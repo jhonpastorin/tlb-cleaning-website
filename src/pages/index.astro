@@ -1,10 +1,25 @@
 ---
-// Blank slate — previous homepage composition removed. New design goes here.
+// Homepage built from content-plans/cleaning-services-homepage.md — section
+// choices, positioning, and every "don't invent this" call trace back to
+// that document. See its "Open items" list for everything flagged below.
 import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import StoryMosaic from '../components/sections/StoryMosaic.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
 
 const pageMeta = {
-  title: 'TLB Cleaning',
-  description: '',
+  title: 'Cleaning Services & Cleaners | TLB Cleaning',
+  description:
+    'Local mums cleaning residential and commercial spaces across the Northern Rivers and southern Gold Coast. Police checked, insured and reliable. Book online.',
+  // §0: URL slug is blank in the spec — root assumed since this is the homepage.
   canonical: 'https://example.com/',
 };
 
@@ -22,11 +37,297 @@ const business = {
     addressCountry: 'AU',
   },
   sameAs: [],
-  areaServed: '',
-  description: '',
+  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  description: pageMeta.description,
 };
+
+// §1 Hero — no hero photo supplied yet. Per the plan's own recommendation,
+// shipping `minimal` now (zero sourcing dependency) rather than a dashed
+// placeholder box standing in for a real photo; swap to `split-single-image`
+// + a real `image` once one is sourced.
+const hero = {
+  headingLines: ['TLB Cleaning.', 'Your reliable local cleaners.'],
+  lead: 'A full-time local team caring for homes, holiday lets and managed properties, on a schedule that suits you.',
+  cta: { label: 'Get an instant quote', href: '/quote/' }, // href guessed — no booking/quote URL given, confirm before launch
+};
+
+// §4 Trust bar — drafted in full; positioned directly under the hero per
+// the spec's own text, not its table row order (see plan's "order conflict" note).
+const trustBarItems = [
+  '9 full-time local cleaners, employed not subcontracted',
+  'Working both sides of the border, NSW and QLD',
+  'Trusted by leading Northern Rivers real estate agencies',
+];
+
+// §2 Definition paragraph — drafted in full.
+const definitionBody = [
+  'TLB Cleaning is a locally owned cleaning company serving the Northern Rivers, Tweed Heads and the Southern Gold Coast. Led by Tegan and staffed by nine full-time local cleaners, TLB provides regular home cleaning, deep and one-off cleans, end of lease and bond cleans, Airbnb turnovers and commercial cleaning across New South Wales and Queensland.',
+];
+
+// §3 Persona cards. Card copy is drafted verbatim; the section's own
+// heading/accent lines aren't in the spec at all, so these two lines are
+// placeholder structural copy, not a brand decision — flag before launch.
+const pathwayCards = {
+  heading: 'Tell us what you need,',
+  headingAccent: "we'll take it from there.",
+  cards: [
+    {
+      number: 1,
+      image: { ratio: '4/3', label: 'Home interior being cleaned' },
+      title: 'I need a hand at home',
+      description: 'Weekly, fortnightly or a one-off reset. Same faces every visit.',
+      cta: { label: 'Get a quote', href: '/house-cleaning/' },
+    },
+    {
+      number: 2,
+      image: { ratio: '4/3', label: 'Holiday let living space, guest-ready' },
+      title: 'I have a holiday let',
+      description: 'Turnovers timed to your bookings, essentials restocked, ready before check-in.',
+      cta: { label: 'Get a quote', href: '/airbnb-cleaning/' },
+    },
+    {
+      number: 3,
+      image: { ratio: '4/3', label: 'Managed rental property exterior' },
+      title: 'I manage properties',
+      description: 'Bond and end of lease cleans that pass, and a team with the capacity for your rent roll.',
+      cta: { label: 'Get a quote', href: '/real-estate-cleaning/' },
+    },
+  ],
+};
+
+// §5 "What's included in every visit" — drafted in full. Icon-less per the
+// plan's note: the only icon set available (ServiceIcon.astro) has nothing
+// cleaning-relevant, and a mismatched abstract icon would just be decoration.
+const includedItems = [
+  {
+    title: 'Inside your home',
+    description: 'Regular cleaning, deep and one-off cleans, end of lease and bond cleans.',
+    href: '/house-cleaning/',
+  },
+  {
+    title: 'Holiday lets',
+    description: 'Airbnb and short-stay turnovers, restocking, guest-ready presentation.',
+    href: '/airbnb-cleaning/',
+  },
+  {
+    title: 'For agencies',
+    description: 'Bond cleans, vacancy turnarounds, routine managed-property cleans.',
+    href: '/real-estate-cleaning/',
+  },
+  {
+    title: 'Around the house',
+    description: 'Carpets, windows, gutters, pressure cleaning, ovens.',
+    href: '/deep-cleaning/',
+  },
+  { title: 'For business', description: 'Offices and commercial premises.' }, // no dedicated page yet — defaults to '#'
+];
+
+// §6 Meet Tegan — bio drafted in full. Pull-quote is blocked in the spec
+// ("[One sentence, in her words...]") and is intentionally omitted rather
+// than invented in her voice.
+const teganBlocks = [
+  { type: 'image' as const, ratio: '3/4', label: 'Tegan, founder of TLB Cleaning' },
+  {
+    type: 'text' as const,
+    body: [
+      'TLB is run by Tegan, a Northern Rivers mum who built the business one recommendation at a time. No website, no advertising, just people telling other people about her.',
+      'There are nine full-time cleaners on the team now, most of them mums as well, working hours that fit around school pick-up. That part is deliberate. People who can be there for their own families tend to stay, and a team that stays does better work.',
+      "Tegan still knows her clients by name. If something isn't right, you're talking to the person who owns the business, not a call centre.",
+    ],
+  },
+];
+
+// §7 "The why" — drafted in full.
+const whyBody = [
+  'You are not really buying a clean house.',
+  'You are buying the bit where you stop thinking about it. Nobody wants to interview cleaners, chase quotes, or wonder whether the person who came last fortnight is coming again.',
+  'Set it up once. Same team, same day, a message when we are on the way. That is the whole idea.',
+];
+
+// §8 Comparison table and §9 Testimonials are both omitted from this build —
+// the spec supplies no comparison criteria at all (§8) and no real client
+// quotes (§9, only a briefing task for Tegan). Per the plan: don't ship a
+// placeholder table with invented criteria, and don't build a testimonial
+// section with invented quotes. Add both once real content exists.
+
+// §10 "What we do" — drafted in full, with the deep links the spec calls for.
+const whatWeDoItems = [
+  {
+    title: 'Airbnb and holiday let turnovers',
+    description: 'Timed to your bookings, restocked and guest-ready before check-in.',
+    href: '/airbnb-cleaning/',
+  },
+  {
+    title: 'End of lease and bond cleans',
+    description: 'Cleaned to the standard your exit inspection is measured against, both sides of the border.',
+    href: '/end-of-lease-cleaning/',
+  },
+  {
+    title: 'Regular home cleaning',
+    description: 'Weekly or fortnightly, same team, set it up once.',
+    href: '/house-cleaning/',
+  },
+  {
+    title: 'Real estate and property management',
+    description: 'Vacancy turnarounds and managed-property cleans for agencies with a rent roll to protect.',
+    href: '/real-estate-cleaning/',
+  },
+  {
+    title: 'Deep and one-off cleans',
+    description: 'A full reset when the place has got away from you, or before someone important arrives.',
+    href: '/deep-cleaning/',
+  },
+];
+
+// §11 Where We Clean — drafted in full. Location page URLs aren't specified
+// in the spec (open item); `/locations/<slug>/` is a guessed pattern —
+// confirm the real one before launch. Tweed Heads and Coolangatta highlighted
+// as the border-crossing anchor towns the copy itself calls out.
+const locationTags = [
+  { label: 'Byron Bay', href: '/locations/byron-bay/' },
+  { label: 'Ballina', href: '/locations/ballina/' },
+  { label: 'Lennox Head', href: '/locations/lennox-head/' },
+  { label: 'Brunswick Heads', href: '/locations/brunswick-heads/' },
+  { label: 'Ocean Shores', href: '/locations/ocean-shores/' },
+  { label: 'Alstonville', href: '/locations/alstonville/' },
+  { label: 'Murwillumbah', href: '/locations/murwillumbah/' },
+  { label: 'Lismore', href: '/locations/lismore/' },
+  { label: 'Kingscliff', href: '/locations/kingscliff/' },
+  { label: 'Pottsville', href: '/locations/pottsville/' },
+  { label: 'Tweed Heads', href: '/locations/tweed-heads/', isHighlighted: true },
+  { label: 'Coolangatta', href: '/locations/coolangatta/', isHighlighted: true },
+  { label: 'Palm Beach', href: '/locations/palm-beach/' },
+  { label: 'Burleigh Heads', href: '/locations/burleigh-heads/' },
+];
+
+// §12 FAQ #1 (branded) — only the 3 fully-drafted questions ship. The other
+// 2 ("same cleaner every time", pricing) are blocked in the spec pending
+// Tegan/the pricing decision — omitted rather than answered with invented copy.
+const brandedFaqItems = [
+  {
+    question: 'Are you a franchise?',
+    answer:
+      "No. TLB is locally owned and run by Tegan, and every cleaner is employed by us rather than subcontracted through a national brand. When you book, you are booking us, not a licence holder using someone else's name.",
+  },
+  {
+    question: 'Do you clean in Queensland as well as New South Wales?',
+    answer:
+      'Yes, both. We work from the Northern Rivers up through Tweed Heads and into the Southern Gold Coast, which means we cross the state line most weeks. It also means we know how the rules differ on either side of it, which matters when a bond is involved.',
+  },
+  {
+    question: 'How did you get to nine cleaners without advertising?',
+    answer:
+      'One recommendation at a time. Every client TLB has, came from someone telling a neighbour. That is a slower way to grow and a much harder one to fake.',
+  },
+];
+
+// §12 FAQ #2 (non-branded, long-tail) — all 6 drafted in full. The spec
+// marks every one "[TBC. Confirm with Tegan]" — lower-risk generic
+// service-education copy than the branded items above, but still pending
+// sign-off before this ships for real.
+const nonBrandedFaqItems = [
+  {
+    question: 'How long does a house clean take?',
+    answer:
+      'A rough guide for a maintained home is about an hour for each bedroom and bathroom, so a three-bedroom, two-bathroom house usually takes three to five hours for one cleaner, or roughly half that with two. Your first clean almost always takes longer, because it brings the home to a baseline. After that, regular visits settle into a predictable window.',
+  },
+  {
+    question: 'Should I book weekly or fortnightly?',
+    answer:
+      'Fortnightly suits most homes. Weekly tends to make sense with a bigger household, pets, working from home, or a place with a lot of through traffic. A fortnightly visit usually costs the same per clean as a weekly one, so the difference is what you spend across a month rather than what you pay on the day. Starting with a one-off and seeing how long it holds is the easiest way to decide.',
+  },
+  {
+    question: 'Do cleaners bring their own products and equipment?',
+    answer:
+      'Yes, a professional cleaning service arrives with everything needed, so you do not have to supply anything or leave anything out. If you would rather particular products were used in your home, because of a baby, an allergy, a pet or a sensitive surface, say so when you book. Most cleaners will either use what you have or bring an alternative.',
+  },
+  {
+    question: 'Do cleaners do the laundry and the dishes?',
+    answer:
+      'Usually not as standard. A regular house clean covers surfaces, floors, kitchen, bathrooms and bins. Laundry, dishes, ironing and putting belongings away are slow tasks with little visible payoff per minute, so most services either exclude them or quote them separately. If you want them included, ask before you book rather than on the day, so the time is in the quote.',
+  },
+  {
+    question: 'Do I need to tidy up before the cleaner arrives?',
+    answer:
+      'Tidy, do not clean. Clearing benchtops, floors and bathroom vanities makes a real difference, because time spent moving your things is time not spent cleaning. Put away clothes, toys, dishes and anything valuable or fragile. Leave the actual cleaning to the cleaner, including the dusty and greasy jobs. If a house is cluttered on the day, the detail work is what gets missed.',
+  },
+  {
+    question: 'Do I need to be home while the cleaner is there?',
+    answer:
+      'That is entirely up to you. Plenty of people are at work or on the school run and arrange access in advance. Plenty prefer to be home for the first visit or two, so they can meet the cleaner and point out what matters most, then leave a key once the routine settles. Either works. Agree how access happens when you book.',
+  },
+];
+
+// §13 Closing CTA — the spec never drafted this heading/lead ("only the
+// section's shape is described"). Rather than invent new marketing copy,
+// this reuses the hero's own already-approved lines as a closing echo —
+// flagged as a placeholder pending real closing copy.
+const closingCta = {
+  heading: hero.headingLines.join(' '),
+  lead: hero.lead,
+  cta: hero.cta,
+};
+
+// Shared nav/footer content — not covered by the content spec at all
+// (it only specifies page sections). Placeholder structure so the page
+// renders; confirm real nav destinations and business contact details
+// before launch.
+const serviceNav = [
+  { label: 'House Cleaning', href: '/house-cleaning/' },
+  { label: 'Airbnb Cleaning', href: '/airbnb-cleaning/' },
+  { label: 'End of Lease Cleaning', href: '/end-of-lease-cleaning/' },
+  { label: 'Real Estate Cleaning', href: '/real-estate-cleaning/' },
+  { label: 'Deep Cleaning', href: '/deep-cleaning/' },
+];
+
+const primaryNav = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about/' },
+  { label: 'Locations', href: '/locations/' },
+  { label: 'Contact', href: '/contact/' },
+];
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
-  <main id="main"></main>
+  <SiteHeader logo={{ label: 'TLB Cleaning' }} primaryNav={primaryNav} serviceNav={serviceNav} cta={hero.cta} />
+
+  <main id="main">
+    <Hero variant="minimal" headingLines={hero.headingLines} lead={hero.lead} cta={hero.cta} />
+
+    <TrustBar items={trustBarItems} />
+
+    <TextBlock theme="light" body={definitionBody} />
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks variant="list" heading="What's included in every visit." items={includedItems} />
+
+    <StoryMosaic theme="light" heading="Meet Tegan" blocks={teganBlocks} />
+
+    <TextBlock theme="dark" body={whyBody} />
+
+    <ServiceBlocks variant="list" heading="What we do" items={whatWeDoItems} />
+
+    <TagCloud
+      heading="Where We Clean"
+      subheading="From Ballina to Burleigh, and both sides of the border."
+      tags={locationTags}
+      note={[]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning' }}
+    columns={[
+      { title: 'Services', links: serviceNav },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={{ phone: '[TBC]', email: '[TBC]', address: 'Northern Rivers, NSW & Southern Gold Coast, QLD' }}
+    copyright="© 2026 TLB Cleaning. All rights reserved."
+  />
 </Base>

@@ -970,6 +970,17 @@ other sections' shapes fit (not a persona/audience split — that's
 `PathwayCards`; not a stat callout — that's `StatBand`; not editorial
 prose — that's `StoryMosaic`).
 
+**Patch note:** the heading `id`/`aria-labelledby` pair used to be the
+literal string `"service-blocks-heading"` on every variant — harmless with
+one instance per page (true of every build so far), but the TLB homepage
+(`content-plans/cleaning-services-homepage.md`) uses two `list` instances
+on the same page, which would have produced two elements sharing one `id`
+and left the second section's `aria-labelledby` pointing at the wrong
+heading. Fixed with a build-time random suffix per instance, the exact same
+fix `Faq.astro` already applies to its own per-instance group name. Found
+by touching this file while building that page, not reported by anyone —
+same pattern as this file's other patch notes.
+
 **Patch note:** `.service-blocks__trigger-media` was a `<div>` wrapping
 `Placeholder` inside a `<button>` — `<button>`'s content model is phrasing
 content only, so a `<div>` there is invalid HTML (browsers render it
@@ -977,6 +988,68 @@ anyway, which is exactly why it went unnoticed). Changed to `<span
 display: block>`, the same way `PhotoGallery.astro`'s filmstrip frames were
 built from the start. Purely a markup-validity fix — no visual or
 behavioural change.
+
+### `TextBlock.astro`
+
+Purpose: a plain single-column prose block — optional heading, body
+paragraphs, optional CTA, no image slot at all. Added while building the
+TLB homepage from `content-plans/cleaning-services-homepage.md`, which hit
+this exact gap twice (an intro/definition paragraph and a persuasive "why"
+block) with nothing in this file covering it — two independent real
+consumers on one page is the same bar this library sets elsewhere for
+"worth a shared component" (`ServiceIcon.astro`'s own justification).
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `theme` | `'light' \| 'dark'` | `'light'` | Light = white bg, `--color-body` text. Dark = charcoal bg, `--color-on-inverse` text — same color treatment `StoryMosaic.astro` already uses for its own dark/light themes. |
+| `align` | `'left' \| 'center'` | `'center'` | |
+| `heading` | `string` | — | Optional — omit for a heading-less block. |
+| `body` | `string[]` | — required | One paragraph per entry. |
+| `cta` | `ButtonData` | — | Optional. Defaults to `brand` variant on light, `inverse-accent` on dark. |
+
+```astro
+<TextBlock theme="light" body={['One paragraph of plain prose, no image.']} />
+<TextBlock theme="dark" body={['A second, unrelated prose block further down the same page.']} />
+```
+
+**Deliberately not `StoryMosaic.astro`:** that component always lays out a
+2-column grid — a text-only use there leaves an empty half-width gap that
+reads as a layout bug, not a deliberate choice (this was checked and
+rejected as a stretch option before building this file). This component is
+single-column with no image concept at all.
+
+Use this when: a page needs a plain paragraph or two with no photo — an
+intro/definition block, a persuasive "why" section, anything that isn't
+worth `StoryMosaic`'s alternating image/text treatment.
+
+### `TrustBar.astro`
+
+Purpose: a thin divided row of 3–5 short proof-point phrases, directly
+under a hero. Added for the same homepage build, once it became clear
+`StatBand.astro`/`MetricsBlock.astro` (both number-led captions — a
+`value` figure is their whole contract) and `TagCloud.astro` (a long
+enumerable pill list) all didn't fit content like "9 full-time local
+cleaners, employed not subcontracted · Working both sides of the border,
+NSW and QLD · Trusted by leading Northern Rivers real estate agencies" —
+three short sentences, only one of which is actually numeric.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `items` | `string[]` | Any count ≥1; the spec's own guidance is 3–5. |
+
+```astro
+<TrustBar items={['9 full-time local cleaners, employed not subcontracted', 'Working both sides of the border, NSW and QLD']} />
+```
+
+Divider treatment (border-left hairlines, stacking to border-top below
+`--bp-sm`) is deliberately copied from `Hero.astro`'s `minimal` variant's
+own `stats` row rather than inventing a second visual language for the
+same idea — no shared code between the two files, just the same
+established pattern reused.
+
+Use this when: a page needs a short row of proof-point sentences that
+aren't uniformly numeric — not a stat callout (`StatBand`), not plain
+numeric metrics (`MetricsBlock`), not a category pill list (`TagCloud`).
 
 ### `ContentGrid.astro`
 
@@ -1080,6 +1153,56 @@ Use this when: a page needs an N-column grid where cell type/size varies by
 position, or specifically for a 2-column text/image section that should be
 grouped with this file's other examples rather than built with
 `StoryMosaic.astro`.
+
+### `ComparisonTable.astro`
+
+Purpose: a real row/column-aligned comparison table — one feature per row,
+one compared entity per column, values as a check/cross icon or a short
+text note, with one column optionally highlighted as "this is us." Added
+as the genuine gap `content-plans/cleaning-services-homepage.md` (§8)
+flagged with no working stretch at all — `ContentGrid.astro` was checked
+directly against this need and ruled out: its N-column grid has no way to
+keep "feature X" aligned consistently down a column across multiple
+compared entities, which is the entire point of a comparison table.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `heading` | `string` | Optional. |
+| `lead` | `string` | Optional. |
+| `columns` | `{ label: string, highlight?: boolean }[]` | The compared entities (e.g. "TLB Cleaning", "Typical cleaner"). `highlight` tints that column's header/cells with the brand color. |
+| `rows` | `{ label: string, values: (boolean \| string)[] }[]` | One entry per feature. `values` aligns 1:1 with `columns` — `true`/`false` render as a check/cross icon, a string renders as its own short note (e.g. `"Sometimes"`). |
+| `footnote` | `string` | Optional closing note below the table. |
+| `cta` | `ButtonData` | Optional, centered below the table. |
+
+```astro
+<ComparisonTable
+  heading="How we compare"
+  columns={[{ label: 'TLB Cleaning', highlight: true }, { label: 'Typical cleaner' }]}
+  rows={[
+    { label: 'Employed, not subcontracted', values: [true, false] },
+    { label: 'Same cleaner every visit', values: [true, 'Sometimes'] },
+  ]}
+/>
+```
+
+Built as a real `<table>`, not a div grid — this is genuinely tabular data,
+and native `<th scope="row"/"col">` semantics give screen readers the
+row/column relationship for free, the same "reach for the native element"
+call `Faq.astro` already makes with `<details>`/`<summary>`. On narrow
+viewports the table scrolls horizontally (sticky first column) rather than
+collapsing to one column — a comparison table has no sensible
+single-column form, same reasoning `PhotoGallery.astro`'s `filmstrip` and
+`ServiceBlocks.astro`'s `slider` rows already use for their own tables/rows.
+
+**Built with no content wired to a page yet.** The homepage build this was
+made for has zero comparison criteria in its content spec at all — per
+that plan's own instruction, don't ship a placeholder table with invented
+rows/columns. This component exists and is ready; add real `columns`/`rows`
+once the actual comparison content is decided.
+
+Use this when: a page needs to compare 2+ things (competitors, plan tiers,
+before/after) feature-by-feature with a shared header row — not a free-form
+N-column grid (`ContentGrid`), not plain numeric metrics (`MetricsBlock`).
 
 ### `SiteFooter.astro`
 

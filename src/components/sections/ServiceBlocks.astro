@@ -47,13 +47,21 @@ interface Props {
 }
 
 const { variant = 'icon-grid', heading, lead, items, cta } = Astro.props;
+
+// Random suffix so multiple <ServiceBlocks> instances on one page never
+// collide on this id — same fix Faq.astro already applies to its own
+// per-instance group name. Found live while building the TLB homepage,
+// which uses two `list` instances on the same page; not reported by
+// anyone — same "found by touching adjacent code" pattern as this file's
+// other patch notes below.
+const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 {variant === 'icon-grid' && (
-  <section class="service-blocks service-blocks--icon-grid" aria-labelledby="service-blocks-heading">
+  <section class="service-blocks service-blocks--icon-grid" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id="service-blocks-heading">{heading}</h2>
+        <h2 id={headingId}>{heading}</h2>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -77,10 +85,10 @@ const { variant = 'icon-grid', heading, lead, items, cta } = Astro.props;
 )}
 
 {variant === 'image-cards' && (
-  <section class="service-blocks service-blocks--image-cards" aria-labelledby="service-blocks-heading">
+  <section class="service-blocks service-blocks--image-cards" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id="service-blocks-heading">{heading}</h2>
+        <h2 id={headingId}>{heading}</h2>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -112,10 +120,10 @@ const { variant = 'icon-grid', heading, lead, items, cta } = Astro.props;
 )}
 
 {variant === 'list' && (
-  <section class="service-blocks service-blocks--list" aria-labelledby="service-blocks-heading">
+  <section class="service-blocks service-blocks--list" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id="service-blocks-heading">{heading}</h2>
+        <h2 id={headingId}>{heading}</h2>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -144,10 +152,10 @@ const { variant = 'icon-grid', heading, lead, items, cta } = Astro.props;
 )}
 
 {variant === 'highlight' && items.length > 0 && (
-  <section class="service-blocks service-blocks--highlight" aria-labelledby="service-blocks-heading">
+  <section class="service-blocks service-blocks--highlight" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id="service-blocks-heading">{heading}</h2>
+        <h2 id={headingId}>{heading}</h2>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -188,10 +196,10 @@ const { variant = 'icon-grid', heading, lead, items, cta } = Astro.props;
 )}
 
 {variant === 'slider' && items.length > 0 && (
-  <section class="service-blocks service-blocks--slider" aria-labelledby="service-blocks-heading">
+  <section class="service-blocks service-blocks--slider" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id="service-blocks-heading">{heading}</h2>
+        <h2 id={headingId}>{heading}</h2>
         {lead && <p class="lead">{lead}</p>}
       </div>
 

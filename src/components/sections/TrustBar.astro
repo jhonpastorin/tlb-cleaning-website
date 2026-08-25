@@ -1,0 +1,83 @@
+---
+// New component — added while building the TLB homepage from
+// content-plans/cleaning-services-homepage.md (§4). Distinct from both:
+//  - StatBand.astro / MetricsBlock.astro: those are number-led captions
+//    (a `value` figure per item is the whole contract). This is for a row
+//    of short proof-point PHRASES that aren't uniformly numeric.
+//  - TagCloud.astro: that's a long enumerable category list rendered as
+//    pills. This is 3-5 short sentences in one divided row, not pills.
+//
+// Divider treatment reuses Hero.astro's `minimal` variant's `stats` row
+// styling verbatim (border-left hairlines, same mobile stack-to-border-top
+// behaviour) rather than inventing a second visual language for the same
+// idea — no shared code between the two, just the same established pattern.
+interface Props {
+  items: string[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="trust-bar" aria-label="Why choose us">
+  <div class="container">
+    <ul class="trust-bar__list">
+      {items.map((item) => (
+        <li class="trust-bar__item">{item}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .trust-bar {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border-muted);
+  }
+
+  .trust-bar__list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-block: var(--space-md);
+  }
+
+  .trust-bar__item {
+    padding-inline: var(--space-lg);
+    border-left: 1px solid var(--color-border-muted);
+    font-size: var(--text-small);
+    color: var(--color-body);
+    text-align: center;
+  }
+
+  .trust-bar__item:first-child {
+    padding-inline-start: 0;
+    border-left: none;
+  }
+
+  .trust-bar__item:last-child {
+    padding-inline-end: 0;
+  }
+
+  /* mirrors --bp-sm — same stack-to-border-top treatment as Hero.astro's
+     minimal `stats` row at this exact breakpoint. */
+  @media (max-width: 480px) {
+    .trust-bar__list {
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .trust-bar__item {
+      padding-inline: 0;
+      border-left: none;
+      border-top: 1px solid var(--color-border-muted);
+      padding-top: var(--space-sm);
+    }
+
+    .trust-bar__item:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+</style>

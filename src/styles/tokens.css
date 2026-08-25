@@ -1,31 +1,41 @@
 /* TLB Cleaning brand tokens.
-   Layer 1 = raw brand values (currently carried over verbatim from the
-   previous brand's config — placeholder values pending TLB's real palette).
+   Layer 1 = raw brand values. Primary/Secondary/Accent are now the real
+   TLB brand-bible colors (see content-plans/brand-style-input.md) — every
+   other Layer 1 value below is still the previous brand's placeholder,
+   pending brand-bible input.
    Layer 2 = semantic roles. Components reference Layer 2 ONLY.
    Re-skinning for another brand = replacing this file. Nothing else. */
 
 :root {
   /* ---- Layer 1: brand primitives ---- */
-  --tlb-primary:        #FDC200;   /* placeholder — was "Maple yellow" */
-  --tlb-secondary:      #8CC62F;   /* green */
-  --tlb-accent:         #61CE70;
-  --tlb-charcoal:       #2E2E2E;
-  --tlb-blue-dark:      #1F2230;
-  --tlb-grey:           #7A7A7A;   /* config "text" */
-  --tlb-white:          #FFFFFF;
-  --tlb-black:          #000000;
-  --tlb-violet:         #926DB0;
-  --tlb-orange:         #F69305;
-  --tlb-cyan:           #387677;
-  --tlb-cyan-dark:      #085453;
+  --tlb-primary:        #234B51;   /* Dark Teal — brand bible primary */
+  --tlb-secondary:      #50AB8D;   /* Teal — brand bible primary */
+  --tlb-accent:         #7FC282;   /* Mint Green — brand bible secondary */
+  --tlb-cream:          #EBE1C7;   /* Cream — brand bible secondary */
+  --tlb-off-white:      #F4EFE3;   /* Off White — brand bible secondary */
+  --tlb-charcoal:       #2E2E2E;   /* placeholder — not covered by the brand bible yet */
+  --tlb-blue-dark:      #1F2230;   /* placeholder — not covered by the brand bible yet */
+  --tlb-grey:           #7A7A7A;   /* placeholder — not covered by the brand bible yet */
+  --tlb-white:          #FFFFFF;   /* placeholder — not covered by the brand bible yet */
+  --tlb-black:          #000000;   /* placeholder — not covered by the brand bible yet */
+  --tlb-violet:         #926DB0;   /* placeholder — not covered by the brand bible yet, unused by any component */
+  --tlb-orange:         #F69305;   /* placeholder — not covered by the brand bible yet, unused by any component */
+  --tlb-cyan:           #387677;   /* placeholder — not covered by the brand bible yet, unused by any component */
+  --tlb-cyan-dark:      #085453;   /* placeholder — not covered by the brand bible yet, unused by any component */
 
-  /* ---- Layer 2: semantic roles ---- */
-  --color-brand:            var(--tlb-primary);
-  --color-on-brand:         var(--tlb-charcoal);
-  --color-surface:          var(--tlb-white);
-  --color-on-surface:       var(--tlb-charcoal);
-  --color-inverse:          var(--tlb-charcoal);   /* dark sections */
-  --color-on-inverse:       var(--tlb-white);
+  /* ---- Layer 2: semantic roles ----
+     Re-wired for the brand-bible ambiance (content-plans/brand-style-input.md
+     + the Core Values / Mission & Brand Promise deck slides): one dark Teal
+     identity used for both the "brand band" and general dark sections, cream/
+     off-white pill fills and dark-Teal ink on light surfaces, Mint Green kept
+     for a small accent role rather than a page-filling colour. */
+  --color-brand:            var(--tlb-primary);      /* Dark Teal — bands: header service bar, Hero split-mosaic, TagCloud */
+  --color-on-brand:         var(--tlb-off-white);     /* light text/ink on top of a Dark Teal band */
+  --color-surface:          var(--tlb-off-white);     /* page/card background — Off White, not stark white */
+  --color-on-surface:       var(--tlb-primary);       /* Dark Teal ink on light surfaces — headings, pill text */
+  --color-inverse:          var(--tlb-primary);       /* dark sections — same Dark Teal as --color-brand */
+  --color-on-inverse:       var(--tlb-off-white);     /* light text on dark sections */
+  --color-accent:           var(--tlb-accent);        /* Mint Green — small decorative accents only (e.g. TagCloud's highlighted-tag ring) */
 
   /* Body copy colour. The config's #7A7A7A measures 4.29:1 on white, which
      PASSES WCAG AA for large text (>=18.66px bold / >=24px normal) but FAILS
@@ -41,25 +51,31 @@
      Hero's minimal-variant background) showed up, rather than adding a
      near-duplicate grey token. Still not a brand colour choice — swapping
      brands only needs Layer 1 above. */
-  --color-surface-muted:    #F4F4F4;
+  --color-surface-muted:    var(--tlb-cream);         /* Cream — warmer muted panel than plain surface, matches the brand bible's second light neutral */
   --color-border-muted:     #D8D8D8;                 /* placeholder dashed border */
 
   /* Interaction — from theme_button_defaults */
-  --color-btn-hover-bg:     var(--tlb-charcoal);
-  --color-btn-hover-text:   var(--tlb-white);
+  --color-btn-hover-bg:     var(--tlb-primary);       /* Dark Teal hover state, matching the unified dark identity above */
+  --color-btn-hover-text:   var(--tlb-off-white);
 
   /* Focus ring — accessible on every background this page uses */
   --color-focus-ring:       var(--tlb-blue-dark);
 
   /* ---- Type ---- */
-  --font-display: 'Montserrat', system-ui, sans-serif;
-  --font-body:    'Nunito Sans', system-ui, sans-serif;
-  --font-button:  'Montserrat', system-ui, sans-serif;
+  /* Poppins Bold -> headlines/titles/CTAs, Roboto Regular -> subtitles/
+     subcopy/body, per the brand bible (content-plans/brand-style-input.md).
+     --weight-heading and --weight-button both move to 700 to match — the
+     brand bible names only one Poppins weight (Bold), so every --font-display
+     consumer now resolves to the same 700 weight as --weight-bold already
+     used, rather than introducing a second, unspecified weight. */
+  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-body:    'Roboto', system-ui, sans-serif;
+  --font-button:  'Poppins', system-ui, sans-serif;
   --font-mono:    'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   --weight-body:      400;
-  --weight-heading:   600;
+  --weight-heading:   700;
   --weight-bold:      700;
-  --weight-button:    600;
+  --weight-button:    700;
 
   /* Scale — verbatim from typography_globals */
   --title-1: clamp(3rem,   1.7309rem + 1.813vw,  4rem);

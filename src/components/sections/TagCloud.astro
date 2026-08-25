@@ -95,7 +95,13 @@ const { heading, subheading, tags, note } = Astro.props;
   .tag-cloud__tag--highlight {
     background: var(--color-brand);
     color: var(--color-on-brand);
-    border: 2px solid var(--color-inverse);
+    /* --color-accent (Mint Green), not --color-inverse: tokens.css now
+       points --color-inverse at the same Dark Teal as --color-brand for
+       the unified dark identity the brand bible calls for, which would
+       make an --color-inverse ring invisible against this tag's own
+       background. Mint Green also matches the deck's actual use of that
+       colour — a small decorative accent, not a page-filling tone. */
+    border: 2px solid var(--color-accent);
   }
 
   .tag-cloud__note {

@@ -1,7 +1,9 @@
 /* Self-hosted via @fontsource — only the weights actually used on this page.
-   Montserrat: 600 (headings/buttons default), 700 (bold headings, H1).
-   Nunito Sans: 400 (body), 700 (bold body). All ship with font-display: swap. */
-@import '@fontsource/montserrat/600.css';
-@import '@fontsource/montserrat/700.css';
-@import '@fontsource/nunito-sans/400.css';
-@import '@fontsource/nunito-sans/700.css';
+   Poppins: 700 (headings, buttons, H1 — the only weight tokens.css's
+   --weight-heading/--weight-bold/--weight-button ever request; the brand
+   bible names only Poppins Bold, so no 400/600 file is loaded).
+   Roboto: 400 (body), 700 (bold body, e.g. footer tagline's <strong>).
+   All ship with font-display: swap. */
+@import '@fontsource/poppins/700.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/700.css';

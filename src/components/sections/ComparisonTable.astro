@@ -1,0 +1,223 @@
+---
+// New component — the one genuine gap content-plans/cleaning-services-homepage.md
+// (§8) flagged with no working stretch at all: a real row/column-aligned
+// table with a shared header, not a free-form grid of independent cells.
+// `ContentGrid.astro` was checked directly against this need first and
+// ruled out — its N-column grid has no way to keep "feature X" aligned
+// consistently down a column across multiple compared entities, which is
+// the entire point of a comparison table.
+//
+// A real <table> rather than a div grid: this is genuinely tabular data
+// (one feature per row, one compared entity per column), and <table>'s
+// native <th scope="row"/"col"> semantics give screen readers the
+// row/column relationship for free — the same "reach for the native
+// element" call Faq.astro already makes with <details>/<summary>.
+import Button from '../ui/Button.astro';
+import type { ButtonData } from '../../data/types';
+
+interface ComparisonColumn {
+  label: string;
+  /** Tints this column's header and cells with the brand color — for the "this is us" column. */
+  highlight?: boolean;
+}
+
+type ComparisonValue = boolean | string;
+
+interface ComparisonRow {
+  /** Row header, e.g. a feature name. */
+  label: string;
+  /** One value per column, in the same order as `columns`. `true`/`false` render as a check/cross icon; a string renders as its own short note (e.g. "Sometimes"). */
+  values: ComparisonValue[];
+}
+
+interface Props {
+  heading?: string;
+  lead?: string;
+  columns: ComparisonColumn[];
+  rows: ComparisonRow[];
+  /** Optional closing note below the table, e.g. a source/caveat line. */
+  footnote?: string;
+  cta?: ButtonData;
+}
+
+const { heading, lead, columns, rows, footnote, cta } = Astro.props;
+
+// Same random-suffix fix as TextBlock.astro/ServiceBlocks.astro's own
+// patch note — avoids a duplicate id if this section is ever used more
+// than once on a page.
+const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<section class="comparison-table" aria-labelledby={heading ? headingId : undefined}>
+  <div class="container container--narrow">
+    {(heading || lead) && (
+      <div class="comparison-table__intro">
+        {heading && <h2 id={headingId}>{heading}</h2>}
+        {lead && <p class="lead">{lead}</p>}
+      </div>
+    )}
+
+    <div class="comparison-table__scroll">
+      <table class="comparison-table__table">
+        <thead>
+          <tr>
+            <th scope="col" class="comparison-table__row-label-col"><span class="sr-only">Feature</span></th>
+            {columns.map((column) => (
+              <th
+                scope="col"
+                class:list={['comparison-table__col-heading', { 'comparison-table__col-heading--highlight': column.highlight }]}
+              >
+                {column.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr>
+              <th scope="row" class="comparison-table__row-label">{row.label}</th>
+              {row.values.map((value, i) => (
+                <td class:list={['comparison-table__cell', { 'comparison-table__cell--highlight': columns[i]?.highlight }]}>
+                  {typeof value === 'boolean' ? (
+                    value ? (
+                      <svg class="comparison-table__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="Yes">
+                        <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    ) : (
+                      <svg class="comparison-table__icon comparison-table__icon--no" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="No">
+                        <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+                      </svg>
+                    )
+                  ) : (
+                    <span class="comparison-table__note">{value}</span>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    {footnote && <p class="comparison-table__footnote small">{footnote}</p>}
+
+    {cta && (
+      <div class="comparison-table__cta">
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .comparison-table {
+    padding-block: var(--space-2xl);
+  }
+
+  .comparison-table__intro {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .comparison-table__intro h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* Horizontal scroll on narrow viewports rather than collapsing columns —
+     a comparison table doesn't have a sensible single-column form the way
+     a card grid does. */
+  .comparison-table__scroll {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-muted);
+  }
+
+  .comparison-table__table {
+    width: 100%;
+    min-width: 480px;
+    border-collapse: collapse;
+  }
+
+  .comparison-table__table th,
+  .comparison-table__table td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--color-border-muted);
+  }
+
+  .comparison-table__table tbody tr:last-child th,
+  .comparison-table__table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .comparison-table__row-label-col,
+  .comparison-table__row-label {
+    text-align: left;
+    /* Sticky first column so the feature name stays visible while scrolling
+       past several compared columns on a narrow screen. */
+    position: sticky;
+    left: 0;
+    background: var(--color-surface-muted);
+  }
+
+  .comparison-table__row-label {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-small);
+    color: var(--color-on-surface);
+  }
+
+  .comparison-table__col-heading {
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    color: var(--color-on-surface);
+    background: var(--color-surface-muted);
+    white-space: nowrap;
+  }
+
+  .comparison-table__col-heading--highlight {
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+  }
+
+  .comparison-table__cell {
+    text-align: center;
+  }
+
+  .comparison-table__cell--highlight {
+    background: color-mix(in srgb, var(--color-brand) 15%, var(--color-surface));
+  }
+
+  .comparison-table__icon {
+    color: var(--color-on-surface);
+  }
+
+  .comparison-table__icon--no {
+    color: var(--color-body);
+  }
+
+  .comparison-table__note {
+    font-size: var(--text-small);
+    color: var(--color-body);
+  }
+
+  .comparison-table__footnote {
+    color: var(--color-body);
+    text-align: center;
+    margin-top: var(--space-sm);
+  }
+
+  .comparison-table__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-lg);
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .comparison-table__table th,
+    .comparison-table__table td {
+      padding: var(--space-xs) var(--space-sm);
+    }
+  }
+</style>

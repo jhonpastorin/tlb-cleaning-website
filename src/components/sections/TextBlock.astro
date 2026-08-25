@@ -1,0 +1,105 @@
+---
+// New component — added while building the TLB homepage from
+// content-plans/cleaning-services-homepage.md (§2, §7), which flagged this
+// exact gap twice: a plain "one paragraph of prose, no image, no card"
+// section had no home in SECTIONS.md. Two independent real consumers on one
+// page is the same bar this library sets elsewhere for "worth a shared
+// component" (see ServiceIcon.astro's own justification).
+//
+// Deliberately NOT StoryMosaic: that component always lays out a 2-column
+// grid, so a text-only use leaves an empty half-width gap that reads as a
+// layout bug rather than a deliberate choice (see SECTIONS.md's own
+// "not recommended" note on that stretch). This is single-column, no image
+// slot, ever.
+import Button from '../ui/Button.astro';
+import type { ButtonData } from '../../data/types';
+
+interface Props {
+  theme?: 'light' | 'dark';
+  align?: 'left' | 'center';
+  heading?: string;
+  body: string[];
+  cta?: ButtonData;
+}
+
+const { theme = 'light', align = 'center', heading, body, cta } = Astro.props;
+
+// Random suffix so multiple instances on one page never collide — same fix
+// Faq.astro already applies to its own per-instance heading, and the same
+// bug class ServiceBlocks.astro was patched for while building this same
+// page (see SECTIONS.md's patch notes on both).
+const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<section class:list={['text-block', `text-block--${theme}`]} aria-labelledby={heading ? headingId : undefined}>
+  <div class="container container--narrow">
+    <div class:list={['text-block__inner', { 'text-block__inner--center': align === 'center' }]}>
+      {heading && <h2 id={headingId}>{heading}</h2>}
+      <div class="text-block__body">
+        {body.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+      {cta && (
+        <div class="text-block__cta">
+          <Button label={cta.label} href={cta.href} variant={cta.variant ?? (theme === 'dark' ? 'inverse-accent' : 'brand')} />
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .text-block--light {
+    background: var(--color-surface);
+  }
+
+  .text-block--dark {
+    background: var(--color-inverse);
+  }
+
+  .text-block__inner {
+    padding-block: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .text-block__inner--center {
+    align-items: center;
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .text-block--dark :global(h2) {
+    color: var(--color-on-inverse);
+  }
+
+  .text-block__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    font-size: var(--text-big);
+    line-height: var(--leading-normal);
+  }
+
+  .text-block--light .text-block__body {
+    color: var(--color-body);
+  }
+
+  .text-block--dark .text-block__body {
+    color: var(--color-on-inverse);
+  }
+
+  .text-block__cta {
+    display: flex;
+    margin-top: var(--space-xs);
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .text-block__inner {
+      padding-block: var(--space-xl);
+    }
+  }
+</style>

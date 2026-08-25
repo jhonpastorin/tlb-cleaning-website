@@ -4,9 +4,9 @@ import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 
-// Preload the display face used for H1 (Montserrat 700) so the largest,
+// Preload the display face used for H1 (Poppins 700) so the largest,
 // earliest text on the page doesn't wait on font discovery via the CSS.
-import montserratBoldWoff2 from '@fontsource/montserrat/files/montserrat-latin-700-normal.woff2?url';
+import poppinsBoldWoff2 from '@fontsource/poppins/files/poppins-latin-700-normal.woff2?url';
 
 export interface LocalBusinessInfo {
   name: string;
@@ -79,9 +79,9 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
 
-    <meta name="theme-color" content="#FDC200" />
+    <meta name="theme-color" content="#234B51" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href={montserratBoldWoff2} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={poppinsBoldWoff2} as="font" type="font/woff2" crossorigin />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
   </head>
