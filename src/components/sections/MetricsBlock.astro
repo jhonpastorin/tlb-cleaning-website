@@ -1,0 +1,299 @@
+---
+// Three variants, one component — plain number + caption metrics, no icon
+// badge and no brand-colour band. Kept separate from StatBand.astro on
+// purpose: StatBand's whole identity is icon badge + brand-yellow band +
+// CTA buttons, none of which any of these three wireframes show. Forcing
+// this in as StatBand variants would mean a pile of "skip the icon, skip
+// the brand band, skip the CTAs" conditionals on a component whose current
+// shape is simple specifically because it doesn't need any of that.
+//  - grid (default): 2-up ribbon-shaped cards, one big value + caption each.
+//  - strip: an image, then a divided row of metrics below it.
+//  - list: a heading + lead beside a divided vertical list of metrics.
+//
+// Follows Hero.astro's Placeholder-wrapping rule: every <Placeholder> that
+// needs this file's own sizing is wrapped in a plain <div> authored here.
+import Placeholder from '../ui/Placeholder.astro';
+import type { ImageBlock } from '../../data/disability-support';
+
+type Variant = 'grid' | 'strip' | 'list';
+
+interface MetricItem {
+  value: string;
+  caption: string;
+}
+
+interface Props {
+  variant?: Variant;
+  /** grid, strip: optional section-level intro above the block. list: rendered inside the panel instead — see that variant's markup. */
+  heading?: string;
+  lead?: string;
+  metrics: MetricItem[];
+  /** strip only: the image the metrics row sits below. */
+  image?: ImageBlock;
+}
+
+const { variant = 'grid', heading, lead, metrics, image } = Astro.props;
+---
+
+{variant === 'grid' && (
+  <section class="metrics-block metrics-block--grid" aria-labelledby={heading ? 'metrics-block-heading' : undefined}>
+    <div class="container">
+      {heading && (
+        <div class="metrics-block__intro">
+          <h2 id="metrics-block-heading">{heading}</h2>
+          {lead && <p class="lead">{lead}</p>}
+        </div>
+      )}
+
+      <div class="metrics-block__grid">
+        {metrics.map((metric) => (
+          <div class="metrics-block__ribbon">
+            <span class="metrics-block__ribbon-value">{metric.value}</span>
+            <span class="metrics-block__ribbon-caption">{metric.caption}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'strip' && (
+  <section class="metrics-block metrics-block--strip" aria-labelledby={heading ? 'metrics-block-heading' : undefined}>
+    <div class="container">
+      {heading && (
+        <div class="metrics-block__intro">
+          <h2 id="metrics-block-heading">{heading}</h2>
+          {lead && <p class="lead">{lead}</p>}
+        </div>
+      )}
+
+      <div class="metrics-block__card">
+        {image && (
+          <div class="metrics-block__strip-media">
+            <Placeholder ratio={image.ratio} label={image.label} src={image.src} />
+          </div>
+        )}
+
+        <div class="metrics-block__strip-row">
+          {metrics.map((metric) => (
+            <div class="metrics-block__strip-item">
+              <span class="metrics-block__strip-value">{metric.value}</span>
+              <span class="metrics-block__strip-caption">{metric.caption}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'list' && (
+  <section class="metrics-block metrics-block--list" aria-labelledby={heading ? 'metrics-block-heading' : undefined}>
+    <div class="container container--narrow">
+      <div class="metrics-block__panel">
+        {heading && (
+          <div class="metrics-block__list-header">
+            <h2 id="metrics-block-heading">{heading}</h2>
+            {lead && <p class="lead">{lead}</p>}
+          </div>
+        )}
+
+        <ul class="metrics-block__list">
+          {metrics.map((metric) => (
+            <li class="metrics-block__list-row">
+              <span class="metrics-block__list-value">{metric.value}</span>
+              <span class="metrics-block__list-caption">{metric.caption}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  /* ---- shared ---- */
+
+  .metrics-block {
+    padding-block: var(--space-2xl);
+  }
+
+  .metrics-block__intro {
+    text-align: center;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    margin-bottom: var(--space-xl);
+  }
+
+  .metrics-block__intro h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* ---- grid ----------------------------------------------------------------
+     Ribbon/banner-shaped cards: a clip-path notch cut from the bottom edge.
+     The notch's deepest point is at the box's full height, so content gets
+     extra bottom padding to stay clear of it — the tail itself is just
+     empty decorative space, nothing sits inside it. */
+
+  .metrics-block__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .metrics-block__ribbon {
+    background: var(--color-surface-muted);
+    clip-path: polygon(0 0, 100% 0, 100% 82%, 50% 100%, 0 82%);
+    padding: var(--space-lg) var(--space-md) calc(var(--space-lg) + 28px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .metrics-block__ribbon-value {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--title-3);
+    color: var(--color-on-surface);
+  }
+
+  .metrics-block__ribbon-caption {
+    font-size: var(--text-small);
+    color: var(--color-body);
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .metrics-block__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---- strip ---- */
+
+  .metrics-block__card {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .metrics-block__strip-media {
+    border-radius: 0;
+  }
+
+  .metrics-block__strip-row {
+    display: flex;
+    background: var(--color-surface);
+  }
+
+  .metrics-block__strip-item {
+    flex: 1;
+    min-width: 0;
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    border-inline-start: 1px solid var(--color-border-muted);
+  }
+
+  .metrics-block__strip-item:first-child {
+    border-inline-start: none;
+  }
+
+  .metrics-block__strip-value {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--title-5);
+    color: var(--color-on-surface);
+  }
+
+  .metrics-block__strip-caption {
+    font-size: var(--text-small);
+    color: var(--color-body);
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .metrics-block__strip-row {
+      flex-direction: column;
+    }
+
+    .metrics-block__strip-item {
+      border-inline-start: none;
+      border-top: 1px solid var(--color-border-muted);
+    }
+
+    .metrics-block__strip-item:first-child {
+      border-top: none;
+    }
+  }
+
+  /* ---- list ---- */
+
+  .metrics-block__panel {
+    background: var(--color-surface-muted);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+  }
+
+  .metrics-block__list-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-md);
+    padding-bottom: var(--space-md);
+    margin-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border-muted);
+  }
+
+  .metrics-block__list-header h2 {
+    font-size: var(--title-6);
+  }
+
+  .metrics-block__list-header .lead {
+    flex: 1;
+    min-width: 200px;
+    font-size: var(--text-small);
+    color: var(--color-body);
+  }
+
+  .metrics-block__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metrics-block__list-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-block: var(--space-sm);
+    border-top: 1px solid var(--color-border-muted);
+  }
+
+  .metrics-block__list-row:first-child {
+    border-top: none;
+  }
+
+  .metrics-block__list-value {
+    flex-shrink: 0;
+    width: 80px;
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--title-6);
+    color: var(--color-on-surface);
+  }
+
+  .metrics-block__list-caption {
+    color: var(--color-body);
+    font-size: var(--text-small);
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .metrics-block__list-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-xs);
+    }
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+// Composition only: imports and component calls. No styling, no markup,
+// no content strings — everything below is a prop pulled from data or layout.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import StoryMosaic from '../components/sections/StoryMosaic.astro';
+import StatBand from '../components/sections/StatBand.astro';
+import VideoFeature from '../components/sections/VideoFeature.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+
+import {
+  pageMeta,
+  business,
+  header,
+  hero,
+  aboutMaple,
+  statBand,
+  videoFeature,
+  pathwayCards,
+  audienceCollage,
+  tagCloud,
+  testimonials,
+  footer,
+} from '../data/disability-support';
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader logo={header.logo} primaryNav={header.primaryNav} serviceNav={header.serviceNav} cta={header.cta} />
+
+  <main id="main">
+    <Hero
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      badges={hero.badges}
+      images={hero.images}
+    />
+
+    <StoryMosaic theme={aboutMaple.theme} blocks={aboutMaple.blocks} />
+
+    <StatBand heading={statBand.heading} stats={statBand.stats} buttons={statBand.buttons} />
+
+    <VideoFeature headingLines={videoFeature.headingLines} video={videoFeature.video} />
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <StoryMosaic
+      theme={audienceCollage.theme}
+      heading={audienceCollage.heading}
+      blocks={audienceCollage.blocks}
+      cta={audienceCollage.cta}
+    />
+
+    <TagCloud heading={tagCloud.heading} subheading={tagCloud.subheading} tags={tagCloud.tags} note={tagCloud.note} />
+
+    <TestimonialCarousel heading={testimonials.heading} testimonials={testimonials.items} />
+  </main>
+
+  <SiteFooter
+    logo={footer.logo}
+    columns={footer.columns}
+    contact={footer.contact}
+    registration={footer.registration}
+    copyright={footer.copyright}
+  />
+</Base>

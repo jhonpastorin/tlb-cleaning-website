@@ -1,0 +1,328 @@
+---
+// Two variants, one component — the third "Social Proof" wireframe letter
+// (A/B became TestimonialCarousel.astro's solo-card/uniform modes). Kept as
+// its own file rather than a third TestimonialCarousel mode: the primary
+// entity here is a brand logo, not a person, and ServiceBlocks.astro's
+// `list` variant was ruled out too — its icon segment renders a fixed
+// ServiceIcon glyph, not an arbitrary logo image.
+//  - list (default): stacked rows, each a client's logo + a short quote,
+//    company, and relationship tag ("5x Client of MNO").
+//  - carousel: heading + lead over a horizontally scrollable logo strip
+//    (prev/next arrows scroll by one viewport-width, native scroll-snap —
+//    no per-item index math needed since there's no "active" logo concept),
+//    plus one static featured quote below it.
+//
+// Follows Hero.astro's Placeholder-wrapping rule: every <Placeholder> that
+// needs this file's own sizing is wrapped in a plain <div> authored here.
+import Placeholder from '../ui/Placeholder.astro';
+import StarRating from '../ui/StarRating.astro';
+import type { ImageBlock } from '../../data/disability-support';
+
+type Variant = 'list' | 'carousel';
+
+interface LogoBarItem {
+  logo: ImageBlock;
+  /** list only */
+  quote?: string;
+  /** list only */
+  company?: string;
+  /** list only: relationship tag, e.g. "5x Client of MNO" */
+  tag?: string;
+}
+
+interface FeaturedQuote {
+  rating: number;
+  body: string;
+  /** e.g. "John Doe, CEO of Star Logo" */
+  attribution: string;
+}
+
+interface Props {
+  variant?: Variant;
+  heading?: string;
+  lead?: string;
+  logos: LogoBarItem[];
+  /** carousel only: one static quote below the logo strip — not tied to whichever logo is scrolled into view. */
+  featuredQuote?: FeaturedQuote;
+}
+
+const { variant = 'list', heading, lead, logos, featuredQuote } = Astro.props;
+---
+
+{variant === 'list' && (
+  <section class="logo-bar logo-bar--list" aria-labelledby={heading ? 'logo-bar-heading' : undefined}>
+    <div class="container">
+      {heading && (
+        <div class="logo-bar__intro">
+          <h2 id="logo-bar-heading">{heading}</h2>
+          {lead && <p class="lead">{lead}</p>}
+        </div>
+      )}
+
+      <ul class="logo-bar__list">
+        {logos.map((item) => (
+          <li class="logo-bar__row">
+            <div class="logo-bar__row-logo">
+              <Placeholder ratio={item.logo.ratio} label={item.logo.label} src={item.logo.src} />
+            </div>
+            <div class="logo-bar__row-body">
+              <span class="logo-bar__row-quote-mark" aria-hidden="true">&ldquo;</span>
+              {item.quote && <p class="logo-bar__row-quote">{item.quote}</p>}
+              {item.company && <p class="logo-bar__row-company">{item.company}</p>}
+              {item.tag && <p class="logo-bar__row-tag">{item.tag}</p>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+{variant === 'carousel' && (
+  <section class="logo-bar logo-bar--carousel" aria-labelledby={heading ? 'logo-bar-heading' : undefined}>
+    <div class="container">
+      {heading && (
+        <div class="logo-bar__intro">
+          <h2 id="logo-bar-heading">{heading}</h2>
+          {lead && <p class="lead">{lead}</p>}
+        </div>
+      )}
+
+      <div class="logo-bar__carousel" data-logo-carousel>
+        <button type="button" class="logo-bar__arrow logo-bar__arrow--prev" data-prev aria-label="Scroll logos left">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+
+        <ul class="logo-bar__track" data-track>
+          {logos.map((item) => (
+            <li class="logo-bar__logo">
+              <Placeholder ratio={item.logo.ratio} label={item.logo.label} src={item.logo.src} />
+            </li>
+          ))}
+        </ul>
+
+        <button type="button" class="logo-bar__arrow logo-bar__arrow--next" data-next aria-label="Scroll logos right">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+
+      {featuredQuote && (
+        <div class="logo-bar__quote">
+          <span class="logo-bar__quote-stars">
+            <StarRating rating={featuredQuote.rating} />
+          </span>
+          <p class="logo-bar__quote-body">{featuredQuote.body}</p>
+          <p class="logo-bar__quote-attribution">{featuredQuote.attribution}</p>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  /* ---- shared ---- */
+
+  .logo-bar {
+    padding-block: var(--space-2xl);
+  }
+
+  .logo-bar__intro {
+    text-align: center;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    margin-bottom: var(--space-xl);
+  }
+
+  .logo-bar__intro h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* ---- list ---- */
+
+  .logo-bar__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .logo-bar__row {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .logo-bar__row-logo {
+    flex: 0 0 200px;
+    background: var(--color-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+  }
+
+  .logo-bar__row-body {
+    flex: 1;
+    min-width: 0;
+    background: var(--color-surface-muted);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-3xs);
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .logo-bar__row-quote-mark {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--color-border-muted);
+  }
+
+  .logo-bar__row-quote {
+    font-size: var(--text-small);
+    color: var(--color-body);
+  }
+
+  .logo-bar__row-company {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-small);
+    color: var(--color-on-surface);
+  }
+
+  .logo-bar__row-tag {
+    font-size: var(--text-small);
+    color: var(--color-body);
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .logo-bar__row-logo {
+      flex-basis: 120px;
+    }
+
+    .logo-bar__row-body {
+      padding: var(--space-sm) var(--space-md);
+    }
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .logo-bar__row {
+      flex-direction: column;
+    }
+
+    .logo-bar__row-logo {
+      flex-basis: auto;
+      padding: var(--space-sm);
+    }
+  }
+
+  /* ---- carousel ---------------------------------------------------------
+     Native overflow-x scroll + scroll-snap, not indexed track-sliding —
+     there's no "active" logo here (unlike TestimonialCarousel), just a
+     strip you can scroll, so the browser's own scrolling does the work. */
+
+  .logo-bar__carousel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .logo-bar__arrow {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-inverse);
+    color: var(--color-on-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--duration-fast) var(--ease-standard);
+  }
+
+  .logo-bar__arrow[disabled] {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .logo-bar__track {
+    list-style: none;
+    flex: 1;
+    display: flex;
+    gap: var(--space-xl);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    min-width: 0;
+  }
+
+  .logo-bar__logo {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: 140px;
+    color: var(--color-on-surface);
+  }
+
+  .logo-bar__quote {
+    max-width: var(--container-narrow);
+    margin: var(--space-xl) auto 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .logo-bar__quote-stars {
+    color: var(--color-brand);
+  }
+
+  .logo-bar__quote-body {
+    color: var(--color-body);
+  }
+
+  .logo-bar__quote-attribution {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    color: var(--color-on-surface);
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .logo-bar__logo {
+      width: 100px;
+    }
+  }
+</style>
+
+<script>
+  // carousel: prev/next arrows scroll the logo strip by ~one viewport width;
+  // arrows disable themselves at either end. Scoped per-instance.
+  document.querySelectorAll<HTMLElement>('[data-logo-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    const prevBtn = root.querySelector<HTMLButtonElement>('[data-prev]');
+    const nextBtn = root.querySelector<HTMLButtonElement>('[data-next]');
+    if (!track) return;
+
+    function updateArrows() {
+      if (!track) return;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (prevBtn) prevBtn.disabled = track.scrollLeft <= 1;
+      if (nextBtn) nextBtn.disabled = track.scrollLeft >= maxScroll - 1;
+    }
+
+    prevBtn?.addEventListener('click', () => track.scrollBy({ left: -track.clientWidth * 0.8, behavior: 'smooth' }));
+    nextBtn?.addEventListener('click', () => track.scrollBy({ left: track.clientWidth * 0.8, behavior: 'smooth' }));
+
+    track.addEventListener('scroll', updateArrows);
+    window.addEventListener('resize', updateArrows);
+    updateArrows();
+  });
+</script>

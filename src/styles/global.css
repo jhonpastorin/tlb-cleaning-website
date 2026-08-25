@@ -1,0 +1,98 @@
+/* Global rules built entirely from tokens.css. No raw brand values here —
+   see the header comment in tokens.css for the layering rule. */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  font-size: var(--text-base);
+  color: var(--color-body);
+  background: var(--color-surface);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--color-on-surface);
+}
+
+h1 { font-size: var(--title-1); }
+h2 { font-size: var(--title-2); }
+h3 { font-size: var(--title-3); }
+h4 { font-size: var(--title-4); }
+h5 { font-size: var(--title-5); }
+h6 { font-size: var(--title-6); }
+
+p {
+  line-height: var(--leading-normal);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.lead {
+  font-size: var(--text-big);
+  line-height: var(--leading-normal);
+}
+
+.small {
+  font-size: var(--text-small);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-sm);
+  top: -100px;
+  background: var(--color-inverse);
+  color: var(--color-on-inverse);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  z-index: 1000;
+  transition: top var(--duration-fast) var(--ease-standard);
+}
+
+.skip-link:focus {
+  top: var(--space-sm);
+}
+
+/* Consistent, visible keyboard focus ring on every interactive element.
+   input/select/textarea added for CallToAction.astro's `form` variant — the
+   first text input in this codebase; same ring everything else already gets. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+svg[aria-hidden='true'] {
+  pointer-events: none;
+}

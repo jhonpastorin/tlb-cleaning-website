@@ -1,0 +1,118 @@
+/* Maple brand tokens.
+   Layer 1 = raw brand values, taken verbatim from maple-brand-config.json.
+   Layer 2 = semantic roles. Components reference Layer 2 ONLY.
+   Re-skinning for another brand = replacing this file. Nothing else. */
+
+:root {
+  /* ---- Layer 1: brand primitives ---- */
+  --maple-primary:      #FDC200;   /* Maple yellow */
+  --maple-secondary:    #8CC62F;   /* green */
+  --maple-accent:       #61CE70;
+  --maple-charcoal:     #2E2E2E;
+  --maple-blue-dark:    #1F2230;
+  --maple-grey:         #7A7A7A;   /* config "text" */
+  --maple-white:        #FFFFFF;
+  --maple-black:        #000000;
+  --maple-violet:       #926DB0;
+  --maple-orange:       #F69305;
+  --maple-cyan:         #387677;
+  --maple-cyan-dark:    #085453;
+
+  /* ---- Layer 2: semantic roles ---- */
+  --color-brand:            var(--maple-primary);
+  --color-on-brand:         var(--maple-charcoal);
+  --color-surface:          var(--maple-white);
+  --color-on-surface:       var(--maple-charcoal);
+  --color-inverse:          var(--maple-charcoal);   /* dark sections */
+  --color-on-inverse:       var(--maple-white);
+
+  /* Body copy colour. The config's #7A7A7A measures 4.29:1 on white, which
+     PASSES WCAG AA for large text (>=18.66px bold / >=24px normal) but FAILS
+     for normal-size body text (4.5:1 required). We ship the config value as
+     specified — do not silently darken it — and flag an approved-pending
+     alternative below. See SECTIONS.md "Accessibility note" for detail.
+     AA-compliant alternative (5.10:1 on white), pending brand-owner sign-off:
+     --color-body: #6E6E6E;
+  */
+  --color-body:             var(--maple-grey);
+  /* Light neutral panel fill — originally scoped to "placeholder fill only";
+     broadened once a second legitimate use (ServiceBlocks' list-row body,
+     Hero's minimal-variant background) showed up, rather than adding a
+     near-duplicate grey token. Still not a brand colour choice — swapping
+     brands only needs Layer 1 above. */
+  --color-surface-muted:    #F4F4F4;
+  --color-border-muted:     #D8D8D8;                 /* placeholder dashed border */
+
+  /* Interaction — from theme_button_defaults */
+  --color-btn-hover-bg:     var(--maple-charcoal);
+  --color-btn-hover-text:   var(--maple-white);
+
+  /* Focus ring — accessible on every background this page uses */
+  --color-focus-ring:       var(--maple-blue-dark);
+
+  /* ---- Type ---- */
+  --font-display: 'Montserrat', system-ui, sans-serif;
+  --font-body:    'Nunito Sans', system-ui, sans-serif;
+  --font-button:  'Montserrat', system-ui, sans-serif;
+  --font-mono:    'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  --weight-body:      400;
+  --weight-heading:   600;
+  --weight-bold:      700;
+  --weight-button:    600;
+
+  /* Scale — verbatim from typography_globals */
+  --title-1: clamp(3rem,   1.7309rem + 1.813vw,  4rem);
+  --title-2: clamp(2.6rem, 1.7309rem + 1.813vw,  3rem);
+  --title-3: clamp(2.2rem, 1.5482rem + 1.3598vw, 2.5rem);
+  --title-4: clamp(1.8rem, 1.3654rem + 0.9065vw, 2rem);
+  --title-5: clamp(1.6rem, 1.2741rem + 0.6799vw, 1.75rem);
+  --title-6: clamp(1.4rem, 1.1827rem + 0.4533vw, 1.5rem);
+  --title-7: clamp(1.2rem, 1.0914rem + 0.2266vw, 1.25rem);
+  --text-base:  1rem;
+  --text-big:   1.125rem;
+  --text-small: 0.875rem;
+  --leading-tight:  1.15;
+  --leading-snug:   1.3;
+  --leading-normal: 1.6;
+
+  /* ---- Space — 4px base ---- */
+  --space-3xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.5rem;
+  --space-xl:  4rem;
+  --space-2xl: 6rem;
+
+  /* ---- Shape & layout ---- */
+  --radius-sm: 6px;
+  --radius-md: 20px;
+  --radius-lg: 60px;
+  --radius-pill: 999px;
+  --container: 1200px;
+  --container-narrow: 800px;
+  --bp-sm: 480px;
+  --bp-md: 768px;    /* config viewport_md */
+  --bp-lg: 1025px;   /* config viewport_lg */
+  --bp-nav: 900px;   /* SiteHeader hamburger collapse */
+
+  /* NOTE ON MEDIA QUERIES: CSS custom properties do not resolve inside
+     @media feature queries, so every @media (max-width: ...) in this
+     codebase uses the literal pixel value with a comment naming the token
+     it mirrors, e.g. "mirrors --bp-md". Keep those literals in sync with
+     the tokens above if a breakpoint ever changes. */
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

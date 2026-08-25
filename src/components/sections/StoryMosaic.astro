@@ -1,0 +1,118 @@
+---
+// Alternating two-column prose/image mosaic. Fully generic: blocks are
+// rendered in DOM order into a 2-column grid, so whichever column an image
+// or text block lands in is just a function of its position in the array —
+// no special-casing. This is what makes it reusable both as the dark "About
+// Maple" story (section 3) and, via theme="light" + an optional cta, as the
+// "Who Can We Help?" AudienceCollage (section 7). Don't fork a new
+// component for a variant of this shape — add a prop instead.
+import Placeholder from '../ui/Placeholder.astro';
+import Button from '../ui/Button.astro';
+import type { StoryBlock, ButtonData } from '../../data/disability-support';
+
+interface Props {
+  theme?: 'dark' | 'light';
+  heading?: string;
+  blocks: StoryBlock[];
+  cta?: ButtonData;
+}
+
+const { theme = 'dark', heading, blocks, cta } = Astro.props;
+---
+
+<section class:list={['story', `story--${theme}`]} aria-labelledby={heading ? 'story-heading' : undefined}>
+  <div class="container story__inner">
+    {heading && <h2 id="story-heading" class="story__heading">{heading}</h2>}
+
+    <div class="story__grid">
+      {blocks.map((block) =>
+        block.type === 'image' ? (
+          <Placeholder ratio={block.ratio} label={block.label} class="story__image" />
+        ) : (
+          <div class="story__text">
+            {block.body.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        )
+      )}
+    </div>
+
+    {cta && (
+      <div class="story__cta">
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .story--dark {
+    background: var(--color-inverse);
+    color: var(--color-on-inverse);
+  }
+
+  .story--light {
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+  }
+
+  .story__inner {
+    padding-block: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .story--dark .story__heading,
+  .story--dark :global(h2) {
+    color: var(--color-on-inverse);
+  }
+
+  .story__heading {
+    text-align: center;
+  }
+
+  .story__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .story__image {
+    border-radius: var(--radius-md);
+  }
+
+  .story__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    font-size: var(--text-big);
+    line-height: var(--leading-normal);
+  }
+
+  .story--dark .story__text {
+    color: var(--color-on-inverse);
+  }
+
+  .story--light .story__text {
+    color: var(--color-body);
+  }
+
+  .story__cta {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .story__inner {
+      padding-block: var(--space-xl);
+    }
+
+    .story__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

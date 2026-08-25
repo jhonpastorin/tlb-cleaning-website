@@ -1,0 +1,103 @@
+---
+// Brand-agnostic image slot. Renders the dashed placeholder box until a real
+// asset exists; pass `src` (a statically-imported image from src/assets) and
+// it swaps to an optimized <Image> that fills the exact same box — no layout
+// changes needed anywhere that calls this component.
+//
+// `caption` mirrors VideoPlaceholder.astro's own caption bar exactly (same
+// gradient-scrim treatment, same class naming) — extended here once a photo
+// (not just a video) needed the same "short message over the image" band,
+// rather than duplicating that CSS a third time.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  /** e.g. "4/3", "1/1", "16/9", "4/1" */
+  ratio?: string;
+  /** Descriptive label matching what the real asset will show, e.g. "Support worker with participant". Doubles as alt text once `src` is set. */
+  label: string;
+  /** A statically-imported image (`import img from '../../assets/...png'`). Omit to keep the placeholder box. */
+  src?: ImageMetadata;
+  /** Set for above-the-fold images (e.g. the hero mosaic) so they aren't lazy-loaded behind the fold they're actually in. */
+  eager?: boolean;
+  /** Optional caption bar over the bottom edge, on a dark gradient scrim so it reads over any photo. */
+  caption?: string;
+  class?: string;
+}
+
+const { ratio = '4/3', label, src, eager = false, caption, class: className } = Astro.props;
+---
+
+{src ? (
+  <div class:list={['placeholder placeholder--image', className]} style={`aspect-ratio: ${ratio};`}>
+    <Image
+      src={src}
+      alt={label}
+      class="placeholder__img"
+      widths={[400, 800, 1200]}
+      sizes="(max-width: 768px) 100vw, 50vw"
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+    />
+    {caption && <span class="placeholder__caption">{caption}</span>}
+  </div>
+) : (
+  <div
+    class:list={['placeholder', className]}
+    style={`aspect-ratio: ${ratio};`}
+    role="img"
+    aria-label={label}
+  >
+    <span class="placeholder__label">{label} · {ratio}</span>
+    {caption && <span class="placeholder__caption">{caption}</span>}
+  </div>
+)}
+
+<style>
+  .placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface-muted);
+    border: 1px dashed var(--color-border-muted);
+    border-radius: inherit;
+    padding: var(--space-xs);
+    overflow: hidden;
+  }
+
+  .placeholder__label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--color-body);
+    text-align: center;
+  }
+
+  .placeholder--image {
+    border: none;
+    padding: 0;
+  }
+
+  .placeholder__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+
+  .placeholder__caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: var(--space-xs) var(--space-md);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+    color: var(--color-on-inverse);
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-small);
+  }
+</style>

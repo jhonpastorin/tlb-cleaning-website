@@ -1,0 +1,117 @@
+---
+// Pill button primitive covering every button treatment in the reference:
+//  - brand          yellow fill / charcoal text   -> header CTA, PathwayCards CTAs
+//  - inverse        charcoal fill / white text    -> Hero "Why choose Maple?"
+//  - inverse-accent charcoal fill / yellow text   -> StatBand "Submit a Referral"
+//  - surface        white fill / charcoal text    -> StatBand "Not Quite Ready?"
+// All four hover to the same charcoal/white pair from theme_button_defaults,
+// except variants that already rest there, which invert to the surface pair.
+type Variant = 'brand' | 'inverse' | 'inverse-accent' | 'surface';
+
+interface Props {
+  label: string;
+  href?: string;
+  variant?: Variant;
+  size?: 'md' | 'sm';
+  fullWidth?: boolean;
+  /** Only used when `href` is absent (renders a <button>). Default 'button' — pass 'submit' inside a <form> (CallToAction.astro's `form` variant needs this; a plain type="button" never submits). */
+  type?: 'button' | 'submit';
+  class?: string;
+}
+
+const {
+  label,
+  href,
+  variant = 'brand',
+  size = 'md',
+  fullWidth = false,
+  type = 'button',
+  class: className,
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class:list={['btn', `btn--${variant}`, `btn--${size}`, { 'btn--full': fullWidth }, className]}
+  href={href}
+  type={href ? undefined : type}
+>
+  {label}
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-button);
+    font-weight: var(--weight-button);
+    border-radius: var(--radius-pill);
+    border: 2px solid transparent;
+    white-space: normal;
+    transition: background-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .btn--md {
+    font-size: var(--text-big);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .btn--sm {
+    font-size: var(--text-small);
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  .btn--full {
+    display: flex;
+    width: 100%;
+  }
+
+  .btn--brand {
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+    border-color: var(--color-brand);
+  }
+  .btn--brand:hover {
+    background: var(--color-btn-hover-bg);
+    color: var(--color-btn-hover-text);
+    border-color: var(--color-btn-hover-bg);
+  }
+
+  .btn--inverse {
+    background: var(--color-inverse);
+    color: var(--color-on-inverse);
+    border-color: var(--color-inverse);
+  }
+  .btn--inverse:hover {
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+    border-color: var(--color-surface);
+  }
+
+  .btn--inverse-accent {
+    background: var(--color-inverse);
+    color: var(--color-brand);
+    border-color: var(--color-inverse);
+  }
+  .btn--inverse-accent:hover {
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+    border-color: var(--color-surface);
+  }
+
+  .btn--surface {
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+    border-color: var(--color-surface);
+  }
+  .btn--surface:hover {
+    background: var(--color-btn-hover-bg);
+    color: var(--color-btn-hover-text);
+    border-color: var(--color-btn-hover-bg);
+  }
+</style>

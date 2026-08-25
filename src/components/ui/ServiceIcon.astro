@@ -1,0 +1,73 @@
+---
+// Small inline-SVG icon set shared by ServiceBlocks' icon-grid and list
+// variants (actual reuse across two variants, not speculative — that's why
+// this is a ui/ primitive rather than duplicated inline in each). Add a case
+// here for a brand that needs a sixth icon — same pattern StatBand.astro
+// already uses for its own icon set.
+export type ServiceIconName = 'idea' | 'spark' | 'bloom' | 'puzzle' | 'target' | 'chart-pie' | 'chart-bars';
+
+interface Props {
+  name: ServiceIconName;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 24 24"
+  width="28"
+  height="28"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'idea' && (
+    <path
+      d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3 11.2c.6.4 1 1.1 1 1.8v.5h4v-.5c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3Z"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  )}
+  {name === 'spark' && (
+    <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2Z" fill="currentColor" stroke="none" />
+  )}
+  {name === 'bloom' && (
+    <g fill="currentColor" stroke="none">
+      <ellipse cx="12" cy="6.5" rx="3" ry="4.5" />
+      <ellipse cx="12" cy="17.5" rx="3" ry="4.5" />
+      <ellipse cx="6.5" cy="12" rx="4.5" ry="3" />
+      <ellipse cx="17.5" cy="12" rx="4.5" ry="3" />
+    </g>
+  )}
+  {name === 'puzzle' && (
+    <path
+      d="M4 4.5A1.5 1.5 0 0 1 5.5 3H9a1.5 1.5 0 0 1 3 0h3.5A1.5 1.5 0 0 1 17 4.5V8a1.5 1.5 0 0 1 0 3v3.5a1.5 1.5 0 0 1-1.5 1.5H12a1.5 1.5 0 0 1-3 0H5.5A1.5 1.5 0 0 1 4 14.5V11a1.5 1.5 0 0 1 0-3V4.5Z"
+      stroke-linejoin="round"
+    />
+  )}
+  {name === 'target' && (
+    <>
+      <circle cx="10.5" cy="13.5" r="7.5" />
+      <circle cx="10.5" cy="13.5" r="4.5" />
+      <circle cx="10.5" cy="13.5" r="1.5" fill="currentColor" stroke="none" />
+      <path d="M14 10l7-7m-4.5 0H21v4.5" stroke-linecap="round" stroke-linejoin="round" />
+    </>
+  )}
+  {name === 'chart-pie' && (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 3v9l7.8-4.5A9 9 0 0 0 12 3Z" fill="currentColor" stroke="none" />
+    </>
+  )}
+  {name === 'chart-bars' && (
+    <g fill="currentColor" stroke="none">
+      <rect x="3" y="4.5" width="14" height="3.5" rx="1.75" />
+      <rect x="3" y="10.25" width="9" height="3.5" rx="1.75" />
+      <rect x="3" y="16" width="18" height="3.5" rx="1.75" />
+    </g>
+  )}
+</svg>

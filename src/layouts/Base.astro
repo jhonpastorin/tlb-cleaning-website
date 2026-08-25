@@ -1,0 +1,92 @@
+---
+import '../styles/reset.css';
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+// Preload the display face used for H1 (Montserrat 700) so the largest,
+// earliest text on the page doesn't wait on font discovery via the CSS.
+import montserratBoldWoff2 from '@fontsource/montserrat/files/montserrat-latin-700-normal.woff2?url';
+
+export interface LocalBusinessInfo {
+  name: string;
+  url: string;
+  logo: string;
+  telephone: string;
+  email: string;
+  address: {
+    streetAddress: string;
+    addressLocality: string;
+    addressRegion: string;
+    postalCode: string;
+    addressCountry: string;
+  };
+  sameAs: string[];
+  areaServed: string;
+  description: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  ogImage?: string;
+  business: LocalBusinessInfo;
+}
+
+const { title, description, canonical, ogImage, business } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: business.name,
+  url: business.url,
+  logo: business.logo,
+  image: ogImage ?? business.logo,
+  telephone: business.telephone,
+  email: business.email,
+  description: business.description,
+  areaServed: business.areaServed,
+  address: {
+    '@type': 'PostalAddress',
+    ...business.address,
+  },
+  sameAs: business.sameAs,
+};
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:locale" content="en_AU" />
+    <meta property="og:site_name" content={business.name} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <meta name="theme-color" content="#FDC200" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={montserratBoldWoff2} as="font" type="font/woff2" crossorigin />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <slot />
+  </body>
+</html>

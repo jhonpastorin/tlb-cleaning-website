@@ -1,0 +1,281 @@
+---
+// One card shape, no `variant` prop — same "extend before fork" call as
+// ContentGrid.astro. All three wireframes this was built from ("Content
+// Card Carousel," "Image Carousel," "Highlights Carousel") are the exact
+// same center-emphasis carousel mechanism as TestimonialCarousel.astro
+// (arrows, dots, center card scaled up, neighbors dimmed) — they only
+// differ in what's inside each card:
+//   - image only    -> "Image Carousel"
+//   - heading+body only -> "Content Card Carousel"
+//   - both          -> "Highlights Carousel"
+// A card just renders whichever fields it's given; no per-wireframe code
+// path. Kept as its own file rather than folded into TestimonialCarousel —
+// that component's card markup (quote mark, avatar, name, role, star
+// rating) is testimonial-specific, not a generic content shape.
+//
+// The centering/scaling JS below is the same pattern TestimonialCarousel.astro
+// already uses (measured via offsetLeft, scoped per-instance) — duplicated,
+// not shared, matching how this codebase already has two independent
+// track-sliding scripts (ServiceBlocks' `slider`, PhotoGallery's `slider`)
+// rather than one shared carousel module. Follows Hero.astro's
+// Placeholder-wrapping rule throughout.
+import Placeholder from '../ui/Placeholder.astro';
+import type { ImageBlock } from '../../data/disability-support';
+
+interface CarouselCard {
+  image?: ImageBlock;
+  heading?: string;
+  body?: string[];
+}
+
+interface Props {
+  heading?: string;
+  lead?: string;
+  cards: CarouselCard[];
+}
+
+const { heading, lead, cards } = Astro.props;
+---
+
+<section class="card-carousel" aria-labelledby={heading ? 'card-carousel-heading' : undefined}>
+  <div class="container card-carousel__inner">
+    {heading && (
+      <div class="card-carousel__intro">
+        <h2 id="card-carousel-heading">{heading}</h2>
+        {lead && <p class="lead">{lead}</p>}
+      </div>
+    )}
+
+    <div class="carousel" data-carousel>
+      <button type="button" class="carousel__arrow carousel__arrow--prev" data-prev aria-label="Previous card">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div class="carousel__viewport">
+        <ul class="carousel__track" data-track>
+          {cards.map((card, i) => (
+            <li class="carousel-card" data-card data-index={i}>
+              {card.image && (
+                <div class="carousel-card__media">
+                  <Placeholder ratio={card.image.ratio} label={card.image.label} src={card.image.src} eager={i === 0} />
+                </div>
+              )}
+              {(card.heading || card.body) && (
+                <div class="carousel-card__body">
+                  {card.heading && <h3>{card.heading}</h3>}
+                  {card.body?.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <button type="button" class="carousel__arrow carousel__arrow--next" data-next aria-label="Next card">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="carousel__dots" role="group" aria-label="Choose card" data-dots>
+      {cards.map((_, i) => (
+        <button
+          type="button"
+          class="carousel__dot"
+          data-dot
+          data-index={i}
+          aria-label={`Show card ${i + 1}`}
+          aria-current={i === 0 ? 'true' : 'false'}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .card-carousel {
+    background: var(--color-surface);
+    padding-block: var(--space-2xl);
+  }
+
+  .card-carousel__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .card-carousel__intro {
+    text-align: center;
+    max-width: var(--container-narrow);
+  }
+
+  .card-carousel__intro h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .carousel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+  }
+
+  .carousel__arrow {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-inverse);
+    color: var(--color-on-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel__viewport {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .carousel__track {
+    list-style: none;
+    display: flex;
+    gap: var(--space-lg);
+    will-change: transform;
+    transition: transform var(--duration-base) var(--ease-standard);
+  }
+
+  .carousel-card {
+    flex: 0 0 auto;
+    width: min(360px, 80vw);
+    background: var(--color-surface-muted);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0.7;
+    transform: scale(0.9);
+    transition: transform var(--duration-base) var(--ease-standard), opacity var(--duration-base) var(--ease-standard);
+  }
+
+  .carousel-card.is-adjacent {
+    opacity: 0.85;
+    transform: scale(0.94);
+  }
+
+  .carousel-card.is-active {
+    opacity: 1;
+    transform: scale(1.06);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+  }
+
+  .carousel-card__media {
+    border-radius: 0;
+  }
+
+  .carousel-card__body {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .carousel-card__body h3 {
+    font-size: var(--title-6);
+  }
+
+  .carousel-card__body p {
+    color: var(--color-body);
+    font-size: var(--text-small);
+  }
+
+  .carousel__dots {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .carousel__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border-muted);
+  }
+
+  .carousel__dot[aria-current='true'] {
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .carousel-card {
+      width: min(300px, 78vw);
+    }
+  }
+</style>
+
+<script>
+  // Scoped per-instance, same pattern as TestimonialCarousel.astro.
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>('[data-track]');
+    const viewport = carousel.querySelector<HTMLElement>('.carousel__viewport');
+    const cards = Array.from(carousel.querySelectorAll<HTMLElement>('[data-card]'));
+    const dots = Array.from(carousel.parentElement?.querySelectorAll<HTMLButtonElement>('[data-dot]') ?? []);
+    const prevBtn = carousel.querySelector<HTMLButtonElement>('[data-prev]');
+    const nextBtn = carousel.querySelector<HTMLButtonElement>('[data-next]');
+
+    let index = 0;
+
+    function render() {
+      if (!track || !viewport || cards.length === 0) return;
+
+      const active = cards[index];
+      const target = viewport.clientWidth / 2 - (active.offsetLeft + active.offsetWidth / 2);
+      track.style.transform = `translateX(${target}px)`;
+
+      cards.forEach((card, i) => {
+        const distance = Math.min(Math.abs(i - index), cards.length - Math.abs(i - index));
+        card.classList.toggle('is-active', distance === 0);
+        card.classList.toggle('is-adjacent', distance === 1);
+      });
+
+      dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === index)));
+    }
+
+    function go(delta: number) {
+      if (cards.length === 0) return;
+      index = (index + delta + cards.length) % cards.length;
+      render();
+    }
+
+    prevBtn?.addEventListener('click', () => go(-1));
+    nextBtn?.addEventListener('click', () => go(1));
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        index = Number(dot.dataset.index ?? 0);
+        render();
+      });
+    });
+
+    carousel.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        go(-1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        go(1);
+      }
+    });
+
+    window.addEventListener('resize', render);
+    render();
+  });
+</script>

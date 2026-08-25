@@ -1,0 +1,281 @@
+---
+// One flexible N-column grid, no `variant` prop — like StoryMosaic.astro,
+// the layout is driven entirely by the `blocks` array's order, each block's
+// `span` (grid-column width), and an optional `tone` (surface/muted/inverse
+// fill). Four cell types (text, image, icon, feature) cover every wireframe
+// this was built from without any special-casing.
+//
+// Deliberately duplicates StoryMosaic.astro's 2-column text/image job at
+// `columns={2}` — that overlap was a conscious call, not an oversight; see
+// SECTIONS.md for why it wasn't just reused instead.
+//
+// Follows Hero.astro's Placeholder-wrapping rule: every <Placeholder> that
+// needs this file's own sizing is wrapped in a plain <div> authored here.
+import Placeholder from '../ui/Placeholder.astro';
+import ServiceIcon from '../ui/ServiceIcon.astro';
+import type { ServiceIconName } from '../ui/ServiceIcon.astro';
+import type { ImageMetadata } from 'astro';
+
+type Tone = 'surface' | 'muted' | 'inverse';
+
+interface TextBlock {
+  type: 'text';
+  heading?: string;
+  body: string[];
+  span?: number;
+  tone?: Tone;
+}
+
+interface ImageCellBlock {
+  type: 'image';
+  ratio: string;
+  label: string;
+  src?: ImageMetadata;
+  span?: number;
+}
+
+interface IconBlock {
+  type: 'icon';
+  icon: ServiceIconName;
+  span?: number;
+  tone?: Tone;
+}
+
+interface FeatureBlock {
+  type: 'feature';
+  icon: ServiceIconName;
+  heading: string;
+  body: string[];
+  span?: number;
+  tone?: Tone;
+}
+
+type ContentGridBlock = TextBlock | ImageCellBlock | IconBlock | FeatureBlock;
+
+interface Props {
+  heading?: string;
+  lead?: string;
+  /** Default 3. StoryMosaic.astro is the established 2-column text/image component — use `columns={2}` here only when you specifically want it duplicated (see SECTIONS.md), not as the default choice. */
+  columns?: number;
+  blocks: ContentGridBlock[];
+}
+
+const { heading, lead, columns = 3, blocks } = Astro.props;
+
+// Discrete modifier classes, not an inline custom property: a mobile
+// breakpoint needs to override this per-instance value, and an inline style
+// (custom-property-valued or not) always beats a stylesheet rule trying to
+// reassign that same property on that same element — found live the same
+// way the [hidden]-vs-display bug was, by checking computed styles in a
+// real browser rather than trusting the code read. See SECTIONS.md.
+const cells = blocks.map((block) => {
+  const span = Math.min(block.span ?? 1, columns);
+  let tone: Tone | undefined;
+  if (block.type === 'text') tone = block.tone ?? 'surface';
+  else if (block.type === 'icon') tone = block.tone ?? 'muted';
+  else if (block.type === 'feature') tone = block.tone ?? 'surface';
+  return { block, span, tone };
+});
+---
+
+<section class="content-grid" aria-labelledby={heading ? 'content-grid-heading' : undefined}>
+  <div class="container">
+    {heading && (
+      <div class="content-grid__intro">
+        <h2 id="content-grid-heading">{heading}</h2>
+        {lead && <p class="lead">{lead}</p>}
+      </div>
+    )}
+
+    <div class:list={['content-grid__grid', `content-grid__grid--cols-${columns}`]}>
+      {cells.map(({ block, span, tone }) => (
+        <div
+          class:list={[
+            'content-grid__cell',
+            `content-grid__cell--${block.type}`,
+            tone && `content-grid__cell--${tone}`,
+            `content-grid__cell--span-${span}`,
+          ]}
+        >
+          {block.type === 'text' && (
+            <>
+              {block.heading && <h3>{block.heading}</h3>}
+              {block.body.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </>
+          )}
+
+          {block.type === 'image' && (
+            <div class="content-grid__image">
+              <Placeholder ratio={block.ratio} label={block.label} src={block.src} />
+            </div>
+          )}
+
+          {block.type === 'icon' && <ServiceIcon name={block.icon} class="content-grid__icon" />}
+
+          {block.type === 'feature' && (
+            <>
+              <ServiceIcon name={block.icon} class="content-grid__icon" />
+              <h3>{block.heading}</h3>
+              {block.body.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .content-grid {
+    padding-block: var(--space-2xl);
+  }
+
+  .content-grid__intro {
+    text-align: center;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    margin-bottom: var(--space-xl);
+  }
+
+  .content-grid__intro h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .content-grid__grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .content-grid__grid--cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content-grid__grid--cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .content-grid__grid--cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .content-grid__cell {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .content-grid__cell--span-1 {
+    grid-column: span 1;
+  }
+
+  .content-grid__cell--span-2 {
+    grid-column: span 2;
+  }
+
+  .content-grid__cell--span-3 {
+    grid-column: span 3;
+  }
+
+  .content-grid__cell--span-4 {
+    grid-column: span 4;
+  }
+
+  .content-grid__cell--surface {
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+  }
+
+  .content-grid__cell--muted {
+    background: var(--color-surface-muted);
+    color: var(--color-on-surface);
+  }
+
+  .content-grid__cell--inverse {
+    background: var(--color-inverse);
+    color: var(--color-on-inverse);
+  }
+
+  .content-grid__cell--text,
+  .content-grid__cell--feature {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-lg);
+  }
+
+  .content-grid__cell--text h3,
+  .content-grid__cell--feature h3 {
+    font-size: var(--title-6);
+  }
+
+  .content-grid__cell--inverse h3 {
+    color: var(--color-on-inverse);
+  }
+
+  .content-grid__cell--text p,
+  .content-grid__cell--feature p {
+    font-size: var(--text-small);
+    color: var(--color-body);
+  }
+
+  .content-grid__cell--inverse p {
+    color: var(--color-on-inverse);
+  }
+
+  .content-grid__cell--icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+  }
+
+  .content-grid__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .content-grid__cell--feature .content-grid__icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: var(--space-xs);
+  }
+
+  .content-grid__image {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  /* mirrors --bp-lg — 3- and 4-col grids drop to 2; already-2-col grids are
+     unaffected. Relies on ordinary cascade source order (this rule appears
+     after the --cols-N rules above, so it wins their equal-specificity tie)
+     rather than any inline value, which is what actually lets a breakpoint
+     override a per-instance layout choice — see the frontmatter comment. */
+  @media (max-width: 1025px) {
+    .content-grid__grid--cols-3,
+    .content-grid__grid--cols-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .content-grid__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .content-grid__cell {
+      grid-column: span 1;
+    }
+
+    .content-grid__cell--text,
+    .content-grid__cell--feature,
+    .content-grid__cell--icon {
+      padding: var(--space-md);
+    }
+  }
+</style>

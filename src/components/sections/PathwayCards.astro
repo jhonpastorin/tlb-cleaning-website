@@ -1,0 +1,138 @@
+---
+import Placeholder from '../ui/Placeholder.astro';
+import Button from '../ui/Button.astro';
+import type { ImageBlock, ButtonData } from '../../data/disability-support';
+
+interface Card {
+  number: number;
+  image: ImageBlock;
+  title: string;
+  description: string;
+  cta: ButtonData;
+}
+
+interface Props {
+  heading: string;
+  /** Second heading line, rendered in brand yellow — pass as a prop, never hardcode a second string. */
+  headingAccent: string;
+  cards: Card[];
+}
+
+const { heading, headingAccent, cards } = Astro.props;
+---
+
+<section class="pathway" aria-labelledby="pathway-heading">
+  <div class="container pathway__inner">
+    <h2 id="pathway-heading" class="pathway__heading">
+      {heading}
+      <br />
+      <span class="pathway__heading-accent">{headingAccent}</span>
+    </h2>
+
+    <ul class="pathway__list">
+      {cards.map((card) => (
+        <li class="pathway__card">
+          <div class="pathway__image">
+            <Placeholder ratio={card.image.ratio} label={card.image.label} />
+          </div>
+          <div class="pathway__body">
+            <div class="pathway__title-row">
+              <span class="pathway__number" aria-hidden="true">{card.number}</span>
+              <h3 class="pathway__title">{card.title}</h3>
+            </div>
+            <p class="pathway__description">{card.description}</p>
+            <Button label={card.cta.label} href={card.cta.href} variant={card.cta.variant ?? 'brand'} fullWidth />
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .pathway {
+    background: var(--color-inverse);
+  }
+
+  .pathway__inner {
+    padding-block: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .pathway__heading {
+    text-align: center;
+    color: var(--color-on-inverse);
+  }
+
+  .pathway__heading-accent {
+    color: var(--color-brand);
+  }
+
+  .pathway__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    width: 100%;
+  }
+
+  .pathway__card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .pathway__image {
+    border-radius: 0;
+  }
+
+  .pathway__body {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    flex: 1;
+  }
+
+  .pathway__title-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .pathway__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-small);
+    flex-shrink: 0;
+  }
+
+  .pathway__title {
+    font-size: var(--title-6);
+    color: var(--color-on-surface);
+  }
+
+  .pathway__description {
+    color: var(--color-body);
+    flex: 1;
+  }
+
+  /* mirrors --bp-md (spec: stack to one column below 800px) */
+  @media (max-width: 800px) {
+    .pathway__list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,1185 @@
+# Sections inventory
+
+This is the map of what exists. **Before adding a new component, check here
+first** — if something close already exists, extend it with a prop/variant
+instead of forking a new file. That's the whole point of this exercise.
+
+Every section is brand-agnostic: it reads only from `src/styles/tokens.css`
+(the semantic layer) and its own props. Re-skinning the whole page for a
+different brand means replacing `tokens.css` — nothing in `src/components/`
+should ever need to change.
+
+This repo is the library itself, not a deployed brand site — see the root
+`README.md`. Every variant documented below traces back to a wireframe at
+`design-refs/wireframes/<section>/<variant>.png`; that's where a new
+wireframe gets dropped before it turns into a `variant` prop here.
+
+---
+
+## UI primitives — `src/components/ui/`
+
+### `Placeholder.astro`
+
+Purpose: reserve space for an image that doesn't exist yet, with zero layout
+shift and a label real asset briefs can be written from.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `ratio` | `string` | `"4/3"` | Any valid CSS `aspect-ratio` value, e.g. `"16/9"`, `"1/1"`, `"4/1"`. |
+| `label` | `string` | — required | Descriptive, e.g. `"Support worker with participant"`. Rendered as visible text and as the `aria-label`. |
+| `caption` | `string` | — | Optional bottom-edge caption on a gradient scrim — mirrors `VideoPlaceholder.astro`'s own caption bar exactly (same CSS, same class naming), extended here once a photo (not just a video) needed the same "short message over the image" treatment. `ImageBand.astro` is built entirely around this. |
+| `class` | `string` | — | Extra class for layout (radius, sizing) from the parent. |
+
+```astro
+<Placeholder ratio="4/3" label="Support coordinator meeting with a group of participants" />
+<Placeholder ratio="21/9" label="Team at the annual conference" caption="Building stronger communities together." />
+```
+
+Use this when: any section needs an image slot before real photography exists.
+
+### `VideoPlaceholder.astro`
+
+Purpose: same contract as `Placeholder`, plus a play-button affordance and an
+optional caption bar, so a video embed can drop in later without touching
+layout.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `ratio` | `string` | `"16/9"` | |
+| `label` | `string` | — required | |
+| `caption` | `string` | — | Optional caption bar pinned to the bottom edge. |
+| `class` | `string` | — | |
+
+```astro
+<VideoPlaceholder ratio="16/9" label="Client testimonial video — support worker at home" caption="Top of the Leaderboard!" />
+```
+
+Use this when: a section needs a video slot (`VideoFeature` is the only
+current consumer, but it's generic).
+
+### `Button.astro`
+
+Purpose: the one pill-button implementation for the whole system. Four
+variants cover every button treatment that appears in the reference — don't
+add a fifth without checking these first.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — required | |
+| `href` | `string` | — | Renders `<a>` if present, `<button>` otherwise. |
+| `type` | `'button' \| 'submit'` | `'button'` | Only used when `href` is absent. `CallToAction.astro`'s `form` variant is the one caller that needs `'submit'` — a plain `type="button"` inside a `<form>` never submits it. |
+| `variant` | `'brand' \| 'inverse' \| 'inverse-accent' \| 'surface'` | `'brand'` | See table below. |
+| `size` | `'md' \| 'sm'` | `'md'` | |
+| `fullWidth` | `boolean` | `false` | |
+| `class` | `string` | — | |
+
+| Variant | Rest state | Hover state | Used by |
+|---|---|---|---|
+| `brand` | yellow fill / charcoal text | charcoal fill / white text | Header CTA, PathwayCards CTAs |
+| `inverse` | charcoal fill / white text | white fill / charcoal text | Hero CTA |
+| `inverse-accent` | charcoal fill / yellow text | white fill / charcoal text | StatBand "Submit a Referral" |
+| `surface` | white fill / charcoal text | charcoal fill / white text | StatBand "Not Quite Ready?" |
+
+```astro
+<Button label="Submit a Referral" href="#referral" variant="inverse-accent" />
+```
+
+Use this when: any section needs a call-to-action pill. Never hand-roll a
+button in a section's scoped `<style>`.
+
+### `ServiceIcon.astro`
+
+Purpose: small inline-SVG icon set shared by `ServiceBlocks.astro`'s
+`icon-grid` and `list` variants — extracted here because it's used by two
+variants, not on the speculation that it might be someday (same bar
+`StatBand.astro`'s own inline icon set was held to, which stayed local since
+nothing else needs it yet).
+
+| Prop | Type | Notes |
+|---|---|---|
+| `name` | `'idea' \| 'spark' \| 'bloom' \| 'puzzle' \| 'target' \| 'chart-pie' \| 'chart-bars'` | Add a new `case` here for a brand that needs another icon — same pattern as `StatBand.astro`. The last two were added for `ContentGrid.astro`'s "mixed media" wireframe, which is now this icon set's second consumer alongside `ServiceBlocks.astro`. |
+| `class` | `string` | |
+
+```astro
+<ServiceIcon name="idea" class="service-blocks__icon" />
+```
+
+Use this when: `ServiceBlocks.astro` or `ContentGrid.astro` needs an icon —
+now a genuinely shared primitive across two sections, not just one.
+
+### `StarRating.astro`
+
+Purpose: the 5-star rating row, extracted from `TestimonialCarousel.astro`
+once `LogoBar.astro`'s featured quote needed the exact same thing — real
+reuse, same bar as `ServiceIcon.astro`.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `rating` | `number` | — required | |
+| `max` | `number` | `5` | |
+
+```astro
+<span class="testimonial-card__stars">
+  <StarRating rating={item.rating} />
+</span>
+```
+
+Deliberately sets no `color` itself — it renders `currentColor` fills/strokes
+and lets the *caller's own wrapper* set color (which inherits down fine).
+Passing a `class` straight into `<StarRating>` for color wouldn't work
+anyway — see the Placeholder-scoping gotcha under `Hero.astro` below; this
+component was designed from the start to avoid that trap rather than hit it.
+
+Use this when: any section needs a star rating — currently
+`TestimonialCarousel.astro`'s cards and `LogoBar.astro`'s featured quote.
+
+---
+
+## Sections — `src/components/sections/`
+
+### `SiteHeader.astro`
+
+Purpose: two-bar site header (white utility bar + yellow service bar),
+collapsing to a hamburger panel below 900px.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `logo` | `{ label: string }` | Rendered as a `4/1` `Placeholder`. |
+| `primaryNav` | `NavItem[]` | `{ label, href, hasDropdown? }`. |
+| `serviceNav` | `NavItem[]` | Same shape; rendered twice (yellow bar at ≥900px, folded into the mobile panel below it) so nothing is lost when it collapses. |
+| `cta` | `ButtonData` | Rendered with `Button` variant `"brand"`, size `"sm"`. |
+
+```astro
+<SiteHeader logo={header.logo} primaryNav={header.primaryNav} serviceNav={header.serviceNav} cta={header.cta} />
+```
+
+Variant: none yet — the two-bar shape is the only one built. If a brand ever
+needs a single-bar header, add a `bars: 1 | 2` prop rather than a new
+component.
+
+Use this when: this is *the* header for any page in this system.
+
+### `Hero.astro` — variants `split-mosaic` (default) | `full-width-photo` | `split-single-image` | `split-collage` | `minimal`
+
+Purpose: one hero component, five layouts, selected with a `variant` prop.
+Extend this with a new `variant` value for the next hero look a wireframe
+calls for — don't fork a new component.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `variant` | `'split-mosaic' \| 'full-width-photo' \| 'split-single-image' \| 'split-collage' \| 'minimal'` | Default `'split-mosaic'`. |
+| `headingLines` | `string[]` | Each entry is one `<br>`-separated line inside the single page H1. All variants. |
+| `lead` | `string` | Rendered at `--text-big`. All variants. |
+| `cta` | `ButtonData` | Defaults to variant `"inverse"` if unset. All variants. |
+| `logo` | `ImageBlock` | Optional small badge/logo above the heading. All variants; omit to render nothing. |
+| `badges` | `ImageBlock[]` | `split-mosaic` only: trust badges inside the white card under the copy (Google Reviews, Registered NDIS Provider in this build). |
+| `images` | `MosaicImage[]` | `split-mosaic` only: `{ ratio, label, span?: 'wide', offset?: boolean }`. One `span: 'wide'` image spans the top row; the rest flow into a row beneath; `offset: true` nudges an image down for the cascading look. Works with any count ≥1. |
+| `image` | `ImageBlock` | `full-width-photo` / `split-single-image` only: the one hero image. Required for those two variants — nothing renders without it. |
+| `collageImages` | `ImageBlock[]` | `split-collage` only: flows alternately into two stacked columns (index 0,2,4… left, 1,3,5… right). No `span`/`offset` — each image's own `ratio` does the sizing. Works with any count ≥1; required — nothing renders without at least one. |
+| `align` | `'left' \| 'center'` | `minimal` only. Default `'left'`. |
+| `stats` | `{ value, caption }[]` | `minimal` only: an optional compact row below the CTA, divided with hairlines. No icon — for the icon-bearing full-width version use `StatBand.astro` instead. Omit for the plain text-only look. Works with any count ≥1. |
+
+```astro
+<!-- split-mosaic (default) -->
+<Hero headingLines={hero.headingLines} lead={hero.lead} cta={hero.cta} badges={hero.badges} images={hero.images} />
+
+<!-- full-width-photo: full-bleed photo, a surface-coloured card floats over it -->
+<Hero
+  variant="full-width-photo"
+  headingLines={['Lorem ipsum dolor']}
+  lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+  cta={{ label: 'CTA Button', href: '#' }}
+  logo={{ ratio: '2/1', label: 'Logo' }}
+  image={{ ratio: '16/9', label: 'Descriptive label for the background photo' }}
+/>
+
+<!-- split-single-image: two flush half-width panels, one image, one copy -->
+<Hero
+  variant="split-single-image"
+  headingLines={['Lorem ipsum', 'dolor sil']}
+  lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+  cta={{ label: 'CTA Button', href: '#' }}
+  image={{ ratio: '4/3', label: 'Descriptive label for the hero image' }}
+/>
+
+<!-- split-collage: copy + a static two-column image collage -->
+<Hero
+  variant="split-collage"
+  headingLines={['Lorem ipsum', 'dolor sil']}
+  lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+  cta={{ label: 'CTA Button', href: '#' }}
+  logo={{ ratio: '2/1', label: 'Logo' }}
+  collageImages={[
+    { ratio: '3/4', label: 'Descriptive label 1' },
+    { ratio: '1/1', label: 'Descriptive label 2' },
+    { ratio: '1/1', label: 'Descriptive label 3' },
+    { ratio: '3/4', label: 'Descriptive label 4' },
+    { ratio: '1/1', label: 'Descriptive label 5' },
+  ]}
+/>
+
+<!-- minimal: text-only, no image -->
+<Hero
+  variant="minimal"
+  headingLines={['Lorem ipsum dolor sil']}
+  lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  cta={{ label: 'CTA Button', href: '#' }}
+  logo={{ ratio: '2/1', label: 'Logo' }}
+/>
+
+<!-- minimal + centered + stats: same variant, three extra props — not a sixth variant -->
+<Hero
+  variant="minimal"
+  align="center"
+  headingLines={['Lorem ipsum dolor sil']}
+  lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  cta={{ label: 'CTA Button', href: '#' }}
+  logo={{ ratio: '2/1', label: 'Logo' }}
+  stats={[
+    { value: '300+', caption: 'clients' },
+    { value: '20+', caption: 'branches' },
+    { value: '70+', caption: 'partnerships' },
+  ]}
+/>
+```
+
+Wireframes: `design-refs/wireframes/hero/full-width-photo.png`,
+`split-single-image.png`, `split-collage.png`, `minimal.png`, and
+`minimal-stats.png` (see that folder's README for provenance — all were
+shared inline in chat, not saved to disk).
+
+Mobile behaviour differs deliberately by variant:
+`full-width-photo`'s card keeps its own solid background so legibility never
+depends on the photo underneath, at any width. `split-single-image` reorders
+copy *above* the image below the `--bp-lg` (1025px) breakpoint — the message
+and CTA shouldn't sit under a full-width image on a small screen — the
+reverse of desktop's image-left, copy-right reading order. `split-collage`
+does the same copy-first reorder at that breakpoint, but keeps its own
+two-column collage grid at every width rather than dropping to one column —
+a compact 2-up photo grid reads fine even at phone widths, and forcing it to
+one column would just make the section far longer to scroll past. `minimal`
+with `stats` set stacks the stat row to one column with horizontal dividers
+below `--bp-sm` (480px), rather than cramming three narrow columns.
+
+Use this when: a page needs a hero with a lead + CTA + a photo. This is the
+highest-value component to reuse across other pages — only the copy, image,
+and `variant` change.
+
+**`split-collage` naming note:** the wireframe this was built from was
+labelled "Split Hero - Carousel Image," but its own description and visual
+both showed a fixed, static grid — not a rotating/sliding carousel. Built
+(and named) to match what was actually depicted, confirmed with the person
+who supplied the wireframe before building. If a genuinely interactive
+image carousel is ever needed for a hero, that's a materially different,
+larger build (porting the arrow/dot/keyboard JS pattern from
+`TestimonialCarousel.astro`) and should be a distinctly-named variant, not
+a silent change to this one.
+
+**Patch note:** `minimal`'s background was originally plain `--color-surface`
+(pure white) specifically *because* `--color-surface-muted` was scoped
+"placeholder fill only" at the time and reusing it felt like the wrong
+move. That restriction has since been broadened (see "Token system quick
+reference" below) after a second legitimate use turned up, so `minimal` now
+uses `--color-surface-muted` and actually matches its wireframe's faint grey
+tint instead of sitting on plain white.
+
+**Why "E. Data are Show" became `minimal` + props, not a sixth variant:**
+its wireframe is the same single-column, no-image content block as `minimal`
+— centered instead of left-aligned, with a stat row added below the CTA.
+Neither difference changes the underlying layout family, so it's `align`
+and `stats` on the existing variant, per this file's own rule at the top:
+extend with a prop before forking. A genuinely different structure (a
+second content column, a background image, an interactive element) would
+still earn its own `variant` value.
+
+**Implementation gotcha (applies to any component, not just Hero):** Astro
+only stamps an element with a file's scoped-style attribute when that
+element is written directly in that file's own template. Passing a class
+straight into a child component (`<Placeholder class="…" />`) puts the class
+on Placeholder's root, but under *Placeholder's* scope — a rule in Hero's
+`<style>` targeting that class silently never matches. Every `Placeholder`
+call in this file that needs sizing/position from Hero's stylesheet is
+wrapped in a plain `<div>` authored right here, and the rule targets the
+wrapper instead. This was found live while building `split-single-image`: an
+unwrapped `.hero__logo` fell back to Placeholder's own `width: 100%`, which
+blew a `1fr 1fr` grid out to roughly a 10/90 split before the wrapper fix.
+The same bug was latent in the original `split-mosaic` build too (mosaic
+item radius/offset, badge sizing were passed straight to `Placeholder` and
+never applied) — fixed here at the same time.
+
+### `StoryMosaic.astro`
+
+Purpose: alternating two-column prose/image mosaic. **This is the reuse
+test the brief calls out** — it renders whatever `blocks` it's given, in
+order, into a 2-column grid. Whether a block lands left or right, or reads
+as "image-first" or "text-first," is purely a function of array order, not
+special-cased logic. That's what let it serve two different sections without
+a fork.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `theme` | `'dark' \| 'light'` | `'dark'` | Dark = charcoal bg / white text (About Maple). Light = white bg / body-grey text (Who Can We Help). |
+| `heading` | `string` | — | Optional. Omit for a heading-less story block (About Maple); pass it for a titled one (Who Can We Help). |
+| `blocks` | `StoryBlock[]` | — required | `{ type: 'text', body: string[] }` or `{ type: 'image', ratio, label }`, in reading order. |
+| `cta` | `ButtonData` | — | Optional centered button below the grid — this is what turns it into `AudienceCollage`. |
+
+```astro
+<!-- Section 3: About Maple, no heading, no CTA -->
+<StoryMosaic theme="dark" blocks={aboutMaple.blocks} />
+
+<!-- Section 7: "Who Can We Help?" (AudienceCollage) — same component, three new props -->
+<StoryMosaic theme="light" heading={audienceCollage.heading} blocks={audienceCollage.blocks} cta={audienceCollage.cta} />
+```
+
+Use this when: any page needs an alternating text/image editorial block —
+brand story, service explainer, "who we help," etc. **Do not build an
+`AudienceCollage.astro`** — that was the trap this component exists to avoid.
+
+### `StatBand.astro`
+
+Purpose: yellow band of four stat callouts (icon badge + big figure +
+caption) plus up to two CTA buttons underneath.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `heading` | `string` | |
+| `stats` | `{ icon: 'group' \| 'heart' \| 'language' \| 'house', value: string, caption: string }[]` | Icon is a key into a small inline-SVG set baked into the component — add a new `case` there if a brand needs a fifth icon. |
+| `buttons` | `ButtonData[]` | Rendered with `Button`, one per entry. |
+
+```astro
+<StatBand heading={statBand.heading} stats={statBand.stats} buttons={statBand.buttons} />
+```
+
+Use this when: a page needs a row of 3–4 trust-building numbers. Stacks 2×2
+at ≤768px, 1-column at ≤480px. **Not** the component for a plain,
+icon-less number + caption — that's `MetricsBlock.astro` below; the two
+look similar in a screenshot but solve different jobs (branded band + CTA
+vs. plain figures).
+
+### `MetricsBlock.astro` — variants `grid` (default) | `strip` | `list`
+
+Purpose: plain number + caption metrics, no icon badge and no
+brand-colour band — kept separate from `StatBand.astro` on purpose (see its
+entry above). Three layouts, selected with a `variant` prop.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `variant` | `'grid' \| 'strip' \| 'list'` | Default `'grid'`. |
+| `heading` | `string` | `grid`/`strip`: optional section-level intro above the block. `list`: rendered *inside* the panel instead, beside `lead` — matches its wireframe, where the heading sits in the card with the metrics, not above it. |
+| `lead` | `string` | Optional, all variants. |
+| `metrics` | `{ value: string, caption: string }[]` | All variants. Works with any count ≥1. |
+| `image` | `ImageBlock` | `strip` only: the image the metrics row sits below. |
+
+```astro
+<!-- grid: ribbon-shaped cards, 2-up -->
+<MetricsBlock metrics={[{ value: '10+', caption: 'lift in brand visibility' }, /* … */]} />
+
+<!-- strip: image, then a divided metrics row below it -->
+<MetricsBlock
+  variant="strip"
+  image={{ ratio: '16/9', label: '…' }}
+  metrics={[{ value: '1000+', caption: 'lift in brand visibility' }, /* … */]}
+/>
+
+<!-- list: heading + lead beside a divided vertical list -->
+<MetricsBlock
+  variant="list"
+  heading="Metrics of our excellence"
+  lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  metrics={[{ value: '473+', caption: 'High-Quality Chemical Products.' }, /* … */]}
+/>
+```
+
+Wireframe: `design-refs/wireframes/metrics/*.png` (see that folder's
+README — shared inline in chat, not saved to disk).
+
+**`grid`'s ribbon shape** is a `clip-path` notch cut from each card's bottom
+edge (a V, deepest at center) — pure decoration, not a content container.
+Cards get extra bottom padding so the value/caption text stays clear of the
+notch; the tail itself is always empty space, never something to put
+content in.
+
+Use this when: a page needs plain highlighted numbers and `StatBand`'s
+icon-badge/brand-band/CTA treatment is more than the moment calls for —
+`grid` for 3–4 standalone stats, `strip` for metrics under an image,
+`list` for metrics beside an explanatory heading.
+
+### `VideoFeature.astro`
+
+Purpose: centered two-line heading over a single constrained video slot.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `headingLines` | `string[]` | |
+| `video` | `{ label: string, caption?: string, ratio?: string }` | Passed straight through to `VideoPlaceholder`. |
+
+```astro
+<VideoFeature headingLines={videoFeature.headingLines} video={videoFeature.video} />
+```
+
+Use this when: a page needs one hero-style video moment (testimonial reel,
+explainer, founder message).
+
+### `ImageBand.astro`
+
+Purpose: one full-content-width image with a short message on a bottom
+gradient scrim. Thin wrapper — the actual caption-overlay treatment lives in
+`Placeholder.astro` (see above); this file only adds section spacing and
+rounded corners. Inset to the page's `.container`, not edge-to-edge to the
+browser viewport — `Hero.astro`'s `full-width-photo` variant is the
+deliberate edge-to-edge exception in this library, not the default.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `ratio` | `string` | `"21/9"` | Wide/short — this variant reads as a "band," not a standard photo. |
+| `label` | `string` | — required | |
+| `caption` | `string` | — | Optional, but this variant's whole reason to exist. |
+| `src` | `ImageMetadata` | — | |
+
+```astro
+<ImageBand ratio="21/9" label="Team at the annual conference" caption="Building stronger communities together." />
+```
+
+Use this when: a page needs one full-width photo moment with a short
+message over it, and doesn't need `Hero.astro`'s H1/CTA/page-opening role.
+
+### `PhotoGallery.astro` — variants `grid` (default) | `filmstrip` | `story`
+
+Purpose: three ways to present a set of photos, selected with a `variant`
+prop.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `variant` | `'grid' \| 'filmstrip' \| 'story'` | Default `'grid'`. |
+| `heading` | `string` | Optional on every variant — `story`'s own wireframe didn't show one. |
+| `lead` | `string` | Optional, all variants. |
+| `images` | `GalleryImage[]` (`ImageBlock & { caption?: string }`) | `grid`, `filmstrip` only. `caption` (e.g. "Copy Here") is `filmstrip`-only; `grid` simply ignores it if present — one shared shape across both rather than two near-identical ones. |
+| `steps` | `StoryStep[]` (`{ step?: string, heading, body: string[], image: ImageBlock }`) | `story` only. `step` is the optional kicker label ("Day 1"). Works with any count ≥2 — a single step has nothing to connect to. |
+
+```astro
+<!-- grid: plain responsive N-image grid under a centered heading -->
+<PhotoGallery heading="Our Gallery" images={galleryImages} />
+
+<!-- filmstrip: heading+lead beside a row where clicking a frame grows it -->
+<PhotoGallery
+  variant="filmstrip"
+  heading="Our Gallery"
+  lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  images={[
+    { ratio: '3/4', label: '…', caption: 'Copy Here' },
+    { ratio: '3/4', label: '…', caption: 'Copy Here' },
+    { ratio: '3/4', label: '…', caption: 'Copy Here' },
+  ]}
+/>
+
+<!-- story: alternating image/text steps with a connector between each pair -->
+<PhotoGallery
+  variant="story"
+  steps={[
+    { step: 'Day 1', heading: '…', body: [...], image: { ratio: '4/3', label: '…' } },
+    { step: 'Day 2', heading: '…', body: [...], image: { ratio: '4/3', label: '…' } },
+    { step: 'Day 3', heading: '…', body: [...], image: { ratio: '4/3', label: '…' } },
+  ]}
+/>
+```
+
+Wireframes: `design-refs/wireframes/photo/band.png`, `gallery-grid.png`,
+`gallery-filmstrip.png`, and `story.png` (see that folder's README — shared
+inline in chat, not saved to disk).
+
+**`filmstrip`'s expand-in-place, not a swap-to-showcase:** the wireframe's
+own description was explicit — "the selected frame appears larger than the
+rest… expands dynamically upon selection." That's a different interaction
+than `ServiceBlocks.astro`'s `highlight` variant (which swaps content into a
+*separate* showcase panel above N unchanging trigger cards). Here there's no
+separate showcase — the clicked frame itself grows via `flex-grow`
+(transitioned through `--duration-base`/`--ease-standard`, zeroed under
+`prefers-reduced-motion` like everywhere else in this codebase) while the
+rest shrink back to `flex-grow: 1`, all in the same row. Two different
+wireframe descriptions, two different mechanisms — resist collapsing them
+into one "expand" abstraction later; they don't share enough to be worth it.
+
+**`story` vs. `StoryMosaic.astro`:** both alternate image/text blocks purely
+by array order — the same reuse test. Kept as its own `PhotoGallery`
+variant rather than folded into `StoryMosaic` because of two things
+`StoryMosaic` doesn't have and shouldn't gain just for this: a `step` kicker
+label per block, and a decorative connector rendered *between* blocks
+(`StoryMosaic`'s `blocks` array has no concept of "between," only "each
+block"). The wireframe's staggered/offset image positioning (step 2's image
+sitting inset rather than flush to the row edge) was read as wireframe-tool
+styling rather than deliberate layout intent and wasn't reproduced — the
+alternating side + connector already carries the "meandering path" feeling
+without needing per-step manual offsets.
+
+Mobile: below `--bp-lg` (1025px) `filmstrip`'s text panel stacks above the
+filmstrip instead of sitting beside it, and `story`'s steps drop to a single
+column (image above text, reverse alternation reset to normal reading order)
+— same reasoning as `Hero`'s split variants throughout: message/content
+first, on a small screen. The `filmstrip` row itself keeps a `min-width`
+per frame and scrolls horizontally rather than collapsing further — a
+3-frame expand-in-place row doesn't have a sensible single-column form the
+way an image grid does.
+
+Use this when: a page needs a photo gallery (`grid`, or `filmstrip` for a
+foregrounded/switchable image), or a narrative image+text sequence with a
+visual "journey" feel (`story`) — not a general alternating editorial block,
+which is `StoryMosaic`.
+
+### `PathwayCards.astro`
+
+Purpose: three (or more) numbered persona cards on a dark background,
+routing different audiences to different CTAs.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `heading` | `string` | First line, white. |
+| `headingAccent` | `string` | Second line, rendered in brand yellow — always a prop, never a second hardcoded string. |
+| `cards` | `{ number, image: ImageBlock, title, description, cta: ButtonData }[]` | Numbering is meaningful here (distinct audiences) and stays. |
+
+```astro
+<PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+```
+
+Use this when: a page needs to split traffic by audience/persona. Stacks to
+one column at ≤800px.
+
+**Patch note:** `.pathway__image` was originally a class passed straight
+into `<Placeholder class="pathway__image" />` — the same passthrough
+scoping bug documented under `Hero.astro` below, so its `border-radius: 0`
+never applied and the image kept its dashed-placeholder corners (rounded,
+inherited from `.pathway__card`'s radius) instead of the square ones the
+card's own bottom-flush layout wants. Fixed by wrapping it in a `<div
+class="pathway__image">` the way every other section here now does. Found
+while building `ServiceBlocks.astro` and checking for the same bug
+elsewhere, not reported by anyone — worth a re-look if this card's corners
+ever look off in a real build.
+
+### `TagCloud.astro`
+
+Purpose: yellow band of dark pill tags in a responsive grid, with one
+highlighted tag and a closing note.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `heading` | `string` | |
+| `subheading` | `string` | |
+| `tags` | `{ label: string, href?: string, isHighlighted?: boolean }[]` | Renders `<a>` if `href` is set, otherwise a plain `<span>` pill. `isHighlighted` swaps the pill to brand-yellow-on-charcoal-border. |
+| `note` | `string[]` | Closing lines, `<br>`-joined. |
+
+```astro
+<TagCloud heading={tagCloud.heading} subheading={tagCloud.subheading} tags={tagCloud.tags} note={tagCloud.note} />
+```
+
+Use this when: a page needs to enumerate a long, flat list of conditions,
+services, or categories as pills. 4 columns desktop, 2 tablet, 1 mobile.
+
+### `Faq.astro`
+
+Purpose: expandable Q&A accordion — **only** the accordion variant lives
+here. The wireframe's second example, "FAQ Grid" (static Q&A cards,
+alternating tones, all visible, no expand/collapse), is exactly
+`ContentGrid.astro`'s `text` block type already — question as `heading`,
+answer as `body`, `tone` alternated per card — so it isn't rebuilt here.
+Same default-to-reuse call as `Hero.astro`'s `split-mosaic`-vs-`StoryMosaic`
+overlap: ask for it built as a second variant on this file instead if you
+specifically want both FAQ looks grouped under one component.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `heading` | `string` | Optional. |
+| `lead` | `string` | Optional. |
+| `items` | `{ question: string, answer: string }[]` | Works with any count ≥1. |
+
+```astro
+<!-- FAQ Accordion -->
+<Faq heading="Frequently Asked Questions" items={faq.items} />
+
+<!-- FAQ Grid — reuse ContentGrid, not a second Faq variant -->
+<ContentGrid columns={2} blocks={[
+  { type: 'text', heading: 'What is your services?', body: ['…'], tone: 'muted' },
+  { type: 'text', heading: 'What is the price for your service?', body: ['…'] },
+  { type: 'text', heading: 'How can I purchase?', body: ['…'], tone: 'inverse' },
+  { type: 'text', heading: 'Where to get products?', body: ['…'] },
+]} />
+```
+
+Wireframe: `design-refs/wireframes/faq/*.png` (see that folder's README —
+shared inline in chat, not saved to disk).
+
+**No JavaScript at all.** Uses native `<details>`/`<summary>`, grouped with
+a shared `name` attribute so opening one item closes the others — that's
+what an accordion is, not independent disclosures, and the browser does it
+natively (Chrome 120+/Firefox 121+/Safari 17.2+; safe to rely on for a
+2026-built template). Keyboard support and expanded-state announcement to
+screen readers come for free from the native element — nothing hand-rolled
+with ARIA. The +/- icon is pure CSS: a horizontal + vertical bar, the
+vertical one scaled to zero via the `[open]` attribute selector, no icon
+swap needed.
+
+**Implementation gotcha specific to this element:** `name`-grouped
+`<details>` exclusivity is **document-wide**, not scoped to the component
+that rendered them — two `<Faq>` instances on one page sharing a literal
+`name="faq"` would incorrectly close each other's open items, the same
+*shape* of bug as the cross-instance `dots`/JS-query issues fixed elsewhere
+in this codebase, just via a native HTML feature instead of a script.
+Fixed with a build-time-random suffix (`faq-${Math.random()...}`) per
+`<Faq>` render, giving every instance its own exclusivity group — verified
+live with two instances on one page: opening an item in one left the
+other's state untouched.
+
+Use this when: a page needs an FAQ section — `Faq` for the expandable
+accordion look, `ContentGrid` (see above) for the static short-answer grid.
+
+### `TestimonialCarousel.astro`
+
+Purpose: 1..N testimonials, one component — no `variant` prop, the *count*
+and an optional `uniform` flag decide the look, same "extend before fork"
+call as `ContentGrid.astro`:
+- **1 testimonial** ("Testimonial Card" wireframe): arrows and dots simply
+  aren't rendered — nothing to navigate to — and the card gets a wider,
+  unscaled standalone treatment instead of carousel sizing.
+- **2+, default**: the original 3-up centre-emphasized carousel — center
+  card scaled up, neighbors scaled down and dimmed.
+- **2+, `uniform`**: the same slider/arrows/dots/keyboard nav, but every
+  card renders at the same size and opacity — no centre emphasis. Straight
+  from the "Testimonial Carousel" wireframe's own description: *"Slider can
+  zoom in highlight testimonials or everything has the same size and
+  format."*
+
+| Prop | Type | Notes |
+|---|---|---|
+| `heading` | `string` | |
+| `testimonials` | `{ quote, name, role, rating: number, avatar: ImageBlock }[]` | Works with any count ≥1 — the center-on-index math is measured via `offsetLeft`, not hardcoded to 3. |
+| `uniform` | `boolean` | Default `false`. Irrelevant with a single testimonial — nothing to differentiate from anyway. |
+
+```astro
+<!-- Testimonial Card: a single item is all it takes — no separate prop or component -->
+<TestimonialCarousel heading="Our Testimonials" testimonials={[testimonials.items[0]]} />
+
+<!-- Testimonial Carousel, emphasized (default) -->
+<TestimonialCarousel heading={testimonials.heading} testimonials={testimonials.items} />
+
+<!-- Testimonial Carousel, uniform -->
+<TestimonialCarousel heading={testimonials.heading} testimonials={testimonials.items} uniform />
+```
+
+Wireframes: `design-refs/wireframes/testimonials/card.png` and
+`carousel.png` (see that folder's README — shared inline in chat, not saved
+to disk).
+
+Implementation notes: vanilla JS (~1.3KB minified, shared with the header
+toggle script — the whole page ships well under the 5KB JS budget), scoped
+per-instance (a page can have more than one — e.g. a solo card section plus
+a full carousel elsewhere) via a `document.querySelectorAll('[data-carousel]').forEach(...)`
+wrapper. Arrows are labelled buttons; dots carry `aria-current`;
+`ArrowLeft`/`ArrowRight` work anywhere inside the carousel; all transitions
+route through `--duration-base`, which tokens.css zeroes under
+`prefers-reduced-motion`.
+
+**Patch note:** `dots` used to be gathered with a single unscoped
+`document.querySelectorAll('[data-dot]')` — harmless with exactly one
+carousel on a page (true of every build so far), but it would have
+cross-wired multiple instances' dot state together the moment a second one
+showed up, which is exactly what building the solo "Testimonial Card" case
+made likely. Fixed while extending this file (verified with three carousel
+instances on one page: clicking one instance's dots left the other two
+untouched), not reported by anyone — the same class of thing as
+`PathwayCards`' unwrapped-`Placeholder` patch note above: found by touching
+adjacent code, not by an audit.
+
+**Patch note:** the inline 5-star SVG loop is now `StarRating.astro`,
+extracted once `LogoBar.astro` needed the identical thing — no visual or
+behavioural change here, purely a dedupe.
+
+Use this when: a page needs social proof — one quote, or several in
+carousel form.
+
+### `CardCarousel.astro`
+
+Purpose: a generic center-emphasis card carousel — the exact same mechanism
+as this file's own carousel (arrows, dots, center card scaled up, neighbors
+dimmed), but for arbitrary content instead of testimonials specifically.
+**No `variant` prop** — same "extend before fork" call as `ContentGrid.astro`:
+one card shape with optional `image`/`heading`/`body`, and whichever fields
+a card actually has determines the look. All three wireframes this was
+built from ("Content Card Carousel," "Image Carousel," "Highlights
+Carousel") turned out to be this same mechanism with different fields
+populated — text-only, image-only, and both, respectively.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `heading` | `string` | Optional — omit for a heading-less carousel dropped straight into a page. |
+| `lead` | `string` | Optional. |
+| `cards` | `{ image?: ImageBlock, heading?: string, body?: string[] }[]` | Works with any count ≥1, same `offsetLeft`-measured centering as `TestimonialCarousel`. A card with only `image` renders image-only; only `heading`/`body` renders text-only; both renders image-on-top. |
+
+```astro
+<!-- Content Card Carousel: text-only -->
+<CardCarousel cards={[{ heading: '…', body: ['…'] }, /* … */]} />
+
+<!-- Image Carousel: image-only -->
+<CardCarousel cards={[{ image: { ratio: '1/1', label: '…' } }, /* … */]} />
+
+<!-- Highlights Carousel: image + text -->
+<CardCarousel cards={[{ image: { ratio: '4/3', label: '…' }, heading: '…', body: ['…'] }, /* … */]} />
+```
+
+Wireframe: `design-refs/wireframes/carousel/*.png` (see that folder's
+README — shared inline in chat, not saved to disk).
+
+**Why this isn't a `TestimonialCarousel` mode:** the mechanism is
+identical, but `TestimonialCarousel`'s card markup (quote mark, avatar,
+name, role, star rating) is testimonial-specific — there's no natural way
+to make it optionally render as a plain content or image card without
+either a pile of extra conditionals or fields that don't apply most of the
+time. A new file with a genuinely generic card shape was the more honest
+option. The interaction-mechanism JS is *duplicated* from
+`TestimonialCarousel`, not shared — this codebase already has two
+independent track-sliding scripts (`ServiceBlocks`' and `PhotoGallery`'s
+`slider` variants) rather than one shared carousel module, so this follows
+existing practice rather than introducing a new one.
+
+Use this when: a page needs a center-emphasis carousel of generic
+content/image cards — not testimonials (`TestimonialCarousel`), not photos
+specifically as the primary subject (`PhotoGallery`), not logos
+(`LogoBar`).
+
+### `LogoBar.astro` — variants `list` (default) | `carousel`
+
+Purpose: the third "Social Proof" wireframe letter — A/B became
+`TestimonialCarousel.astro`'s solo-card/`uniform` modes; this one got its
+own file instead, because its primary entity is a brand logo, not a person.
+`ServiceBlocks.astro`'s `list` variant was considered and ruled out too — its
+icon segment renders a fixed `ServiceIcon` glyph, not an arbitrary logo
+image, so the two `list`s only *look* alike.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `variant` | `'list' \| 'carousel'` | Default `'list'`. |
+| `heading` | `string` | Optional, both variants. |
+| `lead` | `string` | Optional, both variants. |
+| `logos` | `LogoBarItem[]` (`{ logo: ImageBlock, quote?, company?, tag? }`) | `quote`/`company`/`tag` are `list`-only; `carousel` just renders the logo. `tag` is the relationship line, e.g. "5x Client of MNO". |
+| `featuredQuote` | `{ rating: number, body: string, attribution: string }` | `carousel` only: one static quote below the logo strip — not tied to whichever logo is currently scrolled into view. |
+
+```astro
+<!-- list: stacked logo + quote rows -->
+<LogoBar
+  logos={[
+    { logo: { ratio: '2/1', label: '…' }, quote: '…', company: 'Company Name', tag: '5x Client of MNO' },
+    { logo: { ratio: '2/1', label: '…' }, quote: '…', company: 'Company Name', tag: '3x Client of MNO' },
+  ]}
+/>
+
+<!-- carousel: heading + scrollable logo strip + one featured quote -->
+<LogoBar
+  variant="carousel"
+  heading="Trusted by Industry Leaders"
+  lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  logos={partnerLogos}
+  featuredQuote={{ rating: 5, body: '…', attribution: 'John Doe, CEO of Star Logo' }}
+/>
+```
+
+Wireframe: `design-refs/wireframes/testimonials/logo-bar.png` (see that
+folder's README — shared inline in chat, not saved to disk; same source
+image as `card.png`/`carousel.png`, this was letter "C" on it).
+
+**`carousel`'s scroll mechanism is deliberately different from every other
+slider in this codebase:** `TestimonialCarousel` and `PhotoGallery`'s
+`slider` both track a discrete "active index" and translate a track to
+match it — that math exists because those have a concept of one active
+item. A logo strip doesn't; there's nothing to be "active." So this one
+just scrolls a native `overflow-x: auto` track (with `scroll-snap`) by
+~80% of the viewport width per arrow click, and disables an arrow when
+there's nothing left to reveal in that direction. Simpler, and correct for
+what this actually is — resist "unifying" it with the index-based sliders
+later; the underlying interaction genuinely differs.
+
+Use this when: a page needs to display partner/client/certification logos —
+`list` for a logo + short quote per row, `carousel` for a longer strip of
+logos with one featured quote underneath.
+
+### `CallToAction.astro` — variants `primary` (default) | `secondary` | `form`
+
+Purpose: three CTA banner treatments, selected with a `variant` prop.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `variant` | `'primary' \| 'secondary' \| 'form'` | Default `'primary'`. |
+| `logo` | `ImageBlock` | `primary` only. |
+| `heading` | `string` | All variants. |
+| `lead` | `string` | Optional, all variants. |
+| `cta` | `CtaAction` (`{ label, href?, variant? }`) | All variants. A local, looser type than the shared `ButtonData` — `href` is optional here because `form`'s submit button has none; a real `ButtonData` value (`href` always present) satisfies it too, so callers don't need two shapes. |
+| `image` | `ImageBlock` | `primary`, `secondary` only. |
+| `fieldLabel` | `string` | `form` only. Default `'Email address'`. Visually hidden — the wireframe shows no visible label, but the input still needs an accessible name. |
+| `fieldPlaceholder` | `string` | `form` only. Default `'Enter your email'`. |
+| `fieldType` | `'email' \| 'text'` | `form` only. Default `'email'`. |
+| `action`, `method` | `string`, `'get' \| 'post'` | `form` only, both optional. Omit `action` to leave the form unwired until a brand has a real endpoint — it still submits (to the current page) rather than silently doing nothing. |
+
+```astro
+<!-- primary: logo + heading + lead + CTA beside an image, on a muted panel -->
+<CallToAction
+  logo={{ ratio: '2/1', label: 'Logo' }}
+  heading="Lorem ipsum dolor sil"
+  lead="Lorem ipsum dolor sit amet, consectetur."
+  cta={{ label: 'CTA Button', href: '#' }}
+  image={{ ratio: '4/3', label: '…' }}
+/>
+
+<!-- secondary: one flat band — heading + lead, small icon, CTA -->
+<CallToAction
+  variant="secondary"
+  heading="Lorem ipsum dolor sil"
+  lead="Lorem ipsum dolor sit amet, consectetur."
+  image={{ ratio: '1/1', label: '…' }}
+  cta={{ label: 'CTA Button', href: '#' }}
+/>
+
+<!-- form: centered heading + lead over a real input + submit button -->
+<CallToAction
+  variant="form"
+  heading="Lorem ipsum dolor sil"
+  lead="Lorem ipsum dolor sit amet, consectetur."
+  cta={{ label: 'CTA Button' }}
+/>
+```
+
+Wireframe: `design-refs/wireframes/cta/*.png` (see that folder's README —
+shared inline in chat, not saved to disk).
+
+**Why this isn't `Hero.astro`:** `primary`'s layout (logo + heading + lead +
+CTA beside an image) is structurally close to `Hero`'s `split-single-image`
+variant. Built as a separate component anyway because `Hero` is reserved for
+a page's opening section — real `<h1>`, page-title role — and this is a
+mid-page banner that needs an `<h2>`. Reusing `Hero` here would mean either
+a page with two `<h1>`s or a prop just to swap the heading level, neither of
+which belongs on the component whose entire job is being *the* page opener.
+
+**The wireframe showed a lighter band above `primary`'s content** — read as
+surrounding canvas whitespace in the mockup, not a second background tone
+to build, the same call made for a few other wireframes' incidental
+shading (`ContentGrid`'s "B" example, `PhotoGallery`'s `story` offsets, both
+noted in their own entries). `primary` renders as one flat
+`--color-surface-muted` panel.
+
+**First form input in this library:** required extending two things rather
+than hand-rolling around them — `Button.astro` gained a `type` prop (a
+`type="button"` inside a `<form>` never submits it; verified live, not just
+read: clicking the button with the required field empty correctly triggers
+native validation and blocks submission, filling it correctly submits), and
+`global.css`'s focus-visible rule now covers `input`/`select`/`textarea` so
+the field gets the same keyboard focus ring as every button and link
+already do, instead of whatever the browser's bare default happens to be.
+
+Use this when: a page needs a mid-page call-to-action — `primary` for a
+prominent banner with an image, `secondary` for a lighter internal-linking
+nudge, `form` for an email/signup capture.
+
+### `ServiceBlocks.astro` — variants `icon-grid` (default) | `image-cards` | `list` | `highlight` | `slider`
+
+Purpose: five ways to present a set of services/features under a heading +
+lead, selected with a `variant` prop — a new section type (not a `Hero`
+variant), since none of the layouts here are a hero (no H1, no page-opening
+role). Extend this with a new `variant` value for the next "services" look
+a wireframe calls for — don't fork a new component.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `variant` | `'icon-grid' \| 'image-cards' \| 'list' \| 'highlight' \| 'slider'` | Default `'icon-grid'`. |
+| `heading` | `string` | All variants. |
+| `lead` | `string` | Optional, all variants. |
+| `items` | `ServiceItem[]` | `{ icon?, image?: ImageBlock, title, description, cta?: ButtonData, href? }` — one shared shape across variants; each variant only reads the fields it needs (see below), the rest are simply unused if passed. |
+| `cta` | `ButtonData` | `icon-grid` only: an optional closing CTA under the grid. |
+
+Per-variant field usage from `items`:
+
+| Variant | Reads | Ignores |
+|---|---|---|
+| `icon-grid` | `icon`, `title`, `description` | `image`, `cta`, `href` |
+| `image-cards` | `image`, `title`, `description`, `cta` (rendered as a full-width dark footer bar + chevron — **not** a `Button` pill; a genuinely different affordance, see note below) | `icon`, `href` |
+| `list` | `icon`, `title`, `description`, `href` (row link target, defaults to `'#'`) | `image`, `cta` |
+| `highlight` | `image`, `title`, `description`, `cta` (rendered as a real `Button` in the showcase panel) | `icon`, `href` |
+| `slider` | `image`, `title`, `description`, `cta` (rendered as a real `Button` per slide) | `icon`, `href` |
+
+```astro
+<!-- icon-grid (default) -->
+<ServiceBlocks heading="Our Services" lead={lead} items={iconItems} cta={{ label: 'CTA Button', href: '#' }} />
+
+<!-- image-cards -->
+<ServiceBlocks variant="image-cards" heading="Our Services" lead={lead} items={cardItems} />
+
+<!-- list -->
+<ServiceBlocks variant="list" heading="Our Services" lead={lead} items={listItems} />
+
+<!-- highlight: click any trigger card below to feature it in the showcase panel above -->
+<ServiceBlocks variant="highlight" heading="Our Services" lead={lead} items={showcaseItems} />
+
+<!-- slider: prev/next arrows + dots move through one slide at a time -->
+<ServiceBlocks variant="slider" heading="Our Services" lead={lead} items={showcaseItems} />
+```
+
+Wireframes: `design-refs/wireframes/service-blocks/icon-grid.png`,
+`image-cards.png`, `list.png`, `highlight.png`, and `slider.png` (see that
+folder's README — this batch came from `notes.txt` labels/descriptions plus
+inline-shared images, not files on disk).
+
+**`image-cards`' footer bar, not a `Button`:** the wireframe's CTA is a
+full-width dark bar with a label + chevron flush to the card's bottom edge —
+structurally a card-footer link, not the pill shape `Button.astro`'s entire
+contract is built around. Stretching `Button` to cover it would mean either
+a fifth pill variant that doesn't look like a pill, or new props that only
+make sense for this one caller. Built as its own scoped `<a>` instead, per
+this file's own top note: *extend* only when the new thing is really the
+same shape as what exists.
+
+**`highlight` vs. `slider` — why two variants instead of one configurable
+one:** both are "N items, one shown at a time in an enlarged panel," but the
+*trigger* is structurally different — `highlight` is driven by clicking any
+one of N always-visible compact cards (a selection), `slider` is driven by
+prev/next + dots over items that aren't otherwise shown (navigation). Same
+underlying "swap the active panel" idea, different enough interaction model
+to earn separate variants rather than one variant with a `trigger: 'click'
+| 'arrows'` prop bolted on.
+
+**`highlight`'s zoom, and the wireframe's click-to-zoom description:** the
+wireframe's own text was "when clicked, it will be zoomed in" — built as: on
+click, the newly-active panel replaces the previous one (via the `hidden`
+attribute, not a toggled class) and gets a brief scale+opacity entrance
+animation through `--duration-base`/`--ease-standard` (zeroed under
+`prefers-reduced-motion`, same as everywhere else in this codebase). Not a
+lightbox/modal — the panel swaps in place, which is what the wireframe's
+single before/after mockup actually showed (a compact-cards state and an
+enlarged-panel state, not an overlay).
+
+**Implementation gotcha — `[hidden]` can silently lose to your own CSS:**
+found live while verifying `highlight` in a real browser (not just by
+reading the code) — every showcase panel rendered simultaneously on first
+load, regardless of the `hidden` attribute Astro was correctly setting.
+Cause: this file's own `.service-blocks__showcase-panel { display: grid }`
+rule and the browser's built-in `[hidden] { display: none }` rule have equal
+specificity, and *normal author CSS always wins over normal user-agent CSS
+at a tie* — so an unqualified `display` declared by name on an element
+silently defeats `hidden` on it, with no warning from anything. Fixed with
+an explicit `.service-blocks__showcase-panel[hidden] { display: none; }`
+rule, which now wins on specificity within the same (author) origin. Any
+future variant that mixes the `hidden` attribute with its own `display`
+rule needs this same explicit override — it won't fail loudly, it'll just
+render everything at once.
+
+Use this when: a page needs to present 3+ services/features and none of the
+other sections' shapes fit (not a persona/audience split — that's
+`PathwayCards`; not a stat callout — that's `StatBand`; not editorial
+prose — that's `StoryMosaic`).
+
+**Patch note:** `.service-blocks__trigger-media` was a `<div>` wrapping
+`Placeholder` inside a `<button>` — `<button>`'s content model is phrasing
+content only, so a `<div>` there is invalid HTML (browsers render it
+anyway, which is exactly why it went unnoticed). Changed to `<span
+display: block>`, the same way `PhotoGallery.astro`'s filmstrip frames were
+built from the start. Purely a markup-validity fix — no visual or
+behavioural change.
+
+### `ContentGrid.astro`
+
+Purpose: one N-column grid, **no `variant` prop** — like `StoryMosaic.astro`,
+the layout is entirely a function of the `blocks` array's order, each
+block's `span` (grid-column width), and an optional `tone`
+(surface/muted/inverse fill). Four cell types (`text`, `image`, `icon`,
+`feature`) cover everything the wireframe this was built from showed,
+without any special-casing — reordering the same `blocks` array is what
+produces every different-looking arrangement, exactly the reuse test
+`StoryMosaic.astro` was already built to pass, generalized to N columns and
+two more cell types.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `heading` | `string` | Optional. |
+| `lead` | `string` | Optional. |
+| `columns` | `number` | Default `3`. Supports `2`–`4` (discrete modifier classes exist for each; add a fifth in the component + here if ever needed). |
+| `blocks` | `ContentGridBlock[]` | See cell types below. Each entry: `{ ..., span?: number, tone?: 'surface' \| 'muted' \| 'inverse' }`. `span` defaults to `1`, clamped to `columns`. `tone` defaults per type (`text`/`feature` → `surface`, `icon` → `muted`) and is always overridable, e.g. to get an inverse (dark) cell. |
+
+Cell types:
+
+| Type | Fields | Notes |
+|---|---|---|
+| `text` | `heading?`, `body: string[]` | Plain prose cell. |
+| `image` | `ratio`, `label`, `src?` | Rendered through `Placeholder`. |
+| `icon` | `icon: ServiceIconName` | Standalone decorative icon, no text — via `ServiceIcon.astro`. |
+| `feature` | `icon`, `heading`, `body: string[]` | Icon + heading + body combined in one cell — the "mini feature blurb" cell type. |
+
+```astro
+<!-- A: two-column, image/text swappable purely by array order — see the
+     duplication note below before reaching for this over StoryMosaic -->
+<ContentGrid columns={2} blocks={[
+  { type: 'image', ratio: '4/3', label: '…' },
+  { type: 'text', heading: 'Lorem ipsum dolor sil', body: [...] },
+]} />
+
+<!-- B: asymmetric bento row (icon + a span-2 text block), then a uniform row -->
+<ContentGrid columns={3} blocks={[
+  { type: 'icon', icon: 'spark' },
+  { type: 'text', heading: '…', body: [...], span: 2 },
+  { type: 'text', heading: '…', body: [...] },
+  { type: 'icon', icon: 'spark' },
+  { type: 'text', heading: '…', body: [...] },
+]} />
+
+<!-- B, second example: the same text/icon/text pattern as row 2 above, on its own -->
+<ContentGrid columns={3} blocks={[
+  { type: 'text', heading: '…', body: [...] },
+  { type: 'icon', icon: 'spark' },
+  { type: 'text', heading: '…', body: [...] },
+]} />
+
+<!-- C: mixed media, one inverse-tone cell — reorder this same array for the
+     wireframe's second "mixed grid" example, nothing else changes -->
+<ContentGrid columns={3} blocks={[
+  { type: 'icon', icon: 'spark' },
+  { type: 'text', heading: '…', body: [...] },
+  { type: 'icon', icon: 'chart-pie', tone: 'inverse' },
+  { type: 'text', heading: '…', body: [...] },
+  { type: 'icon', icon: 'chart-bars' },
+  { type: 'text', heading: '…', body: [...] },
+]} />
+```
+
+Wireframes: `design-refs/wireframes/content-grid/two-column.png`,
+`info-grid.png`, and `mixed-media.png` (see that folder's README — each
+wireframe showed two examples side by side, both reproduced above from the
+same `blocks` shape, reordered).
+
+**Deliberate duplication of `StoryMosaic.astro`:** `columns={2}` with
+`text`/`image` blocks reproduces exactly what `StoryMosaic.astro` already
+does. Flagged and confirmed before building rather than assumed — the
+person who supplied this wireframe wanted all "Grid Content" examples
+grouped under one importable component (a page-builder/consistency reason),
+so this is a *known, intentional* overlap, not a missed cross-reference.
+Default to reusing `StoryMosaic.astro` for a plain 2-column text/image
+section; reach for `ContentGrid` at `columns={2}` specifically when this
+component's family grouping matters more than avoiding the duplication.
+
+**Implementation gotcha — an inline custom property can't be overridden by
+a breakpoint either:** first built with `columns`/`span` set via inline
+`style="--cg-columns: 3"` / `style="--cg-span: 2"`, reasoning that a
+stylesheet media query could still reassign the *custom property* even
+though it couldn't reassign a plain inline-styled property directly. That
+reasoning was wrong, caught by checking computed styles in a real browser
+(not by re-reading the code) — inline-origin CSS beats stylesheet-origin CSS
+at equal specificity regardless of whether a custom property sits in
+between, so the mobile breakpoint was silently overridden by the very same
+inline value it was trying to replace, and every grid rendered its full
+desktop column count squeezed into a phone-width viewport. Fixed by
+switching to discrete modifier classes (`.content-grid__grid--cols-3`,
+`.content-grid__cell--span-2`, etc.) with the actual values living in the
+stylesheet — a breakpoint can always beat another same-origin stylesheet
+rule via ordinary cascade/source-order, which is the same reason this file's
+media queries elsewhere just use literal pixel values rather than reading
+`--bp-*` tokens. Any future per-instance layout choice that a breakpoint
+needs to override should use this pattern, not an inline custom property.
+
+Use this when: a page needs an N-column grid where cell type/size varies by
+position, or specifically for a 2-column text/image section that should be
+grouped with this file's other examples rather than built with
+`StoryMosaic.astro`.
+
+### `SiteFooter.astro`
+
+Purpose: charcoal footer — logo + optional tagline/social row, N link
+columns, contact details with icons, an optional newsletter signup, and a
+distinct copyright bar. Restructured to match a real reference footer's
+*layout* (not its content or brand colour) — every new field is optional,
+so an existing brand's data keeps working unchanged and just doesn't render
+the sections it hasn't supplied.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `logo` | `{ label: string }` | |
+| `brandHeading` | `string` | Optional. Short bold line under the logo, e.g. "For every home, every need." |
+| `brandBody` | `string` | Optional. Paragraph continuing `brandHeading`. |
+| `socialLinks` | `{ platform: 'facebook' \| 'instagram' \| 'linkedin' \| 'x' \| 'youtube', href: string, label?: string }[]` | Optional; omit for no social row. Icons are inline SVGs local to this file — add a `case` for a new platform. |
+| `columns` | `{ title: string, links: NavItem[] }[]` | Any count — the Contact column (see below) is appended automatically alongside these, not inside `columns`. |
+| `contact` | `{ phone, email, address }` | |
+| `contactHeading` | `string` | Default `'Contact'` — override to `'Phone'` etc. if that fits the brand's content better. |
+| `newsletter` | `{ heading, placeholder?, fieldLabel?, cta: { label, variant? }, action?, method? }` | Optional; omit entirely for no newsletter column. Real `<input type="email" required>` + a `Button` with `type="submit"` — see the `type` prop note under `Button.astro` above. |
+| `registration` | `string` | Now optional (was required) — a legal/registration line some brands need and others don't. |
+| `copyright` | `string` | |
+
+```astro
+<SiteFooter
+  logo={footer.logo}
+  brandHeading="For every home, every need."
+  brandBody="From everyday cleaning to specialised NDIS support, we're here to help make life easier."
+  socialLinks={[{ platform: 'facebook', href: '#' }, { platform: 'instagram', href: '#' }, { platform: 'linkedin', href: '#' }]}
+  columns={footer.columns}
+  contact={footer.contact}
+  contactHeading="Phone"
+  newsletter={{ heading: 'Newsletter', cta: { label: 'Subscribe' } }}
+  registration={footer.registration}
+  copyright={footer.copyright}
+/>
+```
+
+**Layout, not a fixed column count:** `columns` (any length) + Contact +
+Newsletter (if present) all land in one `repeat(auto-fit, minmax(140px,
+1fr))` grid — deliberately not a fixed `repeat(N, 1fr)`, which is what the
+first pass at this restructure used and got wrong. `auto-fit` is what
+actually handles "however many columns a brand happens to have" instead of
+assuming a specific count. Below `--bp-sm` (480px) it's forced to a single
+column regardless — `auto-fit` alone still had room to fit two 140px
+columns side by side at phone widths, but the reference's own mobile view
+(a second screenshot, shared after the desktop one) showed one column per
+row, full width, all the way down; worth knowing if a future edit to this
+grid is tempted to remove that override as "redundant" with `auto-fit`.
+
+**Patch notes, both found live while restructuring, neither by re-reading
+the diff:**
+- The logo `<Placeholder>` had the same unwrapped-`class` scoping bug as
+  `PathwayCards` and the original `Hero` build (`class="site-footer__logo"`
+  passed straight into the child instead of onto a wrapper) — latent in
+  the *original* file, just never visibly broken until this restructure
+  changed the surrounding grid enough to expose it. Fixed with the same
+  wrapper-`<div>` pattern used everywhere else in this codebase.
+- A real content string — Maple's own contact email — doesn't wrap (no
+  spaces), and flex/grid items default to `min-width: auto`, so it pushed
+  the whole page into horizontal overflow at narrow widths. Fixed with
+  `min-width: 0` + `overflow-wrap: break-word` on the contact list's
+  text nodes. Both bugs were caught by checking real computed layout
+  (`getBoundingClientRect`, `scrollWidth` vs. `innerWidth`) against the
+  actual Maple homepage, not by trusting a screenshot at a glance —
+  the same discipline applied to every other component this session.
+
+Use this when: this is *the* footer for any page in this system.
+
+---
+
+## Accessibility note: body copy contrast
+
+`maple-brand-config.json`'s `text` colour (`#7A7A7A`) measures **4.29:1** on
+white — it passes WCAG AA for large text but fails for normal-size body
+text (4.5:1 required). This is shipped as specified (`--color-body` in
+`tokens.css`), not silently darkened, with a commented AA-compliant
+alternative (`#6E6E6E`, 5.10:1) sitting right above it for the brand owner to
+approve. Body text on charcoal and yellow sections is unaffected — it uses
+`--color-on-inverse` (white on charcoal, 13.58:1) and `--color-on-brand`
+(charcoal on yellow, 8.34:1), both comfortably AA/AAA. Flagging this rather
+than fixing it silently is deliberate: it's a brand-token decision, not a
+component bug.
+
+---
+
+## Token system quick reference
+
+- `src/styles/tokens.css` — Layer 1 (raw brand hex/typography values) then
+  Layer 2 (semantic roles: `--color-brand`, `--color-on-surface`, etc.).
+  Components reference Layer 2 only.
+- To re-skin for a different brand: replace this one file. No component,
+  no data file, needs to change.
+- One exception, unavoidable in plain CSS: `@media` breakpoints can't read
+  custom properties, so every media query uses a literal pixel value with a
+  comment naming the token it mirrors (e.g. `/* mirrors --bp-md */`). Keep
+  those in sync by hand if a breakpoint token ever changes.
+- `--color-surface-muted` was originally commented "placeholder fill only."
+  Broadened to a general light-neutral-panel token once a second legitimate
+  use showed up (`Hero.astro`'s `minimal` background, `ServiceBlocks.astro`'s
+  `list` row body) — two real consumers earned it a wider contract rather
+  than a near-duplicate second grey token. Still Layer 2, still swapped by
+  replacing `tokens.css` alone.

@@ -1,0 +1,258 @@
+---
+// Three variants, one component:
+//  - primary (default): logo + heading + lead + CTA beside an image, on a
+//    muted panel. The wireframe showed a lighter band above this — read as
+//    surrounding canvas whitespace, not part of the block, and not built
+//    (same call made for a few other wireframes' incidental shading —
+//    see SECTIONS.md).
+//  - secondary: a single flat band — heading + lead, a small icon, and a
+//    CTA, all in one row. "Soft/internal linking CTA" per the wireframe —
+//    deliberately less visually heavy than `primary`.
+//  - form: centered heading + lead over a real <input> + submit button.
+//    The first form input in this library — see Button.astro's `type` prop
+//    and global.css's extended focus-visible rule, both added for this.
+//
+// Follows Hero.astro's Placeholder-wrapping rule: every <Placeholder> that
+// needs this file's own sizing is wrapped in a plain <div> authored here.
+import Placeholder from '../ui/Placeholder.astro';
+import Button from '../ui/Button.astro';
+import type { ImageBlock, ButtonData } from '../../data/disability-support';
+
+type Variant = 'primary' | 'secondary' | 'form';
+
+// ButtonData (shared everywhere else) requires `href` — correct for a link
+// CTA, wrong for `form`'s submit button, which has none. A structurally
+// looser local type (href optional) accepts real ButtonData values from
+// callers just fine, without loosening href for every other consumer of
+// the shared type.
+interface CtaAction {
+  label: string;
+  href?: string;
+  variant?: ButtonData['variant'];
+}
+
+interface Props {
+  variant?: Variant;
+  /** primary only. */
+  logo?: ImageBlock;
+  heading: string;
+  lead?: string;
+  cta: CtaAction;
+  /** primary, secondary only. */
+  image?: ImageBlock;
+  /** form only. Visually-hidden <label> text — the input still needs an accessible name even though the wireframe shows no visible label. */
+  fieldLabel?: string;
+  fieldPlaceholder?: string;
+  fieldType?: 'email' | 'text';
+  /** form only. Omit to leave the form unwired (submits to the current page) until a brand has a real endpoint. */
+  action?: string;
+  method?: 'get' | 'post';
+}
+
+const {
+  variant = 'primary',
+  logo,
+  heading,
+  lead,
+  cta,
+  image,
+  fieldLabel = 'Email address',
+  fieldPlaceholder = 'Enter your email',
+  fieldType = 'email',
+  action,
+  method = 'post',
+} = Astro.props;
+---
+
+{variant === 'primary' && (
+  <section class="cta cta--primary" aria-labelledby="cta-heading">
+    <div class="container cta__grid">
+      <div class="cta__copy">
+        {logo && (
+          <div class="cta__logo">
+            <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
+          </div>
+        )}
+        <h2 id="cta-heading">{heading}</h2>
+        {lead && <p class="lead">{lead}</p>}
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+      </div>
+
+      {image && (
+        <div class="cta__media">
+          <Placeholder ratio={image.ratio} label={image.label} src={image.src} />
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{variant === 'secondary' && (
+  <section class="cta cta--secondary" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta__band">
+        <div class="cta__copy">
+          <h2 id="cta-heading">{heading}</h2>
+          {lead && <p class="lead">{lead}</p>}
+        </div>
+
+        {image && (
+          <div class="cta__icon">
+            <Placeholder ratio={image.ratio ?? '1/1'} label={image.label} src={image.src} />
+          </div>
+        )}
+
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'form' && (
+  <section class="cta cta--form" aria-labelledby="cta-heading">
+    <div class="container cta__form-inner">
+      <h2 id="cta-heading">{heading}</h2>
+      {lead && <p class="lead">{lead}</p>}
+
+      <form class="cta__form" action={action} method={method}>
+        <label class="sr-only" for="cta-field">{fieldLabel}</label>
+        <input id="cta-field" class="cta__field" type={fieldType} name={fieldType === 'email' ? 'email' : 'value'} placeholder={fieldPlaceholder} required />
+        <Button label={cta.label} type="submit" variant={cta.variant ?? 'inverse'} />
+      </form>
+    </div>
+  </section>
+)}
+
+<style>
+  /* ---- shared ---- */
+
+  .cta {
+    padding-block: var(--space-2xl);
+  }
+
+  /* ---- primary ---- */
+
+  .cta--primary {
+    background: var(--color-surface-muted);
+  }
+
+  .cta--primary .cta__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .cta--primary .cta__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .cta__logo {
+    width: 120px;
+  }
+
+  .cta--primary .cta__media {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  /* mirrors --bp-lg */
+  @media (max-width: 1025px) {
+    .cta--primary .cta__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta--primary .cta__copy {
+      order: 1;
+    }
+
+    .cta--primary .cta__media {
+      order: 2;
+    }
+  }
+
+  /* ---- secondary ---- */
+
+  .cta--secondary .cta__band {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    background: var(--color-surface-muted);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+  }
+
+  .cta--secondary .cta__copy {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cta--secondary .cta__copy .lead {
+    color: var(--color-body);
+    font-size: var(--text-small);
+  }
+
+  .cta__icon {
+    flex-shrink: 0;
+    width: 64px;
+    color: var(--color-on-surface);
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .cta--secondary .cta__band {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .cta__icon {
+      order: -1;
+    }
+  }
+
+  /* ---- form ---- */
+
+  .cta--form .cta__form-inner {
+    text-align: center;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+  }
+
+  .cta--form h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .cta__form {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  .cta__field {
+    flex: 1;
+    min-width: 0;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border-muted);
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+  }
+
+  .cta__field::placeholder {
+    color: var(--color-body);
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .cta__form {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+// Full-bleed-to-container single image with a caption bar over the bottom
+// edge. Thin on purpose — the actual caption-overlay treatment lives in
+// Placeholder.astro (shared with VideoPlaceholder's existing caption bar),
+// this file just gives it page-section spacing and rounded corners.
+import Placeholder from '../ui/Placeholder.astro';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  ratio?: string;
+  label: string;
+  /** Short overlay message on a bottom gradient scrim. Optional, but this variant's whole point. */
+  caption?: string;
+  src?: ImageMetadata;
+}
+
+const { ratio = '21/9', label, caption, src } = Astro.props;
+---
+
+<section class="image-band">
+  <div class="container">
+    <div class="image-band__frame">
+      <Placeholder ratio={ratio} label={label} caption={caption} src={src} eager />
+    </div>
+  </div>
+</section>
+
+<style>
+  .image-band {
+    padding-block: var(--space-2xl);
+  }
+
+  .image-band__frame {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .image-band {
+      padding-block: var(--space-xl);
+    }
+  }
+</style>

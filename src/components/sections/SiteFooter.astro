@@ -1,0 +1,366 @@
+---
+// Restructured to match a real reference footer's layout (logo + tagline +
+// social row / link columns / contact with icons / newsletter signup /
+// distinct copyright bar) — structure only, not that site's content or
+// brand colour. See SECTIONS.md for what's newly optional vs. required.
+//
+// Social-platform and contact-method icons are kept local to this file, not
+// extracted to ui/ — nothing else in this library needs a phone/envelope/
+// pin or a Facebook/Instagram/LinkedIn glyph yet (same bar ServiceIcon.astro
+// and StarRating.astro were held to before they were shared).
+import Placeholder from '../ui/Placeholder.astro';
+import Button from '../ui/Button.astro';
+import type { NavItem, ButtonData } from '../../data/disability-support';
+
+type SocialPlatform = 'facebook' | 'instagram' | 'linkedin' | 'x' | 'youtube';
+
+interface SocialLink {
+  platform: SocialPlatform;
+  href: string;
+  /** Accessible name override. Defaults to "Follow us on {platform}". */
+  label?: string;
+}
+
+interface NewsletterConfig {
+  heading: string;
+  placeholder?: string;
+  /** Visually-hidden label — the field still needs an accessible name. Default 'Email address'. */
+  fieldLabel?: string;
+  cta: Pick<ButtonData, 'label' | 'variant'>;
+  action?: string;
+  method?: 'get' | 'post';
+}
+
+interface Props {
+  logo: { label: string };
+  /** Short bold line under the logo, e.g. "For every home, every need." Optional. */
+  brandHeading?: string;
+  /** Paragraph continuing the brandHeading thought. Optional. */
+  brandBody?: string;
+  socialLinks?: SocialLink[];
+  columns: { title: string; links: NavItem[] }[];
+  contact: { phone: string; email: string; address: string };
+  /** Default 'Contact' — override to e.g. 'Phone' if that fits the brand's content better. */
+  contactHeading?: string;
+  /** Omit entirely for a footer with no newsletter signup. */
+  newsletter?: NewsletterConfig;
+  /** Optional now (was required) — a legal/registration line some brands need and others don't. */
+  registration?: string;
+  copyright: string;
+}
+
+const {
+  logo,
+  brandHeading,
+  brandBody,
+  socialLinks = [],
+  columns,
+  contact,
+  contactHeading = 'Contact',
+  newsletter,
+  registration,
+  copyright,
+} = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="site-footer__logo">
+        <Placeholder ratio="4/1" label={logo.label} />
+      </div>
+
+      {(brandHeading || brandBody) && (
+        <p class="site-footer__tagline">
+          {brandHeading && <strong>{brandHeading}</strong>}
+          {brandHeading && brandBody && ' '}
+          {brandBody}
+        </p>
+      )}
+
+      {socialLinks.length > 0 && (
+        <ul class="site-footer__social">
+          {socialLinks.map((link) => (
+            <li>
+              <a class="site-footer__social-link" href={link.href} aria-label={link.label ?? `Follow us on ${link.platform}`}>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">
+                  {link.platform === 'facebook' && (
+                    <>
+                      <rect x="3" y="3" width="18" height="18" rx="4" />
+                      <path
+                        d="M13.5 21v-7h2.2l.3-2.6h-2.5V9.7c0-.8.2-1.3 1.3-1.3h1.3V6.1c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.1-3.2 3.3v1.9H9v2.6h2v7h2.5Z"
+                        fill="currentColor"
+                        stroke="none"
+                      />
+                    </>
+                  )}
+                  {link.platform === 'instagram' && (
+                    <>
+                      <rect x="3" y="3" width="18" height="18" rx="5" />
+                      <circle cx="12" cy="12" r="4" />
+                      <circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none" />
+                    </>
+                  )}
+                  {link.platform === 'linkedin' && (
+                    <>
+                      <rect x="3" y="3" width="18" height="18" rx="4" />
+                      <circle cx="7.5" cy="8" r="1.4" fill="currentColor" stroke="none" />
+                      <path d="M6.3 10.5h2.4V18H6.3v-7.5Z" fill="currentColor" stroke="none" />
+                      <path
+                        d="M11 10.5h2.3v1c.5-.8 1.4-1.3 2.5-1.3 1.9 0 3.2 1.2 3.2 3.6V18h-2.4v-3.7c0-1-.4-1.7-1.4-1.7-.8 0-1.3.5-1.5 1-.1.2-.1.5-.1.8V18H11v-7.5Z"
+                        fill="currentColor"
+                        stroke="none"
+                      />
+                    </>
+                  )}
+                  {link.platform === 'x' && <path d="M4 4l16 16M20 4L4 20" stroke-linecap="round" />}
+                  {link.platform === 'youtube' && (
+                    <>
+                      <rect x="2" y="5" width="20" height="14" rx="4" />
+                      <path d="M10 9l6 3-6 3V9Z" fill="currentColor" stroke="none" />
+                    </>
+                  )}
+                </svg>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {registration && <p class="small site-footer__registration">{registration}</p>}
+    </div>
+
+    <div class="site-footer__columns">
+      <nav class="site-footer__nav" aria-label="Footer">
+        {columns.map((column) => (
+          <div class="site-footer__column">
+            <h3 class="site-footer__column-title">{column.title}</h3>
+            <ul>
+              {column.links.map((link) => (
+                <li><a href={link.href}>{link.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+
+      <div class="site-footer__column">
+        <h3 class="site-footer__column-title">{contactHeading}</h3>
+        <ul class="site-footer__contact-list">
+          <li>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="M4 7l8 6 8-6" />
+            </svg>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">
+              <path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" />
+              <circle cx="12" cy="9" r="2.5" />
+            </svg>
+            <span>{contact.address}</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">
+              <path d="M6.5 3h3l1.5 5-2 2c.8 2 2.7 3.9 4.7 4.7l2-2 5 1.5v3c0 1.1-.9 2-2 2C11.6 19.2 4.8 12.4 4.5 5c0-1.1.9-2 2-2Z" />
+            </svg>
+            <a href={`tel:${contact.phone.replace(/\s+/g, '')}`}>{contact.phone}</a>
+          </li>
+        </ul>
+      </div>
+
+      {newsletter && (
+        <div class="site-footer__column">
+          <h3 class="site-footer__column-title">{newsletter.heading}</h3>
+          <form class="site-footer__newsletter" action={newsletter.action} method={newsletter.method ?? 'post'}>
+            <label class="sr-only" for="footer-newsletter-email">{newsletter.fieldLabel ?? 'Email address'}</label>
+            <input
+              id="footer-newsletter-email"
+              class="site-footer__newsletter-field"
+              type="email"
+              name="email"
+              placeholder={newsletter.placeholder ?? 'Email Address'}
+              required
+            />
+            <Button label={newsletter.cta.label} type="submit" variant={newsletter.cta.variant ?? 'brand'} size="sm" />
+          </form>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <p class="container small">{copyright}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-inverse);
+    color: var(--color-on-inverse);
+  }
+
+  .site-footer__inner {
+    padding-block: var(--space-xl);
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 3fr;
+    gap: var(--space-lg);
+  }
+
+  .site-footer__logo {
+    width: 140px;
+    margin-bottom: var(--space-sm);
+  }
+
+  .site-footer__tagline {
+    color: var(--color-on-inverse);
+    opacity: 0.8;
+    max-width: 32ch;
+    margin-bottom: var(--space-sm);
+  }
+
+  .site-footer__social {
+    display: flex;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+  }
+
+  .site-footer__social-link {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-on-inverse);
+    transition: border-color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .site-footer__social-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .site-footer__registration {
+    color: var(--color-on-inverse);
+    opacity: 0.6;
+    max-width: 32ch;
+  }
+
+  /* auto-fit rather than a fixed column count: link columns (any count from
+     `columns`), Contact, and Newsletter (optional) all land here as equal
+     flat items — this must flex with however many of those actually exist,
+     not assume a specific total the way a fixed `repeat(N, 1fr)` would. */
+  .site-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .site-footer__nav {
+    display: contents;
+  }
+
+  .site-footer__column {
+    min-width: 0;
+  }
+
+  .site-footer__column-title {
+    font-size: var(--title-7);
+    color: var(--color-on-inverse);
+    margin-bottom: var(--space-sm);
+  }
+
+  .site-footer__column ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .site-footer__column a,
+  .site-footer__column li {
+    color: var(--color-on-inverse);
+    opacity: 0.8;
+    font-size: var(--text-small);
+  }
+
+  .site-footer__column a:hover {
+    opacity: 1;
+  }
+
+  .site-footer__contact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+
+  .site-footer__contact-list svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Flex items default to min-width: auto — an unbroken string (an email
+     address here) won't shrink below its own content width, which is
+     exactly what pushed this column past the viewport at narrow widths.
+     min-width: 0 lets it shrink; overflow-wrap lets the string itself break. */
+  .site-footer__contact-list li > a,
+  .site-footer__contact-list li > span {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  .site-footer__newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: flex-start;
+  }
+
+  .site-footer__newsletter-field {
+    width: 100%;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    padding: var(--space-xs) var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+  }
+
+  .site-footer__newsletter-field::placeholder {
+    color: var(--color-body);
+  }
+
+  .site-footer__bottom {
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-block: var(--space-sm);
+  }
+
+  .site-footer__bottom p {
+    color: var(--color-on-inverse);
+    opacity: 0.7;
+    text-align: center;
+  }
+
+  /* mirrors --bp-lg — brand stacks above the columns area; `.site-footer__columns`'s
+     own auto-fit still handles tablet widths (2-3 columns depending on how
+     many exist) without a breakpoint of its own here. */
+  @media (max-width: 1025px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* mirrors --bp-sm — auto-fit alone would still happily fit two 140px
+     columns side by side at phone widths (e.g. Quick Links + Phone at
+     ~390px); the reference's mobile view wants one column per row, full
+     width, all the way down. */
+  @media (max-width: 480px) {
+    .site-footer__columns {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

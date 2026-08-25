@@ -1,0 +1,332 @@
+---
+// Three variants, one component:
+//  - grid (default): plain N-image responsive grid under a centered heading.
+//  - filmstrip: heading + lead in a side panel, images in a row where
+//    clicking a frame grows it and shrinks the rest — an in-place expand,
+//    not a swap into a separate showcase (that's ServiceBlocks' `highlight`
+//    variant; this is a different interaction the wireframe specifically
+//    called out: "the chosen image expands dynamically upon selection").
+//  - story: a sequence of image/text steps, alternating sides by array
+//    order (same reuse test as StoryMosaic.astro), each with an optional
+//    step label ("Day 1:") and a decorative connector between steps. Kept
+//    here rather than folded into StoryMosaic because of that connector and
+//    the step label — genuinely different visual language, not just a
+//    StoryMosaic reskin; see SECTIONS.md.
+//
+// Follows Hero.astro's Placeholder-wrapping rule: every <Placeholder> that
+// needs this file's own sizing is wrapped in a plain <div> authored here.
+import Placeholder from '../ui/Placeholder.astro';
+import type { ImageBlock } from '../../data/disability-support';
+
+type Variant = 'grid' | 'filmstrip' | 'story';
+
+interface GalleryImage extends ImageBlock {
+  /** filmstrip only: short label under the frame ("Copy Here" in the wireframe this was built from). */
+  caption?: string;
+}
+
+interface StoryStep {
+  /** e.g. "Day 1" — optional kicker label above the heading. */
+  step?: string;
+  heading: string;
+  body: string[];
+  image: ImageBlock;
+}
+
+interface Props {
+  variant?: Variant;
+  /** Optional on every variant — `story`'s own wireframe didn't show one. */
+  heading?: string;
+  lead?: string;
+  /** grid, filmstrip only. */
+  images?: GalleryImage[];
+  /** story only: works with any count >= 2 (a single step has nothing to connect to). */
+  steps?: StoryStep[];
+}
+
+const { variant = 'grid', heading, lead, images = [], steps = [] } = Astro.props;
+---
+
+{variant === 'grid' && (
+  <section class="photo-gallery photo-gallery--grid" aria-labelledby={heading ? 'photo-gallery-heading' : undefined}>
+    <div class="container">
+      {heading && (
+        <div class="photo-gallery__intro">
+          <h2 id="photo-gallery-heading">{heading}</h2>
+          {lead && <p class="lead">{lead}</p>}
+        </div>
+      )}
+
+      <div class="photo-gallery__grid">
+        {images.map((image) => (
+          <div class="photo-gallery__grid-item">
+            <Placeholder ratio={image.ratio} label={image.label} src={image.src} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'filmstrip' && images.length > 0 && (
+  <section class="photo-gallery photo-gallery--filmstrip" aria-labelledby={heading ? 'photo-gallery-heading' : undefined}>
+    <div class="container photo-gallery__layout">
+      {heading && (
+        <div class="photo-gallery__intro">
+          <h2 id="photo-gallery-heading">{heading}</h2>
+          {lead && <p class="lead">{lead}</p>}
+        </div>
+      )}
+
+      <div class="photo-gallery__filmstrip" data-filmstrip>
+        {images.map((image, i) => (
+          <button type="button" class="photo-gallery__frame" data-frame aria-pressed={i === 0}>
+            <span class="photo-gallery__frame-media">
+              <Placeholder ratio={image.ratio} label={image.label} src={image.src} eager={i === 0} />
+            </span>
+            {image.caption && <span class="photo-gallery__frame-caption">{image.caption}</span>}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'story' && steps.length > 0 && (
+  <section class="photo-gallery photo-gallery--story" aria-labelledby={heading ? 'photo-gallery-heading' : undefined}>
+    <div class="container">
+      {heading && (
+        <div class="photo-gallery__intro">
+          <h2 id="photo-gallery-heading">{heading}</h2>
+          {lead && <p class="lead">{lead}</p>}
+        </div>
+      )}
+
+      <div class="photo-gallery__story">
+        {steps.map((step, i) => (
+          <>
+            <div class:list={['photo-gallery__step', { 'photo-gallery__step--reverse': i % 2 === 1 }]}>
+              <div class="photo-gallery__step-media">
+                <Placeholder ratio={step.image.ratio} label={step.image.label} src={step.image.src} />
+              </div>
+              <div class="photo-gallery__step-body">
+                {step.step && <span class="photo-gallery__step-label">{step.step}</span>}
+                <h3>{step.heading}</h3>
+                {step.body.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+
+            {i < steps.length - 1 && (
+              <div class="photo-gallery__connector" aria-hidden="true">
+                <svg viewBox="0 0 60 60" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M30 4C12 18 48 30 30 46" stroke-linecap="round" />
+                  <path d="M21 40l9 10 11-8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+            )}
+          </>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  /* ---- shared ---- */
+
+  .photo-gallery {
+    padding-block: var(--space-2xl);
+  }
+
+  .photo-gallery__intro h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* ---- grid ---- */
+
+  .photo-gallery--grid .photo-gallery__intro,
+  .photo-gallery--story .photo-gallery__intro {
+    text-align: center;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    margin-bottom: var(--space-xl);
+  }
+
+  .photo-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .photo-gallery__grid-item {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .photo-gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .photo-gallery__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---- filmstrip ---- */
+
+  .photo-gallery__layout {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+
+  .photo-gallery--filmstrip .photo-gallery__intro {
+    flex: 0 0 260px;
+  }
+
+  .photo-gallery--filmstrip .photo-gallery__intro .lead {
+    font-size: var(--text-small);
+    color: var(--color-body);
+  }
+
+  .photo-gallery__filmstrip {
+    flex: 1;
+    display: flex;
+    gap: var(--space-sm);
+    min-width: 0;
+    overflow-x: auto;
+  }
+
+  .photo-gallery__frame {
+    flex: 1 1 0%;
+    min-width: 96px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    text-align: left;
+    transition: flex-grow var(--duration-base) var(--ease-standard);
+  }
+
+  .photo-gallery__frame[aria-pressed='true'] {
+    flex-grow: 3;
+  }
+
+  .photo-gallery__frame-media {
+    display: block;
+    height: 320px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .photo-gallery__frame-caption {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-small);
+    color: var(--color-on-surface);
+  }
+
+  /* mirrors --bp-lg */
+  @media (max-width: 1025px) {
+    .photo-gallery__layout {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .photo-gallery--filmstrip .photo-gallery__intro {
+      flex: none;
+    }
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .photo-gallery__frame-media {
+      height: 220px;
+    }
+  }
+
+  /* ---- story ---------------------------------------------------------------
+     A sequence of alternating image/text rows (same array-order reuse test
+     as StoryMosaic.astro) with a decorative connector between each pair. */
+
+  .photo-gallery__story {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .photo-gallery__step {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .photo-gallery__step-media {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .photo-gallery__step--reverse .photo-gallery__step-media {
+    order: 2;
+  }
+
+  .photo-gallery__step--reverse .photo-gallery__step-body {
+    order: 1;
+  }
+
+  .photo-gallery__step-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .photo-gallery__step-label {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-small);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-brand);
+  }
+
+  .photo-gallery__step-body p {
+    color: var(--color-body);
+  }
+
+  .photo-gallery__connector {
+    display: flex;
+    justify-content: center;
+    color: var(--color-border-muted);
+    margin-block: var(--space-sm);
+  }
+
+  /* mirrors --bp-lg */
+  @media (max-width: 1025px) {
+    .photo-gallery__step {
+      grid-template-columns: 1fr;
+    }
+
+    .photo-gallery__step--reverse .photo-gallery__step-media,
+    .photo-gallery__step--reverse .photo-gallery__step-body {
+      order: initial;
+    }
+  }
+</style>
+
+<script>
+  // filmstrip: click any frame to grow it and shrink the rest.
+  document.querySelectorAll<HTMLElement>('[data-filmstrip]').forEach((strip) => {
+    const frames = Array.from(strip.querySelectorAll<HTMLButtonElement>('[data-frame]'));
+    frames.forEach((frame, i) => {
+      frame.addEventListener('click', () => {
+        frames.forEach((f, j) => f.setAttribute('aria-pressed', String(i === j)));
+      });
+    });
+  });
+</script>

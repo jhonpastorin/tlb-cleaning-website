@@ -1,0 +1,312 @@
+---
+// Renders 1..N testimonials with the same data-driven approach throughout —
+// count and props decide the look, never a variant string:
+//  - 1 testimonial ("Testimonial Card" wireframe): arrows/dots are simply
+//    not rendered (nothing to navigate to) and the card gets a wider,
+//    unscaled "standalone card" treatment instead of the carousel's
+//    emphasized-center sizing.
+//  - 2+ testimonials, default: the original 3-up centre-emphasis carousel.
+//  - 2+ testimonials, `uniform`: same slider/arrows/dots, but every card
+//    renders at the same size/opacity — no centre emphasis — per the
+//    "Testimonial Carousel" wireframe's own description: "Slider can zoom
+//    in highlight testimonials or everything has the same size and format."
+import Placeholder from '../ui/Placeholder.astro';
+import StarRating from '../ui/StarRating.astro';
+import type { ImageBlock } from '../../data/disability-support';
+
+interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+  rating: number;
+  avatar: ImageBlock;
+}
+
+interface Props {
+  heading: string;
+  testimonials: Testimonial[];
+  /** Every card the same size/opacity, no centre emphasis. Default false (emphasized). Irrelevant with a single testimonial — nothing to differentiate from anyway. */
+  uniform?: boolean;
+}
+
+const { heading, testimonials, uniform = false } = Astro.props;
+const solo = testimonials.length <= 1;
+---
+
+<section class="testimonials" aria-labelledby="testimonials-heading">
+  <div class="container testimonials__inner">
+    <h2 id="testimonials-heading" class="testimonials__heading">{heading}</h2>
+
+    <div
+      class:list={['testimonial-carousel', { 'testimonial-carousel--solo': solo, 'testimonial-carousel--uniform': uniform }]}
+      data-carousel
+    >
+      {!solo && (
+        <button type="button" class="testimonial-carousel__arrow testimonial-carousel__arrow--prev" data-prev aria-label="Previous testimonial">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      )}
+
+      <div class="testimonial-carousel__viewport">
+        <ul class="testimonial-carousel__track" data-track>
+          {testimonials.map((item, i) => (
+            <li class="testimonial-card" data-card data-index={i}>
+              <Placeholder ratio={item.avatar.ratio} label={item.avatar.label} class="testimonial-card__avatar" />
+              <p class="testimonial-card__quote-mark" aria-hidden="true">&ldquo;</p>
+              <p class="testimonial-card__quote">{item.quote}</p>
+              <p class="testimonial-card__name">{item.name}</p>
+              <p class="testimonial-card__role">{item.role}</p>
+              <span class="testimonial-card__stars">
+                <StarRating rating={item.rating} />
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {!solo && (
+        <button type="button" class="testimonial-carousel__arrow testimonial-carousel__arrow--next" data-next aria-label="Next testimonial">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      )}
+    </div>
+
+    {!solo && (
+      <div class="testimonial-carousel__dots" role="group" aria-label="Choose testimonial" data-dots>
+        {testimonials.map((item, i) => (
+          <button
+            type="button"
+            class="testimonial-carousel__dot"
+            data-dot
+            data-index={i}
+            aria-label={`Show testimonial from ${item.name}`}
+            aria-current={i === 0 ? 'true' : 'false'}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    background: var(--color-surface);
+  }
+
+  .testimonials__inner {
+    padding-block: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .testimonials__heading {
+    text-align: center;
+  }
+
+  .testimonial-carousel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+  }
+
+  .testimonial-carousel__arrow {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-inverse);
+    color: var(--color-on-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .testimonial-carousel__viewport {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .testimonial-carousel__track {
+    display: flex;
+    gap: var(--space-lg);
+    will-change: transform;
+    transition: transform var(--duration-base) var(--ease-standard);
+  }
+
+  .testimonial-card {
+    flex: 0 0 auto;
+    width: min(340px, 80vw);
+    background: var(--color-brand);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg) var(--space-md) var(--space-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-xs);
+    opacity: 0.7;
+    transform: scale(0.9);
+    transition: transform var(--duration-base) var(--ease-standard), opacity var(--duration-base) var(--ease-standard);
+  }
+
+  .testimonial-card.is-adjacent {
+    opacity: 0.85;
+    transform: scale(0.94);
+  }
+
+  .testimonial-card.is-active {
+    opacity: 1;
+    transform: scale(1.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+  }
+
+  /* Solo (1 testimonial): a standalone card, not a scaled-up carousel slide —
+     there's nothing else to be emphasized relative to. */
+  .testimonial-carousel--solo .testimonial-card {
+    width: min(640px, 90vw);
+  }
+
+  .testimonial-carousel--solo .testimonial-card.is-active {
+    transform: none;
+  }
+
+  /* Uniform: every card the same size/opacity regardless of is-active/is-adjacent — the slider/arrows/dots keep working exactly the same, only the emphasis styling is neutralized. */
+  .testimonial-carousel--uniform .testimonial-card,
+  .testimonial-carousel--uniform .testimonial-card.is-active,
+  .testimonial-carousel--uniform .testimonial-card.is-adjacent {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: none;
+  }
+
+  .testimonial-card__avatar {
+    width: 72px;
+    border-radius: 50%;
+    margin-top: -48px;
+    border: 4px solid var(--color-brand);
+  }
+
+  .testimonial-card__quote-mark {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--color-on-brand);
+  }
+
+  .testimonial-card__quote {
+    color: var(--color-on-brand);
+  }
+
+  .testimonial-card__name {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    color: var(--color-on-brand);
+  }
+
+  .testimonial-card__role {
+    font-size: var(--text-small);
+    color: var(--color-on-brand);
+  }
+
+  .testimonial-card__stars {
+    color: var(--color-on-brand);
+  }
+
+  .testimonial-carousel__dots {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .testimonial-carousel__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border-muted);
+  }
+
+  .testimonial-carousel__dot[aria-current='true'] {
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .testimonial-card {
+      width: min(280px, 78vw);
+    }
+  }
+</style>
+
+<script>
+  // Scoped per-instance (a page could have more than one of these — e.g. a
+  // solo "Testimonial Card" section elsewhere and a full carousel here).
+  // `dots` used to be a single unscoped `document.querySelectorAll`, which
+  // would have cross-wired multiple instances' dots together; fixed while
+  // extending this file rather than left as a latent one-instance-only bug.
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>('[data-track]');
+    const viewport = carousel.querySelector<HTMLElement>('.testimonial-carousel__viewport');
+    const cards = Array.from(carousel.querySelectorAll<HTMLElement>('[data-card]'));
+    const dots = Array.from(carousel.parentElement?.querySelectorAll<HTMLButtonElement>('[data-dot]') ?? []);
+    const prevBtn = carousel.querySelector<HTMLButtonElement>('[data-prev]');
+    const nextBtn = carousel.querySelector<HTMLButtonElement>('[data-next]');
+
+    let index = 0;
+
+    function render() {
+      if (!track || !viewport || cards.length === 0) return;
+
+      const active = cards[index];
+      const target = viewport.clientWidth / 2 - (active.offsetLeft + active.offsetWidth / 2);
+      track.style.transform = `translateX(${target}px)`;
+
+      cards.forEach((card, i) => {
+        const distance = Math.min(
+          Math.abs(i - index),
+          cards.length - Math.abs(i - index) // wrap-around distance
+        );
+        card.classList.toggle('is-active', distance === 0);
+        card.classList.toggle('is-adjacent', distance === 1);
+      });
+
+      dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === index)));
+    }
+
+    function go(delta: number) {
+      if (cards.length === 0) return;
+      index = (index + delta + cards.length) % cards.length;
+      render();
+    }
+
+    prevBtn?.addEventListener('click', () => go(-1));
+    nextBtn?.addEventListener('click', () => go(1));
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        index = Number(dot.dataset.index ?? 0);
+        render();
+      });
+    });
+
+    carousel.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        go(-1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        go(1);
+      }
+    });
+
+    window.addEventListener('resize', render);
+    render();
+  });
+</script>

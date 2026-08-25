@@ -1,0 +1,56 @@
+---
+import VideoPlaceholder from '../ui/VideoPlaceholder.astro';
+
+interface Props {
+  headingLines: string[];
+  video: { label: string; caption?: string; ratio?: string };
+}
+
+const { headingLines, video } = Astro.props;
+---
+
+<section class="video-feature" aria-labelledby="video-feature-heading">
+  <div class="container video-feature__inner">
+    <h2 id="video-feature-heading" class="video-feature__heading">
+      {headingLines.map((line) => (
+        <>
+          {line}
+          <br />
+        </>
+      ))}
+    </h2>
+
+    <div class="video-feature__frame">
+      <VideoPlaceholder ratio={video.ratio ?? '16/9'} label={video.label} caption={video.caption} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-feature__inner {
+    padding-block: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    text-align: center;
+  }
+
+  .video-feature__heading {
+    max-width: 26ch;
+  }
+
+  .video-feature__frame {
+    width: 100%;
+    max-width: 720px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .video-feature__inner {
+      padding-block: var(--space-xl);
+    }
+  }
+</style>

@@ -1,0 +1,643 @@
+---
+// Five variants, one component — extend with a variant value, don't fork:
+//  - split-mosaic (default): yellow hero, copy + trust-badge card left, an
+//    asymmetric N-image mosaic right. The original/only built variant.
+//  - full-width-photo: single full-bleed photo behind the section; a
+//    surface-coloured content card floats over it (own solid background, so
+//    legibility never depends on the photo's contrast).
+//  - split-single-image: two flush half-width panels, one plain image, one
+//    copy panel — no brand-colour fill, no mosaic, no trust-badge card.
+//  - split-collage: copy panel + a static two-column image collage (NOT an
+//    interactive carousel, despite the wireframe's label — see SECTIONS.md).
+//  - minimal: text-only, no image at all — headline + lead + CTA in a plain
+//    panel, for informational pages that don't need a photo. Takes an
+//    `align` ('left' default | 'center') and an optional `stats` row rather
+//    than forking a sixth variant for what's the same layout family.
+//
+// IMPORTANT: Astro only stamps an element with THIS component's scoped-style
+// attribute when that element is written directly in this file's template.
+// A class passed straight into <Placeholder class="…" /> lands on
+// Placeholder's own root, under Placeholder's scope, not this one — any
+// rule here targeting that class silently never matches. So every
+// Placeholder that needs sizing/position from this file's <style> is wrapped
+// in a plain <div> authored right here, and the rule targets the wrapper.
+// (This was found live: an unwrapped .hero__logo defaulted to Placeholder's
+// own width:100%, which blew out a 1fr/1fr grid to ~10/90 before the fix.)
+import Placeholder from '../ui/Placeholder.astro';
+import Button from '../ui/Button.astro';
+import type { ImageBlock, MosaicImage, ButtonData } from '../../data/disability-support';
+
+type Variant = 'split-mosaic' | 'full-width-photo' | 'split-single-image' | 'split-collage' | 'minimal';
+
+interface HeroStat {
+  value: string;
+  caption: string;
+}
+
+interface Props {
+  variant?: Variant;
+  headingLines: string[];
+  lead: string;
+  cta: ButtonData;
+  /** Small badge/logo above the heading. Optional on every variant. */
+  logo?: ImageBlock;
+  /** split-mosaic only: trust badges inside the white card under the copy. */
+  badges?: ImageBlock[];
+  /** split-mosaic only: the asymmetric N-image grid (works with any count >= 1). */
+  images?: MosaicImage[];
+  /** full-width-photo / split-single-image only: the one hero image. */
+  image?: ImageBlock;
+  /** split-collage only: images flow alternately into two stacked columns (works with any count >= 1). No wide/offset — each image's own ratio does the sizing. */
+  collageImages?: ImageBlock[];
+  /** minimal only: content alignment. Default 'left'. */
+  align?: 'left' | 'center';
+  /** minimal only: optional compact stat row below the CTA (no icon — see StatBand.astro for the icon-bearing full-width version). Omit for the plain text-only look. */
+  stats?: HeroStat[];
+}
+
+const {
+  variant = 'split-mosaic',
+  headingLines,
+  lead,
+  cta,
+  logo,
+  badges = [],
+  images = [],
+  image,
+  collageImages = [],
+  align = 'left',
+  stats = [],
+} = Astro.props;
+
+const wide = images.find((img) => img.span === 'wide');
+const rest = images.filter((img) => img.span !== 'wide');
+
+// Simple alternating two-column split — not a masonry algorithm, just enough
+// to turn a flat list into the collage's left/right columns.
+const collageColA = collageImages.filter((_, i) => i % 2 === 0);
+const collageColB = collageImages.filter((_, i) => i % 2 === 1);
+---
+
+{variant === 'split-mosaic' && (
+  <section class="hero hero--split-mosaic" aria-labelledby="hero-heading">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <h1 id="hero-heading">
+          {headingLines.map((line) => (
+            <>
+              {line}
+              <br />
+            </>
+          ))}
+        </h1>
+        <p class="lead">{lead}</p>
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+
+        <div class="hero__badges">
+          {badges.map((badge) => (
+            <div class="hero__badge">
+              <Placeholder ratio={badge.ratio} label={badge.label} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="hero__mosaic">
+        {wide && (
+          <div class="hero__mosaic-item hero__mosaic-item--wide">
+            <Placeholder ratio={wide.ratio} label={wide.label} src={wide.src} eager />
+          </div>
+        )}
+        <div class="hero__mosaic-row">
+          {rest.map((img) => (
+            <div class:list={['hero__mosaic-item', { 'hero__mosaic-item--offset': img.offset }]}>
+              <Placeholder ratio={img.ratio} label={img.label} src={img.src} eager />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'full-width-photo' && image && (
+  <section class="hero hero--full-width-photo" aria-labelledby="hero-heading">
+    <div class="hero__media">
+      <Placeholder ratio="16/9" label={image.label} src={image.src} eager />
+    </div>
+
+    <div class="container">
+      <div class="hero__card">
+        {logo && (
+          <div class="hero__logo">
+            <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
+          </div>
+        )}
+        <h1 id="hero-heading">
+          {headingLines.map((line) => (
+            <>
+              {line}
+              <br />
+            </>
+          ))}
+        </h1>
+        <p class="lead">{lead}</p>
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'split-single-image' && image && (
+  <section class="hero hero--split-single" aria-labelledby="hero-heading">
+    <div class="hero__grid">
+      <div class="hero__media">
+        <Placeholder ratio="4/3" label={image.label} src={image.src} eager />
+      </div>
+
+      <div class="hero__copy">
+        {logo && (
+          <div class="hero__logo">
+            <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
+          </div>
+        )}
+        <h1 id="hero-heading">
+          {headingLines.map((line) => (
+            <>
+              {line}
+              <br />
+            </>
+          ))}
+        </h1>
+        <p class="lead">{lead}</p>
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'split-collage' && collageImages.length > 0 && (
+  <section class="hero hero--split-collage" aria-labelledby="hero-heading">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        {logo && (
+          <div class="hero__logo">
+            <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
+          </div>
+        )}
+        <h1 id="hero-heading">
+          {headingLines.map((line) => (
+            <>
+              {line}
+              <br />
+            </>
+          ))}
+        </h1>
+        <p class="lead">{lead}</p>
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+      </div>
+
+      <div class="hero__collage">
+        <div class="hero__collage-col">
+          {collageColA.map((img) => (
+            <div class="hero__collage-item">
+              <Placeholder ratio={img.ratio} label={img.label} src={img.src} eager />
+            </div>
+          ))}
+        </div>
+        <div class="hero__collage-col">
+          {collageColB.map((img) => (
+            <div class="hero__collage-item">
+              <Placeholder ratio={img.ratio} label={img.label} src={img.src} eager />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'minimal' && (
+  <section class="hero hero--minimal" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class:list={['hero__content', { 'hero__content--center': align === 'center' }]}>
+        {logo && (
+          <div class="hero__logo">
+            <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
+          </div>
+        )}
+        <h1 id="hero-heading">
+          {headingLines.map((line) => (
+            <>
+              {line}
+              <br />
+            </>
+          ))}
+        </h1>
+        <p class="lead">{lead}</p>
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+
+        {stats.length > 0 && (
+          <div class="hero__stats">
+            {stats.map((stat) => (
+              <div class="hero__stat">
+                <span class="hero__stat-value">{stat.value}</span>
+                <span class="hero__stat-caption">{stat.caption}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  /* ---- split-mosaic (default) ------------------------------------------ */
+
+  .hero--split-mosaic {
+    background: var(--color-brand);
+    padding-block: var(--space-xl);
+  }
+
+  .hero--split-mosaic .hero__grid {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .hero--split-mosaic .hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    color: var(--color-on-brand);
+  }
+
+  .hero--split-mosaic .hero__copy h1 {
+    color: var(--color-on-brand);
+  }
+
+  .hero--split-mosaic .hero__copy .lead {
+    color: var(--color-on-brand);
+    max-width: 46ch;
+  }
+
+  .hero--split-mosaic .hero__badges {
+    display: flex;
+    gap: var(--space-sm);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+    margin-top: var(--space-xs);
+  }
+
+  .hero--split-mosaic .hero__badge {
+    flex: 1;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .hero--split-mosaic .hero__mosaic {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .hero--split-mosaic .hero__mosaic-item {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .hero--split-mosaic .hero__mosaic-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .hero--split-mosaic .hero__mosaic-item--offset {
+    transform: translateY(var(--space-md));
+  }
+
+  /* mirrors --bp-lg */
+  @media (max-width: 1025px) {
+    .hero--split-mosaic .hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero--split-mosaic .hero__copy {
+      order: 1;
+    }
+
+    .hero--split-mosaic .hero__mosaic {
+      order: 2;
+    }
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .hero--split-mosaic {
+      padding-block: var(--space-lg);
+    }
+
+    .hero--split-mosaic .hero__badges {
+      flex-direction: column;
+    }
+
+    .hero--split-mosaic .hero__mosaic-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero--split-mosaic .hero__mosaic-item--offset {
+      transform: none;
+    }
+  }
+
+  /* ---- full-width-photo -------------------------------------------------
+     Full-bleed photo behind the section; the card carries its own solid
+     --color-surface background, so text contrast never depends on what's in
+     the photo underneath it. */
+
+  .hero--full-width-photo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 560px;
+    overflow: hidden;
+  }
+
+  .hero--full-width-photo .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero--full-width-photo .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero--full-width-photo .hero__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    max-width: 480px;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+  }
+
+  .hero--full-width-photo .hero__logo {
+    width: 120px;
+  }
+
+  .hero--full-width-photo .hero__card .lead {
+    max-width: 40ch;
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .hero--full-width-photo {
+      min-height: 420px;
+    }
+
+    .hero--full-width-photo .hero__card {
+      padding: var(--space-md);
+      gap: var(--space-sm);
+    }
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .hero--full-width-photo .hero__card {
+      max-width: 100%;
+    }
+  }
+
+  /* ---- split-single-image ------------------------------------------------
+     Two flush half-width panels — no container gutter between them, unlike
+     split-mosaic which is inset. Grid row height is driven by the copy
+     panel's content; the image wrapper stretches to match (grid default
+     align-items: stretch) and Placeholder fills it via height:100% +
+     object-fit:cover, falling back to its own aspect-ratio once the layout
+     collapses to one column on mobile and the row height is no longer
+     definite. */
+
+  .hero--split-single .hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero--split-single .hero__media {
+    order: 1;
+    overflow: hidden;
+  }
+
+  .hero--split-single .hero__copy {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--space-md);
+    background: var(--color-surface);
+    padding: var(--space-xl);
+    min-width: 0;
+  }
+
+  .hero--split-single .hero__logo {
+    width: 120px;
+    flex-shrink: 0;
+  }
+
+  .hero--split-single .hero__copy .lead {
+    max-width: 42ch;
+  }
+
+  /* mirrors --bp-lg */
+  @media (max-width: 1025px) {
+    .hero--split-single .hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    /* Copy first on mobile — the message and CTA shouldn't sit below a
+       full-width image on a small screen. */
+    .hero--split-single .hero__media {
+      order: 2;
+    }
+
+    .hero--split-single .hero__copy {
+      order: 1;
+      padding: var(--space-lg) var(--space-md);
+    }
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .hero--split-single .hero__copy {
+      padding: var(--space-md);
+    }
+  }
+
+  /* ---- split-collage -----------------------------------------------------
+     Copy panel (same neutral treatment as split-single-image, not the
+     brand-yellow fill split-mosaic uses) + a static two-column image
+     collage. Explicitly NOT an interactive carousel — the wireframe this
+     was built from was labelled "Carousel Image" but its own description
+     and visual both show a fixed collage; see SECTIONS.md for that call. */
+
+  .hero--split-collage .hero__grid {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .hero--split-collage .hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .hero--split-collage .hero__copy .lead {
+    max-width: 46ch;
+  }
+
+  .hero--split-collage .hero__logo {
+    width: 120px;
+  }
+
+  .hero--split-collage .hero__collage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    align-items: start;
+  }
+
+  .hero--split-collage .hero__collage-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .hero--split-collage .hero__collage-item {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  /* mirrors --bp-lg */
+  @media (max-width: 1025px) {
+    .hero--split-collage .hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero--split-collage .hero__copy {
+      order: 1;
+    }
+
+    .hero--split-collage .hero__collage {
+      order: 2;
+    }
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .hero--split-collage .hero__grid {
+      gap: var(--space-md);
+    }
+  }
+
+  /* ---- minimal -------------------------------------------------------------
+     Text-only: headline + lead + CTA, no image. --color-surface-muted gives
+     it a faint tint distinct from the page's white background, matching the
+     wireframe, without being a brand-colour band like split-mosaic. */
+
+  .hero--minimal {
+    background: var(--color-surface-muted);
+    padding-block: var(--space-2xl);
+  }
+
+  .hero--minimal .hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    max-width: var(--container-narrow);
+  }
+
+  .hero--minimal .hero__content--center {
+    align-items: center;
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .hero--minimal .hero__logo {
+    width: 120px;
+  }
+
+  .hero--minimal .lead {
+    max-width: 60ch;
+  }
+
+  .hero--minimal .hero__stats {
+    display: flex;
+    gap: var(--space-lg);
+    margin-top: var(--space-xs);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border-muted);
+  }
+
+  .hero--minimal .hero__stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    padding-inline-start: var(--space-lg);
+    border-left: 1px solid var(--color-border-muted);
+  }
+
+  .hero--minimal .hero__stat:first-child {
+    padding-inline-start: 0;
+    border-left: none;
+  }
+
+  .hero--minimal .hero__stat-value {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--title-6);
+    color: var(--color-on-surface);
+  }
+
+  .hero--minimal .hero__stat-caption {
+    font-size: var(--text-small);
+    color: var(--color-body);
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .hero--minimal {
+      padding-block: var(--space-xl);
+    }
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .hero--minimal .hero__stats {
+      flex-direction: column;
+      gap: var(--space-sm);
+      width: 100%;
+    }
+
+    .hero--minimal .hero__stat {
+      padding-inline-start: 0;
+      border-left: none;
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--color-border-muted);
+    }
+
+    .hero--minimal .hero__stat:first-child {
+      padding-top: 0;
+      border-top: none;
+    }
+  }
+</style>
