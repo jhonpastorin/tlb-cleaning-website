@@ -10,6 +10,24 @@ export interface NavItem {
   hasDropdown?: boolean;
 }
 
+/** One grouped column inside a mega-menu panel — e.g. "Inside your home"
+ *  with its list of pages. `label` is a grouping heading only, not a page:
+ *  it has no `href` and never renders as a link. Omit `label` entirely for
+ *  an ungrouped flat list of items within the panel. */
+export interface MegaMenuGroup {
+  label?: string;
+  items: NavItem[];
+}
+
+/** A Level-A nav item that also has Level-B children, rendered as a
+ *  dropdown/mega-menu panel (desktop: hover/click panel; mobile: a native
+ *  <details> accordion) instead of NavItem's old decorative-only
+ *  `hasDropdown` chevron. The item's own `href` still points at its own
+ *  real page — the mega-menu is additive, not a replacement destination. */
+export interface MegaMenuNavItem extends NavItem {
+  megaMenu?: MegaMenuGroup[];
+}
+
 export interface ImageBlock {
   ratio: string;
   label: string;

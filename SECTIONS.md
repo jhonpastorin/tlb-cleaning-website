@@ -139,25 +139,113 @@ Use this when: any section needs a star rating — currently
 
 ### `SiteHeader.astro`
 
-Purpose: two-bar site header (white utility bar + yellow service bar),
+Purpose: two-bar site header (white utility bar + brand-color service bar),
 collapsing to a hamburger panel below 900px.
 
 | Prop | Type | Notes |
 |---|---|---|
 | `logo` | `{ label: string }` | Rendered as a `4/1` `Placeholder`. |
-| `primaryNav` | `NavItem[]` | `{ label, href, hasDropdown? }`. |
-| `serviceNav` | `NavItem[]` | Same shape; rendered twice (yellow bar at ≥900px, folded into the mobile panel below it) so nothing is lost when it collapses. |
+| `primaryNav` | `NavItem[]` | `{ label, href, hasDropdown? }`. `hasDropdown` here is still just a decorative chevron — no panel. For a real dropdown, use `serviceNav`'s `megaMenu` instead. |
+| `serviceNav` | `MegaMenuNavItem[]` | `NavItem` plus an optional `megaMenu: MegaMenuGroup[]` (`{ label?: string, items: NavItem[] }[]` — `label` is a grouping heading only, never a link; omit it for an ungrouped flat column). Rendered twice (service bar at ≥900px, folded into the mobile panel below it) so nothing is lost when it collapses. An item's own `href` still points at its own real page — the mega-menu is additive, not a replacement destination. |
+| `secondaryCta` | `ButtonData` | Optional. Rendered *before* `cta` (both desktop and the mobile panel) as an outline-style `Button` variant `"inverse"` (override via `secondaryCta.variant`), size `"sm"` — e.g. a "Book online" link beside the main "Get a quote" button. Omit for the original single-CTA header. |
 | `cta` | `ButtonData` | Rendered with `Button` variant `"brand"`, size `"sm"`. |
 
 ```astro
-<SiteHeader logo={header.logo} primaryNav={header.primaryNav} serviceNav={header.serviceNav} cta={header.cta} />
+<SiteHeader
+  logo={header.logo}
+  primaryNav={header.primaryNav}
+  serviceNav={[
+    { label: 'Home Cleaning', href: '/home-cleaning/', megaMenu: [
+      { label: 'Inside your home', items: [{ label: 'Deep cleaning', href: '/deep-cleaning/' }] },
+    ]},
+    { label: 'Guides', href: '/guides/' }, // no megaMenu — plain link
+  ]}
+  secondaryCta={{ label: 'Book your clean online', href: '/book-online/' }}
+  cta={header.cta}
+/>
 ```
+
+**Mega-menu, desktop:** a real `<a>` for the item's own page, plus a
+separate `<button>` (chevron) that toggles a `position: absolute` panel
+below it. The panel is split into two nested elements on purpose:
+- `.site-header__mega-panel` — the hoverable hit area. No visible styling,
+  `top: 100%` flush against the trigger, and critically **`padding-top`
+  for the gap to the visible card, not `margin-top`.** A margin gap was a
+  real bug: the instant the pointer crosses empty margin space, it's over
+  neither the trigger's box nor the panel's, `:hover` on
+  `.site-header__mega-item` goes false, the panel `display: none`s itself,
+  and the pointer can never actually arrive at a Level-B link. Padding is
+  still part of the element's own box for hit-testing, so it bridges the
+  gap without breaking the hover chain.
+- `.site-header__mega-panel-inner` — the actual visible card (background,
+  radius, shadow, padding). Deliberately **not width-capped**: columns use
+  `grid-template-columns: repeat(var(--mega-cols), minmax(220px, 1fr))`,
+  with `--mega-cols` set inline per item from that item's own
+  `megaMenu.length` — not `auto-fit`. `auto-fit` needs a definite
+  container width to know how many tracks fit, but this container's own
+  width is `max-content` (sized to fit its content) — a circular
+  dependency that reliably collapsed to a single tall column instead of
+  laying out side by side. A fixed repeat count has an unambiguous
+  max-content size, so it actually renders as N real columns.
+- `.site-header__mega-panel` also carries `z-index: 10`: once a panel can
+  be genuinely wide (no cap), it can extend under *later* sibling nav
+  items (e.g. Home Cleaning's panel reaching under Commercial's trigger).
+  Those siblings are also `position: relative` but `z-index: auto`, so
+  without this they'd paint on top of an open panel wherever they
+  overlap — later DOM order wins at equal stacking level otherwise.
+
+Opens on hover/`:focus-within` with **zero JS** for mouse and keyboard;
+the small amount of JS this component carries is only for touch (no hover
+state to reveal it otherwise) via a `.is-open` class, mutually exclusive
+across panels, closed on outside-click or Escape — the same
+click-toggle-layered-on-CSS-hover pattern, not a JS-only menu.
+`.site-header` itself gets `position: relative; z-index: 30` so the panel
+(nested several `position` levels down) reliably paints above `<main>`
+instead of behind it — an absolutely-positioned descendant with the
+default `z-index: auto` has no guarantee of out-painting a later,
+also-`auto` sibling like `<main>` otherwise; DOM order alone doesn't
+settle that for positioned boxes.
+
+**Edge-safe positioning:** `left: 50%; transform: translateX(-50%)` centers
+a panel under its trigger, which clips past the viewport edge once a panel
+is wide and a trigger sits near the left/right edge (Home Cleaning's
+4-column panel, centered under a trigger near the header's own left edge,
+did exactly this live). Fixed with a small measure-and-nudge script, not
+more CSS: on `mouseenter`/`focusin` of the trigger (and the click-toggle
+path, and `resize`), `positionMegaPanel()` measures the now-visible panel's
+`getBoundingClientRect()` against `.site-header .container`'s own inner
+edges (that container's `getBoundingClientRect()` plus its live
+`getComputedStyle(...).paddingLeft`/`paddingRight`) — not the raw window
+edge with a guessed gutter, which was tried first and read as too tight/
+arbitrary. Using the header's own container means the panel lines up with
+the logo's left edge / the CTA's right edge specifically, and stays
+correct if `--space-md` (the container's `padding-inline`) ever changes,
+since the padding is read live rather than mirrored as a second px value
+to keep in sync. If it overflows either inner edge, sets a
+`--mega-shift: Npx` custom property that the `transform` above already
+reads (`translateX(calc(-50% + var(--mega-shift, 0px)))`) — 0 by default,
+so an already-fitting panel is untouched. Guards against measuring a
+currently-hidden panel (`display: none` → an all-zero rect, which would
+compute and cache a bogus shift for next time it opens) and against
+compounding shifts on repeated opens (resets the property before every
+fresh measurement). This is positioning-only JS layered on the
+hover-is-still-pure-CSS behavior above — it never controls whether a panel
+is open, only where it sits once it already is.
+
+**Mega-menu, mobile:** a native `<details>`/`<summary>` accordion per item
+(same "reach for the native element" call `Faq.astro` already makes) —
+no JS needed there at all. Its content leads with an "All {label}" link to
+the item's own page (since `<summary>` itself can't cleanly host a nested
+real link without click conflicts), then each group as a small heading +
+list, single column (no `auto-fit` grid — mobile is already narrow).
 
 Variant: none yet — the two-bar shape is the only one built. If a brand ever
 needs a single-bar header, add a `bars: 1 | 2` prop rather than a new
 component.
 
-Use this when: this is *the* header for any page in this system.
+Use this when: this is *the* header for any page in this system. Reach for
+`serviceNav`'s `megaMenu` specifically when a top-level item has real
+Level-B children to expose, not just a visual chevron.
 
 ### `Hero.astro` — variants `split-mosaic` (default) | `full-width-photo` | `split-single-image` | `split-collage` | `minimal`
 

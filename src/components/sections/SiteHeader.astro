@@ -1,16 +1,32 @@
 ---
+// serviceNav items can now carry a real mega-menu (see MegaMenuNavItem):
+// desktop renders a hover/click dropdown panel grouped into columns;
+// mobile renders a native <details> accordion (no extra JS needed there,
+// same "reach for the native element" call Faq.astro already makes).
+// primaryNav stays plain NavItem[] — nothing in this build needs a mega-menu
+// off the primary row, just the service band.
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
-import type { NavItem, ButtonData } from '../../data/types';
+import type { NavItem, MegaMenuNavItem, ButtonData } from '../../data/types';
 
 interface Props {
   logo: { label: string };
   primaryNav: NavItem[];
-  serviceNav: NavItem[];
+  serviceNav: MegaMenuNavItem[];
+  /** Optional second CTA, rendered before `cta` (left of it, both desktop
+   *  and the mobile panel) as an outline-style `inverse` button — e.g. a
+   *  "Book online" link alongside the main "Get a quote" button. Omit for
+   *  the original single-CTA header. */
+  secondaryCta?: ButtonData;
   cta: ButtonData;
 }
 
-const { logo, primaryNav, serviceNav, cta } = Astro.props;
+const { logo, primaryNav, serviceNav, secondaryCta, cta } = Astro.props;
+
+// Build-time random suffix so panel ids never collide with another
+// SiteHeader instance on the same page — same pattern Faq.astro's
+// groupName uses for its <details> exclusivity groups.
+const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 <header class="site-header">
@@ -49,21 +65,45 @@ const { logo, primaryNav, serviceNav, cta } = Astro.props;
         </ul>
 
         <ul class="site-header__list site-header__list--services-mobile" aria-label="Services">
-          {serviceNav.map((item) => (
-            <li>
-              <a href={item.href}>
-                {item.label}
-                {item.hasDropdown && (
-                  <svg class="chevron" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true" focusable="false">
-                    <path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                )}
-              </a>
-            </li>
-          ))}
+          {serviceNav.map((item) =>
+            item.megaMenu ? (
+              <li class="site-header__mega-item-mobile">
+                <details class="site-header__mega-details">
+                  <summary class="site-header__mega-summary">
+                    {item.label}
+                    <svg class="chevron" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true" focusable="false">
+                      <path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </summary>
+                  <div class="site-header__mega-mobile-body">
+                    <a class="site-header__mega-view-all" href={item.href}>All {item.label}</a>
+                    {item.megaMenu.map((group) => (
+                      <div class="site-header__mega-col">
+                        {group.label && <p class="site-header__mega-group-label">{group.label}</p>}
+                        <ul>
+                          {group.items.map((child) => (
+                            <li><a href={child.href}>{child.label}</a></li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </details>
+              </li>
+            ) : (
+              <li>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            )
+          )}
         </ul>
 
-        <Button label={cta.label} href={cta.href} variant="brand" size="sm" class="site-header__cta" />
+        <div class="site-header__ctas">
+          {secondaryCta && (
+            <Button label={secondaryCta.label} href={secondaryCta.href} variant={secondaryCta.variant ?? 'inverse'} size="sm" />
+          )}
+          <Button label={cta.label} href={cta.href} variant="brand" size="sm" />
+        </div>
       </nav>
     </div>
   </div>
@@ -71,24 +111,63 @@ const { logo, primaryNav, serviceNav, cta } = Astro.props;
   <div class="site-header__bar site-header__bar--services">
     <nav class="container" aria-label="Services">
       <ul class="site-header__list site-header__list--services">
-        {serviceNav.map((item) => (
-          <li>
-            <a href={item.href}>
-              {item.label}
-              {item.hasDropdown && (
+        {serviceNav.map((item, i) => {
+          const panelId = `${instanceId}-mega-${i}`;
+          return item.megaMenu ? (
+            <li class="site-header__mega-item">
+              <a href={item.href}>{item.label}</a>
+              <button
+                type="button"
+                class="site-header__mega-toggle"
+                aria-expanded="false"
+                aria-controls={panelId}
+                aria-label={`Show ${item.label} menu`}
+                data-mega-toggle
+              >
                 <svg class="chevron" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true" focusable="false">
                   <path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-              )}
-            </a>
-          </li>
-        ))}
+              </button>
+              <div id={panelId} class="site-header__mega-panel" data-mega-panel>
+                <div class="site-header__mega-panel-inner" style={`--mega-cols: ${item.megaMenu.length}`}>
+                  <div class="site-header__mega-grid">
+                    {item.megaMenu.map((group) => (
+                      <div class="site-header__mega-col">
+                        {group.label && <p class="site-header__mega-group-label">{group.label}</p>}
+                        <ul>
+                          {group.items.map((child) => (
+                            <li><a href={child.href}>{child.label}</a></li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </li>
+          ) : (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   </div>
 </header>
 
 <style>
+  /* Establishes a stacking context for the whole header so an absolutely-
+     positioned mega-menu panel (nested several levels down) reliably paints
+     above <main>'s content instead of behind it — without this, a header
+     descendant with the UA-default z-index:auto has no guarantee of
+     out-painting a later, also z-index:auto sibling like <main>; DOM order
+     alone doesn't settle it for an absolutely-positioned box. */
+  .site-header {
+    position: relative;
+    z-index: 30;
+  }
+
   .site-header__bar--top {
     background: var(--color-surface);
   }
@@ -166,6 +245,157 @@ const { logo, primaryNav, serviceNav, cta } = Astro.props;
     display: none;
   }
 
+  .site-header__ctas {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+  }
+
+  /* ---- Mega-menu: desktop (hover/click panel) --------------------------- */
+
+  .site-header__mega-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .site-header__mega-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-on-brand);
+    padding: var(--space-3xs);
+  }
+
+  /* The hit-tested hoverable box. No visible styling and no margin-top —
+     `padding-top` here (not margin) is what bridges the gap to the trigger
+     above as an INVISIBLE but still-hoverable strip. A margin-top gap was
+     the earlier bug: the instant the pointer crosses empty margin space
+     between the trigger and the panel, it's over neither element's box,
+     :hover on .site-header__mega-item goes false, the panel display:none's
+     itself, and the pointer can never actually arrive — "hover the trigger,
+     the panel won't stay open long enough to click a link in it." Padding
+     is still part of this element's own box for hit-testing, so the bridge
+     never breaks the hover chain. */
+  .site-header__mega-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    /* Now that the panel isn't width-capped, a wide one (e.g. Home
+       Cleaning's 4 columns) can extend under later sibling nav items
+       (Commercial, Areas we clean). Those siblings are also position:
+       relative but z-index:auto, so without this they'd paint on top of
+       an open panel wherever they overlap — later DOM order wins at
+       equal stacking level. z-index here lifts the panel above every
+       sibling regardless of DOM order; harmless while display:none. */
+    z-index: 10;
+    /* --mega-shift (set by the script below, in px) nudges a panel back
+       inside the viewport when centering it under its trigger would run
+       it off the left/right edge — see that script's comment. 0 by
+       default, so nothing changes for a panel that already fits. */
+    transform: translateX(calc(-50% + var(--mega-shift, 0px)));
+    padding-top: var(--space-xs);
+    text-align: left;
+  }
+
+  /* Hover/focus-within give every desktop mouse and keyboard user the panel
+     with zero JS; `.is-open` (toggled by the script below) is what actually
+     keeps it open for a touch tap, since touch has no hover state at all. */
+  .site-header__mega-item:hover .site-header__mega-panel,
+  .site-header__mega-item:focus-within .site-header__mega-panel,
+  .site-header__mega-panel.is-open {
+    display: block;
+  }
+
+  /* The actual visible card — separated from .site-header__mega-panel above
+     so that element can stay unstyled/full-bleed as pure hoverable hit
+     area (see its own comment). Width is intentionally NOT capped to a
+     fixed max-width: with `repeat(var(--mega-cols), minmax(220px, 1fr))`
+     below (not `auto-fit`), the grid's natural content width already IS
+     exactly wide enough for every column side by side, so there's nothing
+     to cap — capping it here would just squeeze columns back down into a
+     narrow single-column stack, which is the bug this replaces. `--mega-cols`
+     is set inline per item, from that item's own megaMenu.length. */
+  .site-header__mega-panel-inner {
+    width: max-content;
+    max-width: 95vw;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+    padding: var(--space-lg);
+  }
+
+  /* NOT auto-fit: auto-fit needs a definite container width to know how
+     many 220px+ tracks fit, but this container's own width is `max-content`
+     (sized to fit ITS content) — a circular dependency browsers commonly
+     resolve by collapsing to a single column. A fixed repeat count (known
+     at build time, one column per group) has a well-defined max-content
+     size with no ambiguity, so it actually renders as N columns instead of
+     silently stacking into one tall list. */
+  .site-header__mega-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--mega-cols, 1), minmax(220px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .site-header__mega-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .site-header__mega-col a {
+    color: var(--color-on-surface);
+    font-family: var(--font-body);
+    font-weight: var(--weight-body);
+    font-size: var(--text-small);
+    padding-block: 2px;
+  }
+
+  .site-header__mega-col a:hover {
+    color: var(--color-brand);
+  }
+
+  .site-header__mega-group-label {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-small);
+    color: var(--color-brand);
+    padding-bottom: var(--space-3xs);
+    margin-bottom: var(--space-3xs);
+    border-bottom: 1px solid var(--color-border-muted);
+  }
+
+  /* ---- Mega-menu: mobile (native <details> accordion) -------------------- */
+
+  .site-header__mega-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .site-header__mega-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .site-header__mega-mobile-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-block: var(--space-sm);
+    padding-inline-start: var(--space-sm);
+  }
+
+  .site-header__mega-view-all {
+    font-weight: var(--weight-heading);
+  }
+
   /* mirrors --bp-nav */
   @media (max-width: 900px) {
     .site-header__toggle {
@@ -202,8 +432,20 @@ const { logo, primaryNav, serviceNav, cta } = Astro.props;
 
     .site-header__list--services-mobile {
       display: flex;
+      flex-direction: column;
+      align-items: stretch;
       border-top: 1px solid var(--color-border-muted);
       padding-top: var(--space-sm);
+    }
+
+    .site-header__mega-item-mobile {
+      width: 100%;
+    }
+
+    .site-header__ctas {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
     }
 
     .site-header__bar--top {
@@ -220,5 +462,89 @@ const { logo, primaryNav, serviceNav, cta } = Astro.props;
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!expanded));
     nav?.classList.toggle('is-open', !expanded);
+  });
+
+  // Desktop mega-menu: click-toggle (touch/keyboard) layered on top of the
+  // CSS-only hover/focus-within reveal (mouse) above. Opening one closes
+  // any other open panel; clicking outside or pressing Escape closes all.
+  function closeAllMega(except?: HTMLElement) {
+    document.querySelectorAll<HTMLElement>('[data-mega-panel]').forEach((panel) => {
+      if (panel === except) return;
+      panel.classList.remove('is-open');
+      panel.style.removeProperty('--mega-shift');
+      document.querySelector<HTMLButtonElement>(`[aria-controls="${panel.id}"]`)?.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-mega-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const panel = document.getElementById(btn.getAttribute('aria-controls') ?? '');
+      if (!panel) return;
+      const isOpen = panel.classList.contains('is-open');
+      closeAllMega(isOpen ? undefined : panel);
+      panel.classList.toggle('is-open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      if (!isOpen) requestAnimationFrame(() => positionMegaPanel(panel));
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element) || !event.target.closest('.site-header__mega-item')) {
+      closeAllMega();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeAllMega();
+  });
+
+  // Keep every mega-menu panel inside the page's actual content area, not
+  // just the raw viewport: centered under its trigger (the CSS default)
+  // works until the trigger sits near the left or right edge and the panel
+  // is wide enough to run off it — Home Cleaning's 4-column panel, centered
+  // under a trigger near the header's left edge, clipped there in exactly
+  // that way. `--mega-shift` (a CSS custom property the transform above
+  // already reads) nudges it back in by however many px it would otherwise
+  // overflow past the header's own `.container` — i.e. it lines up with
+  // the logo's left edge / the CTA's right edge, not an arbitrary gutter
+  // guessed from the raw window edge, and it stays correct if `--space-md`
+  // (the container's own `padding-inline`) ever changes, since this reads
+  // that padding live via getComputedStyle rather than mirroring its px
+  // value as a second source of truth. Runs on mouseenter/focusin too, not
+  // just the click-toggle path, since opening via hover is pure CSS with
+  // no JS hook of its own otherwise — this only ever adjusts position,
+  // never visibility.
+  const headerContainer = document.querySelector<HTMLElement>('.site-header .container');
+
+  function positionMegaPanel(panel: HTMLElement) {
+    // A hidden panel's rect is all zeros, not "not overflowing" — measuring
+    // one anyway would compute (and store) a bogus shift for whenever it
+    // next opens. Only ever measure a panel that's actually on screen.
+    if (getComputedStyle(panel).display === 'none' || !headerContainer) return;
+    panel.style.removeProperty('--mega-shift');
+    const rect = panel.getBoundingClientRect();
+    const containerRect = headerContainer.getBoundingClientRect();
+    const containerStyle = getComputedStyle(headerContainer);
+    const innerLeft = containerRect.left + parseFloat(containerStyle.paddingLeft || '0');
+    const innerRight = containerRect.right - parseFloat(containerStyle.paddingRight || '0');
+    let shift = 0;
+    if (rect.left < innerLeft) {
+      shift = innerLeft - rect.left;
+    } else if (rect.right > innerRight) {
+      shift = innerRight - rect.right;
+    }
+    if (shift !== 0) panel.style.setProperty('--mega-shift', `${shift}px`);
+  }
+
+  document.querySelectorAll<HTMLElement>('.site-header__mega-item').forEach((item) => {
+    const panel = item.querySelector<HTMLElement>('[data-mega-panel]');
+    if (!panel) return;
+    const reposition = () => requestAnimationFrame(() => positionMegaPanel(panel));
+    item.addEventListener('mouseenter', reposition);
+    item.addEventListener('focusin', reposition);
+  });
+
+  window.addEventListener('resize', () => {
+    document.querySelectorAll<HTMLElement>('[data-mega-panel]').forEach((panel) => positionMegaPanel(panel));
   });
 </script>
