@@ -2,7 +2,6 @@
 interface Tag {
   label: string;
   href?: string;
-  isHighlighted?: boolean;
 }
 
 interface Props {
@@ -25,10 +24,7 @@ const { heading, subheading, tags, note } = Astro.props;
         const Tag = tag.href ? 'a' : 'span';
         return (
           <li>
-            <Tag
-              href={tag.href}
-              class:list={['tag-cloud__tag', { 'tag-cloud__tag--highlight': tag.isHighlighted }]}
-            >
+            <Tag href={tag.href} class="tag-cloud__tag">
               {tag.label}
             </Tag>
           </li>
@@ -84,23 +80,19 @@ const { heading, subheading, tags, note } = Astro.props;
     height: 100%;
     padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-pill);
-    background: var(--color-inverse);
-    color: var(--color-on-inverse);
+    background: var(--color-brand);
+    color: var(--color-on-brand);
     font-family: var(--font-display);
     font-weight: var(--weight-heading);
     font-size: var(--text-small);
     text-align: center;
-  }
-
-  .tag-cloud__tag--highlight {
-    background: var(--color-brand);
-    color: var(--color-on-brand);
     /* --color-accent (Mint Green), not --color-inverse: tokens.css now
        points --color-inverse at the same Dark Teal as --color-brand for
        the unified dark identity the brand bible calls for, which would
        make an --color-inverse ring invisible against this tag's own
        background. Mint Green also matches the deck's actual use of that
-       colour — a small decorative accent, not a page-filling tone. */
+       colour — a small decorative accent, not a page-filling tone. Every
+       tag uses this outlined pill now; there's no unhighlighted variant. */
     border: 2px solid var(--color-accent);
   }
 
