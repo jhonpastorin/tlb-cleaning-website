@@ -1200,11 +1200,15 @@ Type sizing: row titles and column headings both use `--text-big`
 default for table-ish text — a deliberate legibility call for a table
 that's meant to be a page's persuasive centerpiece, not a dense reference
 grid. The check/cross icons are sized up to match (28px, from 20px) and
-centered both axes within their desktop cell (`.comparison-table__scroll
-.comparison-table__cell` sets `display: flex; align-items/justify-content:
-center`) — the mobile stacked-card layout uses its own equal-specificity
-override of that same cell class to keep its label-left/icon-right
-`space-between` layout instead.
+centered both axes within their desktop cell via `text-align: center` +
+`vertical-align: middle` on `.comparison-table__cell` — **not**
+`display: flex`, which was tried first and broke desktop layout: flex's
+outer display value is `block`, so it pulls a `<td>` out of table-cell
+layout entirely and drops it below the row instead of beside its
+siblings. The mobile stacked-card layout still overrides this same class
+to `display: flex` + `space-between` inside its own `@media` block, which
+is fine there — at that point the whole table has already been switched
+to block layout on purpose (see below).
 
 On desktop, the table scrolls horizontally (sticky first column) if it
 overflows. On mobile (≤768px, mirrors `--bp-md`) it switches to stacked
