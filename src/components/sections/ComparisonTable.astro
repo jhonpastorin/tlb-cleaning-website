@@ -139,11 +139,15 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
 
   /* Horizontal scroll on narrow viewports rather than collapsing columns —
      a comparison table doesn't have a sensible single-column form the way
-     a card grid does. */
+     a card grid does. Border uses --color-body (darker grey), not the
+     shared --color-border-muted token other components' hairlines use —
+     that token is a light #D8D8D8, too faint to read as a real dividing
+     line on a table meant to be scanned row by row. Scoped to this
+     component only; --color-border-muted itself is untouched. */
   .comparison-table__scroll {
     overflow-x: auto;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border-muted);
+    border: 2px solid var(--color-body);
   }
 
   .comparison-table__table {
@@ -155,7 +159,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
   .comparison-table__table th,
   .comparison-table__table td {
     padding: var(--space-sm) var(--space-md);
-    border-bottom: 1px solid var(--color-border-muted);
+    border-bottom: 2px solid var(--color-body);
   }
 
   .comparison-table__table tbody tr:last-child th,
@@ -318,7 +322,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     .comparison-table__row-label {
       position: static;
       background: var(--color-surface);
-      border: 1px solid var(--color-border-muted);
+      border: 2px solid var(--color-body);
       border-radius: var(--radius-sm);
       padding: var(--space-sm) var(--space-md);
       margin-bottom: var(--space-xs);
@@ -330,7 +334,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       justify-content: space-between;
       gap: var(--space-sm);
       text-align: left;
-      border: 1px solid var(--color-border-muted);
+      border: 2px solid var(--color-body);
       border-radius: var(--radius-sm);
       padding: var(--space-sm) var(--space-md);
       margin-bottom: var(--space-xs);

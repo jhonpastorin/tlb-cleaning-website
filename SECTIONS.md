@@ -1231,6 +1231,13 @@ horizontal-scroll-only mobile treatment once an approved mobile mockup
 showed the stacked-card pattern instead — same underlying `<table>`
 markup, just a different `@media` block.
 
+Borders (the outer wrapper, row dividers, and every mobile card) use
+`var(--color-body)` at `2px`, not the shared `--color-border-muted` token
+(`#D8D8D8`) other components' hairlines use — that's too faint to read as
+a real dividing line on a table meant to be scanned row by row at a
+glance. Scoped to this component only; `--color-border-muted` itself is
+untouched everywhere else.
+
 **Wired to the homepage** — `src/pages/index.astro`, between "The why" and
 "What we do," with `heading="How TLB Cleaning compares"` (the section's
 `<h2>`) and `cornerLabel="Why TLB Cleaning is different"` (the visible
