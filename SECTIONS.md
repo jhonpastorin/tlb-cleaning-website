@@ -1237,6 +1237,18 @@ version, before landing on the single-card-per-feature shape an approved
 mockup called for — same underlying `<table>` markup throughout, just a
 different `@media` block.
 
+⚠️ **Specificity trap in the mobile `@media` block, hit three times while
+building this:** the generic `.comparison-table__table th, .comparison-table__table td
+{ display: block; ... }` reset (one class + one type selector) outranks a
+plain single-class follow-up rule on the same element — a bare
+`.comparison-table__cell { display: flex }` (or `border-bottom: none`, or
+a padding override) silently loses that tie and never applies, regardless
+of source order. Every rule meant to override that reset for `.row-label`
+or `.cell` specifically is written as `.comparison-table__table
+th.comparison-table__row-label` / `td.comparison-table__cell` (class +
+type + class) to actually outrank it — copy that shape for any future
+override in this block rather than a bare class selector.
+
 Borders (the outer wrapper, the desktop row dividers, and every mobile
 card) use `var(--color-body)` at `2px`, not the shared
 `--color-border-muted` token (`#D8D8D8`) other components' hairlines

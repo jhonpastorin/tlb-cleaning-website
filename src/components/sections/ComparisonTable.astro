@@ -338,13 +338,26 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       border-bottom: none;
     }
 
-    .comparison-table__row-label {
+    /* Both selectors below match (class + type) the specificity of the
+       generic `.comparison-table__table th, .comparison-table__table td
+       { display: block; ... }` reset a few rules up — a plain single-class
+       `.comparison-table__cell { display: flex }` LOSES that tie (a type
+       selector outweighs one fewer class) and silently stays `block`
+       regardless of source order. Found live: the icon-wrap (itself
+       `display: flex`, whose outer value is `block`) was dropping onto its
+       own line and centering within the full cell width instead of sitting
+       beside the label — same underlying mistake as the earlier
+       border-bottom fix above, just for `display` instead of a border. */
+    .comparison-table__table th.comparison-table__row-label {
       position: static;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3xs);
       background: var(--color-surface);
       padding: var(--space-sm) var(--space-md);
     }
 
-    .comparison-table__cell {
+    .comparison-table__table td.comparison-table__cell {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -354,7 +367,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       padding: var(--space-sm) var(--space-md);
     }
 
-    .comparison-table__cell--highlight {
+    .comparison-table__table td.comparison-table__cell.comparison-table__cell--highlight {
       border-top-color: var(--color-brand);
     }
 
@@ -367,10 +380,14 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     }
   }
 
-  /* mirrors --bp-sm */
+  /* mirrors --bp-sm — matches the 768px block's now-bumped specificity
+     (`.comparison-table__table th/td.comparison-table__row-label/__cell`)
+     for the same reason noted up there: a plain single-class selector here
+     would silently lose this padding override to that rule instead of
+     narrowing it further. */
   @media (max-width: 480px) {
-    .comparison-table__row-label,
-    .comparison-table__cell {
+    .comparison-table__table th.comparison-table__row-label,
+    .comparison-table__table td.comparison-table__cell {
       padding: var(--space-xs) var(--space-sm);
     }
   }
