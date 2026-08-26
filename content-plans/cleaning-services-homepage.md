@@ -309,22 +309,40 @@ end, per §13's "no secondary links" instruction).
 
 ## 8. Comparison table
 
-**Content: 🔒 blocked — zero data.** The spec's own placeholder for this
-row is literally the words "Comparison Table," with no columns, rows, or
-comparison criteria specified anywhere in the brief.
+**Content: drafted, in full — supplied directly** (not from the original
+brief, which had zero comparison criteria; real copy + desktop/mobile
+mockups were provided separately). Heading: "Why TLB Cleaning is
+different." Columns: "TLB Cleaning" (highlighted) vs. "Other Brands," TLB
+✓ on every row, Other Brands ✗ on every row.
 
-🔴 **Component gap — no table component exists in `SECTIONS.md`.**
-`ContentGrid.astro` was checked directly against this need: it's a
-free-form N-column grid of independent cells (`text`/`image`/`icon`/
-`feature`), not a row/column-aligned table with shared headers, so there's
-no way to align "feature X" consistently across multiple "plan"/competitor
-columns the way a real comparison table needs. This needs both a new
-`ComparisonTable.astro` component **and** real comparison content (TLB vs.
-competitors? plan tiers? before/after?) before it can be built — recommend
-**not** shipping a placeholder table with invented criteria, since that
-would misrepresent something never actually decided.
+| Row label | Description |
+|---|---|
+| Nine full-time cleaners employed by TLB, not subcontracted* | (The person in your home is on our team, not booked through a platform) |
+| Owned and run by local mums from the Northern Rivers | (Led by Tegan, staffed by mothers who live where they clean) |
+| Grew to nine full-time cleaners without ever advertising | (Every client so far arrived on a recommendation) |
+| You see the cleaners who work your area, by name and face, before you book | (Nine local cleaners, photographed and named, not a stock photo) |
+| Ongoing contracts with the region's leading real estate agencies* | (Our work is inspected by local property managers every week) |
 
-**Positioning:** full-width table, no imagery.
+⚠️ Two row labels carry a trailing `*` with no accompanying footnote text
+supplied — kept verbatim rather than dropped or invented; add the footnote
+once that text exists.
+
+**Component: `ComparisonTable.astro`** 🟢 — built for exactly this shape
+(§8 was originally the one gap with no working stretch at all;
+`ContentGrid.astro` was checked directly and ruled out — its free-form
+N-column cell grid can't keep "feature X" aligned down a column across
+compared entities). Now extended with an optional `description` field per
+row for the parenthetical second line this content needs.
+
+**Positioning:** full-width table, no imagery. Desktop: standard table,
+horizontal scroll if it overflows. Mobile (≤768px): stacked cards per the
+approved mobile mockup — one card for the row label/description, then a
+small bordered chip per compared column — not the horizontal-scroll-only
+treatment this component shipped with originally.
+
+**Built into the homepage** between "The why" (§7) and "What we do" (§10),
+per instruction — ahead of its position in the "Full page order" list
+below, which is updated accordingly.
 
 ---
 
@@ -567,7 +585,7 @@ band — last section before the footer.
 6. `ServiceBlocks` (list) — "What's included in every visit"
 7. `StoryMosaic` (light) — "Meet Tegan"
 8. Prose block 🔴 (dark) — "The why"
-9. Comparison table 🔴 — component doesn't exist; content doesn't exist either
+9. `ComparisonTable` 🟢 — "Why TLB Cleaning is different" (built)
 10. `TestimonialCarousel` (uniform, 2 items) — Social proof
 11. `ServiceBlocks` (list, with `href`s) — "What we do" services grid
 12. `TagCloud` — Where We Clean
@@ -578,7 +596,6 @@ band — last section before the footer.
 ## Open items before this can be built
 
 **Content, fully blocked (no copy exists):**
-- Comparison table (§8) — no columns/rows/criteria specified at all.
 - Testimonials (§9) — no quotes; needs Tegan to supply two real client
   testimonials per the brief's own sourcing instructions.
 - Tegan's pull-quote (§6) — one sentence in her own words, not yet supplied.
@@ -589,15 +606,12 @@ band — last section before the footer.
 **Content, drafted but pending Tegan's confirmation before publishing:**
 - All 6 non-branded FAQ answers (§12).
 
-**Components that don't exist yet:**
-- `ComparisonTable.astro` (§8) — genuine gap, no stretch option fits.
-- A plain single-column prose block, needed twice (§2, §7) — recommend
-  `TextBlock.astro`; `ContentGrid.astro` at `columns={1}` is a working
-  stretch in the meantime (exact for §2's light/surface case, an inset-card
-  rather than full-bleed-band look for §7's dark case).
-- A short non-numeric proof-point row (§4) — recommend `TrustBar.astro`;
-  `ContentGrid.astro` at `columns={3}` is a working stretch (boxed cards
-  with gaps, not a single hairline-divided row).
+**Components — now built:** `TextBlock.astro` (§2, §7), `TrustBar.astro`
+(§4), and `ComparisonTable.astro` (§8) all exist in
+`src/components/sections/` and are wired into `index.astro`. The
+`ContentGrid.astro`-stretch fallbacks noted earlier in this doc are no
+longer needed and are left in place above only as the reasoning trail for
+why each new component was justified.
 
 **Images needed but not supplied:** hero photo (§1 — only needed if
 building `split-single-image` rather than `minimal`), 3 persona-card photos
@@ -607,6 +621,8 @@ building `split-single-image` rather than `minimal`), 3 persona-card photos
 Type, related keywords, query fan-outs, named entities (§0).
 
 **Other open items:**
+- Comparison table (§8): two row labels carry a trailing `*` with no
+  footnote text supplied — add it once it exists.
 - Location page URLs for the 14 `TagCloud` suburb links (§11) aren't
   specified — needs the actual slug pattern for those pages.
 - `ServiceIcon.astro`'s existing icon set (§5, §10) doesn't include any

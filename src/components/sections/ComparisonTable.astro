@@ -26,6 +26,8 @@ type ComparisonValue = boolean | string;
 interface ComparisonRow {
   /** Row header, e.g. a feature name. */
   label: string;
+  /** Optional second line under `label` — a short clarifying note in parentheses, e.g. "(Led by Tegan, staffed by mothers who live where they clean)". */
+  description?: string;
   /** One value per column, in the same order as `columns`. `true`/`false` render as a check/cross icon; a string renders as its own short note (e.g. "Sometimes"). */
   values: ComparisonValue[];
 }
@@ -75,9 +77,15 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
         <tbody>
           {rows.map((row) => (
             <tr>
-              <th scope="row" class="comparison-table__row-label">{row.label}</th>
+              <th scope="row" class="comparison-table__row-label">
+                <span class="comparison-table__row-title">{row.label}</span>
+                {row.description && <span class="comparison-table__row-desc">{row.description}</span>}
+              </th>
               {row.values.map((value, i) => (
-                <td class:list={['comparison-table__cell', { 'comparison-table__cell--highlight': columns[i]?.highlight }]}>
+                <td
+                  class:list={['comparison-table__cell', { 'comparison-table__cell--highlight': columns[i]?.highlight }]}
+                  data-label={columns[i]?.label}
+                >
                   {typeof value === 'boolean' ? (
                     value ? (
                       <svg class="comparison-table__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="Yes">
@@ -160,10 +168,22 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
   }
 
   .comparison-table__row-label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .comparison-table__row-title {
     font-family: var(--font-display);
     font-weight: var(--weight-heading);
     font-size: var(--text-small);
     color: var(--color-on-surface);
+  }
+
+  .comparison-table__row-desc {
+    font-size: var(--text-small);
+    font-weight: var(--weight-body);
+    color: var(--color-body);
   }
 
   .comparison-table__col-heading {
@@ -213,10 +233,93 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     margin-top: var(--space-lg);
   }
 
-  /* mirrors --bp-sm */
-  @media (max-width: 480px) {
+  /* mirrors --bp-md — stacked cards, not horizontal scroll. Per-feature:
+     one card for the row label/description, then one small bordered "chip"
+     row per compared column (its header label pulled back in via `::before`
+     + `data-label`, since `<thead>` is visually hidden here) — matches the
+     approved mobile mockup rather than the "no sensible single-column form"
+     assumption this component shipped with originally. Still a real
+     <table> under the hood: only display/layout changes, so the row/column
+     `<th scope>` semantics screen readers rely on are untouched. */
+  @media (max-width: 768px) {
+    .comparison-table__scroll {
+      overflow-x: visible;
+      border: none;
+      border-radius: 0;
+    }
+
+    .comparison-table__table {
+      min-width: 0;
+    }
+
+    .comparison-table__table thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+
+    .comparison-table__table,
+    .comparison-table__table tbody,
+    .comparison-table__table tr,
     .comparison-table__table th,
     .comparison-table__table td {
+      display: block;
+      width: 100%;
+    }
+
+    .comparison-table__table tbody tr {
+      margin-bottom: var(--space-md);
+    }
+
+    .comparison-table__table tbody tr:last-child {
+      margin-bottom: 0;
+    }
+
+    .comparison-table__row-label {
+      position: static;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-muted);
+      border-radius: var(--radius-sm);
+      padding: var(--space-sm) var(--space-md);
+      margin-bottom: var(--space-xs);
+    }
+
+    .comparison-table__cell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      text-align: left;
+      border: 1px solid var(--color-border-muted);
+      border-radius: var(--radius-sm);
+      padding: var(--space-sm) var(--space-md);
+      margin-bottom: var(--space-xs);
+    }
+
+    .comparison-table__cell:last-child {
+      margin-bottom: 0;
+    }
+
+    .comparison-table__cell--highlight {
+      border-color: var(--color-brand);
+    }
+
+    .comparison-table__cell::before {
+      content: attr(data-label);
+      font-family: var(--font-display);
+      font-weight: var(--weight-heading);
+      font-size: var(--text-small);
+      color: var(--color-on-surface);
+    }
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .comparison-table__row-label,
+    .comparison-table__cell {
       padding: var(--space-xs) var(--space-sm);
     }
   }

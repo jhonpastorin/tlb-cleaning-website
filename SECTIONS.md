@@ -1170,7 +1170,7 @@ compared entities, which is the entire point of a comparison table.
 | `heading` | `string` | Optional. |
 | `lead` | `string` | Optional. |
 | `columns` | `{ label: string, highlight?: boolean }[]` | The compared entities (e.g. "TLB Cleaning", "Typical cleaner"). `highlight` tints that column's header/cells with the brand color. |
-| `rows` | `{ label: string, values: (boolean \| string)[] }[]` | One entry per feature. `values` aligns 1:1 with `columns` — `true`/`false` render as a check/cross icon, a string renders as its own short note (e.g. `"Sometimes"`). |
+| `rows` | `{ label: string, description?: string, values: (boolean \| string)[] }[]` | One entry per feature. `description` is an optional second line under `label` (a short clarifying note, e.g. "(Led by Tegan, staffed by mothers who live where they clean)"). `values` aligns 1:1 with `columns` — `true`/`false` render as a check/cross icon, a string renders as its own short note (e.g. `"Sometimes"`). |
 | `footnote` | `string` | Optional closing note below the table. |
 | `cta` | `ButtonData` | Optional, centered below the table. |
 
@@ -1188,17 +1188,24 @@ compared entities, which is the entire point of a comparison table.
 Built as a real `<table>`, not a div grid — this is genuinely tabular data,
 and native `<th scope="row"/"col">` semantics give screen readers the
 row/column relationship for free, the same "reach for the native element"
-call `Faq.astro` already makes with `<details>`/`<summary>`. On narrow
-viewports the table scrolls horizontally (sticky first column) rather than
-collapsing to one column — a comparison table has no sensible
-single-column form, same reasoning `PhotoGallery.astro`'s `filmstrip` and
-`ServiceBlocks.astro`'s `slider` rows already use for their own tables/rows.
+call `Faq.astro` already makes with `<details>`/`<summary>`.
 
-**Built with no content wired to a page yet.** The homepage build this was
-made for has zero comparison criteria in its content spec at all — per
-that plan's own instruction, don't ship a placeholder table with invented
-rows/columns. This component exists and is ready; add real `columns`/`rows`
-once the actual comparison content is decided.
+On desktop, the table scrolls horizontally (sticky first column) if it
+overflows. On mobile (≤768px, mirrors `--bp-md`) it switches to stacked
+cards instead — per feature: one card for the row label/description, then
+one small bordered "chip" per compared column, its header label pulled
+back in via CSS `::before` + a `data-label` attribute (the real `<thead>`
+is only visually hidden, not removed, so the table semantics screen
+readers rely on survive the layout swap). This replaced an original
+horizontal-scroll-only mobile treatment once an approved mobile mockup
+showed the stacked-card pattern instead — same underlying `<table>`
+markup, just a different `@media` block.
+
+**Wired to the homepage** — `src/pages/index.astro`'s "Why TLB Cleaning is
+different" section, between "The why" and "What we do." Two row labels
+there carry a trailing `*` with no footnote text supplied alongside them
+in the source; kept verbatim rather than dropped, `footnote` left unset —
+add the footnote text once it exists.
 
 Use this when: a page needs to compare 2+ things (competitors, plan tiers,
 before/after) feature-by-feature with a shared header row — not a free-form
