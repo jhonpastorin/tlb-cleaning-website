@@ -91,15 +91,17 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
                   data-label={columns[i]?.label}
                 >
                   {typeof value === 'boolean' ? (
-                    value ? (
-                      <svg class="comparison-table__icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="Yes">
-                        <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                    ) : (
-                      <svg class="comparison-table__icon comparison-table__icon--no" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="No">
-                        <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
-                      </svg>
-                    )
+                    <span class="comparison-table__icon-wrap">
+                      {value ? (
+                        <svg class="comparison-table__icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="Yes">
+                          <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      ) : (
+                        <svg class="comparison-table__icon comparison-table__icon--no" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="No">
+                          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+                        </svg>
+                      )}
+                    </span>
                   ) : (
                     <span class="comparison-table__note">{value}</span>
                   )}
@@ -213,18 +215,32 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
   }
 
   .comparison-table__cell {
-    /* text-align centers the icon horizontally (it's inline content);
-       vertical-align centers it within the cell's full row height. NOT
-       `display: flex` — flex's outer display value is `block`, which pulls
-       a <td> out of table-cell layout entirely and drops it below the row
-       instead of beside its siblings. Found live: that's exactly what
-       broke desktop once tried here. */
+    /* vertical-align centers the cell's whole content box within the row's
+       height — this still works with a block-level flex child (see
+       .comparison-table__icon-wrap below), it isn't limited to inline
+       content. text-align is kept as a fallback for the plain-text `note`
+       case below, which has no wrapper of its own. NOT `display: flex` on
+       this element itself — flex's outer display value is `block`, which
+       pulls a <td> out of table-cell layout entirely and drops it below
+       the row instead of beside its siblings. Found live: that's exactly
+       what broke desktop once tried here. */
     text-align: center;
     vertical-align: middle;
   }
 
   .comparison-table__cell--highlight {
     background: color-mix(in srgb, var(--color-brand) 15%, var(--color-surface));
+  }
+
+  /* A <span>, not the <td> itself, so `display: flex` is safe here — this
+     doesn't touch the cell's own table-cell layout, it just guarantees the
+     icon is pixel-centered inside it regardless of any inline-whitespace
+     quirk `text-align: center` alone was leaving on the table (a stray
+     text node from JSX formatting can visibly skew where "center" lands). */
+  .comparison-table__icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .comparison-table__icon {

@@ -1200,15 +1200,25 @@ Type sizing: row titles and column headings both use `--text-big`
 default for table-ish text — a deliberate legibility call for a table
 that's meant to be a page's persuasive centerpiece, not a dense reference
 grid. The check/cross icons are sized up to match (28px, from 20px) and
-centered both axes within their desktop cell via `text-align: center` +
-`vertical-align: middle` on `.comparison-table__cell` — **not**
-`display: flex`, which was tried first and broke desktop layout: flex's
-outer display value is `block`, so it pulls a `<td>` out of table-cell
-layout entirely and drops it below the row instead of beside its
-siblings. The mobile stacked-card layout still overrides this same class
-to `display: flex` + `space-between` inside its own `@media` block, which
-is fine there — at that point the whole table has already been switched
-to block layout on purpose (see below).
+wrapped in their own `.comparison-table__icon-wrap` `<span>` — a
+`display: flex` + centered `align-items`/`justify-content` on that inner
+span, not on `.comparison-table__cell` (the `<td>`) itself. Two things
+that were tried first and didn't work, in order:
+1. `display: flex` directly on `.comparison-table__cell` — flex's outer
+   display value is `block`, so it pulled the `<td>` out of table-cell
+   layout entirely and dropped it below the row instead of beside its
+   siblings, breaking desktop layout outright.
+2. `text-align: center` + `vertical-align: middle` on `.comparison-table__cell`
+   alone (no wrapper) — fixed the layout but the icon still rendered
+   visibly off-center, apparently thrown off by incidental inline
+   whitespace from the surrounding JSX. The `<span>` wrapper sidesteps
+   that ambiguity entirely; `vertical-align: middle` is kept on the cell
+   itself since it still governs the whole cell's content box (block-level
+   children included) within the row's height. The mobile stacked-card
+   layout still overrides `.comparison-table__cell` to `display: flex` +
+   `space-between` inside its own `@media` block — safe there, since that
+   applies to the cell as a whole flex *row* item (label vs. icon-wrap),
+   not the icon centering itself.
 
 On desktop, the table scrolls horizontally (sticky first column) if it
 overflows. On mobile (≤768px, mirrors `--bp-md`) it switches to stacked
