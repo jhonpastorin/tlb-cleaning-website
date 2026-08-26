@@ -1222,21 +1222,27 @@ that were tried first and didn't work, in order:
 
 On desktop, the table scrolls horizontally (sticky first column) if it
 overflows. On mobile (≤768px, mirrors `--bp-md`) it switches to stacked
-cards instead — per feature: one card for the row label/description, then
-one small bordered "chip" per compared column, its header label pulled
-back in via CSS `::before` + a `data-label` attribute (the real `<thead>`
-is only visually hidden, not removed, so the table semantics screen
-readers rely on survive the layout swap). This replaced an original
-horizontal-scroll-only mobile treatment once an approved mobile mockup
-showed the stacked-card pattern instead — same underlying `<table>`
-markup, just a different `@media` block.
+cards instead — one card per feature, not one card per segment: the
+border/radius/`overflow: hidden` clip live on the `<tr>` itself, and the
+row label and each compared column's value butt up against each other
+inside it with zero gap, divided only by an internal `border-top` (a
+brand-teal `border-top` on the highlighted column specifically). Each
+value row shows its column's header label via CSS `::before` +
+`data-label` on the left, the check/cross icon on the right via
+`justify-content: space-between` (the real `<thead>` is only visually
+hidden, not removed, so the table semantics screen readers rely on
+survive the layout swap). This replaced an original horizontal-scroll
+mobile treatment, then a since-corrected one-card-per-segment-with-gaps
+version, before landing on the single-card-per-feature shape an approved
+mockup called for — same underlying `<table>` markup throughout, just a
+different `@media` block.
 
-Borders (the outer wrapper, row dividers, and every mobile card) use
-`var(--color-body)` at `2px`, not the shared `--color-border-muted` token
-(`#D8D8D8`) other components' hairlines use — that's too faint to read as
-a real dividing line on a table meant to be scanned row by row at a
-glance. Scoped to this component only; `--color-border-muted` itself is
-untouched everywhere else.
+Borders (the outer wrapper, the desktop row dividers, and every mobile
+card) use `var(--color-body)` at `2px`, not the shared
+`--color-border-muted` token (`#D8D8D8`) other components' hairlines
+use — that's too faint to read as a real dividing line on a table meant
+to be scanned row by row at a glance. Scoped to this component only;
+`--color-border-muted` itself is untouched everywhere else.
 
 **Wired to the homepage** — `src/pages/index.astro`, between "The why" and
 "What we do," with `heading="How TLB Cleaning compares"` (the section's

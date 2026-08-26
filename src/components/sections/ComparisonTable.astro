@@ -311,7 +311,16 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       width: 100%;
     }
 
+    /* One bordered card per feature: the outer border/radius lives on the
+       <tr> itself (clipped with overflow:hidden), not on each segment —
+       row-label and every cell butt up against each other with zero gap,
+       divided only by an internal border-top. Matches the approved mockup:
+       a single card per feature, not three separate boxes with margins
+       between them. */
     .comparison-table__table tbody tr {
+      border: 2px solid var(--color-body);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
       margin-bottom: var(--space-md);
     }
 
@@ -319,13 +328,20 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       margin-bottom: 0;
     }
 
+    /* Base rule `.comparison-table__table th, .comparison-table__table td`
+       (a class + a type selector) outranks a plain single-class override —
+       matching that same shape here, not just `.comparison-table__row-label`/
+       `.comparison-table__cell` alone, so this border-bottom reset actually
+       wins instead of losing the specificity tie-break silently. */
+    .comparison-table__table th,
+    .comparison-table__table td {
+      border-bottom: none;
+    }
+
     .comparison-table__row-label {
       position: static;
       background: var(--color-surface);
-      border: 2px solid var(--color-body);
-      border-radius: var(--radius-sm);
       padding: var(--space-sm) var(--space-md);
-      margin-bottom: var(--space-xs);
     }
 
     .comparison-table__cell {
@@ -334,18 +350,12 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       justify-content: space-between;
       gap: var(--space-sm);
       text-align: left;
-      border: 2px solid var(--color-body);
-      border-radius: var(--radius-sm);
+      border-top: 2px solid var(--color-body);
       padding: var(--space-sm) var(--space-md);
-      margin-bottom: var(--space-xs);
-    }
-
-    .comparison-table__cell:last-child {
-      margin-bottom: 0;
     }
 
     .comparison-table__cell--highlight {
-      border-color: var(--color-brand);
+      border-top-color: var(--color-brand);
     }
 
     .comparison-table__cell::before {
