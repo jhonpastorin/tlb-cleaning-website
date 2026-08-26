@@ -1199,7 +1199,12 @@ Type sizing: row titles and column headings both use `--text-big`
 (1.125rem), one step up from this library's more common `--text-small`
 default for table-ish text — a deliberate legibility call for a table
 that's meant to be a page's persuasive centerpiece, not a dense reference
-grid.
+grid. The check/cross icons are sized up to match (28px, from 20px) and
+centered both axes within their desktop cell (`.comparison-table__scroll
+.comparison-table__cell` sets `display: flex; align-items/justify-content:
+center`) — the mobile stacked-card layout uses its own equal-specificity
+override of that same cell class to keep its label-left/icon-right
+`space-between` layout instead.
 
 On desktop, the table scrolls horizontally (sticky first column) if it
 overflows. On mobile (≤768px, mirrors `--bp-md`) it switches to stacked

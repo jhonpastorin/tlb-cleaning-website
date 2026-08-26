@@ -92,11 +92,11 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
                 >
                   {typeof value === 'boolean' ? (
                     value ? (
-                      <svg class="comparison-table__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="Yes">
+                      <svg class="comparison-table__icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="Yes">
                         <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
                       </svg>
                     ) : (
-                      <svg class="comparison-table__icon comparison-table__icon--no" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="No">
+                      <svg class="comparison-table__icon comparison-table__icon--no" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="No">
                         <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
                       </svg>
                     )
@@ -220,7 +220,17 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     background: color-mix(in srgb, var(--color-brand) 15%, var(--color-surface));
   }
 
+  /* Desktop only — mobile's own rule below overrides this to flex/
+     space-between (label left, icon right), which is deliberate there. */
+  .comparison-table__scroll .comparison-table__cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .comparison-table__icon {
+    width: 28px;
+    height: 28px;
     color: var(--color-on-surface);
   }
 
@@ -299,7 +309,11 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       margin-bottom: var(--space-xs);
     }
 
-    .comparison-table__cell {
+    /* Matches the desktop `.comparison-table__scroll .comparison-table__cell`
+       rule's specificity (two classes) so this actually wins here despite
+       coming later only in source order, not selector weight — a plain
+       `.comparison-table__cell` at one class would lose that tie-break. */
+    .comparison-table__table .comparison-table__cell {
       display: flex;
       align-items: center;
       justify-content: space-between;
