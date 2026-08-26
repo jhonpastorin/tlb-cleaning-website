@@ -311,9 +311,12 @@ end, per §13's "no secondary links" instruction).
 
 **Content: drafted, in full — supplied directly** (not from the original
 brief, which had zero comparison criteria; real copy + desktop/mobile
-mockups were provided separately). Heading: "Why TLB Cleaning is
-different." Columns: "TLB Cleaning" (highlighted) vs. "Other Brands," TLB
-✓ on every row, Other Brands ✗ on every row.
+mockups were provided separately). Section heading: "How TLB Cleaning
+compares." "Why TLB Cleaning is different" moved to the table's own
+top-left corner cell instead (`cornerLabel`), per a follow-up revision —
+two distinct headings, not a duplicate. Columns: "TLB Cleaning"
+(highlighted) vs. "Other Brands," TLB ✓ on every row, Other Brands ✗ on
+every row.
 
 | Row label | Description |
 |---|---|
@@ -331,14 +334,19 @@ once that text exists.
 (§8 was originally the one gap with no working stretch at all;
 `ContentGrid.astro` was checked directly and ruled out — its free-form
 N-column cell grid can't keep "feature X" aligned down a column across
-compared entities). Now extended with an optional `description` field per
-row for the parenthetical second line this content needs.
+compared entities). Extended twice since: an optional `description` field
+per row (the parenthetical second line this content needs), and an
+optional `cornerLabel` prop for the table's own visible top-left heading.
 
-**Positioning:** full-width table, no imagery. Desktop: standard table,
+**Positioning:** full-width table (`.container`, not the narrower
+`.container--narrow` some prose sections use — a comparison table reads
+better at the wider measure), no imagery. Desktop: standard table,
 horizontal scroll if it overflows. Mobile (≤768px): stacked cards per the
 approved mobile mockup — one card for the row label/description, then a
 small bordered chip per compared column — not the horizontal-scroll-only
-treatment this component shipped with originally.
+treatment this component shipped with originally. Row titles and column
+headings sized up a step (`--text-big`, from the more common
+`--text-small`) for a more prominent, persuasive-centerpiece read.
 
 **Built into the homepage** between "The why" (§7) and "What we do" (§10),
 per instruction — ahead of its position in the "Full page order" list
@@ -585,7 +593,7 @@ band — last section before the footer.
 6. `ServiceBlocks` (list) — "What's included in every visit"
 7. `StoryMosaic` (light) — "Meet Tegan"
 8. Prose block 🔴 (dark) — "The why"
-9. `ComparisonTable` 🟢 — "Why TLB Cleaning is different" (built)
+9. `ComparisonTable` 🟢 — "How TLB Cleaning compares" (built)
 10. `TestimonialCarousel` (uniform, 2 items) — Social proof
 11. `ServiceBlocks` (list, with `href`s) — "What we do" services grid
 12. `TagCloud` — Where We Clean

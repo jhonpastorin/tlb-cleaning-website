@@ -35,6 +35,8 @@ interface ComparisonRow {
 interface Props {
   heading?: string;
   lead?: string;
+  /** Visible text for the table's own top-left corner cell (e.g. "Why TLB Cleaning is different") — distinct from `heading`, which is the section's own <h2> above the table. Omit to keep that cell a plain sr-only "Feature" label. */
+  cornerLabel?: string;
   columns: ComparisonColumn[];
   rows: ComparisonRow[];
   /** Optional closing note below the table, e.g. a source/caveat line. */
@@ -42,7 +44,7 @@ interface Props {
   cta?: ButtonData;
 }
 
-const { heading, lead, columns, rows, footnote, cta } = Astro.props;
+const { heading, lead, cornerLabel, columns, rows, footnote, cta } = Astro.props;
 
 // Same random-suffix fix as TextBlock.astro/ServiceBlocks.astro's own
 // patch note — avoids a duplicate id if this section is ever used more
@@ -51,7 +53,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
 ---
 
 <section class="comparison-table" aria-labelledby={heading ? headingId : undefined}>
-  <div class="container container--narrow">
+  <div class="container">
     {(heading || lead) && (
       <div class="comparison-table__intro">
         {heading && <h2 id={headingId}>{heading}</h2>}
@@ -63,7 +65,9 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       <table class="comparison-table__table">
         <thead>
           <tr>
-            <th scope="col" class="comparison-table__row-label-col"><span class="sr-only">Feature</span></th>
+            <th scope="col" class="comparison-table__row-label-col">
+              {cornerLabel ? <span>{cornerLabel}</span> : <span class="sr-only">Feature</span>}
+            </th>
             {columns.map((column) => (
               <th
                 scope="col"
@@ -167,6 +171,13 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     background: var(--color-surface-muted);
   }
 
+  .comparison-table__row-label-col {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-big);
+    color: var(--color-on-surface);
+  }
+
   .comparison-table__row-label {
     display: flex;
     flex-direction: column;
@@ -176,12 +187,12 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
   .comparison-table__row-title {
     font-family: var(--font-display);
     font-weight: var(--weight-heading);
-    font-size: var(--text-small);
+    font-size: var(--text-big);
     color: var(--color-on-surface);
   }
 
   .comparison-table__row-desc {
-    font-size: var(--text-small);
+    font-size: var(--text-base);
     font-weight: var(--weight-body);
     color: var(--color-body);
   }
@@ -190,6 +201,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     text-align: center;
     font-family: var(--font-display);
     font-weight: var(--weight-heading);
+    font-size: var(--text-big);
     color: var(--color-on-surface);
     background: var(--color-surface-muted);
     white-space: nowrap;
@@ -217,7 +229,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
   }
 
   .comparison-table__note {
-    font-size: var(--text-small);
+    font-size: var(--text-base);
     color: var(--color-body);
   }
 
@@ -311,7 +323,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       content: attr(data-label);
       font-family: var(--font-display);
       font-weight: var(--weight-heading);
-      font-size: var(--text-small);
+      font-size: var(--text-base);
       color: var(--color-on-surface);
     }
   }

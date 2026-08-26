@@ -1167,8 +1167,9 @@ compared entities, which is the entire point of a comparison table.
 
 | Prop | Type | Notes |
 |---|---|---|
-| `heading` | `string` | Optional. |
+| `heading` | `string` | Optional. The section's own `<h2>` above the table. |
 | `lead` | `string` | Optional. |
+| `cornerLabel` | `string` | Optional. Visible text for the table's own top-left corner cell (e.g. "Why TLB Cleaning is different") — a second, distinct heading that lives inside the table itself, not the section's `<h2>` above it. Omit to keep that cell a plain sr-only "Feature" label. |
 | `columns` | `{ label: string, highlight?: boolean }[]` | The compared entities (e.g. "TLB Cleaning", "Typical cleaner"). `highlight` tints that column's header/cells with the brand color. |
 | `rows` | `{ label: string, description?: string, values: (boolean \| string)[] }[]` | One entry per feature. `description` is an optional second line under `label` (a short clarifying note, e.g. "(Led by Tegan, staffed by mothers who live where they clean)"). `values` aligns 1:1 with `columns` — `true`/`false` render as a check/cross icon, a string renders as its own short note (e.g. `"Sometimes"`). |
 | `footnote` | `string` | Optional closing note below the table. |
@@ -1177,6 +1178,7 @@ compared entities, which is the entire point of a comparison table.
 ```astro
 <ComparisonTable
   heading="How we compare"
+  cornerLabel="Why we're different"
   columns={[{ label: 'TLB Cleaning', highlight: true }, { label: 'Typical cleaner' }]}
   rows={[
     { label: 'Employed, not subcontracted', values: [true, false] },
@@ -1188,7 +1190,16 @@ compared entities, which is the entire point of a comparison table.
 Built as a real `<table>`, not a div grid — this is genuinely tabular data,
 and native `<th scope="row"/"col">` semantics give screen readers the
 row/column relationship for free, the same "reach for the native element"
-call `Faq.astro` already makes with `<details>`/`<summary>`.
+call `Faq.astro` already makes with `<details>`/`<summary>`. Wrapped in the
+standard `.container` (not `.container--narrow`) — a comparison table reads
+better at full section width than the 800px narrow measure some other
+sections (e.g. `Faq.astro`) use for prose.
+
+Type sizing: row titles and column headings both use `--text-big`
+(1.125rem), one step up from this library's more common `--text-small`
+default for table-ish text — a deliberate legibility call for a table
+that's meant to be a page's persuasive centerpiece, not a dense reference
+grid.
 
 On desktop, the table scrolls horizontally (sticky first column) if it
 overflows. On mobile (≤768px, mirrors `--bp-md`) it switches to stacked
@@ -1201,11 +1212,14 @@ horizontal-scroll-only mobile treatment once an approved mobile mockup
 showed the stacked-card pattern instead — same underlying `<table>`
 markup, just a different `@media` block.
 
-**Wired to the homepage** — `src/pages/index.astro`'s "Why TLB Cleaning is
-different" section, between "The why" and "What we do." Two row labels
-there carry a trailing `*` with no footnote text supplied alongside them
-in the source; kept verbatim rather than dropped, `footnote` left unset —
-add the footnote text once it exists.
+**Wired to the homepage** — `src/pages/index.astro`, between "The why" and
+"What we do," with `heading="How TLB Cleaning compares"` (the section's
+`<h2>`) and `cornerLabel="Why TLB Cleaning is different"` (the visible
+text inside the table's own top-left cell) — two distinct headings by
+design, not a duplicate. Two row labels there carry a trailing `*` with no
+footnote text supplied alongside them in the source; kept verbatim rather
+than dropped, `footnote` left unset — add the footnote text once it
+exists.
 
 Use this when: a page needs to compare 2+ things (competitors, plan tiers,
 before/after) feature-by-feature with a shared header row — not a free-form

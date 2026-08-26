@@ -150,7 +150,8 @@ const whyBody = [
 // the source with no footnote text supplied alongside it — kept verbatim
 // rather than dropped; add the footnote once that text exists.
 const comparisonTable = {
-  heading: 'Why TLB Cleaning is different',
+  heading: 'How TLB Cleaning compares',
+  cornerLabel: 'Why TLB Cleaning is different',
   columns: [{ label: 'TLB Cleaning', highlight: true }, { label: 'Other Brands' }],
   rows: [
     {
@@ -343,6 +344,7 @@ const primaryNav = [
 
     <ComparisonTable
       heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
       columns={comparisonTable.columns}
       rows={comparisonTable.rows}
     />
