@@ -31,6 +31,10 @@ interface Props {
 
 const { heading, testimonials, uniform = false } = Astro.props;
 const solo = testimonials.length <= 1;
+// Matches the client script's starting index exactly (see the script below)
+// so the server-rendered markup already reflects the middle card being
+// active/current, rather than index 0, before JS hydrates.
+const initialIndex = Math.floor((testimonials.length - 1) / 2);
 ---
 
 <section class="testimonials" aria-labelledby="testimonials-heading">
@@ -52,8 +56,24 @@ const solo = testimonials.length <= 1;
       <div class="testimonial-carousel__viewport">
         <ul class="testimonial-carousel__track" data-track>
           {testimonials.map((item, i) => (
-            <li class="testimonial-card" data-card data-index={i}>
-              <Placeholder ratio={item.avatar.ratio} label={item.avatar.label} class="testimonial-card__avatar" />
+            <li
+              class:list={['testimonial-card', {
+                'is-active': i === initialIndex,
+                'is-adjacent': Math.min(
+                  Math.abs(i - initialIndex),
+                  testimonials.length - Math.abs(i - initialIndex)
+                ) === 1,
+              }]}
+              data-card
+              data-index={i}
+            >
+              {/* Wrapper, not a class passed into Placeholder directly — see
+                  Hero.astro's note: a class on <Placeholder> lands under
+                  Placeholder's own scope, so a rule here would silently
+                  never match it. */}
+              <div class="testimonial-card__avatar">
+                <Placeholder ratio={item.avatar.ratio} label={item.avatar.label} />
+              </div>
               <p class="testimonial-card__quote-mark" aria-hidden="true">&ldquo;</p>
               <p class="testimonial-card__quote">{item.quote}</p>
               <p class="testimonial-card__name">{item.name}</p>
@@ -84,7 +104,7 @@ const solo = testimonials.length <= 1;
             data-dot
             data-index={i}
             aria-label={`Show testimonial from ${item.name}`}
-            aria-current={i === 0 ? 'true' : 'false'}
+            aria-current={i === initialIndex ? 'true' : 'false'}
           />
         ))}
       </div>
@@ -126,11 +146,22 @@ const solo = testimonials.length <= 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Half of the viewport's own padding-top below, so the arrows stay
+       level with the card's centre instead of the padded box's centre. */
+    margin-top: 20px;
   }
 
   .testimonial-carousel__viewport {
     flex: 1;
     overflow: hidden;
+    /* `overflow-x: hidden` + `overflow-y: visible` looks like the fix for
+       "clip sideways, not vertically", but per the CSS Overflow spec a
+       'visible' axis paired with a non-visible one is computed as 'auto'
+       instead — which still clips content that overflows upward (there's
+       no way to scroll to negative space). The only real fix: give this
+       box enough top padding that the avatar's ~36px protrusion (see
+       .testimonial-card__avatar) never needs to leave its bounds at all. */
+    padding-top: 40px;
   }
 
   .testimonial-carousel__track {
@@ -141,8 +172,10 @@ const solo = testimonials.length <= 1;
   }
 
   .testimonial-card {
+    /* Smaller fixed width for side cards, so the active one (below) reads
+       as clearly larger/zoomed rather than just marginally bigger. */
     flex: 0 0 auto;
-    width: min(340px, 80vw);
+    width: min(340px, 82vw);
     background: var(--color-brand);
     border-radius: var(--radius-md);
     padding: var(--space-lg) var(--space-md) var(--space-md);
@@ -152,45 +185,60 @@ const solo = testimonials.length <= 1;
     text-align: center;
     gap: var(--space-xs);
     opacity: 0.7;
-    transform: scale(0.9);
-    transition: transform var(--duration-base) var(--ease-standard), opacity var(--duration-base) var(--ease-standard);
+    transition: width var(--duration-base) var(--ease-standard),
+      transform var(--duration-base) var(--ease-standard),
+      opacity var(--duration-base) var(--ease-standard),
+      box-shadow var(--duration-base) var(--ease-standard);
   }
 
   .testimonial-card.is-adjacent {
     opacity: 0.85;
-    transform: scale(0.94);
   }
 
   .testimonial-card.is-active {
+    /* Genuinely wider (more room for the quote), plus a slight scale for
+       the "zoom" pop on top of that. */
+    width: min(480px, 92vw);
+    transform: scale(1.04);
     opacity: 1;
-    transform: scale(1.08);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
   }
 
-  /* Solo (1 testimonial): a standalone card, not a scaled-up carousel slide —
-     there's nothing else to be emphasized relative to. */
+  /* Solo (1 testimonial): a standalone card, not a carousel slide — there's
+     nothing else to be emphasized relative to. */
   .testimonial-carousel--solo .testimonial-card {
     width: min(640px, 90vw);
-  }
-
-  .testimonial-carousel--solo .testimonial-card.is-active {
-    transform: none;
   }
 
   /* Uniform: every card the same size/opacity regardless of is-active/is-adjacent — the slider/arrows/dots keep working exactly the same, only the emphasis styling is neutralized. */
   .testimonial-carousel--uniform .testimonial-card,
   .testimonial-carousel--uniform .testimonial-card.is-active,
   .testimonial-carousel--uniform .testimonial-card.is-adjacent {
+    width: min(420px, 88vw);
     opacity: 1;
-    transform: scale(1);
+    transform: none;
     box-shadow: none;
+  }
+
+  @media (max-width: 768px) {
+    .testimonial-carousel--uniform .testimonial-card,
+    .testimonial-carousel--uniform .testimonial-card.is-active {
+      width: min(280px, 78vw);
+    }
   }
 
   .testimonial-card__avatar {
     width: 72px;
+    height: 72px;
+    flex-shrink: 0;
     border-radius: 50%;
-    margin-top: -48px;
+    /* Exactly half the circle (36px, half of 72px) sits above the card's
+       top edge: the card's own padding-top (--space-lg, 40px) is how far
+       down this element would normally sit, so this margin needs to cancel
+       that AND pull it up another half-diameter — -(40 + 36) = -76px. */
+    margin-top: -76px;
     border: 4px solid var(--color-brand);
+    overflow: hidden;
   }
 
   .testimonial-card__quote-mark {
@@ -240,7 +288,11 @@ const solo = testimonials.length <= 1;
   /* mirrors --bp-md */
   @media (max-width: 768px) {
     .testimonial-card {
-      width: min(280px, 78vw);
+      width: min(220px, 70vw);
+    }
+
+    .testimonial-card.is-active {
+      width: min(320px, 88vw);
     }
   }
 </style>
@@ -259,15 +311,18 @@ const solo = testimonials.length <= 1;
     const prevBtn = carousel.querySelector<HTMLButtonElement>('[data-prev]');
     const nextBtn = carousel.querySelector<HTMLButtonElement>('[data-next]');
 
-    let index = 0;
+    // Start on the middle card, not the first — index 0 would open with a
+    // neighbor peeking on the right but nothing on the left, instead of the
+    // symmetric "active card centered, one neighbor each side" look.
+    let index = Math.floor((cards.length - 1) / 2);
 
     function render() {
       if (!track || !viewport || cards.length === 0) return;
 
-      const active = cards[index];
-      const target = viewport.clientWidth / 2 - (active.offsetLeft + active.offsetWidth / 2);
-      track.style.transform = `translateX(${target}px)`;
-
+      // Classes toggle BEFORE the offset math below: is-active now changes
+      // actual card width (not just a transform), so offsetLeft/offsetWidth
+      // must be read after the browser reflows with the new class, not
+      // before — otherwise the centering math is one step stale.
       cards.forEach((card, i) => {
         const distance = Math.min(
           Math.abs(i - index),
@@ -276,6 +331,20 @@ const solo = testimonials.length <= 1;
         card.classList.toggle('is-active', distance === 0);
         card.classList.toggle('is-adjacent', distance === 1);
       });
+
+      // getBoundingClientRect, not offsetLeft/offsetWidth: offsetLeft is
+      // relative to the element's offsetParent, which — since nothing here
+      // (track/viewport/cards) sets `position` — resolves all the way up
+      // to <body>, not the viewport. That silently centered the active
+      // card against the wrong reference point. Real on-screen rects sidestep
+      // that entirely, and stay correct however the page around this
+      // section is laid out.
+      const active = cards[index];
+      const viewportRect = viewport.getBoundingClientRect();
+      const activeRect = active.getBoundingClientRect();
+      const currentX = new DOMMatrixReadOnly(getComputedStyle(track).transform).m41;
+      const target = currentX + (viewportRect.left + viewportRect.width / 2) - (activeRect.left + activeRect.width / 2);
+      track.style.transform = `translateX(${target}px)`;
 
       dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === index)));
     }
