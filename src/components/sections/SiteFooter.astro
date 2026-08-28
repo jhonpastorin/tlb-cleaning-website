@@ -11,6 +11,7 @@
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
 import type { NavItem, ButtonData } from '../../data/types';
+import type { ImageMetadata } from 'astro';
 
 type SocialPlatform = 'facebook' | 'instagram' | 'linkedin' | 'x' | 'youtube';
 
@@ -32,7 +33,7 @@ interface NewsletterConfig {
 }
 
 interface Props {
-  logo: { label: string };
+  logo: { label: string; src?: ImageMetadata };
   /** Short bold line under the logo, e.g. "For every home, every need." Optional. */
   brandHeading?: string;
   /** Paragraph continuing the brandHeading thought. Optional. */
@@ -67,7 +68,7 @@ const {
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
       <div class="site-footer__logo">
-        <Placeholder ratio="4/1" label={logo.label} />
+        <Placeholder ratio="6554/3812" label={logo.label} src={logo.src} />
       </div>
 
       {(brandHeading || brandBody) && (
@@ -209,7 +210,10 @@ const {
   }
 
   .site-footer__logo {
-    width: 140px;
+    /* Narrower than the header's width — this is the stacked badge+wordmark
+       (~1.7:1), not the wide horizontal lockup, so the same 200px would make
+       it noticeably taller than the rest of the brand column. */
+    width: 160px;
     margin-bottom: var(--space-sm);
   }
 

@@ -79,6 +79,12 @@ const { ratio = '4/3', label, src, eager = false, caption, class: className } = 
   .placeholder--image {
     border: none;
     padding: 0;
+    /* Photos are opaque and fully cover this box, so the base .placeholder
+       background never shows through them — but an asset with real
+       transparency (e.g. a logo PNG) does let it bleed through wherever
+       it's see-through. Clear it here so those assets render on whatever
+       sits behind this component, not a Cream box baked into it. */
+    background: transparent;
   }
 
   .placeholder__img {

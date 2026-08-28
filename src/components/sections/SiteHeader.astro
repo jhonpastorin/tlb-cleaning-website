@@ -8,9 +8,10 @@
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
 import type { NavItem, MegaMenuNavItem, ButtonData } from '../../data/types';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
-  logo: { label: string };
+  logo: { label: string; src?: ImageMetadata };
   primaryNav: NavItem[];
   serviceNav: MegaMenuNavItem[];
   /** Optional second CTA, rendered before `cta` (left of it, both desktop
@@ -33,7 +34,7 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
   <div class="site-header__bar site-header__bar--top">
     <div class="container site-header__row">
       <a href="/" class="site-header__logo" aria-label={logo.label}>
-        <Placeholder ratio="4/1" label={logo.label} />
+        <Placeholder ratio="7006/1564" label={logo.label} src={logo.src} eager />
       </a>
 
       <button
@@ -100,9 +101,9 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
 
         <div class="site-header__ctas">
           {secondaryCta && (
-            <Button label={secondaryCta.label} href={secondaryCta.href} variant={secondaryCta.variant ?? 'inverse'} size="sm" />
+            <Button label={secondaryCta.label} href={secondaryCta.href} variant={secondaryCta.variant ?? 'surface'} size="sm" />
           )}
-          <Button label={cta.label} href={cta.href} variant="brand" size="sm" />
+          <Button label={cta.label} href={cta.href} variant="surface" size="sm" />
         </div>
       </nav>
     </div>
@@ -169,7 +170,7 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
   }
 
   .site-header__bar--top {
-    background: var(--color-surface);
+    background: var(--color-brand);
   }
 
   .site-header__bar--services {
@@ -185,7 +186,7 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
   }
 
   .site-header__logo {
-    width: 140px;
+    width: 200px;
     flex-shrink: 0;
   }
 
@@ -199,7 +200,7 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
   .site-header__toggle-bar {
     width: 24px;
     height: 2px;
-    background: var(--color-on-surface);
+    background: var(--color-accent);
     display: block;
   }
 
@@ -222,7 +223,7 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    color: var(--color-on-surface);
+    color: var(--color-accent);
   }
 
   .chevron {
@@ -398,6 +399,10 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
 
   /* mirrors --bp-nav */
   @media (max-width: 900px) {
+    .site-header__logo {
+      width: 150px;
+    }
+
     .site-header__toggle {
       display: flex;
     }
@@ -418,6 +423,16 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
       padding: var(--space-md);
       border-top: 1px solid var(--color-border-muted);
       display: none;
+    }
+
+    /* The collapsed top bar is dark now (.site-header__bar--top), but this
+       dropdown panel keeps its original light surface — mega-menu/accordion
+       content below (.mega-col, .mega-view-all, etc.) is styled for a light
+       backdrop and isn't touched here. So the primary nav links need their
+       pre-dark-header color back once they're rendered inside this light
+       panel, rather than inheriting the new accent color meant for the bar. */
+    .site-header__list a {
+      color: var(--color-on-surface);
     }
 
     .site-header__nav.is-open {

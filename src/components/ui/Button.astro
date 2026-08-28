@@ -3,7 +3,9 @@
 //  - brand          yellow fill / charcoal text   -> header CTA, PathwayCards CTAs
 //  - inverse        charcoal fill / white text    -> Hero "Why choose Maple?"
 //  - inverse-accent charcoal fill / yellow text   -> StatBand "Submit a Referral"
-//  - surface        white fill / charcoal text    -> StatBand "Not Quite Ready?"
+//  - surface        Dark Teal fill / off-white text, Mint ring + glow, hovers
+//                    to a solid Mint fill -> SiteHeader CTAs (a same-Dark-Teal
+//                    band needed a CTA that still visibly lifts off it)
 // All four hover to the same charcoal/white pair from theme_button_defaults,
 // except variants that already rest there, which invert to the surface pair.
 type Variant = 'brand' | 'inverse' | 'inverse-accent' | 'surface';
@@ -53,7 +55,9 @@ const Tag = href ? 'a' : 'button';
     white-space: normal;
     transition: background-color var(--duration-fast) var(--ease-standard),
       color var(--duration-fast) var(--ease-standard),
-      border-color var(--duration-fast) var(--ease-standard);
+      border-color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard);
   }
 
   .btn--md {
@@ -105,13 +109,21 @@ const Tag = href ? 'a' : 'button';
   }
 
   .btn--surface {
+    /* Off White fill — reads clearly on the dark band it sits on (SiteHeader's
+       top bar), with the Mint ring + glow doing the rest of the "pop". */
     background: var(--color-surface);
     color: var(--color-on-surface);
-    border-color: var(--color-surface);
+    border-color: var(--color-accent);
+    box-shadow: 0 2px 12px color-mix(in srgb, var(--color-accent) 45%, transparent);
   }
   .btn--surface:hover {
-    background: var(--color-btn-hover-bg);
-    color: var(--color-btn-hover-text);
-    border-color: var(--color-btn-hover-bg);
+    /* Inverts to a solid Mint fill on hover — the ring "fills in". Dark Teal
+       text here, not off-white: Mint is too light for white/off-white text
+       to stay readable against it. */
+    background: var(--color-accent);
+    color: var(--color-on-surface);
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 18px color-mix(in srgb, var(--color-accent) 65%, transparent);
+    transform: translateY(-1px);
   }
 </style>
