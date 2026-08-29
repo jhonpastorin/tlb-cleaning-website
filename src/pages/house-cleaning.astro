@@ -1,0 +1,501 @@
+---
+// House cleaning page, built from content-plans/home-cleaning.md — section
+// choices, positioning, and every "don't invent this" call trace back to
+// that document. See its "Open items" list for everything flagged below.
+//
+// Ships at /house-cleaning/ per the plan's §0 slug ruling; the plan file is
+// named home-cleaning.md after the brief's own title, not after the slug.
+//
+// Sections blocked on content that doesn't exist yet are handled two ways:
+//   - §8 (before/after images), §9 (James video) and §11 (testimonials) are
+//     built as RESERVED SLOTS — labelled Placeholder frames and bracketed
+//     [TBC] briefing text. Obviously unfinished on sight, zero layout shift
+//     when the real assets and quotes land.
+//   - §10 (the "how we compare" table) is NOT built. The brief supplies no
+//     heading, columns or rows for it at all, so there is no shape to hold
+//     open. Not to be confused with the inclusions table at §5 below, which
+//     is a different table with content the brief does supply.
+// Never fill a reserved slot with invented photos, quotes or names — those
+// are outward-facing trust claims, not filler.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import PhotoGallery from '../components/sections/PhotoGallery.astro';
+import VideoFeature from '../components/sections/VideoFeature.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+// Site chrome (header nav, mega-menus, footer links/contact) — shared with
+// index.astro, see src/data/navigation.ts.
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+
+// §0 Page metadata — title tag and description drafted in full.
+const pageMeta = {
+  title: 'House Cleaning Services - Regular Cleans | TLB Cleaning',
+  description:
+    'Regular house cleaning from local mums you actually know. Same cleaner every visit, police checked and insured. Get a quote in under a minute.',
+  // §0: slug ruled as /house-cleaning/. Domain is still a placeholder,
+  // same as index.astro — confirm before launch.
+  canonical: 'https://example.com/house-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero — copy drafted in full. No hero photo supplied, so shipping
+// `minimal` per the plan's own recommendation rather than a dashed
+// placeholder standing in for a real photo; swap to `split-single-image`
+// + a real `image` once one is sourced.
+//
+// The CTA lives here rather than on the definition block below (§2), per
+// the plan's §1 ruling: Hero.astro's `cta` prop is required, and two
+// identical buttons a screen apart would be worse than one.
+const hero = {
+  headingLines: ['House cleaning you never have to chase.'],
+  lead: 'The same local team, on the same day every time, so you can stop wondering whether anyone is turning up.',
+  cta: quoteCta,
+};
+
+// §4 Trust bar — drafted in full; positioned directly under the hero per
+// the spec's own text, not its table row order (see the plan's "order
+// conflict" note).
+//
+// Capitalisation normalised to sentence case across all three: the source
+// capitalises only the third. Flagged in the plan as an open item — this is
+// the presentational fix, not a copy change.
+//
+// NOTE the plan flags that this wording differs from the homepage's own
+// trust bar ("9 full-time local cleaners, employed not subcontracted").
+// Kept as the brief wrote it; reconcile the two pages before launch.
+const trustBarItems = [
+  '9 full-time local team members',
+  'Every client came from a recommendation',
+  'Trusted by leading Northern Rivers real estate agencies',
+];
+
+// §2 Definition paragraph — drafted in full. This is the page's
+// answer-target block for `house cleaning services`, so it stays the first
+// prose after the hero. `cta` deliberately unset (see §1 note above).
+const definitionBody: TextBlockBody[] = [
+  'Regular home cleaning services are ongoing visits on a set schedule, weekly, fortnightly or monthly, that keep a lived-in house on top of things rather than resetting it.',
+  'TLB Cleaning provides house cleaning services across the Northern Rivers and the Southern Gold Coast.',
+];
+
+// §3 Situation cards — card copy drafted verbatim, split into title (the
+// opening first-person sentence) + description (the rest) per the plan.
+//
+// Three things below are NOT from the spec and are flagged in the plan as
+// open items: the section heading/accent lines, the per-card CTA labels,
+// and the card images. The headings are placeholder structural copy so the
+// section renders; the CTA labels are plain wayfinding, not marketing copy.
+const pathwayCards = {
+  heading: 'Not quite what you need?',
+  headingAccent: 'Start here instead.',
+  cards: [
+    {
+      number: 1,
+      image: { ratio: '4/3', label: 'Lived-in kitchen before a deep clean' },
+      title: "It's got away from me a bit.",
+      description:
+        'Start with a one-off deep clean, then set up a fortnightly. That way round works out cheaper than doing it the other way.',
+      cta: { label: 'Deep cleaning', href: '/deep-cleaning/' },
+    },
+    {
+      number: 2,
+      image: { ratio: '4/3', label: 'Empty room on moving-out day' },
+      title: "I'm moving out.",
+      description:
+        'That is an end of lease clean, measured against an inspection rather than your own standard. Different page.',
+      cta: { label: 'End of lease cleaning', href: '/end-of-lease-cleaning/' },
+    },
+    {
+      number: 3,
+      // §0: /senior-home-cleaning/ is the domestic seniors page. It is NOT
+      // the same page as Commercial → "Aged care, retirement and seniors"
+      // (/aged-care-retirement-and-seniors/), which is cleaning aged-care
+      // premises. It currently has no mega-menu entry — open item.
+      image: { ratio: '4/3', label: "Older person's living room" },
+      title: "It's for Mum or Dad's place.",
+      description:
+        'We do regular cleans for older clients, including through Home Care Packages and DVA.',
+      cta: { label: 'Senior home cleaning', href: '/senior-home-cleaning/' },
+    },
+  ],
+};
+
+// §5 + §5b "What's included in every visit" — ONE ComparisonTable covering
+// the room list and both scope lists, replacing the earlier ServiceBlocks
+// `list` + ContentGrid pair.
+//
+// COLUMN DESIGN — one column, three states. ComparisonTable's `values`
+// accepts a string as well as a boolean, and a cell rendered as a short
+// note is what carries the middle state here:
+//
+//   ✓                    → in every clean, at no extra cost
+//   "Quoted separately"  → we do it, but it's priced separately
+//   ✗                    → we don't do it at all
+//
+// A second "Quoted separately" column was tried first and dropped: it put a
+// CHECK MARK under a negative heading on the exclusion rows (a tick meaning
+// "yes, we don't do this"), and spent a full column on crosses. Folding
+// that state into the cell text keeps the "costs extra is not the same as
+// we don't do this" distinction the plan calls out, in half the width.
+//
+// The five rooms carry their task lists as `description`, so no detail from
+// the brief's room-by-room list is lost in the move to a table.
+const inclusionsTable = {
+  heading: "What's included in every visit.",
+  lead: "What's included in every regular clean, and what sits outside it.",
+  cornerLabel: 'Room by room',
+  columns: [{ label: 'Every regular clean', highlight: true }],
+  rows: [
+    {
+      label: 'Kitchen',
+      description:
+        'Benchtops, splashback, stovetop, sink and taps, cupboard fronts, microwave outside, bin, floors.',
+      values: [true],
+    },
+    {
+      label: 'Bathrooms and toilets',
+      description: 'Shower, screen, bath, basin, taps, mirror, toilet inside and out, floors.',
+      values: [true],
+    },
+    {
+      label: 'Bedrooms and living areas',
+      description: 'Beds made, surfaces dusted, mirrors, skirting boards spot-cleaned, vacuum and mop.',
+      values: [true],
+    },
+    {
+      // ⚠️ This is the laundry ROOM. The brief also lists "laundry" (washing
+      // your clothes) as NOT included further down — two different things
+      // that would read as a flat contradiction if both rows just said
+      // "Laundry". The other row is disambiguated to "Washing, drying and
+      // folding clothes" for exactly this reason; don't shorten it back.
+      label: 'Laundry room',
+      description: 'Sink, benches, appliance fronts, floors.',
+      values: [true],
+    },
+    {
+      label: 'Throughout',
+      description: 'Cobwebs, switches and handles, all floors.',
+      values: [true],
+    },
+    { label: 'Inside the oven', values: ['Quoted separately'] },
+    { label: 'Carpet steam cleaning', values: ['Quoted separately'] },
+    { label: 'Windows', values: ['Quoted separately'] },
+    { label: 'Blinds', values: ['Quoted separately'] },
+    { label: 'Inside the fridge', values: ['Quoted separately'] },
+    { label: 'Dishes', values: [false] },
+    { label: 'Washing, drying and folding clothes', values: [false] },
+    { label: 'Tidying or organising belongings', values: [false] },
+    { label: 'Moving heavy furniture', values: [false] },
+  ],
+  footnote:
+    "A cross means it's not something we take on. Anything marked quoted separately we're happy to do — just ask when you book and we'll price it in.",
+};
+
+// §6 "The first one takes longer." — drafted in full.
+const firstVisitBody: TextBlockBody[] = [
+  "We start from wherever the house is, so the first visit is longer than the ones after it and priced differently. If it has been a while, a one-off deep clean first works out better value than paying for a long first regular clean. We'll tell you honestly which one you need.",
+];
+
+// §7 "The why" — drafted in full, including the four-item list that is the
+// rhetorical engine of the block. TextBlock's `body` takes a
+// `{ list: [...] }` entry so the list sits between the lead-in line and the
+// closing paragraphs, in source order (see TextBlock.astro's own note).
+const whyBody: TextBlockBody[] = [
+  'They leave because:',
+  {
+    list: [
+      'The messages stopped getting answered.',
+      'The good one moved away, or got busy.',
+      'Month four arrived and the bathroom quietly stopped being done properly.',
+      'Nobody wanted to be the person who raised it. So it went back on your list.',
+    ],
+  },
+  "What you want isn't a spotless house. It's to stop thinking about it.",
+  "So we built the opposite. Nine local cleaners, employed properly, still here next year. Nothing to chase, nothing to raise at month four. We've got you covered.",
+];
+
+// §8 Credibility signals — before/after images from genuine TLB jobs.
+//
+// Built as reserved SLOTS, not content: no `src` on any frame, so each
+// renders Placeholder's dashed box with its label visible. That label is
+// the photo brief — whoever sources these can shoot straight from it, and
+// there is zero layout shift when the real images land.
+//
+// `filmstrip` and not `grid`: it's the only PhotoGallery variant whose
+// per-image `caption` actually renders, and the Before/After labelling is
+// the whole point here. `grid` silently ignores `caption`, which would
+// leave the pairs unlabelled.
+//
+// ⚠️ The brief's constraints are non-negotiable when these are filled:
+// genuine TLB jobs, client permission obtained, no identifying detail.
+// Do not substitute stock photography — a fabricated "before and after
+// from a real job" is a false trust claim, not filler.
+//
+// ⚠️ If the photos come back as single composite before/after frames
+// (the pairing done in the image file rather than the layout), switch to
+// variant="grid" and drop the captions — see the plan's §8 option 2.
+//
+// ⚠️ Known tension, spotted by looking at the rendered page rather than
+// reading the component: `filmstrip` grows the ACTIVE frame and shrinks
+// the rest, so a Before and its own After are never the same size at the
+// same moment — which is exactly the comparison a before/after pair is
+// asking the viewer to make. It's still the best fit of what exists
+// (nothing in SECTIONS.md pairs two images as one unit, and `grid` throws
+// the captions away), but if the pairing has to read at a glance, this
+// wants a real paired component rather than a variant swap.
+//
+// Heading/lead are NOT in the brief ("Credibility signals" is a section
+// label, not copy) — placeholder structural copy, flagged as an open item.
+const credibilityImages = [
+  { ratio: '3/4', label: 'Kitchen benchtop and splashback, before the clean', caption: 'Before' },
+  { ratio: '3/4', label: 'Same kitchen benchtop and splashback, after the clean', caption: 'After' },
+  { ratio: '3/4', label: 'Shower screen and tiles, before the clean', caption: 'Before' },
+  { ratio: '3/4', label: 'Same shower screen and tiles, after the clean', caption: 'After' },
+];
+
+// §9 Hero video — James testimonial.
+//
+// Reserved slot, same reasoning: VideoPlaceholder holds a 16/9 frame with
+// a play affordance and the label visible, so the real embed drops in
+// later without touching layout.
+//
+// ⚠️ headingLines is placeholder copy. The brief's own row reads "Hero
+// video" / "James video testimonial" — a section label and an asset note,
+// neither of which is page copy. Needs a real H2.
+//
+// ⚠️ "James" is named with no other context in the brief — confirm who he
+// is (regular client? how long?) before the label ships as alt text.
+const heroVideo = {
+  headingLines: ['A word from James.'],
+  video: {
+    ratio: '16/9',
+    label: 'James, regular TLB client, talking to camera about his cleans',
+  },
+};
+
+// §11 Social proof — section built, but every quote/name/role below is a
+// bracketed [TBC] briefing slot, NOT a real client testimonial. Same
+// convention index.astro uses for its own testimonial section: the visible
+// text reads as obviously unfinished, so it can't be mistaken for a real
+// customer saying a real thing. Swap each slot for a real quote as it's
+// collected; never fill these with invented names or words.
+//
+// Two slots, not the homepage's three, because the brief specifies exactly
+// two jobs for this page's testimonials — tenure and the switcher story.
+// The homepage's third slot has no brief-specified angle, so there's no
+// third story to reserve here.
+//
+// `uniform` because with exactly 2 items the carousel renders no arrows or
+// dots anyway (count decides the look), and equal sizing reads better than
+// one card artificially scaled up over the other.
+const testimonials = [
+  {
+    quote:
+      "[TBC — ask Teagan for a quote from a long-standing client, naming how long they've been with TLB. Tenure is the proof this page needs.]",
+    name: '[Client name — TBC]',
+    role: '[Suburb / property type — TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Long-standing TLB client' },
+  },
+  {
+    quote:
+      "[TBC — ask Teagan for a quote from a client who'd been through several cleaners before TLB. The category evidence shows churn is the norm, so the switcher story is what converts.]",
+    name: '[Client name — TBC]',
+    role: '[Suburb / property type — TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Client who switched to TLB after other cleaners' },
+  },
+];
+
+// §12 Where We Clean — drafted in full. Location page URLs aren't specified
+// (open item); `/locations/<slug>/` mirrors the pattern index.astro already
+// guesses — confirm the real one before launch.
+//
+// NOTE this 12-suburb list differs from the homepage's 14 (it drops Ocean
+// Shores and Alstonville) and from the header's "Areas we clean" menu
+// (which adds Evans Head and Casino). Flagged in the plan; kept as this
+// brief wrote it rather than silently reconciled.
+//
+// Tweed Heads and Coolangatta are highlighted as the border-crossing anchor
+// towns, per the plan's suggestion.
+const locationTags = [
+  { label: 'Byron Bay', href: '/locations/byron-bay/' },
+  { label: 'Ballina', href: '/locations/ballina/' },
+  { label: 'Lennox Head', href: '/locations/lennox-head/' },
+  { label: 'Brunswick Heads', href: '/locations/brunswick-heads/' },
+  { label: 'Tweed Heads', href: '/locations/tweed-heads/', isHighlighted: true },
+  { label: 'Kingscliff', href: '/locations/kingscliff/' },
+  { label: 'Pottsville', href: '/locations/pottsville/' },
+  { label: 'Murwillumbah', href: '/locations/murwillumbah/' },
+  { label: 'Lismore', href: '/locations/lismore/' },
+  { label: 'Coolangatta', href: '/locations/coolangatta/', isHighlighted: true },
+  { label: 'Burleigh Heads', href: '/locations/burleigh-heads/' },
+  { label: 'Palm Beach', href: '/locations/palm-beach/' },
+];
+
+// §13 Branded FAQs — all four drafted in full, nothing blocked.
+const brandedFaqItems = [
+  {
+    question: "Who's in my house when I'm at work?",
+    answer:
+      "Someone you've met. We'll introduce the cleaner looking after your home before the first visit, so you never open the door to a stranger. How we get in is agreed when you book.",
+  },
+  {
+    question: 'Why not just find a cleaner through a local Facebook group?',
+    answer:
+      "Plenty do, and it works until they get sick, go on holiday or move on. We're nine employed cleaners, so there's cover, and we're still the same local mums you'd have found there anyway.",
+  },
+  {
+    question: "Can I skip a clean when we're away?",
+    answer:
+      "Yes, just let us know ahead of time and we'll move it or skip it. Your spot stays yours. Most families skip a fortnight over Christmas and pick straight back up in January.",
+  },
+  {
+    question: 'What happens at the first visit?',
+    answer:
+      "It takes longer than the ones after it, because we're starting from wherever the house is. We'll walk through with you, agree the priorities, and set the rhythm from there.",
+  },
+];
+
+// §14 Non-branded FAQs — 2 of 5 ship. The other three ("Is there a minimum
+// booking?", "What if my cleaner is sick or on holiday?", "Do you bring your
+// own products and equipment?") each carry an explicit [TLB TO CONFIRM]
+// bracket in the brief AND are operational-policy claims a client could hold
+// TLB to — a minimum charge, a cover guarantee, what products staff carry.
+// Held back rather than published unconfirmed; the drafted text for all
+// three is in content-plans/home-cleaning.md §14, ready to drop in.
+//
+// The minimum-booking one additionally never states TLB's own minimum as
+// drafted, so it doesn't yet answer its own question.
+const nonBrandedFaqItems = [
+  {
+    question: 'Do I need to tidy up before you arrive?',
+    answer:
+      "Tidy, don't clean. Clearing benchtops, floors and vanities makes a real difference, because time spent moving your things is time not spent cleaning. Put away clothes, toys, dishes and anything fragile. Leave the actual cleaning to us. If the house is cluttered on the day we clean around it, and some of the detail gets missed.",
+  },
+  {
+    question: 'Can I ask for particular things to be prioritised each visit?',
+    answer:
+      "Yes, and most regular clients do. Tell us what matters most in your house, whether that's the bathrooms, the floors or the kitchen, and we'll work to that order every visit. If your priorities change, message us and we'll update the notes on your booking.",
+  },
+];
+
+// §15 Closing CTA — the brief never drafted this paragraph ("one paragraph,
+// one button, no secondary links" describes only the shape). Rather than
+// invent new marketing copy, this echoes the hero's own already-approved
+// lines — placeholder pending real closing copy, same call index.astro
+// makes for its own closing block.
+const closingCta = {
+  heading: hero.headingLines.join(' '),
+  lead: hero.lead,
+  cta: hero.cta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero variant="minimal" headingLines={hero.headingLines} lead={hero.lead} cta={hero.cta} />
+
+    <TrustBar items={trustBarItems} />
+
+    <TextBlock theme="light" body={definitionBody} />
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ComparisonTable
+      heading={inclusionsTable.heading}
+      lead={inclusionsTable.lead}
+      cornerLabel={inclusionsTable.cornerLabel}
+      columns={inclusionsTable.columns}
+      rows={inclusionsTable.rows}
+      footnote={inclusionsTable.footnote}
+    />
+
+    <TextBlock theme="light" align="left" heading="The first one takes longer." body={firstVisitBody} />
+
+    <TextBlock theme="dark" align="left" heading="Nobody leaves a cleaner over the cleaning." body={whyBody} />
+
+    <PhotoGallery
+      variant="filmstrip"
+      heading="The difference, on real jobs."
+      lead="Before and after from genuine TLB cleans, shared with our clients' permission."
+      images={credibilityImages}
+    />
+
+    <VideoFeature headingLines={heroVideo.headingLines} video={heroVideo.video} />
+
+    {/* §10 comparison table sits here in the plan's page order. Not built —
+        the brief supplies no heading, columns or rows for it at all, so
+        there is no shape to reserve the way §8/§9/§11 reserve theirs.
+        See content-plans/home-cleaning.md §10 for what it needs, including
+        why the homepage's rows shouldn't just be copied across. */}
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+
+    <TagCloud
+      heading="Where We Clean"
+      subheading="From Ballina to Burleigh, and both sides of the border."
+      tags={locationTags}
+      note={[]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

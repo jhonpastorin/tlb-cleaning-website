@@ -35,6 +35,10 @@ interface Props {
   variant?: Variant;
   /** primary only. */
   logo?: ImageBlock;
+  /** Short eyebrow label rendered above the <h2>, outside it — e.g. "MEET THE
+   *  TEAM". Same prop and same reasoning as Hero.astro's `kicker`; added at
+   *  the same time, for the Why TLB page which needs one in both places. */
+  kicker?: string;
   heading: string;
   lead?: string;
   cta: CtaAction;
@@ -50,6 +54,7 @@ interface Props {
 }
 
 const {
+  kicker,
   variant = 'primary',
   logo,
   heading,
@@ -73,7 +78,8 @@ const {
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
           </div>
         )}
-        <h2 id="cta-heading">{heading}</h2>
+        {kicker && <p class="cta__kicker">{kicker}</p>}
+          <h2 id="cta-heading">{heading}</h2>
         {lead && <p class="lead">{lead}</p>}
         <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
       </div>
@@ -92,6 +98,7 @@ const {
     <div class="container">
       <div class="cta__band">
         <div class="cta__copy">
+          {kicker && <p class="cta__kicker">{kicker}</p>}
           <h2 id="cta-heading">{heading}</h2>
           {lead && <p class="lead">{lead}</p>}
         </div>
@@ -111,7 +118,8 @@ const {
 {variant === 'form' && (
   <section class="cta cta--form" aria-labelledby="cta-heading">
     <div class="container cta__form-inner">
-      <h2 id="cta-heading">{heading}</h2>
+      {kicker && <p class="cta__kicker">{kicker}</p>}
+          <h2 id="cta-heading">{heading}</h2>
       {lead && <p class="lead">{lead}</p>}
 
       <form class="cta__form" action={action} method={method}>
@@ -124,6 +132,18 @@ const {
 )}
 
 <style>
+  /* Matches Hero.astro's .hero__kicker treatment — same idea, same visual
+     language, deliberately not shared code for one shared declaration block. */
+  .cta__kicker {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-small);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    opacity: 0.75;
+  }
+
   /* ---- shared ---- */
 
   .cta {

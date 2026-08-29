@@ -135,6 +135,27 @@ Use this when: any section needs a star rating — currently
 
 ---
 
+## Shared page data — `src/data/`
+
+Not components — the content every page repeats. `types.ts` holds the
+structural prop shapes the components read (`NavItem`, `ImageBlock`,
+`ButtonData`, …) and stays free of brand-specific content.
+
+`navigation.ts` holds the site chrome: `primaryNav`, `headerNav` (the teal
+service band and its mega-menus), `headerSecondaryCta`, `quoteCta`,
+`serviceLinks` / `footerServiceLinks`, `footerContact`, `footerCopyright`.
+It was inline in `index.astro` until `house-cleaning.astro` needed the
+identical header and footer — two real consumers, the same bar
+`ServiceIcon.astro` and `StarRating.astro` were held to. Page-specific
+section content still lives in each page file; only the repeated chrome
+moved here.
+
+⚠️ `headerNav` mixes real service pages with non-service ones ("Meet the
+team", "Why TLB", "Guides"), so the footer's Services column must **not**
+be derived from it — that's what `serviceLinks` is for.
+
+---
+
 ## Sections — `src/components/sections/`
 
 ### `SiteHeader.astro`
@@ -256,6 +277,7 @@ calls for — don't fork a new component.
 | Prop | Type | Notes |
 |---|---|---|
 | `variant` | `'split-mosaic' \| 'full-width-photo' \| 'split-single-image' \| 'split-collage' \| 'minimal'` | Default `'split-mosaic'`. |
+| `kicker` | `string` | Optional short eyebrow label rendered **above** the `<h1>`, outside it — e.g. "WHY TLB". All variants. Deliberately not folded into `headingLines`: those all render *inside* the single page H1, so a kicker there becomes part of the heading text. Same idea `PhotoGallery.astro`'s `story` steps already have as `step`; added for the Why TLB page, which needs one here and one on `CallToAction.astro`. |
 | `headingLines` | `string[]` | Each entry is one `<br>`-separated line inside the single page H1. All variants. |
 | `lead` | `string` | Rendered at `--text-big`. All variants. |
 | `cta` | `ButtonData` | Defaults to variant `"inverse"` if unset. All variants. |
@@ -894,6 +916,7 @@ Purpose: three CTA banner treatments, selected with a `variant` prop.
 |---|---|---|
 | `variant` | `'primary' \| 'secondary' \| 'form'` | Default `'primary'`. |
 | `logo` | `ImageBlock` | `primary` only. |
+| `kicker` | `string` | Optional short eyebrow label above the `<h2>`, outside it — e.g. "MEET THE TEAM". All variants. Same prop and reasoning as `Hero.astro`'s `kicker`, added at the same time for the Why TLB page which needs one in both places. |
 | `heading` | `string` | All variants. |
 | `lead` | `string` | Optional, all variants. |
 | `cta` | `CtaAction` (`{ label, href?, variant? }`) | All variants. A local, looser type than the shared `ButtonData` — `href` is optional here because `form`'s submit button has none; a real `ButtonData` value (`href` always present) satisfies it too, so callers don't need two shapes. |
@@ -1092,13 +1115,41 @@ consumers on one page is the same bar this library sets elsewhere for
 | `theme` | `'light' \| 'dark'` | `'light'` | Light = white bg, `--color-body` text. Dark = charcoal bg, `--color-on-inverse` text — same color treatment `StoryMosaic.astro` already uses for its own dark/light themes. |
 | `align` | `'left' \| 'center'` | `'center'` | |
 | `heading` | `string` | — | Optional — omit for a heading-less block. |
-| `body` | `string[]` | — required | One paragraph per entry. |
+| `body` | `TextBlockBody[]` | — required | One entry per block, in reading order. A `string` renders as a paragraph; `{ list: string[] }` renders as a bullet list. `string[]` still satisfies this, so pre-existing callers are unchanged. |
 | `cta` | `ButtonData` | — | Optional. Defaults to `brand` variant on light, `inverse-accent` on dark. |
 
 ```astro
 <TextBlock theme="light" body={['One paragraph of plain prose, no image.']} />
 <TextBlock theme="dark" body={['A second, unrelated prose block further down the same page.']} />
+
+<!-- a list between paragraphs — order in the array is the order on the page -->
+<TextBlock
+  theme="dark"
+  align="left"
+  heading="Nobody leaves a cleaner over the cleaning."
+  body={[
+    'They leave because:',
+    { list: ['The messages stopped getting answered.', 'The good one moved away, or got busy.'] },
+    "What you want isn't a spotless house. It's to stop thinking about it.",
+  ]}
+/>
 ```
+
+**Why lists are a `body` entry and not a `bullets` prop:** a separate
+`bullets` prop can only render *after* the paragraphs, but the copy that
+needed this (`content-plans/home-cleaning.md` §7) has a lead-in line above
+the list and two conclusions below it. Making `body` polymorphic keeps
+source order authoritative — the same "array order is the layout" call
+`StoryMosaic.astro` and `ContentGrid.astro` already make — instead of
+adding a second ordering concept alongside it. Export: `TextBlockBody`.
+
+Markers are drawn as `::before` pseudo-elements, not by re-enabling
+`list-style`: `reset.css` clears list markers globally (`ul, ol {
+list-style: none }`), and a pseudo-element takes its colour from
+`currentColor`, so the marker follows the light/dark theme without a
+second rule or any `::marker` support assumption. A centred block keeps
+its list left-aligned (`.text-block__inner--center .text-block__list`) —
+centred bullet text is unreadable past a few words.
 
 **Deliberately not `StoryMosaic.astro`:** that component always lays out a
 2-column grid — a text-only use there leaves an empty half-width gap that

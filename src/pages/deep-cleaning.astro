@@ -1,0 +1,453 @@
+---
+// Deep cleaning page, built from content-plans/deep-cleaning.md — section
+// choices and every "don't invent this" call trace back to that document.
+//
+// TO RESOLVE BEFORE LAUNCH (full detail in the plan's 🚩 list):
+//  1. The brief's meta description is END OF LEASE copy on a deep-cleaning
+//     page — bond, inspections, two sets of tenancy rules, no mention of
+//     deep cleaning. A placeholder written from the H1 is in use below.
+//  2. Branded FAQ 2 says "the task list is published on this page." §5's
+//     comparison table compares three services in six lines — it is not a
+//     full room-by-room task list. Either reword that FAQ to say "linked
+//     from this page", or publish the full checklist here.
+//  3. Branded FAQ 4 is held back — its drafted answer contains a literal
+//     "[X] days" lead time.
+//
+// RESOLVED since the first build: §5's table content was supplied as a
+// three-way service comparison, which also gave PathwayCards card 3
+// ("here is how the three differ") a real destination — #compare on this
+// page.
+//
+// Blocked-on-media sections (§8 video, §9 testimonials) are built
+// as RESERVED SLOTS — labelled Placeholder frames and bracketed [TBC]
+// briefing text, obviously unfinished on sight, zero layout shift when the
+// real assets land. Never fill one with invented photos, quotes or names.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import VideoFeature from '../components/sections/VideoFeature.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+// Site chrome — shared with index.astro and house-cleaning.astro.
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+
+// §0 Page metadata.
+const pageMeta = {
+  title: 'House Deep Cleaning Services - One-Off | TLB Cleaning',
+  // ⚠️ PLACEHOLDER. The brief's own Description tag is end-of-lease copy
+  // ("End of lease and bond cleaning that passes the first inspection…") —
+  // wrong page entirely, and it would compete with the real end-of-lease
+  // page for the same query. This stand-in is written from the brief's H1
+  // and definition paragraph so the page isn't shipped describing a service
+  // it doesn't sell. Replace with approved copy.
+  description:
+    'One-off deep cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast. A room-by-room reset that reaches the detail a regular clean does not. Get an instant quote.',
+  // Domain still a placeholder, same as the other pages — confirm before launch.
+  canonical: 'https://example.com/deep-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero — drafted in full. `minimal` because no hero photo is supplied;
+// move to `split-single-image` once one exists rather than filling it with
+// stock.
+//
+// ⚠️ The overview runs 31 words against the brief's own 15–25 target for
+// this slot — two sentences doing one sentence's job. Shipped verbatim
+// because trimming it is a copy call, not a build call.
+//
+// CTA sits here, not on §2's TextBlock: Hero.astro's `cta` prop is required.
+// Same ruling as house-cleaning.astro.
+const hero = {
+  headingLines: ['One clean to reset the whole house.'],
+  lead: 'Before the guests arrive, after the party, when you move in, or when it has just got away from you. A single clean that takes the house back to the start.',
+  cta: quoteCta,
+};
+
+// §4 Trust bar — drafted; positioned directly under the hero per the brief's
+// own text, ahead of its table-row position. Capitalisation normalised to
+// sentence case (the source capitalises only the third).
+//
+// ⚠️ Same wording as house-cleaning.astro, but the homepage says "9
+// full-time local cleaners, employed not subcontracted". Reconcile all
+// three at once.
+const trustBarItems = [
+  '9 full-time local team members',
+  'Every client came from a recommendation',
+  'Trusted by leading Northern Rivers real estate agencies',
+];
+
+// §2 Definition paragraph — drafted. The answer-target block for
+// `house deep cleaning services`; stays the first prose after the hero.
+const definitionBody: TextBlockBody[] = [
+  "A deep clean is a one-off, room-by-room reset that covers the detail work a regular clean doesn't reach. TLB Cleaning provides house deep cleaning services across the Northern Rivers, the Tweed and the Southern Gold Coast.",
+];
+
+// §3 Situation cards — copy drafted verbatim, split into title (the opening
+// statement) + description (the rest).
+//
+// Section heading/accent, the three CTA labels and all three images are NOT
+// in the brief — placeholder structural copy and unsourced image slots.
+const pathwayCards = {
+  heading: 'Not sure a deep clean is the one?',
+  headingAccent: 'Start here.',
+  cards: [
+    {
+      number: 1,
+      image: { ratio: '4/3', label: 'Tidy living room kept up by regular visits' },
+      title: 'Actually I want this regularly.',
+      description:
+        'Most people book a deep clean first and then set up a fortnightly. That way round works well, and it costs less than doing it the other way.',
+      cta: { label: 'Regular house cleaning', href: '/house-cleaning/' },
+    },
+    {
+      number: 2,
+      image: { ratio: '4/3', label: 'Empty room on moving-out day' },
+      title: 'I am moving out.',
+      description:
+        'That is an end of lease clean, a different standard measured against an inspection. Different page.',
+      cta: { label: 'End of lease cleaning', href: '/end-of-lease-cleaning/' },
+    },
+    {
+      number: 3,
+      // Resolved: the three-way comparison table now exists on this page
+      // (§5 below), so "here is how the three differ" points at it. The
+      // card's wording reads like it was written expecting exactly that.
+      image: { ratio: '4/3', label: 'Three cleaning types compared side by side' },
+      title: 'I am not sure which I need.',
+      description: 'Fair. Here is how the three differ, in plain terms.',
+      cta: { label: 'Compare the three', href: '#compare' },
+    },
+  ],
+};
+
+// §5 "What's included in a deep clean" — now supplied as a three-way
+// service comparison (deep vs regular vs end of lease), transcribed from
+// the design mockup. This is a DIFFERENT shape from what the brief's
+// "Table - room by room" row implied, and it's the better one: it answers
+// "which of these do I need" rather than just listing tasks.
+//
+// It also resolves PathwayCards card 3 — "here is how the three differ"
+// now has somewhere on this page to point at (#compare, set on the wrapper
+// in the template below, since ComparisonTable takes no id prop).
+//
+// ⚠️ LAYOUT DIFFERS FROM THE MOCKUP, deliberately. The mockup puts the
+// heading/lead/CTA in a left-hand panel BESIDE the table. That was built as
+// an optional `split` layout on ComparisonTable and then reverted, because
+// it doesn't survive a 4-column table at this library's type scale:
+// measured in the browser at a 1200px container, the table needs 999px of
+// its own and a side panel leaves it at most ~848px, which pushed the third
+// column ("End of Lease / Bond Clean") off behind a horizontal scroll. A
+// third of the comparison silently hidden is a worse outcome than a
+// different arrangement. Stacked, the table needs 1148px and gets exactly
+// 1148px — it fits with nothing clipped.
+//
+// If the side-by-side look matters more than the current type size, the
+// path is a smaller type scale for this table specifically — which trades
+// against the deliberate legibility call documented in SECTIONS.md.
+//
+// ⚠️ LAST ROW NORMALISED. The mockup's final row reads "Built for homes
+// that need a reset" as the row LABEL, with "Built for maintenance" /
+// "Built for inspection" as the other two columns' values — which makes
+// the deep-clean tick circular ("built for homes that need a reset: yes,
+// it is"), and states one column's answer inside a label that's supposed
+// to be neutral across all three. Normalised to label "Built for" with a
+// real value per column, so the row compares like every other row. Revert
+// to the literal mockup wording if that was deliberate.
+//
+// ⚠️ Branded FAQ 2 still says "the task list is published on this page."
+// This table compares three services in six lines; it is not a full
+// room-by-room task list. The "View the full room-by-room checklist" CTA
+// points at the existing guide page for that. Either that FAQ should say
+// "linked from this page", or the full checklist needs to live here.
+const comparisonTable = {
+  heading: "What's included in a deep clean",
+  lead: 'A detailed, top-to-bottom clean across every room.',
+  cta: {
+    label: 'View the full room-by-room checklist',
+    // Points at the guide already listed in the header mega-menu. Swap if a
+    // dedicated checklist page is planned instead.
+    href: '/guides/what-is-included-in-a-deep-clean/',
+  },
+  columns: [
+    { label: 'Deep Clean (One-Off)', highlight: true },
+    { label: 'Regular Clean (Fortnightly)' },
+    { label: 'End of Lease / Bond Clean' },
+  ],
+  rows: [
+    { label: 'Room-by-room detail', values: [true, 'General upkeep', 'Meets real estate checklist'] },
+    { label: 'Inside cupboards & drawers', values: [true, 'Surface only', 'Yes'] },
+    { label: 'Skirting, corners & edges', values: [true, 'Standard', 'Yes'] },
+    { label: 'Oven & rangehood detail', values: [true, 'Outside only', 'Yes'] },
+    { label: 'Windowsills, tracks & frames', values: [true, 'Inside only', 'Yes'] },
+    { label: 'Built for', values: ['Homes that need a reset', 'Maintenance', 'Inspection'] },
+  ],
+};
+
+// §6 "The moments this comes up" — drafted in full.
+//
+// The brief files this under "The why", but structurally it isn't the
+// persuasive prose that implies elsewhere — it's six labelled occasions,
+// each a short title plus a one-line gloss. That's grid content, not a
+// paragraph, so ContentGrid at 3 columns (2 rows of 3) rather than a
+// TextBlock bullet list, which would flatten each title/gloss pair into one
+// run-on line.
+const momentsBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'Moving in',
+    body: ['Before the furniture, while the place is empty and it is easy.'],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Before guests',
+    body: ['Family for Christmas, or the in-laws for a week. High stakes, short notice.'],
+  },
+  { type: 'text' as const, heading: 'After a party', body: ['Self-explanatory.'] },
+  {
+    type: 'text' as const,
+    heading: 'Before it goes to market',
+    body: ['Photos, open homes and first impressions.'],
+  },
+  {
+    type: 'text' as const,
+    heading: 'The spring reset',
+    body: ['Windows open, everything out, the once-a-year one.'],
+  },
+  {
+    type: 'text' as const,
+    heading: 'After a long absence',
+    body: ['Coming back to a house that has been shut up for months.'],
+  },
+];
+
+// §7 Credibility signals — REMOVED at TLB's direction.
+//
+// The brief's row for this section was empty (just the boilerplate label,
+// no direction), so the first build filled it with before/after placeholder
+// slots on the sibling page's premise. That assumption was wrong and the
+// section has been dropped. If it comes back it needs a real brief first —
+// what the visuals are supposed to prove, not just that visuals go here.
+
+// §8 Hero video — reserved 16/9 slot. The brief specifies the content well
+// ("a before-and-after video showing a deep clean"), better than the
+// house-cleaning page's did. `headingLines` is NOT in the brief — placeholder.
+const heroVideo = {
+  headingLines: ['Watch a house come back.'],
+  video: {
+    ratio: '16/9',
+    label: 'Before-and-after video of a TLB deep clean, room by room',
+  },
+};
+
+// §9 Social proof — bracketed [TBC] briefing slots, NOT real testimonials.
+// Same convention index.astro and house-cleaning.astro both use: the visible
+// text reads as obviously unfinished so it can't be mistaken for a real
+// client quote. Never fill with invented names or words.
+//
+// ⚠️ The brief says only "Ask Teagan for Deep Cleaning testimonials" — no
+// story angles, unlike the house-cleaning brief which specified a tenure
+// story and a switcher story. The two angles below are a PROPOSAL for what
+// would convert on this page; confirm before briefing Teagan.
+const testimonials = [
+  {
+    quote:
+      "[TBC — ask Teagan for a quote from a client whose house had got badly away from them. This answers the shame barrier branded FAQ 1 addresses, and it's the most common reason people hesitate to book a deep clean.]",
+    name: '[Client name — TBC]',
+    role: '[Suburb / property type — TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Deep clean client' },
+  },
+  {
+    quote:
+      '[TBC — ask Teagan for a quote from a client who booked against a deadline: guests arriving, listing photos, or a move-in date. Deadline pressure is what turns a deep clean from someday into this week.]',
+    name: '[Client name — TBC]',
+    role: '[Suburb / property type — TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Deep clean client who booked against a deadline' },
+  },
+];
+
+// §10 Branded FAQs — 3 of 4 ship.
+//
+// HELD BACK: "How soon can you get here?" — its drafted answer contains a
+// literal unfilled placeholder ("Usually within [X] days"). A lead time is
+// an operational promise; publishing a guessed number would commit TLB to
+// something nobody agreed. The rest of that answer is good and ships the
+// moment the number exists:
+//   "Usually within [X] days, and sooner if something opens up. Deep cleans
+//    are often booked around a date, so tell us when the guests land or the
+//    photos are taken and we'll work back."
+//
+// ⚠️ Item 2 below promises "the task list is published on this page" — and
+// §5 isn't built. See the file header. This FAQ ships as drafted on the
+// assumption the task list is coming; if it isn't, this answer needs
+// rewording before launch.
+const brandedFaqItems = [
+  {
+    question: "My house hasn't had a proper clean in years. Is that a problem?",
+    answer:
+      "Not at all, that's the job. Tell us honestly how it is when you book so we can allow the right time, and we'll quote for what's actually there, not a guess.",
+  },
+  {
+    question: "How do I know it'll actually be a deep clean and not a quick once-over?",
+    answer:
+      "Because the task list is published on this page before you book. Our cleaners are employed full-time, not contractors paid by the job, so nobody's rushing to the next one.",
+  },
+  {
+    question: 'What if the house needs more time than we booked?',
+    answer:
+      "We'll tell you before we start, not after. If it's bigger than expected you decide whether to add time or have us prioritise the rooms that matter most. No surprise invoices.",
+  },
+];
+
+// §11 Non-branded FAQs — 3 of 5 ship.
+//
+// HELD BACK, both bracketed [TLB TO CONFIRM] in the source AND both being
+// claims a client could hold TLB to. Drafted text kept here verbatim, ready
+// to uncomment once confirmed:
+//
+// 1. "What isn't included in a deep clean?"
+//    "A deep clean covers the detail work inside your home, so a few jobs
+//     sit outside it. We don't wash dishes, do laundry, or tidy and organise
+//     your belongings. Cleaning at height, outside windows, carpet steam
+//     cleaning and inside-the-oven work are all quoted separately. If you're
+//     unsure whether something is covered, ask when you book and we'll tell
+//     you straight."
+//    → [TLB TO CONFIRM the full exclusions list before publishing.]
+//      Note this and §5's missing table are the same blocked fact seen
+//      twice — settling the task list settles both.
+//
+// 2. "Do cleaners move furniture during a deep clean?"
+//    "Yes, within reason. Our team moves light furniture like dining chairs,
+//     bedside tables and small appliances to clean under and behind them,
+//     which is one of the real differences between a deep clean and a
+//     regular one. We don't shift heavy items such as wardrobes, beds or
+//     fridges, because of the risk to your floors and to our team."
+//    → [TLB TO CONFIRM the policy on heavy items.] This is a safety and
+//      liability claim about what staff will lift — don't publish it
+//      unconfirmed.
+const nonBrandedFaqItems = [
+  {
+    question: "What's the difference between a deep clean and a spring clean?",
+    answer:
+      "They're the same service with a different trigger. A spring clean is a deep clean booked seasonally, usually when the weather turns and the house needs airing out. A deep clean is that same room-by-room reset, booked whenever it's needed, including before a move, after a party or ahead of guests arriving. Book either one and you get the same task list.",
+  },
+  {
+    question: 'How often should you deep clean a house?',
+    answer:
+      'Most homes need one when the build-up becomes visible, rather than on a set schedule. Look for dust sitting on skirting boards and ceiling fans, grout that has changed colour, a greasy film on cupboard fronts, or a musty smell that doesn\'t shift. In the Northern Rivers and on the Tweed, bathrooms and window tracks usually get there faster because of the coastal humidity. Many homes book one deep clean, then a fortnightly regular clean to hold it.',
+  },
+  {
+    question: 'Can I get a deep clean before I move in?',
+    answer:
+      "Yes, and it's one of the most common reasons people book one. An empty house is faster to deep clean than a full one, so the best timing is after the previous occupants have gone and before your furniture arrives. We clean inside cupboards and wardrobes, scrub the bathrooms and reset the kitchen, so you unpack into a home that's genuinely clean rather than just tidy.",
+  },
+];
+
+// §12 Closing CTA — ⚠️ ADDED, not in the brief.
+//
+// This brief has no closing-CTA row and no "Where We Clean" row, though the
+// house-cleaning brief has both. A service page whose only CTA sits above
+// the fold loses conversions, and the brief does specify the "Get an instant
+// quote" CTA, so this is built — but the paragraph is a placeholder echoing
+// the hero, same stopgap the other two pages use.
+//
+// "Where We Clean" is NOT added: it needs a suburb list, and three
+// disagreeing lists already exist across this site (see
+// content-plans/home-cleaning.md §12). Not a call to make silently.
+const closingCta = {
+  heading: hero.headingLines.join(' '),
+  lead: hero.lead,
+  cta: hero.cta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero variant="minimal" headingLines={hero.headingLines} lead={hero.lead} cta={hero.cta} />
+
+    <TrustBar items={trustBarItems} />
+
+    <TextBlock theme="light" body={definitionBody} />
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    {/* Wrapper carries the #compare anchor PathwayCards card 3 links to —
+        ComparisonTable takes no id prop, and adding one just for an anchor
+        target isn't worth a shared-component change. */}
+    <div id="compare">
+      <ComparisonTable
+        heading={comparisonTable.heading}
+        lead={comparisonTable.lead}
+        cta={comparisonTable.cta}
+        columns={comparisonTable.columns}
+        rows={comparisonTable.rows}
+      />
+    </div>
+
+    <ContentGrid columns={3} heading="The moments this comes up." blocks={momentsBlocks} />
+
+
+    <VideoFeature headingLines={heroVideo.headingLines} video={heroVideo.video} />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Deep Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

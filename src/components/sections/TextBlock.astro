@@ -14,11 +14,20 @@
 import Button from '../ui/Button.astro';
 import type { ButtonData } from '../../data/types';
 
+// A body entry is either a paragraph (string) or a bullet list
+// ({ list: [...] }). Order-driven rather than a separate `bullets` prop,
+// because a list usually needs to sit BETWEEN paragraphs — a lead-in line
+// above it, the conclusion below — which a trailing prop can't express.
+// Same "array order is the layout" call StoryMosaic.astro and
+// ContentGrid.astro already make. `string[]` still satisfies this, so every
+// existing caller is unchanged.
+export type TextBlockBody = string | { list: string[] };
+
 interface Props {
   theme?: 'light' | 'dark';
   align?: 'left' | 'center';
   heading?: string;
-  body: string[];
+  body: TextBlockBody[];
   cta?: ButtonData;
 }
 
@@ -36,9 +45,17 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
     <div class:list={['text-block__inner', { 'text-block__inner--center': align === 'center' }]}>
       {heading && <h2 id={headingId}>{heading}</h2>}
       <div class="text-block__body">
-        {body.map((paragraph) => (
-          <p>{paragraph}</p>
-        ))}
+        {body.map((entry) =>
+          typeof entry === 'string' ? (
+            <p>{entry}</p>
+          ) : (
+            <ul class="text-block__list">
+              {entry.list.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          )
+        )}
       </div>
       {cta && (
         <div class="text-block__cta">
@@ -89,6 +106,43 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
 
   .text-block--dark .text-block__body {
     color: var(--color-on-inverse);
+  }
+
+  /* reset.css clears list-style globally, so the markers are drawn here as
+     ::before pseudo-elements rather than by re-enabling list-style — that
+     keeps the marker colour tokenised per theme, which a native marker
+     can't be without ::marker support assumptions. */
+  .text-block__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .text-block__list li {
+    position: relative;
+    padding-left: var(--space-md);
+  }
+
+  .text-block__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    /* centres the dot on the first line's cap height at --text-big */
+    top: calc(var(--text-big) * var(--leading-normal) / 2);
+    transform: translateY(-50%);
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+  }
+
+  /* A centred block still gets a left-aligned list — centred bullet text is
+     unreadable at more than a couple of words. The list box itself stays
+     centred within the measure. */
+  .text-block__inner--center .text-block__list {
+    text-align: left;
+    align-self: center;
   }
 
   .text-block__cta {

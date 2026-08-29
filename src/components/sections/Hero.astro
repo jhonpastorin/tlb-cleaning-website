@@ -36,6 +36,12 @@ interface HeroStat {
 
 interface Props {
   variant?: Variant;
+  /** Short eyebrow label rendered ABOVE the <h1>, outside it — e.g. "WHY TLB".
+   *  Deliberately not folded into `headingLines`: those all render inside the
+   *  single page <h1>, so a kicker there would become part of the heading text
+   *  ("WHY TLB Nine local mums…"), which is wrong semantically and visually.
+   *  Same idea PhotoGallery.astro's `story` steps already have as `step`. */
+  kicker?: string;
   headingLines: string[];
   lead: string;
   cta: ButtonData;
@@ -56,6 +62,7 @@ interface Props {
 }
 
 const {
+  kicker,
   variant = 'split-mosaic',
   headingLines,
   lead,
@@ -82,6 +89,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   <section class="hero hero--split-mosaic" aria-labelledby="hero-heading">
     <div class="container hero__grid">
       <div class="hero__copy">
+        {kicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>
@@ -133,6 +141,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
           </div>
         )}
+        {kicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>
@@ -161,6 +170,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
           </div>
         )}
+        {kicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>
@@ -185,6 +195,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
           </div>
         )}
+        {kicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>
@@ -226,6 +237,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
           </div>
         )}
+        {kicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>
@@ -253,6 +265,19 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
 )}
 
 <style>
+  /* Eyebrow label above the H1. Sized/spaced to read as a label, not a
+     subheading — uppercase with wide tracking is what distinguishes it from
+     the lead line below the heading. */
+  .hero__kicker {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-small);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    opacity: 0.75;
+  }
+
   /* ---- split-mosaic (default) ------------------------------------------ */
 
   .hero--split-mosaic {
