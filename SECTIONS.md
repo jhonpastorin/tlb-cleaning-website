@@ -683,6 +683,26 @@ highlighted tag and a closing note.
 Use this when: a page needs to enumerate a long, flat list of conditions,
 services, or categories as pills. 4 columns desktop, 2 tablet, 1 mobile.
 
+**Patch note:** the heading `id`/`aria-labelledby` pair used to be the
+literal string `"tag-cloud-heading"` — harmless with one instance per page
+(true of every build until now), but `commercial-cleaning.astro` renders
+**two** TagClouds on one page ("What we clean", the fifteen commercial
+premises types, and "Where we clean", the suburb list), which produced two
+elements sharing one `id` and left the second section's `aria-labelledby`
+resolving to the first section's heading. Fixed with a build-time random
+suffix per instance — the same fix `ServiceBlocks.astro` and `Faq.astro`
+already apply, for the same reason. Found by building that page, not
+reported by anyone.
+
+⚠️ **`isHighlighted` no longer exists.** The `Tag` interface is `{ label,
+href? }` only — every pill uses the outlined Mint Green treatment now (see
+the styling note in the component). A stale `isHighlighted: true` in a
+caller's tag array will **not** be caught by `astro check` (excess-property
+checking doesn't fire on a `const`-inferred array passed to a prop), so it
+silently does nothing. Two were caught this way while building
+`commercial-cleaning.astro`; check for others if a pill ever fails to
+highlight as expected.
+
 ### `Faq.astro`
 
 Purpose: expandable Q&A accordion — **only** the accordion variant lives
@@ -739,6 +759,17 @@ other's state untouched.
 
 Use this when: a page needs an FAQ section — `Faq` for the expandable
 accordion look, `ContentGrid` (see above) for the static short-answer grid.
+
+**Patch note:** the `name`-grouping fix above was applied to the `<details>`
+exclusivity group but **not** to the heading `id`, which stayed the literal
+string `"faq-heading"`. Every page that renders a branded and a non-branded
+FAQ block — `index.astro`, `ndis-cleaning.astro`, and now
+`commercial-cleaning.astro` — had therefore been shipping two elements with
+one `id`, with the second section's `aria-labelledby` resolving to the first
+section's heading. Same build-time random suffix, applied to both now. Found
+while building `commercial-cleaning.astro` and checking for the same bug
+elsewhere, not reported by anyone — the same way `TagCloud.astro`'s own
+identical patch was found in the same change.
 
 ### `TestimonialCarousel.astro`
 

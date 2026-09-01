@@ -12,11 +12,20 @@ interface Props {
 }
 
 const { heading, subheading, tags, note } = Astro.props;
+
+// Build-time random suffix per instance — the same fix ServiceBlocks.astro
+// and Faq.astro already apply. The id was the literal string
+// "tag-cloud-heading", harmless with one instance per page (true of every
+// build until now) but commercial-cleaning.astro renders two TagClouds
+// ("What we clean" and "Where we clean"), which produced two elements
+// sharing one id and left the second section's aria-labelledby pointing at
+// the first section's heading. Found by building that page, not by an audit.
+const headingId = `tag-cloud-heading-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<section class="tag-cloud" aria-labelledby="tag-cloud-heading">
+<section class="tag-cloud" aria-labelledby={headingId}>
   <div class="container tag-cloud__inner">
-    <h2 id="tag-cloud-heading" class="tag-cloud__heading">{heading}</h2>
+    <h2 id={headingId} class="tag-cloud__heading">{heading}</h2>
     <p class="tag-cloud__subheading">{subheading}</p>
 
     <ul class="tag-cloud__list">

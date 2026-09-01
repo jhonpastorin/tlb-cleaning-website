@@ -34,13 +34,22 @@ const { heading, lead, items } = Astro.props;
 // build-time-random suffix keeps each instance's group to itself with zero
 // client-side JS.
 const groupName = `faq-${Math.random().toString(36).slice(2, 9)}`;
+
+// The heading id needed the same treatment and didn't get it when the group
+// name above was fixed — it stayed the literal "faq-heading". Every page
+// that renders a branded and a non-branded FAQ block (index.astro,
+// ndis-cleaning.astro, commercial-cleaning.astro) has therefore been
+// shipping two elements with one id, with the second section's
+// aria-labelledby resolving to the first section's heading. Same fix,
+// applied to both now.
+const headingId = `faq-heading-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<section class="faq" aria-labelledby={heading ? 'faq-heading' : undefined}>
+<section class="faq" aria-labelledby={heading ? headingId : undefined}>
   <div class="container container--narrow">
     {heading && (
       <div class="faq__intro">
-        <h2 id="faq-heading">{heading}</h2>
+        <h2 id={headingId}>{heading}</h2>
         {lead && <p class="lead">{lead}</p>}
       </div>
     )}
