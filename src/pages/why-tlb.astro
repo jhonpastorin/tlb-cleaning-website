@@ -28,6 +28,7 @@ import TrustBar from '../components/sections/TrustBar.astro';
 import TextBlock from '../components/sections/TextBlock.astro';
 import PathwayCards from '../components/sections/PathwayCards.astro';
 import ContentGrid from '../components/sections/ContentGrid.astro';
+import Callout from '../components/sections/Callout.astro';
 import ComparisonTable from '../components/sections/ComparisonTable.astro';
 import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
 import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
@@ -287,13 +288,11 @@ const objectionBlocks = [
 
 // §9c The timing callout.
 //
-// Per the plan: shipped as a dark TextBlock rather than a new Callout.astro.
-// A callout component would have exactly ONE consumer today and this
-// library's own bar is two (see ServiceIcon.astro's justification in
-// SECTIONS.md) — the dark band already reads as the break in rhythm that a
-// callout is mostly doing here. Build Callout.astro when a second one turns
-// up, not speculatively.
-const timingCallout: TextBlockBody[] = [
+// Now a real Callout (tone="warning"). It shipped as a dark TextBlock while
+// Callout.astro had only one consumer and this library's bar is two; the
+// NDIS page's "you probably don't need a registered provider" box became the
+// second, so the component was built and this was retro-fitted to it.
+const timingCallout: string[] = [
   'Do not do this in the fortnight before Christmas. If you have family arriving, or you are about to list the house, or you are three weeks from moving out, this is the worst possible moment to change anything. Anybody telling you now is a great time to switch is thinking about their month, not yours.',
 ];
 
@@ -492,7 +491,7 @@ const closingCta = {
 
     <ContentGrid columns={2} blocks={objectionBlocks} />
 
-    <TextBlock theme="dark" align="left" body={timingCallout} />
+    <Callout tone="warning" body={timingCallout} />
 
     <ServiceBlocks
       variant="list"

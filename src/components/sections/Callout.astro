@@ -1,0 +1,130 @@
+---
+// New component — an emphasised single-message panel for a "read this before
+// you go further" moment: one short heading, a paragraph or two, an optional
+// CTA. Not a section heading, not a running-prose block.
+//
+// Proposed and DEFERRED once, on content-plans/why-tlb.md §9c, because it
+// had exactly one consumer and this library's bar is two (see
+// ServiceIcon.astro's own justification in SECTIONS.md). Built now that the
+// bar is met, with both consumers real from day one:
+//   - why-tlb.astro       — "Do not do this in the fortnight before Christmas"
+//   - ndis-cleaning.astro — "You probably don't need a registered provider"
+// Both interrupt the reading flow to correct something the reader likely
+// believes. Both were previously dark TextBlocks, which works but overloads
+// a component whose job is running prose.
+//
+// Deliberately NOT a TextBlock variant: TextBlock is full-bleed and
+// section-shaped (its whole point is a band of prose), whereas this is an
+// inset card that has to read as an interruption WITHIN the page's flow.
+// Adding a "look like a card instead of a band" flag to TextBlock would
+// contradict the thing that component exists to be.
+import Button from '../ui/Button.astro';
+import type { ButtonData } from '../../data/types';
+
+interface Props {
+  /** `note` (default) = brand-accent panel. `warning` = charcoal panel, for
+   *  "don't do this" rather than "worth knowing". */
+  tone?: 'note' | 'warning';
+  heading?: string;
+  body: string[];
+  cta?: ButtonData;
+}
+
+const { tone = 'note', heading, body, cta } = Astro.props;
+
+// Same random-suffix fix Faq/TextBlock/ServiceBlocks/ComparisonTable all
+// carry — avoids a duplicate id if a page ever uses two callouts.
+const headingId = `callout-heading-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<section class="callout" aria-labelledby={heading ? headingId : undefined}>
+  <div class="container">
+    <div class:list={['callout__panel', `callout__panel--${tone}`]}>
+      {heading && <h2 id={headingId} class="callout__heading">{heading}</h2>}
+      <div class="callout__body">
+        {body.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+      {cta && (
+        <div class="callout__cta">
+          <Button label={cta.label} href={cta.href} variant={cta.variant ?? (tone === 'warning' ? 'inverse-accent' : 'brand')} />
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .callout {
+    padding-block: var(--space-xl);
+  }
+
+  /* The accent bar is what makes this read as an interruption rather than
+     another section: a full-height rule down the leading edge, which no
+     other section in this library uses. Border-inline-start (not left) so a
+     future RTL brand flips it for free. */
+  .callout__panel {
+    /* Accent colour is set per tone below, NOT here: --color-brand and
+       --color-inverse both resolve to the same Dark Teal (#234B51), so a
+       --color-brand bar on the warning tone's teal panel would be
+       invisible. Caught by checking tokens.css, not by looking at it. */
+    border-inline-start: 6px solid;
+    border-radius: var(--radius-md);
+    padding: var(--space-lg) var(--space-lg) var(--space-lg) var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    /* Narrower than the full container — a callout that runs the full page
+       width stops reading as an aside and starts reading as a section. */
+    max-width: 60rem;
+  }
+
+  .callout__panel--note {
+    background: var(--color-surface-muted);
+    color: var(--color-body);
+    border-inline-start-color: var(--color-brand);
+  }
+
+  .callout__panel--warning {
+    background: var(--color-inverse);
+    color: var(--color-on-inverse);
+    /* Mint Green — the one token that reads against the teal panel. */
+    border-inline-start-color: var(--color-accent);
+  }
+
+  .callout__heading {
+    /* One step down from a section h2: this is still an <h2> for document
+       outline purposes, but visually it's an aside, not a new chapter. */
+    font-size: var(--text-big);
+    margin: 0;
+  }
+
+  .callout__panel--note .callout__heading {
+    color: var(--color-on-surface);
+  }
+
+  .callout__panel--warning .callout__heading {
+    color: var(--color-on-inverse);
+  }
+
+  .callout__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    line-height: var(--leading-normal);
+  }
+
+  .callout__cta {
+    display: flex;
+    margin-top: var(--space-3xs);
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .callout__panel {
+      padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+      border-inline-start-width: 4px;
+    }
+  }
+</style>

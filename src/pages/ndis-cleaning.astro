@@ -1,0 +1,509 @@
+---
+// NDIS cleaning page, built from content-plans/ndis-cleaning.md.
+//
+// THIS PAGE IS NOT LIKE ITS SIBLINGS. The others sell cleaning to people
+// choosing a supplier. This one addresses people with disability, their
+// family carers, and coordinators who hold a duty of care to them — and it
+// makes claims about how a government scheme works. Three rules follow:
+//   1. Factual claims about NDIS rules are advice, not marketing. A
+//      participant may act on them. See §15's compliance note.
+//   2. Screening claims are safety claims, not trust badges.
+//   3. Nothing here is inferred from the sibling pages. Where the brief was
+//      blank it stays blank rather than borrowing household-cleaning copy.
+//
+// BLOCKS LAUNCH:
+//   - §5's "Worth knowing" source copy contained internal strategy written
+//     to TLB ("addressable market", "win the enquiry"). REWRITTEN for the
+//     reader — see that section. The rewrite needs sign-off.
+//   - Four compliance brackets ship visibly per house convention (TLB's
+//     ruling), but must be filled before launch: [insured],
+//     [police-checked / worker-screened] ×2, [plan-managed and self-managed].
+//     NDIS Worker Screening and a police check are DIFFERENT checks — the
+//     bracket needs a decision, not just a value.
+//   - §15's non-branded FAQs cite a line-item code, a phone number and
+//     cancellation rules from the NDIS Pricing Arrangements, which are
+//     REISSUED ANNUALLY. Compliance read + "last reviewed" date required.
+//
+// Team size is NINE throughout, per TLB's ruling (the brief's §11 said
+// "[five]" while its own trust bar said 9).
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import Callout from '../components/sections/Callout.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+
+const pageMeta = {
+  // Brief said "NDIS Cleaning Service |  TLB Cleaning" — singular, and with a
+  // double space. Pluralised to match the focus keyword ("NDIS cleaning
+  // services") and the double space removed. Flagged in the plan's §0.
+  title: 'NDIS Cleaning Services | TLB Cleaning',
+  description:
+    'Reliable NDIS household cleaning in the Northern Rivers and Tweed. The same trusted local team, on time, treating your home like our own. Get a fast quote.',
+  canonical: 'https://example.com/ndis-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  // NSW only on this page, unlike its siblings — deliberate per the brief's
+  // own meta description and suburb list. The NDIS is administered
+  // per-state; confirm it's intentional rather than an omission.
+  areaServed: 'Northern Rivers and Tweed, NSW',
+  description: pageMeta.description,
+};
+
+// §1 Hero — drafted in full. Lead is 23 words, inside the 15–25 target.
+//
+// ⚠️ `minimal` because no photo is supplied, and it costs more here than
+// anywhere else: the H1 is literally "the same trusted local faces" above a
+// hero with no faces in it. A real photo of real staff earns more on this
+// page than on any other.
+//
+// ⚠️ Do NOT use src/assets/hero/participant-and-support-worker.png or its
+// siblings. Despite the names they are leftover placeholders from the
+// Maple/NDIS template this component library was first built against — not
+// TLB's people. Using them would fabricate a workforce on the one page
+// where that matters most.
+const hero = {
+  headingLines: ['The same trusted local faces, treating your home with genuine care.'],
+  lead: 'Consistent, respectful in-home cleaning you can rely on. Experience the comfort of a safe environment, familiar local faces, and a completely stress-free schedule.',
+  cta: quoteCta,
+};
+
+// §4 Trust bar — third point REPLACED for this audience.
+//
+// The boilerplate's "Trusted by leading Northern Rivers real estate
+// agencies" means nothing to a participant or coordinator, and quietly
+// signals "commercial cleaning contractor" to someone choosing an in-home
+// support. Swapped for the Code of Conduct line, which is the one
+// compliance claim in the brief that is true as written for every provider
+// paid from NDIS funding — so it needs no bracket.
+const trustBarItems = [
+  '9 full-time local team members',
+  'Every client came from a recommendation',
+  'Bound by the NDIS Code of Conduct',
+];
+
+// §2 Definition paragraph — the brief supplied NOTHING here (the row held
+// only "CTA - Get an instant quote"), but this is the answer-target block
+// for the focus keyword and the page had no sentence saying what NDIS
+// cleaning is.
+//
+// ⚠️ DRAFTED, NOT SUPPLIED. Sentence one deliberately reuses the brief's own
+// branded-FAQ wording ("cleaning usually sits under Core Supports where it's
+// reasonable and necessary in your plan") rather than inventing a new
+// characterisation of the scheme — so the claim traces to copy TLB already
+// wrote. Sentence two is the standard sibling pattern (what TLB does, where).
+// Needs sign-off like any other funding statement on this page.
+const definitionBody: TextBlockBody[] = [
+  "NDIS cleaning is regular household cleaning paid for from a participant's NDIS plan, usually under Core Supports where it is reasonable and necessary.",
+  'TLB Cleaning provides NDIS cleaning services across the Northern Rivers and the Tweed.',
+];
+
+// §3 Pathway cards — drafted. The source titles each end in a literal "→";
+// stripped, because PathwayCards renders its own CTA affordance and the
+// arrow would duplicate it.
+const pathwayCards = {
+  // Not in the brief — placeholder structural copy.
+  heading: 'However you are arranging support,',
+  headingAccent: 'start here.',
+  cards: [
+    {
+      number: 1,
+      image: { ratio: '4/3', label: 'Cleaner working in a participant home' },
+      title: 'Set up regular support',
+      description:
+        'Most participants prefer the comfort of a consistent, weekly or fortnightly schedule. You get the same familiar face treating your home with genuine care, every time.',
+      cta: { label: 'Regular cleaning', href: '/house-cleaning/' },
+    },
+    {
+      number: 2,
+      image: { ratio: '4/3', label: 'Home being reset by a deep clean' },
+      title: 'I need a deep reset clean',
+      description:
+        'Sometimes you just need help getting back on top of things. A deep clean resets the home to a safe, comfortable standard before starting regular service.',
+      cta: { label: 'Deep cleaning', href: '/deep-cleaning/' },
+    },
+    {
+      number: 3,
+      // ⚠️ STOPGAP DESTINATION. The brief gives this card no route, and it is
+      // the page's highest-value click — a coordinator placing participants
+      // is a repeat, multi-client referrer. /contact/ stops it stranding,
+      // but what a coordinator actually wants is a referral route: how to
+      // send a participant, how invoicing works, who to call. None of that
+      // exists yet. See the plan's §3.
+      image: { ratio: '4/3', label: 'Support coordinator reviewing a participant plan' },
+      title: 'I am a Support Coordinator',
+      description:
+        'We make managing plans easy. We are a reliable, [insured] local business ready to provide consistent, respectful in-home help for your participants.',
+      cta: { label: 'Talk to us', href: '/contact/' },
+    },
+  ],
+};
+
+// §5 "Worth knowing" — REWRITTEN. This is the page's most important edit.
+//
+// The brief's source copy ended: "So the addressable market for a good local
+// operator is large and growing, and almost nobody explains this clearly to
+// the participant. Whoever explains it first tends to win the enquiry."
+//
+// That is written TO TLB, not to the reader — competitive strategy notes
+// pasted into a customer-facing brief. Publishing it would tell an audience
+// of people with disability that they are an addressable market and that the
+// page exists to win their enquiry. The heading had the same problem ("The
+// biggest misconception is also the biggest opportunity" — TLB's
+// opportunity, not the reader's).
+//
+// The FIRST half is genuinely valuable and very likely the
+// highest-converting explanation on the page: most participants don't know
+// that plan-managed and self-managed funding can go to an unregistered
+// provider, and that belief is the objection standing between them and an
+// enquiry. Kept, rewritten as guidance addressed to the reader.
+//
+// ⚠️ The brief's "roughly 65% of active participants" statistic is CUT. It
+// was attributed to "the NDIA's own pricing review" with no name or date, it
+// does no work for someone deciding whether to call, and it is exactly the
+// kind of number that ages. Reinstate only with a proper citation.
+//
+// First consumer of the new Callout.astro (tone="note").
+const worthKnowing = {
+  heading: "You probably don't need a registered provider.",
+  body: [
+    'Most people assume NDIS cleaning has to come from a registered provider. Only NDIA-managed plans are restricted that way.',
+    'If your plan is self-managed or plan-managed, you can choose any provider you like — including us. If you are not sure which kind of plan you have, your plan manager or support coordinator will know, and we are happy to talk it through with them.',
+  ],
+};
+
+// §10a "Who this is for" — drafted. The brief files this as one P row, but
+// it is an intro plus a three-item list; TextBlock's `{ list }` body entry
+// handles both in source order. Three short phrases don't need
+// ServiceBlocks' full row treatment.
+const whoThisIsForBody: TextBlockBody[] = [
+  "If keeping on top of the house has become harder than it used to be, you're not alone — and you don't have to sort it out by yourself.",
+  'We clean for:',
+  {
+    list: [
+      'NDIS participants who want a regular, reliable clean at home',
+      'Family carers arranging support for someone they love',
+      'Support coordinators and plan managers who need a local provider that turns up, communicates and invoices properly',
+    ],
+  },
+];
+
+// §10b Suburbs.
+//
+// ⚠️ This is the site's FOURTH different suburb list, and NSW-only — no
+// Southern Gold Coast, unlike every sibling page. That is consistent with
+// the meta description and plausibly correct for a state-administered
+// scheme, but confirm it is deliberate.
+//
+// ⚠️ Bangalow and Goonellabah appear on NO other list on this site. If TLB
+// serves them they belong on the others too; if not, they shouldn't be here.
+//
+// hrefs use the same guessed /locations/<slug>/ pattern as every other page,
+// still unconfirmed sitewide.
+const locationTags = [
+  { label: 'Ballina', href: '/locations/ballina/' },
+  { label: 'Lennox Head', href: '/locations/lennox-head/' },
+  { label: 'Alstonville', href: '/locations/alstonville/' },
+  { label: 'Byron Bay', href: '/locations/byron-bay/' },
+  { label: 'Bangalow', href: '/locations/bangalow/' },
+  { label: 'Lismore', href: '/locations/lismore/' },
+  { label: 'Goonellabah', href: '/locations/goonellabah/' },
+  { label: 'Casino', href: '/locations/casino/' },
+  { label: 'Evans Head', href: '/locations/evans-head/' },
+  { label: 'Ocean Shores', href: '/locations/ocean-shores/' },
+  { label: 'Tweed Heads', href: '/locations/tweed-heads/', isHighlighted: true },
+  { label: 'Kingscliff', href: '/locations/kingscliff/' },
+];
+
+// §11 "Why people choose TLB" — three differentiators.
+//
+// ⚠️ The brief files this under a "Services (use icons and short text)"
+// boilerplate row, but the content is three numbered differentiators, not a
+// service list. Mapped to the content, not the label.
+//
+// LAYOUT: ContentGrid at columns={2}, with the third cell spanning both.
+// The three items are structurally uneven — item 1 is a paragraph plus a
+// tagline, items 2 and 3 run three paragraphs each — so a 3-up grid would
+// leave one short cell beside two long ones. Two short-ish cells on top and
+// the longest full-width underneath absorbs that unevenness.
+//
+// Icon-less: ServiceIcon.astro's set is abstract and has nothing matching
+// reliability, familiarity or local ownership.
+const whyChooseBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'We turn up',
+    body: [
+      "For most households a missed clean is annoying. When you've been waiting all week for help with the bathroom, it's a genuinely bad day — which is why reliability isn't something we advertise, it's the thing the whole business was built on.",
+      'On time. Done properly. Every time.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'The same familiar faces — not a call centre',
+    body: [
+      "You shouldn't have to explain your home to a stranger every fortnight.",
+      "Wherever we can, you'll have the same cleaner each visit — someone who knows how you like things done and doesn't need to be told twice. If they're unwell or away, we'll let you know beforehand and send someone from our team who already knows your preferences.",
+      "We're a local team, not a national network routing your call through a head office somewhere else. When you ring us, you're talking to someone who lives here.",
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'A real local business, and a real name behind it',
+    body: [
+      // Team size is NINE per TLB's ruling — the brief said "[five]" here
+      // while its own trust bar said 9.
+      'TLB was started by Teagan, a local mum who wanted the job done properly. It grew from one person to a team of nine without a dollar spent on advertising — every client came from someone who had already been looked after.',
+      "Most of our team are local women. If you'd feel more comfortable with a woman in your home, tell us and we'll do our best to arrange it.",
+      // ⚠️ Two visible brackets, per TLB's bracket convention. Both are
+      // launch-blocking: worker vetting is a safety representation on a page
+      // inviting staff into the homes of people with disability. And
+      // "police-checked / worker-screened" needs a DECISION — NDIS Worker
+      // Screening and a police check are different checks, offered here
+      // interchangeably with a slash.
+      "We're [insured], [police-checked / worker-screened], and — like every provider paid from NDIS funding — bound by the NDIS Code of Conduct. Your home is yours. We treat it that way.",
+    ],
+    span: 2,
+    tone: 'muted' as const,
+  },
+];
+
+// §12 Social proof — bracketed [TBC] briefing slots, NOT real testimonials.
+//
+// ⚠️ The brief supplied NOTHING here — not even the "ask Teagan for
+// testimonials" line every sibling brief had. The two angles below are a
+// proposal; confirm before briefing Teagan.
+//
+// ⚠️ EXTRA CARE REQUIRED WHEN THESE ARE FILLED. A quote from an NDIS
+// participant is health-adjacent personal information: consent must be
+// explicit and informed, and identifying detail (suburb plus disability,
+// say) should be minimised. A carer or coordinator quote may be easier to
+// obtain and carries similar weight for a coordinator reader.
+// Never invent a participant quote.
+const testimonials = [
+  {
+    quote:
+      '[TBC — ask Teagan for a quote from a participant or their family carer about consistency: the same person arriving, on the day they said. Written consent required, and keep identifying detail to a minimum.]',
+    name: '[Name — TBC]',
+    role: '[Participant or family carer — TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB NDIS client' },
+  },
+  {
+    quote:
+      '[TBC — ask Teagan for a quote from a support coordinator or plan manager about communication and invoicing. Coordinators are repeat referrers, and this is the quote that reaches them.]',
+    name: '[Name — TBC]',
+    role: '[Support coordinator or plan manager — TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Support coordinator who refers to TLB' },
+  },
+];
+
+// §14 Branded FAQs — all five ship. Two carry visible brackets per TLB's
+// convention; both are launch-blocking (see the file header).
+//
+// The brief's first answer carried a stray "(33 words)" — an editing
+// artefact from drafting, stripped here. It is not a placeholder.
+const brandedFaqItems = [
+  {
+    question: 'Can I use my NDIS funding to pay for cleaning?',
+    answer:
+      "Often, yes — cleaning usually sits under Core Supports where it's reasonable and necessary in your plan. We work with [plan-managed and self-managed] participants, and we're glad to talk it through with your coordinator.",
+  },
+  {
+    // ⚠️ The page's single most important trust question. Of the four
+    // brackets, resolve this one first.
+    question: 'Who actually comes into my home — will it be the same person each time?',
+    answer:
+      'The same trusted local team wherever we can, familiar faces, not a different stranger each week. TLB is a real local business, insured and accountable [confirm police checks], with Teagan standing behind every job.',
+  },
+  {
+    question: 'What makes TLB different from other cleaners doing NDIS work?',
+    answer:
+      "We're the reliable middle: big enough to rely on, local enough to care. A proper local team with backup — not a call centre, and not one person who might not show.",
+  },
+  {
+    question: "What if I'm not happy with the clean, or I want things done differently?",
+    answer:
+      "Tell us and we'll make it right — that's the deal. You choose what gets done, how often, and what we leave alone. Change it any time; it's your home, your call.",
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      "A simple chat — what you need, when, and whether we're the right fit. No pressure, no obligation. We're happy to speak with your family, coordinator or plan manager too.",
+  },
+];
+
+// §15 Non-branded FAQs — all five drafted, none bracketed, so they READ
+// ready to ship. They are not.
+//
+// ⚠️ COMPLIANCE REVIEW REQUIRED BEFORE PUBLISHING. These are the strongest
+// content in the brief and the most consequential, because a participant may
+// act on them. Every claim below is checkable and dated:
+//   - line item "01_019_0120_1_1" for yard and garden — from the NDIS
+//     Pricing Arrangements, which are REISSUED ANNUALLY
+//   - NDIA contact 1800 800 110 — verify current
+//   - short-notice cancellation rules — among the most frequently revised
+//     parts of the pricing arrangements
+//   - consumables generally not claimable — broadly right, confirm phrasing
+//   - shared-household funding — an eligibility judgement, keep it hedged
+//
+// Recommended before launch: a read by someone who works with plans daily
+// (a plan manager or coordinator, not just a proofread); a visible "last
+// reviewed" date on this block; a short "this is general information, check
+// with your plan manager" line; and a diarised re-check when the next
+// pricing arrangements publish.
+//
+// The answers already hedge well ("often yes, but usually only", "not until
+// it's funded, but you can ask for it"). Don't let a review flatten that
+// into vagueness — the honesty is what earns a coordinator's trust.
+const nonBrandedFaqItems = [
+  {
+    question: 'Can I still get cleaning funded if I live with family or housemates?',
+    answer:
+      'Often yes, but usually only for the spaces you\'re responsible for. The NDIS won\'t fund supports that duplicate what family or other household members already provide, and the NDIA considers whether a support is shared. In a share house, that can mean funding covers your own room and the parts of the home your disability stops you managing, rather than the whole house.',
+  },
+  {
+    question: "Cleaning isn't in my plan — can I still get it?",
+    answer:
+      "Not until it's funded, but you can ask for it. Core Supports funding is usually flexible, so if you already have Assistance with Daily Life funding you may be able to use some of it for cleaning. If you don't, raise it at your next plan check-in or ask the NDIA for a plan variation on 1800 800 110. An occupational therapist report describing what you can't safely do strengthens the case.",
+  },
+  {
+    question: 'What will the cleaner actually do?',
+    answer:
+      "Everyday household cleaning you can't manage safely yourself: vacuuming, mopping, bathrooms, kitchen, dusting, laundry, changing linen and taking out bins. It's an hourly support, so you set the priorities for the time booked — a two-hour visit won't cover a whole-house deep clean. Yard and garden work is a separate NDIS line item (01_019_0120_1_1), billed separately at its own rate.",
+  },
+  {
+    question: 'Do I need to provide cleaning products and a vacuum?',
+    answer:
+      "That's set by your provider and recorded in your service agreement, so ask before the first visit. The NDIS funds the hour of support work, not consumables — cleaning products, mops and vacuums generally can't be claimed from your plan unless they're specialised items linked to your disability. If you'd rather your own products were used for allergy or sensory reasons, say so upfront.",
+  },
+  {
+    question: 'What happens if I have to cancel a clean?',
+    answer:
+      "Your service agreement sets the notice period, so check it before you sign. If you cancel inside that window, a provider may be able to claim the session from your plan — but only if the agreement says so and they couldn't give the worker other paid work instead. Give as much notice as you can and you won't be charged.",
+  },
+];
+
+// §16 Closing CTA — ⚠️ not in the brief, which has no closing-CTA row (and
+// two mid-page rows reading "CTA -" with nothing after them).
+//
+// Uses "Get a fast quote" from the brief's own meta description and branded
+// FAQ 5, rather than the sitewide "Get an instant quote" — *fast* is gentler
+// than *instant* for this audience, and the brief chose it twice.
+//
+// ⚠️ Consider a second, coordinator-specific route here, tied to card 3's
+// unresolved destination. Participants and coordinators want different next
+// steps, and this page is the one place both are reading.
+const closingCta = {
+  heading: 'Tell us what would help.',
+  lead: "A simple chat — what you need, when, and whether we're the right fit. No pressure, and we're happy to speak with your family, coordinator or plan manager too.",
+  cta: { label: 'Get a fast quote', href: quoteCta.href },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero variant="minimal" headingLines={hero.headingLines} lead={hero.lead} cta={hero.cta} />
+
+    <TrustBar items={trustBarItems} />
+
+    <TextBlock theme="light" align="left" body={definitionBody} />
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <Callout tone="note" heading={worthKnowing.heading} body={worthKnowing.body} />
+
+    {/* §7 credibility signals, §8 hero video and §9 "the why" are all
+        EMPTY in the brief — boilerplate labels with no direction at all.
+        Not built and not guessed: the deep-cleaning page's credibility
+        block was filled on an assumption and removed again at TLB's
+        direction, which is the precedent. They need a brief first. */}
+
+    <TextBlock
+      theme="light"
+      align="left"
+      heading="NDIS cleaning for people across the Northern Rivers and Tweed"
+      body={whoThisIsForBody}
+    />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      tags={locationTags}
+      note={[]}
+    />
+
+    <ContentGrid columns={2} heading="Why participants and coordinators choose us" blocks={whyChooseBlocks} />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    {/* §13 "How we compare" is NOT built. The brief said only "[Insert
+        comparison table here, if applicable]" — and "if applicable" suggests
+        the author was unsure too. The shared table in src/data/comparison.ts
+        is approved copy but wrong for this audience: "ongoing contracts with
+        the region's leading real estate agencies" answers a household's
+        question, not a participant's. A coordinator wants screening,
+        insurance, plan types accepted, worker consistency and cancellation
+        terms. Write NDIS-specific rows or leave it out — an off-target
+        table costs more credibility than it earns. */}
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="NDIS Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

@@ -1190,6 +1190,56 @@ Use this when: a page needs a short row of proof-point sentences that
 aren't uniformly numeric — not a stat callout (`StatBand`), not plain
 numeric metrics (`MetricsBlock`), not a category pill list (`TagCloud`).
 
+### `Callout.astro`
+
+Purpose: an emphasised single-message panel for a "read this before you go
+further" moment — one short heading, a paragraph or two, an optional CTA.
+Not a section heading, not a running-prose block.
+
+**Proposed and deliberately deferred once**, on
+`content-plans/why-tlb.md` §9c, because it had exactly one consumer and this
+library's bar is two (the same bar `ServiceIcon.astro` was held to). Built
+once `content-plans/ndis-cleaning.md` §5 became the second, and both
+consumers were wired up in the same change — the why-tlb block was
+retro-fitted from the dark `TextBlock` it had been shipping as.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `tone` | `'note' \| 'warning'` | `'note'` | `note` = muted cream panel, teal accent bar — "worth knowing". `warning` = teal panel, mint accent bar — "don't do this". |
+| `heading` | `string` | — | Optional. Rendered as an `<h2>` for document outline, but sized at `--text-big` — visually an aside, not a new chapter. |
+| `body` | `string[]` | — required | One paragraph per entry. |
+| `cta` | `ButtonData` | — | Optional. Defaults to `brand` on `note`, `inverse-accent` on `warning`. |
+
+```astro
+<Callout tone="note" heading="You probably don't need a registered provider." body={[...]} />
+<Callout tone="warning" body={['Do not do this in the fortnight before Christmas. …']} />
+```
+
+**Deliberately not a `TextBlock` variant.** `TextBlock` is full-bleed and
+section-shaped — a band of prose is the whole point of it. This is an inset
+card that has to read as an interruption *within* the page's flow. Adding a
+"look like a card instead of a band" flag to `TextBlock` would contradict
+the thing that component exists to be.
+
+**The accent bar's colour is set per tone, not once on the panel — and that
+matters.** `--color-brand` and `--color-inverse` both resolve to the same
+Dark Teal (`#234B51`), so a single `--color-brand` bar would be *invisible*
+on the `warning` tone's teal panel. `note` uses `--color-brand` on cream;
+`warning` uses `--color-accent` (Mint Green), the one token that reads
+against teal. Caught by checking `tokens.css` while building, not by
+looking at the rendered page — worth remembering for any future component
+that assumes those two tokens differ.
+
+Uses `border-inline-start` rather than `border-left` so a future RTL brand
+flips it for free, and caps at `max-width: 60rem` — a callout that runs the
+full container width stops reading as an aside and starts reading as a
+section.
+
+Use this when: a page needs to interrupt itself to correct something the
+reader probably believes, or to warn them off an action. Not for running
+prose (`TextBlock`), not for a mid-page conversion banner
+(`CallToAction`).
+
 ### `ContentGrid.astro`
 
 Purpose: one N-column grid, **no `variant` prop** — like `StoryMosaic.astro`,
