@@ -38,6 +38,7 @@ import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
 import TextBlock from '../components/sections/TextBlock.astro';
 import PathwayCards from '../components/sections/PathwayCards.astro';
 import TagCloud from '../components/sections/TagCloud.astro';
@@ -47,6 +48,8 @@ import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// §2 backdrop, behind the Cream scrim (the homepage's — no photo supplied for this page yet).
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 import type { TextBlockBody } from '../components/sections/TextBlock.astro';
 import {
@@ -567,9 +570,14 @@ const closingCta = {
       image={hero.image}
     />
 
-    <TrustBar variant="card" cards={trustBarCards} />
-
-    <TextBlock theme="muted" align="left" body={definitionBody} />
+    {/* Trust bar + definition block share ONE photo behind a Cream scrim,
+        so it is laid out across both — see the homepage for why a
+        per-section background cannot do this. 75% keeps Dark Teal body
+        copy above 4.5:1 over the darkest part of the frame. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
 
     <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
 

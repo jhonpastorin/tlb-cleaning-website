@@ -156,10 +156,14 @@ const { variant = 'divided', items = [], cards = [] } = Astro.props;
      can't drift apart. */
   .trust-bar--card {
     --trust-bar-overlap: 2.75rem;
+    /* --trust-bar-fill is the section's own ground below the hero's edge,
+       exposed as a token so a wrapper painting its own background behind
+       this section (ui/Backdrop.astro) can hand it `transparent` and have
+       the photo show through the strips either side of the card. */
     background: linear-gradient(
       to bottom,
       transparent var(--trust-bar-overlap),
-      var(--color-surface-muted) var(--trust-bar-overlap)
+      var(--trust-bar-fill, var(--color-surface-muted)) var(--trust-bar-overlap)
     );
     border-bottom: none;
     position: relative;

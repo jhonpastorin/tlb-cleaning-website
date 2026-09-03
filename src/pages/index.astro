@@ -6,6 +6,7 @@ import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
 import TextBlock from '../components/sections/TextBlock.astro';
 import PathwayCards from '../components/sections/PathwayCards.astro';
 import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
@@ -22,6 +23,8 @@ import heroImg from '../assets/home/home-cleaner-with-cleaning-supplies-caddy.pn
 import pathwayHomeImg from '../assets/home/house-cleaning-team-vacuuming-open-plan-living-room.jpg';
 import pathwayHolidayLetImg from '../assets/home/holiday-let-cleaning-guest-ready-cottage-living-room.jpg';
 import pathwayRentalImg from '../assets/home/rental-property-cleaning-two-storey-house-exterior.jpg';
+// §2 backdrop, behind the Cream scrim.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 // Site chrome (header nav, mega-menus, footer links/contact) — shared with
 // house-cleaning.astro, see src/data/navigation.ts.
@@ -386,9 +389,20 @@ const closingCta = {
       image={hero.image}
     />
 
-    <TrustBar variant="card" cards={trustBarCards} />
+    {/* The trust bar and the definition block share ONE photo, so it has to
+        be laid out across both — hence the wrapper rather than a
+        `backgroundImage` on the TextBlock alone, which left the Cream
+        strips either side of the teal card as flat colour.
 
-    <TextBlock theme="muted" align="left" body={definitionBody} />
+        75, not the default 80: enough Cream off the scrim for the photo to
+        show, and still 5.0:1 for Dark Teal body copy measured over the
+        DARKEST thing in the frame (the cleaner's green tee). At 70 that
+        worst case drops to 4.57:1, which clears AA by too little to be
+        worth it — anything lower fails. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
 
     <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
 

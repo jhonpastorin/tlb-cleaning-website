@@ -1,0 +1,128 @@
+---
+// Puts ONE background photo behind a run of adjacent sections, with the
+// brand ground laid over it as a scrim.
+//
+// Why this exists rather than each section carrying its own photo (which
+// TextBlock.astro's `backgroundImage` already does, and still does for a
+// section standing alone): two stacked sections each rendering the same
+// image would each `cover` their own box, so the photo would restart at the
+// seam between them — two different crops of the same room, visibly
+// mismatched. Here the image is laid out once, across the full height of
+// everything slotted in.
+//
+// The children must not paint their own backgrounds over it. Rather than
+// giving every section a "transparent" theme, this sets the background
+// token each one already reads to `transparent` from out here — see the
+// :global rules at the bottom of the sheet. A section added to this list
+// needs its own background to be a token, not a hardcoded colour.
+//
+// `display: flow-root` on the root is load-bearing. The trust bar's card
+// variant pulls itself UP into the hero with a negative top margin; without
+// a block formatting context that margin collapses through this wrapper and
+// drags the wrapper's top edge — and so the photo's — up over the bottom of
+// the hero. With one, the wrapper's top edge stays on the hero's bottom
+// edge and the card overflows above it, which is exactly the arrangement
+// the overlap wants.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  /** The photo. Decorative by definition here, so it renders with alt="". */
+  image: ImageMetadata;
+  /** Which ground goes over it. Matches TextBlock's theme names so a wrapped
+   *  block and its wrapper can't be described in two different vocabularies. */
+  tint?: 'light' | 'muted' | 'dark';
+  /** Scrim opacity, 0-100. Default 80. Lower shows more photo — re-check the
+   *  wrapped copy against the lightest AND darkest areas of the image before
+   *  dropping it, since the scrim is all that stands between them. */
+  opacity?: number;
+  /** Which part of the photo survives the crop. These sections are a shallow
+   *  band and the image is landscape, so `cover` throws away most of its
+   *  height — 'center' (the default) keeps the middle. Use 'top' when the
+   *  subject sits high in the frame, 'bottom' when it sits low. */
+  focus?: 'top' | 'center' | 'bottom';
+  /** Set for a backdrop above the fold, so the photo isn't lazy-loaded. */
+  eager?: boolean;
+}
+
+const { image, tint = 'muted', opacity = 80, focus = 'center', eager = false } = Astro.props;
+---
+
+<div
+  class:list={['backdrop', `backdrop--${tint}`]}
+  style={`--backdrop-scrim-opacity: ${opacity}%; --backdrop-focus: ${focus};`}
+>
+  <div class="backdrop__bg" aria-hidden="true">
+    <Image
+      src={image}
+      alt=""
+      widths={[800, 1400, 2000]}
+      sizes="100vw"
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+    />
+    <span class="backdrop__scrim"></span>
+  </div>
+
+  <div class="backdrop__content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .backdrop--light {
+    --backdrop-ground: var(--color-surface);
+  }
+
+  .backdrop--muted {
+    --backdrop-ground: var(--color-surface-muted);
+  }
+
+  .backdrop--dark {
+    --backdrop-ground: var(--color-inverse);
+  }
+
+  .backdrop {
+    display: flow-root; /* see the header comment — not cosmetic */
+    position: relative;
+    isolation: isolate;
+    /* Shows while the photo loads, and stands in for good if it never does. */
+    background: var(--backdrop-ground);
+  }
+
+  .backdrop__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .backdrop__bg :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center var(--backdrop-focus, center);
+    display: block;
+  }
+
+  .backdrop__scrim {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--backdrop-ground) var(--backdrop-scrim-opacity, 80%), transparent);
+  }
+
+  .backdrop__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Hand every wrapped section a transparent ground. Each of these targets a
+     token the section already reads for its own background, so nothing here
+     reaches past a section's public surface into its internals. */
+  .backdrop__content :global(.text-block) {
+    --text-block-bg: transparent;
+  }
+
+  .backdrop__content :global(.trust-bar--card) {
+    --trust-bar-fill: transparent;
+  }
+</style>
