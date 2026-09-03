@@ -47,6 +47,11 @@ interface Props {
   kicker?: string;
   headingLines: string[];
   lead: string;
+  /** The hero's CTA. Rendered as `brand` when the caller doesn't name a
+   *  variant — identical to `inverse` at rest (--color-brand and
+   *  --color-inverse are both Dark Teal), but it hovers to the Mint accent
+   *  instead of inverting to Off White. The hero CTA is the page's primary
+   *  action and sits on a light panel, so the accent is the hover it wants. */
   cta: ButtonData;
   /** Small badge/logo above the heading. Optional on every variant. */
   logo?: ImageBlock;
@@ -118,7 +123,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
           ))}
         </h1>
         <p class="lead">{lead}</p>
-        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
 
         <div class="hero__badges">
           {badges.map((badge) => (
@@ -170,7 +175,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
           ))}
         </h1>
         <p class="lead">{lead}</p>
-        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
       </div>
     </div>
   </section>
@@ -202,7 +207,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
           ))}
         </h1>
         <p class="lead">{lead}</p>
-        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
       </div>
     </div>
   </section>
@@ -227,7 +232,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
           ))}
         </h1>
         <p class="lead">{lead}</p>
-        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
       </div>
 
       <div class="hero__collage">
@@ -269,7 +274,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
           ))}
         </h1>
         <p class="lead">{lead}</p>
-        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
+        <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
 
         {stats.length > 0 && (
           <div class="hero__stats">
