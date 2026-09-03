@@ -284,7 +284,8 @@ calls for — don't fork a new component.
 | `logo` | `ImageBlock` | Optional small badge/logo above the heading. All variants; omit to render nothing. |
 | `badges` | `ImageBlock[]` | `split-mosaic` only: trust badges inside the white card under the copy (Google Reviews, Registered NDIS Provider in this build). |
 | `images` | `MosaicImage[]` | `split-mosaic` only: `{ ratio, label, span?: 'wide', offset?: boolean }`. One `span: 'wide'` image spans the top row; the rest flow into a row beneath; `offset: true` nudges an image down for the cascading look. Works with any count ≥1. |
-| `image` | `ImageBlock` | `full-width-photo` / `split-single-image` only: the one hero image. Required for those two variants — nothing renders without it. |
+| `image` | `ImageBlock` | `full-width-photo` / `split-single-image` only: the one hero image. Required for those two variants — nothing renders without it. `split-single-image` honours the block's own `ratio` (default `4/3`); that ratio only shows below `--bp-lg`, since on desktop the panel stretches to the copy column's height and the photo covers it. |
+| `imagePosition` | `'left' \| 'right'` | `split-single-image` only. Default `'left'`. Mirrors the two panels at desktop widths; mobile is unaffected (copy stays above the image for both). A prop, not a sixth variant — mirroring one grid is the same layout family, same call as `minimal`'s `align`. |
 | `collageImages` | `ImageBlock[]` | `split-collage` only: flows alternately into two stacked columns (index 0,2,4… left, 1,3,5… right). No `span`/`offset` — each image's own `ratio` does the sizing. Works with any count ≥1; required — nothing renders without at least one. |
 | `align` | `'left' \| 'center'` | `minimal` only. Default `'left'`. |
 | `stats` | `{ value, caption }[]` | `minimal` only: an optional compact row below the CTA, divided with hairlines. No icon — for the icon-bearing full-width version use `StatBand.astro` instead. Omit for the plain text-only look. Works with any count ≥1. |
@@ -310,6 +311,16 @@ calls for — don't fork a new component.
   lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
   cta={{ label: 'CTA Button', href: '#' }}
   image={{ ratio: '4/3', label: 'Descriptive label for the hero image' }}
+/>
+
+<!-- split-single-image, mirrored: copy left, image right (the homepage hero) -->
+<Hero
+  variant="split-single-image"
+  imagePosition="right"
+  headingLines={['Lorem ipsum', 'dolor sil']}
+  lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+  cta={{ label: 'CTA Button', href: '#' }}
+  image={{ ratio: '16/9', label: 'Descriptive label for the hero image', src: heroImg }}
 />
 
 <!-- split-collage: copy + a static two-column image collage -->
@@ -363,7 +374,11 @@ Mobile behaviour differs deliberately by variant:
 depends on the photo underneath, at any width. `split-single-image` reorders
 copy *above* the image below the `--bp-lg` (1025px) breakpoint — the message
 and CTA shouldn't sit under a full-width image on a small screen — the
-reverse of desktop's image-left, copy-right reading order. `split-collage`
+reverse of desktop's image-left, copy-right reading order. With
+`imagePosition="right"` that mobile order is already what desktop does, so
+nothing visibly reorders there; the `--bp-lg` rules are written to win over
+the mirror rules at equal specificity (they come later in the sheet) so both
+positions land on copy-first. `split-collage`
 does the same copy-first reorder at that breakpoint, but keeps its own
 two-column collage grid at every width rather than dropping to one column —
 a compact 2-up photo grid reads fine even at phone widths, and forcing it to
@@ -384,6 +399,44 @@ image carousel is ever needed for a hero, that's a materially different,
 larger build (porting the arrow/dot/keyboard JS pattern from
 `TestimonialCarousel.astro`) and should be a distinctly-named variant, not
 a silent change to this one.
+
+**Gutter alignment:** the section is full-bleed (the photo runs off the
+viewport edge), but its copy still has to start on the same vertical line as
+every `.container` section on the page, or the H1 sits inboard of everything
+below it. So the grid is three tracks, not two — `photo | copy | gutter`,
+mirrored to `gutter | copy | photo` under `imagePosition="right"` — where the
+gutter is an empty track sized
+`max(--space-md, (100% - --container) / 2 + --space-md)`: exactly where
+`.container`'s content edge falls. Percentages in a track size resolve
+against the grid container's own width, which here is the full page width —
+the same basis `.container` measures from. Deliberately **not** `100vw`:
+that includes the scrollbar, which `.container`'s `margin-inline: auto` does
+not, so a vw-based gutter would sit about half a scrollbar out. The copy
+panel's outer padding is `0` to match (the gutter track is already holding
+that space); only its inner edge, facing the photo, takes `--space-xl`.
+
+Both panels are pinned to `grid-row: 1`. Without that, auto-placement — which
+only ever walks forward — puts the DOM-first `.hero__media` in column 3 under
+`-reverse`, parks the cursor past column 2, and bumps `.hero__copy` to a
+second row: the hero renders as a diagonal stair rather than a split. The
+`--bp-lg` block then has to reset **both** `grid-column` and `grid-row` to
+their defaults, not just the column: an explicit `grid-column: 2` in a
+one-column grid generates implicit columns (silently restoring the
+side-by-side layout), and a leftover `grid-row: 1` would stack both panels
+into the same cell.
+
+**Patch note — `split-single-image`'s Off White band:** the *section* carries
+`background: var(--color-surface)` (Off White), and neither panel sets one of
+its own (the copy panel's own `--color-surface` was removed). Two reasons.
+The panels read as one continuous band with no seam down the middle — the
+split comes from the photo's edge, not from a colour change. And it's the
+backdrop a cut-out asset with real transparency (the homepage hero's figure)
+sits on: `Placeholder`'s `--image` branch deliberately clears its own
+background, so without a fill on the section that figure has nothing to sit
+on. That fill matches the body background, so it's declared for the same
+reason every other variant declares one — the variant owns its band colour
+rather than inheriting whatever the page happens to be — not because it's
+visibly different here. Under an opaque cover photo it's invisible either way.
 
 **Patch note:** `minimal`'s background was originally plain `--color-surface`
 (pure white) specifically *because* `--color-surface-muted` was scoped
@@ -1559,18 +1612,19 @@ Use this when: this is *the* footer for any page in this system.
 
 ---
 
-## Accessibility note: body copy contrast
+## Accessibility note: body copy contrast — resolved
 
-`maple-brand-config.json`'s `text` colour (`#7A7A7A`) measures **4.29:1** on
-white — it passes WCAG AA for large text but fails for normal-size body
-text (4.5:1 required). This is shipped as specified (`--color-body` in
-`tokens.css`), not silently darkened, with a commented AA-compliant
-alternative (`#6E6E6E`, 5.10:1) sitting right above it for the brand owner to
-approve. Body text on charcoal and yellow sections is unaffected — it uses
-`--color-on-inverse` (white on charcoal, 13.58:1) and `--color-on-brand`
-(charcoal on yellow, 8.34:1), both comfortably AA/AAA. Flagging this rather
-than fixing it silently is deliberate: it's a brand-token decision, not a
-component bug.
+`--color-body` reads `--tlb-dark-teal` (`#234B51`): **8.33:1** on Off White,
+**7.34:1** on Cream. AA at every size, AAA at normal size.
+
+It previously read a previous-brand placeholder grey (`#7A7A7A`) carrying a
+standing AA-fail flag. That flag understated the problem — it quoted
+**4.29:1 on white**, but this site's page background is Off White, where the
+grey measured **3.74:1** (and 3.51:1 on Cream). The grey's `--tlb-grey` slot
+has since been deleted as a non-TLB colour, which took the whole issue with
+it; the `#6E6E6E` alternative that was pending brand-owner sign-off is moot,
+being no more a TLB colour than the grey was. Light-on-dark body text was
+never affected: `--color-on-inverse` is Off White on Dark Teal at 8.33:1.
 
 ---
 
@@ -1581,6 +1635,17 @@ component bug.
   Components reference Layer 2 only.
 - To re-skin for a different brand: replace this one file. No component,
   no data file, needs to change.
+- Layer 1 holds the five registered brand colours, each in a slot named for
+  the colour itself: Dark Teal `#234B51` (`--tlb-dark-teal`), Teal `#50AB8D`
+  (`--tlb-teal`), Mint Green `#7FC282` (`--tlb-mint-green`), Cream `#EBE1C7`
+  (`--tlb-cream`), Off White `#F4EFE3` (`--tlb-off-white`). Slots for colours
+  that aren't TLB's get deleted, not kept "just in case" — `--tlb-charcoal`,
+  `--tlb-grey` and `--tlb-violet` are gone; the few previous-brand leftovers
+  still in Layer 1 are there only because something reads them or a TLB value
+  is still owed. Role names belong to Layer 2 only — a Layer 1 slot never claims to be "the brand colour", so
+  rewiring a role can't leave a name lying about what it holds. Note **Teal
+  is not wired to any Layer 2 role**, so it renders nowhere yet. Full
+  record: `content-plans/brand-style-input.md`.
 - One exception, unavoidable in plain CSS: `@media` breakpoints can't read
   custom properties, so every media query uses a literal pixel value with a
   comment naming the token it mirrors (e.g. `/* mirrors --bp-md */`). Keep

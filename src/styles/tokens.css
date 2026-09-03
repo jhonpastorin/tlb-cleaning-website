@@ -1,51 +1,60 @@
 /* TLB Cleaning brand tokens.
-   Layer 1 = raw brand values. Primary/Secondary/Accent are now the real
-   TLB brand-bible colors (see content-plans/brand-style-input.md) — every
-   other Layer 1 value below is still the previous brand's placeholder,
-   pending brand-bible input.
+   Layer 1 = raw brand values, each named for the colour it is. All five
+   registered brand-bible colors are in (see
+   content-plans/brand-style-input.md) — every other Layer 1 value below is
+   still the previous brand's placeholder, pending brand-bible input.
    Layer 2 = semantic roles. Components reference Layer 2 ONLY.
    Re-skinning for another brand = replacing this file. Nothing else. */
 
 :root {
-  /* ---- Layer 1: brand primitives ---- */
-  --tlb-primary:        #234B51;   /* Dark Teal — brand bible primary */
-  --tlb-secondary:      #50AB8D;   /* Teal — brand bible primary */
-  --tlb-accent:         #7FC282;   /* Mint Green — brand bible secondary */
-  --tlb-cream:          #EBE1C7;   /* Cream — brand bible secondary */
-  --tlb-off-white:      #F4EFE3;   /* Off White — brand bible secondary */
-  --tlb-charcoal:       #2E2E2E;   /* placeholder — not covered by the brand bible yet */
+  /* ---- Layer 1: brand primitives ----
+     Every slot here is named for the colour it holds, not for a role it plays
+     — roles live in Layer 2, and a colour that gets reassigned shouldn't
+     leave a slot called "primary" holding something that isn't. The five
+     brand-bible colours come first; the handful after them are the previous
+     brand's leftovers, kept only where something still reads them or a real
+     value is still owed. Anything that was neither got deleted rather than
+     left sitting in the palette. */
+  --tlb-dark-teal:      #234B51;
+  --tlb-teal:           #50AB8D;   /* Registered but NOT wired: no Layer 2
+                                      role reads it, so it renders nowhere on
+                                      the site. See brand-style-input.md. */
+  --tlb-mint-green:     #7FC282;
+  --tlb-cream:          #EBE1C7;
+  --tlb-off-white:      #F4EFE3;
   --tlb-blue-dark:      #1F2230;   /* placeholder — not covered by the brand bible yet */
-  --tlb-grey:           #7A7A7A;   /* placeholder — not covered by the brand bible yet */
   --tlb-white:          #FFFFFF;   /* placeholder — not covered by the brand bible yet */
   --tlb-black:          #000000;   /* placeholder — not covered by the brand bible yet */
-  --tlb-violet:         #926DB0;   /* placeholder — not covered by the brand bible yet, unused by any component */
   --tlb-orange:         #F69305;   /* placeholder — not covered by the brand bible yet, unused by any component */
   --tlb-cyan:           #387677;   /* placeholder — not covered by the brand bible yet, unused by any component */
   --tlb-cyan-dark:      #085453;   /* placeholder — not covered by the brand bible yet, unused by any component */
 
   /* ---- Layer 2: semantic roles ----
-     Re-wired for the brand-bible ambiance (content-plans/brand-style-input.md
+     This is the layer that carries roles — Layer 1 above is colour names
+     only. Re-wired for the brand-bible ambiance (content-plans/brand-style-input.md
      + the Core Values / Mission & Brand Promise deck slides): one dark Teal
      identity used for both the "brand band" and general dark sections, cream/
      off-white pill fills and dark-Teal ink on light surfaces, Mint Green kept
      for a small accent role rather than a page-filling colour. */
-  --color-brand:            var(--tlb-primary);      /* Dark Teal — bands: header service bar, Hero split-mosaic, TagCloud */
+  --color-brand:            var(--tlb-dark-teal);      /* Dark Teal — bands: header service bar, Hero split-mosaic, TagCloud */
   --color-on-brand:         var(--tlb-off-white);     /* light text/ink on top of a Dark Teal band */
   --color-surface:          var(--tlb-off-white);     /* page/card background — Off White, not stark white */
-  --color-on-surface:       var(--tlb-primary);       /* Dark Teal ink on light surfaces — headings, pill text */
-  --color-inverse:          var(--tlb-primary);       /* dark sections — same Dark Teal as --color-brand */
+  --color-on-surface:       var(--tlb-dark-teal);       /* Dark Teal ink on light surfaces — headings, pill text */
+  --color-inverse:          var(--tlb-dark-teal);       /* dark sections — same Dark Teal as --color-brand */
   --color-on-inverse:       var(--tlb-off-white);     /* light text on dark sections */
-  --color-accent:           var(--tlb-accent);        /* Mint Green — small decorative accents only (e.g. TagCloud's highlighted-tag ring) */
+  --color-accent:           var(--tlb-mint-green);        /* Mint Green — small decorative accents only (e.g. TagCloud's highlighted-tag ring) */
 
-  /* Body copy colour. The config's #7A7A7A measures 4.29:1 on white, which
-     PASSES WCAG AA for large text (>=18.66px bold / >=24px normal) but FAILS
-     for normal-size body text (4.5:1 required). We ship the config value as
-     specified — do not silently darken it — and flag an approved-pending
-     alternative below. See SECTIONS.md "Accessibility note" for detail.
-     AA-compliant alternative (5.10:1 on white), pending brand-owner sign-off:
-     --color-body: #6E6E6E;
-  */
-  --color-body:             var(--tlb-grey);
+  /* Body copy colour. Was the previous brand's placeholder grey (#7A7A7A) in
+     a --tlb-grey slot; that slot is gone (it isn't a TLB brand colour) and
+     body copy now uses Dark Teal, the same ink --color-on-surface already
+     uses for headings. This also RESOLVES the contrast flag that used to sit
+     here: the grey measured 3.74:1 on this site's Off White background — a
+     WCAG AA fail for normal-size text (4.5:1 needed), and worse than the
+     4.29:1 the old note quoted, because that figure was measured against
+     pure white, which is not a background this site uses. Dark Teal measures
+     8.33:1 on Off White and 7.34:1 on Cream, so AA passes at every size, AAA
+     at normal size. */
+  --color-body:             var(--tlb-dark-teal);
   /* Light neutral panel fill — originally scoped to "placeholder fill only";
      broadened once a second legitimate use (ServiceBlocks' list-row body,
      Hero's minimal-variant background) showed up, rather than adding a
@@ -55,7 +64,7 @@
   --color-border-muted:     #D8D8D8;                 /* placeholder dashed border */
 
   /* Interaction — from theme_button_defaults */
-  --color-btn-hover-bg:     var(--tlb-primary);       /* Dark Teal hover state, matching the unified dark identity above */
+  --color-btn-hover-bg:     var(--tlb-dark-teal);       /* Dark Teal hover state, matching the unified dark identity above */
   --color-btn-hover-text:   var(--tlb-off-white);
 
   /* Focus ring — accessible on every background this page uses */

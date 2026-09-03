@@ -17,6 +17,7 @@ import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import heroImg from '../assets/home_cleaning/inside_your_home/home/home-cleaner-with-cleaning-supplies-caddy.png';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 // Site chrome (header nav, mega-menus, footer links/contact) — shared with
 // house-cleaning.astro, see src/data/navigation.ts.
@@ -58,14 +59,20 @@ const business = {
   description: pageMeta.description,
 };
 
-// §1 Hero — no hero photo supplied yet. Per the plan's own recommendation,
-// shipping `minimal` now (zero sourcing dependency) rather than a dashed
-// placeholder box standing in for a real photo; swap to `split-single-image`
-// + a real `image` once one is sourced.
+// §1 Hero — the hero photo has now been supplied, so this is the
+// `split-single-image` swap the plan called for (it shipped as `minimal`
+// while there was no asset). Image sits on the RIGHT via `imagePosition`;
+// its ratio matches the asset's native 1920x1080 so the cut-out figure
+// isn't cropped when the layout collapses to one column.
 const hero = {
   headingLines: ['TLB Cleaning.', 'Your reliable local cleaners.'],
   lead: 'A full-time local team caring for homes, holiday lets and managed properties, on a schedule that suits you.',
   cta: quoteCta,
+  image: {
+    ratio: '16/9',
+    label: 'TLB Cleaning cleaner in apron and gloves holding a caddy of cleaning supplies',
+    src: heroImg,
+  },
 };
 
 // §4 Trust bar — drafted in full; positioned directly under the hero per
@@ -313,7 +320,14 @@ const closingCta = {
   />
 
   <main id="main">
-    <Hero variant="minimal" headingLines={hero.headingLines} lead={hero.lead} cta={hero.cta} />
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
 
     <TrustBar items={trustBarItems} />
 
