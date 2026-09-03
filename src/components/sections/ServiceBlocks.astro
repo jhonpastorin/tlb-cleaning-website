@@ -5,6 +5,10 @@
 //    (a different affordance than Button.astro's pill — see SECTIONS.md).
 //  - list: stacked pill-shaped rows, icon segment + text + a circular
 //    "go" arrow.
+//  - photo-tiles: a grid of photo tiles, each its own link, with the copy
+//    over a brand scrim and a CTA that comes in on hover. Distinct from
+//    image-cards, which is a light card with the photo ABOVE the text and a
+//    permanent footer bar — here the photo IS the card.
 //  - highlight: N compact cards feed one enlarged showcase panel above them;
 //    clicking a card swaps the showcase's content with a brief zoom-in.
 //  - slider: one showcase panel at a time, navigated with prev/next arrows
@@ -16,24 +20,25 @@
 // file follows throughout: never pass a class straight into <Placeholder>
 // when this file's <style> needs to size or position it — wrap it in a
 // plain <div> authored here instead, or the rule silently never matches.
+import { Image } from 'astro:assets';
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
 import ServiceIcon from '../ui/ServiceIcon.astro';
 import type { ServiceIconName } from '../ui/ServiceIcon.astro';
 import type { ImageBlock, ButtonData } from '../../data/types';
 
-type Variant = 'icon-grid' | 'image-cards' | 'list' | 'highlight' | 'slider';
+type Variant = 'icon-grid' | 'image-cards' | 'list' | 'highlight' | 'slider' | 'photo-tiles';
 
 interface ServiceItem {
   /** icon-grid, list */
   icon?: ServiceIconName;
-  /** image-cards, highlight, slider */
+  /** image-cards, highlight, slider, photo-tiles */
   image?: ImageBlock;
   title: string;
   description: string;
   /** image-cards (footer bar), highlight/slider (showcase button) */
   cta?: ButtonData;
-  /** list only: row link target. Defaults to '#' if omitted. */
+  /** list, photo-tiles: row/tile link target. Defaults to '#' if omitted. */
   href?: string;
 }
 
@@ -44,9 +49,21 @@ interface Props {
   items: ServiceItem[];
   /** icon-grid only: optional closing CTA under the grid. */
   cta?: ButtonData;
+  /** photo-tiles only: the label on every tile's hover CTA. One label for
+   *  the whole grid rather than per item — these tiles all do the same
+   *  thing (open the service), and five slightly different verbs would read
+   *  as five different affordances. */
+  tileCtaLabel?: string;
 }
 
-const { variant = 'icon-grid', heading, lead, items, cta } = Astro.props;
+const {
+  variant = 'icon-grid',
+  heading,
+  lead,
+  items,
+  cta,
+  tileCtaLabel = 'Learn more',
+} = Astro.props;
 
 // Random suffix so multiple <ServiceBlocks> instances on one page never
 // collide on this id — same fix Faq.astro already applies to its own
@@ -142,6 +159,44 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+{variant === 'photo-tiles' && (
+  <section class="service-blocks service-blocks--photo-tiles" aria-labelledby={headingId}>
+    <div class="container">
+      <div class="service-blocks__intro">
+        <h2 id={headingId}>{heading}</h2>
+        {lead && <p class="lead">{lead}</p>}
+      </div>
+
+      <ul class="service-blocks__tiles">
+        {items.map((item) => (
+          <li>
+            {/* The whole tile is the link, so the CTA below is a styled
+                <span>, not a nested <a> — an anchor inside an anchor is
+                invalid and browsers recover from it unpredictably. It is
+                revealed on :focus-within too, so it is never a hover-only
+                affordance for keyboard users. */}
+            <a class="service-blocks__tile" href={item.href ?? '#'}>
+              {item.image?.src && (
+                <span class="service-blocks__tile-media">
+                  {/* alt="" — the tile's own title and description already
+                      say what this is; the photo is atmosphere. */}
+                  <Image src={item.image.src} alt="" widths={[400, 800]} sizes="(max-width: 768px) 100vw, 33vw" loading="lazy" />
+                </span>
+              )}
+              <span class="service-blocks__tile-scrim"></span>
+              <span class="service-blocks__tile-body">
+                <span class="service-blocks__tile-title">{item.title}</span>
+                <span class="service-blocks__tile-desc">{item.description}</span>
+                <span class="service-blocks__tile-cta">{tileCtaLabel}</span>
               </span>
             </a>
           </li>
@@ -477,6 +532,142 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
       width: 36px;
       height: 36px;
       margin-inline-end: var(--space-sm);
+    }
+  }
+
+  /* ---- photo-tiles -----------------------------------------------------------
+     Photo, scrim, copy — three layers in one link box. The scrim is what
+     makes the copy legible over an arbitrary photo, so it is not optional:
+     it rests at 55% of the Dark Teal ground and deepens to 75% on hover,
+     which is also what makes the CTA readable as it arrives. */
+
+  .service-blocks--photo-tiles {
+    padding-block: var(--space-2xl);
+  }
+
+  .service-blocks__tiles {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .service-blocks__tile {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: 320px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--color-on-inverse);
+  }
+
+  .service-blocks__tile-media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .service-blocks__tile-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--duration-slow) var(--ease-standard);
+  }
+
+  .service-blocks__tile-scrim {
+    position: absolute;
+    inset: 0;
+    /* Dark Teal, not black — a neutral scrim over five different photos is
+       what makes a set of tiles look like stock, and the brand ground is
+       already the site's answer for "text over an image" (see
+       ui/Backdrop.astro and Hero's full-width-photo). */
+    background: color-mix(in srgb, var(--color-inverse) 55%, transparent);
+    transition: background var(--duration-base) var(--ease-standard);
+  }
+
+  .service-blocks__tile-body {
+    position: relative;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3xs);
+    padding: var(--space-md);
+  }
+
+  .service-blocks__tile-title {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--title-7);
+  }
+
+  .service-blocks__tile-desc {
+    font-size: var(--text-small);
+    line-height: var(--leading-snug);
+    color: color-mix(in srgb, var(--color-on-inverse) 85%, transparent);
+  }
+
+  /* The CTA is laid out at full size from the start and only faded/slid in,
+     so revealing it never reflows the tile or shifts the copy above it. */
+  .service-blocks__tile-cta {
+    margin-top: var(--space-sm);
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+    font-family: var(--font-button);
+    font-weight: var(--weight-button);
+    font-size: var(--text-small);
+    padding: var(--space-xs) var(--space-md);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity var(--duration-base) var(--ease-standard),
+      transform var(--duration-base) var(--ease-standard);
+  }
+
+  .service-blocks__tile:hover .service-blocks__tile-scrim,
+  .service-blocks__tile:focus-within .service-blocks__tile-scrim {
+    background: color-mix(in srgb, var(--color-inverse) 75%, transparent);
+  }
+
+  .service-blocks__tile:hover .service-blocks__tile-cta,
+  .service-blocks__tile:focus-visible .service-blocks__tile-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .service-blocks__tile:hover .service-blocks__tile-media :global(img) {
+    transform: scale(1.04);
+  }
+
+  /* Touch devices never hover, so the CTA would be permanently invisible —
+     and a tile whose only affordance is a hover state reads as flat art.
+     Show it outright wherever hover isn't available. */
+  @media (hover: none) {
+    .service-blocks__tile-cta {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .service-blocks__tiles {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* mirrors --bp-sm */
+  @media (max-width: 480px) {
+    .service-blocks__tiles {
+      grid-template-columns: 1fr;
+    }
+
+    .service-blocks__tile {
+      min-height: 260px;
     }
   }
 

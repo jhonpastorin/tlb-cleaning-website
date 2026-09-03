@@ -25,6 +25,14 @@ import pathwayHolidayLetImg from '../assets/home/holiday-let-cleaning-guest-read
 import pathwayRentalImg from '../assets/home/rental-property-cleaning-two-storey-house-exterior.jpg';
 // §2 backdrop, behind the Cream scrim.
 import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+// §10 "What we do" tiles — one photo per service, named for the service so
+// a real shoot drops straight in over the top.
+import serviceAirbnbImg from '../assets/home/service-airbnb-and-holiday-let-turnovers.jpg';
+import serviceEndOfLeaseImg from '../assets/home/service-end-of-lease-and-bond-cleans.png';
+import serviceRegularImg from '../assets/home/service-regular-home-cleaning.png';
+import serviceRealEstateImg from '../assets/home/service-real-estate-and-property-management.jpg';
+import serviceDeepCleanImg from '../assets/home/service-deep-and-one-off-cleans.png';
+import type { ImageMetadata } from 'astro';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 // Site chrome (header nav, mega-menus, footer links/contact) — shared with
 // house-cleaning.astro, see src/data/navigation.ts.
@@ -277,7 +285,26 @@ const testimonials = [
 // §10 "What we do" — drafted in full, with the deep links the spec calls
 // for. Same five services the footer's column uses, so it lives in
 // src/data/navigation.ts as `serviceLinks`.
-const whatWeDoItems = serviceLinks;
+// One photo per service, keyed by the service's own href so the pairing
+// can't silently slip if serviceLinks is ever reordered. The photos live in
+// src/assets/home under service-named filenames, so replacing one with a
+// real photo of that service is a file swap with no code change.
+//
+// ⚠️ All five are COPIES of photos already used elsewhere on the site — the
+// library has six real photographs total and no per-service shoot. They are
+// placeholders in everything but name.
+const serviceImages: Record<string, ImageMetadata> = {
+  '/airbnb-cleaning/': serviceAirbnbImg,
+  '/end-of-lease-cleaning/': serviceEndOfLeaseImg,
+  '/house-cleaning/': serviceRegularImg,
+  '/real-estate-cleaning/': serviceRealEstateImg,
+  '/deep-cleaning/': serviceDeepCleanImg,
+};
+
+const whatWeDoItems = serviceLinks.map((service) => ({
+  ...service,
+  image: { ratio: '4/3', label: service.title, src: serviceImages[service.href] },
+}));
 
 // §11 Where We Clean — drafted in full. Location page URLs aren't specified
 // in the spec (open item); `/locations/<slug>/` is a guessed pattern —
@@ -421,7 +448,7 @@ const closingCta = {
 
     <TestimonialCarousel heading="What our clients say" testimonials={testimonials} />
 
-    <ServiceBlocks variant="list" heading="What we do" items={whatWeDoItems} />
+    <ServiceBlocks variant="photo-tiles" heading="What we do" items={whatWeDoItems} tileCtaLabel="See the service" />
 
     <TagCloud
       heading="Where We Clean"
