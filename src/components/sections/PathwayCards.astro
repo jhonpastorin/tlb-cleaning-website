@@ -33,7 +33,7 @@ const { heading, headingAccent, cards } = Astro.props;
       {cards.map((card) => (
         <li class="pathway__card">
           <div class="pathway__image">
-            <Placeholder ratio={card.image.ratio} label={card.image.label} />
+            <Placeholder ratio={card.image.ratio} label={card.image.label} src={card.image.src} />
           </div>
           <div class="pathway__body">
             <div class="pathway__title-row">

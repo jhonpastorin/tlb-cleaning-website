@@ -17,7 +17,11 @@ import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../assets/home_cleaning/inside_your_home/home/home-cleaner-with-cleaning-supplies-caddy.png';
+import heroImg from '../assets/home/home-cleaner-with-cleaning-supplies-caddy.png';
+// §3 persona card photos, one per card, in card order.
+import pathwayHomeImg from '../assets/home/house-cleaning-team-vacuuming-open-plan-living-room.jpg';
+import pathwayHolidayLetImg from '../assets/home/holiday-let-cleaning-guest-ready-cottage-living-room.jpg';
+import pathwayRentalImg from '../assets/home/rental-property-cleaning-two-storey-house-exterior.jpg';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 // Site chrome (header nav, mega-menus, footer links/contact) — shared with
 // house-cleaning.astro, see src/data/navigation.ts.
@@ -115,26 +119,38 @@ const definitionBody = [
 // heading/accent lines aren't in the spec at all, so these two lines are
 // placeholder structural copy, not a brand decision — flag before launch.
 const pathwayCards = {
-  heading: 'Tell us what you need,',
+  heading: 'Tell us what you need',
   headingAccent: "we'll take it from there.",
   cards: [
     {
       number: 1,
-      image: { ratio: '4/3', label: 'Home interior being cleaned' },
+      image: {
+        ratio: '4/3',
+        label: 'TLB cleaners vacuuming and dusting an open-plan living room and kitchen',
+        src: pathwayHomeImg,
+      },
       title: 'I need a hand at home',
       description: 'Weekly, fortnightly or a one-off reset. Same faces every visit.',
       cta: { label: 'Get a quote', href: '/house-cleaning/' },
     },
     {
       number: 2,
-      image: { ratio: '4/3', label: 'Holiday let living space, guest-ready' },
+      image: {
+        ratio: '4/3',
+        label: 'Guest-ready holiday let living room with a lit wood fire and made-up sofa',
+        src: pathwayHolidayLetImg,
+      },
       title: 'I have a holiday let',
       description: 'Turnovers timed to your bookings, essentials restocked, ready before check-in.',
       cta: { label: 'Get a quote', href: '/airbnb-cleaning/' },
     },
     {
       number: 3,
-      image: { ratio: '4/3', label: 'Managed rental property exterior' },
+      image: {
+        ratio: '4/3',
+        label: 'Street view of a managed two-storey rental property between tenancies',
+        src: pathwayRentalImg,
+      },
       title: 'I manage properties',
       description: 'Bond and end of lease cleans that pass, and a team with the capacity for your rent roll.',
       cta: { label: 'Get a quote', href: '/real-estate-cleaning/' },
@@ -142,31 +158,39 @@ const pathwayCards = {
   ],
 };
 
-// §5 "What's included in every visit" — drafted in full. Icon-less per the
-// plan's note: the only icon set available (ServiceIcon.astro) has nothing
-// cleaning-relevant, and a mismatched abstract icon would just be decoration.
+// §5 "What's included in every visit" — drafted in full. These rows used to
+// ship icon-less because ServiceIcon.astro held only the previous brand's
+// abstract set (idea, spark, bloom…) and a mismatched glyph would have been
+// pure decoration. That note is now resolved rather than worked around: the
+// five cleaning-specific icons below were added to ServiceIcon itself, so
+// each row names its own subject instead of borrowing an unrelated shape.
 const includedItems = [
   {
+    icon: 'house' as const,
     title: 'Inside your home',
     description: 'Regular cleaning, deep and one-off cleans, end of lease and bond cleans.',
     href: '/house-cleaning/',
   },
   {
+    icon: 'suitcase' as const,
     title: 'Holiday lets',
     description: 'Airbnb and short-stay turnovers, restocking, guest-ready presentation.',
     href: '/airbnb-cleaning/',
   },
   {
+    icon: 'key' as const,
     title: 'For agencies',
     description: 'Bond cleans, vacancy turnarounds, routine managed-property cleans.',
     href: '/real-estate-cleaning/',
   },
   {
+    icon: 'spray-bottle' as const,
     title: 'Around the house',
     description: 'Carpets, windows, gutters, pressure cleaning, ovens.',
     href: '/deep-cleaning/',
   },
-  { title: 'For business', description: 'Offices and commercial premises.' }, // no dedicated page yet — defaults to '#'
+  // no dedicated page yet — href defaults to '#'
+  { icon: 'office' as const, title: 'For business', description: 'Offices and commercial premises.' },
 ];
 
 // §6 Meet Tegan — bio drafted in full. Pull-quote is blocked in the spec

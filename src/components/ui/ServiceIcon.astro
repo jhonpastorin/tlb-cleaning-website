@@ -4,7 +4,13 @@
 // this is a ui/ primitive rather than duplicated inline in each). Add a case
 // here for a brand that needs a sixth icon — same pattern StatBand.astro
 // already uses for its own icon set.
-export type ServiceIconName = 'idea' | 'spark' | 'bloom' | 'puzzle' | 'target' | 'chart-pie' | 'chart-bars';
+// The first seven are the abstract set this component shipped with. The five
+// after them are the cleaning-specific ones the TLB homepage's `list` rows
+// needed — index.astro used to carry a note saying its rows stayed icon-less
+// because nothing here was cleaning-relevant and an abstract stand-in would
+// be pure decoration. These are that gap closed, not a second set: same
+// 24x24 viewBox, same 1.6 stroke, same currentColor contract.
+export type ServiceIconName = 'idea' | 'spark' | 'bloom' | 'puzzle' | 'target' | 'chart-pie' | 'chart-bars' | 'house' | 'suitcase' | 'key' | 'spray-bottle' | 'office';
 
 interface Props {
   name: ServiceIconName;
@@ -61,6 +67,42 @@ const { name, class: className } = Astro.props;
     <>
       <circle cx="12" cy="12" r="9" />
       <path d="M12 3v9l7.8-4.5A9 9 0 0 0 12 3Z" fill="currentColor" stroke="none" />
+    </>
+  )}
+  {name === 'house' && (
+    <>
+      <path d="M3 11 12 4l9 7" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M5.2 9.8v9.7h13.6V9.8" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M10 19.5v-5.2h4v5.2" stroke-linecap="round" stroke-linejoin="round" />
+    </>
+  )}
+  {name === 'suitcase' && (
+    <>
+      <rect x="3" y="7.8" width="18" height="12.4" rx="2.2" />
+      <path d="M9 7.8V6.2a1.6 1.6 0 0 1 1.6-1.6h2.8A1.6 1.6 0 0 1 15 6.2v1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M3 13.2h18" stroke-linecap="round" />
+    </>
+  )}
+  {name === 'key' && (
+    <>
+      <circle cx="8.8" cy="8.8" r="3.8" />
+      <path d="m11.6 11.6 8 8" stroke-linecap="round" />
+      <path d="m17 15 2 2M14.6 17.4l2 2" stroke-linecap="round" />
+    </>
+  )}
+  {name === 'spray-bottle' && (
+    <>
+      <path d="M7.5 20.5v-8a2.5 2.5 0 0 1 2.5-2.5h2a2.5 2.5 0 0 1 2.5 2.5v8Z" stroke-linejoin="round" />
+      <path d="M9.8 10V6.2h3V10" stroke-linejoin="round" />
+      <path d="M12.8 7h2.9l2.3-1.8" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M19.4 8.2h.01M20.8 10.4h.01M18.2 11.2h.01" stroke-linecap="round" stroke-width="2.2" />
+    </>
+  )}
+  {name === 'office' && (
+    <>
+      <path d="M2.8 20.6h18.4" stroke-linecap="round" />
+      <path d="M4.4 20.2V9.4h6.4v10.8M13.2 20.2V3.8h6.4v16.4" stroke-linejoin="round" />
+      <path d="M6.4 12.4h2.4M6.4 16h2.4M15.2 7h2.4M15.2 10.6h2.4M15.2 14.2h2.4" stroke-linecap="round" />
     </>
   )}
   {name === 'chart-bars' && (
