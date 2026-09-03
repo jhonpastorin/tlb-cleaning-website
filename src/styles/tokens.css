@@ -63,9 +63,22 @@
   --color-surface-muted:    var(--tlb-cream);         /* Cream — warmer muted panel than plain surface, matches the brand bible's second light neutral */
   --color-border-muted:     #D8D8D8;                 /* placeholder dashed border */
 
-  /* Interaction — from theme_button_defaults */
-  --color-btn-hover-bg:     var(--tlb-dark-teal);       /* Dark Teal hover state, matching the unified dark identity above */
-  --color-btn-hover-text:   var(--tlb-off-white);
+  /* Interaction. Read only by .btn--brand — the default variant, so this is
+     the hover for nearly every CTA on the site.
+
+     Was Dark Teal on Dark Teal: the same colour the brand button already
+     rests at, i.e. a hover that changed nothing. It now lifts to Mint, which
+     is also what .btn--surface hovers to, so there is one hover language
+     across the site rather than two.
+
+     Dark Teal ink on Mint, NOT off-white: Mint against Dark Teal measures
+     4.53:1 (AA at every size — button text is 18px bold, which is just under
+     WCAG's 18.66px "large" threshold, so 4.5:1 is the bar it has to clear).
+     Off-white on Mint measures 1.84:1 and is not an option. The registered
+     --tlb-teal is the more obvious "accent" by name but only reaches 3.44:1
+     against Dark Teal ink, so it stays unwired. */
+  --color-btn-hover-bg:     var(--tlb-mint-green);
+  --color-btn-hover-text:   var(--tlb-dark-teal);
 
   /* Focus ring — accessible on every background this page uses */
   --color-focus-ring:       var(--tlb-blue-dark);

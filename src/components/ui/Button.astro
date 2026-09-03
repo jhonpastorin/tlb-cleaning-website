@@ -1,13 +1,16 @@
 ---
 // Pill button primitive covering every button treatment in the reference:
-//  - brand          yellow fill / charcoal text   -> header CTA, PathwayCards CTAs
+//  - brand          Dark Teal fill / off-white text, hovers to a Mint fill
+//                    with Dark Teal ink -> the default, so nearly every CTA
 //  - inverse        charcoal fill / white text    -> Hero "Why choose Maple?"
 //  - inverse-accent charcoal fill / yellow text   -> StatBand "Submit a Referral"
 //  - surface        Dark Teal fill / off-white text, Mint ring + glow, hovers
 //                    to a solid Mint fill -> SiteHeader CTAs (a same-Dark-Teal
 //                    band needed a CTA that still visibly lifts off it)
-// All four hover to the same charcoal/white pair from theme_button_defaults,
-// except variants that already rest there, which invert to the surface pair.
+// brand and surface both hover to Mint (one hover language for the two
+// variants that rest on a dark fill); inverse and inverse-accent invert to
+// the light surface pair instead, since they already rest at Dark Teal and
+// sit inside dark bands where a Mint fill would shout.
 type Variant = 'brand' | 'inverse' | 'inverse-accent' | 'surface';
 
 interface Props {
@@ -84,6 +87,11 @@ const Tag = href ? 'a' : 'button';
     background: var(--color-btn-hover-bg);
     color: var(--color-btn-hover-text);
     border-color: var(--color-btn-hover-bg);
+    /* Same lift + accent glow .btn--surface uses on hover, so the two
+       Mint-hovering variants behave identically and not just match in
+       colour. */
+    box-shadow: 0 4px 18px color-mix(in srgb, var(--color-accent) 45%, transparent);
+    transform: translateY(-1px);
   }
 
   .btn--inverse {
