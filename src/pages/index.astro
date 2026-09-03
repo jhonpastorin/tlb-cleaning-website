@@ -61,15 +61,23 @@ const business = {
 
 // §1 Hero — the hero photo has now been supplied, so this is the
 // `split-single-image` swap the plan called for (it shipped as `minimal`
-// while there was no asset). Image sits on the RIGHT via `imagePosition`;
-// its ratio matches the asset's native 1920x1080 so the cut-out figure
-// isn't cropped when the layout collapses to one column.
+// while there was no asset). Image sits on the RIGHT via `imagePosition`.
+//
+// The asset was trimmed to its own alpha bounding box (1920x1080 down to
+// 1364x1032 — the original was mostly empty transparent margin), and `ratio`
+// states those exact dimensions. With `imageFit` set to contain on top, the
+// green backdrop behind the figure survives whole at every width: the panel
+// stretches to the copy column's height, so the default `cover` was slicing
+// the circle's sides off. `contain-bottom` rather than plain `contain`
+// because the asset's own bottom edge cuts through the figure — anchored
+// there it stands on the section's edge instead of floating mid-panel with a
+// visible cut line.
 const hero = {
   headingLines: ['TLB Cleaning.', 'Your reliable local cleaners.'],
   lead: 'A full-time local team caring for homes, holiday lets and managed properties, on a schedule that suits you.',
   cta: quoteCta,
   image: {
-    ratio: '16/9',
+    ratio: '1364/1032',
     label: 'TLB Cleaning cleaner in apron and gloves holding a caddy of cleaning supplies',
     src: heroImg,
   },
@@ -323,6 +331,7 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
+      imageFit="contain-bottom"
       headingLines={hero.headingLines}
       lead={hero.lead}
       cta={hero.cta}

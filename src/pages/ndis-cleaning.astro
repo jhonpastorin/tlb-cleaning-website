@@ -85,20 +85,41 @@ const business = {
 
 // §1 Hero — drafted in full. Lead is 23 words, inside the 15–25 target.
 //
-// ⚠️ `minimal` because no photo is supplied, and it costs more here than
-// anywhere else: the H1 is literally "the same trusted local faces" above a
-// hero with no faces in it. A real photo of real staff earns more on this
-// page than on any other.
+// Hero style matches the homepage, house cleaning and deep cleaning pages:
+// `split-single-image`, copy left, image right. NO ASSET YET — `image` is
+// passed with a `label` but no `src`, so Placeholder renders its dashed
+// briefing box in the panel. That is a deliberate reversal of this page's
+// earlier call (`minimal`, to avoid a dashed box standing in for a photo):
+// the style is now shared across the site, so the slot is held open here
+// instead of this page opening differently from every other one.
 //
-// ⚠️ Do NOT use src/assets/hero/participant-and-support-worker.png or its
-// siblings. Despite the names they are leftover placeholders from the
+// ⚠️ The dashed box is a pre-launch state. It must not ship to production —
+// either the asset lands or this hero goes back to `variant="minimal"`.
+//
+// Dropping the asset in is a one-line change: add `src`. `ratio` is 4/3 and
+// `imageFit` is contain-bottom, matching the cut-out-figure-on-a-green-circle
+// template the three sourced assets use (contain so the backdrop is never
+// cropped, bottom-anchored so the figure stands on the section's edge). If a
+// plain photograph arrives instead, drop `imageFit` to let it default to
+// `cover` and bleed edge to edge.
+//
+// ⚠️ This page needs the asset more than any other: the H1 is literally
+// "the same trusted local faces" and the hero has no faces in it. A photo of
+// real staff earns more here than anywhere else on the site.
+//
+// ⚠️ Do NOT fill it from src/assets/hero/participant-and-support-worker.png
+// or its siblings. Despite the names they are leftover placeholders from the
 // Maple/NDIS template this component library was first built against — not
-// TLB's people. Using them would fabricate a workforce on the one page
-// where that matters most.
+// TLB's people. Using them would fabricate a workforce on the one page where
+// that matters most.
 const hero = {
   headingLines: ['The same trusted local faces, treating your home with genuine care.'],
   lead: 'Consistent, respectful in-home cleaning you can rely on. Experience the comfort of a safe environment, familiar local faces, and a completely stress-free schedule.',
   cta: quoteCta,
+  image: {
+    ratio: '4/3',
+    label: 'A real TLB cleaner, one of the regular faces, cleaning in a home',
+  },
 };
 
 // §4 Trust bar — third point REPLACED for this audience.
@@ -447,7 +468,15 @@ const closingCta = {
   />
 
   <main id="main">
-    <Hero variant="minimal" headingLines={hero.headingLines} lead={hero.lead} cta={hero.cta} />
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      imageFit="contain-bottom"
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
 
     <TrustBar items={trustBarItems} />
 

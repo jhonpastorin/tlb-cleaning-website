@@ -109,15 +109,37 @@ const business = {
 // first non-branded FAQ closes "a site walkthrough settles it in ten
 // minutes". The sitewide header CTA is untouched; this is page-level only.
 //
-// 🟡 `minimal` because no photo is supplied. A real TLB team member in a
-// real workplace would do more for a B2B buyer than any sentence here.
-// Do NOT use src/assets/hero/* — those are Maple template leftovers, not
-// TLB's people.
+// Hero style matches the homepage, house cleaning and deep cleaning pages:
+// `split-single-image`, copy left, image right. NO ASSET YET — `image` is
+// passed with a `label` but no `src`, so Placeholder renders its dashed
+// briefing box in the panel. That is a deliberate reversal of this page's
+// earlier call (`minimal`, to avoid a dashed box standing in for a photo):
+// the style is now shared across the site, so the slot is held open here
+// instead of this page opening differently from every other one.
+//
+// ⚠️ The dashed box is a pre-launch state. It must not ship to production —
+// either the asset lands or this hero goes back to `variant="minimal"`.
+//
+// Dropping the asset in is a one-line change: add `src`. `ratio` is 4/3 and
+// `imageFit` is contain-bottom, matching the cut-out-figure-on-a-green-circle
+// template the three sourced assets use (contain so the backdrop is never
+// cropped, bottom-anchored so the figure stands on the section's edge). If a
+// plain photograph arrives instead, drop `imageFit` to let it default to
+// `cover` and bleed edge to edge.
+//
+// ⚠️ Do NOT fill it from src/assets/hero/* — those are Maple template
+// leftovers, not TLB's people. What this page needs is a real TLB team
+// member in a real workplace; for a B2B buyer that does more than any
+// sentence here.
 const hero = {
   kicker: 'Commercial Cleaning',
   headingLines: ['Professional ongoing service that never cuts corners after month one.'],
   lead: 'The reliable middle your office needs. Trust a fully insured local team to keep your workplace spotless, professional, and welcoming week after week.',
   cta: { label: 'Book a site walkthrough', href: quoteCta.href },
+  image: {
+    ratio: '4/3',
+    label: 'A TLB cleaner at work in a real office or commercial workplace',
+  },
 };
 
 // §4 Trust bar — the brief's three points, unchanged.
@@ -521,11 +543,14 @@ const closingCta = {
 
   <main id="main">
     <Hero
-      variant="minimal"
+      variant="split-single-image"
+      imagePosition="right"
+      imageFit="contain-bottom"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
       lead={hero.lead}
       cta={hero.cta}
+      image={hero.image}
     />
 
     <TrustBar items={trustBarItems} />

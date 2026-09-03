@@ -60,6 +60,16 @@ interface Props {
    *  widths. Default 'left'. Mobile is unaffected — copy stays above the
    *  image below --bp-lg for both positions. */
   imagePosition?: 'left' | 'right';
+  /** full-width-photo / split-single-image only: how `image` fills its panel.
+   *  Default 'cover', which is what a photo wants. Use 'contain' for a cut-out
+   *  figure on a transparent backdrop — the panel stretches to the copy's
+   *  height, so 'cover' crops the sides off a frame that was meant to be seen
+   *  whole. Nothing shows in the leftover space; the section's own background
+   *  is already what a transparent asset sits on. 'contain-bottom' anchors it
+   *  to the panel's bottom edge instead of centring it — for a cut-out whose
+   *  subject is flush with the bottom of its own frame, so it stands on the
+   *  section edge rather than floating above it. */
+  imageFit?: 'cover' | 'contain' | 'contain-bottom';
   /** split-collage only: images flow alternately into two stacked columns (works with any count >= 1). No wide/offset — each image's own ratio does the sizing. */
   collageImages?: ImageBlock[];
   /** minimal only: content alignment. Default 'left'. */
@@ -79,6 +89,7 @@ const {
   images = [],
   image,
   imagePosition = 'left',
+  imageFit = 'cover',
   collageImages = [],
   align = 'left',
   stats = [],
@@ -139,7 +150,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
 {variant === 'full-width-photo' && image && (
   <section class="hero hero--full-width-photo" aria-labelledby="hero-heading">
     <div class="hero__media">
-      <Placeholder ratio="16/9" label={image.label} src={image.src} eager />
+      <Placeholder ratio="16/9" label={image.label} src={image.src} fit={imageFit} eager />
     </div>
 
     <div class="container">
@@ -172,7 +183,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   >
     <div class="hero__grid">
       <div class="hero__media">
-        <Placeholder ratio={image.ratio ?? '4/3'} label={image.label} src={image.src} eager />
+        <Placeholder ratio={image.ratio ?? '4/3'} label={image.label} src={image.src} fit={imageFit} eager />
       </div>
 
       <div class="hero__copy">
@@ -276,6 +287,27 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
 )}
 
 <style>
+  /* Desktop floor shared by every variant, so a page's hero opens at the same
+     height whichever layout it uses — a `minimal` informational hero and the
+     homepage's `split-single-image` shouldn't differ in scale just because
+     one has a photo. 560px is the value `full-width-photo` already carried on
+     its own; it now reads this instead of repeating the literal.
+
+     Each variant applies it to whichever box actually needs to grow: the
+     split variants put it on .hero__grid so the ROW stretches and the photo
+     panel grows with it (on the section, the row would keep its content
+     height and the photo would leave a band of empty background beneath
+     itself); `minimal` has no grid, so it goes on the section, which becomes
+     a flex container purely to keep the copy centred in the taller band.
+     Every variant releases the floor below --bp-lg — on a phone the content
+     is already taller than this, and a floor there only risks dead space.
+     `full-width-photo` is the exception: its photo IS the background, so it
+     keeps a definite (shorter) height on mobile rather than dropping to
+     auto. */
+  .hero {
+    --hero-min-height: 560px;
+  }
+
   /* Eyebrow label above the H1. Sized/spaced to read as a label, not a
      subheading — uppercase with wide tracking is what distinguishes it from
      the lead line below the heading. */
@@ -301,6 +333,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
     grid-template-columns: 5fr 6fr;
     gap: var(--space-lg);
     align-items: center;
+    min-height: var(--hero-min-height);
   }
 
   .hero--split-mosaic .hero__copy {
@@ -359,6 +392,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   @media (max-width: 1025px) {
     .hero--split-mosaic .hero__grid {
       grid-template-columns: 1fr;
+      min-height: auto;
     }
 
     .hero--split-mosaic .hero__copy {
@@ -398,7 +432,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
     position: relative;
     display: flex;
     align-items: center;
-    min-height: 560px;
+    min-height: var(--hero-min-height);
     overflow: hidden;
   }
 
@@ -435,6 +469,9 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   /* mirrors --bp-md */
   @media (max-width: 768px) {
     .hero--full-width-photo {
+      /* Not `auto` like the other variants: this one's photo is the
+         background, so it still needs a definite height to be visible at
+         all — just a shorter one on a phone. */
       min-height: 420px;
     }
 
@@ -490,6 +527,10 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   .hero--split-single .hero__grid {
     display: grid;
     grid-template-columns: 1fr 1fr var(--hero-gutter);
+    /* The copy panel's own justify-content: center keeps the text optically
+       centred in whatever height wins. See --hero-min-height at the top of
+       this sheet for why the floor sits on the grid, not the section. */
+    min-height: var(--hero-min-height);
   }
 
   /* Both panels are pinned to row 1. Without an explicit row, auto-placement
@@ -500,6 +541,14 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
     grid-column: 1;
     grid-row: 1;
     overflow: hidden;
+    /* Keep an empty image slot on the section's own band colour instead of
+       Placeholder's default Cream, which would split this hero into two
+       different-coloured halves — the exact seam the section-level
+       background above exists to avoid. Tracks --color-surface rather than
+       restating it, so the two can't drift apart. The dashed border still
+       marks the slot as unfilled. No effect once `src` is set: the image
+       branch keeps no background of its own. */
+    --placeholder-bg: var(--color-surface);
   }
 
   .hero--split-single .hero__copy {
@@ -548,6 +597,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   @media (max-width: 1025px) {
     .hero--split-single .hero__grid {
       grid-template-columns: 1fr;
+      min-height: auto;
     }
 
     /* Drop the desktop placement entirely. An explicit `grid-column: 2` (or
@@ -596,6 +646,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
     grid-template-columns: 5fr 6fr;
     gap: var(--space-lg);
     align-items: center;
+    min-height: var(--hero-min-height);
   }
 
   .hero--split-collage .hero__copy {
@@ -634,6 +685,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   @media (max-width: 1025px) {
     .hero--split-collage .hero__grid {
       grid-template-columns: 1fr;
+      min-height: auto;
     }
 
     .hero--split-collage .hero__copy {
@@ -660,6 +712,11 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   .hero--minimal {
     background: var(--color-surface-muted);
     padding-block: var(--space-2xl);
+    /* Flex purely to centre the single .container child inside the floor —
+       without it the copy would sit at the top of a 560px band. */
+    min-height: var(--hero-min-height);
+    display: flex;
+    align-items: center;
   }
 
   .hero--minimal .hero__content {
@@ -715,6 +772,13 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   .hero--minimal .hero__stat-caption {
     font-size: var(--text-small);
     color: var(--color-body);
+  }
+
+  /* mirrors --bp-lg */
+  @media (max-width: 1025px) {
+    .hero--minimal {
+      min-height: auto;
+    }
   }
 
   /* mirrors --bp-md */

@@ -26,13 +26,21 @@ shift and a label real asset briefs can be written from.
 | Prop | Type | Default | Notes |
 |---|---|---|---|
 | `ratio` | `string` | `"4/3"` | Any valid CSS `aspect-ratio` value, e.g. `"16/9"`, `"1/1"`, `"4/1"`. |
-| `label` | `string` | — required | Descriptive, e.g. `"Support worker with participant"`. Rendered as visible text and as the `aria-label`. |
+| `label` | `string` | — required | Descriptive, e.g. `"Support worker with participant"`. Rendered as visible text while this is a placeholder, and as the image's `alt` once `src` is set. |
+| `src` | `ImageMetadata` | — | A statically-imported image (`import img from '../../assets/…png'`). Omit to keep the dashed placeholder box; set it and the component swaps to an optimized `<Image>` filling the exact same box, so nothing else has to change. |
+| `eager` | `boolean` | `false` | Set for above-the-fold images (a hero's) so they load eagerly at high fetch priority instead of lazily. |
+| `fit` | `'cover' \| 'contain' \| 'contain-bottom'` | `'cover'` | How the image fills its box. `cover` suits a photo — it bleeds edge to edge and can lose a little off the sides. `contain` is for an asset whose whole frame has to survive: a cut-out figure on a transparent backdrop is visibly clipped by `cover` the moment the box's ratio drifts from the file's. Nothing shows in the leftover space, since the `--image` branch keeps no background of its own. `contain-bottom` is the same fit anchored to the bottom edge, for a cut-out whose subject is already flush with the bottom of its own frame — centred, that cut edge floats mid-box and reads as a mistake. Implemented as two inline custom properties on the wrapper rather than a modifier class: the declarations have to reach the `<Image />` element, which Astro stamps with *its* scope, not this file's, and a custom property inherits across that boundary where a class selector wouldn't match. |
 | `caption` | `string` | — | Optional bottom-edge caption on a gradient scrim — mirrors `VideoPlaceholder.astro`'s own caption bar exactly (same CSS, same class naming), extended here once a photo (not just a video) needed the same "short message over the image" treatment. `ImageBand.astro` is built entirely around this. |
 | `class` | `string` | — | Extra class for layout (radius, sizing) from the parent. |
 
 ```astro
 <Placeholder ratio="4/3" label="Support coordinator meeting with a group of participants" />
 <Placeholder ratio="21/9" label="Team at the annual conference" caption="Building stronger communities together." />
+
+<!-- real asset, above the fold -->
+<Placeholder ratio="16/9" label="Descriptive alt text" src={heroImg} eager />
+<!-- cut-out figure standing on the section's bottom edge -->
+<Placeholder ratio="1364/1032" label="Descriptive alt text" src={heroImg} fit="contain-bottom" eager />
 ```
 
 Use this when: any section needs an image slot before real photography exists.
@@ -285,6 +293,7 @@ calls for — don't fork a new component.
 | `badges` | `ImageBlock[]` | `split-mosaic` only: trust badges inside the white card under the copy (Google Reviews, Registered NDIS Provider in this build). |
 | `images` | `MosaicImage[]` | `split-mosaic` only: `{ ratio, label, span?: 'wide', offset?: boolean }`. One `span: 'wide'` image spans the top row; the rest flow into a row beneath; `offset: true` nudges an image down for the cascading look. Works with any count ≥1. |
 | `image` | `ImageBlock` | `full-width-photo` / `split-single-image` only: the one hero image. Required for those two variants — nothing renders without it. `split-single-image` honours the block's own `ratio` (default `4/3`); that ratio only shows below `--bp-lg`, since on desktop the panel stretches to the copy column's height and the photo covers it. |
+| `imageFit` | `'cover' \| 'contain' \| 'contain-bottom'` | `full-width-photo` / `split-single-image` only. Default `'cover'`, which is what a photo wants. Use `'contain'` for a cut-out figure on a transparent backdrop: the panel stretches to the copy column's height, so `cover` crops the sides off a frame meant to be seen whole. `'contain-bottom'` anchors that fit to the panel's bottom edge — for a cut-out whose subject is already flush with the bottom of its own frame, so it stands on the section edge rather than floating above a visible cut line (the homepage hero). Passes straight through to `Placeholder`'s own `fit` prop. |
 | `imagePosition` | `'left' \| 'right'` | `split-single-image` only. Default `'left'`. Mirrors the two panels at desktop widths; mobile is unaffected (copy stays above the image for both). A prop, not a sixth variant — mirroring one grid is the same layout family, same call as `minimal`'s `align`. |
 | `collageImages` | `ImageBlock[]` | `split-collage` only: flows alternately into two stacked columns (index 0,2,4… left, 1,3,5… right). No `span`/`offset` — each image's own `ratio` does the sizing. Works with any count ≥1; required — nothing renders without at least one. |
 | `align` | `'left' \| 'center'` | `minimal` only. Default `'left'`. |
@@ -368,6 +377,25 @@ Wireframes: `design-refs/wireframes/hero/full-width-photo.png`,
 `split-single-image.png`, `split-collage.png`, `minimal.png`, and
 `minimal-stats.png` (see that folder's README for provenance — all were
 shared inline in chat, not saved to disk).
+
+**Desktop minimum height:** every variant reads one shared
+`--hero-min-height: 560px`, declared on `.hero` itself, so a page's hero
+opens at the same scale whichever layout it uses — a text-only `minimal`
+hero and the homepage's `split-single-image` shouldn't differ in height just
+because one has a photo. 560px isn't new: `full-width-photo` already carried
+that literal, and now reads the shared value instead.
+
+Where each variant applies it matters. The split variants (`split-mosaic`,
+`split-single-image`, `split-collage`) put it on `.hero__grid`, so the grid
+*row* stretches and the photo panel grows with it; on the section instead,
+the row would keep its content height and the photo would leave a band of
+empty background beneath itself. `minimal` has no grid, so it goes on the
+section, which becomes `display: flex; align-items: center` purely to keep
+the copy centred in the taller band. Every variant releases the floor to
+`auto` below `--bp-lg` (1025px) — phone content is already taller, and a
+floor there only risks dead space. `full-width-photo` is the exception: its
+photo *is* the background, so it needs a definite height to be visible at
+all and keeps a shorter 420px one on mobile.
 
 Mobile behaviour differs deliberately by variant:
 `full-width-photo`'s card keeps its own solid background so legibility never

@@ -20,16 +20,36 @@ interface Props {
   src?: ImageMetadata;
   /** Set for above-the-fold images (e.g. the hero mosaic) so they aren't lazy-loaded behind the fold they're actually in. */
   eager?: boolean;
+  /** How the image fills its box. Default 'cover' — right for a photo, which
+   *  should bleed edge to edge and can lose a little off the sides. Use
+   *  'contain' for an asset whose whole frame has to survive: a cut-out
+   *  figure on a transparent backdrop gets visibly clipped by 'cover' as soon
+   *  as the box's ratio drifts from the file's. Nothing shows in the leftover
+   *  space — this component's --image branch keeps no background of its own.
+   *  'contain-bottom' is the same fit anchored to the bottom edge, for a
+   *  cut-out whose subject is already flush with the bottom of its own frame:
+   *  centred, that cut edge floats mid-panel and reads as a mistake; anchored,
+   *  the figure stands on the section's own edge. */
+  fit?: 'cover' | 'contain' | 'contain-bottom';
   /** Optional caption bar over the bottom edge, on a dark gradient scrim so it reads over any photo. */
   caption?: string;
   class?: string;
 }
 
-const { ratio = '4/3', label, src, eager = false, caption, class: className } = Astro.props;
+const { ratio = '4/3', label, src, eager = false, fit = 'cover', caption, class: className } = Astro.props;
+
+// One prop, two CSS declarations — kept as a closed set of values rather than
+// exposing object-fit and object-position separately, since only these
+// combinations are meaningful here.
+const objectFit = fit === 'cover' ? 'cover' : 'contain';
+const objectPosition = fit === 'contain-bottom' ? 'center bottom' : 'center';
 ---
 
 {src ? (
-  <div class:list={['placeholder placeholder--image', className]} style={`aspect-ratio: ${ratio};`}>
+  <div
+    class:list={['placeholder placeholder--image', className]}
+    style={`aspect-ratio: ${ratio}; --placeholder-fit: ${objectFit}; --placeholder-fit-position: ${objectPosition};`}
+  >
     <Image
       src={src}
       alt={label}
@@ -61,7 +81,14 @@ const { ratio = '4/3', label, src, eager = false, caption, class: className } = 
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-surface-muted);
+    /* Cream by default — a faint fill is what makes an empty slot read as a
+       reserved box rather than a hole in the page. Overridable because a
+       caller whose own section already has a background needs the slot to sit
+       ON that background, not punch a differently-coloured panel into it
+       (Hero.astro's split-single-image band does exactly this). A custom
+       property, not a class, because a class handed to this component lands
+       under ITS scope, not the caller's — see the note in Hero.astro. */
+    background: var(--placeholder-bg, var(--color-surface-muted));
     border: 1px dashed var(--color-border-muted);
     border-radius: inherit;
     padding: var(--space-xs);
@@ -90,7 +117,13 @@ const { ratio = '4/3', label, src, eager = false, caption, class: className } = 
   .placeholder__img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* Set from the `fit` prop as an inline custom property on the wrapper,
+       rather than a modifier class: the value has to land on the <Image />
+       component's own element, which Astro stamps with ITS scope, not this
+       file's — see the scoping note in Hero.astro. A custom property
+       inherits across that boundary; a class selector wouldn't match. */
+    object-fit: var(--placeholder-fit, cover);
+    object-position: var(--placeholder-fit-position, center);
     border-radius: inherit;
   }
 

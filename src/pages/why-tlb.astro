@@ -83,15 +83,37 @@ const business = {
 // Folding it into headingLines would make the heading read "WHY TLB Nine
 // local mums, and no anonymous contractors".
 //
-// ⚠️ `minimal` because no photo is supplied — but note this page argues
-// "the part none of the others can show you: names and faces". A hero with
-// no faces on it is the weakest possible opening for that argument. A real
-// team photo would do more work here than anywhere else on the site.
+// Hero style matches the homepage, house cleaning and deep cleaning pages:
+// `split-single-image`, copy left, image right. NO ASSET YET — `image` is
+// passed with a `label` but no `src`, so Placeholder renders its dashed
+// briefing box in the panel. That is a deliberate reversal of this page's
+// earlier call (`minimal`, to avoid a dashed box standing in for a photo):
+// the style is now shared across the site, so the slot is held open here
+// instead of this page opening differently from every other one.
+//
+// ⚠️ The dashed box is a pre-launch state. It must not ship to production —
+// either the asset lands or this hero goes back to `variant="minimal"`.
+//
+// Dropping the asset in is a one-line change: add `src`. `ratio` is 4/3 and
+// `imageFit` is contain-bottom, matching the cut-out-figure-on-a-green-circle
+// template the three sourced assets use (contain so the backdrop is never
+// cropped, bottom-anchored so the figure stands on the section's edge). If a
+// plain photograph arrives instead, drop `imageFit` to let it default to
+// `cover` and bleed edge to edge.
+//
+// ⚠️ This page argues "the part none of the others can show you: names and
+// faces". A hero with no faces on it is the weakest possible opening for
+// that argument, so a real team photo does more work here than almost
+// anywhere else.
 const hero = {
   kicker: 'Why TLB',
   headingLines: ['Nine local mums, and no anonymous contractors.'],
   lead: "We grew to nine full-time staff and won contracts with the region's leading real estate agencies without ever running an advertisement.",
   cta: quoteCta,
+  image: {
+    ratio: '4/3',
+    label: 'The TLB team — the nine local cleaners this page names',
+  },
 };
 
 // §4 Trust bar — positioned directly under the hero per the boilerplate's
@@ -449,11 +471,14 @@ const closingCta = {
 
   <main id="main">
     <Hero
-      variant="minimal"
+      variant="split-single-image"
+      imagePosition="right"
+      imageFit="contain-bottom"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
       lead={hero.lead}
       cta={hero.cta}
+      image={hero.image}
     />
 
     <TrustBar items={trustBarItems} />
