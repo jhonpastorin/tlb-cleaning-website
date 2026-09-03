@@ -208,7 +208,16 @@ const teganBlocks = [
   },
 ];
 
-// §7 "The why" — drafted in full.
+// §7 "The why" — drafted in full. Runs over a background photo behind a
+// Dark Teal scrim (see the TextBlock props below): the copy is about the
+// calm of not having to think about it, and a settled, empty room says that
+// faster than the words do.
+//
+// ⚠️ The photo is REUSED from persona card 2 further up this same page.
+// It is the only real photograph in the library that fits the mood — the
+// other TLB assets are cut-out figures on a green circle, useless full
+// bleed. A dedicated photo for this section would be better; the swap is
+// one import line.
 const whyBody = [
   'You are not really buying a clean house.',
   'You are buying the bit where you stop thinking about it. Nobody wants to interview cleaners, chase quotes, or wonder whether the person who came last fortnight is coming again.',
@@ -387,7 +396,7 @@ const closingCta = {
 
     <StoryMosaic theme="light" heading="Meet Teagan" blocks={teganBlocks} />
 
-    <TextBlock theme="dark" body={whyBody} />
+    <TextBlock theme="dark" body={whyBody} backgroundImage={pathwayHolidayLetImg} scrimOpacity={82} />
 
     <ComparisonTable
       heading={comparisonTable.heading}
