@@ -24,7 +24,12 @@ import type { ButtonData } from '../../data/types';
 export type TextBlockBody = string | { list: string[] };
 
 interface Props {
-  theme?: 'light' | 'dark';
+  /** light = the page's own Off White (no visible band edge), muted = the
+   *  Cream neutral, dark = the Dark Teal band. `muted` exists because a
+   *  `light` block sitting on a `light` page reads as empty space rather
+   *  than a section; it's the same Cream --color-surface-muted already
+   *  carries for Hero's minimal panel and ServiceBlocks' list rows. */
+  theme?: 'light' | 'muted' | 'dark';
   align?: 'left' | 'center';
   heading?: string;
   body: TextBlockBody[];
@@ -71,6 +76,10 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
     background: var(--color-surface);
   }
 
+  .text-block--muted {
+    background: var(--color-surface-muted);
+  }
+
   .text-block--dark {
     background: var(--color-inverse);
   }
@@ -100,7 +109,8 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
     line-height: var(--leading-normal);
   }
 
-  .text-block--light .text-block__body {
+  .text-block--light .text-block__body,
+  .text-block--muted .text-block__body {
     color: var(--color-body);
   }
 

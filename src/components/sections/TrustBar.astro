@@ -147,11 +147,20 @@ const { variant = 'divided', items = [], cards = [] } = Astro.props;
      the parent's WIDTH, so "30% of the card's own height" has no direct CSS
      expression here. 2.75rem is ~30% of the card's ~9rem desktop height at
      this padding with a two-line description — retune it alongside either.
-     The section carries no background or border of its own, so the hero
-     shows through the overlapped strip. */
+     The section's fill is a hard-stop gradient rather than a flat colour:
+     the top --trust-bar-overlap of it MUST stay transparent so the hero
+     shows through the overlapped strip, and everything below the hero's
+     edge is Cream, which runs straight into a `muted` TextBlock under it
+     with no seam. A flat background here would slab over the hero's bottom
+     edge instead. The stop tracks the same variable as the pull, so the two
+     can't drift apart. */
   .trust-bar--card {
     --trust-bar-overlap: 2.75rem;
-    background: none;
+    background: linear-gradient(
+      to bottom,
+      transparent var(--trust-bar-overlap),
+      var(--color-surface-muted) var(--trust-bar-overlap)
+    );
     border-bottom: none;
     position: relative;
     z-index: 1;
