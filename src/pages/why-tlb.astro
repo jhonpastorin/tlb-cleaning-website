@@ -39,6 +39,10 @@ import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 // §2 backdrop, behind the Cream scrim (this page's own folder).
 import definitionBgImg from '../assets/why_tlb/why-tlb-cleaner-vacuuming-a-living-room-rug.png';
+// §5's resolution line — the TLB team at work, since "we built TLB" is a
+// statement about them. Not this page's own why_tlb photo again: that one is
+// already behind §2 above, and one photo twice on one page reads as a mistake.
+import tradeOffBgImg from '../assets/home/house-cleaning-team-vacuuming-open-plan-living-room.jpg';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 import type { TextBlockBody } from '../components/sections/TextBlock.astro';
 import {
@@ -513,7 +517,18 @@ const closingCta = {
 
     <ContentGrid columns={2} blocks={tradeOffBlocks} />
 
-    <TextBlock theme="dark" align="left" body={tradeOffResolution} />
+    {/* Photo behind the Dark Teal ground rather than a flat band: this is the
+        line the page turns on, and it is the only dark section between two
+        light ones. 82% scrim — the same figure the homepage's dark pivot block
+        uses — keeps Off White copy at full contrast over the photo's bright
+        window wall. */}
+    <TextBlock
+      theme="dark"
+      align="left"
+      body={tradeOffResolution}
+      backgroundImage={tradeOffBgImg}
+      scrimOpacity={82}
+    />
 
     {/* Anchor target for §3's card 1. ComparisonTable takes no id prop, and
         adding one purely for an anchor isn't worth a shared-component change
