@@ -116,10 +116,24 @@ const hero = {
 // ⚠️ Same wording as house-cleaning.astro, but the homepage says "9
 // full-time local cleaners, employed not subcontracted". Reconcile all
 // three at once.
-const trustBarItems = [
-  '9 full-time local team members',
-  'Every client came from a recommendation',
-  'Trusted by leading Northern Rivers real estate agencies',
+// Card variant: the brief's lines run VERBATIM as the descriptions, each
+// under a short added label — same shape as every other page's trust bar.
+const trustBarCards = [
+  {
+    icon: 'team' as const,
+    title: 'Local team',
+    description: '9 full-time local team members',
+  },
+  {
+    icon: 'chat' as const,
+    title: 'Word of mouth',
+    description: 'Every client came from a recommendation',
+  },
+  {
+    icon: 'building' as const,
+    title: 'Agency trusted',
+    description: 'Trusted by leading Northern Rivers real estate agencies',
+  },
 ];
 
 // §2 Definition paragraph — drafted. The answer-target block for
@@ -427,7 +441,7 @@ const closingCta = {
       image={hero.image}
     />
 
-    <TrustBar items={trustBarItems} />
+    <TrustBar variant="card" cards={trustBarCards} />
 
     <TextBlock theme="light" body={definitionBody} />
 

@@ -130,10 +130,24 @@ const hero = {
 // support. Swapped for the Code of Conduct line, which is the one
 // compliance claim in the brief that is true as written for every provider
 // paid from NDIS funding — so it needs no bracket.
-const trustBarItems = [
-  '9 full-time local team members',
-  'Every client came from a recommendation',
-  'Bound by the NDIS Code of Conduct',
+// Card variant: the brief's lines run VERBATIM as the descriptions, each
+// under a short added label — same shape as every other page's trust bar.
+const trustBarCards = [
+  {
+    icon: 'team' as const,
+    title: 'Local team',
+    description: '9 full-time local team members',
+  },
+  {
+    icon: 'chat' as const,
+    title: 'Word of mouth',
+    description: 'Every client came from a recommendation',
+  },
+  {
+    icon: 'shield-check' as const,
+    title: 'NDIS aligned',
+    description: 'Bound by the NDIS Code of Conduct',
+  },
 ];
 
 // §2 Definition paragraph — the brief supplied NOTHING here (the row held
@@ -478,7 +492,7 @@ const closingCta = {
       image={hero.image}
     />
 
-    <TrustBar items={trustBarItems} />
+    <TrustBar variant="card" cards={trustBarCards} />
 
     <TextBlock theme="light" align="left" body={definitionBody} />
 
