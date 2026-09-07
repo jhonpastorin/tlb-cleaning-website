@@ -110,9 +110,12 @@ const trustBarCards = [
     description: '9 full-time local cleaners, employed not subcontracted',
   },
   {
-    icon: 'map-pin' as const,
-    title: 'Cross-border',
-    description: 'Working both sides of the border, NSW and QLD',
+    // Icon follows the copy: 'chat' is what the other five pages' trust bars
+    // already use for this same word-of-mouth line, and a map pin now points
+    // at nothing the card says.
+    icon: 'chat' as const,
+    title: 'Word of mouth',
+    description: 'Every client came from a recommendation',
   },
   {
     icon: 'building' as const,
