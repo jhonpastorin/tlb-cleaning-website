@@ -18,15 +18,27 @@ export const quoteCta: ButtonData = { label: 'Get an instant quote', href: '/quo
 // given, confirm before launch.
 export const headerSecondaryCta: ButtonData = { label: 'Book your clean online', href: '/book-online/' };
 
-// The five real service pages, used for the footer's "Services" column and
-// for the homepage's "What we do" list. headerNav below mixes real services
+// The real service pages, used for the footer's "Services" column and for
+// the homepage's "Our services" grid. headerNav below mixes real services
 // with non-service pages ("Meet the team", "Why TLB", "Guides"), so it is
 // NOT safe to derive the footer's services column from it.
+//
+// Order and descriptions are the home-page brief's "Our services" list
+// verbatim (v6, Sept 2026) — that section is the only place the
+// descriptions render, so the copy lives with the links rather than in the
+// page. Commercial cleaning joined the list in v6; it was the one service
+// with a real page (/commercial-cleaning/) that this list had been missing,
+// so the footer column gains it too.
 export const serviceLinks = [
   {
-    title: 'Airbnb and holiday let turnovers',
-    description: 'Timed to your bookings, restocked and guest-ready before check-in.',
-    href: '/airbnb-cleaning/',
+    title: 'Regular home cleaning',
+    description: 'Weekly or fortnightly, same team, set it up once.',
+    href: '/house-cleaning/',
+  },
+  {
+    title: 'Deep and one-off cleans',
+    description: "A room-by-room reset, before guests, after a party, or when it's just time.",
+    href: '/deep-cleaning/',
   },
   {
     title: 'End of lease and bond cleans',
@@ -34,9 +46,9 @@ export const serviceLinks = [
     href: '/end-of-lease-cleaning/',
   },
   {
-    title: 'Regular home cleaning',
-    description: 'Weekly or fortnightly, same team, set it up once.',
-    href: '/house-cleaning/',
+    title: 'Airbnb and holiday let turnovers',
+    description: 'Timed to your bookings, restocked and guest-ready before check-in. Full management available.',
+    href: '/airbnb-cleaning/',
   },
   {
     title: 'Real estate and property management',
@@ -44,9 +56,9 @@ export const serviceLinks = [
     href: '/real-estate-cleaning/',
   },
   {
-    title: 'Deep and one-off cleans',
-    description: 'A full reset when the place has got away from you, or before someone important arrives.',
-    href: '/deep-cleaning/',
+    title: 'Commercial cleaning',
+    description: 'Offices, shopfronts and premises, on a schedule that suits how you trade.',
+    href: '/commercial-cleaning/',
   },
 ];
 

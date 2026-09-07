@@ -4,14 +4,38 @@ interface Tag {
   href?: string;
 }
 
+// A labelled run of pills — one region, one service family, one category.
+// Added for the deep-cleaning brief's "Where we clean", which lists three
+// regions (Northern Rivers, the Tweed, Southern Gold Coast) as separate
+// labelled groups rather than one flat run. Three consecutive TagClouds
+// would have meant three Dark Teal bands back to back, each repeating a
+// heading and subheading, and flattening the three into one `tags` array
+// would have thrown away the grouping — including the fact that one of the
+// three regions is in a different state.
+//
+// `groups` sits alongside `tags` rather than replacing it, the same
+// per-shape prop pair TrustBar.astro (`items`/`cards`) and Hero.astro
+// (`image`/`images`/`collageImages`) already use: every existing caller
+// keeps passing `tags` and renders exactly as before. Pass one or the
+// other — `groups` wins if both are set.
+export interface TagGroup {
+  label: string;
+  tags: Tag[];
+}
+
 interface Props {
   heading: string;
   subheading: string;
-  tags: Tag[];
+  /** One flat run of pills. Omit when passing `groups`. */
+  tags?: Tag[];
+  /** Labelled runs of pills, rendered as an <h3> per run. */
+  groups?: TagGroup[];
   note: string[];
 }
 
-const { heading, subheading, tags, note } = Astro.props;
+const { heading, subheading, tags = [], groups = [], note } = Astro.props;
+
+const grouped = groups.length > 0;
 
 // Build-time random suffix per instance — the same fix ServiceBlocks.astro
 // and Faq.astro already apply. The id was the literal string
@@ -28,18 +52,38 @@ const headingId = `tag-cloud-heading-${Math.random().toString(36).slice(2, 9)}`;
     <h2 id={headingId} class="tag-cloud__heading">{heading}</h2>
     <p class="tag-cloud__subheading">{subheading}</p>
 
-    <ul class="tag-cloud__list">
-      {tags.map((tag) => {
-        const Tag = tag.href ? 'a' : 'span';
-        return (
-          <li>
-            <Tag href={tag.href} class="tag-cloud__tag">
-              {tag.label}
-            </Tag>
-          </li>
-        );
-      })}
-    </ul>
+    {grouped ? (
+      groups.map((group) => (
+        <div class="tag-cloud__group">
+          <h3 class="tag-cloud__group-label">{group.label}</h3>
+          <ul class="tag-cloud__list">
+            {group.tags.map((tag) => {
+              const Tag = tag.href ? 'a' : 'span';
+              return (
+                <li>
+                  <Tag href={tag.href} class="tag-cloud__tag">
+                    {tag.label}
+                  </Tag>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))
+    ) : (
+      <ul class="tag-cloud__list">
+        {tags.map((tag) => {
+          const Tag = tag.href ? 'a' : 'span';
+          return (
+            <li>
+              <Tag href={tag.href} class="tag-cloud__tag">
+                {tag.label}
+              </Tag>
+            </li>
+          );
+        })}
+      </ul>
+    )}
 
     <p class="tag-cloud__note">
       {note.map((line, i) => (
@@ -72,6 +116,30 @@ const headingId = `tag-cloud-heading-${Math.random().toString(36).slice(2, 9)}`;
 
   .tag-cloud__subheading {
     color: var(--color-on-brand);
+  }
+
+  /* One group = its label plus its own pill grid. The wrapper is full width
+     so its grid tracks match the flat variant's exactly — a group of 19
+     towns and a group of 9 line up column for column down the section. */
+  .tag-cloud__group {
+    width: 100%;
+  }
+
+  .tag-cloud__group-label {
+    color: var(--color-on-brand);
+    font-size: var(--text-big);
+    margin-top: var(--space-md);
+  }
+
+  .tag-cloud__group:first-of-type .tag-cloud__group-label {
+    margin-top: 0;
+  }
+
+  /* The flat variant's own margin-block already spaces one grid from the
+     heading above it; inside a group the label supplies the top space, so
+     only the bottom half is wanted. */
+  .tag-cloud__group .tag-cloud__list {
+    margin-block: var(--space-sm) var(--space-md);
   }
 
   .tag-cloud__list {

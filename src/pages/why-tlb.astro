@@ -55,6 +55,7 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { trustBarCards } from '../data/trust';
 
 const pageMeta = {
   title: 'Best House Cleaning Services Near You | TLB Cleaning',
@@ -122,30 +123,6 @@ const hero = {
     label: 'The TLB team — the nine local cleaners this page names',
   },
 };
-
-// §4 Trust bar — positioned directly under the hero per the boilerplate's
-// own instruction, ahead of its table-row position.
-//
-// ⚠️ Third of four wordings for the same headcount across the site.
-// Card variant: the brief's lines run VERBATIM as the descriptions, each
-// under a short added label — same shape as every other page's trust bar.
-const trustBarCards = [
-  {
-    icon: 'team' as const,
-    title: 'Local team',
-    description: '9 full-time local team members',
-  },
-  {
-    icon: 'chat' as const,
-    title: 'Word of mouth',
-    description: 'Every client came from a recommendation',
-  },
-  {
-    icon: 'building' as const,
-    title: 'Agency trusted',
-    description: 'Trusted by leading Northern Rivers real estate agencies',
-  },
-];
 
 // §2 Thesis + definition. Entries 1–2 are the hero overflow (see §1).
 // Entry 3 is the answer-target block — it names all four competitor

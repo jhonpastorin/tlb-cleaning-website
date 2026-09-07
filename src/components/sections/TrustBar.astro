@@ -38,6 +38,16 @@ interface Props {
 }
 
 const { variant = 'divided', items = [], cards = [] } = Astro.props;
+
+// `card`'s desktop row is one 1fr column per cell, which is right for the
+// three proof points every page carried until now. The deep-cleaning brief
+// supplies FIVE, and five 1fr columns in a 1200px container leaves each
+// supporting line about two words wide. At exactly five, the row lays out on
+// a 6-column track instead — three cells of span 2, then two of span 3 —
+// which centres the remainder rather than leaving an orphan column.
+// Deliberately scoped to five: 4-or-fewer callers are untouched, and 6+ has
+// no caller yet, so it would be an unverified guess at the right shape.
+const cardsWrapFive = variant === 'card' && cards.length === 5;
 ---
 
 {variant === 'divided' && (
@@ -55,7 +65,7 @@ const { variant = 'divided', items = [], cards = [] } = Astro.props;
 {variant === 'card' && (
   <section class="trust-bar trust-bar--card" aria-label="Why choose us">
     <div class="container">
-      <ul class="trust-bar__card">
+      <ul class:list={['trust-bar__card', cardsWrapFive && 'trust-bar__card--wrap-5']}>
         {cards.map((card) => (
           <li class="trust-bar__cell">
             <span class="trust-bar__icon" aria-hidden="true">
@@ -196,6 +206,29 @@ const { variant = 'divided', items = [], cards = [] } = Astro.props;
     border-left: none;
   }
 
+  /* Five cells: 3 over 2 on a 6-column track (see the flag's note above).
+     Cell 4 opens the second row, so it drops its divider the way cell 1
+     does. Both media queries below reset these spans — they set their own
+     column count, and a span of 2 or 3 inside a 2- or 1-column grid would
+     otherwise win on specificity and overflow the track. */
+  .trust-bar__card--wrap-5 {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(6, 1fr);
+    row-gap: var(--space-md);
+  }
+
+  .trust-bar__card--wrap-5 > .trust-bar__cell {
+    grid-column: span 2;
+  }
+
+  .trust-bar__card--wrap-5 > .trust-bar__cell:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+
+  .trust-bar__card--wrap-5 > .trust-bar__cell:nth-child(4) {
+    border-left: none;
+  }
+
   .trust-bar__icon {
     flex-shrink: 0;
     display: inline-flex;
@@ -228,6 +261,16 @@ const { variant = 'divided', items = [], cards = [] } = Astro.props;
 
     .trust-bar__cell:nth-child(odd) {
       border-left: none;
+    }
+
+    .trust-bar__card--wrap-5 > .trust-bar__cell,
+    .trust-bar__card--wrap-5 > .trust-bar__cell:nth-child(n + 4) {
+      grid-column: auto;
+    }
+
+    /* Row starts are the odd cells again at two per row, not cell 4. */
+    .trust-bar__card--wrap-5 > .trust-bar__cell:nth-child(even) {
+      border-left: 1px solid color-mix(in srgb, var(--color-on-brand) 25%, transparent);
     }
   }
 
@@ -262,7 +305,14 @@ const { variant = 'divided', items = [], cards = [] } = Astro.props;
       grid-template-columns: 1fr;
     }
 
-    .trust-bar__cell {
+    .trust-bar__card--wrap-5 > .trust-bar__cell,
+    .trust-bar__card--wrap-5 > .trust-bar__cell:nth-child(n + 4) {
+      grid-column: auto;
+    }
+
+    .trust-bar__cell,
+    /* Out-specificities the tablet rule above, which still matches here. */
+    .trust-bar__card--wrap-5 > .trust-bar__cell:nth-child(even) {
       padding-inline: 0;
       border-left: none;
     }

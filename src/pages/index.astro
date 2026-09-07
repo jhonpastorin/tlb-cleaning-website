@@ -1,7 +1,15 @@
 ---
-// Homepage built from content-plans/cleaning-services-homepage.md — section
-// choices, positioning, and every "don't invent this" call trace back to
-// that document. See its "Open items" list for everything flagged below.
+// Homepage built from the "TLB Cleaning — Home Page" brief (MNO Ventures,
+// September 2026, Version 6). Section choices, positioning and every
+// "don't invent this" call trace back to that document; where this build
+// departs from the brief's literal order, the reason is stated inline.
+//
+// v6 rewrote the whole page against v5 (content-plans/cleaning-services-homepage.md):
+// the "nine full-time cleaners" / "local mums" / police-check proof points
+// are gone, the region is stated as the Northern Rivers and the Tweed
+// (with the Southern Gold Coast crossed into rather than led with), and two
+// new prose sections plus a much larger FAQ, service list and town list
+// arrived. Treat this file, not the v5 plan, as current.
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
@@ -14,19 +22,20 @@ import StoryMosaic from '../components/sections/StoryMosaic.astro';
 import ComparisonTable from '../components/sections/ComparisonTable.astro';
 import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
 import TagCloud from '../components/sections/TagCloud.astro';
+import { locationGroups } from '../data/locations';
 import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 import heroImg from '../assets/home/home-cleaner-with-cleaning-supplies-caddy.png';
-// §3 persona card photos, one per card, in card order.
+// "Three cards" photos, one per card, in card order.
 import pathwayHomeImg from '../assets/home/house-cleaning-team-vacuuming-open-plan-living-room.jpg';
 import pathwayHolidayLetImg from '../assets/home/holiday-let-cleaning-guest-ready-cottage-living-room.jpg';
 import pathwayRentalImg from '../assets/home/rental-property-cleaning-two-storey-house-exterior.jpg';
-// §2 backdrop, behind the Cream scrim.
+// Backdrop behind the trust bar + opening paragraph, under the Cream scrim.
 import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-// §10 "What we do" tiles — one photo per service, named for the service so
-// a real shoot drops straight in over the top.
+// "Our services" tiles — one photo per service, named for the service so a
+// real shoot drops straight in over the top.
 import serviceAirbnbImg from '../assets/home/service-airbnb-and-holiday-let-turnovers.jpg';
 import serviceEndOfLeaseImg from '../assets/home/service-end-of-lease-and-bond-cleans.png';
 import serviceRegularImg from '../assets/home/service-regular-home-cleaning.png';
@@ -35,7 +44,7 @@ import serviceDeepCleanImg from '../assets/home/service-deep-and-one-off-cleans.
 import type { ImageMetadata } from 'astro';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 // Site chrome (header nav, mega-menus, footer links/contact) — shared with
-// house-cleaning.astro, see src/data/navigation.ts.
+// the service pages, see src/data/navigation.ts.
 import {
   primaryNav,
   headerNav,
@@ -46,13 +55,12 @@ import {
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
-import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { trustBarCards } from '../data/trust';
 
 const pageMeta = {
   title: 'Cleaning Services & Cleaners | TLB Cleaning',
   description:
-    'Local mums cleaning residential and commercial spaces across the Northern Rivers and southern Gold Coast. Police checked, insured and reliable. Book online.',
-  // §0: URL slug is blank in the spec — root assumed since this is the homepage.
+    'A local cleaning team across the Northern Rivers, the Tweed and the Southern Gold Coast. Book online, by text or over the phone. Set your day and we take it from there.',
   canonical: 'https://example.com/',
 };
 
@@ -70,26 +78,20 @@ const business = {
     addressCountry: 'AU',
   },
   sameAs: [],
-  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  // v6 leads with the Northern Rivers and the Tweed; the Southern Gold
+  // Coast is where the team crosses to, not part of the primary claim.
+  areaServed: 'Northern Rivers NSW, the Tweed, and the Southern Gold Coast QLD',
   description: pageMeta.description,
 };
 
-// §1 Hero — the hero photo has now been supplied, so this is the
-// `split-single-image` swap the plan called for (it shipped as `minimal`
-// while there was no asset). Image sits on the RIGHT via `imagePosition`.
-//
-// The asset was trimmed to its own alpha bounding box (1920x1080 down to
-// 1364x1032 — the original was mostly empty transparent margin), and `ratio`
-// states those exact dimensions. With `imageFit` set to contain on top, the
-// green backdrop behind the figure survives whole at every width: the panel
-// stretches to the copy column's height, so the default `cover` was slicing
-// the circle's sides off. `contain-bottom` rather than plain `contain`
-// because the asset's own bottom edge cuts through the figure — anchored
-// there it stands on the section's edge instead of floating mid-panel with a
-// visible cut line.
+// Hero — H1 and subheadline verbatim. The brief's [Button] under the
+// opening paragraph is this button: the paragraph ships as its own band
+// below the trust bar (see the Backdrop note), and repeating the same CTA
+// twice inside one screen would read as two different offers rather than
+// one. Every other [Button] in the brief is built where it was asked for.
 const hero = {
   headingLines: ['TLB Cleaning.', 'Your reliable local cleaners.'],
-  lead: 'A full-time local team caring for homes, holiday lets and managed properties, on a schedule that suits you.',
+  lead: 'A local team across the Northern Rivers and the Tweed. Easy to book, instant pricing, cost effective.',
   cta: quoteCta,
   image: {
     ratio: '1364/1032',
@@ -98,40 +100,15 @@ const hero = {
   },
 };
 
-// §4 Trust bar — drafted in full; positioned directly under the hero per
-// the spec's own text, not its table row order (see plan's "order conflict" note).
-// Card variant: each supplied line runs VERBATIM as the description, with a
-// short categorical label added above it as the title — the same shape all
-// six pages' trust bars now use. The labels are the only new words.
-const trustBarCards = [
-  {
-    icon: 'team' as const,
-    title: 'Local team',
-    description: '9 full-time local cleaners, employed not subcontracted',
-  },
-  {
-    // Icon follows the copy: 'chat' is what the other five pages' trust bars
-    // already use for this same word-of-mouth line, and a map pin now points
-    // at nothing the card says.
-    icon: 'chat' as const,
-    title: 'Word of mouth',
-    description: 'Every client came from a recommendation',
-  },
-  {
-    icon: 'building' as const,
-    title: 'Agency trusted',
-    description: 'Trusted by leading Northern Rivers real estate agencies',
-  },
-];
-
-// §2 Definition paragraph — drafted in full.
+// Opening paragraph — verbatim.
 const definitionBody = [
-  'TLB Cleaning is a locally owned cleaning company serving the Northern Rivers, Tweed Heads and the Southern Gold Coast. Led by Teagan and staffed by nine full-time local cleaners, TLB provides regular home cleaning, deep and one-off cleans, end of lease and bond cleans, Airbnb turnovers and commercial cleaning across New South Wales and Queensland.',
+  'TLB Cleaning is a Northern Rivers cleaning company. From Lismore, Alstonville and Ballina, up through Byron, Mullumbimby and Murwillumbah to Tweed Heads, and everywhere else the beautiful Northern Rivers encompasses. We do regular home cleaning, deep and one-off cleans, end of lease and bond cleans, Airbnb turnovers and commercial cleaning.',
 ];
 
-// §3 Persona cards. Card copy is drafted verbatim; the section's own
-// heading/accent lines aren't in the spec at all, so these two lines are
-// placeholder structural copy, not a brand decision — flag before launch.
+// Three cards — card copy verbatim, including the links the brief names.
+// The section's own heading/accent lines aren't in the brief at all, so
+// these two lines are placeholder structural copy carried over from the
+// previous build, not a brand decision — flag before launch.
 const pathwayCards = {
   heading: 'Tell us what you need',
   headingAccent: "we'll take it from there.",
@@ -144,7 +121,8 @@ const pathwayCards = {
         src: pathwayHomeImg,
       },
       title: 'I need a hand at home',
-      description: 'Weekly, fortnightly or a one-off reset. Same faces every visit.',
+      description:
+        "Weekly, fortnightly or a one-off reset. The same faces every visit, and nothing to organise once it's set.",
       cta: { label: 'Get a quote', href: '/house-cleaning/' },
     },
     {
@@ -155,7 +133,8 @@ const pathwayCards = {
         src: pathwayHolidayLetImg,
       },
       title: 'I have a holiday let',
-      description: 'Turnovers timed to your bookings, essentials restocked, ready before check-in.',
+      description:
+        "We work to your booking calendar, not the other way around. Turnovers, restocking and guest-ready presentation, or full management if you'd rather hand the lot over.",
       cta: { label: 'Get a quote', href: '/airbnb-cleaning/' },
     },
     {
@@ -166,19 +145,19 @@ const pathwayCards = {
         src: pathwayRentalImg,
       },
       title: 'I manage properties',
-      description: 'Bond and end of lease cleans that pass, and a team with the capacity for your rent roll.',
+      description:
+        'Bond and end of lease cleans that pass, and the capacity to handle a rent roll rather than one job at a time.',
       cta: { label: 'Get a quote', href: '/real-estate-cleaning/' },
     },
   ],
 };
 
-// §5 "What's included in every visit" — drafted in full. These rows used to
-// ship icon-less because ServiceIcon.astro held only the previous brand's
-// abstract set (idea, spark, bloom…) and a mismatched glyph would have been
-// pure decoration. That note is now resolved rather than worked around: the
-// five cleaning-specific icons below were added to ServiceIcon itself, so
-// each row names its own subject instead of borrowing an unrelated shape.
-const includedItems = [
+// "What we do" — the brief's five categories, verbatim. Deliberately the
+// icon-led `list` variant rather than photo tiles: "Our services" further
+// down is the photographic, link-per-service grid, and running both as
+// tiles would make the page ask the same question twice. Each row still
+// deep-links to the page that covers it.
+const whatWeDoItems = [
   {
     icon: 'house' as const,
     title: 'Inside your home',
@@ -188,7 +167,8 @@ const includedItems = [
   {
     icon: 'suitcase' as const,
     title: 'Holiday lets',
-    description: 'Airbnb and short-stay turnovers, restocking, guest-ready presentation.',
+    description:
+      'Airbnb and short-stay turnovers, restocking, guest-ready presentation, and full management of the property if you want it.',
     href: '/airbnb-cleaning/',
   },
   {
@@ -203,200 +183,264 @@ const includedItems = [
     description: 'Carpets, windows, gutters, pressure cleaning, ovens.',
     href: '/deep-cleaning/',
   },
-  // no dedicated page yet — href defaults to '#'
-  { icon: 'office' as const, title: 'For business', description: 'Offices and commercial premises.' },
+  {
+    icon: 'office' as const,
+    title: 'For business',
+    description: 'Offices and commercial premises.',
+    href: '/commercial-cleaning/',
+  },
 ];
 
-// §6 Meet Tegan — bio drafted in full. Pull-quote is blocked in the spec
-// ("[One sentence, in her words...]") and is intentionally omitted rather
-// than invented in her voice.
-const teganBlocks = [
-  { type: 'image' as const, ratio: '3/4', label: 'Teagan, founder of TLB Cleaning' },
+// "Local team, run properly" — bio verbatim. The brief marks a [Team photo]
+// here; no such asset exists in src/assets yet, so this stays a labelled
+// Placeholder rather than borrowing an unrelated photo. StoryMosaic's image
+// blocks are placeholder-only by type, so the swap is a component change,
+// not a one-line import — brief the shoot from the label below.
+const teamBlocks = [
+  { type: 'image' as const, ratio: '3/4', label: 'The TLB Cleaning team' },
   {
     type: 'text' as const,
     body: [
-      'TLB is run by Teagan, a Northern Rivers mum who built the business one recommendation at a time. No website, no advertising, just people telling other people about her.',
-      'There are nine full-time cleaners on the team now, most of them mums as well, working hours that fit around school pick-up. That part is deliberate. People who can be there for their own families tend to stay, and a team that stays does better work.',
-      "Teagan still knows her clients by name. If something isn't right, you're talking to the person who owns the business, not a call centre.",
+      'TLB was started by Teagan Burke, an Alstonville local who built an amazing team around her, one recommendation at a time. No website, no advertising, just people telling other people about her.',
+      "That team is spread right across the Northern Rivers and the Tweed now, inland and on the coast, cleaning in the same towns they live in and shop in. You'll meet whoever is looking after your place before the first visit, and you'll come to know them by name.",
+      "Behind the local part is a business that runs properly. Set days, set teams, and a schedule you don't have to hold in your head.",
     ],
   },
 ];
 
-// §7 "The why" — drafted in full. Runs over a background photo behind a
-// Dark Teal scrim (see the TextBlock props below): the copy is about the
-// calm of not having to think about it, and a settled, empty room says that
-// faster than the words do.
+// href guessed — the "Meet the team" nav item points at /about/ (see
+// navigation.ts), so this matches it rather than inventing a second slug.
+const teamCta = { label: 'Meet the team', href: '/about/' };
+
+// "Easy to book, local to the core" — new in v6, copy verbatim. Runs over a
+// background photo behind the Dark Teal scrim: the section is about the
+// calm of not having to organise anything, and a settled, guest-ready room
+// says that faster than the words do.
 //
-// ⚠️ The photo is REUSED from persona card 2 further up this same page.
-// It is the only real photograph in the library that fits the mood — the
-// other TLB assets are cut-out figures on a green circle, useless full
-// bleed. A dedicated photo for this section would be better; the swap is
-// one import line.
-const whyBody = [
-  'You are not really buying a clean house.',
-  'You are buying the bit where you stop thinking about it. Nobody wants to interview cleaners, chase quotes, or wonder whether the person who came last fortnight is coming again.',
-  'Set it up once. Same team, same day, a message when we are on the way. That is the whole idea.',
+// ⚠️ The photo is REUSED from persona card 2 further up this same page. It
+// is the only real photograph in the library that fits the mood — the other
+// TLB assets are cut-out figures on a green circle, useless full bleed. A
+// dedicated photo would be better; the swap is one import line.
+const bookingBody = [
+  "Book online in a couple of minutes. Or send a text, ring us, or drop us an email, whichever you'd actually do.",
+  "You'll get a reminder in the lead-up so the day never sneaks up on you, and a message when we're on our way. If you run a holiday let, we'll work straight off your booking calendar so turnovers happen around your guests without you organising anything.",
+  'Then we turn up and get on with it. Some clients want a quick chat and a walk through. Others would rather we let ourselves in and they come home to it done. Both are completely fine, and you can change your mind whenever you like.',
 ];
 
-// §8 Comparison table — copy supplied directly (desktop + mobile mockups +
-// this content). The columns and rows now live in src/data/comparison.ts,
-// shared with why-tlb.astro which uses the identical table; this page keeps
-// its own heading and cornerLabel.
+// "Easy to book, instant pricing, cost effective" — new in v6, copy
+// verbatim. The brief's one-line "You'll know the price before we start,
+// not after." is prepended at the call site as this block's first
+// paragraph: TextBlock has no separate `lead` slot, and the line is doing a
+// standfirst's job, so it reads as one on its own above the detail.
+const pricingBody = [
+  "We quote on your actual place rather than a guess, so tell us the size of it and roughly what condition it's in and we'll come back with a number. If it turns out you need less than you asked for, we'll say so. A one-off deep clean followed by a fortnightly usually works out better than paying for a long first regular clean, and we'd rather tell you that than take the bigger booking.",
+  "No lock-in, no minimum term and no exit fee. If it stops suiting you, tell us and we'll stop.",
+];
+
+// Comparison table — copy supplied directly in the brief, verbatim.
+//
+// NOT src/data/comparison.ts: that file holds the older two-column
+// TLB-vs-Other-Brands tick table, which why-tlb.astro and
+// commercial-cleaning.astro still render. v6 replaces the homepage's table
+// with a three-way comparison whose cells are prose, not ticks, so the two
+// tables no longer share substance. Kept local rather than rewriting the
+// shared file out from under two pages this brief doesn't cover —
+// reconcile once those pages get their own v6 briefs.
 const comparisonTable = {
   heading: 'How TLB Cleaning compares',
   cornerLabel: 'Why TLB Cleaning is different',
-  columns: comparisonColumns,
-  rows: comparisonRows,
+  columns: [
+    { label: 'A national brand or app' },
+    { label: 'An independent cleaner' },
+    { label: 'TLB Cleaning', highlight: true },
+  ],
+  rows: [
+    {
+      label: 'Who cleans your home',
+      values: ['Whoever is rostered that day', 'The same person', 'Your own local team, known by name'],
+    },
+    {
+      label: 'When someone is away',
+      values: [
+        'A different contractor',
+        'Rebook for another week',
+        'Someone from your team covers, and we let you know first',
+      ],
+    },
+    {
+      label: 'How you book',
+      values: ['Online only', 'Text or a phone call', 'Online, text, phone or email'],
+    },
+    {
+      label: 'Reminders',
+      values: ['Automated', 'Usually none', "Before the day, and again when we're on our way"],
+    },
+    {
+      label: 'Holiday lets',
+      values: ['A standard turnover', 'Depends on availability', 'Worked straight off your booking calendar'],
+    },
+    {
+      label: 'Your schedule',
+      values: ['Whatever slot is available', 'Whenever they can fit you in', 'A set day and a set team'],
+    },
+    {
+      label: 'Commitment',
+      values: ['Often a subscription', 'None', 'No lock-in, no minimum term, no exit fee'],
+    },
+    {
+      label: 'Where they live',
+      values: ['Wherever the contractor is based', 'Locally', 'In the towns they clean in, across the region'],
+    },
+  ],
 };
 
-// §9 Testimonials — section now built (3-up centre-emphasis carousel, per
-// the reference layout) but every quote/name/role below is a placeholder,
-// NOT a real client testimonial — the spec still supplies no actual quotes,
-// only a briefing task for Tegan. Do not replace these with invented
-// customer names/quotes; swap each slot for a real one as it's collected.
-// Two of the three follow the brief's own required stories verbatim; the
-// third has no brief-specified angle, so it defaults to team
-// consistency/reliability (ties to the trust bar + "same cleaner every
-// visit" FAQ elsewhere on this page) — reconsider once real quotes exist.
+// Testimonials — every quote, name and role below is a PLACEHOLDER, not a
+// real client testimonial. v6 supplies only the briefing task for Teagan,
+// and asks for two rather than the three the previous build reserved. Do
+// not replace these with invented customer names or quotes; swap each slot
+// for a real one as it is collected. `uniform` because two cards should sit
+// as an equal pair — the centre-emphasis treatment needs an odd count to
+// have a centre.
 const testimonials = [
   {
     quote:
-      "[TBC — ask Tegan for a quote from a long-standing client, naming how long they've been with TLB. Tenure is the proof this page needs.]",
+      "[TBC — ask Teagan for a quote from a long-standing client, ideally naming how long they've been with TLB. Tenure is the proof this page needs.]",
     name: '[Client name — TBC]',
-    role: '[Suburb / property type — TBC]',
+    role: '[Town / property type — TBC]',
     rating: 5,
     avatar: { ratio: '1/1', label: 'Long-standing TLB client' },
   },
   {
     quote:
-      "[TBC — ask Tegan for a quote from a client who'd been through several cleaners before TLB. Churn is the norm in this category, so the switcher story is what converts.]",
+      '[TBC — ask Teagan for a quote from a client who has been with a few cleaners over the years. That switcher story is what converts.]',
     name: '[Client name — TBC]',
-    role: '[Suburb / property type — TBC]',
+    role: '[Town / property type — TBC]',
     rating: 5,
     avatar: { ratio: '1/1', label: 'Client who switched to TLB after other cleaners' },
   },
-  {
-    quote:
-      '[TBC — a third client quote, angle not specified in the brief; defaulting to team consistency/reliability. Confirm this is the right third story before publishing.]',
-    name: '[Client name — TBC]',
-    role: '[Suburb / property type — TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB client' },
-  },
 ];
 
-// §10 "What we do" — drafted in full, with the deep links the spec calls
-// for. Same five services the footer's column uses, so it lives in
-// src/data/navigation.ts as `serviceLinks`.
+// "Our services" — the brief's six services with the deep links it names.
+// Titles, descriptions and hrefs live in src/data/navigation.ts as
+// `serviceLinks`, shared with the footer's Services column.
 // One photo per service, keyed by the service's own href so the pairing
-// can't silently slip if serviceLinks is ever reordered. The photos live in
+// can't silently slip if that list is ever reordered. The photos live in
 // src/assets/home under service-named filenames, so replacing one with a
 // real photo of that service is a file swap with no code change.
 //
 // ⚠️ All five are COPIES of photos already used elsewhere on the site — the
 // library has six real photographs total and no per-service shoot. They are
-// placeholders in everything but name.
+// placeholders in everything but name. Commercial cleaning, new to this
+// list in v6, has no photo at all and renders as a plain brand tile until
+// one exists.
 const serviceImages: Record<string, ImageMetadata> = {
-  '/airbnb-cleaning/': serviceAirbnbImg,
-  '/end-of-lease-cleaning/': serviceEndOfLeaseImg,
   '/house-cleaning/': serviceRegularImg,
-  '/real-estate-cleaning/': serviceRealEstateImg,
   '/deep-cleaning/': serviceDeepCleanImg,
+  '/end-of-lease-cleaning/': serviceEndOfLeaseImg,
+  '/airbnb-cleaning/': serviceAirbnbImg,
+  '/real-estate-cleaning/': serviceRealEstateImg,
 };
 
-const whatWeDoItems = serviceLinks.map((service) => ({
+const ourServiceItems = serviceLinks.map((service) => ({
   ...service,
   image: { ratio: '4/3', label: service.title, src: serviceImages[service.href] },
 }));
 
-// §11 Where We Clean — drafted in full. Location page URLs aren't specified
-// in the spec (open item); `/locations/<slug>/` is a guessed pattern —
-// confirm the real one before launch.
-const locationTags = [
-  { label: 'Byron Bay', href: '/locations/byron-bay/' },
-  { label: 'Ballina', href: '/locations/ballina/' },
-  { label: 'Lennox Head', href: '/locations/lennox-head/' },
-  { label: 'Brunswick Heads', href: '/locations/brunswick-heads/' },
-  { label: 'Ocean Shores', href: '/locations/ocean-shores/' },
-  { label: 'Alstonville', href: '/locations/alstonville/' },
-  { label: 'Murwillumbah', href: '/locations/murwillumbah/' },
-  { label: 'Lismore', href: '/locations/lismore/' },
-  { label: 'Kingscliff', href: '/locations/kingscliff/' },
-  { label: 'Pottsville', href: '/locations/pottsville/' },
-  { label: 'Tweed Heads', href: '/locations/tweed-heads/' },
-  { label: 'Coolangatta', href: '/locations/coolangatta/' },
-  { label: 'Palm Beach', href: '/locations/palm-beach/' },
-  { label: 'Burleigh Heads', href: '/locations/burleigh-heads/' },
-];
+// "Where we clean" — the brief's three regions as three labelled runs of
+// pills, town lists verbatim and in the brief's own order.
+//
+// The list now lives in src/data/locations.ts, shared with every other
+// page's "Where we clean" section — it had been copied verbatim into three
+// pages while two others ran their own shorter versions. The open questions
+// (the /locations/<slug>/ URL pattern, and the ~41 town pages that don't
+// exist yet) are flagged there, where one fix now serves every page.
 
-// §12 FAQ #1 (branded) — only the 3 fully-drafted questions ship. The other
-// 2 ("same cleaner every time", pricing) are blocked in the spec pending
-// Tegan/the pricing decision — omitted rather than answered with invented copy.
-const brandedFaqItems = [
+// FAQ — all twelve questions, in the brief's order, as one block rather
+// than the branded/non-branded split the previous build ran. v6 interleaves
+// the two kinds deliberately (franchise, then coverage, then how long a
+// clean takes), and splitting them would reorder the page against the
+// brief.
+//
+// ⚠️ Four answers are marked [CONFIRM with Teagan] in the brief and ship
+// here as the brief's own suggested wording, not as signed-off copy: "Will
+// I get the same cleaner every time?", "How long does a house clean take?",
+// "Should I book weekly or fortnightly?" and "Do you charge extra for the
+// inland towns?". The brackets are stripped so the page reads as a page;
+// get these four confirmed before launch.
+const faqItems = [
   {
     question: 'Are you a franchise?',
     answer:
-      "No. TLB is locally owned and run by Teagan, and every cleaner is employed by us rather than subcontracted through a national brand. When you book, you are booking us, not a licence holder using someone else's name.",
+      "No. TLB is locally owned and locally run, started here and still here. When you book, you're booking us.",
+  },
+  {
+    // [CONFIRM with Teagan]
+    question: 'Will I get the same cleaner every time?',
+    answer:
+      "Yes, wherever we can. Your place is assigned to a team and that's who you'll see. If someone's away, another member of your team covers and we let you know beforehand.",
+  },
+  {
+    question: 'Do you cover the inland towns as well as the coast?',
+    answer:
+      "Yes. Lismore, Casino, Alstonville, Kyogle, Murwillumbah and everywhere in between. We're a Northern Rivers business, not a coastal one.",
   },
   {
     question: 'Do you clean in Queensland as well as New South Wales?',
     answer:
-      'Yes, both. We work from the Northern Rivers up through Tweed Heads and into the Southern Gold Coast, which means we cross the state line most weeks. It also means we know how the rules differ on either side of it, which matters when a bond is involved.',
+      'Yes. We work right across the Northern Rivers and the Tweed, and cross the border into Coolangatta, Palm Beach and Burleigh Heads.',
   },
   {
-    question: 'How did you get to nine cleaners without advertising?',
-    answer:
-      'One recommendation at a time. Every client TLB has, came from someone telling a neighbour. That is a slower way to grow and a much harder one to fake.',
-  },
-];
-
-// §12 FAQ #2 (non-branded, long-tail) — all 6 drafted in full. The spec
-// marks every one "[TBC. Confirm with Tegan]" — lower-risk generic
-// service-education copy than the branded items above, but still pending
-// sign-off before this ships for real.
-const nonBrandedFaqItems = [
-  {
+    // [CONFIRM]
     question: 'How long does a house clean take?',
     answer:
-      'A rough guide for a maintained home is about an hour for each bedroom and bathroom, so a three-bedroom, two-bathroom house usually takes three to five hours for one cleaner, or roughly half that with two. Your first clean almost always takes longer, because it brings the home to a baseline. After that, regular visits settle into a predictable window.',
+      'A rough guide for a maintained home is about an hour for each bedroom and bathroom, so a three-bedroom, two-bathroom house usually takes three to five hours for one cleaner, or roughly half that with two. Your first clean takes longer, because it brings the home to a baseline. After that, visits settle into a predictable window.',
   },
   {
+    // [CONFIRM]
     question: 'Should I book weekly or fortnightly?',
     answer:
-      'Fortnightly suits most homes. Weekly tends to make sense with a bigger household, pets, working from home, or a place with a lot of through traffic. A fortnightly visit usually costs the same per clean as a weekly one, so the difference is what you spend across a month rather than what you pay on the day. Starting with a one-off and seeing how long it holds is the easiest way to decide.',
+      "Fortnightly suits most homes. Weekly tends to work better for larger households, homes with pets, or anywhere the kitchen and bathrooms get heavy use. Start fortnightly and tell us if it isn't holding.",
   },
   {
-    question: 'Do cleaners bring their own products and equipment?',
+    question: 'How much does a clean cost?',
     answer:
-      'Yes, a professional cleaning service arrives with everything needed, so you do not have to supply anything or leave anything out. If you would rather particular products were used in your home, because of a baby, an allergy, a pet or a sensitive surface, say so when you book. Most cleaners will either use what you have or bring an alternative.',
+      "It depends on the size of your place, its condition and how often we come. That's why we quote rather than publish a flat rate that would be wrong for most homes. Tell us the basics and you'll have a price back quickly, with no obligation attached to it.",
   },
   {
-    question: 'Do cleaners do the laundry and the dishes?',
+    question: 'Is the first clean more expensive?',
     answer:
-      'Usually not as standard. A regular house clean covers surfaces, floors, kitchen, bathrooms and bins. Laundry, dishes, ironing and putting belongings away are slow tasks with little visible payoff per minute, so most services either exclude them or quote them separately. If you want them included, ask before you book rather than on the day, so the time is in the quote.',
+      "Usually, yes, and we'll tell you that upfront. The first visit starts from wherever the house is rather than holding a standard that's already set, so it takes longer. After that, your regular visits settle into a consistent price.",
   },
   {
-    question: 'Do I need to tidy up before the cleaner arrives?',
+    question: 'Am I locked into a contract?',
     answer:
-      'Tidy, do not clean. Clearing benchtops, floors and bathroom vanities makes a real difference, because time spent moving your things is time not spent cleaning. Put away clothes, toys, dishes and anything valuable or fragile. Leave the actual cleaning to the cleaner, including the dusty and greasy jobs. If a house is cluttered on the day, the detail work is what gets missed.',
+      "No. No minimum term, no exit fee, and you can pause or skip a visit whenever you need to. Most people stay because it's working, not because they signed something.",
   },
   {
-    question: 'Do I need to be home while the cleaner is there?',
+    // [CONFIRM with Teagan]
+    question: 'Do you charge extra for the inland towns?',
     answer:
-      'That is entirely up to you. Plenty of people are at work or on the school run and arrange access in advance. Plenty prefer to be home for the first visit or two, so they can meet the cleaner and point out what matters most, then leave a key once the routine settles. Either works. Agree how access happens when you book.',
+      "Our teams live across the region, so we're not driving in from somewhere else. Tell us where you are when you book and your quote will reflect it.",
+  },
+  {
+    question: 'Do I need to be home?',
+    answer:
+      "Not at all, and most of our clients aren't. How we get in is agreed when you book, and we'll message you when we're on the way.",
+  },
+  {
+    question: 'Can I book over the phone instead of online?',
+    answer:
+      "Yes. Online, text, phone or email, whichever suits you. Plenty of people would rather talk it through the first time, and we'd rather that than have you guess at a form.",
   },
 ];
 
-// §13 Closing CTA — the spec never drafted this heading/lead ("only the
-// section's shape is described"). Rather than invent new marketing copy,
-// this reuses the hero's own already-approved lines as a closing echo —
-// flagged as a placeholder pending real closing copy.
+// Closing block — copy verbatim. v6 supplies this outright, where v5 left
+// it undrafted and the previous build echoed the hero's lines instead.
 const closingCta = {
-  heading: hero.headingLines.join(' '),
-  lead: hero.lead,
-  cta: hero.cta,
+  heading: 'Set it up once, and stop thinking about it.',
+  lead: "Tell us which town you're in and what your place needs, and we'll come back with a price.",
+  cta: quoteCta,
 };
-
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -419,10 +463,15 @@ const closingCta = {
       image={hero.image}
     />
 
-    {/* The trust bar and the definition block share ONE photo, so it has to
+    {/* The trust bar and the opening paragraph share ONE photo, so it has to
         be laid out across both — hence the wrapper rather than a
         `backgroundImage` on the TextBlock alone, which left the Cream
         strips either side of the teal card as flat colour.
+
+        The brief lists the opening paragraph above the trust bar. It is
+        inverted here because TrustBar's `card` variant is built to overlap
+        the section above it — it has to sit directly under the hero, or the
+        overlap lands on a paragraph and reads as a layout fault.
 
         75, not the default 80: enough Cream off the scrim for the photo to
         show, and still 5.0:1 for Dark Teal body copy measured over the
@@ -436,11 +485,27 @@ const closingCta = {
 
     <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
 
-    <ServiceBlocks variant="list" heading="What's included in every visit." items={includedItems} />
+    <ServiceBlocks variant="list" heading="What we do" items={whatWeDoItems} />
 
-    <StoryMosaic theme="light" heading="Meet Teagan" blocks={teganBlocks} />
+    <StoryMosaic theme="light" heading="Local team, run properly" blocks={teamBlocks} cta={teamCta} />
 
-    <TextBlock theme="dark" body={whyBody} backgroundImage={pathwayHolidayLetImg} scrimOpacity={82} />
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Easy to book, local to the core"
+      body={bookingBody}
+      cta={hero.cta}
+      backgroundImage={pathwayHolidayLetImg}
+      scrimOpacity={82}
+    />
+
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading="Easy to book, instant pricing, cost effective"
+      body={["You'll know the price before we start, not after.", ...pricingBody]}
+      cta={hero.cta}
+    />
 
     <ComparisonTable
       heading={comparisonTable.heading}
@@ -449,19 +514,18 @@ const closingCta = {
       rows={comparisonTable.rows}
     />
 
-    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} />
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
 
-    <ServiceBlocks variant="photo-tiles" heading="What we do" items={whatWeDoItems} tileCtaLabel="See the service" />
+    <ServiceBlocks variant="photo-tiles" heading="Our services" items={ourServiceItems} tileCtaLabel="See the service" />
 
     <TagCloud
-      heading="Where We Clean"
-      subheading="From Ballina to Burleigh, and both sides of the border."
-      tags={locationTags}
-      note={[]}
+      heading="Where we clean"
+      subheading="Across the Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="Cleaning FAQs" items={nonBrandedFaqItems} />
+    <Faq heading="Frequently asked questions" items={faqItems} />
 
     <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
   </main>

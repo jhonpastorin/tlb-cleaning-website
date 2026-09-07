@@ -95,7 +95,15 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
       </div>
       {cta && (
         <div class="text-block__cta">
-          <Button label={cta.label} href={cta.href} variant={cta.variant ?? (theme === 'dark' ? 'inverse-accent' : 'brand')} />
+          {/* `surface` on dark, not `inverse-accent`: this theme's band IS
+              --color-inverse, so an inverse-filled pill sits on a fill of its
+              own colour and reads as a hole rather than a button — visible on
+              the homepage's "Easy to book, local to the core" block, which
+              runs the band over a photo as well. `surface` is the variant
+              Button.astro documents for exactly this ("a same-Dark-Teal band
+              needed a CTA that still visibly lifts off it"): Off White fill,
+              Dark Teal ink at 8.33:1, Mint ring. */}
+          <Button label={cta.label} href={cta.href} variant={cta.variant ?? (theme === 'dark' ? 'surface' : 'brand')} />
         </div>
       )}
     </div>

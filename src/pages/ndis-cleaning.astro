@@ -36,6 +36,7 @@ import PathwayCards from '../components/sections/PathwayCards.astro';
 import Callout from '../components/sections/Callout.astro';
 import ContentGrid from '../components/sections/ContentGrid.astro';
 import TagCloud from '../components/sections/TagCloud.astro';
+import { nswLocationGroups } from '../data/locations';
 import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
 import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
@@ -54,6 +55,7 @@ import {
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
+import { trustBarCards } from '../data/trust';
 
 const pageMeta = {
   // Brief said "NDIS Cleaning Service |  TLB Cleaning" — singular, and with a
@@ -124,34 +126,6 @@ const hero = {
     label: 'A real TLB cleaner, one of the regular faces, cleaning in a home',
   },
 };
-
-// §4 Trust bar — third point REPLACED for this audience.
-//
-// The boilerplate's "Trusted by leading Northern Rivers real estate
-// agencies" means nothing to a participant or coordinator, and quietly
-// signals "commercial cleaning contractor" to someone choosing an in-home
-// support. Swapped for the Code of Conduct line, which is the one
-// compliance claim in the brief that is true as written for every provider
-// paid from NDIS funding — so it needs no bracket.
-// Card variant: the brief's lines run VERBATIM as the descriptions, each
-// under a short added label — same shape as every other page's trust bar.
-const trustBarCards = [
-  {
-    icon: 'team' as const,
-    title: 'Local team',
-    description: '9 full-time local team members',
-  },
-  {
-    icon: 'chat' as const,
-    title: 'Word of mouth',
-    description: 'Every client came from a recommendation',
-  },
-  {
-    icon: 'shield-check' as const,
-    title: 'NDIS aligned',
-    description: 'Bound by the NDIS Code of Conduct',
-  },
-];
 
 // §2 Definition paragraph — the brief supplied NOTHING here (the row held
 // only "CTA - Get an instant quote"), but this is the answer-target block
@@ -259,32 +233,24 @@ const whoThisIsForBody: TextBlockBody[] = [
   },
 ];
 
-// §10b Suburbs.
+// §10b Suburbs — now the shared list from src/data/locations.ts, which every
+// "Where we clean" section on the site reads from.
 //
-// ⚠️ This is the site's FOURTH different suburb list, and NSW-only — no
-// Southern Gold Coast, unlike every sibling page. That is consistent with
-// the meta description and plausibly correct for a state-administered
-// scheme, but confirm it is deliberate.
+// This page had been the site's fourth separate suburb list: twelve towns,
+// two of which (Bangalow, Goonellabah) appeared nowhere else. Both are in
+// the shared Northern Rivers list now, so that inconsistency is resolved in
+// their favour rather than by dropping them.
 //
-// ⚠️ Bangalow and Goonellabah appear on NO other list on this site. If TLB
-// serves them they belong on the others too; if not, they shouldn't be here.
+// `nswLocationGroups`, not the full list: this page is NSW-only, matching its
+// meta description. Plausibly right for a scheme administered per-state, but
+// confirm it is deliberate — if TLB takes NDIS work across the border, swap
+// to `locationGroups`.
 //
-// hrefs use the same guessed /locations/<slug>/ pattern as every other page,
-// still unconfirmed sitewide.
-const locationTags = [
-  { label: 'Ballina', href: '/locations/ballina/' },
-  { label: 'Lennox Head', href: '/locations/lennox-head/' },
-  { label: 'Alstonville', href: '/locations/alstonville/' },
-  { label: 'Byron Bay', href: '/locations/byron-bay/' },
-  { label: 'Bangalow', href: '/locations/bangalow/' },
-  { label: 'Lismore', href: '/locations/lismore/' },
-  { label: 'Goonellabah', href: '/locations/goonellabah/' },
-  { label: 'Casino', href: '/locations/casino/' },
-  { label: 'Evans Head', href: '/locations/evans-head/' },
-  { label: 'Ocean Shores', href: '/locations/ocean-shores/' },
-  { label: 'Tweed Heads', href: '/locations/tweed-heads/', isHighlighted: true },
-  { label: 'Kingscliff', href: '/locations/kingscliff/' },
-];
+// One stale `isHighlighted: true` flag went with the old list. That property
+// no longer exists on TagCloud's Tag interface and astro check does not catch
+// it (excess-property checking doesn't fire on a const-inferred array passed
+// to a prop), so that pill had been silently rendering un-highlighted.
+
 
 // §11 "Why people choose TLB" — three differentiators.
 //
@@ -524,8 +490,8 @@ const closingCta = {
     <TagCloud
       heading="Where we clean"
       subheading="Across the Northern Rivers and the Tweed."
-      tags={locationTags}
-      note={[]}
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
     />
 
     <ContentGrid columns={2} heading="Why participants and coordinators choose us" blocks={whyChooseBlocks} />

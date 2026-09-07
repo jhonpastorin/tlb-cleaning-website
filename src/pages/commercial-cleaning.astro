@@ -62,6 +62,8 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
 
 const pageMeta = {
   // Brief said "Commercial Cleaning Service |  TLB Cleaning" — singular, and
@@ -144,42 +146,6 @@ const hero = {
     label: 'A TLB cleaner at work in a real office or commercial workplace',
   },
 };
-
-// §4 Trust bar — the brief's three points, unchanged.
-//
-// ✅ This is the first page on the site where the third point is genuinely
-// on-target. ndis-cleaning.md flagged "Trusted by leading Northern Rivers
-// real estate agencies" as meaningless to that audience and quietly
-// signalling "commercial cleaning contractor". Here that signal is the
-// correct one: an agency is a commercial client, the relationship is an
-// ongoing contract, and property managers inspect the work weekly.
-//
-// ⚠️ OPEN DECISION, not taken here. Point 1 is the fourth wording of this
-// claim across five pages; elsewhere it reads "nine full-time cleaners,
-// employed not subcontracted". For a commercial reader the
-// employed-not-subcontracted phrasing is materially stronger, because
-// subcontracting is the exact practice the "Worth knowing" block and the
-// comparison table are both about. Left as the brief wrote it rather than
-// changing supplied copy unilaterally.
-// Card variant: the brief's lines run VERBATIM as the descriptions, each
-// under a short added label — same shape as every other page's trust bar.
-const trustBarCards = [
-  {
-    icon: 'team' as const,
-    title: 'Local team',
-    description: '9 full-time local team members',
-  },
-  {
-    icon: 'chat' as const,
-    title: 'Word of mouth',
-    description: 'Every client came from a recommendation',
-  },
-  {
-    icon: 'building' as const,
-    title: 'Agency trusted',
-    description: 'Trusted by leading Northern Rivers real estate agencies',
-  },
-];
 
 // §2 Definition paragraph — the brief supplied NOTHING here (the row held
 // only "CTA - Get an instant quote"), but this is the answer-target block
@@ -336,26 +302,18 @@ const premisesTags = [
 // service area can't rank for "commercial cleaners [suburb]", which is how
 // this is searched.
 //
-// ⚠️ The site already has FOUR different suburb lists. Rather than add a
-// fifth, this reuses the header mega-menu's own "Northern Rivers NSW" group
-// (navigation.ts:182-195) verbatim, minus its hub link. NSW only, following
-// this page's meta description — which is also why the Blue Card gap in the
-// last non-branded FAQ matters. If commercial work does cross the border,
-// this list and that FAQ both need the Southern Gold Coast added.
-const locationTags = [
-  { label: 'Byron Bay', href: '/locations/byron-bay/' },
-  { label: 'Brunswick Heads', href: '/locations/brunswick-heads/' },
-  { label: 'Ballina', href: '/locations/ballina/' },
-  { label: 'Lennox Head', href: '/locations/lennox-head/' },
-  { label: 'Lismore', href: '/locations/lismore/' },
-  { label: 'Alstonville', href: '/locations/alstonville/' },
-  { label: 'Kingscliff', href: '/locations/kingscliff/' },
-  { label: 'Pottsville', href: '/locations/pottsville/' },
-  { label: 'Murwillumbah', href: '/locations/murwillumbah/' },
-  { label: 'Evans Head', href: '/locations/evans-head/' },
-  { label: 'Casino', href: '/locations/casino/' },
-  { label: 'Tweed Heads', href: '/locations/tweed-heads/' },
-];
+// The list itself is no longer this page's own: it comes from
+// src/data/locations.ts, which every "Where we clean" section now shares.
+// This page had been running the header mega-menu's twelve NSW towns while
+// the homepage, house-cleaning and deep-cleaning ran a 47-town NSW list —
+// nothing contradictory (it was a subset) but three towns deep in the Tweed
+// simply weren't claimed here.
+//
+// `nswLocationGroups`, not the full list: this page's meta description is NSW
+// only, which is also why the Blue Card gap in the last non-branded FAQ
+// matters. If commercial work does cross the border, swap to
+// `locationGroups` and fill that FAQ.
+
 
 // §9 Social proof — bracketed [TBC] briefing slots, NOT real testimonials.
 //
@@ -641,8 +599,8 @@ const closingCta = {
     <TagCloud
       heading="Where we clean"
       subheading="Across the Northern Rivers and the Tweed."
-      tags={locationTags}
-      note={[]}
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

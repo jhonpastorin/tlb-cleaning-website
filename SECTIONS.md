@@ -716,6 +716,156 @@ foregrounded/switchable image), or a narrative image+text sequence with a
 visual "journey" feel (`story`) — not a general alternating editorial block,
 which is `StoryMosaic`.
 
+⚠️ **Not for before/after pairs — that's `BeforeAfter.astro`, immediately
+below.** Both of this component's plausible variants were tried on that
+content first and both fall short: `grid` leaves the viewer to hold one frame
+in memory while looking at the next, and `filmstrip` grows the active frame
+and shrinks the rest, so a Before and its own After are never the same size at
+the same moment. This component's unit is the individual photo; a before/after
+pair's unit is the pair.
+
+### `BeforeAfter.astro`
+
+Purpose: draggable before/after comparison sliders — two photos of one scene
+laid exactly on top of each other, with a handle that wipes between them.
+**The unit here is the PAIR**, not the photo.
+
+Added for `content-plans/home-cleaning.md` §9, which is the gap
+`house-cleaning.astro` had already written down in its own source: *"nothing
+in SECTIONS.md pairs two images as one unit."* It didn't. Every existing
+option treats images as a set of independent frames — see the "why not
+`PhotoGallery`" note below.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `heading` | `string` | — | Optional section `<h2>`. |
+| `lead` | `string` | — | Optional. Worth using to say the frame is draggable — the grip is an affordance, not an instruction. |
+| `pairs` | `BeforeAfterPair[]` | — required | `{ before, after, caption?, start?, ratio? }`. `before`/`after` are each `{ src: ImageMetadata, alt: string }`. Works with any count ≥1. Export: `BeforeAfterPair`. |
+| `beforeLabel` | `string` | `'Before'` | Pill on the left/overlay half. |
+| `afterLabel` | `string` | `'After'` | Pill on the right/base half. |
+| `note` | `string` | — | Optional closing line under the grid — provenance, consent, or (as house-cleaning currently uses it) the fact that the images on show are illustrative samples rather than real jobs. |
+
+Per-pair: `caption` names what the pair shows, `start` (0–100, default 50)
+sets where the handle opens, `ratio` (default `"4/3"`) sizes the frame.
+
+```astro
+<BeforeAfter
+  heading="The difference, on real jobs."
+  lead="Drag the handle across each photo to see the same spot before and after a clean."
+  pairs={[
+    {
+      before: { src: kitchenBefore, alt: 'Kitchen benchtop before the clean' },
+      after: { src: kitchenAfter, alt: 'The same benchtop after the clean' },
+      caption: 'Kitchen benchtop and splashback',
+    },
+  ]}
+/>
+```
+
+⚠️ **`src` is REQUIRED on both images — this component has no reserved-slot
+mode**, which makes it the deliberate exception to this library's usual
+`Placeholder`-until-the-asset-exists habit. A comparison slider with nothing
+to compare has no meaningful empty state; two dashed boxes wiping over each
+other is worse than not shipping the section. Use `PhotoGallery`'s labelled
+`Placeholder` frames while the photography is still pending.
+
+⚠️ **Both images in a pair must be the SAME SCENE from the SAME POSITION.**
+The slider wipes one over the other in place, so anything that moves between
+the two frames — a shifted camera, a chair pushed in, a different crop — reads
+as a glitch rather than as cleaning. **The component cannot enforce this; the
+photo brief has to.** It is the single thing most likely to make a real pair
+fail after the code is correct.
+
+**Why not a `PhotoGallery` variant.** Both of its plausible variants were
+checked against this content and ruled out:
+
+- `grid` lays N frames out side by side, so the viewer holds one in memory and
+  saccades to the next — which is exactly the comparison a slider does *for*
+  them.
+- `filmstrip` grows the **active** frame and shrinks the rest, so a Before and
+  its own After are never the same size at the same moment. That was the
+  specific tension `house-cleaning.astro` recorded when it shipped `filmstrip`
+  the first time.
+
+`ContentGrid`/`StoryMosaic` have no concept of two images as one unit at all.
+The interaction here is a wipe between the two members of a pair — a different
+content shape, not a layout variant of "some photos" — so it is its own file,
+per this file's own bar.
+
+**The control is a native `<input type="range">`, not a hand-rolled drag
+handler.** It brings pointer drag, touch, click-to-position, arrow/Home/End
+keys and a screen-reader-announced value with it, none of which comes free
+from a div with pointer events — the same "reach for the native element" call
+`Faq.astro` makes with `<details>` and `ComparisonTable.astro` with `<table>`.
+The input is stretched transparently over the whole frame (with a full-height
+thumb, so a webkit drag can start anywhere vertically rather than in a band
+across the middle); the visible divider and grip are `aria-hidden` decoration.
+A visually-hidden `<label>` names it per pair — "slider, 50" tells a
+screen-reader user nothing about which two photos they are moving between.
+
+**One source of truth: `--ba-pos`.** The script's whole job is copying the
+input's value onto the frame's `--ba-pos`. The overlay's clip and the
+divider's position both read that one property, so there is no second state to
+keep in step. It is declared with a `50%` fallback on `.before-after__frame`
+itself, so with JS disabled or still parsing the pair renders as a clean
+static split rather than one image with an invisible one on top.
+
+**The overlay is clipped, not resized.** `clip-path: inset(0 calc(100% -
+var(--ba-pos)) 0 0)` reveals the left portion. Deliberately not a width change
+on a wrapper: the image inside must not *resize* as the handle moves, only be
+revealed, or the two halves stop lining up and the wipe reads as a zoom.
+
+⚠️ **Implementation gotcha — the range input MUST stay before the divider in
+the DOM.** The input is transparent, so its focus ring has to be drawn on the
+grip instead, and the only selector that reaches from the focused element to
+the grip is a sibling combinator, which walks **forward only**. Built with the
+divider first, that rule matched nothing — silently, with no warning from
+anything (the same shape as this file's other "your own CSS silently loses"
+notes). Caught and fixed before shipping; stacking order is `z-index`, not
+source order, so the reorder costs nothing.
+
+Also worth knowing, checked rather than assumed: `astro:assets`' `<Image>`
+**does** receive the calling file's scope attribute, so a class passed to it
+from here works — unlike a class passed into a custom component such as
+`Placeholder`, which lands under *that* component's scope and silently never
+matches (see `Hero.astro`'s note). Verified against the built HTML, not
+inferred; if the images ever render unpositioned, check this first.
+
+Layout: `repeat(auto-fit, minmax(420px, 1fr))`, so it works with any number of
+pairs — same call `SiteFooter.astro`'s link grid makes. The 420px floor is a
+usability minimum, not a look: much below it the handle has too little travel
+to feel like a comparison rather than a fidget. The `--bp-md` query resets the
+tracks to `1fr` explicitly, because a `1fr` column narrower than the floor
+overflows the container rather than shrinking — the same "a breakpoint has to
+be able to beat a layout choice" problem `ContentGrid.astro` and
+`TrustBar.astro` both document.
+
+`touch-action: pan-y` on the frame keeps vertical page scrolling working on a
+phone while letting horizontal drags reach the input. Under
+`prefers-reduced-motion` only the grip's decorative hover grow is suppressed —
+the wipe itself is direct manipulation and stays, since removing it would
+break the control.
+
+Per-instance ids use the same build-time random suffix `Faq.astro`,
+`ServiceBlocks.astro` and `TagCloud.astro` already apply. Needed twice over
+here: for the section heading, and for *each* range input, since a duplicate
+input `id` silently sends every `<label>`'s clicks to the first match on the
+page.
+
+**Wired to `house-cleaning.astro` §9**, currently against four SAMPLE
+illustrations generated by `scripts/make-before-after-samples.mjs` — flat
+vector drawings, each stamped with a visible SAMPLE badge, so the interaction
+could be built and reviewed before any real client photography exists. That
+page's `note` says so in the reader's own view. Swapping in real photos is
+four import lines plus deleting the note; the shooting brief lives in that
+page's §9 block.
+
+Use this when: a page needs to show one scene in two states and the
+comparison is the point — before/after cleaning, a renovation, a repair. Not
+for a set of independent photos (`PhotoGallery`), not for one photo with a
+message over it (`ImageBand`).
+
+
 ### `PathwayCards.astro`
 
 Purpose: three (or more) numbered persona cards on a dark background,
@@ -754,12 +904,36 @@ highlighted tag and a closing note.
 |---|---|---|
 | `heading` | `string` | |
 | `subheading` | `string` | |
-| `tags` | `{ label: string, href?: string, isHighlighted?: boolean }[]` | Renders `<a>` if `href` is set, otherwise a plain `<span>` pill. `isHighlighted` swaps the pill to brand-yellow-on-charcoal-border. |
+| `tags` | `Tag[]` (`{ label, href? }`) | One flat run of pills. Renders `<a>` if `href` is set, otherwise a plain `<span>` pill. Omit when passing `groups`. |
+| `groups` | `TagGroup[]` (`{ label, tags: Tag[] }`) | Labelled runs of pills, an `<h3>` per run. Wins if both are set. Export: `TagGroup`. |
 | `note` | `string[]` | Closing lines, `<br>`-joined. |
 
 ```astro
+<!-- one flat run -->
 <TagCloud heading={tagCloud.heading} subheading={tagCloud.subheading} tags={tagCloud.tags} note={tagCloud.note} />
+
+<!-- labelled runs -->
+<TagCloud
+  heading="Where we clean"
+  subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+  groups={[{ label: 'Northern Rivers', tags: [...] }, { label: 'The Tweed', tags: [...] }]}
+  note={["If a town isn't listed, ask us anyway."]}
+/>
 ```
+
+**Why `groups` and not three TagClouds, or one flat array.** Added for
+`content-plans/deep-cleaning.md` §12's "Where we clean", which lists three
+regions (Northern Rivers, the Tweed, Southern Gold Coast) as separately
+labelled runs. Three consecutive `TagCloud`s would have meant three Dark Teal
+bands back to back, each repeating a heading and subheading; flattening the
+three into one `tags` array would have thrown the grouping away — including
+that one of the three regions is in a different state. `groups` sits
+*alongside* `tags` rather than replacing it, the same per-shape prop pair
+`TrustBar.astro` (`items`/`cards`) and `Hero.astro`
+(`image`/`images`/`collageImages`) already use, so every existing caller keeps
+passing `tags` and renders byte-identically. Each group's wrapper is full
+width so its grid tracks match the flat variant's exactly — a group of 28
+towns and a group of 9 line up column for column down the section.
 
 Use this when: a page needs to enumerate a long, flat list of conditions,
 services, or categories as pills. 4 columns desktop, 2 tablet, 1 mobile.
@@ -1284,13 +1458,51 @@ cleaners, employed not subcontracted · Working both sides of the border,
 NSW and QLD · Trusted by leading Northern Rivers real estate agencies" —
 three short sentences, only one of which is actually numeric.
 
-| Prop | Type | Notes |
-|---|---|---|
-| `items` | `string[]` | Any count ≥1; the spec's own guidance is 3–5. |
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `variant` | `'divided' \| 'card'` | `'divided'` | |
+| `items` | `string[]` | `[]` | `divided` only. Any count ≥1; the spec's own guidance is 3–5. |
+| `cards` | `{ icon: TrustBarIconName, title, description }[]` | `[]` | `card` only — the same per-variant prop call `Hero.astro` already makes. Icons: `team`, `map-pin`, `building`, `chat`, `shield-check`, `sparkle`. |
 
 ```astro
 <TrustBar items={['9 full-time local cleaners, employed not subcontracted', 'Working both sides of the border, NSW and QLD']} />
+
+<TrustBar variant="card" cards={[{ icon: 'team', title: 'Local team', description: '9 full-time local team members' }]} />
 ```
+
+**The card copy lives in `src/data/trust.ts`, not in the pages.** All six
+pages render the identical five proof points, so the array was extracted the
+same way `comparison.ts` and `locations.ts` were — two real consumers is this
+codebase's bar for sharing, and this had six. Three pages had already drifted
+onto an older set of three points ("9 full-time local team members", "Every
+client came from a recommendation") while the other three carried the five
+from `content-plans/deep-cleaning.md` §4, which is exactly the failure the
+extraction prevents. A page needing a *sixth*, page-specific point appends to
+the shared array at the call site — but `card` has no laid-out rule past five
+(see below), so that needs a component change first.
+
+**`card` at five cells — 3-over-2, not five squeezed columns.** `card`'s
+desktop row is one `1fr` column per cell, which is right for the three proof
+points every page carried until `content-plans/deep-cleaning.md` §4 supplied
+**five**. Five `1fr` columns in a 1200px container leave each supporting line
+about two words wide. At **exactly five**, the component adds
+`.trust-bar__card--wrap-5`: a 6-column track carrying three cells of `span 2`
+then two of `span 3`, which centres the remainder instead of leaving an orphan
+column, with cell 4 dropping its divider the way cell 1 does.
+
+Deliberately scoped to five — four-or-fewer callers are untouched, and 6+ has
+no caller yet, so a shape for it would be an unverified guess. **A 6+ caller
+needs its own rule**; without one it falls back to the squeezed single row.
+
+Both media queries reset the spans explicitly. They set their own column count
+(2 at `--bp-lg`, 1 at `--bp-sm`), and a `span 2`/`span 3` inside a 2- or
+1-column grid wins on specificity and overflows the track — the same
+"a breakpoint has to be able to beat a per-instance layout choice" problem
+`ContentGrid.astro`'s inline-custom-property gotcha documents, here solved by
+resetting rather than by never setting. The tablet query also has to *restore*
+cell 4's divider (it's mid-row at two per row, not a row start), and the
+mobile query then has to out-specificity that restore to take every divider
+off again.
 
 Divider treatment (border-left hairlines, stacking to border-top below
 `--bp-sm`) is deliberately copied from `Hero.astro`'s `minimal` variant's

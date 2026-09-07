@@ -105,10 +105,26 @@ const Tag = href ? 'a' : 'button';
     border-color: var(--color-surface);
   }
 
+  /* Dark fill with an ACCENT-coloured label — the "yellow on charcoal"
+     treatment named at the top of this file. The label was
+     --color-brand, which was correct for the previous brand (brand = a
+     bright yellow, inverse = charcoal) and is invisible under TLB's, where
+     --color-brand and --color-inverse BOTH resolve to Dark Teal: Dark Teal
+     ink on a Dark Teal fill, 1:1, a button with no readable label at all.
+     Found rendering on the homepage's dark TextBlock; it was equally broken
+     in StatBand and Callout's warning tone, which are this variant's other
+     two callers.
+
+     --color-accent is the token that actually carries the variant's stated
+     intent. Mint on Dark Teal measures 4.53:1 — AA for this button's 18px
+     bold label, the same pairing (and the same figure) tokens.css already
+     justifies for the brand button's hover. The border takes the accent too,
+     so the pill keeps a visible edge when it rests on a band that shares its
+     own fill colour. */
   .btn--inverse-accent {
     background: var(--color-inverse);
-    color: var(--color-brand);
-    border-color: var(--color-inverse);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
   }
   .btn--inverse-accent:hover {
     background: var(--color-surface);
