@@ -1,0 +1,559 @@
+---
+// Commercial carpet cleaning — a LEAF page under the /commercial-cleaning/
+// hub (navigation.ts, "Commercial services" group). Sibling of
+// /commercial-pressure-cleaning/, built in the same pass and sharing its
+// structure deliberately: two leaves off one hub that open differently read
+// as two different sites.
+//
+// NO CONTENT BRIEF EXISTS. Every other page in src/pages/ was built from a
+// file in content-plans/; there is none for this one. All copy below is
+// DRAFTED, not supplied, and needs sign-off before launch. Where a claim
+// depends on a fact only TLB holds, it ships as a visible [bracket] per
+// house convention rather than as a plausible guess.
+//
+// Structure follows commercial-cleaning.astro (hero, trust bar + definition
+// under one backdrop, pathway cards, "worth knowing", related services,
+// comparison, testimonials, service area, two FAQ blocks, closing CTA). The
+// one addition is the scope-of-work block, which the hub flags in its own
+// source as its highest-value missing content. A single service is far
+// easier to scope than a whole contract, so it lands here first.
+//
+// BLOCKS LAUNCH:
+//   - IS THIS DELIVERED IN HOUSE? The biggest unknown on the page. Hot water
+//     extraction needs a truck-mount or a commercial portable, and nothing in
+//     the brand foundation document or any existing page says TLB owns one.
+//     If this work is subcontracted to a carpet specialist, the comparison
+//     table below (whose first row is "employed by TLB, not subcontracted")
+//     contradicts the page it sits on and must be dropped from this page
+//     rather than reworded. See the §10 comment.
+//   - Method. The scope block names hot water extraction AND encapsulation.
+//     Confirm TLB offers both, or cut the second card and the sentence in
+//     non-branded FAQ 2 that offers it as an alternative.
+//   - Drying time, pricing basis and minimum charge are all bracketed. They
+//     are the three things a facilities buyer rings about.
+//   - [insured] and [police-checked] in card 3 are inherited from the hub,
+//     where the same brackets are already open. One answer fixes both pages.
+//
+// NOT BUILT, deliberately: before/after slider, hero video, credibility
+// signals. Carpet is the best before/after subject on the whole site and
+// BeforeAfter.astro is already running on five pages, but it takes real
+// paired photography and none exists for commercial work. The photo brief
+// is written out at the reserved slot in the render below.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// The §1 hero and §3 card 1 are this page's own, generated per
+// IMAGE-GUIDELINES; the prompts are in
+// src/assets/commercial_cleaning/carpet/IMAGE-PROMPTS.md.
+//
+// Cards 2 and 3 are REUSED from the hub's folder, per IMAGE-GUIDELINES §5
+// ("reuse before generating; same subject = same file"). Neither card is
+// about carpet: card 2 is the walkthrough where a scope gets agreed and card
+// 3 is who is in the building, which is the same subject the hub uses those
+// two frames for. Card 1 was briefly the hub's vacuuming photo and is now a
+// carpet-specific frame, because it is the one card whose subject IS carpet
+// and reusing there would have put the same photo on two pages meaning two
+// different things.
+import heroImg from '../assets/commercial_cleaning/carpet/commercial-carpet-extraction-in-an-open-plan-office.jpg';
+import cardExtractionImg from '../assets/commercial_cleaning/carpet/commercial-carpet-extraction-along-an-office-corridor.jpg';
+import cardWalkthroughImg from '../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
+import cardTeamImg from '../assets/commercial_cleaning/commercial-cleaner-with-a-caddy-in-an-office-kitchenette.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+
+// §0 Metadata. Focus keyword leads the title, matching the hub's pattern.
+const pageMeta = {
+  title: 'Commercial Carpet Cleaning | TLB Cleaning',
+  description:
+    'Commercial carpet cleaning across the Northern Rivers and the Tweed. Hot water extraction after hours, traffic lanes and stains treated, and a written price before we start.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/commercial-carpet-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  // ⚠️ NSW only, following the hub's call and this page's meta description.
+  // footerContact still claims the Southern Gold Coast. Same open item.
+  areaServed: 'Northern Rivers and Tweed, NSW',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The kicker carries the focus keyword so someone arriving from a
+// search result gets confirmation above the H1, which is free to be a
+// benefit rather than a keyword. Same call the hub makes.
+//
+// CTA is "Book a site walkthrough", not the sitewide "Get an instant quote".
+// Carpet is priced on area, fibre and condition, none of which survive a
+// form, and branded FAQ 5 below says exactly that.
+//
+// A SCENE PHOTO, not a cut-out figure, following the call the hub made at
+// TLB's direction: a studio cut-out on a plain background says "a cleaner"
+// without saying commercial. Here the extractor, the desk bank and the
+// glass-partitioned meeting room are what carry it.
+//
+// So this is family A in IMAGE-GUIDELINES terms, which sets two things:
+//   - `imageFit` is UNSET on the render below, taking Placeholder's `cover`
+//     default. There is no transparency to preserve and no figure to stand
+//     on the section edge.
+//   - `ratio` is 1/1 because the SOURCE is 1024x1024, so a box matching the
+//     file crops nothing. Regenerate square if this is ever reshot, or
+//     change both together.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. An AI image of a person who does not
+// exist, in the §3 canonical uniform (aqua polo, dark teal apron, teal
+// gloves). Honest as generic service imagery and NOT presented as a named
+// team member, which IMAGE-GUIDELINES §7 forbids. A real photo of a real TLB
+// cleaner on a real site would still do more, so treat this as a good
+// placeholder rather than the finished job.
+const hero = {
+  kicker: 'Commercial carpet cleaning',
+  headingLines: ['Your carpet is the first thing anyone walks on.'],
+  lead:
+    'Carpet cleaning for offices, clinics, venues and strata across the Northern Rivers and the Tweed. Done after you close, dry before you open.',
+  cta: { label: 'Book a site walkthrough', href: quoteCta.href },
+  image: {
+    ratio: '1/1',
+    label:
+      'A cleaner in an aqua polo, dark teal apron and teal gloves running a carpet extraction machine across the carpet of an open plan office',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. The answer-target block for the focus keyword and the first
+// place the phrase appears in body copy. Paragraph two does the synonym work
+// ("carpet steam cleaning", "hot water extraction") so this one page can
+// answer all three queries instead of three thin pages competing.
+const definitionBody: TextBlockBody[] = [
+  'Commercial carpet cleaning is the deep cleaning of carpet in a workplace, usually by hot water extraction, done outside trading hours so the floor is dry before your team or your customers arrive. It lifts the grit, oils and traffic marks that vacuuming alone leaves behind. TLB Cleaning cleans commercial carpet across the Northern Rivers and the Tweed.',
+  'Carpet steam cleaning and hot water extraction are the same job under two names. The machine heats water, injects it into the pile under pressure and vacuums it straight back out with the soil in it. Nothing is steamed in the literal sense, so a cleaner who leans hard on the word is selling the word rather than the method.',
+];
+
+// §3 Pathway cards. The three questions a commercial buyer actually arrives
+// with, in their own words. Same framing as the hub, re-pointed at carpet.
+//
+// Destinations are the hub, the quote flow and /why-tlb/. A leaf that links
+// only to a quote form strands the reader who is not ready to ask for one.
+const pathwayCards = {
+  heading: 'People arrive here with three questions.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        // The cleaned strip behind the wand is deliberate and it is the
+        // reason this frame exists. It is ONE frame showing work in
+        // progress, not a before/after pair implying a specific job, which
+        // IMAGE-GUIDELINES §7 rules out.
+        label:
+          'A cleaner drawing a carpet extraction wand along the worn traffic lane of an office corridor, a cleaned strip visible behind the wand',
+        src: cardExtractionImg,
+      },
+      title: 'The carpet looks tired and I need it back',
+      description:
+        'Traffic lanes, chair marks, spills and the grey path from the door to the lift. One extraction clean lifts most of it, and we tell you honestly which marks are permanent before we quote, not after.',
+      cta: { label: 'Book a site walkthrough', href: quoteCta.href },
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label:
+          'A TLB cleaner and an office manager talking through the job in an office reception area',
+        src: cardWalkthroughImg,
+      },
+      title: 'I want it on a schedule, not as a panic',
+      description:
+        'Most workplaces settle on two extraction cleans a year with spot treatment in between. We can fold that into an ongoing commercial contract so it happens on time without anyone having to remember it.',
+      cta: { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        label: 'TLB cleaner in uniform with her cleaning caddy in an office kitchenette',
+        src: cardTeamImg,
+      },
+      title: 'I want to know who is in the building',
+      description:
+        // ⚠️ Two brackets, both inherited from the hub. Same answer fixes both.
+        'The same small team you have met, in TLB uniform. Never a roster of strangers sent out by a call centre. We are a local business, [insured] and [police-checked], and there is one local number to ring if something is not right.',
+      cta: { label: 'Why TLB', href: '/why-tlb/' },
+    },
+  ],
+};
+
+// §4 Scope of work. THE MOST IMPORTANT BLOCK ON THIS PAGE.
+//
+// commercial-cleaning.astro flags in its own source that the site tells
+// readers four times to demand a written scope and never shows one. That gap
+// is far easier to close for one service than for a whole contract, so it
+// closes here first. "Worth knowing" below repeats the demand; this section
+// is what makes the demand honest.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard commercial practice, not supplied
+// by TLB. Confirm each one and cut anything TLB does not actually do. An
+// overstated scope is worse than a short one, because this is the block a
+// client will hold us to.
+//
+// icon-grid over TextBlock's { list } shape: six distinct stages with a
+// sentence each, not a flat task list. The list shape is right for "the
+// twenty things we wipe"; this is a method.
+const scopeItems = [
+  {
+    icon: 'target' as const,
+    title: 'We inspect and test first',
+    description:
+      'We check the fibre, the backing and how the carpet is laid, then test in an out of sight corner. Wool, nylon and solution dyed carpet do not take the same treatment, and getting that wrong is how carpet gets ruined.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Pre-vacuum, then pre-spray',
+    description:
+      'Dry soil comes out with a commercial vacuum before any water touches the pile, because wet grit turns into mud. Then a pre-spray goes down and is given time to break down the oils holding the soil in place.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'Traffic lanes and stains by hand',
+    description:
+      'Doorways, corridors and the run past the printer wear faster than the rest of the floor. Those lanes are agitated separately, and individual stains are treated by type rather than with one product for everything.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Hot water extraction',
+    description:
+      'Heated water and solution go into the pile under pressure and come straight back out with the soil. This is the method carpet manufacturers name in their own maintenance requirements, and the one that removes soil rather than hiding it.',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Encapsulation when drying time is tight',
+    description:
+      // ⚠️ Confirm TLB offers this second method. If not, cut this card and
+      // the matching sentence in non-branded FAQ 2.
+      'For a floor that has to be walked on in a few hours, encapsulation crystallises the soil so it vacuums out the next day. Lighter than extraction and much faster to dry, which is the right call for a corridor that never closes.',
+  },
+  {
+    icon: 'office' as const,
+    title: 'Groomed, dried and put back',
+    description:
+      // ⚠️ Real bracket. Drying time depends on the machine, the pile and the
+      // weather, and nobody has said what TLB's air movers can do.
+      'The pile is groomed so it dries evenly, air movers go down where the floor has to be back in service quickly, and furniture goes back where it was. Typical drying time is [X to Y hours. Confirm].',
+  },
+];
+
+// §5 "Worth knowing". The hub's equivalent block is the strongest copy on the
+// site and it works by making the reader distrust the cheapest quote rather
+// than by making claims about TLB. Same job here, different lever: on carpet
+// the lever is not the Award, it is that the cheap method looks identical on
+// the day and costs you the carpet.
+//
+// ⚠️ The warranty point is real and checkable. Major carpet makers do require
+// periodic hot water extraction by a professional to keep a warranty intact,
+// and many name a frequency. No interval is stated here ON PURPOSE, because
+// it varies by brand and an undated specific goes stale silently. Worth a
+// verification read by someone who prices carpet work.
+const worthKnowingBody: TextBlockBody[] = [
+  'A bad carpet clean and a good one look the same on the day. The difference turns up three weeks later. Over-wetting leaves moisture in the backing, which is how you get an odour that will not shift and, in a humid Northern Rivers summer, mould under a floor that looks fine from above. Too much detergent left in the pile is worse in its own way: it stays tacky, so the carpet re-soils faster than before it was cleaned and the traffic lanes come back darker than they started.',
+  'The other thing worth knowing is that most commercial carpet is still under a manufacturer warranty, and most of those warranties require periodic hot water extraction by a professional. A cheap bonnet clean can technically void one. So ask any cleaner which method they use, what they do about drying, and whether their work meets your carpet maker’s maintenance requirements. We put the method and the price in writing before we start, and we tell you straight when a mark is not coming out.',
+];
+
+// §6 Related pages. NOT the hub's full fifteen-pill premises list, which
+// would compete with the hub for the same links. These are the settings
+// where commercial carpet is the actual problem, plus the two routes back up
+// the cluster (the hub and the pressure cleaning sibling).
+//
+// ⚠️ Every href is a flat kebab-case guess from its menu label, per
+// navigation.ts. Unconfirmed sitewide.
+const settingTags = [
+  { label: 'Office cleaning', href: '/office-cleaning/' },
+  { label: 'Strata and common area cleaning', href: '/strata-and-common-area-cleaning/' },
+  { label: 'Medical, clinic and salon cleaning', href: '/medical-clinic-and-salon-cleaning/' },
+  { label: 'Aged care, retirement and seniors', href: '/aged-care-retirement-and-seniors/' },
+  { label: 'Hospitality, venues and holiday parks', href: '/hospitality-venues-and-holiday-parks/' },
+  { label: 'Retail and shopfronts', href: '/retail-and-shopfronts/' },
+  { label: 'Schools and childcare centres', href: '/schools-and-childcare-centres/' },
+  { label: 'Gyms and fitness studios', href: '/gyms-and-fitness-studios/' },
+  { label: 'Commercial pressure cleaning', href: '/commercial-pressure-cleaning/' },
+  { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
+];
+
+// §9 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+// Never invent a quote or a business name. BFD 5.3 requires written
+// permission before naming a client at all.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client whose carpet had been written off as needing replacement and came back after one extraction clean. That is the single most valuable testimonial this page can carry, because it puts a dollar figure on what the clean saved. A named business and a role, with written permission.]',
+    name: '[Business name, TBC]',
+    role: '[Role, for example practice manager, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB commercial carpet cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client on a scheduled carpet programme, two or three cleans in. This one has to prove the schedule held, not that a single clean went well.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Long-standing TLB commercial client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about the after hours side, from a client whose floor was dry and back in service before opening. That answers the one objection this page cannot answer for itself.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Client whose premises reopened on time' },
+  },
+];
+
+// §10 Comparison table. The shared rows from src/data/comparison.ts, now on a
+// fourth page.
+//
+// ⚠️ CONDITIONAL, and this is the file header's first launch blocker. Row one
+// is "Nine full-time cleaners employed by TLB, not subcontracted". If
+// commercial carpet work is subcontracted to a carpet specialist, this table
+// contradicts the page it is sitting on and has to come off this page. That
+// is a question for TLB, not a rewrite.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'Carpet cleaning is easy to sell once. What is hard is being the same people, at the same standard, the second and third time you are asked back.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §11 Branded FAQs. Written in the CUSTOMER'S voice, where "we" means the
+// reader's business rather than TLB. That register is the hub's, and it is
+// held here deliberately: a leaf that switches voice reads as bolted on.
+const brandedFaqItems = [
+  {
+    question: 'Can you do it after we close?',
+    answer:
+      'Yes, and most carpet work is done that way. We clean in the evening or across a weekend so the floor has the night to dry and your team walks in on a finished job. After hours work is priced differently, because weekends and late shifts attract penalty rates under the Cleaning Services Award 2020. Both options go on the quote so you can see what each one costs.',
+  },
+  {
+    question: 'Do we have to move all the furniture out?',
+    answer:
+      'No. We move what two people can safely move, clean underneath and put it back where it was. Desks with computers on them, heavy filing and anything fixed stay put and we clean around them. If you want the floor done wall to wall, say so at the walkthrough and we will plan the visit around a clear room.',
+  },
+  {
+    question: 'Will the stains actually come out?',
+    answer:
+      'Most will. Coffee, food, mud and general traffic soil usually lift completely. Dye based spills, bleach marks, rust and anything heat set into the fibre often will not, and an old stain that has been scrubbed before is the hardest of all. We tell you which is which at the walkthrough rather than after we have taken your money.',
+  },
+  {
+    question: 'How often should we be doing this?',
+    answer:
+      'Most workplaces land on two extraction cleans a year with spot treatment in between as things happen. A busy reception, a clinic or a venue often needs quarterly. A quiet upstairs office can stretch to annually. It comes down to foot traffic rather than floor area, and a walkthrough settles it quickly.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We come and look at the carpet, test the fibre and tell you what will lift and what will not. Then you get a written scope and a price, with the after hours option shown separately. No obligation. If it suits, we book a night that works around your trading.',
+  },
+];
+
+// §12 Non-branded FAQs. The long-tail block, aimed at what people search
+// rather than what they ask us.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. These claims are checkable:
+//   - Hot water extraction is the method most carpet manufacturers specify in
+//     their maintenance requirements. Correct in substance. The interval
+//     varies by brand, which is why none is stated.
+//   - Bonnet cleaning can void some carpet warranties. Correct for several
+//     major makers. Hedged to "some" and "can", deliberately.
+//   - Cleaning Services Award 2020 (MA000022) penalty rates for weekends and
+//     late shifts. Correct, and consistent with the hub, which says the same.
+//   - Drying time is NOT given as a number anywhere in this block, because
+//     the honest answer depends on equipment TLB has not specified.
+// Recommended before launch: a read by someone who prices carpet work, and a
+// visible "last reviewed" date, since the Award changes every 1 July.
+const nonBrandedFaqItems = [
+  {
+    question: 'How long does commercial carpet take to dry?',
+    answer:
+      'A properly extracted carpet is usually walkable within a few hours and fully dry inside the day, which is why the work is done overnight. Drying comes down to three things: how much water went in, how much air is moving across the floor, and the humidity. Air movers cut it substantially. A carpet still damp the next morning was over-wet, not thoroughly cleaned.',
+  },
+  {
+    question: 'What is the difference between hot water extraction and encapsulation?',
+    answer:
+      'Hot water extraction injects heated water and solution into the pile under pressure and vacuums it back out with the soil. It removes the most and takes the longest to dry. Encapsulation uses a polymer that crystallises around the soil so it can be vacuumed out the next day. It is faster and drier but lighter, so it suits interim maintenance between extraction cleans rather than replacing them.',
+  },
+  {
+    question: 'Does carpet cleaning damage the carpet?',
+    answer:
+      'Done properly, no. Done badly, yes. Carpet gets damaged two ways: over-wetting, which leaves moisture in the backing and can cause odour, delamination or mould, and using the wrong chemistry for the fibre, which is how wool ends up bleached or browned. That is why a competent cleaner tests the fibre in a hidden spot before starting instead of treating every floor the same.',
+  },
+  {
+    question: 'Can carpet cleaning void a warranty?',
+    answer:
+      'It can. Many carpet manufacturers set maintenance requirements inside the warranty, and most of those specify periodic hot water extraction by a professional. Some exclude bonnet cleaning outright. If your building still has its carpet warranty, check what the maker requires before you accept a quote, and ask the cleaner in writing whether their method meets it.',
+  },
+  {
+    question: 'How much does commercial carpet cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE. The most searched question on the topic, and
+      // the page cannot answer it without a number from TLB. A "from $X per
+      // square metre" that turns out to be wrong is worse than no number, and
+      // the ACCC treats from-pricing as a claim.
+      'Commercial carpet is usually priced per square metre, with a minimum charge for small jobs, and the rate moves with the condition of the floor, how much furniture there is to work around and whether the work is after hours. Ask for the price against a written scope rather than an hourly rate, so you can see what is actually included. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+// §13 Closing CTA. Same offer as the hero, worded as what actually happens.
+const closingCta = {
+  kicker: 'Commercial carpet cleaning',
+  heading: 'Start with a walkthrough.',
+  lead: 'We come and look at the carpet, test the fibre and tell you what will lift and what will not. Then you get a written scope and a price. No obligation.',
+  cta: { label: 'Book a site walkthrough', href: quoteCta.href },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    {/* Trust bar and definition share ONE photo behind a Cream scrim, laid
+        across both sections. 75% keeps Dark Teal body copy above 4.5:1 over
+        the darkest part of the frame. Same treatment as the hub. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What a carpet clean actually involves"
+      lead="Six stages, in this order. Skip the first two and the rest is just wet carpet."
+      items={scopeItems}
+      cta={{ label: 'Book a site walkthrough', href: quoteCta.href }}
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Why the cheap carpet clean costs more"
+      body={worthKnowingBody}
+    />
+
+    {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
+
+        Carpet is the best before/after subject on this site and the component
+        is already running on five pages, so this section would do more here
+        than any paragraph above it.
+
+        NOT BUILT because BeforeAfter has no reserved-slot mode by design: its
+        `src` is required, since a comparison slider with nothing to compare
+        has no meaningful empty state. It needs real paired photography and
+        none exists for commercial work.
+
+        THE PHOTO BRIEF: one traffic lane or corridor, shot from a fixed
+        tripod position, before and after, with NOTHING moved between the two
+        frames. A shifted camera or a chair pushed in reads as a glitch rather
+        than as cleaning. Two or three pairs is plenty. Drop it in here,
+        between "Worth knowing" and the related pages. */}
+
+    <TagCloud
+      heading="Where we clean carpet"
+      subheading="Commercial carpet cleaning for workplaces across the Northern Rivers and the Tweed."
+      tags={settingTags}
+      note={[]}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Commercial Carpet Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>
