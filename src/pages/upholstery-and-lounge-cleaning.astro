@@ -1,0 +1,409 @@
+---
+// Upholstery and lounge cleaning — one of the six "Appliances" leaf pages
+// under the Home Cleaning mega-menu. See carpet-and-rug-cleaning.astro for
+// the shared reasoning behind this group's structure, and
+// src/data/appliance-services.ts for the cluster links.
+//
+// NO CONTENT BRIEF EXISTS. All copy is DRAFTED from the brand foundation
+// document. Facts only TLB holds ship as visible [brackets].
+//
+// THE ONE THING THIS PAGE IS ABOUT: the cleaning code on the label. W, S, WS
+// and X are a real, standardised set of manufacturer codes, they decide what
+// can legally and safely be used on a lounge, and getting them wrong is how a
+// sofa gets watermarked or shrunk. Almost no competitor page in this category
+// explains them. That is this page's whole advantage and its §4 block.
+//
+// BLOCKS LAUNCH:
+//   - CODE S. An S-coded fabric must be cleaned with solvent, not water. That
+//     needs different product, ventilation and competence. Confirm TLB does
+//     S-coded lounges at all; if it does not, §4's fifth card and branded FAQ
+//     3 both change from "we treat it differently" to "we will tell you it is
+//     a specialist job". Either is a good answer. Guessing is not.
+//   - LEATHER is deliberately mentioned only to say it is a different job.
+//     Confirm whether TLB cleans and conditions leather. If yes it deserves
+//     its own card; if no, the current single sentence is right.
+//   - Drying time and pricing basis are bracketed.
+//
+// PHOTOGRAPHY: hero is a family B cut-out keyed with scripts/key-cutout.mjs.
+// Prompts in src/assets/home_cleaning/appliances/IMAGE-PROMPTS.md.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import heroImg from '../assets/home_cleaning/appliances/upholstery_and_lounge/cleaner-cleaning-a-linen-armchair.png';
+import cardSofaImg from '../assets/home_cleaning/appliances/upholstery_and_lounge/well-used-family-sofa-in-a-living-room.jpg';
+import cardQuoteImg from '../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
+import cardTeamImg from '../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { otherApplianceServices } from '../data/appliance-services';
+
+const OWN_HREF = '/upholstery-and-lounge-cleaning/';
+
+const pageMeta = {
+  title: 'Upholstery and Lounge Cleaning | TLB Cleaning',
+  description:
+    'Lounge, armchair and dining chair cleaning across the Northern Rivers and the Tweed. We read the fabric code before we start, so your sofa is not the experiment.',
+  canonical: 'https://example.com/upholstery-and-lounge-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+const hero = {
+  kicker: 'Upholstery and lounge cleaning',
+  headingLines: ['Everyone sits in the same spot. You can see exactly where.'],
+  lead:
+    'Lounges, armchairs and dining chairs cleaned in your home across the Northern Rivers and the Tweed. We read the fabric code first, so your sofa is not the experiment.',
+  cta: { label: 'Get an instant quote', href: quoteCta.href },
+  image: {
+    ratio: '1/1',
+    label:
+      'A TLB cleaner in an aqua polo, dark teal apron and teal gloves cleaning the seat cushion of a pale linen armchair with a hand-held upholstery tool',
+    src: heroImg,
+  },
+};
+
+const definitionBody: TextBlockBody[] = [
+  'Upholstery cleaning is the deep cleaning of soft furniture in your home: lounges, armchairs, ottomans, bed heads and dining chairs. Most fabric is cleaned with a hand-held extraction tool that puts a controlled amount of solution into the fabric and draws it back out, so the cover is cleaned without being soaked. TLB Cleaning cleans upholstery across the Northern Rivers and the Tweed.',
+  'The thing that decides how a lounge is cleaned is not how dirty it is. It is the cleaning code the manufacturer put on the label, usually under a cushion or beneath the frame. W means water based cleaning is fine, S means solvent only, WS means either, and X means vacuum only and nothing wet at all. A cleaner who does not look for that tag is guessing with your furniture.',
+];
+
+const pathwayCards = {
+  heading: 'People arrive here with three questions.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        label: 'A well-used pale oatmeal fabric sofa in a bright family living room',
+        src: cardSofaImg,
+      },
+      title: 'The lounge has had a hard life',
+      description:
+        'Head marks along the back, dark patches on the arms, biscuit crumbs in the seams and the faint smell of a dog who is not sorry. That is a normal family lounge and it is exactly what this service is for.',
+      cta: { label: 'Get an instant quote', href: quoteCta.href },
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label: 'A TLB cleaner and a homeowner talking through the job in a living room',
+        src: cardQuoteImg,
+      },
+      title: 'Something got spilled and I need it gone',
+      description:
+        'Wine, coffee, milk, a toddler. The sooner we get to it the better the odds, and the worst thing you can do in the meantime is scrub it. Blot it and ring us.',
+      cta: { label: 'Talk to us', href: '/contact/' },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        label: 'A TLB cleaner in uniform with her caddy in the entry hall of a home',
+        src: cardTeamImg,
+      },
+      title: 'I want to know who is in my home',
+      description:
+        'The same local team you have met, not a roster of strangers from a call centre. We are local mums who clean where we live, [insured] and [police-checked], and there is one local number to ring.',
+      cta: { label: 'Why TLB', href: '/why-tlb/' },
+    },
+  ],
+};
+
+// §4 Method. Card 1 is the fabric code and it is the reason this page exists.
+const methodItems = [
+  {
+    icon: 'target' as const,
+    title: 'We find the label first',
+    description:
+      'Under a cushion or beneath the frame there is a tag with a cleaning code on it. W, S, WS or X. That single letter decides everything that happens next, and we look for it before we open a bottle.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Then we test where it will not show',
+    description:
+      'Labels go missing and covers get replaced, so the code is a starting point rather than the last word. A test patch on a hidden section, usually the back or under a skirt, confirms the fabric is colourfast before anything reaches the part you look at.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Dry soil and hair out first',
+    description:
+      'A thorough vacuum with a brush head, into the seams and under the cushions. Crumbs, sand and pet hair come out dry or they turn to paste the moment the fabric is damp. This is where a surprising amount of the improvement comes from.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'Marks treated individually',
+    description:
+      'Head and hand marks on the arms are body oil and need a different treatment from a food spill, which needs a different one again from ink. Arms, headrests and the front edge of the seat are the areas that always need the most work.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Cleaned to the code, not to a formula',
+    description:
+      // ⚠️ LAUNCH BLOCKER. Confirm TLB cleans S-coded fabric. See header.
+      'Water safe fabrics get low moisture extraction with the hand tool. Solvent only fabrics need a dry method instead, and delicate or X-coded covers get vacuumed and left alone rather than risked. [Confirm whether TLB cleans S-coded solvent-only fabric.]',
+  },
+  {
+    icon: 'office' as const,
+    title: 'Groomed and dried',
+    description:
+      // ⚠️ Bracket is real.
+      'The pile is groomed back the right way so it dries evenly without watermarks, and we get air moving through the room. Typical drying time is [X to Y hours. Confirm]. Cushions go back only once they are dry, never before.',
+  },
+];
+
+const worthKnowingBody: TextBlockBody[] = [
+  'The most expensive thing that happens to a lounge is not the spill. It is what gets done to the spill in the first ten minutes. Scrubbing at a mark drives it deeper and lifts the nap so that spot looks different forever, even after the stain is gone. A supermarket spot cleaner sprayed on undiluted leaves a ring of clean fabric with a tidemark around it, and that ring is often harder to fix than the original mark. On a water sensitive fabric, plain tap water on a cloth is enough to leave a permanent watermark.',
+  'If something goes on your lounge, blot it. Press a clean dry cloth straight down, lift, move to a dry part of the cloth, repeat. Do not rub, do not soak it, do not reach for whatever is under the sink. Then ring someone. Almost everything is recoverable when it is fresh and untouched, and a good proportion of what we cannot fix is damage from the rescue attempt rather than from the spill.',
+];
+
+const clusterServices = otherApplianceServices(OWN_HREF);
+
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client who was about to replace a lounge and kept it after a clean. The saving is the story on this page. Written permission required (BFD 5.3).]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB upholstery cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about a spill rescued quickly. That pays off the "blot it and ring us" block and encourages the phone call this page wants.]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB client after a spill' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client with pets, ideally mentioning smell rather than marks. Odour is what people are too embarrassed to ask about and most likely to search.]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB client with pets' },
+  },
+];
+
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'A lounge is the most expensive soft thing in most houses. It is worth knowing who is about to put water on it.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+const brandedFaqItems = [
+  {
+    question: 'How long before we can sit on it?',
+    answer:
+      'Usually a few hours, and comfortably by that evening. We use as little moisture as the fabric needs rather than soaking it, groom the pile back and get air moving before we go. Cushions go back on once they are properly dry, because putting a damp cushion back on a damp base is how a lounge ends up smelling worse than it started.',
+  },
+  {
+    question: 'Do you clean the cushions and under them too?',
+    answer:
+      'Yes. Cushions are done on both sides where the fabric allows, and the frame underneath gets vacuumed out along with the seams. That is where the crumbs, coins, hair and sand live, and it makes more difference to how a lounge feels than the surface clean does.',
+  },
+  {
+    question: 'What if our lounge cannot be wet cleaned?',
+    answer:
+      // ⚠️ Depends on the S-code launch blocker in the header.
+      'Then we do not wet clean it. Some fabrics are solvent only and some are vacuum only, and both are common in older and imported furniture. We check the label and test before anything happens, and if your lounge is one we should not touch we will tell you and say why rather than take the job.',
+  },
+  {
+    question: 'Can you get rid of the dog smell?',
+    answer:
+      'Usually a good way. Most of what you smell is oil and hair held in the fabric and down in the seams, and that comes out with a thorough clean. If a pet has actually wet the lounge and it has soaked through into the foam, that is harder, because a surface clean does not reach foam. We will tell you which one you have before we start.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'Tell us what the lounge is, roughly how old, and what has happened to it. We look at the label and the fabric when we arrive, test a hidden patch and give you a price. It can go on the same visit as your regular clean if that suits.',
+  },
+];
+
+// §12 Non-branded FAQs.
+//
+// ⚠️ VERIFICATION PASS. The W/S/WS/X cleaning codes are a genuine
+// manufacturer standard and are described here correctly and plainly. They
+// are the strongest factual content on this page, so keep them accurate:
+//   - W: water based cleaning agents
+//   - S: solvent based only, no water
+//   - WS: either
+//   - X: vacuum only, no cleaning agents of any kind
+// Nothing here makes a health claim about dust mites or allergens, which is
+// deliberate and consistent with the mould page. Do not add one.
+const nonBrandedFaqItems = [
+  {
+    question: 'What do the cleaning codes on a lounge label mean?',
+    answer:
+      'W means water based cleaning is safe. S means solvent only, so no water at all. WS means either will do. X means vacuum only, with no cleaning agent of any kind. The tag is usually under a seat cushion or stapled beneath the frame. If a cleaner has not asked to see it, they do not yet know what they are allowed to use on your furniture.',
+  },
+  {
+    question: 'How often should a lounge be cleaned?',
+    answer:
+      'Every twelve to eighteen months suits most households. Bring that forward to every six to twelve months with pets, small children, or a lounge that gets eaten on nightly. Vacuuming the seams and rotating the cushions every few weeks does more for how long a lounge lasts than any deep clean, because it stops grit from cutting the fibres.',
+  },
+  {
+    question: 'Can you clean a leather lounge the same way?',
+    answer:
+      // ⚠️ Confirm whether TLB cleans leather. See the file header.
+      'No. Leather is not upholstery in the cleaning sense: it is a finished surface, and it is cleaned and conditioned rather than extracted. Water based upholstery methods can strip the finish and dry the hide out. Treat leather as a separate job and ask specifically whether a cleaner does it.',
+  },
+  {
+    question: 'Will cleaning make my lounge look worn?',
+    answer:
+      'It should not, but it can reveal wear that was already there. Cleaning removes the film of soil that sits evenly over a fabric, and where the pile is genuinely flattened or abraded, usually the arms and the front seat edge, that becomes more visible once the surrounding fabric is clean again. That is existing wear showing, not new damage, and a good cleaner will point it out beforehand.',
+  },
+  {
+    question: 'How much does upholstery cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling.
+      'Upholstery is usually priced per seat or per item, so a three seater, two armchairs and six dining chairs are quoted as separate line items rather than by the hour. What moves the price is the fabric, the size, the condition and whether any spot treatment is needed. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+const closingCta = {
+  kicker: 'Upholstery and lounge cleaning',
+  heading: 'Book your lounge in.',
+  lead: 'We read the label, test a hidden patch and tell you what will lift before we start. It can go on the same visit as your regular clean.',
+  cta: { label: 'Get an instant quote', href: quoteCta.href },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      imageFit="contain-bottom"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="How we clean a lounge"
+      lead="Six stages. The first one is a label, and it decides the other five."
+      items={methodItems}
+      cta={{ label: 'Get an instant quote', href: quoteCta.href }}
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="What to do in the first ten minutes after a spill"
+      body={worthKnowingBody}
+    />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Other things we clean around the house"
+      lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
+      items={clusterServices.map((service) => ({
+        icon: 'spray-bottle' as const,
+        title: service.label,
+        description: service.blurb,
+        href: service.href,
+      }))}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    <Faq heading="Upholstery cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

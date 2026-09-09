@@ -1,0 +1,453 @@
+---
+// Carpet and rug cleaning — one of the six "Appliances" leaf pages under the
+// Home Cleaning mega-menu, all built in the same pass and sharing a
+// structure. Their cluster links come from src/data/appliance-services.ts;
+// read that file's header first, including the note on why "Appliances" is
+// the wrong word for this group.
+//
+// NO CONTENT BRIEF EXISTS for any of the six. All copy is DRAFTED from the
+// brand foundation document, which governs voice and claim rules but supplies
+// no operational detail. Facts only TLB holds ship as visible [brackets].
+//
+// ⚠️ THIS PAGE HAS A COMMERCIAL TWIN. /commercial-carpet-cleaning/ covers the
+// same method for workplaces. They must stay in their lanes or they compete
+// for the same queries: THAT page is offices, strata and after-hours trading;
+// THIS page is a family living room, a wool rug and pets. The two link each
+// other once, and neither repeats the other's argument. The Award and
+// after-hours penalty-rate material belongs only to the commercial page; the
+// wool and pet material belongs only to this one.
+//
+// BLOCKS LAUNCH:
+//   - IS THIS DELIVERED IN HOUSE? Same unanswered question as the commercial
+//     twin. Extraction needs a machine, and nothing in any brief says TLB
+//     owns one. If it is subcontracted, the comparison table below (row one:
+//     "employed by TLB, not subcontracted") contradicts the page it sits on
+//     and must come off.
+//   - WOOL AND NATURAL FIBRE. The page says outright that TLB tests fibre
+//     first and treats wool differently. Confirm TLB is equipped and willing
+//     to clean wool and natural-fibre rugs at all. Plenty of cleaners decline
+//     them and refer to a specialist rug plant, which is a perfectly good
+//     answer — but it has to be the real one, because branded FAQ 3 promises
+//     an honest call at the walkthrough.
+//   - PET URINE. Named in FAQ 4 because it is the single most searched carpet
+//     problem and the most commonly over-promised. The answer is deliberately
+//     hedged. Confirm whether TLB does sub-surface urine treatment or only
+//     surface cleaning, and cut the claim if it is the latter.
+//   - Drying time and pricing basis are bracketed. Both come up on the first
+//     call.
+//
+// PHOTOGRAPHY. The hero is a family B cut-out keyed with
+// scripts/key-cutout.mjs; prompts and the keying notes are in
+// src/assets/home_cleaning/appliances/IMAGE-PROMPTS.md. Cards 2 and 3 are the
+// two shared frames every page in this group uses.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// §1 hero: family B cut-out, 1024x1024 PNG with a real alpha channel, so
+// ratio 1/1 and contain-bottom. The figure faces LEFT, into the copy, because
+// the image panel sits on the right.
+import heroImg from '../assets/home_cleaning/appliances/carpet_and_rug/cleaner-extracting-a-wool-rug.png';
+import cardRugImg from '../assets/home_cleaning/appliances/carpet_and_rug/living-room-rug-with-a-worn-traffic-path.jpg';
+// Cards 2 and 3 are shared by all six pages in this group — same subject,
+// same file, per IMAGE-GUIDELINES §5.
+import cardQuoteImg from '../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
+import cardTeamImg from '../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { otherApplianceServices } from '../data/appliance-services';
+
+const OWN_HREF = '/carpet-and-rug-cleaning/';
+
+const pageMeta = {
+  title: 'Carpet and Rug Cleaning | TLB Cleaning',
+  description:
+    'Carpet and rug cleaning across the Northern Rivers and the Tweed. Hot water extraction, wool and natural fibres tested first, and a straight answer on what will lift.',
+  canonical: 'https://example.com/carpet-and-rug-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  // Residential pages claim the full service area, including QLD. Only the
+  // commercial pages are NSW-only, and that is a live open item over there.
+  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+const hero = {
+  kicker: 'Carpet and rug cleaning',
+  headingLines: ['The carpet holds everything the house walks in.'],
+  lead:
+    'Carpet and rug cleaning for homes across the Northern Rivers and the Tweed. We test the fibre before we start, and tell you what will lift before you pay.',
+  cta: { label: 'Get an instant quote', href: quoteCta.href },
+  image: {
+    ratio: '1/1',
+    label:
+      'A TLB cleaner in an aqua polo, dark teal apron and teal gloves kneeling to draw a carpet extraction wand across a pale wool rug',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. The answer-target block for the focus keyword. Paragraph two
+// does the synonym work and, more usefully, draws the carpet/rug distinction
+// that the rest of the page depends on.
+const definitionBody: TextBlockBody[] = [
+  'Carpet and rug cleaning is the deep cleaning of soft floor coverings in your home, usually by hot water extraction, which pushes heated water and cleaning solution into the pile under pressure and draws it straight back out with the soil. It lifts the grit, oils, sand and pet hair that vacuuming leaves behind. TLB Cleaning cleans carpet and rugs across the Northern Rivers and the Tweed.',
+  'Carpet steam cleaning and hot water extraction are two names for the same method. Rugs are the part people get wrong: a fitted synthetic carpet and a loose wool rug are not the same job, they do not take the same water or the same chemistry, and a rug that is cleaned like carpet is how you end up with shrinkage, bleeding dyes or a browned fringe.',
+];
+
+const pathwayCards = {
+  heading: 'People arrive here with three questions.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        label: 'A pale wool rug in a family living room with a faint worn path running across it',
+        src: cardRugImg,
+      },
+      title: 'It looks grey and I know it is not clean',
+      description:
+        'The path from the door to the sofa, the patch under the coffee table, sand that never quite vacuums out. One extraction clean lifts most of it. We will tell you honestly which marks are in the fibre for good.',
+      cta: { label: 'Get an instant quote', href: quoteCta.href },
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label: 'A TLB cleaner and a homeowner talking through the job in a living room',
+        src: cardQuoteImg,
+      },
+      title: 'I want it done with the regular clean',
+      description:
+        'Most homes settle on carpet once a year and rugs as they need it. We can fold it into your regular clean so it happens on schedule instead of when someone finally notices.',
+      cta: { label: 'Regular home cleaning', href: '/house-cleaning/' },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        label: 'A TLB cleaner in uniform with her caddy in the entry hall of a home',
+        src: cardTeamImg,
+      },
+      title: 'I want to know who is in my home',
+      description:
+        // ⚠️ Same two brackets every page on this site carries. One answer
+        // fixes all of them.
+        'The same local team you have met, not a roster of strangers from a call centre. We are local mums who clean where we live, [insured] and [police-checked], and there is one local number to ring.',
+      cta: { label: 'Why TLB', href: '/why-tlb/' },
+    },
+  ],
+};
+
+// §4 Method. Six stages in the order they happen. The wool card is the one
+// that matters most: it is the page's central claim and its biggest open
+// question. See the file header.
+const methodItems = [
+  {
+    icon: 'target' as const,
+    title: 'We test the fibre first',
+    description:
+      'Wool, nylon, polypropylene and viscose all behave differently in water, and a rug label is not always right. We test in a hidden corner before anything wet touches the floor, because getting this wrong is not something you can undo.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Dry soil out before water goes in',
+    description:
+      'A proper vacuum first, slowly and in both directions. Most of what is in a carpet is dry grit, and wetting it turns it to mud that goes deeper. Skipping this step is the single most common shortcut.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'Traffic lanes and spots by hand',
+    description:
+      'Doorways, the run past the couch and the spot where the dog sleeps wear faster than the rest. Those get pre-treated and agitated separately, and individual spots are treated by what caused them rather than with one product for everything.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Hot water extraction',
+    description:
+      'Heated water and solution into the pile under pressure, straight back out with the soil in it. This is the method carpet makers name in their own care instructions, and the one that removes soil rather than moving it around.',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Wool and natural fibres, differently',
+    description:
+      // ⚠️ LAUNCH BLOCKER. Confirm TLB cleans wool at all — see the file
+      // header. If it refers these on, this card says so instead.
+      'Wool takes less water, a gentler pH and much more care on the drying, and silk, jute and viscose take less again. Some rugs are better off going to a rug plant, and we will say so rather than take the job. [Confirm TLB cleans wool in home.]',
+  },
+  {
+    icon: 'office' as const,
+    title: 'Groomed and dried',
+    description:
+      // ⚠️ Bracket is real. Depends on equipment nobody has specified.
+      'The pile is groomed so it dries evenly and air is moved across it. Typical drying time is [X to Y hours. Confirm]. In a humid Northern Rivers summer we will tell you to leave a fan on, and we would rather say that than pretend humidity does not exist.',
+  },
+];
+
+// §5 "Worth knowing". Same job as every sibling's version of this block: make
+// the reader distrust the cheapest quote without making a claim about TLB.
+// The lever here is that the cheap method looks identical on the day.
+const worthKnowingBody: TextBlockBody[] = [
+  'A bad carpet clean and a good one look the same when the van drives away. The difference shows up about three weeks later. Over-wetting leaves moisture down in the backing, and on this coast, in a humid February, that is how you get a smell that will not shift and mould underneath a carpet that looks perfectly fine from above. Too much detergent left behind is a slower problem: it stays tacky, grabs the next lot of dirt, and the traffic lanes come back darker than they were before you paid to have them cleaned.',
+  'So the question worth asking any carpet cleaner is not the price per room. It is what they do about drying, what they will do differently on a wool rug, and whether they will tell you before they start that a mark is permanent. We would rather lose the job than shrink your rug, and we would rather say a stain is staying than take your money and hope.',
+];
+
+const clusterServices = otherApplianceServices(OWN_HREF);
+
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client whose carpet was close to being replaced and came back after one clean. That is the most valuable testimonial this page can carry, because it puts a dollar figure against the job. Written permission required (BFD 5.3).]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB carpet cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client with pets or small children. That is who searches this page hardest, and it is the one that pays off FAQ 4.]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB client with pets' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about a wool or natural fibre rug, ideally one where TLB gave honest advice rather than just doing the job. That proves the page’s central promise better than any claim here does.]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB rug cleaning client' },
+  },
+];
+
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'Anyone can run a machine over a floor once. What is harder is being the people you can ring next year, who remember which rug is the good one.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+const brandedFaqItems = [
+  {
+    question: 'How long until we can walk on it?',
+    answer:
+      'A few hours for normal walking in socks, and back to normal by the end of the day. We groom the pile so it dries evenly and get air moving before we leave. If it is a humid week we will say so and suggest you leave a fan running, because on this coast that matters more than it does anywhere else.',
+  },
+  {
+    question: 'Do we have to move all the furniture?',
+    answer:
+      'No. We move what two people can lift safely, clean underneath and put it back. Beds, wardrobes and anything full of books stay where they are and we clean around them. If you want the room done wall to wall, clear it before we arrive and tell us when you book.',
+  },
+  {
+    question: 'Can you clean our wool rug?',
+    answer:
+      // ⚠️ Depends on the launch blocker in the file header. Written as the
+      // honest version of the answer either way.
+      'We test it first. Wool takes less water and gentler chemistry than carpet, and some rugs, especially silk, viscose or anything with an unstable dye, are better off going to a specialist rug plant. If yours is one of those we will tell you at the walkthrough rather than find out the hard way on your living room floor.',
+  },
+  {
+    question: 'Will the stains come out?',
+    answer:
+      'Most will. Food, mud, coffee and general traffic soil usually lift completely. Dye based spills, bleach, rust and anything already scrubbed hard with a supermarket spot cleaner are the difficult ones, and some are permanent. We will tell you which is which before we quote, not after.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We look at the floors, test the fibre and tell you what will lift and what will not. Then you get a price. If it suits, we book a time, and we can put it on a schedule with your regular clean so you never have to think about it again.',
+  },
+];
+
+// §12 Non-branded FAQs.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. These are checkable claims:
+//   - Hot water extraction is the method most carpet manufacturers name in
+//     their care instructions. Correct in substance; no interval is stated
+//     because it varies by maker.
+//   - Wool needs gentler pH and less moisture than synthetics. Correct and
+//     uncontroversial.
+//   - Pet urine penetrates to the backing and underlay. Correct, and the
+//     reason the answer is hedged rather than promising removal.
+//   - Dust mites: the answer deliberately makes NO health claim. Mite
+//     allergen is a health topic and BFD 5.3 keeps this business out of it,
+//     the same way the mould page does. Do not add one.
+const nonBrandedFaqItems = [
+  {
+    question: 'How often should carpet be cleaned in a home?',
+    answer:
+      'Once a year suits most households. Make it every six months with pets, small children, or a house that opens straight onto sand or a paddock, and you can stretch to eighteen months in a quiet home with hard floors through the middle. Vacuuming weekly does more for the life of a carpet than anything else, and it is what decides how long between deep cleans.',
+  },
+  {
+    question: 'Is steam cleaning the same as hot water extraction?',
+    answer:
+      'Yes. The two names describe one method: heated water and solution injected into the pile under pressure and vacuumed straight back out with the soil in it. No actual steam is involved, and nothing is being sterilised. Dry cleaning and encapsulation are genuinely different methods, lighter and faster to dry, and they suit maintenance between extraction cleans rather than replacing them.',
+  },
+  {
+    question: 'Can carpet cleaning shrink a rug?',
+    answer:
+      'It can, and this is where most rug damage comes from. Wool and other natural fibres absorb far more water than synthetics, and a rug that is soaked like a fitted carpet can shrink, cockle at the edges or bleed dye between colours. Natural fibres need less moisture, gentler chemistry and controlled drying, which is why any competent cleaner tests the fibre before starting.',
+  },
+  {
+    question: 'Does carpet cleaning get rid of pet smells?',
+    answer:
+      // ⚠️ Deliberately hedged. See the launch blocker in the file header.
+      'Often, but not always, and be wary of anyone who promises it outright. Surface cleaning lifts what is in the pile. Urine soaks through to the backing and frequently into the underlay and the floor beneath, and once it is there a surface clean will not reach it. That needs sub-surface treatment, and in bad cases replacing the underlay is the only honest answer.',
+  },
+  {
+    question: 'How much does carpet cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE. Most searched question on the topic, and the
+      // page cannot answer it without a number from TLB. A wrong "from $X"
+      // is worse than no number, and the ACCC treats from-pricing as a claim.
+      'Home carpet cleaning is usually priced per room or per square metre, with a minimum charge for a small job, and rugs are usually quoted separately by size and fibre. What moves the price is the area, the condition, whether furniture has to be moved and whether any spot treatment is needed. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+const closingCta = {
+  kicker: 'Carpet and rug cleaning',
+  heading: 'Book your carpet clean.',
+  lead: 'We test the fibre, tell you what will lift and what will not, and give you a price before we start. No obligation, and no surprises on the day.',
+  cta: { label: 'Get an instant quote', href: quoteCta.href },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      imageFit="contain-bottom"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="How we clean a carpet"
+      lead="Six stages, in this order. The first two are the ones a cheap job skips."
+      items={methodItems}
+      cta={{ label: 'Get an instant quote', href: quoteCta.href }}
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Why the cheapest carpet clean is rarely the cheapest"
+      body={worthKnowingBody}
+    />
+
+    {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
+        Carpet is the best before/after subject on this site. NOT BUILT
+        because the component's `src` is required by design and generated
+        pairs are barred by IMAGE-GUIDELINES §7. It needs real photography:
+        one traffic lane, tripod locked off, before and after, nothing moved
+        between frames. Drop it in here. */}
+
+    <ServiceBlocks
+      variant="list"
+      heading="Other things we clean around the house"
+      lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
+      items={clusterServices.map((service) => ({
+        icon: 'spray-bottle' as const,
+        title: service.label,
+        description: service.blurb,
+        href: service.href,
+      }))}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    <Faq heading="Carpet and rug cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

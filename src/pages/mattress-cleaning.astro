@@ -1,0 +1,432 @@
+---
+// Mattress cleaning — one of the six "Appliances" leaf pages under the Home
+// Cleaning mega-menu. See carpet-and-rug-cleaning.astro for the shared
+// reasoning behind this group, and src/data/appliance-services.ts for the
+// cluster links.
+//
+// NO CONTENT BRIEF EXISTS. All copy is DRAFTED from the brand foundation
+// document. Facts only TLB holds ship as visible [brackets].
+//
+// ⚠️ THIS IS THE MOST CONSTRAINED PAGE IN THE GROUP, for the same reason the
+// mould page is the most constrained on the site. Mattress cleaning is sold
+// almost universally on HEALTH FEAR: dust mites, allergens, "10,000 mites in
+// your bed", asthma, eczema, bacteria counts, UV sterilisation claims. Every
+// competitor page in this category runs some version of it.
+//
+// THIS PAGE MAKES NO HEALTH CLAIM OF ANY KIND. Not one. It does not say a
+// clean mattress improves anyone's sleep, breathing, allergies, skin or
+// health. It does not quote a mite count. It does not use the words
+// sanitise, sterilise or disinfect. That follows BFD 5.3, which requires
+// content touching cleaning methods to avoid advice that could cause harm and
+// bars claims the business cannot substantiate, and it follows the precedent
+// mould-cleaning-and-removal.astro set deliberately and at length.
+//
+// The page sells the same service on honest ground instead: a mattress is the
+// one thing in the house nobody ever washes, it absorbs sweat and body oil
+// for years, and it is worth having done. That is true, checkable and enough.
+//
+// DO NOT ADD, no matter how well it would convert:
+//   - any mite, allergen, bacteria or germ count
+//   - "sanitised", "sterilised", "disinfected", "hospital grade"
+//   - any claim about sleep quality, asthma, eczema, allergies or health
+//   - UV light sterilisation claims, which are especially poorly evidenced
+//
+// BLOCKS LAUNCH:
+//   - METHOD. The page describes a low-moisture extraction clean. Confirm
+//     that is what TLB does. If TLB uses a dry compound or a UV-and-vacuum
+//     machine instead, §4 needs rewriting, and if it is UV, the claims made
+//     for it need to stay off this page regardless.
+//   - Drying time is the single most important number here, because a damp
+//     mattress cannot be slept on that night. Bracketed.
+//   - Pricing basis bracketed.
+//
+// PHOTOGRAPHY: hero is a family B cut-out keyed with scripts/key-cutout.mjs
+// against a green screen (a white mattress cannot be keyed off white). See
+// src/assets/home_cleaning/appliances/IMAGE-PROMPTS.md.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Callout from '../components/sections/Callout.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import heroImg from '../assets/home_cleaning/appliances/mattress/cleaner-cleaning-a-bare-mattress.png';
+import cardBedImg from '../assets/home_cleaning/appliances/mattress/stripped-bed-ready-for-mattress-cleaning.jpg';
+import cardQuoteImg from '../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
+import cardTeamImg from '../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { otherApplianceServices } from '../data/appliance-services';
+
+const OWN_HREF = '/mattress-cleaning/';
+
+const pageMeta = {
+  // ⚠️ No health language in the description either. This is the field most
+  // likely to have "healthier sleep" quietly added to it later. Do not.
+  title: 'Mattress Cleaning | TLB Cleaning',
+  description:
+    'Mattress cleaning across the Northern Rivers and the Tweed. A low moisture clean for the one thing in the house that never gets washed, dry by bedtime.',
+  canonical: 'https://example.com/mattress-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+const hero = {
+  kicker: 'Mattress cleaning',
+  headingLines: ['You wash the sheets every week. The mattress, never.'],
+  lead:
+    'Mattress cleaning in your home across the Northern Rivers and the Tweed. A low moisture clean, done in the morning, dry in time for bed.',
+  cta: { label: 'Get an instant quote', href: quoteCta.href },
+  image: {
+    ratio: '1/1',
+    label:
+      'A TLB cleaner in an aqua polo, dark teal apron and teal gloves drawing a hand-held upholstery tool across a bare mattress',
+    src: heroImg,
+  },
+};
+
+const definitionBody: TextBlockBody[] = [
+  'Mattress cleaning is the deep cleaning of the mattress itself, not the bedding. It is done in your home with a hand-held extraction tool that puts a controlled amount of solution into the surface and draws it straight back out, so the top layers are cleaned without the mattress being soaked. TLB Cleaning cleans mattresses across the Northern Rivers and the Tweed.',
+  'It is worth doing because a mattress is the one soft thing in a house that never gets washed. Sheets go through the machine weekly, a mattress protector occasionally, and the mattress underneath absorbs sweat, body oil and skin for eight hours a night for years. Nothing about that is an emergency. It is just a job that quietly never gets done.',
+];
+
+const pathwayCards = {
+  heading: 'People arrive here with three questions.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        label: 'A bed stripped back to a bare mattress with the linen folded on a chair beside it',
+        src: cardBedImg,
+      },
+      title: 'It has never been cleaned and I have done the maths',
+      description:
+        'Most mattresses have never been touched since the day they arrived. If yours is five or ten years old and still has years left in it, this is the job that makes it feel looked after rather than tolerated.',
+      cta: { label: 'Get an instant quote', href: quoteCta.href },
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label: 'A TLB cleaner and a homeowner talking through the job in a living room',
+        src: cardQuoteImg,
+      },
+      title: 'Something happened and it soaked in',
+      description:
+        'A wet bed, a sick child, a spilled drink. Fresh is far better than dry, so ring us sooner rather than after it has set. We will be straight with you about how deep it has gone.',
+      cta: { label: 'Talk to us', href: '/contact/' },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        label: 'A TLB cleaner in uniform with her caddy in the entry hall of a home',
+        src: cardTeamImg,
+      },
+      title: 'I want to know who is in my home',
+      description:
+        'The same local team you have met, not a roster of strangers from a call centre. We are local mums who clean where we live, [insured] and [police-checked], and there is one local number to ring.',
+      cta: { label: 'Why TLB', href: '/why-tlb/' },
+    },
+  ],
+};
+
+// §4 Method. Five stages rather than six: there is genuinely less to a
+// mattress than to a carpet, and padding it out with a sixth would be
+// invented process.
+const methodItems = [
+  {
+    icon: 'target' as const,
+    title: 'Stripped and checked',
+    description:
+      'Bedding comes off and we look at what we are dealing with: the fabric, the seams, any existing marks and whether there is damage or damp underneath. Pillow top, quilted and foam surfaces all take slightly different handling.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Vacuumed properly, both sides where we can',
+    description:
+      'A slow pass with a brush head across the surface, into the quilting and right along the piped seams, which is where everything collects. If the mattress can be turned safely we do the other side too. A lot of the result comes from this step alone.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'Marks treated individually',
+    description:
+      'Body oil marks, spills and old stains each need something different, and they are treated by what caused them. We will tell you before we start which marks are likely to lift and which have been there long enough to be permanent.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Low moisture extraction',
+    description:
+      // ⚠️ LAUNCH BLOCKER. Confirm this is TLB's actual method. See header.
+      'A hand tool puts in as little solution as the job needs and pulls it straight back out. Deliberately restrained: the inside of a mattress cannot be dried out once it is wet, so putting less in is the whole skill. [Confirm TLB uses low moisture extraction.]',
+  },
+  {
+    icon: 'office' as const,
+    title: 'Dried before the bed goes back together',
+    description:
+      // ⚠️ The number that matters most on this page.
+      'Air moved across the surface until it is dry to the touch, and we book mornings so it has the day. Typical drying time is [X to Y hours. Confirm]. We would rather come back another day than have you make up a bed that is not properly dry.',
+  },
+];
+
+// The one place this page talks about what it will NOT do. A Callout, not a
+// TextBlock, because it is a short aside rather than a chapter — the exact
+// distinction SECTIONS.md draws, and the same call the mould page makes for
+// its scope note.
+const scopeCallout = {
+  heading: 'What a mattress clean does not do',
+  body: ['A clean is not a repair and it is not a rescue. A mattress that has collapsed in the middle, lost its support or been soaked right through is at the end of its life, and cleaning it will not change that. If that is what we find, we will say so and you can put the money towards the replacement instead.'],
+};
+
+const worthKnowingBody: TextBlockBody[] = [
+  'The thing that decides whether a mattress clean goes well is moisture, and it works the opposite way to how people expect. More water does not mean a better clean. A mattress is thick, dense and completely enclosed, and unlike a carpet you cannot lift it, get air underneath it and dry it out. Whatever soaks past the top few centimetres stays there. That is why a proper mattress clean uses as little liquid as it can get away with, and why anyone offering to shampoo or saturate one is offering you a damp mattress.',
+  'The other half is timing. We book mattresses in the morning so there is a whole day of airflow before anyone needs the bed, and we would genuinely rather move the booking than hand back something that is still cool to the touch. If a cleaner cannot tell you how long yours will take to dry, they have not thought about the part of the job that matters most.',
+];
+
+const clusterServices = otherApplianceServices(OWN_HREF);
+
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client who had simply never had it done and was glad they did. Ordinary and relatable beats dramatic here. Written permission required (BFD 5.3).]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB mattress cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a parent about a child’s mattress after an accident. ⚠️ Must not stray into health language when it comes back.]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB client, family home' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote mentioning that the bed was usable the same night. Drying time is the real objection on this page and a client saying it lands harder than we can.]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB mattress cleaning client' },
+  },
+];
+
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'This is a job in your bedroom, on the bed you sleep in. Who does it matters more here than almost anywhere else in the house.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+const brandedFaqItems = [
+  {
+    question: 'Can we sleep in the bed that night?',
+    answer:
+      // ⚠️ Do not turn the bracket into a number without confirming it.
+      'That is the plan, and it is why we book mattresses in the morning. We use as little moisture as the job allows and get air moving across the surface before we leave. Typical drying is [X to Y hours. Confirm]. If it is a humid week we will tell you honestly rather than have you make the bed up over a damp mattress.',
+  },
+  {
+    question: 'Do we need to strip the bed first?',
+    answer:
+      'It helps a lot if you can. Sheets, protector and pillows off, and somewhere to put them. If you would rather we did it, that is fine, just tell us when you book so we allow the time. We will not put the bedding back on until the surface is properly dry.',
+  },
+  {
+    question: 'Will old stains come out?',
+    answer:
+      'Some will and some will not, and we will tell you which before we start. Recent spills usually lift well. Old marks that have gone through into the padding and dried there are often permanent, because the mark is no longer on the surface we can reach. Anyone promising a mattress will come back looking new has not seen it yet.',
+  },
+  {
+    question: 'How often is it worth doing?',
+    answer:
+      'Every year or two suits most beds, and more often for a child’s bed or if someone in the house sweats heavily at night. Between cleans the useful habits are a washable mattress protector, washing it with the sheets, and airing the bed before you make it rather than pulling the covers straight up.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'Tell us how many beds, what size and roughly how old. We will give you a price and book a morning. It can go on the same visit as your regular clean, and most people do the whole house at once rather than one bed at a time.',
+  },
+];
+
+// §12 Non-branded FAQs.
+//
+// ⚠️ READ THE FILE HEADER BEFORE EDITING THIS BLOCK. Every question below is
+// one that competitors answer with a health claim, and every answer here
+// deliberately declines to make one. The first is the hardest: "do you kill
+// dust mites" is the single most searched question on this topic and the
+// honest answer is that a cleaner is not the right source for it. That answer
+// is the page's integrity, and it is worth more than the conversion it costs.
+const nonBrandedFaqItems = [
+  {
+    question: 'Does mattress cleaning get rid of dust mites?',
+    answer:
+      'We are a cleaning business, not a health service, so we will not make claims about mites or what they do. What a clean actually does is remove dust, hair, skin and surface soil from the mattress and the seams. If mites or allergies are the reason you are asking, that is a question for your GP or a health service rather than for us, and be cautious of any cleaner who answers it confidently.',
+  },
+  {
+    question: 'How long does a mattress take to dry?',
+    answer:
+      'Several hours for a properly done low moisture clean, and a full day is the safe assumption in humid weather. It depends almost entirely on how much liquid went in, how much air is moving through the room and the humidity that day. A mattress that is still cool to the touch is still wet inside, whatever the surface feels like.',
+  },
+  {
+    question: 'Can a mattress be cleaned with a steam cleaner?',
+    answer:
+      'It is a poor idea for the same reason saturating one is. Steam puts heat and moisture into a thick enclosed item that cannot be dried from the other side, and moisture that gets down into the foam or springs has no way out. Low moisture methods exist precisely because a mattress cannot be treated like a floor.',
+  },
+  {
+    question: 'Is it worth cleaning an old mattress?',
+    answer:
+      'It depends on what is left of it. If the mattress still supports you properly and has a few years in it, a clean is a cheap way to make it pleasant again. If it sags in the middle, has broken down at the edges or has been soaked through at some point, cleaning it is money spent on something that needs replacing.',
+  },
+  {
+    question: 'How much does mattress cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling.
+      'Mattresses are usually priced per mattress by size, so a king costs more than a single, with a lower rate per bed when several are done in the same visit. Heavy staining or a mattress that has to be turned may add to it. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+const closingCta = {
+  kicker: 'Mattress cleaning',
+  heading: 'Book it for a morning.',
+  lead: 'We strip it, clean it with as little moisture as the job needs and get air across it, so the bed is ready by the evening. Do the whole house at once if it is easier.',
+  cta: { label: 'Get an instant quote', href: quoteCta.href },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      imageFit="contain-bottom"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="How we clean a mattress"
+      lead="Five stages. Putting less water in is the skill, not more."
+      items={methodItems}
+      cta={{ label: 'Get an instant quote', href: quoteCta.href }}
+    />
+
+    <Callout tone="note" heading={scopeCallout.heading} body={scopeCallout.body} />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Why less water is the whole job"
+      body={worthKnowingBody}
+    />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Other things we clean around the house"
+      lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
+      items={clusterServices.map((service) => ({
+        icon: 'spray-bottle' as const,
+        title: service.label,
+        description: service.blurb,
+        href: service.href,
+      }))}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    <Faq heading="Mattress cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

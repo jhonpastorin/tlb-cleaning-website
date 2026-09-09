@@ -1,0 +1,436 @@
+---
+// Blinds, shutters and ceiling fans — the last of the six "Appliances" leaf
+// pages under the Home Cleaning mega-menu. See carpet-and-rug-cleaning.astro
+// for the shared reasoning behind this group, and
+// src/data/appliance-services.ts for the cluster links.
+//
+// NO CONTENT BRIEF EXISTS. All copy is DRAFTED from the brand foundation
+// document. Facts only TLB holds ship as visible [brackets].
+//
+// WHAT THIS PAGE IS ACTUALLY SELLING. Nobody wakes up wanting their blinds
+// cleaned. This is the least urgent service in the group and the copy accepts
+// that rather than manufacturing urgency: it sells the job as the one a
+// regular clean never has time for, best done as an add-on. The strongest
+// honest hooks are the ones the page uses — a ceiling fan turned on after
+// months off, and the fact that this is above eye level so it is invisible
+// until sunlight hits it.
+//
+// ⚠️ NO HEALTH CLAIM. Dust is the other obvious angle and it leads straight
+// to allergens and air quality, which is exactly where this site does not go.
+// Same rule as the mattress and mould pages, same reason (BFD 5.3). Say the
+// blinds are dusty and leave it there.
+//
+// BLOCKS LAUNCH:
+//   - ULTRASONIC vs IN SITU. Venetian and fabric blinds are cleaned either in
+//     place, or taken down and put through an ultrasonic bath off site. They
+//     are completely different services: different price, and one of them
+//     means the customer has bare windows for a day or two. Confirm which TLB
+//     does. §4 currently describes in-situ cleaning, which is the more common
+//     answer for a domestic cleaner, and branded FAQ 4 hedges the other.
+//   - HEIGHT AND SAFETY. Ceiling fans and tall windows mean working at
+//     height off a ladder. Confirm TLB's own limit — how high the team will
+//     go, and where a two-storey void or a raked ceiling becomes a job they
+//     decline. The page currently says there is a limit without naming it.
+//   - ROLLER AND FABRIC BLINDS. Confirm whether TLB cleans fabric and roller
+//     blinds at all, or only hard surfaces (venetians, shutters, verticals).
+//     Water marks fabric blinds permanently and plenty of cleaners decline.
+//   - Pricing basis bracketed.
+//
+// PHOTOGRAPHY: hero is a family B cut-out keyed against green (white blind
+// slats cannot be keyed off white). See
+// src/assets/home_cleaning/appliances/IMAGE-PROMPTS.md.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Callout from '../components/sections/Callout.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import heroImg from '../assets/home_cleaning/appliances/blinds_shutters_and_fans/cleaner-wiping-venetian-blind-slats.png';
+import cardShuttersImg from '../assets/home_cleaning/appliances/blinds_shutters_and_fans/plantation-shutters-and-ceiling-fan-in-a-living-room.jpg';
+import cardQuoteImg from '../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
+import cardTeamImg from '../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { otherApplianceServices } from '../data/appliance-services';
+
+const OWN_HREF = '/blinds-shutters-and-ceiling-fans/';
+
+const pageMeta = {
+  title: 'Blinds, Shutters and Ceiling Fan Cleaning | TLB Cleaning',
+  description:
+    'Blind, shutter and ceiling fan cleaning across the Northern Rivers and the Tweed. The dusty things above eye level that a regular clean never gets time for.',
+  canonical: 'https://example.com/blinds-shutters-and-ceiling-fans/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+const hero = {
+  kicker: 'Blinds, shutters and ceiling fans',
+  headingLines: ['You only notice when the afternoon sun hits them.'],
+  lead:
+    'Blinds, shutters, verticals and ceiling fans cleaned across the Northern Rivers and the Tweed. The jobs above eye level that a regular clean never reaches.',
+  cta: { label: 'Get an instant quote', href: quoteCta.href },
+  image: {
+    ratio: '1/1',
+    label:
+      'A TLB cleaner in an aqua polo, dark teal apron and teal gloves wiping the slats of a white venetian blind with a mint microfibre cloth',
+    src: heroImg,
+  },
+};
+
+const definitionBody: TextBlockBody[] = [
+  'This is the detail cleaning of the things above eye level: venetian and vertical blinds, roller blinds, plantation shutters, pelmets, window tracks and ceiling fan blades. Every one of them collects dust on a horizontal surface you cannot see from standing height, which is why they are invisible until low sun comes through the window and shows you all of it at once. TLB Cleaning cleans blinds, shutters and fans across the Northern Rivers and the Tweed.',
+  'It is almost always an add-on rather than a job on its own. A regular clean is scheduled around the surfaces that get used daily, so anything overhead gets done occasionally at best. Booking it once or twice a year alongside a regular visit is how most people deal with it, and it costs less than calling someone out for it separately.',
+];
+
+const pathwayCards = {
+  heading: 'People arrive here with three questions.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        label: 'A living room with white plantation shutters half open and a ceiling fan above, morning light striping the floor',
+        src: cardShuttersImg,
+      },
+      title: 'I have finally looked up',
+      description:
+        'The tops of the slats, the fan blades, the pelmet and the window track. It is a slow job on a ladder with a cloth, one slat at a time, and it is the definition of a Saturday you would rather have back.',
+      cta: { label: 'Get an instant quote', href: quoteCta.href },
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label: 'A TLB cleaner and a homeowner talking through the job in a living room',
+        src: cardQuoteImg,
+      },
+      title: 'Add it to the regular clean',
+      description:
+        'This is the sensible way to do it. Once or twice a year, folded into a visit that is already happening, so it never becomes the job nobody has done since you moved in.',
+      cta: { label: 'Regular home cleaning', href: '/house-cleaning/' },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        label: 'A TLB cleaner in uniform with her caddy in the entry hall of a home',
+        src: cardTeamImg,
+      },
+      title: 'I want to know who is in my home',
+      description:
+        'The same local team you have met, not a roster of strangers from a call centre. We are local mums who clean where we live, [insured] and [police-checked], and there is one local number to ring.',
+      cta: { label: 'Why TLB', href: '/why-tlb/' },
+    },
+  ],
+};
+
+const methodItems = [
+  {
+    icon: 'target' as const,
+    title: 'Dry dust comes off first',
+    description:
+      'Everything gets dusted or vacuumed with a brush head before anything damp appears. Dust plus a wet cloth is mud, and on a white slat or a fan blade that means smears you then have to chase around the room.',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'Ceiling fans, blade by blade',
+    description:
+      'The felt of dust sits on the top of each blade where nobody sees it, and the housing and pull chain collect it too. Each blade is supported and wiped rather than swiped at, because bending a blade is what puts a wobble in a fan.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'Hard blinds and shutters, slat by slat',
+    description:
+      'Aluminium, timber and faux timber slats get done individually, both faces, along with the head rail, the cords or wand and the bottom rail. There is no fast way to do this properly, which is the entire reason people book it out.',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Fabric handled dry, or not at all',
+    description:
+      // ⚠️ LAUNCH BLOCKER. Confirm whether TLB cleans fabric blinds.
+      'Roller, roman and sunscreen blinds mark permanently if they are treated like a hard surface, and a water ring on a fabric blind is worse than the dust was. These get dry methods and spot work only. [Confirm whether TLB cleans fabric blinds at all.]',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Tracks, sills and pelmets',
+    description:
+      'The window track is where the dust ends up once the blind above it has been done, along with dead insects and sand, so it gets cleared and wiped as part of the same job rather than left as the giveaway.',
+  },
+  {
+    icon: 'house' as const,
+    title: 'Only as high as is safe',
+    description:
+      // ⚠️ LAUNCH BLOCKER. Confirm the actual limit. See the file header.
+      'Standard ceilings and windows are routine. A raked ceiling, a stairwell void or a second storey reached from outside is a different job with different equipment, and we will tell you when something is beyond a step ladder rather than improvise. [Confirm TLB’s height limit.]',
+  },
+];
+
+// The one genuinely useful warning on the page, and it is a real one: the
+// ultrasonic question decides whether the customer loses their windows for a
+// day. Callout rather than TextBlock because it is a short aside.
+const scopeCallout = {
+  heading: 'Ask whether your blinds are leaving the house',
+  body: [
+    'There are two ways to clean a blind, and they are not the same service. In situ means it stays on the window and is cleaned in place, which is quicker and cheaper and suits most dusty but otherwise sound blinds. Ultrasonic means the blind is taken down, put through a bath off site and rehung a day or two later, which gets a far better result on something greasy or genuinely neglected, and leaves you with a bare window in the meantime. Neither is better in general. Just make sure you know which one you are buying.',
+  ],
+};
+
+const worthKnowingBody: TextBlockBody[] = [
+  'Most damaged blinds in this region are not damaged by dirt. They are damaged by someone cleaning them, and the two ways it happens are worth knowing before you spend a Saturday on a ladder. The first is water: a fabric roller or roman blind that gets wiped with a damp cloth will very often dry with a visible tidemark, and unlike a carpet there is no way to blend it out afterwards. The second is force. A venetian slat wiped hard without being supported from behind bends, and a bent slat never sits flat again, so the blind will not close properly from then on.',
+  'Ceiling fans have their own version of this. A fan blade is a balanced aerofoil, and pushing down hard on the end of one while you scrub the top of it is how a fan that ran silently for ten years starts to wobble. If you are doing it yourself, hold the blade from underneath and wipe with the other hand. If a fan already wobbles, that is an electrician or a balancing kit rather than a cleaner.',
+];
+
+const clusterServices = otherApplianceServices(OWN_HREF);
+
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about how much brighter a room felt afterwards. Light is the honest benefit here, not health. Written permission required (BFD 5.3).]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB blind cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client who adds this to their regular clean once or twice a year. It is the behaviour this page is trying to encourage.]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB regular cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about a job the client had been putting off for years. Recognition converts better than aspiration on this page.]',
+    name: '[First name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB client, living room' },
+  },
+];
+
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'A small job in your home, done carefully, by someone who will still be around next year when you want it done again.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+const brandedFaqItems = [
+  {
+    question: 'Can you do this with our regular clean?',
+    answer:
+      'Yes, and that is how most people do it. We allow extra time on a visit that is already booked rather than sending someone out for it separately, which makes it cheaper. Once or twice a year suits most homes. Just tell us which rooms you want done when you book.',
+  },
+  {
+    question: 'Do you do ceiling fans as well as blinds?',
+    answer:
+      'Yes, and they are usually done in the same pass, because both are overhead work in the same room. Blades are wiped top and bottom with the blade supported, and the housing and pull chain are done too. If a fan wobbles when it runs, tell us, because that is a balancing or electrical issue rather than a cleaning one.',
+  },
+  {
+    question: 'What about high windows and raked ceilings?',
+    answer:
+      // ⚠️ Depends on the height launch blocker in the file header.
+      'Standard ceiling heights are routine. A raked ceiling, a stairwell void or anything that needs more than a step ladder is a different job, and we will tell you honestly if it is beyond what we can do safely rather than have someone stretch off the top rung. [Confirm TLB’s height limit before launch.]',
+  },
+  {
+    question: 'Can you clean our fabric roller blinds?',
+    answer:
+      // ⚠️ Depends on the fabric launch blocker in the file header.
+      'They are dusted and spot treated rather than wet cleaned, because water marks fabric blinds permanently and a tidemark cannot be blended out afterwards. If a fabric blind is genuinely soiled rather than dusty, the honest answer is usually specialist ultrasonic cleaning or replacement, and we will say so.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'Tell us roughly how many windows, what kind of blinds and how many fans. We will give you a price and either book it in on its own or add it to your next regular clean, whichever works out better for you.',
+  },
+];
+
+// §12 Non-branded FAQs.
+//
+// ⚠️ NO HEALTH CLAIM ANYWHERE IN THIS BLOCK. Dust is the obvious hook and it
+// leads directly to allergens and air quality, which this site stays out of
+// (BFD 5.3, and the precedent set by the mould and mattress pages). The
+// answers below talk about light, appearance and damage instead. Do not add
+// an allergy angle, however well it would convert.
+//
+// Checkable claims:
+//   - Water marks fabric blinds. Correct and the single most useful warning.
+//   - Bending a venetian slat prevents it closing flat. Correct.
+//   - Unbalanced fan blades cause wobble; balancing kits exist. Correct, and
+//     the answer sends that to an electrician rather than offering to fix it.
+const nonBrandedFaqItems = [
+  {
+    question: 'How often should blinds be cleaned?',
+    answer:
+      'A quick dust every few weeks as part of normal cleaning, and a proper detailed clean once or twice a year. Bring that forward in a kitchen, where dust binds with cooking grease into a film that no longer dusts off, and near the coast or an unsealed road, where the dust load is simply higher. Regular light dusting is what stops it reaching the greasy stage.',
+  },
+  {
+    question: 'What is the best way to clean venetian blinds?',
+    answer:
+      'Dry first, always: dust or vacuum with a brush head before anything damp goes near them, because dust plus moisture is mud. Then wipe each slat with the slat supported from behind so it cannot bend. Work from the top down so what falls lands on slats you have not done yet, and finish with the head rail, the cords and the window track underneath.',
+  },
+  {
+    question: 'Can you wash fabric or roller blinds with water?',
+    answer:
+      'Generally no, and this is where most self-inflicted blind damage comes from. Most roller, roman and sunscreen fabrics are treated or coated, and water leaves a visible ring as it dries that cannot be blended out the way a mark on carpet can. Dry dusting and careful spot treatment are the safe options. Anything beyond that is a specialist ultrasonic clean or a replacement.',
+  },
+  {
+    question: 'Why does my ceiling fan wobble after being cleaned?',
+    answer:
+      'Almost always because a blade got bent. Fan blades are balanced as a set, and pressing down on the end of one while scrubbing the top is enough to put a slight bend in it, which shows up as a wobble as soon as the fan runs. Support the blade from underneath while you wipe. A fan that already wobbles needs a balancing kit or an electrician, not a cleaner.',
+  },
+  {
+    question: 'How much does blind and fan cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling.
+      'Usually priced per blind and per fan, with a lower rate when a whole house is done at once or when it is added to an existing clean. Size and type move it: a wide vertical blind or a plantation shutter takes longer than a small venetian. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+const closingCta = {
+  kicker: 'Blinds, shutters and ceiling fans',
+  heading: 'Add it to your next clean.',
+  lead: 'Blinds, shutters, tracks and fans, done once or twice a year on a visit that is already happening. Tell us which rooms and we will price it.',
+  cta: { label: 'Get an instant quote', href: quoteCta.href },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      imageFit="contain-bottom"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="How we clean blinds, shutters and fans"
+      lead="Six stages. Dry before damp, and support before pressure."
+      items={methodItems}
+      cta={{ label: 'Get an instant quote', href: quoteCta.href }}
+    />
+
+    <Callout tone="note" heading={scopeCallout.heading} body={scopeCallout.body} />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Most damaged blinds were damaged by cleaning"
+      body={worthKnowingBody}
+    />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Other things we clean around the house"
+      lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
+      items={clusterServices.map((service) => ({
+        icon: 'spray-bottle' as const,
+        title: service.label,
+        description: service.blurb,
+        href: service.href,
+      }))}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    <Faq heading="Blind and ceiling fan cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>
