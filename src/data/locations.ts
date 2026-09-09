@@ -27,7 +27,7 @@
 // <span> instead of a link.
 //
 // ⚠️ Still 404ing, and unrelated to the town pages: the three region overview
-// pages the mega-menu links ("All of Northern Rivers" and friends) and
+// pages (no longer linked from the mega-menu, which now lists towns only) and
 // /locations/ itself, which every footer on the site links to.
 //
 // The header mega-menu (navigation.ts) is now built from these same arrays

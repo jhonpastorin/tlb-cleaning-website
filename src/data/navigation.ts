@@ -125,17 +125,12 @@ export const primaryNav: NavItem[] = [
 // panel at four columns, the same width Home Cleaning's already runs.
 const REGION_COL_ROWS = 20;
 
-// Each region's own overview page heads its first column, the way the old
-// menu led with "Northern Rivers NSW" and "Southern Gold Coast QLD".
-// ⚠️ Slugs guessed, same as everything else here: the two the old menu
-// already used are kept verbatim, and "The Tweed" — a region the old menu
-// folded into Northern Rivers and so never linked — follows townSlug's
-// pattern. Confirm all three before launch.
-const regionColumns = (label: string, overviewHref: string, towns: string[]): MegaMenuGroup[] => {
-  const rows: NavItem[] = [
-    { label: `All of ${label}`, href: overviewHref },
-    ...towns.map((town) => ({ label: town, href: townSlug(town) })),
-  ];
+// Towns only: the region itself is the column heading, not a link. The
+// "All of <region>" rows that used to head each column are gone at the
+// client's request — the region overview pages still exist, they just
+// aren't linked from this menu.
+const regionColumns = (label: string, towns: string[]): MegaMenuGroup[] => {
+  const rows: NavItem[] = towns.map((town) => ({ label: town, href: townSlug(town) }));
   const colCount = Math.ceil(rows.length / REGION_COL_ROWS);
   const perCol = Math.ceil(rows.length / colCount);
   return Array.from({ length: colCount }, (_, col) => ({
@@ -229,9 +224,9 @@ export const headerNav: MegaMenuNavItem[] = [
     // the "Where we clean" section on every page renders. Nothing was
     // dropped; the sheet's list is superseded rather than merged.
     megaMenu: [
-      ...regionColumns('Northern Rivers', '/locations/northern-rivers-nsw/', northernRiversTowns),
-      ...regionColumns('The Tweed', '/locations/the-tweed/', tweedTowns),
-      ...regionColumns('Southern Gold Coast', '/locations/southern-gold-coast-qld/', southernGoldCoastTowns),
+      ...regionColumns('Northern Rivers', northernRiversTowns),
+      ...regionColumns('The Tweed', tweedTowns),
+      ...regionColumns('Southern Gold Coast', southernGoldCoastTowns),
     ],
   },
   {
