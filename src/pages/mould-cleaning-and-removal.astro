@@ -1,0 +1,800 @@
+---
+// Mould cleaning and removal page, shipping at /mould-cleaning-and-removal/.
+//
+// PROVENANCE. Like the end-of-lease page and unlike every other page in this
+// repo, there is NO content brief for this page. The copy is DRAFTED from
+// "TLB Cleaning - Brand Foundation.md" (the BFD), which governs voice, claim
+// rules and compliance but supplies no operational detail. Everything about
+// what TLB actually does with mould, what it charges, what it declines and
+// what it refers on is drafted from category convention and flagged
+// [CONFIRM]. content-plans/mould-cleaning-and-removal.md lists the open
+// items in one place.
+//
+// THIS IS THE MOST CONSTRAINED PAGE ON THE SITE. Three separate BFD rules
+// bind harder here than anywhere else, and all three point the same way:
+// claim less than a competitor would.
+//
+//  1. HEALTH CLAIMS. BFD 5.3 (Workplace health and safety) says content
+//     touching cleaning products, methods or safety must align with Safe
+//     Work Australia and state WHS guidance and must "avoid advice that
+//     could cause harm if followed incorrectly". Mould is the one cleaning
+//     topic with a genuine health literature behind it. This page therefore
+//     makes NO health claim of any kind. It does not say mould causes any
+//     symptom, condition or illness, it does not say removing it improves
+//     anyone's health, and it does not tell anyone whether their home is
+//     safe. Section 10 says outright that health questions belong to NSW
+//     Health, Queensland Health or a GP, and points there. TLB is a cleaning
+//     company. Keep it that way.
+//
+//  2. NO GUARANTEE IT STAYS GONE. BFD 5.3 (Australian Consumer Law) bars
+//     guaranteeing outcomes TLB cannot control. Mould regrows wherever the
+//     moisture that fed it is still there, and the moisture is almost always
+//     a building problem (a leak, a failed seal, no ventilation) that a
+//     cleaner cannot fix. Section 8 is built around saying that plainly.
+//     Never add "mould gone for good" or a permanent-removal claim.
+//
+//  3. SCOPE. TLB cleans surface mould. It is not a licensed building,
+//     plumbing or remediation business, and this page must not read as
+//     though it is. Section 9's comparison table exists specifically to draw
+//     that boundary in public, and section 5's Callout names the referral
+//     cases. [CONFIRM with Teagan where the real line sits] - if TLB does
+//     hold a relevant credential or does more than surface work, this whole
+//     framing changes and needs rewriting rather than patching.
+//
+// SAFETY COPY. Section 7's warning Callout tells a reader what NOT to do
+// before we arrive. It is deliberately limited to two things that are
+// uncontroversial and well documented (do not dry-brush or dry-scrape mould,
+// and never mix bleach with ammonia or other cleaners). It gives no method,
+// no product and no dosing advice, because per BFD 5.3 advice that could
+// cause harm if followed incorrectly is exactly what must not be published.
+// Do not expand this into a how-to. If someone wants a method, the answer is
+// to book, not to be talked through it.
+//
+// NO VIDEO SLOT, deliberately. Every sibling page carries a reserved
+// VideoFeature. This page does not, because a reserved video frame below the
+// fold sits directly under section 11's four reserved before/after frames,
+// and five empty boxes make the page read as unbuilt rather than
+// unphotographed. Add one when there is real footage to put in it.
+//
+// RESERVED SLOTS. The hero and both mould-specific cards now carry this
+// folder's own photography. What remains reserved is section 11's
+// before/after gallery, and it must stay that way until there are real jobs
+// to photograph: IMAGE-GUIDELINES.md section 7 bars generated before/after
+// pairs and BFD 5.2 requires them to come from genuine TLB jobs with client
+// permission, which the section heading "Real TLB mould cleans" asserts.
+// Slots with no `src` render as labelled dashed boxes at the right size,
+// which is the correct state for a slot with no honest asset (guidelines
+// section 6). The photography brief is in
+// src/assets/home_cleaning/inside_your_home/mould_cleaning_and_removal/IMAGE-PROMPTS.md.
+// Note that folder's own warning: the library house style is "bright,
+// optimistic, calm and finished", which is the exact opposite of what a
+// before shot of mould looks like. The three placed images resolve that by
+// photographing the outcome and the cause rather than the horror, so keep
+// any replacement modest for the same reason.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import Callout from '../components/sections/Callout.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+// Before/after slider (§ credibility signals). The four images are SAMPLE
+// illustrations, not photographs — generated by
+// scripts/make-before-after-samples.mjs and each stamped with a visible
+// SAMPLE badge, so the interaction could be built and reviewed before any
+// real client photography exists. Replace them with real paired photography
+// and drop the section's `note`; the shooting and consent brief is in the
+// block above `beforeAfterPairs` below.
+import BeforeAfter from '../components/sections/BeforeAfter.astro';
+import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import { locationGroups } from '../data/locations';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import sampleCeilingBeforeImg from '../assets/home_cleaning/before_after/sample-ceiling-before.png';
+import sampleCeilingAfterImg from '../assets/home_cleaning/before_after/sample-ceiling-after.png';
+import sampleShowerBeforeImg from '../assets/home_cleaning/before_after/sample-shower-before.png';
+import sampleShowerAfterImg from '../assets/home_cleaning/before_after/sample-shower-after.png';
+// Section 1 hero. Cut-out figure on transparency (IMAGE-GUIDELINES.md family
+// B), a 1080x1080 PNG with an alpha channel, so ratio 1/1 and contain-bottom.
+// Square rather than the family's usual 16/9 for the reason set out on the
+// slot below. The figure faces left, into the copy, because the image sits on
+// the right.
+import heroImg from '../assets/home_cleaning/inside_your_home/mould_cleaning_and_removal/mould-cleaning-cleaner-wiping-along-a-bathroom-wall.png';
+// Section 3 pathway cards. Card 1 is the only image on this page that shows
+// the problem, and it is deliberately modest: spotting along a cornice line
+// in an otherwise clean bathroom, which is what most real jobs look like.
+// Card 3 shows condensation rather than mould, because moisture is that
+// card's actual subject and it carries no implied judgement about the house.
+// Card 2 reuses the moving-out-day photo, which does honestly show what that
+// card is about. See IMAGE-PROMPTS.md in this folder for the reasoning.
+import cardBathroomImg from '../assets/home_cleaning/inside_your_home/mould_cleaning_and_removal/mould-cleaning-spotting-along-a-bathroom-cornice.jpg';
+import cardMovingOutImg from '../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-empty-room-on-moving-out-day.jpg';
+import cardCondensationImg from '../assets/home_cleaning/inside_your_home/mould_cleaning_and_removal/mould-cleaning-condensation-on-a-bedroom-window.jpg';
+// Section 2 backdrop behind the Cream scrim, shared with the trust bar.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { trustBarCards } from '../data/trust';
+
+// Section 0. Page metadata.
+//
+// The description names the humidity, which is the local hook and the honest
+// reason this service exists here rather than a generic one. It claims
+// removal of surface mould specifically, not remediation, and promises
+// nothing about it staying away.
+const pageMeta = {
+  title: 'Mould Cleaning and Removal | TLB Cleaning',
+  description:
+    'Surface mould cleaned from bathrooms, walls, ceilings and wardrobes across the Northern Rivers and Southern Gold Coast. We remove what is there and tell you straight what is causing it.',
+  // Domain still a placeholder, same as every other page. Confirm before launch.
+  canonical: 'https://example.com/mould-cleaning-and-removal/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// Section 1. Hero. The figure is this folder's own cut-out rather than the
+// homepage cleaner, which would make this page look like the homepage rather
+// than like a mould page. It shows work in progress in a clean, ordinary
+// bathroom, not a ruined one: the page's argument is that mould is a
+// moisture problem in a normal coastal house, and a grim hero would
+// contradict the copy and shame the reader section 6 goes out of its way not
+// to shame.
+//
+// The headline is the page's whole honest position in six words, and the
+// lead does the thing a competitor's hero will not: it says out loud that
+// cleaning alone does not keep it away. That is a strange thing to lead
+// with commercially and it is the right thing to lead with here, because the
+// alternative is a promise the business cannot keep.
+const hero = {
+  headingLines: ['We can get the mould off.', 'Keeping it off takes more than cleaning.'],
+  lead: 'Surface mould cleaned from bathrooms, walls, ceilings and wardrobes across the Northern Rivers, the Tweed and the Southern Gold Coast. We remove what is there, and we tell you honestly what is feeding it.',
+  cta: quoteCta,
+  image: {
+    // 1/1, not the 16/9 the other heroes use, and deliberately. This panel is
+    // a `contain` fit in a near-square column, so any empty canvas around the
+    // cut-out is dead space that scales the figure DOWN: at 16/9 the subject
+    // was 60% of the canvas width and rendered about two thirds height. A
+    // canvas cropped to the subject lets contain scale it to the full panel.
+    ratio: '1/1',
+    label: 'TLB cleaner in uniform reaching up with a cloth to wipe along the top of a wall',
+    src: heroImg,
+  },
+};
+
+// Section 2. Definition paragraph. Answer-target for `mould cleaning` and
+// `mould removal`, and the GEO passage most likely to be lifted whole by an
+// AI overview. BFD 3.6.2 asks for a definition-style opening sentence and a
+// semantic triple, which is what the two sentences do.
+//
+// The definition is deliberately mechanical, not medical: what mould is and
+// what it needs to grow. No health framing anywhere in it. See the file
+// header, constraint 1.
+const definitionBody: TextBlockBody[] = [
+  'Mould is a fungus that grows on damp indoor surfaces, which is why it turns up on bathroom ceilings, window reveals, wardrobe backs and the cool outside walls of a room. It needs moisture, and it stops needing anything else once it has that. TLB Cleaning provides surface mould cleaning and removal across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+  'Mould cleaning and mould removal are the same job by two names. What both of them mean, done honestly, is removing the growth from the surface it is on. What neither of them means is fixing the reason it grew there, and that difference is most of this page.',
+];
+
+// Section 3. Pathway cards. Three genuinely different visitors, and the
+// third one is the reason this page is written the way it is: someone whose
+// mould keeps coming back has usually already paid someone to clean it.
+//
+// Card 3 lands on section 8, the moisture section, via #moisture set on a
+// wrapper in the template below. Same anchor pattern as the deep-cleaning
+// and end-of-lease pages use for #compare.
+//
+// Section heading/accent and the three CTA labels are DRAFTED, not briefed.
+const pathwayCards = {
+  heading: 'Mould turns up three ways here.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        label: 'Dark spotting along the cornice line of a clean bathroom ceiling above a shower',
+        src: cardBathroomImg,
+      },
+      title: "It's in the bathroom and it looks awful",
+      description:
+        'The most common one, and the most straightforward. Ceilings, cornices, silicone lines, grout and window reveals. We clean it off and tell you what we saw behind it.',
+      cta: { label: 'Get an instant quote', href: '/quote/' },
+    },
+    {
+      number: 2,
+      image: { ratio: '4/3', label: 'Empty room on moving-out day', src: cardMovingOutImg },
+      title: "I'm moving out and there's mould",
+      description:
+        'Then it sits inside the bond clean rather than beside it, because the exit inspection is going to look at exactly those surfaces. Book the two together.',
+      cta: { label: 'End of lease and bond cleaning', href: '/end-of-lease-cleaning/' },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        label: 'Condensation running down the inside of a bedroom window on a humid morning',
+        src: cardCondensationImg,
+      },
+      title: 'It keeps coming back',
+      description:
+        'Then cleaning is not your problem, moisture is, and someone has probably already cleaned it once. Here is what is actually going on.',
+      cta: { label: 'Why it comes back', href: '#moisture' },
+    },
+  ],
+};
+
+// Section 4. Where we find it and what we do about it.
+//
+// [CONFIRM THE WHOLE LIST WITH TEAGAN.] Drafted from category convention,
+// not from TLB's scope of works. The surfaces are safe enough to describe,
+// but two lines below make operational commitments that need checking:
+// whether the team treats silicone and grout (as opposed to declaring them
+// beyond cleaning), and whether soft furnishings are touched at all.
+//
+// SHAPE. ContentGrid `text` cells at 2 columns, matching the inclusions
+// grids on the deep-cleaning and end-of-lease pages so all three read as one
+// company's standard. Six cells, three clean rows, no span needed.
+//
+// The copy deliberately describes WHERE and WHAT, never HOW. No product
+// names, no methods, no dilutions. See the file header, safety copy.
+const surfaceBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'Bathroom ceilings and cornices',
+    body: [
+      'The single most common place we are called to, because a bathroom makes its own weather twice a day. Ceilings, cornices, the wall above the shower and the corners where the extraction fan never quite reaches.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Silicone, grout and shower seals',
+    body: [
+      'Grout lines, shower bases and the silicone beads around baths and screens. Some of it cleans up completely. Silicone that has gone black all the way through has failed rather than got dirty, and it needs replacing rather than scrubbing. We tell you which one you have.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Window reveals, sills and tracks',
+    body: [
+      'Where the condensation sits every morning through winter and never quite dries before the next night. Reveals, sills, the tracks underneath and the rubber seals along the frame.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Wardrobes, cupboards and behind furniture',
+    body: [
+      'Cool outside walls with something pressed against them and no air moving. Wardrobe backs and floors, the wall behind a bedhead, the back of a linen cupboard. Usually found by smell before it is found by sight.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Walls, ceilings and painted surfaces',
+    body: [
+      'Surface growth on sound paint, cleaned back. Where the paint is already lifting, bubbling or soft, the moisture is behind it rather than on it, and cleaning the face of it achieves nothing that lasts. We say so instead of doing it.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'What we look at while we are there',
+    body: [
+      'Whether there is an extraction fan and whether it works, where the air does and does not move, and anything obviously wet that should not be. Not an inspection and not a report, just a set of eyes and an honest answer at the end of it.',
+    ],
+  },
+];
+
+// Section 5. What sits outside the clean, and when we hand it on.
+//
+// [CONFIRM]. This Callout draws the commercial boundary of the whole page,
+// and it is the block most likely to be softened by someone who wants the
+// page to sell harder. Resist that. A cleaning company that quietly takes on
+// a leak-driven or in-cavity mould job is selling a clean it knows will fail
+// within a month, which is both a bad outcome and, under BFD 5.3, a claim
+// problem.
+//
+// The second paragraph names the trades to call. That is deliberate: telling
+// someone the job is not yours without telling them whose it is reads as a
+// brush-off rather than as advice.
+const scopeCallout = {
+  body: [
+    'Quoted separately: carpet and rug cleaning, upholstery and mattress cleaning, and full wall washing where the mould has spread well beyond spotting. Ask for these with your quote so the whole job is priced once, rather than half of it being discovered on the day.',
+    'Not a cleaning job at all: mould inside a wall or ceiling cavity, mould that follows a burst pipe, a roof leak or a flood, mould across a large area of a home, or paint and plaster that has gone soft. Those need a plumber, a builder or a licensed remediation specialist, and cleaning the surface will only hide the problem until it comes back. If that is what we find, we will tell you on the spot and we would rather lose the job than take it.',
+  ],
+};
+
+// Section 6. Why it happens here. The local section, and a genuine
+// differentiator against a national platform running one generic mould page
+// for eleven cities (BFD 1.5, competitive context).
+//
+// Every claim here is about CLIMATE AND BUILDINGS, which is observable and
+// uncontroversial. Nothing about health, nothing about risk. The subtropical
+// humidity, the closed-up holiday home and the poorly ventilated bathroom
+// are three things any local reader will recognise immediately, which is the
+// point.
+//
+// Deliberately not mentioned: the 2022 floods. Flood-affected mould is a
+// remediation job that section 5 explicitly refers out, so raising floods
+// here would invite exactly the enquiry this page says it will not take, in
+// a region where that event is still raw. Left out on purpose, not by
+// oversight.
+const climateBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'The humidity is the whole story',
+    body: [
+      'A warm subtropical coast with a wet summer is close to ideal growing conditions for most of the year. Homes here get damp in ways the same house would not three hours inland.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Houses that get shut up',
+    body: [
+      'Holiday homes between guests, a place left while the owners are away, a spare room nobody opens. Air stops moving, humidity settles, and mould does the rest quietly with nobody there to notice.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Bathrooms with nowhere for the steam to go',
+    body: [
+      'An extraction fan that vents into the roof space instead of outside, or one that was never fitted, or a window nobody opens in winter. The moisture has to go somewhere and it goes into the ceiling.',
+    ],
+  },
+];
+
+// Section 7. What not to do before we get there. Callout `warning`, the
+// charcoal panel, which SECTIONS.md reserves for "don't do this" rather than
+// "worth knowing". This is the one block on the site that genuinely earns it.
+//
+// STRICTLY LIMITED, on purpose. Two things, both well documented, neither of
+// them a method:
+//   1. Do not dry-brush or dry-scrape it. Disturbing it dry sends it into
+//      the air and around the room.
+//   2. Never mix bleach with ammonia or with other cleaners. This is a
+//      standard household chemical safety warning and the reason it is here
+//      is that "mould" and "bleach" are the two words most likely to appear
+//      together in a search that lands on this page.
+//
+// DO NOT EXPAND THIS INTO A HOW-TO. BFD 5.3 bars advice that could cause
+// harm if followed incorrectly, and a mould-removal method published by a
+// cleaning company is precisely that. No products, no dilutions, no PPE
+// instructions. If someone wants the job done, the answer is to book it.
+const safetyCallout = {
+  heading: 'Two things worth not doing first',
+  body: [
+    'Do not dry-brush, dry-scrape or vacuum it while it is dry. Disturbing mould dry is how it leaves the surface and goes everywhere else in the room, which turns one job into four.',
+    'Never mix bleach with ammonia, with a cleaner containing ammonia, or with other cleaning products. That combination produces a dangerous gas, and it is a genuine risk in a small, closed bathroom. If you are not sure what is in the bottle, do not combine it with anything.',
+    'Beyond that, we would rather you left it and let us look at it than went at it hard, because a surface that has been scrubbed through is a harder job afterwards, not an easier one.',
+  ],
+};
+
+// Section 8. Why it comes back. The anchor target for pathway card 3, and
+// the honest centre of the page.
+//
+// This section is the reason the page cannot make the promise a competitor
+// makes. It should never be softened into "and then it is gone for good".
+// See the file header, constraint 2.
+const moistureBody: TextBlockBody[] = [
+  'Mould grows where there is moisture, so it regrows wherever the moisture is still there. Clean it off a bathroom ceiling that gets no ventilation and it will be back, usually within a few months, because nothing about the ceiling changed. That is not a bad clean. That is the clean doing its job on a problem that was never a cleaning problem.',
+  'Sometimes the fix is small and free. Run the fan for twenty minutes after a shower instead of two. Open the room up on a dry day. Pull the wardrobe two centimetres off the wall so air can get behind it. Stop drying washing inside a closed room. We will point out the ones we can see while we are there.',
+  'Sometimes the fix is not small, and it is a leak, a failed seal, a fan venting into the roof space or no ventilation at all. Then it is a plumber, an electrician or a builder, and it is worth spending that money before spending ours again. We would rather tell you that once than clean the same ceiling every autumn.',
+];
+
+// Section 9. The comparison table. Draws the scope boundary in public, in
+// the format the site already uses to answer "which service do I need".
+//
+// The third column is NOT a TLB service, and that is the point of including
+// it: a visitor whose problem is in the third column needs to recognise
+// themselves there and go elsewhere. A table that only listed the two
+// services TLB sells would quietly imply TLB covers everything.
+//
+// [CONFIRM the first column with Teagan], particularly the "How long" and
+// "What it does not do" rows.
+const comparisonTable = {
+  heading: 'Mould clean, deep clean or specialist remediation',
+  cornerLabel: 'Which one you need',
+  columns: [
+    { label: 'Mould clean', highlight: true },
+    { label: 'Deep clean' },
+    { label: 'Specialist remediation' },
+  ],
+  rows: [
+    {
+      label: 'What it is',
+      values: [
+        'Surface mould removed from the surfaces it is growing on',
+        'A one-off reset of the whole house, room by room',
+        'Building work that removes affected material and fixes the cause',
+      ],
+    },
+    {
+      label: 'When you need it',
+      values: [
+        'Visible growth on ceilings, seals, reveals or wardrobe walls',
+        'The house is due a reset and there is some spotting along with everything else',
+        'Mould inside a cavity, after a leak or a flood, or across a large area',
+      ],
+    },
+    {
+      label: 'Who does it',
+      values: ['TLB Cleaning', 'TLB Cleaning', 'A licensed remediation specialist, plumber or builder'],
+    },
+    {
+      label: 'Does it fix the cause',
+      values: [
+        'No. We identify what we can see and tell you',
+        'No',
+        'Yes, that is the whole point of it',
+      ],
+    },
+    {
+      label: 'Will it come back',
+      values: [
+        'Yes, if the moisture is still there',
+        'Yes, if the moisture is still there',
+        'Not if the cause has actually been fixed',
+      ],
+    },
+  ],
+  footnote:
+    'Plenty of jobs are simply the first column, and a bathroom ceiling cleaned properly once or twice a year is a normal way to live in a house on this coast. The point of the table is that if you are in the third column, no amount of cleaning is going to be the answer, and you should know that before you pay anyone.',
+};
+
+// Section 10. The health question. SHORT, and it defers rather than answers.
+//
+// This is the block that keeps the page inside BFD 5.3. Someone searching
+// mould at eleven at night is often worried about their family, and the
+// honest, compliant and genuinely kind response is to say plainly that a
+// cleaning company is not who should be answering that, and to name who is.
+//
+// DO NOT let this section grow into a symptoms list, a risk explainer or a
+// reassurance. Any sentence that begins to characterise what mould does to
+// people does not belong on a cleaning company's website. If TLB ever wants
+// to cover this properly it belongs in a guide, written with a citable
+// health authority source per BFD 3.3 and 5.2, not here.
+const healthBody: TextBlockBody[] = [
+  'People often ask us whether mould in the house is a health problem, and it is a fair question to ask. It is not our question to answer. We clean, we are not a health service, and we are not going to tell you what mould in your home does or does not mean for the people in it.',
+  'If that is what is worrying you, ask someone qualified. NSW Health and Queensland Health both publish guidance on damp and mould in the home, and your GP is the right person for anything about your own family. What we can do is remove what is on the surface and be straight with you about what we saw.',
+];
+
+// Section 11. Credibility signals.
+//
+// ⚠️ THE IMAGES WIRED HERE ARE SAMPLES, NOT PHOTOGRAPHS. They are flat vector
+// illustrations from scripts/make-before-after-samples.mjs, each carrying a
+// visible SAMPLE badge, and their filenames say `sample-` precisely so they
+// cannot be mistaken for real jobs. The guardrail every page in this build
+// shares has not moved: a fabricated "before and after from a real job" is a
+// false trust claim, not filler. The section's `note` prop says so on the
+// page itself, in the reader's own view, not just here in a comment.
+//
+// This is a DRAGGABLE COMPARISON SLIDER (BeforeAfter.astro), not the
+// PhotoGallery grid this section used to be — the same change house-cleaning
+// made and for the same reason. A grid lays four independent frames out and
+// leaves the viewer to hold one in memory while looking at the next; the
+// slider makes the PAIR the unit and does the comparison for them, in place.
+//
+// Shoot each pair from ONE FIXED POSITION. The slider wipes one frame over
+// the other in place, so a shifted camera or a different crop reads as a
+// glitch rather than as cleaning — a requirement the component cannot
+// enforce and the brief has to.
+//
+// The photo brief, which the sample frames stand in for:
+//   1. BEFORE. Mould spotting along a bathroom ceiling and cornice.
+//   2. AFTER.  The same ceiling, same angle, same light.
+//   3. BEFORE. Mould in shower grout and along the screen.
+//   4. AFTER.  The same shower, same angle.
+//
+// Two before/after pairs. Consent conditions are the same as every other
+// page (written permission, no identifying detail in frame) with one extra
+// consideration: a mould photo says something about how a specific home has
+// been kept, so the privacy bar under BFD 5.3 is higher, not lower, than for
+// a kitchen. Get permission in writing and keep the frame tight.
+const beforeAfterPairs: BeforeAfterPair[] = [
+  {
+    before: {
+      src: sampleCeilingBeforeImg,
+      alt: 'Sample illustration: a bathroom ceiling and cornice before treatment, mould spotting clustered in the corner and along the join',
+    },
+    after: {
+      src: sampleCeilingAfterImg,
+      alt: 'Sample illustration: the same bathroom ceiling and cornice after treatment, the spotting gone and the paint back to an even tone',
+    },
+    caption: 'Bathroom ceiling and cornice',
+  },
+  {
+    before: {
+      src: sampleShowerBeforeImg,
+      alt: 'Sample illustration: shower grout and screen before treatment, mould dotted through the grout lines',
+    },
+    after: {
+      src: sampleShowerAfterImg,
+      alt: 'Sample illustration: the same shower grout and screen after treatment, the grout lines back to colour',
+    },
+    caption: 'Shower grout and screen',
+  },
+];
+
+// Section 12. Booking. TextBlock `dark`, carrying the page's second CTA,
+// same placement logic as the sibling pages.
+//
+// [CONFIRM] the photo-before-quoting flow in paragraph two. It is drafted,
+// and it is the sensible way to quote this particular service, but it is a
+// claim about how TLB's booking process works and it should match what the
+// booking form actually asks for.
+const bookingBody: TextBlockBody[] = [
+  'Book online in a couple of minutes, or send a text, ring us or drop us an email, whichever you would actually do.',
+  'Send a photo with your enquiry if you can. Mould is one of the few jobs where a picture genuinely changes the quote, because the difference between spotting along a cornice and a wall that has gone through is obvious in a photo and impossible to describe. It also means that if this is a job we should be handing to someone else, we can tell you that before anyone books a day.',
+  'If it turns out to be bigger than a clean, you will hear that from us early and at no cost. We would rather give you an honest answer and no invoice than take a booking we already know will not hold.',
+];
+
+// Section 13. Social proof. Bracketed [TBC] briefing slots, NOT real
+// testimonials. BFD 5.2 and 3.6.3 prohibit fabricated or paraphrased
+// testimonials outright, and IMAGE-GUIDELINES.md section 7 prohibits
+// generating a face to sit beside one. Never fill these in.
+//
+// Note the second slot's brief. A testimonial praising TLB for turning work
+// away is the most on-brand proof this page could carry, and it is the one
+// that would make the honesty above read as real rather than as positioning.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client whose bathroom mould was cleaned and stayed manageable afterwards. Ideally one where a ventilation change was part of it, because that is what this page actually argues.]',
+    name: '[Client name, TBC]',
+    role: '[Suburb / property type, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Mould cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan whether any client has ever thanked TLB for telling them a job needed a builder or a plumber rather than a cleaner. That quote is worth more on this page than any before-and-after, because it is the only thing that proves the promise the rest of the page is making.]',
+    name: '[Client name, TBC]',
+    role: '[Suburb / property type, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Client referred on to a specialist' },
+  },
+];
+
+// Section 14. Where we clean. The shared 56-town, three-region list from
+// src/data/locations.ts. Open questions are flagged there, where one fix
+// serves every page.
+
+// Section 15. FAQs. Ten questions, one block, matching the deep-cleaning and
+// end-of-lease pages. BFD 3.5 asks for self-contained 40 to 80 word answers.
+//
+// EVERY ANSWER IS DRAFTED, not briefed. Two carry hard compliance lines and
+// are flagged individually. Note that the health question is answered by
+// deferral, exactly as section 10 does, and the "will it come back" question
+// is answered honestly rather than reassuringly. Both of those are the point
+// of the page, not a weakness in it.
+const faqItems = [
+  {
+    // The claim-critical answer. Never soften this into a promise.
+    question: 'Will the mould come back after you clean it?',
+    answer:
+      'If the moisture that grew it is still there, yes. Cleaning removes the growth, it does not change the conditions. Where the cause is ventilation or a habit we can often point out a fix that costs nothing. Where it is a leak or a failed seal, it needs a trade, and we will say so rather than sell you the same clean twice.',
+  },
+  {
+    // The health answer. Defers, names the authorities, characterises
+    // nothing. See section 10 and the file header, constraint 1.
+    question: 'Is mould in my home a health risk?',
+    answer:
+      'That is not a question a cleaning company should be answering, so we do not. NSW Health and Queensland Health both publish guidance on damp and mould in the home, and your GP is the right person for anything about your own family. We can tell you what we can see and remove what is on the surface.',
+  },
+  {
+    question: 'Can you get rid of mould permanently?',
+    answer:
+      'Not by cleaning, and nobody can. Permanent means the moisture is gone, and moisture is a building matter rather than a cleaning one. What lasts is a clean plus whatever fixes the cause, whether that is running the fan properly or getting a plumber in. We do the first part and tell you honestly about the second.',
+  },
+  {
+    question: 'How do I know if it is surface mould or something worse?',
+    answer:
+      'Spotting on sound paint, silicone, grout or a window reveal is usually surface. Paint that is bubbling, lifting or soft, plaster that gives when you press it, a musty smell with nothing visible, or growth that keeps spreading after cleaning all point to moisture behind the surface. Send us a photo and we will give you a straight answer before you book.',
+  },
+  {
+    // [CONFIRM] the referral position. It is the page's central boundary.
+    question: 'What if the job turns out to be too big for a clean?',
+    answer:
+      'We tell you, at no cost, and we do not take the booking. Mould inside a cavity, mould after a leak or a flood, or mould across a large area needs a licensed remediation specialist, a plumber or a builder. Cleaning the surface of a problem like that hides it for a few weeks and takes your money for nothing.',
+  },
+  {
+    // [CONFIRM] the silicone position, which is an operational call about
+    // what the team will and will not attempt. Restates section 4.
+    question: 'Can you clean black mould out of shower silicone?',
+    answer:
+      'Sometimes. If it is sitting on the surface it usually comes off. If the silicone has gone black the whole way through, it has failed rather than got dirty, and no amount of cleaning brings it back. In that case it needs replacing, which is a small job for a handyman or a bathroom trade, and we will tell you which one you have.',
+  },
+  {
+    question: 'Why is mould so common in the Northern Rivers?',
+    answer:
+      'Warm, humid and wet for a good part of the year, which is close to ideal for it. Add homes that get closed up between guests or holidays, bathrooms with weak extraction and cool outside walls with wardrobes pushed against them, and it turns up in the same handful of places in house after house across the region.',
+  },
+  {
+    // [CONFIRM] whether mould work is genuinely bundled into a bond clean at
+    // no separate charge, or quoted as an addition. The answer below implies
+    // it is quoted with the bond clean rather than included in it, which is
+    // the safer reading, but Teagan should confirm which it is.
+    question: 'Can you do the mould as part of a bond clean?',
+    answer:
+      'Yes, and it is worth booking them together, because an exit inspection looks closely at exactly the surfaces mould likes. Tell us it is there when you book the bond clean so it is quoted properly and the right amount of time is allowed, rather than being found on the day when the schedule is already set.',
+  },
+  {
+    question: 'Do you bring your own products and equipment?',
+    answer:
+      'Yes, everything. If you would prefer particular products used in your home, or someone in the house is sensitive to something, tell us when you book and we will work with that.',
+  },
+  {
+    question: 'How much does mould cleaning cost?',
+    answer:
+      'It depends on how much there is, what it is growing on and how much of it can actually be cleaned, which is why we quote rather than publish a rate. A photo with your enquiry gets you an accurate price much faster, and it lets us tell you early if this is a job for a trade instead.',
+  },
+];
+
+// Section 16. Closing block. Drafted. Repeats the page's position rather
+// than a promise, which is the only close consistent with everything above.
+const closingCta = {
+  heading: 'Tell us what you are looking at.',
+  lead: 'Send a photo with your enquiry and you will get an honest answer, including if the answer is that you need a trade rather than a cleaner.',
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    {/* Cut-out figure on transparency, so the section colour shows through.
+        The subject is framed waist-up and cropped by the bottom edge, which
+        contain-bottom then anchors. Two framing mistakes were made here
+        before this one worked, both worth not repeating: a full standing
+        figure is too thin for the panel, and empty canvas around the subject
+        shrinks it under a contain fit. Crop to the subject. */}
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      imageFit="contain-bottom"
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    {/* Trust bar + definition block share ONE photo behind a Cream scrim, so
+        it is laid out across both. 75% keeps Dark Teal body copy above 4.5:1
+        over the darkest part of the frame. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75} focus="top">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards
+      heading={pathwayCards.heading}
+      headingAccent={pathwayCards.headingAccent}
+      cards={pathwayCards.cards}
+    />
+
+    <ContentGrid
+      columns={2}
+      heading="Where it turns up, and what we do about it"
+      lead="Mould grows in the same handful of places in house after house on this coast."
+      blocks={surfaceBlocks}
+    />
+
+    <Callout tone="note" body={scopeCallout.body} />
+
+    <ContentGrid
+      columns={3}
+      heading="Why it happens here"
+      lead="This is a mould climate. It is not a reflection on how you keep your house."
+      blocks={climateBlocks}
+    />
+
+    {/* `warning` is the charcoal panel SECTIONS.md reserves for "don't do
+        this". Strictly two things, no method. Do not expand into a how-to. */}
+    <Callout tone="warning" heading={safetyCallout.heading} body={safetyCallout.body} />
+
+    {/* Wrapper carries the #moisture anchor PathwayCards card 3 links to.
+        TextBlock takes no id prop, and adding one just for an anchor target
+        isn't worth a shared-component change. Same pattern the sibling pages
+        use for #compare. */}
+    <div id="moisture">
+      <TextBlock
+        theme="light"
+        align="left"
+        heading="Cleaning takes it off. Moisture is what brings it back."
+        body={moistureBody}
+      />
+    </div>
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+      footnote={comparisonTable.footnote}
+    />
+
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading="On the health question"
+      body={healthBody}
+    />
+
+    {/* Drag the handle to wipe between the two frames of each pair — see
+        the block above `beforeAfterPairs` for why this is a slider and not
+        a gallery, and for the fact that these four images are SAMPLES. The
+        `note` is what tells the reader that; delete it with the imports. */}
+    <BeforeAfter
+      heading="The difference, on real jobs."
+      lead="Drag the handle across each photo to see the same spot before and after a mould clean."
+      pairs={beforeAfterPairs}
+      note="Illustrative samples, shown while we collect before and after photos from real TLB cleans."
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Send us a photo and we will tell you straight"
+      body={bookingBody}
+      cta={quoteCta}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={faqItems} />
+
+    <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

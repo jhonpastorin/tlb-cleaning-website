@@ -137,17 +137,27 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     margin-bottom: var(--space-sm);
   }
 
+  /* One local line token so the outer frame, the row rules and the new
+     column rules can never drift apart. A tint of --color-body rather
+     than the flat 2px --color-body this shipped with: at full strength on
+     every side of every cell the grid read as a heavy ledger and fought
+     the copy for attention. The shared --color-border-muted token is
+     still not used here — it's a fixed light grey that goes muddy against
+     the brand-tinted highlight column, whereas mixing --color-body with
+     transparent keeps the line in the same teal family as the text it
+     sits beside. Scoped to this component; the shared token is untouched. */
+  .comparison-table {
+    --comparison-line-color: color-mix(in srgb, var(--color-body) 25%, transparent);
+    --comparison-line: 1px solid var(--comparison-line-color);
+  }
+
   /* Horizontal scroll on narrow viewports rather than collapsing columns —
      a comparison table doesn't have a sensible single-column form the way
-     a card grid does. Border uses --color-body (darker grey), not the
-     shared --color-border-muted token other components' hairlines use —
-     that token is a light #D8D8D8, too faint to read as a real dividing
-     line on a table meant to be scanned row by row. Scoped to this
-     component only; --color-border-muted itself is untouched. */
+     a card grid does. */
   .comparison-table__scroll {
     overflow-x: auto;
     border-radius: var(--radius-md);
-    border: 2px solid var(--color-body);
+    border: var(--comparison-line);
   }
 
   .comparison-table__table {
@@ -156,10 +166,31 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     border-collapse: collapse;
   }
 
+  /* Borders on all four sides, so every cell is fully boxed and the
+     columns are ruled as well as the rows. `border-collapse: collapse`
+     above merges each shared edge into a single line, so adjacent cells
+     don't stack up to a double-thickness rule. */
   .comparison-table__table th,
   .comparison-table__table td {
     padding: var(--space-sm) var(--space-md);
-    border-bottom: 2px solid var(--color-body);
+    border: var(--comparison-line);
+  }
+
+  /* The perimeter is drawn once, by .comparison-table__scroll's own
+     border — which is the one that follows the rounded corners. Dropping
+     the outermost cell edges keeps that frame a single line instead of
+     doubling it just inside the radius, where the corner cells would
+     otherwise cut visibly across the curve. */
+  .comparison-table__table tr > *:first-child {
+    border-left: none;
+  }
+
+  .comparison-table__table tr > *:last-child {
+    border-right: none;
+  }
+
+  .comparison-table__table thead th {
+    border-top: none;
   }
 
   .comparison-table__table tbody tr:last-child th,
@@ -184,10 +215,26 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     color: var(--color-on-surface);
   }
 
+  /* NOT `display: flex` here — same trap the `.comparison-table__cell`
+     note below spells out, just on the row-label <th> instead of a <td>:
+     flex's outer display value is `block`, which pulls the cell out of
+     table-cell layout so it no longer stretches to the row's full height.
+     Its border-bottom then draws short of the row's real bottom edge and
+     the first column's dividing lines visibly break away from the rest of
+     the row. Found live on every page using this section. The two spans
+     stack on their own as block-level children instead, with a margin
+     standing in for the old flex `gap`. */
   .comparison-table__row-label {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3xs);
+    vertical-align: middle;
+  }
+
+  .comparison-table__row-title,
+  .comparison-table__row-desc {
+    display: block;
+  }
+
+  .comparison-table__row-desc {
+    margin-top: var(--space-3xs);
   }
 
   .comparison-table__row-title {
@@ -318,7 +365,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
        a single card per feature, not three separate boxes with margins
        between them. */
     .comparison-table__table tbody tr {
-      border: 2px solid var(--color-body);
+      border: var(--comparison-line);
       border-radius: var(--radius-sm);
       overflow: hidden;
       margin-bottom: var(--space-md);
@@ -331,11 +378,14 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     /* Base rule `.comparison-table__table th, .comparison-table__table td`
        (a class + a type selector) outranks a plain single-class override —
        matching that same shape here, not just `.comparison-table__row-label`/
-       `.comparison-table__cell` alone, so this border-bottom reset actually
-       wins instead of losing the specificity tie-break silently. */
+       `.comparison-table__cell` alone, so this border reset actually
+       wins instead of losing the specificity tie-break silently.
+       `border: none`, not just `border-bottom` — the desktop rule now sets
+       all four sides, and the stacked card layout here draws its own frame
+       on the <tr> plus a single divider per cell below. */
     .comparison-table__table th,
     .comparison-table__table td {
-      border-bottom: none;
+      border: none;
     }
 
     /* Both selectors below match (class + type) the specificity of the
@@ -363,7 +413,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
       justify-content: space-between;
       gap: var(--space-sm);
       text-align: left;
-      border-top: 2px solid var(--color-body);
+      border-top: var(--comparison-line);
       padding: var(--space-sm) var(--space-md);
     }
 

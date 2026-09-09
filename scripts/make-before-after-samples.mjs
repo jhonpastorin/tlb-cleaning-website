@@ -1,13 +1,16 @@
-// Generates the four SAMPLE before/after images the house-cleaning page's
-// BeforeAfter slider is wired to, so the interaction can be built, reviewed
-// and signed off before any real client photography exists.
+// Generates the SAMPLE before/after images the BeforeAfter sliders are wired
+// to, so the interaction can be built, reviewed and signed off before any real
+// client photography exists. Four scenes, each a pair: kitchen bench and
+// shower screen (house-cleaning, home, deep-cleaning), oven interior
+// (end-of-lease, whose brief names the oven) and bathroom ceiling with cornice
+// (mould-cleaning, whose brief names the ceiling).
 //
 // ⚠️ THESE ARE NOT PHOTOGRAPHS AND MUST NEVER BE PRESENTED AS ONE. They are
 // flat vector illustrations, each stamped with a visible SAMPLE badge, and
 // their filenames say `sample-` for the same reason. The page's own guardrail
 // stands: a fabricated "before and after from a real job" is a false trust
 // claim. When real photography lands, swap the four imports in
-// house-cleaning.astro and delete these files.
+// each page that uses them and delete these files.
 //
 // Run: node scripts/make-before-after-samples.mjs
 //
@@ -206,11 +209,162 @@ const shower = (dirty) => {
   </svg>`;
 };
 
+/* ──────────────────────────── Oven interior ──────────────────────────── */
+// For the end-of-lease page, whose photo brief names the oven specifically:
+// it is the single item agents inspect hardest and the one tenants most often
+// lose bond over, so a generic kitchen bench would not stand in for it.
+// Shared geometry: the cavity walls in perspective, two wire racks on their
+// side rails, the lower element, and the door glass framing the whole shot.
+// Only the burnt-on layer and the tone change between states.
+const oven = (dirty) => {
+  const r = rng(31);
+  const cavity = dirty ? '#4a4238' : '#b9b5ab';
+  const backWall = dirty ? '#3d362e' : '#a8a49a';
+  const rack = dirty ? '#5e5648' : '#d8d5cd';
+
+  // Burnt-on carbon: heaviest on the floor of the cavity where spills land
+  // and bake, thinning up the walls. Suppressed entirely in the clean state.
+  let grime = '';
+  if (dirty) {
+    for (let i = 0; i < 70; i++) {
+      const x = 300 + r() * 1000;
+      const y = 840 + r() * 190;
+      grime += `<ellipse cx="${x}" cy="${y}" rx="${6 + r() * 46}" ry="${3 + r() * 16}"
+                fill="#17120c" opacity="${0.22 + r() * 0.5}"/>`;
+    }
+    for (let i = 0; i < 40; i++) {
+      const x = 280 + r() * 1040;
+      const y = 250 + r() * 560;
+      grime += `<ellipse cx="${x}" cy="${y}" rx="${4 + r() * 20}" ry="${3 + r() * 14}"
+                fill="#221a11" opacity="${0.14 + r() * 0.36}"/>`;
+    }
+    // A run of boiled-over fat down the back wall, and spatter on the glass.
+    grime += `<path d="M 830 300 q 22 210 -10 430" stroke="#1d160e" stroke-width="26"
+               fill="none" opacity="0.42" stroke-linecap="round"/>`;
+    for (let i = 0; i < 34; i++) {
+      grime += `<circle cx="${200 + r() * 1200}" cy="${140 + r() * 940}" r="${3 + r() * 9}"
+                 fill="#2b2118" opacity="${0.16 + r() * 0.3}"/>`;
+    }
+  }
+
+  // The clean state's gleam: enamel throws light back off the cavity floor
+  // and along the rack wires, which is most of what "clean" reads as here.
+  const shine = dirty
+    ? ''
+    : `<ellipse cx="800" cy="930" rx="420" ry="34" fill="#ffffff" opacity="0.3"/>
+       <ellipse cx="560" cy="470" rx="150" ry="26" fill="#ffffff" opacity="0.18"/>
+       <rect x="250" y="180" width="46" height="700" rx="23" fill="#ffffff" opacity="0.14"/>`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+    <rect width="${W}" height="${H}" fill="${dirty ? '#2a251f' : '#8f8b82'}"/>
+    <!-- door frame: the shot is taken through the open door -->
+    <rect x="0" y="0" width="${W}" height="${H}" fill="${dirty ? '#39332b' : '#9c988f'}"/>
+    <rect x="150" y="110" width="1300" height="990" rx="18" fill="${cavity}"/>
+    <!-- cavity floor and ceiling, angled to read as depth -->
+    <path d="M 150 110 L 340 260 L 1260 260 L 1450 110 Z" fill="${dirty ? '#443c33' : '#aeaaa0'}"/>
+    <path d="M 150 1100 L 340 950 L 1260 950 L 1450 1100 Z" fill="${dirty ? '#332c25' : '#a5a197'}"/>
+    <rect x="340" y="260" width="920" height="690" fill="${backWall}"/>
+    <!-- side rails the racks sit on -->
+    <rect x="360" y="430" width="30" height="380" rx="15" fill="${rack}" opacity="0.8"/>
+    <rect x="1210" y="430" width="30" height="380" rx="15" fill="${rack}" opacity="0.8"/>
+    <!-- two wire racks -->
+    ${[470, 700].map((y) => {
+      let wires = `<rect x="360" y="${y}" width="880" height="12" rx="6" fill="${rack}"/>`;
+      for (let x = 390; x < 1230; x += 60) {
+        wires += `<rect x="${x}" y="${y - 4}" width="9" height="20" rx="4" fill="${rack}" opacity="0.9"/>`;
+      }
+      return wires;
+    }).join('')}
+    <!-- lower element -->
+    <path d="M 430 880 h 300 q 60 0 60 40 q 0 40 60 40 h 290"
+      stroke="${dirty ? '#6b6154' : '#c9c5bc'}" stroke-width="22" fill="none" stroke-linecap="round"/>
+    ${grime}
+    ${shine}
+    <!-- door glass edge, drawn last so it sits over the cavity -->
+    <rect x="150" y="110" width="1300" height="990" rx="18" fill="none"
+      stroke="${dirty ? '#575046' : '#d2cec5'}" stroke-width="26"/>
+    ${badge()}
+  </svg>`;
+};
+
+/* ─────────────────────── Bathroom ceiling and cornice ─────────────────────── */
+// For the mould page, whose brief names a ceiling and cornice rather than a
+// bench or a screen — mould reads as a ceiling problem to the people who
+// search for it, and the shower pair above cannot carry that on its own.
+// Shared geometry: the ceiling plane, the cornice run across it, the wall
+// below, a downlight and an exhaust vent. Only the colony and the tone move.
+const ceiling = (dirty) => {
+  const r = rng(53);
+  const ceilFill = dirty ? '#cbcabb' : '#f7f5ec';
+  const corniceFill = dirty ? '#dedccd' : '#fdfcf6';
+  const wallFill = dirty ? '#a09e8f' : '#ddd9cb';
+
+  // The colony: dense in the corner where the two planes meet and the air
+  // moves least, thinning along the cornice run. Drawn as clustered blooms
+  // rather than even scatter — that clustering is what distinguishes mould
+  // from ordinary dirt at a glance.
+  let grime = '';
+  if (dirty) {
+    const bloom = (cx, cy, n, spread, maxR) => {
+      let out = '';
+      for (let i = 0; i < n; i++) {
+        const a = r() * Math.PI * 2;
+        const d = r() * spread;
+        out += `<circle cx="${cx + Math.cos(a) * d}" cy="${cy + Math.sin(a) * d * 0.6}"
+                 r="${2 + r() * maxR}" fill="#2f3a2c" opacity="${0.18 + r() * 0.46}"/>`;
+      }
+      return out;
+    };
+    grime += bloom(210, 250, 150, 240, 11);
+    grime += bloom(520, 190, 90, 190, 8);
+    grime += bloom(1040, 300, 70, 210, 7);
+    grime += bloom(1430, 235, 110, 200, 9);
+    // Staining along the cornice join itself, where condensation runs.
+    for (let i = 0; i < 120; i++) {
+      grime += `<circle cx="${r() * W}" cy="${470 + r() * 46}" r="${2 + r() * 7}"
+                 fill="#3a4436" opacity="${0.16 + r() * 0.4}"/>`;
+    }
+    // A damp shadow spreading down the wall below the worst corner.
+    grime += `<ellipse cx="240" cy="700" rx="300" ry="180" fill="#6f7566" opacity="0.26"/>`;
+  }
+
+  const shine = dirty
+    ? ''
+    : `<ellipse cx="900" cy="240" rx="520" ry="130" fill="#ffffff" opacity="0.26"/>
+       <ellipse cx="1180" cy="760" rx="380" ry="150" fill="#ffffff" opacity="0.16"/>`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+    <!-- ceiling plane across the top, wall below, cornice on the join -->
+    <rect width="${W}" height="${H}" fill="${wallFill}"/>
+    <rect x="0" y="0" width="${W}" height="470" fill="${ceilFill}"/>
+    <rect x="0" y="452" width="${W}" height="66" fill="${corniceFill}"/>
+    <path d="M 0 452 h ${W}" stroke="${dirty ? '#8f8e80' : '#ddd9cc'}" stroke-width="6"/>
+    <path d="M 0 518 h ${W}" stroke="${dirty ? '#8f8e80' : '#ddd9cc'}" stroke-width="6"/>
+    <!-- downlight -->
+    <circle cx="1150" cy="200" r="76" fill="${dirty ? '#a3a293' : '#dedbcd'}"/>
+    <circle cx="1150" cy="200" r="54" fill="${dirty ? '#87867a' : '#fdfcf6'}"/>
+    <!-- exhaust vent, the other place mould gathers -->
+    <rect x="330" y="120" width="200" height="140" rx="12" fill="${dirty ? '#a5a495' : '#e2dfd2'}"/>
+    ${[40, 76, 112].map((o) => `<rect x="352" y="${120 + o}" width="156" height="14" rx="7"
+      fill="${dirty ? '#75746a' : '#a9a596'}"/>`).join('')}
+    <!-- part-height wall tiling below -->
+    <rect x="0" y="820" width="${W}" height="${H - 820}" fill="${dirty ? '#8e8d80' : '#c9c6b7'}"/>
+    <path d="M 0 820 h ${W}" stroke="${dirty ? '#6f6e63' : '#b0ac9c'}" stroke-width="8"/>
+    ${grime}
+    ${shine}
+    ${badge()}
+  </svg>`;
+};
+
 const files = [
   ['sample-kitchen-before.png', kitchen(true)],
   ['sample-kitchen-after.png', kitchen(false)],
   ['sample-shower-before.png', shower(true)],
   ['sample-shower-after.png', shower(false)],
+  ['sample-oven-before.png', oven(true)],
+  ['sample-oven-after.png', oven(false)],
+  ['sample-ceiling-before.png', ceiling(true)],
+  ['sample-ceiling-after.png', ceiling(false)],
 ];
 
 await mkdir(OUT, { recursive: true });
