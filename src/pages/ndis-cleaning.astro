@@ -42,6 +42,19 @@ import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own two assets, generated per IMAGE-GUIDELINES; the prompts are
+// in src/assets/ndis/IMAGE-PROMPTS.md. They fill the §1 hero and the §3 card 3
+// slots that had been shipping as dashed placeholder boxes.
+//
+// Cards 1 and 2 are REUSED rather than generated, per IMAGE-GUIDELINES §5
+// ("reuse before generating; same subject = same file"): each card links to
+// the page the photo already belongs to, so the frame means the same thing in
+// both places. Card 1 is the homepage's regular-clean photo and card 2 is the
+// deep-cleaning page's own.
+import heroImg from '../assets/ndis/ndis-cleaning-cleaner-in-a-lived-in-living-room.jpg';
+import cardRegularImg from '../assets/home/house-cleaning-team-vacuuming-open-plan-living-room.jpg';
+import cardDeepCleanImg from '../assets/home/service-deep-and-one-off-cleans.png';
+import cardCoordinatorImg from '../assets/ndis/ndis-cleaning-cleaner-and-support-coordinator-talking-in-a-home.jpg';
 // §2 backdrop, behind the Cream scrim (the homepage's — no photo supplied for this page yet).
 import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
@@ -91,29 +104,35 @@ const business = {
 // §1 Hero — drafted in full. Lead is 23 words, inside the 15–25 target.
 //
 // Hero style matches the homepage, house cleaning and deep cleaning pages:
-// `split-single-image`, copy left, image right. NO ASSET YET — `image` is
-// passed with a `label` but no `src`, so Placeholder renders its dashed
-// briefing box in the panel. That is a deliberate reversal of this page's
-// earlier call (`minimal`, to avoid a dashed box standing in for a photo):
-// the style is now shared across the site, so the slot is held open here
-// instead of this page opening differently from every other one.
+// `split-single-image`, copy left, image right.
 //
-// ⚠️ The dashed box is a pre-launch state. It must not ship to production —
-// either the asset lands or this hero goes back to `variant="minimal"`.
+// THE ASSET HAS LANDED. This slot shipped as a dashed Placeholder box for
+// most of this page's life, and the note that used to sit here said the page
+// needed it more than any other, because the H1 is literally "the same
+// trusted local faces" and the hero had no faces in it. It has one now.
 //
-// Dropping the asset in is a one-line change: add `src`. `ratio` is 4/3 and
-// `imageFit` is contain-bottom, matching the cut-out-figure-on-a-green-circle
-// template the three sourced assets use (contain so the backdrop is never
-// cropped, bottom-anchored so the figure stands on the section's edge). If a
-// plain photograph arrives instead, drop `imageFit` to let it default to
-// `cover` and bleed edge to edge.
+// Two consequences of it being a SCENE PHOTO (family A) rather than the
+// cut-out figure the slot was originally sized for:
+//   - `imageFit` is now UNSET on the render below, taking Placeholder's
+//     `cover` default. There is no transparency to preserve and no figure to
+//     stand on the section's edge. This is the call the old note anticipated:
+//     "if a plain photograph arrives instead, drop `imageFit`".
+//   - `ratio` is 1/1 because the SOURCE is 1024×1024, so a box matching the
+//     file crops nothing. Regenerate square if this is ever reshot, or change
+//     both together.
 //
-// ⚠️ This page needs the asset more than any other: the H1 is literally
-// "the same trusted local faces" and the hero has no faces in it. A photo of
-// real staff earns more here than anywhere else on the site.
+// ⚠️ GENERATED, NOT PHOTOGRAPHED, and on this page that distinction carries
+// more weight than anywhere else on the site. The woman in the frame does not
+// exist. She is honest as generic service imagery — she is not named, not
+// captioned as a team member, and not presented as a participant — which is
+// the line IMAGE-GUIDELINES §7 draws. But a page whose entire promise is
+// "the same familiar faces" is the page where a real photograph of the real
+// nine does the most work, and it is still the right thing to shoot before
+// launch. Treat this as a good placeholder, not the finished job.
 //
-// ⚠️ Do NOT fill it from src/assets/hero/participant-and-support-worker.png
-// or its siblings. Despite the names they are leftover placeholders from the
+// ⚠️ Still true, and still worth keeping: do NOT fill this or any slot on
+// this page from src/assets/hero/participant-and-support-worker.png or its
+// siblings. Despite the names they are leftover placeholders from the
 // Maple/NDIS template this component library was first built against — not
 // TLB's people. Using them would fabricate a workforce on the one page where
 // that matters most.
@@ -122,8 +141,10 @@ const hero = {
   lead: 'Consistent, respectful in-home cleaning you can rely on. Experience the comfort of a safe environment, familiar local faces, and a completely stress-free schedule.',
   cta: quoteCta,
   image: {
-    ratio: '4/3',
-    label: 'A real TLB cleaner, one of the regular faces, cleaning in a home',
+    ratio: '1/1',
+    label:
+      'A TLB cleaner in an aqua polo and dark teal apron standing with her vacuum in a comfortable, lived-in living room, turning toward the camera with a warm, open expression',
+    src: heroImg,
   },
 };
 
@@ -153,7 +174,11 @@ const pathwayCards = {
   cards: [
     {
       number: 1,
-      image: { ratio: '4/3', label: 'Cleaner working in a participant home' },
+      image: {
+        ratio: '4/3',
+        label: 'Two TLB cleaners vacuuming and tidying an open-plan living room during a regular visit',
+        src: cardRegularImg,
+      },
       title: 'Set up regular support',
       description:
         'Most participants prefer the comfort of a consistent, weekly or fortnightly schedule. You get the same familiar face treating your home with genuine care, every time.',
@@ -161,7 +186,11 @@ const pathwayCards = {
     },
     {
       number: 2,
-      image: { ratio: '4/3', label: 'Home being reset by a deep clean' },
+      image: {
+        ratio: '4/3',
+        label: 'A TLB cleaner working through a room during a deep reset clean',
+        src: cardDeepCleanImg,
+      },
       title: 'I need a deep reset clean',
       description:
         'Sometimes you just need help getting back on top of things. A deep clean resets the home to a safe, comfortable standard before starting regular service.',
@@ -175,7 +204,21 @@ const pathwayCards = {
       // but what a coordinator actually wants is a referral route: how to
       // send a participant, how invoicing works, who to call. None of that
       // exists yet. See the plan's §3.
-      image: { ratio: '4/3', label: 'Support coordinator reviewing a participant plan' },
+      // ⚠️ THE LABEL CHANGED WITH THE PHOTO, deliberately. This slot was
+      // briefed as "Support coordinator reviewing a participant plan", and
+      // that photo was not generated: IMAGE-GUIDELINES §4 bans lettering in
+      // frame, and a photo whose entire subject is a document is a photo of
+      // garbled fake text — on this page, garbled fake text on something
+      // shaped like an NDIS plan. The conversation is where a placement
+      // actually gets arranged, so it carries the same meaning with nothing
+      // to misread. §6 requires the label to describe the photo that is
+      // there, not the one first hoped for.
+      image: {
+        ratio: '4/3',
+        label:
+          'A TLB cleaner and a support coordinator talking in the living room of a home, relaxed and unhurried',
+        src: cardCoordinatorImg,
+      },
       title: 'I am a Support Coordinator',
       description:
         'We make managing plans easy. We are a reliable, [insured] local business ready to provide consistent, respectful in-home help for your participants.',
@@ -454,7 +497,6 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      imageFit="contain-bottom"
       headingLines={hero.headingLines}
       lead={hero.lead}
       cta={hero.cta}

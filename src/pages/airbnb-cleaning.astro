@@ -1,0 +1,639 @@
+---
+// Airbnb and holiday let cleaning — one of the three LEAF pages under the
+// "Specialist cleaning" group in the Home Cleaning mega-menu
+// (navigation.ts). Sibling of /real-estate-cleaning/ and /ndis-cleaning/.
+//
+// Built in the same pass as /real-estate-cleaning/ and sharing its
+// structure deliberately, the same call the two commercial leaves made:
+// two pages off one menu group that open differently read as two sites.
+//
+// NO CONTENT BRIEF EXISTS in content-plans/ for this page. But unlike the
+// commercial leaves, this one is NOT drafted from nothing — the Brand
+// Foundation Document has a full audience section for it (§7 "Audience 2:
+// Airbnb and short-stay hosts", plus §3's third differentiator and §5's
+// approved headline/CTA sets). Every positioning claim below traces to that
+// document, and the places it is quoted are marked. Copy still needs
+// sign-off; approved *positioning* is not the same as approved *page copy*.
+//
+// BLOCKS LAUNCH — all six are operational facts only TLB holds, and all six
+// ship as visible [brackets] per house convention rather than as plausible
+// guesses:
+//   - HOW the calendar sync actually works. The BFD says TLB "syncs with
+//     your booking calendar" and "manages backend scheduling directly
+//     around bookings". That is a real differentiator and the page leans on
+//     it, but nothing states the mechanism — iCal feed, channel manager, PMS
+//     integration, or a person reading the bookings. Naming a specific
+//     integration would fabricate a system. Bracketed in §4 and branded FAQ 1.
+//   - LINEN. Does TLB supply and launder linen, or turn the host's own? This
+//     is the single biggest cost and logistics question in short-stay
+//     cleaning and the page cannot answer it. Bracketed in §4 and
+//     non-branded FAQ 3.
+//   - CONSUMABLES. The BFD promises restocked essentials "such as toilet
+//     paper and olive oil". Who buys them, and are they billed on? Bracketed
+//     in §4.
+//   - SAME-DAY TURNOVER CUT-OFF. The one thing a host rings about. What is
+//     the latest checkout TLB can still turn for a same-day check-in, and is
+//     there a booking deadline? Bracketed in branded FAQ 2.
+//   - PRICING BASIS. Flat rate per turnover or hourly, and is there a
+//     minimum? Bracketed in non-branded FAQ 1. A "from $X" that turns out
+//     wrong is worse than no number; the ACCC treats from-pricing as a claim.
+//   - [insured], inherited from every sibling page. One answer fixes all.
+//
+// ⚠️ COMPLIANCE READ REQUIRED on non-branded FAQ 5 (short-stay planning
+// rules). It describes NSW's short-term rental accommodation framework and
+// the Byron Shire day cap. Those rules are live, contested and periodically
+// amended, and a host may act on what this page says. It is written without
+// dates, precinct lists or a specific commencement on purpose. It needs a
+// verification pass and a visible "last reviewed" date before launch, or it
+// should come off the page. See that FAQ's own comment.
+//
+// NOT BUILT, deliberately: hero video, credibility signals, metrics. No
+// direction exists for any of them and the deep-cleaning page's precedent is
+// that a credibility block filled on an assumption gets removed again.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Callout from '../components/sections/Callout.astro';
+import BeforeAfter from '../components/sections/BeforeAfter.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own assets, generated per IMAGE-GUIDELINES; the prompts are in
+// src/assets/airbnb/IMAGE-PROMPTS.md.
+//
+// ⚠️ NOT REUSED: src/assets/home/holiday-let-cleaning-guest-ready-cottage-living-room.jpg
+// (and its duplicate service-airbnb-and-holiday-let-turnovers.jpg), which is
+// what the homepage runs for its holiday-let persona card. IMAGE-GUIDELINES
+// §5 says reuse before generating, and that rule was deliberately broken
+// here: that photo is a snowbound English stone cottage with a wood burner
+// and bare winter trees through the glass. It is not the Northern Rivers, it
+// is not Australia, and it is the opposite season. It predates the prompt
+// sheets and has no prompt of its own. The homepage should be repointed at
+// these frames too — see the sheet's opening note.
+import heroImg from '../assets/airbnb/airbnb-cleaning-cleaner-finishing-a-guest-ready-holiday-apartment.jpg';
+import cardLinenImg from '../assets/airbnb/airbnb-turnover-making-up-a-bed-with-fresh-white-linen.jpg';
+import cardRestockImg from '../assets/airbnb/airbnb-turnover-restocked-guest-essentials-on-a-kitchen-bench.jpg';
+import cardKeysImg from '../assets/airbnb/airbnb-turnover-cleaner-arriving-at-a-holiday-cottage-with-keys.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as every sibling.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+// Before/after SAMPLES, shared with four other pages. See §7.
+import sampleKitchenBeforeImg from '../assets/home_cleaning/before_after/sample-kitchen-before.png';
+import sampleKitchenAfterImg from '../assets/home_cleaning/before_after/sample-kitchen-after.png';
+import sampleShowerBeforeImg from '../assets/home_cleaning/before_after/sample-shower-before.png';
+import sampleShowerAfterImg from '../assets/home_cleaning/before_after/sample-shower-after.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+
+// §0 Metadata. Focus keyword leads the title, matching every sibling.
+// "Airbnb cleaning" is the phrase hosts search; "holiday let turnovers" is
+// the phrase the homepage and footer already use for this page, so both
+// appear, the search term first.
+const pageMeta = {
+  title: 'Airbnb Cleaning and Holiday Let Turnovers | TLB Cleaning',
+  description:
+    'Airbnb and holiday let cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast. Turnovers timed to your bookings, essentials restocked and guest-ready before check-in.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/airbnb-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  // BOTH STATES, unlike commercial-cleaning and ndis-cleaning which stop at
+  // the border. Deliberate: the BFD's own audience section for short-stay
+  // hosts names "the Northern Rivers and Southern Gold Coast" explicitly, and
+  // twice. So this page uses the full `locationGroups` below rather than
+  // `nswLocationGroups`.
+  areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The H1 is the BFD's own approved headline for this audience
+// ("Set and forget hosting starts here.") and the CTA is its approved CTA
+// for the same block ("Let us handle your turnovers") — not the sitewide
+// "Get an instant quote". A host is buying an arrangement, not a job, and
+// the CTA should say so. quoteCta.href is still the destination, so there is
+// one form to build, not two.
+//
+// The kicker carries the focus keyword, which frees the H1 to be a promise
+// rather than a keyword. Same call the commercial leaves make.
+//
+// A SCENE PHOTO (family A), not a cut-out figure: the shutters, the ocean
+// through them, the squared cushions and the restocked bench are what say
+// *holiday let*, and none of them survive a cut-out. So `imageFit` is unset
+// and takes Placeholder's `cover` default, and `ratio` is 1/1 because the
+// source is 1024×1024 — a box matching the file crops nothing. Regenerate
+// square if this is ever reshot, or change both together.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. A person who does not exist, in the
+// IMAGE-GUIDELINES §3 canonical uniform. Honest as generic service imagery
+// and not presented as a named team member, which §7 forbids. A real photo
+// of a real TLB cleaner in a real Byron holiday let would do more; treat
+// this as a good placeholder rather than the finished job.
+const hero = {
+  kicker: 'Airbnb and holiday let cleaning',
+  headingLines: ['Set and forget hosting', 'starts here.'],
+  lead:
+    'Turnovers timed to your bookings, essentials restocked and the place guest-ready before check-in. Across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+  cta: { label: 'Let us handle your turnovers', href: quoteCta.href },
+  image: {
+    ratio: '1/1',
+    label:
+      'A cleaner in an aqua polo and dark teal apron setting a vase of fresh flowers on the dining table of a finished, guest-ready coastal holiday apartment, with restocked towels and essentials on the kitchen bench behind her',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. The answer-target block for the focus keyword and the first
+// place the phrase appears in body copy. Paragraph two does the synonym work
+// ("holiday let turnover", "short-stay cleaning", "changeover") so this one
+// page answers all of those queries instead of four thin pages competing for
+// them — the same call the commercial carpet page makes with "steam cleaning".
+const definitionBody: TextBlockBody[] = [
+  'Airbnb cleaning is the turnover clean between one guest checking out and the next checking in: the whole property reset, linen changed, bathrooms and kitchen done, consumables restocked and the place presented ready for arrival. TLB Cleaning does Airbnb and holiday let turnovers across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+  'A turnover, a changeover and a short-stay clean are the same job under three names. It is not a house clean on a shorter timeline — the difference is that it is scheduled off a booking calendar rather than a weekly slot, it has a hard deadline set by someone else, and presentation counts as much as cleanliness, because it is being photographed and reviewed by the person walking in.',
+];
+
+// §3 Pathway cards. The three situations a host actually arrives in, taken
+// from the BFD's pain-point list for this audience (coordination around
+// bookings and same-day turnovers; restocking and presentation; managing it
+// all from out of area). Not three services — three readers.
+//
+// Destinations spread deliberately: the quote flow, the guide the nav
+// already promises, and /why-tlb/. A leaf that links only to a quote form
+// strands the host who is comparing rather than buying.
+//
+// ⚠️ Card 2's destination /guides/the-airbnb-turnover-checklist/ is taken
+// verbatim from navigation.ts' Guides mega-menu, where it is listed and
+// unbuilt. It will 404 until that guide ships. Kept rather than repointed
+// because it is the honest destination and the menu already advertises it —
+// but if the guides section slips past launch, this card needs the quote
+// flow instead. Same open item as every other guide link on the site.
+const pathwayCards = {
+  heading: 'Hosts arrive here in one of three situations.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        label:
+          'A cleaner in an aqua polo and dark teal apron making up a queen bed with fresh white linen in a bright coastal holiday house bedroom',
+        src: cardLinenImg,
+      },
+      title: 'I am chasing my cleaner around every booking',
+      description:
+        'Checkout at ten, check-in at two, and a message thread you have to manage yourself every single time. We work off your calendar instead of asking you to relay it, so the turnover happens without you organising it.',
+      cta: { label: 'Let us handle your turnovers', href: quoteCta.href },
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label:
+          'A cleaner setting out folded white towels beside restocked guest essentials on the kitchen bench of a coastal holiday apartment',
+        src: cardRestockImg,
+      },
+      title: 'The cleaning is fine, the presentation is not',
+      description:
+        'A clean property still reviews badly if the loo paper ran out on day two and the bed looks made rather than presented. Restocking and presentation are part of the turnover here, not an extra you have to ask for.',
+      cta: { label: 'The turnover checklist', href: '/guides/the-airbnb-turnover-checklist/' },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        label:
+          'A cleaner arriving at the front door of a coastal holiday cottage with a key in her hand and her cleaning caddy on the verandah beside her',
+        src: cardKeysImg,
+      },
+      title: 'I host from out of town and cannot see the place',
+      description:
+        // BFD approved headline for this exact reader: "Hosting from out of
+        // town? We've got your keys covered."
+        'If you are in Brisbane or Sydney and your listing is in Byron, you are trusting someone else with the keys and with your reviews. We are a full-time local team you can ring, not a roster of strangers, and we tell you what we found.',
+      cta: { label: 'Why TLB', href: '/why-tlb/' },
+    },
+  ],
+};
+
+// §4 What a turnover includes. THE MOST IMPORTANT BLOCK ON THIS PAGE, and
+// the reason it is here rather than a paragraph: a host comparing quotes is
+// comparing scopes, and the differentiator the BFD claims for this audience
+// is precisely that TLB does more than "the basics and leave".
+//
+// ⚠️ EVERY ITEM IS DRAFTED against the BFD's differentiator list, not
+// supplied as page copy by TLB. Confirm each one and CUT anything TLB does
+// not actually do. An overstated scope is worse than a short one, because
+// this is the block a host will hold us to on a Sunday afternoon.
+//
+// Three of the six carry brackets. They are the three questions that decide
+// whether a host can switch to TLB at all, so they are not cosmetic.
+const turnoverItems = [
+  {
+    icon: 'target' as const,
+    title: 'Scheduled off your bookings',
+    description:
+      // ⚠️ MECHANISM BRACKETED. The BFD claims the sync; nothing states how.
+      'We work to your booking calendar rather than a standing weekly slot, so a new booking or a changed date does not become a message you have to send. [How we take your calendar — iCal link, channel manager, or we are set up as a cleaner on your listing. Confirm.]',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'The full reset, not a tidy',
+    description:
+      'Kitchen, bathrooms, floors, surfaces, mirrors and glass, inside the microwave and the fridge, bins out and rebagged. Every room reset to the same state, because the guest walking in has no idea what the last one did.',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Linen changed and beds presented',
+    description:
+      // ⚠️ Real bracket, and the biggest operational unknown on the page.
+      'Beds stripped, remade and presented rather than just made, towels folded and set out, and anything stained or worn flagged to you rather than put back on the bed. [Whether we supply and launder linen or turn yours. Confirm — this changes the price and the logistics.]',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Essentials restocked',
+    description:
+      // BFD names toilet paper and olive oil specifically. Kept, because a
+      // specific is what makes this believable. Billing bracketed.
+      'Loo paper, hand soap, dishwashing, tea and coffee, and the kitchen staples a guest expects to find rather than buy — down to the olive oil. [Whether we buy and bill the restock or top up from your supply. Confirm.]',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'The welcoming touches',
+    description:
+      'Fresh flowers, cushions squared, the outdoor setting wiped down, blinds and doors set the way they should be for arrival. Small things, and they are most of the difference between a four and a five.',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'We tell you what we found',
+    description:
+      'Damage, breakages, something missing, a smoke alarm chirping or a guest who plainly had twelve people in a six-berth house — you hear about it from us the same day, in time to do something about it.',
+  },
+];
+
+// §5 "Worth knowing" — the interruption block. Callout, tone="note", the
+// same job it does on the NDIS page: correct something the reader probably
+// believes before they compare on price.
+//
+// The lever here is the BFD's own consequence framing for this audience:
+// what inaction costs a host is not a dirty house, it is the review. That is
+// the one argument a cheaper quote cannot answer.
+const worthKnowing = {
+  heading: 'The cheapest turnover is priced per clean. It costs you per review.',
+  body: [
+    'A turnover is the only clean on this site whose result gets published. A missed shower screen is a private annoyance in a family home and a permanent three-star sentence on a listing — and it lands on the review that sits at the top of your page for the next six months.',
+    'So the number worth comparing is not the price per turnover. It is what happens when a guest checks out at eleven and the next one arrives at two, and whether anybody is going to tell you the toaster is broken before a guest does.',
+  ],
+};
+
+// §6 Why the same team matters. TextBlock dark, the sibling pages' "worth
+// knowing" long-form slot.
+//
+// This is where the BFD's "first month is the critical proving period" and
+// "once a cleaner proves dependable, hosts rarely switch" insight earns its
+// place — stated as what the host should demand, not as what TLB claims.
+const whySameTeamBody: TextBlockBody[] = [
+  'Short-stay cleaning has the highest turnover of cleaners of any work we do, and it is not because the job is hard. It is because it is scheduled around other people, it clusters on Fridays and Sundays, and a sole operator with six listings physically cannot cover a Saturday when four of them change over at once. So the good ones get busy, then they get overcommitted, then one weekend they do not show — and it is your guest standing on the verandah, not theirs.',
+  'That is the whole reason TLB is nine full-time employed cleaners rather than one person with a car. Capacity is what makes a Saturday changeover boring, and boring is the entire product. When you are choosing between quotes, the questions worth asking are how many people the business actually employs, what happens when your regular cleaner is sick, and who answers the phone at nine on a Sunday morning.',
+  'We are also not a platform. The person in your property is on our team, we know which property is yours, and there is one local number to ring — which is a low bar until the weekend you need it.',
+];
+
+// §7 Before/after. The shared SAMPLE pairs, now on a sixth page, per the
+// same-structure-everywhere call.
+//
+// ⚠️ THESE ARE ILLUSTRATIVE SAMPLES, not TLB jobs, and the `note` on the
+// render is what tells the reader so. Do not remove the note without
+// removing the images.
+//
+// THE PHOTO BRIEF this stands in for, and it is a better brief on this page
+// than on any other: a turnover is the one clean where before and after are
+// twenty minutes apart, in a property nobody lives in, with no tenant or
+// client to consent — so it is by far the easiest place on the site to shoot
+// a real pair. One fixed tripod position, nothing moved between frames.
+// Kitchen bench and shower screen are the two that read at a glance.
+//
+// ⚠️ Written permission from the host is still required, and no identifying
+// detail in frame — no street numbers, no mail, no guest belongings.
+const beforeAfterPairs: BeforeAfterPair[] = [
+  {
+    before: {
+      src: sampleKitchenBeforeImg,
+      alt: 'Sample illustration: kitchen benchtop and tiled splashback before a turnover clean, with stained grout and baked-on spills',
+    },
+    after: {
+      src: sampleKitchenAfterImg,
+      alt: 'Sample illustration: the same kitchen benchtop and splashback after the turnover, grout clean and surfaces gleaming',
+    },
+    caption: 'Kitchen benchtop and splashback',
+  },
+  {
+    before: {
+      src: sampleShowerBeforeImg,
+      alt: 'Sample illustration: shower screen and wall tiles before a turnover clean, with soap scum on the glass and mould in the grout',
+    },
+    after: {
+      src: sampleShowerAfterImg,
+      alt: 'Sample illustration: the same shower screen and tiles after the turnover, glass clear and grout back to colour',
+    },
+    caption: 'Shower screen and tiles',
+  },
+];
+
+// §8 What we turn over. The property types this work actually covers, as
+// pills — the same shape the commercial pages use for premises types.
+//
+// ⚠️ Every href is a flat kebab-case guess from its label except the four
+// that already exist elsewhere in the site (deep, end of lease, mould,
+// house cleaning). Unconfirmed sitewide, per navigation.ts.
+const propertyTags = [
+  { label: 'Airbnb and Stayz listings', href: quoteCta.href },
+  { label: 'Whole-house holiday lets', href: quoteCta.href },
+  { label: 'Beach houses and coastal cottages', href: quoteCta.href },
+  { label: 'Granny flats and studios', href: quoteCta.href },
+  { label: 'Apartments and units', href: quoteCta.href },
+  { label: 'Hinterland retreats and cabins', href: quoteCta.href },
+  { label: 'Multi-listing portfolios', href: quoteCta.href },
+  { label: 'Deep clean between seasons', href: '/deep-cleaning/' },
+  { label: 'Mould cleaning and removal', href: '/mould-cleaning-and-removal/' },
+  { label: 'End of lease and bond cleans', href: '/end-of-lease-cleaning/' },
+];
+
+// §9 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+// Never invent a quote, a host, or a property. BFD 5.3 requires written
+// permission before naming a client at all, and IMAGE-GUIDELINES §7 forbids
+// generating a face for one — the avatars stay as labelled placeholders.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a host about a same-day changeover that landed on time — ideally a Saturday with a tight window. That is the single most valuable testimonial this page can carry, because reliability on the hard day is the whole claim.]',
+    name: '[Host first name, TBC]',
+    role: '[Property type and town, for example "Holiday house, Suffolk Park", TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB holiday let client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from an out-of-area owner — Brisbane or Sydney — about not having to be there. This is the one that reaches the remote investor, who is the highest-value reader on the page.]',
+    name: '[Host first name, TBC]',
+    role: '[Remote owner, town of the listing, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Out-of-area TLB holiday let client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote that mentions the restocking or the presentation specifically, and if a host has ever quoted a guest review back to her, ask whether we can use that. A guest praising the property in a host\'s own words is stronger proof than anything we can say.]',
+    name: '[Host first name, TBC]',
+    role: '[Property type and town, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Long-standing TLB holiday let client' },
+  },
+];
+
+// §10 Comparison table. The shared approved rows, now on a fifth page.
+//
+// ⚠️ ONE ROW IS OFF-TARGET HERE and it is worth a decision rather than a
+// shrug: "Ongoing contracts with the region's leading real estate agencies"
+// answers an agency's question, not a host's. It is the row the NDIS page
+// judged wrong for its audience and dropped the whole table over. Kept here
+// because for a host it still reads as "this is a real business other
+// professionals rely on", and because the trust bar above already makes the
+// same claim on every page. If TLB would rather it were host-specific, the
+// fix is a page-local `rows` array with a holiday-let row in its place —
+// not an edit to the shared file, which four other pages read.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'Anyone can clean a holiday let once. The thing worth paying for is the fiftieth changeover being as boring as the first.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §11 Branded FAQs — what hosts ask us. Two carry brackets and both are
+// launch-blocking (see the file header).
+const brandedFaqItems = [
+  {
+    question: 'Do I have to tell you every time I get a booking?',
+    answer:
+      'No — that is the part we take off you. We work from your calendar rather than from your messages, so a new booking or a moved date flows through without you relaying it. [How we take your calendar. Confirm.] You will still hear from us when something needs a decision.',
+  },
+  {
+    question: 'Can you do a same-day turnover?',
+    answer:
+      // ⚠️ THE question hosts ring about, and the page cannot answer it
+      // without a real cut-off from TLB.
+      'Yes, and most of our short-stay work is same-day. Checkout to check-in is usually three or four hours, which is enough for a full reset with the right number of people on it. [The latest checkout we can turn for a same-day arrival, and how much notice we need. Confirm.]',
+  },
+  {
+    question: 'What happens if a guest leaves the place in a state?',
+    answer:
+      "We clean it and we tell you, with what we found, the same day. An extra-hours charge only ever happens after we have told you and you have said yes — you will not find a surprise on an invoice. If it is bad enough to be a claim, you have it in writing from us while it still matters.",
+  },
+  {
+    question: 'Will it be the same cleaner every time?',
+    answer:
+      'Wherever we can, yes, and it makes a real difference on a short-stay property — someone who knows where the spare linen lives and which door sticks is faster and misses less. When your regular cleaner is away you get someone else from our team of nine who has been briefed on your property, not a stranger from a platform.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We ask about the property, how often it turns over and what presentation you want, and we look at it in person if it is local. Then you get a price and a scope in writing. No obligation, no lock-in contract. If it suits, we set it up around your calendar and it starts happening.',
+  },
+];
+
+// §12 Non-branded FAQs — the long-tail block, aimed at what hosts search
+// rather than what they ask us.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. Two of these five make checkable claims
+// about things outside TLB's control:
+//   - FAQ 2 describes how a cleaning fee behaves on a booking platform. True
+//     in substance and deliberately platform-neutral, because the platforms
+//     change their own fee mechanics without notice.
+//   - FAQ 5 describes NSW short-term rental planning rules and a shire day
+//     cap. See the file header — this one needs a real compliance read and a
+//     "last reviewed" date, or it comes off the page.
+// Recommended before launch: a read by someone who hosts in the shire, and a
+// diarised re-check of FAQ 5 every six months.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does Airbnb cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE. The most-searched question on the topic. A
+      // "from $X" that turns out wrong is worse than no number.
+      'Short-stay turnovers are usually priced as a flat rate per changeover rather than hourly, because a host needs to know the number before they set their cleaning fee. The rate moves with the size of the property, how many bedrooms and bathrooms turn over, whether linen is included and how tight the same-day window is. Ask for it against a written scope, not an hourly rate. [TLB’s pricing basis and minimum. Confirm.]',
+  },
+  {
+    question: 'Should the guest cleaning fee cover the whole turnover?',
+    answer:
+      'Usually it covers most of it, and hosts who try to make it cover everything tend to lose bookings — the fee is visible at checkout and a high one reads as a red flag on a short stay. The common approach is to set the fee at or a little under the real turnover cost and treat the rest as a cost of doing business, then price the nightly rate accordingly. Check your platform’s current rules before you rely on any of this: how cleaning fees are displayed, refunded on cancellation and counted toward your total is set by the platform, and it changes.',
+  },
+  {
+    question: 'Who supplies the linen and towels?',
+    answer:
+      // ⚠️ Bracketed. The genuinely unanswered operational question.
+      'It goes one of two ways, and it is worth settling before the first clean. Either the host keeps three sets per bed on site and the cleaner turns and launders them, or a linen service delivers hired linen and takes the used sets away. Hired linen costs more per turnover and removes the laundry bottleneck, which is what usually breaks a same-day changeover. [Which TLB does. Confirm.]',
+  },
+  {
+    question: 'How long does a turnover actually take?',
+    answer:
+      'A one-bedroom apartment is usually an hour to ninety minutes with one person. A three-bedroom house with two bathrooms is closer to three hours, or half that with two cleaners on it — which is how a same-day changeover gets done inside a three-hour window at all. Laundry is the part that does not compress: if the linen has to be washed and dried on site between guests, that sets the floor, not the cleaning.',
+  },
+  {
+    question: 'Are there rules about how many nights I can let my place?',
+    answer:
+      // ⚠️ COMPLIANCE READ REQUIRED — see the file header. Written without
+      // dates, precinct names or a day count on purpose: every one of those
+      // is exactly the kind of specific that goes stale silently and that a
+      // host may act on. Do not "improve" this by adding them without a
+      // verification pass and a visible last-reviewed date.
+      'In NSW, short-term rental accommodation is regulated: properties generally have to be listed on the state register, meet fire-safety requirements and comply with a code of conduct, and non-hosted letting is capped at a set number of nights a year in some areas. The Byron Shire has its own reduced cap, applied unevenly across the shire, so two listings a few streets apart can sit under different limits. Queensland is different again and several Gold Coast rules are set locally. Check the current position with your council and the NSW planning portal before you rely on a number — this is general information, not planning advice, and the rules in this region have changed more than once.',
+  },
+];
+
+// §13 Closing CTA. Same offer as the hero, worded as what actually happens.
+// Kicker matches the hero's, the pattern the commercial leaves set.
+const closingCta = {
+  kicker: 'Airbnb and holiday let cleaning',
+  heading: 'Hand us the calendar.',
+  lead: 'We look at the property, ask how often it turns over and what presentation you want, and put a price and a scope in writing. No lock-in, no obligation.',
+  cta: { label: 'Let us handle your turnovers', href: quoteCta.href },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    {/* Trust bar and definition share ONE photo behind a Cream scrim, laid
+        across both sections. 75% keeps Dark Teal body copy above 4.5:1 over
+        the darkest part of the frame. Same treatment as every sibling. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What a turnover includes"
+      lead="Six things, every changeover. The last one is the one hosts say they miss most when they leave."
+      items={turnoverItems}
+      cta={{ label: 'Let us handle your turnovers', href: quoteCta.href }}
+    />
+
+    <Callout tone="note" heading={worthKnowing.heading} body={worthKnowing.body} />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Why short-stay cleaners disappear, and what to ask before you book one"
+      body={whySameTeamBody}
+    />
+
+    {/* Drag the handle to wipe between the two frames of each pair. These
+        four images are SAMPLES — the `note` is what tells the reader that;
+        delete it with the imports. See the §7 comment for the photo brief,
+        which is easier to fill on this page than on any other. */}
+    <BeforeAfter
+      heading="The difference, on real jobs."
+      lead="Drag the handle across each photo to see the same spot before and after a clean."
+      pairs={beforeAfterPairs}
+      note="Illustrative samples, shown while we collect before and after photos from real TLB cleans."
+    />
+
+    <TagCloud
+      heading="What we turn over"
+      subheading="Short-stay and holiday properties of every shape, across both sides of the border."
+      tags={propertyTags}
+      note={["Something not on the list? Ask us anyway."]}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our hosts say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Airbnb and Holiday Let Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

@@ -1,0 +1,527 @@
+---
+// Roof cleaning — a LEAF page under the Home Cleaning mega-menu's third
+// group, "Outside your home" (navigation.ts). Built in the same pass as
+// window, gutter, high pressure and exterior house washing.
+//
+// Its middle is a `ContentGrid` of image/text pairs rather than the window
+// page's persona cards or the gutter page's day-in-the-life story, because
+// this page has to teach one thing before it can sell anything: the black on
+// a roof is alive, and blasting it is how roofs get wrecked. That argument
+// needs a picture beside each paragraph.
+//
+// NO CONTENT BRIEF EXISTS for any of the five. All copy below is DRAFTED, not
+// supplied, and needs sign-off. Facts only TLB holds ship as [brackets].
+//
+// BLOCKS LAUNCH:
+//   - WORKING AT HEIGHT, and here it is worse than the gutter page: this is
+//     time spent ON the roof surface, not at the edge of it. Confirm training,
+//     harness and anchor practice, and that insurance covers it, before this
+//     publishes.
+//   - IS THIS DELIVERED IN HOUSE? Soft washing needs a low pressure unit and
+//     the right chemistry. If it is subcontracted, §8's comparison table
+//     ("employed by TLB, not subcontracted") contradicts the page and comes
+//     off it.
+//   - WHAT SOLUTION DO WE USE, AND WHAT DOES IT DO TO THE GARDEN? §3 and
+//     branded FAQ 4 both promise plants are wet down and protected.
+//     Sodium hypochlorite based mixes are the industry norm and they will
+//     kill plants if run off untreated. Confirm the product, the dilution and
+//     the garden protocol. This is the biggest complaint risk on the page.
+//   - TILE, COLORBOND, OR BOTH? §5 treats them differently and it should.
+//     Confirm TLB does both, and confirm whether anything is declined
+//     (asbestos cement sheeting is the one that matters, see below).
+//   - ⚠️ ASBESTOS. Older fibre cement roofing and eave sheeting can contain
+//     asbestos, and cleaning it disturbs the surface. Non-branded FAQ 4 says
+//     we do not touch it. Confirm that is the policy, because it must be.
+//   - PAINTING AND RESTORATION. We are cleaning, not recoating. Branded FAQ 5
+//     says so. Confirm TLB does not want to offer restoration, or that answer
+//     changes.
+//   - PRICING BASIS and minimum charge. Bracketed in non-branded FAQ 5.
+//   - [insured] in §6 is inherited from the commercial hub.
+//
+// PHOTOGRAPHY: four generated assets of its own in
+// src/assets/home_cleaning/outside_your_home/roof_cleaning/, prompts in the
+// IMAGE-PROMPTS.md beside them, plus the cluster's shared backdrop one level
+// up. Uniform deviation as per the group, plus a harness on the two roof
+// frames, which is the point of them.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import BeforeAfter from '../components/sections/BeforeAfter.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import heroImg from '../assets/home_cleaning/outside_your_home/roof_cleaning/soft-washing-a-tiled-house-roof.jpg';
+import algaeImg from '../assets/home_cleaning/outside_your_home/roof_cleaning/black-algae-streaks-on-a-tiled-roof.jpg';
+import halfDoneImg from '../assets/home_cleaning/outside_your_home/roof_cleaning/half-treated-roof-tiles.jpg';
+import gearImg from '../assets/home_cleaning/outside_your_home/roof_cleaning/cleaner-with-soft-wash-gear-beside-a-house.jpg';
+// Shared across all five pages in this group. See the window page's note.
+import definitionBgImg from '../assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg';
+// SAMPLE illustrations, not photographs. See §7.
+import sampleRoofBefore from '../assets/home_cleaning/before_after/sample-roof-before.png';
+import sampleRoofAfter from '../assets/home_cleaning/before_after/sample-roof-after.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { otherOutsideServices } from '../data/outsideYourHome';
+
+// §0 Metadata. "Roof cleaning" leads. "Soft washing" is the method and is
+// carried in body copy, because almost nobody searches for it and everybody
+// searches for the problem.
+const pageMeta = {
+  title: 'Roof Cleaning | TLB Cleaning',
+  description:
+    'Roof cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast. Soft washing that kills the algae and lichen at the root, on tile or colorbond, without high pressure.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/roof-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The heading is the sentence people actually say to each other when
+// they pull into the driveway, which is the whole reason this page converts.
+//
+// Scene photo, family A, square source so the 1/1 box crops nothing. The
+// harness is deliberately visible.
+const hero = {
+  kicker: 'Roof cleaning',
+  headingLines: ['That black is not dirt.', "It's alive, and it spreads."],
+  lead:
+    'Soft washing for tile and colorbond roofs across the Northern Rivers, the Tweed and the Southern Gold Coast. Low pressure, treated at the root, no blasting.',
+  cta: quoteCta,
+  image: {
+    ratio: '1/1',
+    label:
+      'A cleaner in an aqua polo and a teal safety harness soft washing a tiled roof with a low pressure lance, the treated tiles pale and the untreated ones still dark with algae',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. The answer target. Paragraph two does the work almost no
+// competitor page in this category does honestly: it separates the method from
+// the service, and it says out loud that the cheap version of this job causes
+// damage.
+const definitionBody: TextBlockBody[] = [
+  'Roof cleaning is the removal of the algae, moss and lichen growing on a roof, along with the leaf litter and grime that feed them. TLB Cleaning cleans tile and colorbond roofs across the Northern Rivers, the Tweed and the Southern Gold Coast, using low pressure soft washing rather than a high pressure blast.',
+  'Soft washing means a cleaning solution and dwell time instead of force. It matters because high pressure on a roof strips the surface coating off concrete tiles, blows water in under the laps and can crack pointing along the ridge, and none of that is repaired by the clean that caused it. A soft wash also kills the growth at the root, so the roof stays clear for longer rather than greening up again next wet season.',
+];
+
+// §3 The teaching block. `ContentGrid` at two columns, laid out purely by
+// array order the way `StoryMosaic` is, so image and text swap sides by
+// position alone. `StoryMosaic` itself cannot be used here: its `image` block
+// has no `src` field, so it can only ever render a placeholder, and this page
+// has real photos. Flagged in SECTIONS.md's own note about the deliberate
+// overlap between the two.
+//
+// Three rows: what the black is, what a soft wash does, who arrives. The
+// third row exists because the two above it are technical, and the reader
+// still has to let a stranger onto their roof.
+const explainerBlocks = [
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A concrete tiled roof heavily streaked with black algae and blotched with pale green lichen, worst on the shaded side and in the valley',
+    src: algaeImg,
+  },
+  {
+    type: 'text' as const,
+    heading: 'What the black streaking actually is',
+    body: [
+      'It is algae, and the pale crusty blotches with it are lichen. Both live on the roof rather than sitting on it, which is why hosing does nothing and why the streaks always run downslope from the ridge in the same pattern.',
+      'It grows fastest where the roof stays damp longest: the shaded southern side, under trees, in the valleys and along the bottom two rows of tiles. That is also why one elevation of a house can look filthy while the sunny side looks nearly new.',
+      'Lichen is the one to deal with early. It anchors into the surface of the tile and holds moisture there, and on an older roof that speeds up the day the tiles need replacing rather than washing.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'What a soft wash does that a blast cannot',
+    body: [
+      'Low pressure and a cleaning solution, left to work, then rinsed. The growth dies rather than being knocked off, so it comes back on a scale of years instead of months.',
+      'High pressure looks more impressive on the day and costs you later. Enough force to strip lichen off a concrete tile also strips the factory coating, which is the layer keeping the tile from soaking up water. Wet tiles are heavier, they grow moss faster and they break more easily underfoot.',
+      'On colorbond the same rule applies for a different reason: pressure gets under the laps and into the screw holes, and a roof that has never leaked can start after it has been blasted.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A tiled roof halfway through a soft wash, one side still streaked black with algae and lichen, the other side pale, even and faintly damp',
+    src: halfDoneImg,
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A cleaner in uniform standing on the lawn beside a low pressure soft wash unit with a teal harness over her shoulder, turning to the camera with a friendly expression',
+    src: gearImg,
+  },
+  {
+    type: 'text' as const,
+    heading: 'Who is on your roof',
+    body: [
+      // ⚠️ [insured] inherited from the commercial hub. One answer fixes every
+      // page.
+      'The same small local team, in TLB uniform, harnessed and anchored. We are local, [insured] and there is one number to ring if something is not right.',
+      'We walk the roof before we start and tell you what we found. Cracked tiles, failed pointing, a rusted valley or a sheet that has lifted are all things you want to hear about while somebody is up there, not in the next storm. We clean roofs, we do not repair them, so there is nothing in it for us either way.',
+    ],
+  },
+];
+
+// §4 The warning. `Callout` `warning` tone, used once. This is the single most
+// useful paragraph on the page for a reader about to accept the cheapest
+// quote, and it makes no claim about TLB at all.
+//
+// ⚠️ VERIFY THE WORDING. Manufacturer guidance for concrete roof tiles and
+// prepainted steel roofing both advise against high pressure cleaning, and
+// stripping a tile's surface coating is the well established failure mode.
+// Stated here as behaviour rather than as legal or warranty advice, with no
+// pressure figure and no brand named. If TLB wants a source on the page, the
+// tile and steel manufacturers' own care guidance is the honest one.
+const pressureCallout = {
+  heading: 'Never let anyone high pressure your roof',
+  body: [
+    'A high pressure wand held on a concrete tile takes the growth off and the surface coating with it. The tile underneath is porous, so it drinks water, grows moss faster and gets heavier and more brittle. The roof looks its best on the day it is damaged and worse every year after.',
+    'On a tiled roof the other two casualties are the pointing along the ridge, which cracks, and the laps, where water is forced up under the tiles into the roof space. If a quote is cheap because the job is quick, this is usually why. Ask what pressure they use and what they do about the growth in the surface, and if the answer is a number of thousands of PSI, keep looking.',
+  ],
+};
+
+// §5 Scope of work. `ServiceBlocks` icon grid. Six stages in the order they
+// happen, and the last two are the ones a homeowner never thinks to ask about
+// and always cares about afterwards.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against ordinary practice, not supplied by TLB.
+// Confirm each and cut what TLB does not do. Two carry blockers, marked.
+const scopeItems = [
+  {
+    icon: 'puzzle' as const,
+    title: 'We get on it safely, or not at all',
+    description:
+      'Harness, anchor and a proper look at the pitch and the condition before anyone walks on it. A brittle old tile roof in the wet is a job to be assessed, not attacked, and if it cannot be walked we say so.',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Roof first, then the gutters',
+    description:
+      'Loose leaf litter, moss mats and debris come off before any solution goes down, and the gutters and valleys are cleared afterwards, because everything we take off the roof ends up in them. A roof clean that leaves your gutters packed is half a job.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Solution on, and time to work',
+    description:
+      // ⚠️ BLOCKER. Confirm the product and dilution. See the file header.
+      'A low pressure application, left to do its job rather than rushed, then rinsed at a pressure the surface can take. [Confirm the cleaning solution TLB uses and its dilution, so this page can name it plainly.]',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Plants and pets protected',
+    description:
+      // ⚠️ BLOCKER, and the biggest complaint risk on the page.
+      'Garden beds along the drip line get wet down before and rinsed after, outdoor furniture is moved or covered, and pets come inside while we work. [Confirm TLB’s garden protection protocol and what is done with the run-off.]',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'A word on what we found',
+    description:
+      'Cracked tiles, failed ridge pointing, a rusted valley, lifted sheeting or a whirlybird that has seized. Photographed and shown to you, with no repair quote attached, because we do not do roof repairs.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Windows and paths afterwards',
+    description:
+      'Anything that catches run-off gets rinsed down before we leave: windows, walls, paved paths, the driveway. A clean roof over spotted windows and a streaked wall does not look like a clean house.',
+  },
+];
+
+// §6 Timing. Short dark block. The one genuinely useful piece of local advice
+// on the page, and it doubles as the reason not to wait.
+const timingBody: TextBlockBody[] = [
+  'Roof growth here is seasonal, and the best time to deal with it is before the wet rather than after.',
+  {
+    list: [
+      'Late winter and spring is the sweet spot. The growth is dormant and slower, the weather is settled enough to work, and the roof is clear before the summer storms.',
+      'After a long wet summer is when people notice it, and it is also when everyone rings at once. It can still be done, it just books out.',
+      'Before selling, do it early. A dark streaked roof is the first thing in an aerial photo and the first thing a buyer values as a future cost.',
+    ],
+  },
+  'How often depends on the shade, not the calendar. A roof in full sun with nothing overhanging it can go many years. A roof under trees on the southern side of a hinterland block will be greening up again long before that, and the honest answer is that we will tell you what yours looks like rather than sell you a schedule you do not need.',
+];
+
+// §7 Before and after. SAMPLE illustrations, not photographs. See the window
+// page's §6 note, which applies verbatim.
+//
+// THE PHOTO BRIEF for a real pair: one roof plane, shot from a fixed position
+// (a ladder at the ridge, or the same upstairs window both times), before and
+// after, nothing moved between frames. A tiled roof with heavy streaking is
+// the most persuasive subject in this entire category, and it is worth the
+// tripod.
+const roofPair = {
+  before: { src: sampleRoofBefore, alt: 'Sample illustration: a tiled roof streaked with black algae and blotched with pale lichen' },
+  after: { src: sampleRoofAfter, alt: 'Sample illustration: the same tiled roof clean, the tiles even and pale with no streaking' },
+  caption: 'Algae and lichen on a tiled roof',
+  start: 45,
+};
+
+// §8 The rest of the cluster. Shared data, this page's own href filtered out.
+const siblingItems = otherOutsideServices('/roof-cleaning/');
+
+// §9 Comparison table. Shared rows from src/data/comparison.ts.
+//
+// ⚠️ CONDITIONAL. Row one is "employed by TLB, not subcontracted". If roof
+// work is subcontracted, the table contradicts the page and comes off it.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'This is the trade where the cheapest quote can cost you a roof. What you are buying is the judgement about pressure, not the hour of labour.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §10 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client whose roof was badly streaked, ideally one who says what the house looked like from the street afterwards. That is the sale on this page.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB roof cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client who had been quoted a high pressure clean elsewhere and chose soft washing instead. That answers the objection the page argues hardest.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB roof cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from someone selling a house, about the roof in the listing photos. Agents are a referral source and this is the quote that reaches them.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB roof cleaning client' },
+  },
+];
+
+// §11 Branded FAQs, in the customer's voice. Self-contained 40 to 80 word
+// answers, per BFD 3.5.
+const brandedFaqItems = [
+  {
+    question: 'Will it come back?',
+    answer:
+      'Eventually, and much more slowly than after a high pressure blast. A soft wash kills the algae and lichen at the root rather than knocking the top off it, so the roof stays clear for years rather than a season. Shade is the variable: under trees on the southern side it returns sooner than in full sun.',
+  },
+  {
+    question: 'Can you walk on our roof without breaking tiles?',
+    answer:
+      'On a sound roof, yes, and it is walked in the right places by someone who knows where those are. Old, brittle or previously blasted tiles are more fragile, and we assess that before starting. If a roof should not be walked we will tell you rather than risk it and hope.',
+  },
+  {
+    question: 'Do you do colorbond as well as tiles?',
+    answer:
+      // ⚠️ BLOCKER. Confirm both are done. See the file header.
+      'Yes. [Confirm TLB cleans both tile and colorbond.] Colorbond usually needs less work, because growth has less to hold on to, but it still films up with grime and algae in the shade, and it needs low pressure for a different reason: force gets under the laps and around the screws.',
+  },
+  {
+    question: 'What about our garden and our pets?',
+    answer:
+      // ⚠️ BLOCKER. See §5.
+      'Beds along the drip line get wet down before and rinsed after, furniture is moved or covered and pets stay inside until we have finished and rinsed off. [Confirm TLB’s garden protection protocol.] Tell us about anything precious in the beds when you book and we will work around it.',
+  },
+  {
+    question: 'Can you paint or restore the roof too?',
+    answer:
+      // ⚠️ BLOCKER. Confirm TLB does not want to offer this.
+      'No. We clean roofs, we do not recoat or repair them, and we do not have a painter waiting in the van. If a roof turns out to need pointing, sealing or replacement, you will hear that from us with no quote attached to it.',
+  },
+];
+
+// §12 Non-branded FAQs.
+//
+// ⚠️ VERIFICATION PASS REQUIRED:
+//   - Algae, moss and lichen being living growth rather than dirt, and lichen
+//     anchoring into the tile surface, are both standard and correct.
+//   - High pressure stripping the surface coating of concrete tiles is the
+//     established failure mode and matches manufacturer care guidance.
+//   - ⚠️ ASBESTOS. The answer below states we do not clean fibre cement
+//     roofing that may contain asbestos. This must match TLB's actual policy
+//     before publishing, and it is worded as a referral rather than as advice.
+//   - Frequency is hedged as an observation with shade as the variable.
+//   - Pricing bracketed on purpose.
+const nonBrandedFaqItems = [
+  {
+    question: 'What is soft washing a roof?',
+    answer:
+      'A low pressure application of a cleaning solution, left to work for a period and then rinsed off gently. The pressure is closer to a garden hose than a pressure washer. It suits roofs, render, painted surfaces and cladding, where force would strip the finish or drive water in behind it.',
+  },
+  {
+    question: 'Why does my roof have black streaks?',
+    answer:
+      'It is algae growing on the surface, running downslope from the ridge because that is the way water carries it. Humidity, shade and leaf litter feed it, which is why the streaking is always worst on the shaded elevation, in the valleys and under overhanging trees. The pale crusty patches with it are lichen.',
+  },
+  {
+    question: 'Does roof cleaning damage tiles?',
+    answer:
+      'Soft washing does not. High pressure can, and often does: it strips the surface coating off concrete tiles, cracks ridge pointing and forces water up under the laps into the roof space. Once the coating is gone the tile absorbs water, grows moss faster and becomes more brittle underfoot.',
+  },
+  {
+    question: 'Can old fibre cement roofing be cleaned?',
+    answer:
+      // ⚠️ MUST MATCH TLB'S ACTUAL POLICY. See the note above this array.
+      'Not by us. Fibre cement roofing and eave sheeting installed before the 1990s can contain asbestos, and cleaning disturbs the surface, so it is work for a licensed asbestos removalist rather than a cleaner. If you are not sure what your roof is made of, get it identified before anyone washes it.',
+  },
+  {
+    question: 'How much does roof cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE.
+      'Roof cleaning is usually priced per square metre of roof area, with a minimum charge, and the rate moves with pitch, access, roof type, how heavy the growth is and whether the gutters are done at the same time. Ask for a price against a written scope that says which method is being used. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+// §13 Closing CTA.
+const closingCta = {
+  kicker: 'Roof cleaning',
+  heading: 'Start with a look at it.',
+  lead: 'Send us the address and a photo from the street if you have one. We will tell you what is growing up there, what will come off and what it will cost.',
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75} focus="bottom">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    {/* Two columns, and which side each block lands on is purely its position
+        in the array. Row one is image then text, row two text then image, row
+        three image then text. */}
+    <ContentGrid
+      heading="Before you let anyone up there"
+      lead="Three things worth understanding about a roof, and one of them will save you money."
+      columns={2}
+      blocks={explainerBlocks}
+    />
+
+    <Callout tone="warning" heading={pressureCallout.heading} body={pressureCallout.body} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What a roof clean involves"
+      lead="Six stages, in this order. The last three are the ones people ring about afterwards."
+      items={scopeItems}
+      cta={quoteCta}
+    />
+
+    <BeforeAfter
+      heading="The same roof, both ways."
+      lead="Drag the handle across the photo."
+      pairs={[roofPair]}
+      note="Illustrative sample, shown while we collect before and after photos from real TLB jobs."
+    />
+
+    <TextBlock theme="dark" align="left" heading="When to do it" body={timingBody} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="The rest of the outside"
+      lead="Roofs are usually booked with the gutters, and often with the walls, because everything we take off the roof lands on both."
+      items={siblingItems}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    <Faq heading="Roof cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

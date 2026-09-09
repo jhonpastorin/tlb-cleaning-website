@@ -1,0 +1,557 @@
+---
+// Window cleaning — a LEAF page under the Home Cleaning mega-menu's third
+// group, "Outside your home" (navigation.ts). First of the five in that group
+// to be built, alongside gutter, roof, high pressure and exterior house
+// washing in the same pass.
+//
+// NO CONTENT BRIEF EXISTS for any of the five. Every page built from
+// content-plans/ has a file there; this group has none. All copy below is
+// DRAFTED, not supplied, and needs sign-off before launch. Where a claim
+// depends on a fact only TLB holds it ships as a visible [bracket], per house
+// convention, rather than as a plausible guess.
+//
+// BLOCKS LAUNCH:
+//   - IS THIS DELIVERED IN HOUSE? Window cleaning needs its own kit: a
+//     water-fed pole system with a filter trolley for anything above the
+//     ground floor, and squeegees, scrims and a ladder for the rest. Nothing
+//     in the brand foundation document or any existing page says TLB owns
+//     any of it. If the work is subcontracted, §9's comparison table (row
+//     one: "employed by TLB, not subcontracted") contradicts the page it
+//     sits on and has to come off this page.
+//   - HOW HIGH DO WE GO? §4 and branded FAQ 3 both say first-floor glass is
+//     reached from the ground with a pole and that nothing needs a ladder on
+//     a roof. Confirm that is true, and confirm the cut-off. A two-storey
+//     home with a stairwell window over a paved courtyard is the job that
+//     tests it, and it is common right through Byron and Lennox.
+//   - PRICING BASIS. Per window, per pane or per hour, and the minimum
+//     charge. Bracketed in non-branded FAQ 5, which is the most searched
+//     question in this category.
+//   - INSIDE AS WELL AS OUT? Bracketed in branded FAQ 1. It changes the
+//     price, the time on site and whether anyone needs to be home.
+//   - SCREENS AND FLYSCREENS. Bracketed in §4. Most enquiries assume it.
+//   - [insured] in §3 card 3 is inherited from the commercial hub, where the
+//     same bracket is already open. One answer fixes every page.
+//
+// PHOTOGRAPHY: four generated assets of its own in
+// src/assets/home_cleaning/outside_your_home/window_cleaning/, prompts in the
+// IMAGE-PROMPTS.md beside them, plus the cluster's shared backdrop one level
+// up. Same deliberate uniform deviation as the commercial pressure page: no
+// apron on outdoor work. Argued in that folder's sheet and TLB's call to
+// reverse.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Callout from '../components/sections/Callout.astro';
+import BeforeAfter from '../components/sections/BeforeAfter.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+// This page's own four frames. Nothing is reused from the indoor folders:
+// IMAGE-GUIDELINES §5 cuts both ways, and an indoor scene cannot stand in for
+// glass seen from the garden.
+import heroImg from '../assets/home_cleaning/outside_your_home/window_cleaning/cleaning-a-large-window-from-outside.jpg';
+import cardHazeImg from '../assets/home_cleaning/outside_your_home/window_cleaning/salt-hazed-sliding-door-glass.jpg';
+import cardPoleImg from '../assets/home_cleaning/outside_your_home/window_cleaning/water-fed-pole-on-an-upstairs-window.jpg';
+import cardTeamImg from '../assets/home_cleaning/outside_your_home/window_cleaning/cleaner-wiping-a-window-frame-and-track.jpg';
+// The cluster's shared backdrop, one folder up: a clean coastal home exterior,
+// no people, no equipment, generous open lawn across the lower third where the
+// copy sits. All five "Outside your home" pages use this one file rather than
+// five near-identical exteriors, which is §5's reuse rule applied honestly:
+// same subject, same file.
+import definitionBgImg from '../assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg';
+// SAMPLE illustrations, not photographs. See §6.
+import sampleWindowBefore from '../assets/home_cleaning/before_after/sample-window-before.png';
+import sampleWindowAfter from '../assets/home_cleaning/before_after/sample-window-after.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { otherOutsideServices } from '../data/outsideYourHome';
+
+// §0 Metadata. Focus keyword leads the title, matching every sibling. "Window
+// washing" and "window cleaner" are the common synonyms and are carried in
+// body copy rather than the title, so the two do not read as two services.
+const pageMeta = {
+  title: 'Window Cleaning | TLB Cleaning',
+  description:
+    'Window cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast. Glass, frames, sills and tracks, with the coastal salt film taken off properly.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/window-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. Kicker carries the focus keyword so someone arriving from a search
+// result gets confirmation above the H1, which is then free to be a benefit.
+// Same call as every service page here.
+//
+// The heading is the thing this service actually sells, which is not clean
+// glass. It is the view people paid for when they bought a house near the
+// coast and then slowly stopped being able to see.
+//
+// A SCENE PHOTO, family A. A cut-out figure on a plain ground says "a
+// cleaner" without saying windows; the house, the garden and the wet arc on
+// the glass are what carry it, and none of them survives a cut-out.
+// `imageFit` is unset, so Placeholder's `cover` default applies, and `ratio`
+// is 1/1 because the source file is square, so the box crops nothing.
+const hero = {
+  kicker: 'Window cleaning',
+  headingLines: ['You paid for the view.', 'Have a look at it.'],
+  lead:
+    'Glass, frames, sills and tracks, inside and out, across the Northern Rivers, the Tweed and the Southern Gold Coast. We bring the ladders, the poles and the water.',
+  cta: quoteCta,
+  image: {
+    ratio: '1/1',
+    label:
+      'A cleaner in an aqua polo and teal gloves squeegeeing a large window from outside a white weatherboard home, the finished glass clear and reflecting the garden',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. The answer-target block for the focus keyword and the first
+// place the phrase appears in body copy. Paragraph two does the synonym work
+// and, more usefully, names what makes glass here different from glass in
+// Sydney: the salt. That is the fact this whole page turns on.
+const definitionBody: TextBlockBody[] = [
+  'Window cleaning is the washing of the glass, frames, sills and tracks of a home, inside and out, so light comes through the way it did when the windows were new. TLB Cleaning cleans windows across the Northern Rivers, the Tweed and the Southern Gold Coast, either as a one-off or on a schedule with your regular clean.',
+  'Window cleaning and window washing describe the same job. What sets a coastal home apart is the film on the outside of the glass, which is salt as much as dust. Salt spray dries on the surface and holds grime against it, so a coastal window looks hazy again far sooner than an inland one, and it will not come off with a squirt of glass cleaner and paper towel.',
+];
+
+// §3 Pathway cards. The three ways people actually arrive at this page, in
+// their own words. Same framing every service page here uses, re-pointed at
+// glass.
+const pathwayCards = {
+  heading: 'People arrive here for three reasons.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        // No person in this frame on purpose: the subject is the film on the
+        // glass, and a figure would compete with it.
+        label:
+          'A large sliding glass door on a coastal home seen from outside, the glass dulled by salt haze and hard water spotting, with grit in the bottom track',
+        src: cardHazeImg,
+      },
+      title: 'The glass has gone cloudy and I cannot fix it',
+      description:
+        'That haze is salt and hard water, not dirt, and it sits on the glass in a layer that wiping makes worse. One proper clean takes it back to clear, and you get the tracks and the flyscreens done at the same time.',
+      cta: quoteCta,
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label:
+          'A cleaner standing safely on the lawn using a long water-fed pole with a soft brush head to clean a first-floor window of a home',
+        src: cardPoleImg,
+      },
+      title: 'The high ones have not been done in years',
+      description:
+        'Nobody wants to carry a ladder around the side of the house, and on a slope nobody should. First-floor glass gets reached from the ground with a water-fed pole, which is safer for us and cheaper for you than scaffolding.',
+      cta: { label: 'Get an instant quote', href: quoteCta.href },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        // A visible, friendly face, because the copy beside it promises the
+        // same small team. A figure turned away would argue with its caption.
+        label:
+          'A cleaner in uniform crouched at the base of a window wiping the frame and sill track, turning to the camera with a friendly expression',
+        src: cardTeamImg,
+      },
+      title: 'I want it done with everything else',
+      description:
+        // ⚠️ [insured] inherited from the commercial hub, where the bracket is
+        // already open. One answer fixes every page.
+        'Windows twice a year, gutters before the wet season, and your regular clean carrying on as normal. Same local team, one number to ring, and we are [insured]. You set it up once and stop thinking about it.',
+      cta: { label: 'Set up your regular clean', href: '/house-cleaning/' },
+    },
+  ],
+};
+
+// §4 What the job covers. The most important block on the page, for the same
+// reason it is on the commercial pressure page: this site tells readers to
+// demand a written scope and then has to show one.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against ordinary practice, not supplied by TLB.
+// Confirm each one and cut anything TLB does not actually do. Two carry their
+// own blockers, marked inline.
+const scopeItems = [
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Glass, both sides',
+    description:
+      // ⚠️ BLOCKER. Inside as well as out is assumed here and bracketed in
+      // branded FAQ 1. It changes the price, the time on site and whether
+      // anyone has to be home.
+      'Washed, squeegeed and edged, then the perimeter dried by hand so there is no line left around the outside of the pane. [Confirm whether inside glass is included as standard or quoted separately.]',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Frames, sills and reveals',
+    description:
+      'Wiped down with the glass rather than left as a grey border around it. Aluminium frames on the coast collect a chalky salt bloom, and that is usually what people are seeing when they say the window still looks dirty.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Tracks and drainage holes',
+    description:
+      'Sliding door tracks get vacuumed out and then wiped, including the weep holes at the outside edge. A blocked track is why a heavy door drags, and it is the one part of a window nobody ever cleans.',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Flyscreens and security screens',
+    description:
+      // ⚠️ BLOCKER. Screens are the single most common assumption in an
+      // enquiry, and whether they come out of the frame or get washed in
+      // place is a real difference in time.
+      'Taken out where they lift out, washed, dried and put back the way they came. [Confirm whether screens are included, and whether security screens are washed in place rather than removed.]',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'Cobwebs and the surrounds',
+    description:
+      'Webs knocked out of the reveal, the eave above the window and the corners of the frame, because leaving them there undoes the look of clean glass within a fortnight. Nests and hives we point out and leave alone.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Purified water on the high ones',
+    description:
+      'Anything above the ground floor is done from the ground with a water-fed pole running filtered water, which dries without spotting so there is nothing to squeegee. It also means no ladder leaning on your gutter.',
+  },
+];
+
+// §5 A note, not a claim. Callout `note` tone, the same job the commercial
+// pressure page gives its "worth knowing" block: make the reader distrust a
+// cheap quote without making a single claim about TLB. Here the lever is that
+// coastal glass genuinely behaves differently, which is checkable and is the
+// thing most competitor pages in this category never mention.
+//
+// ⚠️ VERIFY THE WORDING. Salt aerosol carried inland from surf is well
+// documented and is the reason coastal glazing and window hardware carry
+// their own maintenance advice from manufacturers. Stated here as behaviour
+// people can see on their own windows, with no number attached, because the
+// distance salt carries depends on the wind and the surf and any figure would
+// be invented. If TLB wants a source on the page, glazing manufacturers'
+// own care guidance is the honest one to cite.
+const saltCallout = {
+  heading: 'Why coastal windows go hazy faster',
+  body: [
+    'Salt does not blow onto glass as grit and sit there. It arrives as fine spray, dries into a film and then holds every bit of dust and pollen that lands afterwards against the surface. That is why a window three streets back from the beach can look worse than one in a paddock, and why the haze comes back sooner here than anywhere inland.',
+    'It also means dry wiping makes it worse. Rubbing a dry salt film across glass drags the grit it is holding, and on older glass that leaves fine scratching you cannot polish out. The fix is water, a wash and a squeegee, not a cloth and a spray bottle.',
+  ],
+};
+
+// §6 Before and after. SAMPLE illustrations, not photographs.
+//
+// ⚠️ These are flat vector drawings generated by
+// scripts/make-exterior-before-after-samples.mjs, each stamped with a visible
+// SAMPLE badge, and their filenames say `sample-` for the same reason. A
+// fabricated "before and after from a real job" is a false trust claim and
+// IMAGE-GUIDELINES §7 forbids it. The `note` prop below tells the reader so
+// in their own view.
+//
+// SWAPPING IN A REAL PAIR is two import lines and deleting the note. THE
+// PHOTO BRIEF: one window, shot from a fixed tripod position, before and
+// after, with nothing moved between the frames. Shoot from outside with the
+// interior in shade so the glass reads as glass rather than as a mirror, and
+// pick a pane with visible salt film rather than mud, because mud looks like
+// a one-off and salt is the recurring sale. The component wipes one frame
+// over the other in place, so a shifted camera reads as a glitch.
+const windowPair = {
+  before: { src: sampleWindowBefore, alt: 'Sample illustration: a window pane hazy with salt film and hard water spotting, grit in the track' },
+  after: { src: sampleWindowAfter, alt: 'Sample illustration: the same window pane clear, the frame and track clean, the garden reflected sharply' },
+  caption: 'Salt film and hard water spotting on a coastal pane',
+  start: 45,
+};
+
+// §7 What to ask. Persuasive block, dark TextBlock, no claim about TLB in it.
+// Two questions, both of which a competent operator answers straight away and
+// a cheap one talks around.
+const askBody: TextBlockBody[] = [
+  'Two questions sort out a window cleaner quickly, and neither of them is about price.',
+  {
+    list: [
+      'How do you reach the upstairs glass? A pole from the ground is safe and needs nothing from you. A ladder leaned against a gutter bends the gutter, and a ladder on soft ground beside a paved courtyard is how people get hurt on a job that was meant to be simple.',
+      'What is included besides the glass? If frames, sills, tracks and screens are extra, the quote you are comparing is not the same job. This is where a cheap number usually comes from.',
+    ],
+  },
+  'The other thing worth knowing is that clean glass shows every mark on everything around it. Windows are usually the first exterior job people book and the one that makes them look at the walls, the gutters and the roof for the first time in years. That is normal, and it is why we quote the outside of a house as a whole when you ask us to.',
+];
+
+// §8 The rest of the cluster. Shared data from src/data/outsideYourHome.ts, so
+// the five pages cannot drift into five different lists. This page's own href
+// is filtered out.
+const siblingItems = otherOutsideServices('/window-cleaning/');
+
+// §9 Comparison table. The shared rows from src/data/comparison.ts.
+//
+// ⚠️ CONDITIONAL, and it is this file's first launch blocker. Row one is
+// "Nine full-time cleaners employed by TLB, not subcontracted". If window
+// cleaning is subcontracted to an operator with the pole system, the table
+// contradicts the page it sits on and has to come off this page. A question
+// for TLB, not a rewrite.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'The person on your windows is on our team, and they will be the one who comes back next time.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §10 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+// Never invent a quote or a name. BFD 5.3 requires written permission before
+// naming a client at all, and IMAGE-GUIDELINES §7 forbids a generated face
+// beside one, which is why every avatar here stays a labelled placeholder.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client whose windows had not been done in years, ideally one who mentions the view or the light rather than the glass. That is what this page is selling.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB window cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from an Airbnb or holiday let host about guest photos and reviews. Hosts are the buyer most likely to book windows on a schedule, and a host quote carries more weight with a host.]',
+    name: '[Host first name, TBC]',
+    role: '[Airbnb host, suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB holiday let client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client with a two-storey home about the high windows being done from the ground. That answers the objection this page cannot answer for itself.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB window cleaning client' },
+  },
+];
+
+// §11 Branded FAQs, in the customer's voice: "we" and "our" mean the reader's
+// household, not TLB. That register is held across all five pages in this
+// group. Each answer is a self-contained 40 to 80 word passage, per BFD 3.5.
+const brandedFaqItems = [
+  {
+    question: 'Do you do the inside of the windows as well?',
+    answer:
+      // ⚠️ BLOCKER. See §4.
+      'Usually yes, and most people want both, because clean glass outside makes the inside obvious. [Confirm whether inside glass is included as standard or priced separately.] If we are doing the inside we work around you, put mats down under each window and take the tracks and sills as we go.',
+  },
+  {
+    question: 'How often should we get them done?',
+    answer:
+      'Twice a year suits most homes here, and the closer you are to the beach the more that matters. Holiday lets and homes right on the water often go quarterly, because guests photograph the view and salt film shows up in every one of those photos. We can put it on the same schedule as your regular clean.',
+  },
+  {
+    question: 'Can you reach our upstairs windows?',
+    answer:
+      // ⚠️ BLOCKER. Confirm the real cut-off. See the file header.
+      'First-floor glass is done from the ground with a water-fed pole, so there is no ladder against your gutter and nothing for you to hold. [Confirm the height limit and whether anything is quoted out, for example a stairwell window over a paved courtyard.] If a window is genuinely unsafe to reach we will say so rather than improvise.',
+  },
+  {
+    question: 'Does anyone need to be home?',
+    answer:
+      'Not for the outside. We need side access, the gate unlocked and any dogs sorted out, and a tap we can use if we are running a pole system. For inside glass someone needs to let us in, or we use whatever arrangement your regular clean already runs on.',
+  },
+  {
+    question: 'What happens if it rains after you have been?',
+    answer:
+      'Clean glass stays clean through rain. Rain is only a problem on glass that was already dirty, because it runs the film down the pane in streaks. If a storm drops mud or salt spray on windows the same week we did them, ring us and we will look at it.',
+  },
+];
+
+// §12 Non-branded FAQs. The long-tail block, aimed at what people search
+// rather than what they ask us.
+//
+// ⚠️ VERIFICATION PASS REQUIRED:
+//   - Pure water and water-fed poles. Standard industry practice, correct as
+//     stated: filtered water dries without leaving mineral spots, which is
+//     what removes the need to squeegee at height.
+//   - Salt film behaviour. Observable and correct in substance. Deliberately
+//     carries no distance figure. See §5.
+//   - Hard water spotting etching glass over time is well established and is
+//     why the answer distinguishes it from a film that will wash off.
+//   - Frequency is an observation, not a rule, and is hedged.
+//   - Pricing is bracketed on purpose. A "from $X per window" that turns out
+//     to be wrong is worse than no number, and the ACCC treats from-pricing
+//     as a claim.
+const nonBrandedFaqItems = [
+  {
+    question: 'What is pure water window cleaning?',
+    answer:
+      'Water run through a filter that strips out the dissolved minerals, then fed up a telescopic pole to a soft brush head. Because there is nothing left in the water to dry on the glass, the pane can be left wet and it dries clear with no spots. That is what makes cleaning first-floor windows from the ground possible at all.',
+  },
+  {
+    question: 'How often should windows be cleaned in a coastal home?',
+    answer:
+      'Twice a year is the usual settling point, quarterly for homes on the water or holiday lets that are photographed constantly, and once a year is enough well back in the hinterland. Salt film is the variable. The nearer the surf and the more onshore wind a wall faces, the sooner the haze comes back.',
+  },
+  {
+    question: 'Can hard water stains be removed from glass?',
+    answer:
+      'Fresh spotting comes off with a wash. Spotting that has been baking on for years is different, because the minerals slowly etch into the surface of the glass and the mark is then in the glass rather than on it. It can often be improved with a polish, not always fully removed, and a sprinkler hitting a window every morning is the usual cause.',
+  },
+  {
+    question: 'Is it safe to clean upstairs windows yourself?',
+    answer:
+      'Ladder falls at home are common and often serious, and the risk goes up on the ground most houses actually have: soft soil, a slope, pavers, or a gutter that flexes when a ladder leans on it. Working from the ground with a pole avoids the fall entirely, which is why professionals moved to poles for anything above the ground floor.',
+  },
+  {
+    question: 'How much does window cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE. See the note above this array.
+      'Window cleaning is usually priced per window or per pane, with a minimum charge for small jobs, and the rate moves with height, access, how many are sliding doors and whether screens and tracks are included. Ask for the price against a written list of what is covered rather than an hourly rate. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+// §13 Closing CTA. Same offer as the hero, worded as what actually happens.
+const closingCta = {
+  kicker: 'Window cleaning',
+  heading: 'Get your view back.',
+  lead: 'Tell us how many windows and how high, and we will come back with a price and a date. If it is easier, we will look at the whole outside of the house while we are there.',
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    {/* Trust bar and definition share ONE photo behind a Cream scrim, laid
+        across both sections. 75% keeps Dark Teal body copy above 4.5:1 over
+        the darkest part of the frame. `focus="bottom"` keeps the open lawn
+        and paving the shot was composed for, rather than the roofline. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75} focus="bottom">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What a window clean covers"
+      lead="Six things, and the last four are what separate a window clean from a wipe over the glass."
+      items={scopeItems}
+      cta={quoteCta}
+    />
+
+    <Callout tone="note" heading={saltCallout.heading} body={saltCallout.body} />
+
+    <BeforeAfter
+      heading="Salt film, and the same pane without it."
+      lead="Drag the handle across the photo to see the difference on one window."
+      pairs={[windowPair]}
+      note="Illustrative sample, shown while we collect before and after photos from real TLB jobs."
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Two questions before you book anyone"
+      body={askBody}
+    />
+
+    <ServiceBlocks
+      variant="list"
+      heading="The rest of the outside"
+      lead="Windows are usually where people start. These are the other four, and they are often quoted together."
+      items={siblingItems}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    <Faq heading="Window cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

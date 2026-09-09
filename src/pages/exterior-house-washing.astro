@@ -1,0 +1,511 @@
+---
+// Exterior house washing — a LEAF page under the Home Cleaning mega-menu's
+// third group, "Outside your home" (navigation.ts). Last of the five in that
+// group to be built, alongside window, gutter, roof and high pressure.
+//
+// It is the widest of the five and it is the one that sells the other four,
+// so its job is to describe the whole outside of a house and then hand the
+// reader off honestly. Its middle uses `CardCarousel`, which no other page in
+// this group uses, because the three cards here are one idea shown three ways
+// (the film, the wall without it, the person who does it) rather than three
+// different purchases.
+//
+// ⚠️ OVERLAP TO WATCH. This page and /high-pressure-cleaning/ can end up
+// competing, since both mention walls. The line held here: THIS page is
+// vertical surfaces, by soft wash, at low pressure. THAT page is the ground
+// and hard surfaces, by force. Each says so and each links the other. And
+// /mould-cleaning-and-removal/ is INSIDE the house, which is a different
+// service with a health dimension; it is linked from §4 rather than competed
+// with.
+//
+// NO CONTENT BRIEF EXISTS for any of the five. All copy below is DRAFTED, not
+// supplied, and needs sign-off. Facts only TLB holds ship as [brackets].
+//
+// BLOCKS LAUNCH:
+//   - IS THIS DELIVERED IN HOUSE? Soft washing a whole house needs a low
+//     pressure unit, the right chemistry and enough reach for a two-storey
+//     wall. If it is subcontracted, §8's comparison table ("employed by TLB,
+//     not subcontracted") contradicts the page and comes off it.
+//   - WHAT SOLUTION, AT WHAT DILUTION, AND WHAT ABOUT THE GARDEN? Bracketed
+//     in §5 and branded FAQ 3. This is the biggest complaint risk on the
+//     page, exactly as it is on the roof page, and one answer fixes both.
+//   - PAINTED SURFACES AND WARRANTIES. §5 says we do not use enough pressure
+//     to strip sound paint. Confirm, and confirm what TLB says about walls
+//     that are already flaking, because that is the argument that follows a
+//     complaint.
+//   - HOW HIGH? A two-storey wall and a gable end over a garden bed is the
+//     job that tests it. Bracketed in branded FAQ 4.
+//   - ASBESTOS. Older fibre cement cladding and eave sheeting is the same
+//     issue as the roof page's, and non-branded FAQ 4 says we do not touch
+//     it. This must match TLB's actual policy.
+//   - PRICING BASIS and minimum charge. Bracketed in non-branded FAQ 5.
+//   - [insured] in §4 card 3 is inherited from the commercial hub.
+//
+// PHOTOGRAPHY: four generated assets of its own in
+// src/assets/home_cleaning/outside_your_home/exterior_house_washing/, prompts
+// in the IMAGE-PROMPTS.md beside them, plus the cluster's shared backdrop one
+// level up.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import CardCarousel from '../components/sections/CardCarousel.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Callout from '../components/sections/Callout.astro';
+import BeforeAfter from '../components/sections/BeforeAfter.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import heroImg from '../assets/home_cleaning/outside_your_home/exterior_house_washing/soft-washing-a-weatherboard-wall.jpg';
+import mouldWallImg from '../assets/home_cleaning/outside_your_home/exterior_house_washing/mould-and-algae-on-a-rendered-wall.jpg';
+import cleanWallImg from '../assets/home_cleaning/outside_your_home/exterior_house_washing/clean-weatherboard-wall-and-eaves.jpg';
+import lanceImg from '../assets/home_cleaning/outside_your_home/exterior_house_washing/cleaner-with-a-soft-wash-lance-at-a-house-wall.jpg';
+// Shared across all five pages in this group. See the window page's note.
+import definitionBgImg from '../assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg';
+// SAMPLE illustrations, not photographs. See §6.
+import sampleWallBefore from '../assets/home_cleaning/before_after/sample-wall-before.png';
+import sampleWallAfter from '../assets/home_cleaning/before_after/sample-wall-after.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { otherOutsideServices } from '../data/outsideYourHome';
+
+// §0 Metadata. The menu label leads the title. "House washing", "exterior
+// cleaning" and "soft wash" are the synonyms and are carried in body copy.
+const pageMeta = {
+  title: 'Exterior House Washing | TLB Cleaning',
+  description:
+    'Exterior house washing across the Northern Rivers, the Tweed and the Southern Gold Coast. Walls, eaves, soffits and window frames soft washed so the whole house looks newer.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/exterior-house-washing/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The heading is the realisation this service depends on: people
+// stop seeing their own walls, because the change happened a shade at a time
+// over about five years.
+//
+// Scene photo, family A, square source so the 1/1 box crops nothing.
+const hero = {
+  kicker: 'Exterior house washing',
+  headingLines: ['Your house is not', 'that colour. Not really.'],
+  lead:
+    'Walls, eaves, soffits, downpipes and window frames, soft washed across the Northern Rivers, the Tweed and the Southern Gold Coast. Low pressure, so nothing gets stripped.',
+  cta: quoteCta,
+  image: {
+    ratio: '1/1',
+    label:
+      'A cleaner in an aqua polo and teal gloves soft washing the white weatherboard wall of a home with a low pressure lance, the treated boards bright and the untreated section still greyed',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. The answer target. Paragraph two is the fact the whole page
+// turns on and the reason people are surprised by the result: what is on the
+// wall is mostly alive, so it is not paint fade and it is not permanent.
+const definitionBody: TextBlockBody[] = [
+  'Exterior house washing is the washing down of the outside of a house: the walls, the eaves and soffits, the gable ends, the window frames and sills, the downpipes and the fascia. TLB Cleaning washes house exteriors across the Northern Rivers, the Tweed and the Southern Gold Coast, using low pressure soft washing rather than a high pressure blast.',
+  'What is on the wall is mostly not dirt. It is a film of mould, algae and lichen living on the surface, held there by humidity and shade, mixed with salt if you are near the water and dust if you are near a road. That is why the shaded side of a house looks like a different colour from the sunny side, and why the answer is a cleaning solution with dwell time rather than force.',
+];
+
+// §3 What it is. `CardCarousel`, whose cards take an image plus a heading and
+// body. Used here and nowhere else in this group: three cards that are one
+// argument shown three ways, which is what a centre-emphasis carousel is
+// good at, and it keeps this page from opening like the four beside it.
+const carouselCards = [
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'The shaded rendered side wall of a home filmed with grey green mould and algae, with streaks below the eaves and green growth rising from the garden bed',
+      src: mouldWallImg,
+    },
+    heading: 'This is what five years looks like',
+    body: [
+      'Nobody notices it happening, because it arrives one shade at a time and always on the side of the house you do not use. The giveaways are the streaks under the eaves, the green rising out of the garden bed and the window frames that have gone from white to grey.',
+    ],
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'The freshly washed white weatherboard wall and eaves of a home, the boards bright and even, the window frames and sills clean, no cobwebs in the soffit',
+      src: cleanWallImg,
+    },
+    heading: 'This is the same wall, washed',
+    body: [
+      'No paint, no render, no repairs. This is the reason people book it before selling, before Christmas and before the family arrives: it is the cheapest thing you can do to a house that changes how the whole place reads from the street.',
+    ],
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner in uniform standing on the lawn beside a washed house wall holding a low pressure soft wash lance, turning to the camera with a friendly expression',
+      src: lanceImg,
+    },
+    heading: 'And this is who does it',
+    body: [
+      'The same small local team who does the rest of your cleaning, working top down with low pressure, wetting the garden beds first and rinsing everything they touched on the way out.',
+    ],
+  },
+];
+
+// §4 What the wash covers. `ServiceBlocks` icon grid. Six items, and the order
+// is the order of the job: top down, because anything else means washing the
+// same wall twice.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against ordinary practice, not supplied by TLB.
+// Confirm each and cut what TLB does not do. Three carry blockers, marked.
+const scopeItems = [
+  {
+    icon: 'chart-bars' as const,
+    title: 'Top down, always',
+    description:
+      'Eaves and gables first, then the walls, then the window frames, then whatever the run-off landed on. Washing bottom up means the dirty water runs over what you just cleaned, which is why a cheap job leaves streaks on the lower boards.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Low pressure and a solution',
+    description:
+      // ⚠️ BLOCKER. Confirm the product and dilution. Same question as the
+      // roof page's, and one answer fixes both.
+      'A cleaning solution applied gently, given time to kill the growth, then rinsed at a pressure the surface can take. [Confirm the solution TLB uses and its dilution, so this page can name it plainly.]',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Eaves, soffits and cobwebs',
+    description:
+      'The underside of the eaves is where the webs, the mud nests and the dust live, and it is the part everyone forgets. Nests and hives get pointed out and left alone rather than knocked down without asking.',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'Window frames, sills and downpipes',
+    description:
+      'Frames, sills, fascia, downpipes, gutters from the outside, and the meter box. These are the parts that read as grubby even when the wall is clean, and leaving them undone is what makes a wash look half finished.',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Plants, pets and furniture',
+    description:
+      // ⚠️ BLOCKER, and the biggest complaint risk on the page.
+      'Beds along the wall get wet down before and rinsed after, furniture and pots move out of the way, pets come inside, and anything precious in the garden gets pointed out to us first. [Confirm TLB’s garden protection protocol.]',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Where we stop',
+    description:
+      'Sound painted surfaces, render, weatherboard, brick, fibre cement, colorbond and cladding are all fine. Flaking paint, rotten timber and old fibre cement that might contain asbestos are not, and we will tell you rather than wash them and see.',
+  },
+];
+
+// §5 The note. `Callout` `note` tone rather than `warning`, because this is
+// the "worth knowing" moment rather than the "do not do this" one: the
+// warning about high pressure is already made in full on the high pressure
+// page, and repeating it here at the same volume would be the site arguing
+// with itself.
+//
+// ⚠️ VERIFY THE WORDING. Mould and algae being living growth that regrows
+// from what is left behind is standard, and it is the reason a treated wall
+// stays clean longer than a blasted one. Stated with no product named and no
+// duration promised.
+const softWashCallout = {
+  heading: 'Why a wash lasts longer than a blast',
+  body: [
+    'Force removes what you can see. It leaves the roots and spores in the surface of the render or the grain of the timber, and they start again from there, which is why a blasted wall can look green again within a season. A solution with dwell time kills the growth, so the wall comes back slowly and from scratch.',
+    'It also matters for what the wall is made of. Enough pressure to scour mould out of render is enough to take the render with it, and on weatherboard it drives water up behind the boards where you cannot see it and it does not dry. Slower, gentler and chemically correct is genuinely the version that lasts.',
+  ],
+};
+
+// §6 Before and after. SAMPLE illustrations, not photographs. See the window
+// page's §6 note, which applies verbatim.
+//
+// THE PHOTO BRIEF for a real pair: one wall, ideally a shaded elevation with
+// visible growth, shot from a fixed tripod position, before and after, with
+// nothing moved between the frames and at the same time of day so the shadow
+// line matches. Include the eaves and one window in the frame, because those
+// are the parts the copy promises and the parts a reader checks.
+const wallPair = {
+  before: { src: sampleWallBefore, alt: 'Sample illustration: a weatherboard wall filmed with grey green mould, streaks under the eaves, cobwebs in the soffit and green growth at the base' },
+  after: { src: sampleWallAfter, alt: 'Sample illustration: the same wall bright and even, the eaves and window frame clean, no growth at the base' },
+  caption: 'A shaded weatherboard elevation, filmed and then washed',
+  start: 42,
+};
+
+// §7 When to book it. Short dark block. Doubles as the section that explains
+// the right ORDER for the whole outside of a house, which is the single most
+// useful thing this page can tell someone who is about to book three services
+// from this group.
+const orderBody: TextBlockBody[] = [
+  'If you are doing the whole outside, the order saves you money.',
+  {
+    list: [
+      'Roof first, if it needs doing. Everything that comes off a roof lands on the walls, the windows and the ground.',
+      'Then the walls, the eaves and the window frames. This page.',
+      'Then the windows, so the glass is done after the wall above it has been rinsed.',
+      'Then the gutters, because they catch what the roof and walls shed.',
+      'Ground last. Driveways, paths and patios take whatever ran off everything above them.',
+    ],
+  },
+  'Booked the other way around, you pay to clean the driveway twice. We quote it as one job when you ask us to, and we will tell you what genuinely needs doing this year rather than all five of them.',
+];
+
+// §8 The rest of the cluster. Shared data, this page's own href filtered out.
+const siblingItems = otherOutsideServices('/exterior-house-washing/');
+
+// §9 Comparison table. Shared rows from src/data/comparison.ts.
+//
+// ⚠️ CONDITIONAL. Row one is "employed by TLB, not subcontracted". If this is
+// subcontracted, the table contradicts the page and comes off it.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'The person washing your house is on our team, and they are the one who will be back next year.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §10 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client who was surprised by the colour of their own house afterwards. That reaction is the single best thing this page could show, and it is the one people say out loud.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB exterior house washing client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from someone who washed the house before selling, ideally with the agent’s reaction in it. Agents are a referral source and this is the quote that reaches them.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB exterior house washing client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client who had the roof, walls and driveway done together, about it being one booking rather than three trades. That is what §7 is arguing.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB exterior house washing client' },
+  },
+];
+
+// §11 Branded FAQs, in the customer's voice. Self-contained 40 to 80 word
+// answers, per BFD 3.5.
+const brandedFaqItems = [
+  {
+    question: 'Will it strip our paint?',
+    answer:
+      // ⚠️ BLOCKER. Confirm the position on already flaking paint.
+      'Not sound paint. The pressure is closer to a garden hose than a pressure washer, which is the whole point of soft washing. Paint that is already flaking or chalking is a different matter: we will show you before we start, because a wash will lift what was already letting go. [Confirm TLB’s position on flaking paint.]',
+  },
+  {
+    question: 'How long does the whole house take?',
+    answer:
+      'A single-storey house is usually most of a day, and a two-storey one is a day or more depending on access and how much growth there is. Most of that time is application and rinsing rather than scrubbing. You get the estimate with the price, and we work around whether anyone is home.',
+  },
+  {
+    question: 'What about our garden?',
+    answer:
+      // ⚠️ BLOCKER. Same question as the roof page's. See §4.
+      'Beds along the wall get wet down before we start and rinsed again afterwards, which is what protects them. Furniture and pots move, pets stay inside, and anything you are precious about gets pointed out to us first. [Confirm TLB’s garden protection protocol and what happens to the run-off.]',
+  },
+  {
+    question: 'Can you reach a two-storey wall and the gable?',
+    answer:
+      // ⚠️ BLOCKER. Confirm the real cut-off. See the file header.
+      'Usually, from the ground, with the right reach on the lance. [Confirm TLB’s height limit and what is quoted out.] Access is what decides it: a gable end over a steep garden bed is harder than a two-storey wall over a lawn. If we cannot reach something safely we will say so instead of improvising.',
+  },
+  {
+    question: 'Can you do the inside mould as well?',
+    answer:
+      'That is a different service, and it has a health dimension that outside work does not. Have a look at our mould cleaning and removal page, which covers ceilings, cornices, bathrooms and wardrobes, and what causes it in the first place. We can do both, quoted separately.',
+  },
+];
+
+// §12 Non-branded FAQs.
+//
+// ⚠️ VERIFICATION PASS REQUIRED:
+//   - Mould and algae as living growth on the surface, regrowing from
+//     residue, is standard and correct.
+//   - Soft washing versus high pressure, and which surfaces take which, is
+//     standard practice and matches manufacturer care guidance for render,
+//     prepainted steel and weatherboard.
+//   - ⚠️ ASBESTOS. The answer below states we do not wash old fibre cement
+//     cladding. This must match TLB's actual policy before publishing, and it
+//     is worded as a referral rather than as advice.
+//   - Frequency is hedged as an observation with shade and salt as the
+//     variables.
+//   - Pricing bracketed on purpose.
+const nonBrandedFaqItems = [
+  {
+    question: 'What is soft washing a house?',
+    answer:
+      'A low pressure application of a cleaning solution to the walls, eaves and trim, left to work and then rinsed off gently. The force is close to a garden hose. It suits render, paint, weatherboard, cladding and roofs, where high pressure would strip the finish or push water in behind it.',
+  },
+  {
+    question: 'Why is one side of my house darker than the others?',
+    answer:
+      'Because that side stays damp longest. The southern and shaded elevations get less sun and less drying wind, so mould and algae live there happily while the sunny walls stay clear. Overhanging trees, a fence close to the wall and garden beds against the base all make it worse.',
+  },
+  {
+    question: 'How often should a house exterior be washed?',
+    answer:
+      'Every one to two years suits most homes here, and shaded, coastal or tree covered houses sit at the shorter end of that. Humidity is the driver: the further inland and the more sun a wall gets, the longer it stays clean. Doing it before the growth is thick is faster and cheaper than rescuing it.',
+  },
+  {
+    question: 'Can old fibre cement cladding be washed?',
+    answer:
+      // ⚠️ MUST MATCH TLB'S ACTUAL POLICY. See the note above this array.
+      'Not by us. Fibre cement cladding and eave sheeting installed before the 1990s can contain asbestos, and washing disturbs the surface, so it is work for a licensed asbestos removalist rather than a cleaner. If you are not sure what your walls are made of, get it identified before anyone cleans them.',
+  },
+  {
+    question: 'How much does exterior house washing cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE.
+      'It is usually priced on the size of the house and the access, with a minimum charge, and it moves with the number of storeys, how much growth there is, the wall material and whether the roof, windows or driveway are done at the same time. Ask for a price against a written scope of what is included. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+// §13 Closing CTA.
+const closingCta = {
+  kicker: 'Exterior house washing',
+  heading: 'Send us a photo of the shady side.',
+  lead: 'That is the side that tells us what the job is. We will come back with a price, a date and an honest word on whether the roof and the driveway are worth doing at the same time.',
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75} focus="bottom">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <CardCarousel
+      heading="One wall, three ways of looking at it"
+      lead="Use the arrows to move through it."
+      cards={carouselCards}
+    />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What the wash covers"
+      lead="Six things, in the order they happen. The order is not decoration, it is why the lower boards come out clean."
+      items={scopeItems}
+      cta={quoteCta}
+    />
+
+    <Callout tone="note" heading={softWashCallout.heading} body={softWashCallout.body} />
+
+    <BeforeAfter
+      heading="The shaded side, both ways."
+      lead="Drag the handle across the photo."
+      pairs={[wallPair]}
+      note="Illustrative sample, shown while we collect before and after photos from real TLB jobs."
+    />
+
+    <TextBlock theme="dark" align="left" heading="Do it in this order" body={orderBody} cta={quoteCta} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="The rest of the outside"
+      lead="The other four, in the order they are worth doing."
+      items={siblingItems}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    <Faq heading="Exterior house washing FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

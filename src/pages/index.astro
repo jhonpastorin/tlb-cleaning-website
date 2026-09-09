@@ -50,6 +50,7 @@ import serviceEndOfLeaseImg from '../assets/home/service-end-of-lease-and-bond-c
 import serviceRegularImg from '../assets/home/service-regular-home-cleaning.png';
 import serviceRealEstateImg from '../assets/home/service-real-estate-and-property-management.jpg';
 import serviceDeepCleanImg from '../assets/home/service-deep-and-one-off-cleans.png';
+import serviceCommercialImg from '../assets/home/service-commercial-cleaning.jpg';
 import type { ImageMetadata } from 'astro';
 import sampleKitchenBeforeImg from '../assets/home_cleaning/before_after/sample-kitchen-before.png';
 import sampleKitchenAfterImg from '../assets/home_cleaning/before_after/sample-kitchen-after.png';
@@ -341,17 +342,18 @@ const testimonials = [
 // src/assets/home under service-named filenames, so replacing one with a
 // real photo of that service is a file swap with no code change.
 //
-// ⚠️ All five are COPIES of photos already used elsewhere on the site — the
-// library has six real photographs total and no per-service shoot. They are
-// placeholders in everything but name. Commercial cleaning, new to this
-// list in v6, has no photo at all and renders as a plain brand tile until
-// one exists.
+// ⚠️ The first five are COPIES of photos already used elsewhere on the site —
+// the library has six real photographs total and no per-service shoot. They
+// are placeholders in everything but name. Commercial cleaning is the
+// exception: its tile has its own shopfront photo, generated for this slot
+// and used nowhere else, so it is not a stand-in for a different service.
 const serviceImages: Record<string, ImageMetadata> = {
   '/house-cleaning/': serviceRegularImg,
   '/deep-cleaning/': serviceDeepCleanImg,
   '/end-of-lease-cleaning/': serviceEndOfLeaseImg,
   '/airbnb-cleaning/': serviceAirbnbImg,
   '/real-estate-cleaning/': serviceRealEstateImg,
+  '/commercial-cleaning/': serviceCommercialImg,
 };
 
 const ourServiceItems = serviceLinks.map((service) => ({

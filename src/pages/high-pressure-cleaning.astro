@@ -1,0 +1,538 @@
+---
+// High pressure cleaning (HOMES) — a LEAF page under the Home Cleaning
+// mega-menu's third group, "Outside your home" (navigation.ts).
+//
+// ⚠️ THIS PAGE HAS A COMMERCIAL TWIN, and that page's source asked for this
+// comment. /commercial-pressure-cleaning/ sits under the Commercial menu and
+// was built first. The two will compete for the same queries unless they stay
+// in their lanes:
+//   - THAT page is workplaces: car parks, loading docks, bin bays, trading
+//     hours, WHS duties and wash water compliance. Its reader is responsible
+//     for premises.
+//   - THIS page is homes: driveways, paths, patios, pool surrounds, fences and
+//     retaining walls. Its reader lives there.
+// Deliberate differences that keep them apart: the language ("your place", not
+// "the site", per BFD 2.3), the CTA (an instant quote, not a site
+// walkthrough), the surfaces, and the fact that this page spends its warning
+// on what NOT to pressure clean around a house, which a car park does not
+// have. Each links to the other so a misrouted visitor has somewhere to go.
+//
+// NO CONTENT BRIEF EXISTS for any of the five in this group. All copy below is
+// DRAFTED, not supplied, and needs sign-off. Facts only TLB holds ship as
+// visible [brackets].
+//
+// BLOCKS LAUNCH (the first four are shared with the commercial twin, and one
+// answer fixes both pages):
+//   - IS THIS DELIVERED IN HOUSE? Pressure cleaning needs its own plant: a
+//     petrol unit, a rotary surface cleaner, hose and in many cases a water
+//     tank. If it is subcontracted, §9's comparison table ("employed by TLB,
+//     not subcontracted") contradicts the page and comes off it.
+//   - HOT WATER OR COLD? §5 says oil and grease need heat or a degreaser with
+//     dwell time. If TLB runs cold only, cut the grease claims.
+//   - WATER SUPPLY AND POWER. Branded FAQ 4 is bracketed. It is the third
+//     question every caller asks.
+//   - PRICING BASIS and minimum charge. Bracketed in non-branded FAQ 5.
+//   - DO WE DO TIMBER DECKS? §4's warning says a deck needs a different
+//     approach, not a blast. Confirm whether TLB takes deck work at all,
+//     because half the enquiries from this page will ask.
+//   - RETAINING WALLS, FENCES AND POOL SURROUNDS are named in §6's list.
+//     Confirm each one.
+//   - [insured] in §3 card 3 is inherited from the commercial hub.
+//
+// PHOTOGRAPHY: four generated assets of its own in
+// src/assets/home_cleaning/outside_your_home/high_pressure_cleaning/, prompts
+// in the IMAGE-PROMPTS.md beside them, plus the cluster's shared backdrop one
+// level up. NOTHING is reused from the commercial pressure folder: those four
+// frames are a commercial forecourt and a shopfront, and IMAGE-GUIDELINES §5
+// forbids relabelling a photo to mean something it does not show.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Callout from '../components/sections/Callout.astro';
+import BeforeAfter from '../components/sections/BeforeAfter.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import heroImg from '../assets/home_cleaning/outside_your_home/high_pressure_cleaning/pressure-cleaning-a-home-driveway.jpg';
+import cardPathImg from '../assets/home_cleaning/outside_your_home/high_pressure_cleaning/half-cleaned-paver-path.jpg';
+import cardPoolImg from '../assets/home_cleaning/outside_your_home/high_pressure_cleaning/cleaning-a-pool-surround-and-patio.jpg';
+import cardTeamImg from '../assets/home_cleaning/outside_your_home/high_pressure_cleaning/cleaner-beside-a-pressure-washer-on-a-driveway.jpg';
+// Shared across all five pages in this group. See the window page's note.
+import definitionBgImg from '../assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg';
+// SAMPLE illustrations, not photographs. See §7.
+import sampleDrivewayBefore from '../assets/home_cleaning/before_after/sample-driveway-before.png';
+import sampleDrivewayAfter from '../assets/home_cleaning/before_after/sample-driveway-after.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { otherOutsideServices } from '../data/outsideYourHome';
+
+// §0 Metadata. The menu label is "High pressure cleaning" and it leads the
+// title. "Pressure washing" and "pressure cleaning" are the same thing and
+// are carried in body copy, so the three do not read as three services. The
+// description says "home" in the first line on purpose: it is the one signal
+// that keeps this result apart from the commercial twin's in a search page.
+const pageMeta = {
+  title: 'High Pressure Cleaning | TLB Cleaning',
+  description:
+    'High pressure cleaning for homes across the Northern Rivers, the Tweed and the Southern Gold Coast. Driveways, paths, patios, pool surrounds and fences, at a pressure the surface can take.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/high-pressure-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The heading is what the job feels like rather than what it is: a
+// driveway is the first thing anyone sees and the last thing anyone gets
+// around to.
+//
+// Scene photo, family A, square source so the 1/1 box crops nothing.
+const hero = {
+  kicker: 'High pressure cleaning',
+  headingLines: ['Your driveway is the', 'first thing anyone sees.'],
+  lead:
+    'Driveways, paths, patios, pool surrounds and fences across the Northern Rivers, the Tweed and the Southern Gold Coast. Cleaned at a pressure the surface can actually take.',
+  cta: quoteCta,
+  image: {
+    ratio: '1/1',
+    label:
+      'A cleaner in an aqua polo and teal gloves pressure washing the concrete driveway of a white weatherboard home, the cleaned slab wet and pale behind the spray',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. The answer target, and the place the synonyms are settled.
+// Paragraph two introduces soft washing, which is the distinction most
+// competitor pages in this category get wrong, and it is what keeps this page
+// honest when it later says not to blast your render.
+const definitionBody: TextBlockBody[] = [
+  'High pressure cleaning is the cleaning of outdoor hard surfaces at a home with pressurised water. Driveways, paths, patios, pool surrounds, courtyards, steps, fences and retaining walls. It lifts off the grime, algae, moss and oil that build up on anything left out in the weather. TLB Cleaning does high pressure cleaning for homes across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+  'Pressure cleaning, pressure washing and high pressure cleaning all describe the same work. Soft washing is genuinely different: low pressure and a cleaning solution instead of force, for render, paint, cladding, roofs and anything else that force would strip. Most homes need both, and the skill is knowing which surface takes which. If you want the walls and the roof done, that is exterior house washing and roof cleaning, and they are linked further down.',
+];
+
+// §3 Pathway cards. Three ways people arrive, in their words. Persona cards
+// suit this page where they did not suit gutters, because the three jobs here
+// really are different purchases: a rescue, a pre-event tidy up and an
+// ongoing arrangement.
+const pathwayCards = {
+  heading: 'People book this for three reasons.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        // No person in this frame on purpose: the subject is the line down
+        // the middle of the paving, and a figure would compete with it.
+        label:
+          'A paved path beside a home halfway through being pressure cleaned, weathered grey and green with algae on one side of a straight line and pale and clean on the other',
+        src: cardPathImg,
+      },
+      title: 'It has gone green and slippery',
+      description:
+        'Algae on a shaded path is the one that matters, because it is genuinely slippery when it rains and it is usually on the way to the front door. One clean fixes it, and we will tell you which marks are staining and which are in the concrete for good.',
+      cta: quoteCta,
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label:
+          'A cleaner pressure washing the paved surround of a backyard swimming pool at a home, the cleaned stone pale and wet, the pool still and reflecting the sky',
+        src: cardPoolImg,
+      },
+      title: 'We have people coming',
+      description:
+        'Christmas, a party, a birthday, or the photos going up before the house is listed. Paths, patio and pool surround done in a day so the outside matches the inside. Tell us the date and we will work back from it.',
+      cta: { label: 'Get an instant quote', href: quoteCta.href },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        // A visible, friendly face, because the copy beside it promises the
+        // same small team.
+        label:
+          'A cleaner in uniform standing beside her pressure washer on a home driveway, turning to the camera with a friendly expression',
+        src: cardTeamImg,
+      },
+      title: 'I want it to just stay done',
+      description:
+        // ⚠️ [insured] inherited from the commercial hub.
+        'Surfaces done once a year never get back to the state that needs rescuing, and each visit costs less because there is less to take off. Same local team, [insured], on the same schedule as your regular clean if you want it that way.',
+      cta: { label: 'Set up your regular clean', href: '/house-cleaning/' },
+    },
+  ],
+};
+
+// §4 The warning, placed EARLY on this page rather than late. Every other page
+// in this group argues its warning after the scope of work; here the reader
+// arrives already wanting force applied to their house, and the honest thing
+// is to say what that ruins before describing the job.
+//
+// `Callout` `warning` tone, used once.
+//
+// ⚠️ VERIFY THE WORDING. Each item is a well established failure mode:
+// pressure etching concrete, washing jointing sand out of pavers, furring and
+// splintering softwood decking, stripping render and paint, and forcing water
+// behind cladding. No pressure figures and no brand names, both of which
+// date. If TLB wants a source, the tile, render and decking manufacturers'
+// own care guidance is the honest one to cite.
+const surfaceCallout = {
+  heading: 'Some of these should never see high pressure',
+  body: [
+    'A wand that cleans a concrete driveway will wreck other things around the same house in seconds. Rendered and painted walls strip. Timber decking furs up and splinters, and the grain lifts so it goes grey again faster than before. Pavers lose the sand out of the joints, which is what was holding them still. Roof tiles lose their surface coating. Cladding lets water in behind it, where it keeps causing damage after the machine has gone.',
+    'None of that shows in a quote. It shows on your house, and it does not wash off. The right answer for those surfaces is a soft wash: low pressure and a cleaning solution instead of force. We use both, and at the quote we will tell you which of your surfaces gets which.',
+  ],
+};
+
+// §5 Scope of work. `ServiceBlocks` icon grid. Six stages in the order they
+// happen. Structurally the same block as the commercial twin's, because the
+// method genuinely is the same method, with the items rewritten for a house:
+// no trading hours, no WHS duty, no bin bay, and the last one is about your
+// garden rather than a stormwater offence.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against ordinary practice, not supplied by TLB.
+// Confirm each and cut what TLB does not do. Two carry blockers, marked.
+const scopeItems = [
+  {
+    icon: 'target' as const,
+    title: 'Pressure matched to the surface',
+    description:
+      'Concrete, exposed aggregate, pavers, sandstone, tiles, render and painted steel all take a different setting, and the wrong one leaves a mark that cannot be undone. This is the first thing we work out and it is most of what you are paying for.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'We move things and cover things first',
+    description:
+      'Cars off the driveway, furniture and pots off the patio, garden beds along the edge wet down, windows and door seals checked. Ten minutes of setting up is the difference between a clean driveway and a wet laundry.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Pre-treat, then clean',
+    description:
+      // ⚠️ BLOCKER. Confirm hot or cold water. See the file header.
+      'Oil, grease and organic growth get a treatment with dwell time before any water goes near them, and grease needs heat or a degreaser to release at all. Blasting a stain cold just spreads it. [Confirm whether TLB runs hot water or cold.]',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Surface cleaner on the flat, wand on the edges',
+    description:
+      'Open areas are done with a rotary surface cleaner, which cleans evenly and leaves no stripes. Edges, steps, kerbs and corners are finished by hand. Stripes across a driveway are the signature of a job done entirely with a wand.',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Soft wash where force would do damage',
+    description:
+      'Render, painted surfaces, cladding, fences and roofs get low pressure and a cleaning solution. It also kills the algae and mould at the root rather than knocking the top off it, which is why a soft washed surface stays clean longer.',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'Your garden, your pool, your drain',
+    description:
+      // ⚠️ BLOCKER, and the one to get right before publishing.
+      'Beds get rinsed, the pool gets covered or the surround is worked away from it, and run-off carrying detergent or oil is kept out of the stormwater drain rather than hosed into it. [Confirm what TLB does about run-off on a residential job.]',
+  },
+];
+
+// §6 What we clean. A plain list rather than `TagCloud`, which is this
+// library's pill band and needs an href per pill: every surface here is a
+// surface, not a page, and inventing eleven destinations for them would be
+// link padding. `TextBlock`'s polymorphic `body` handles a lead-in, a list
+// and a conclusion in source order, which is exactly this shape.
+const surfacesBody: TextBlockBody[] = [
+  'Around an ordinary house, this is usually the list:',
+  {
+    list: [
+      'Driveways, in concrete, exposed aggregate or pavers',
+      'Front paths, side paths and the bit nobody looks at behind the shed',
+      'Patios, courtyards, alfresco areas and outdoor steps',
+      'Pool surrounds and coping, where algae is a genuine slip risk',
+      'Fences, gates and retaining walls, at a pressure they can take',
+      'Carports, garage floors and the oil patch under the car',
+      'Bin areas, and the smell that comes with them',
+      'Rendered and painted walls, by soft wash rather than force',
+    ],
+  },
+  'If it is fixed to the ground and it is outside, ask us. If it is the walls and the roof you are looking at, those are their own jobs and they are linked below, because doing them in the wrong order means cleaning the driveway twice.',
+];
+
+// §7 Before and after. SAMPLE illustrations, not photographs. See the window
+// page's §6 note, which applies verbatim.
+//
+// THE PHOTO BRIEF for a real pair, and this is the category where it is most
+// worth doing: one driveway, shot from a fixed tripod position, before and
+// after, with NOTHING moved between the frames. No car in the second shot, no
+// bin shifted, same time of day so the shadows match. Concrete and pavers are
+// the best subjects because the change is unmistakable.
+const drivewayPair = {
+  before: { src: sampleDrivewayBefore, alt: 'Sample illustration: a concrete driveway greyed with grime, algae down the shaded edge and an oil patch in the middle' },
+  after: { src: sampleDrivewayAfter, alt: 'Sample illustration: the same driveway pale, even and clean, with the oil patch and algae gone' },
+  caption: 'Concrete driveway, grime, algae and an oil patch',
+  start: 40,
+};
+
+// §8 The rest of the cluster. Shared data, this page's own href filtered out.
+// The commercial twin is linked separately, in the closing block below, so it
+// does not sit in a row of residential services as though it were one.
+const siblingItems = otherOutsideServices('/high-pressure-cleaning/');
+
+// §9 Comparison table. Shared rows from src/data/comparison.ts.
+//
+// ⚠️ CONDITIONAL. Row one is "employed by TLB, not subcontracted". If pressure
+// cleaning is subcontracted to an operator with the plant, this table
+// contradicts the page and comes off it. Same blocker as the commercial twin.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'Anyone can hire a machine for a day. What you are actually buying is someone who knows which surface takes what pressure, and who will be reachable next week.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §10 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client whose driveway or path had gone green, ideally one who mentions how the whole house looked afterwards. The driveway is never really the point.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB high pressure cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client who booked before Christmas or before a party. That is the biggest single reason this page gets read in December.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB high pressure cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from an Airbnb host or an agent about a property being photographed or listed. Both are referral sources and both read this page.]',
+    name: '[Client or host first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB holiday let client' },
+  },
+];
+
+// §11 Branded FAQs, in the customer's voice. Self-contained 40 to 80 word
+// answers, per BFD 3.5.
+const brandedFaqItems = [
+  {
+    question: 'Will it damage our concrete or pavers?',
+    answer:
+      'Not if the pressure is matched to the surface, which is the first thing we work out. Old, decorative or already crumbling surfaces get flagged before we start rather than after, and pavers get the sand in the joints treated with respect. Render, paint, cladding and roofs get a soft wash instead of force.',
+  },
+  {
+    question: 'Can you get the oil stain off our driveway?',
+    answer:
+      'Usually a good way, sometimes not completely. Fresh oil responds well to a degreaser with dwell time and the right heat. Oil that has been soaking into porous concrete for years is in the slab, and no amount of pressure pulls it back out. We tell you which one you have before we quote.',
+  },
+  {
+    question: 'How long does it take?',
+    answer:
+      'A driveway and front path at an average house is usually half a day. Add the patio, the pool surround and the fences and it becomes a full day. Heavily stained surfaces take longer because the time goes into pre-treatment, not into more pressure. You get the estimate with the price.',
+  },
+  {
+    question: 'What do you need from us on the day?',
+    answer:
+      // ⚠️ BLOCKER. See the file header.
+      'Cars off the area being cleaned, furniture and pots moved if you can, the gate unlocked and dogs inside. [Confirm whether TLB brings its own water and power, or needs a tap and a power point.] Everything else, including the machine, comes with us.',
+  },
+  {
+    question: 'Can you do it while we are out?',
+    answer:
+      'Yes, as long as we can get in and reach a tap. Most people are at work for it. We will send you a message when we are done and let you know anything we found, like a cracked paver or a downpipe discharging onto the path, which is often why an area keeps going green.',
+  },
+];
+
+// §12 Non-branded FAQs.
+//
+// ⚠️ VERIFICATION PASS REQUIRED:
+//   - Concrete etching under a held wand, jointing sand washing out of
+//     pavers, timber furring and render stripping are all standard and
+//     correct.
+//   - Algae on shaded paving being a real slip hazard is uncontroversial.
+//   - The stormwater answer is correct in substance for NSW: allowing
+//     polluting matter to enter stormwater is an offence under the Protection
+//     of the Environment Operations Act 1997, and stormwater is untreated. It
+//     is worded as a duty, names no section number and no penalty figure, and
+//     is SILENT ON QLD, which matters because this service crosses the border.
+//     ⚠️ ADD A QLD CLAUSE, or confirm the service area for this page.
+//   - Frequency is an observation, hedged.
+//   - Pricing bracketed on purpose.
+const nonBrandedFaqItems = [
+  {
+    question: 'How often should a driveway be pressure cleaned?',
+    answer:
+      'Once a year suits most homes, and shaded or tree covered areas often want it more like every eight months. The shaded southern side of a house grows algae far faster than the sunny side, so it is normal for one path to need doing twice as often as the driveway. Surfaces kept on a schedule cost less each time.',
+  },
+  {
+    question: 'What is the difference between pressure cleaning and soft washing?',
+    answer:
+      'Pressure cleaning uses force to remove what is sitting on a hard surface, and suits concrete, pavers, brick and steel. Soft washing uses low pressure and a cleaning solution, and suits render, paint, cladding, fences and roofs, where force would strip the finish or push water in behind it. Soft washing also treats growth at the root, so it stays clean longer.',
+  },
+  {
+    question: 'Can high pressure cleaning damage a timber deck?',
+    answer:
+      // ⚠️ BLOCKER. Confirm whether TLB takes deck work at all.
+      'Yes, easily. Pressure lifts the soft fibres between the grain, so the boards feel furry, splinter more and weather grey faster than before. A deck wants a gentle wash with the right cleaner and a brush, worked along the grain, not a wand held close. Anyone who quotes a deck at driveway pressure is going to cost you the deck.',
+  },
+  {
+    question: 'Where is the water allowed to go?',
+    answer:
+      // ⚠️ SILENT ON QLD. See the note above this array.
+      'Clean rinse water off a path can generally go where rain would. Water carrying oil, grease, detergent or paint cannot: in NSW, letting polluting matter enter a stormwater drain is an offence under the Protection of the Environment Operations Act 1997, and stormwater runs to the creek untreated. That kind of run-off has to be contained, so ask any cleaner how they handle it before they start.',
+  },
+  {
+    question: 'How much does high pressure cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE.
+      'It is usually priced per square metre with a minimum charge for small jobs, and the rate moves with the surface, how badly stained it is, access to water and power, and whether anything needs soft washing instead. Ask for the price against a written scope rather than an hourly rate, so you can see what is included. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+// §13 Closing CTA. The commercial twin is linked in the lead rather than as a
+// second button, so a business reader who landed here has a way out without
+// competing with the page's one CTA (BFD 2.4: one primary CTA per page).
+const closingCta = {
+  kicker: 'High pressure cleaning',
+  heading: 'Send us a photo of the worst bit.',
+  lead: 'That is usually enough to price it. We will tell you what will come off, what will not and which surfaces need a soft wash instead. Cleaning a workplace rather than a home? Our commercial pressure cleaning page is the one you want.',
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="left"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75} focus="bottom">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    {/* The warning sits BEFORE the scope of work on this page, which is the
+        reverse of its siblings. See the §4 comment. */}
+    <Callout tone="warning" heading={surfaceCallout.heading} body={surfaceCallout.body} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What the job actually involves"
+      lead="Six stages, in this order. The second and the last are the ones cheap operators skip."
+      items={scopeItems}
+      cta={quoteCta}
+    />
+
+    <BeforeAfter
+      heading="One driveway, both ways."
+      lead="Drag the handle across the photo."
+      pairs={[drivewayPair]}
+      note="Illustrative sample, shown while we collect before and after photos from real TLB jobs."
+    />
+
+    <TextBlock theme="dark" align="left" heading="What we clean around a house" body={surfacesBody} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="The rest of the outside"
+      lead="Do these in the right order and the driveway only gets cleaned once. Walls and roof first, ground last."
+      items={siblingItems}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    <Faq heading="High pressure cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

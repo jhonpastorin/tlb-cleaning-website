@@ -7,7 +7,8 @@
 //
 // Page-specific content still lives in each page file — only the chrome
 // every page repeats lives here.
-import type { MegaMenuNavItem, NavItem, ButtonData } from './types';
+import type { MegaMenuGroup, MegaMenuNavItem, NavItem, ButtonData } from './types';
+import { northernRiversTowns, tweedTowns, southernGoldCoastTowns, townSlug } from './locations';
 
 // The one quote CTA used by the header, both heroes, and the closing CTA
 // blocks. href guessed — no booking/quote URL given, confirm before launch.
@@ -90,8 +91,9 @@ export const primaryNav: NavItem[] = [
 // original 5-item, services-only list was — footerServiceLinks below
 // stays services-only, reusing whatWeDoItems' already-real hrefs instead.
 //
-// Home Cleaning, Commercial, and Areas we clean each carry a `megaMenu`
-// transcribed from the "IA & Menu" content roadmap sheet — Level A = the
+// Home Cleaning and Commercial each carry a `megaMenu` transcribed from the
+// "IA & Menu" content roadmap sheet; Areas we clean now builds its columns
+// from locations.ts instead (see regionColumns above) — Level A = the
 // item itself, Level B = its children, [bracketed] rows = non-clickable
 // group labels (no `label` maps to no `href`, matching MegaMenuGroup).
 // None of the sheet's hrefs were specified; every child slug below is a
@@ -107,6 +109,41 @@ export const primaryNav: NavItem[] = [
 // that one is commercial cleaning of aged-care premises, this is regular
 // domestic cleaning for older clients at home (Home Care Packages, DVA).
 // /senior-home-cleaning/ currently has no mega-menu entry of its own.
+// "Areas we clean" mega-menu columns, built from the same town lists the
+// homepage's "Where we clean" TagCloud renders (src/data/locations.ts) —
+// previously this menu carried its own hand-typed 15-town subset from the
+// "IA & Menu" sheet, which is exactly the drift locations.ts was extracted
+// to end. The menu now IS the homepage list, so there is one place to edit
+// a town.
+//
+// 56 towns in one row of columns would be either six columns wide or thirty
+// rows tall, so each region's list is split across at most REGION_COL_ROWS
+// rows per column, balanced so the columns of a region are within one row
+// of each other. Only a region's FIRST column carries the region label —
+// MegaMenuGroup makes `label` optional precisely so a continuation column
+// can render as a bare list under the heading above it. That lands the
+// panel at four columns, the same width Home Cleaning's already runs.
+const REGION_COL_ROWS = 20;
+
+// Each region's own overview page heads its first column, the way the old
+// menu led with "Northern Rivers NSW" and "Southern Gold Coast QLD".
+// ⚠️ Slugs guessed, same as everything else here: the two the old menu
+// already used are kept verbatim, and "The Tweed" — a region the old menu
+// folded into Northern Rivers and so never linked — follows townSlug's
+// pattern. Confirm all three before launch.
+const regionColumns = (label: string, overviewHref: string, towns: string[]): MegaMenuGroup[] => {
+  const rows: NavItem[] = [
+    { label: `All of ${label}`, href: overviewHref },
+    ...towns.map((town) => ({ label: town, href: townSlug(town) })),
+  ];
+  const colCount = Math.ceil(rows.length / REGION_COL_ROWS);
+  const perCol = Math.ceil(rows.length / colCount);
+  return Array.from({ length: colCount }, (_, col) => ({
+    label: col === 0 ? label : undefined,
+    items: rows.slice(col * perCol, (col + 1) * perCol),
+  }));
+};
+
 export const headerNav: MegaMenuNavItem[] = [
   {
     label: 'Home Cleaning',
@@ -185,38 +222,16 @@ export const headerNav: MegaMenuNavItem[] = [
   {
     label: 'Areas we clean',
     href: '/locations/',
-    // Suburb list per the sheet — NOTE this differs from locationTags (§11's
-    // "Where We Clean" TagCloud further down this file): the sheet adds
-    // Evans Head and Casino and drops Ocean Shores and Coolangatta. Flagging
-    // rather than silently reconciling — confirm which list is current
-    // before launch, then bring the other in line.
+    // Reconciled: this menu used to run the "IA & Menu" sheet's 15-town
+    // subset while the homepage ran locations.ts' 56 towns in three regions.
+    // The homepage list wins — it's the fuller one, it already covers every
+    // town the sheet listed (Evans Head and Casino included), and it's what
+    // the "Where we clean" section on every page renders. Nothing was
+    // dropped; the sheet's list is superseded rather than merged.
     megaMenu: [
-      {
-        label: 'Northern Rivers NSW',
-        items: [
-          { label: 'Northern Rivers NSW', href: '/locations/northern-rivers-nsw/' },
-          { label: 'Byron Bay', href: '/locations/byron-bay/' },
-          { label: 'Brunswick Heads', href: '/locations/brunswick-heads/' },
-          { label: 'Ballina', href: '/locations/ballina/' },
-          { label: 'Lennox Head', href: '/locations/lennox-head/' },
-          { label: 'Lismore', href: '/locations/lismore/' },
-          { label: 'Alstonville', href: '/locations/alstonville/' },
-          { label: 'Kingscliff', href: '/locations/kingscliff/' },
-          { label: 'Pottsville', href: '/locations/pottsville/' },
-          { label: 'Murwillumbah', href: '/locations/murwillumbah/' },
-          { label: 'Evans Head', href: '/locations/evans-head/' },
-          { label: 'Casino', href: '/locations/casino/' },
-          { label: 'Tweed Heads', href: '/locations/tweed-heads/' },
-        ],
-      },
-      {
-        label: 'Southern Gold Coast QLD',
-        items: [
-          { label: 'Southern Gold Coast QLD', href: '/locations/southern-gold-coast-qld/' },
-          { label: 'Burleigh Heads', href: '/locations/burleigh-heads/' },
-          { label: 'Palm Beach', href: '/locations/palm-beach/' },
-        ],
-      },
+      ...regionColumns('Northern Rivers', '/locations/northern-rivers-nsw/', northernRiversTowns),
+      ...regionColumns('The Tweed', '/locations/the-tweed/', tweedTowns),
+      ...regionColumns('Southern Gold Coast', '/locations/southern-gold-coast-qld/', southernGoldCoastTowns),
     ],
   },
   {

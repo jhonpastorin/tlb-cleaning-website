@@ -1,0 +1,524 @@
+---
+// Gutter cleaning — a LEAF page under the Home Cleaning mega-menu's third
+// group, "Outside your home" (navigation.ts). Built in the same pass as
+// window, roof, high pressure and exterior house washing.
+//
+// Its section order is deliberately NOT the window page's. Both open the same
+// way (hero, trust bar, definition) because that opening is the site's, but
+// this page's middle is a `PhotoGallery` story of what happens on the day
+// rather than persona cards, because the objection here is not "which of
+// these am I" but "what are you actually going to do on my roof". Five leaf
+// pages off one menu group that all run the identical eleven sections read as
+// a template; the shared parts are the ones that should be shared.
+//
+// NO CONTENT BRIEF EXISTS for any of the five. All copy below is DRAFTED, not
+// supplied, and needs sign-off. Facts only TLB holds ship as visible
+// [brackets] rather than plausible guesses.
+//
+// BLOCKS LAUNCH:
+//   - WORKING AT HEIGHT. This is the one page in the group with a real safety
+//     and insurance question behind it. Gutter work means a ladder, a roof
+//     edge and in places a two-storey drop. Confirm TLB's people are trained
+//     and equipped for it and that the public liability and workers
+//     compensation cover extends to work at height, BEFORE this publishes.
+//     §4's warning callout tells readers not to do this themselves, which
+//     only holds if TLB does it properly.
+//   - SINGLE STOREY ONLY? Branded FAQ 3 currently says two-storey homes are
+//     assessed on access. Confirm the real cut-off, and whether anything on a
+//     steep hinterland block is declined outright.
+//   - DO WE GO ON THE ROOF, OR STAY ON THE LADDER? The two are different jobs
+//     with different risk and different pricing, and §3 step 2 assumes the
+//     ladder. Confirm.
+//   - GUTTER GUARD. Non-branded FAQ 4 says it reduces the work without ending
+//     it, which is true. Whether TLB supplies or installs it is bracketed.
+//   - RAINWATER TANKS. §5 says we tell you before we flush if the roof feeds
+//     a tank. Confirm that is the practice, because on a rural block it is the
+//     difference between a clean job and a contaminated tank.
+//   - PRICING BASIS and minimum charge. Bracketed in non-branded FAQ 5.
+//   - [insured] in §6 is inherited from the commercial hub, where the same
+//     bracket is already open.
+//
+// PHOTOGRAPHY: four generated assets of its own in
+// src/assets/home_cleaning/outside_your_home/gutter_cleaning/, prompts in the
+// IMAGE-PROMPTS.md beside them, plus the cluster's shared backdrop one level
+// up. Same uniform deviation as the rest of the group: no apron on outdoor
+// work.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PhotoGallery from '../components/sections/PhotoGallery.astro';
+import Callout from '../components/sections/Callout.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import BeforeAfter from '../components/sections/BeforeAfter.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import heroImg from '../assets/home_cleaning/outside_your_home/gutter_cleaning/clearing-leaf-litter-from-a-house-gutter.jpg';
+import blockedImg from '../assets/home_cleaning/outside_your_home/gutter_cleaning/blocked-gutter-packed-with-leaves.jpg';
+import baggingImg from '../assets/home_cleaning/outside_your_home/gutter_cleaning/cleaner-bagging-gutter-debris-on-the-lawn.jpg';
+import clearImg from '../assets/home_cleaning/outside_your_home/gutter_cleaning/clear-gutter-and-downpipe-after-a-clean.jpg';
+// Shared across all five pages in this group. See the window page's note.
+import definitionBgImg from '../assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg';
+// SAMPLE illustrations, not photographs. See §7.
+import sampleGutterBefore from '../assets/home_cleaning/before_after/sample-gutter-before.png';
+import sampleGutterAfter from '../assets/home_cleaning/before_after/sample-gutter-after.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { otherOutsideServices } from '../data/outsideYourHome';
+
+// §0 Metadata. "Gutter cleaning" leads; "gutter clearing" and "roof gutters"
+// are synonyms carried in body copy rather than the title.
+const pageMeta = {
+  title: 'Gutter Cleaning | TLB Cleaning',
+  description:
+    'Gutter cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast. Gutters, valleys and downpipes cleared by hand and flushed, debris taken away.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/gutter-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The heading names the actual consequence rather than the task,
+// because nobody wants clean gutters. They want the water to go where it was
+// meant to go, and they want to not be on the ladder.
+//
+// Scene photo, family A, square source so the 1/1 box crops nothing.
+const hero = {
+  kicker: 'Gutter cleaning',
+  headingLines: ['Nobody should be up', 'that ladder. We will go.'],
+  lead:
+    'Gutters, valleys and downpipes cleared by hand, flushed and checked, across the Northern Rivers, the Tweed and the Southern Gold Coast. The debris leaves with us.',
+  cta: quoteCta,
+  image: {
+    ratio: '1/1',
+    label:
+      'A cleaner in an aqua polo and teal gloves on a footed extension ladder lifting damp eucalypt leaf litter out of a house gutter into a teal bucket',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. Answer target for the focus keyword. Paragraph two carries
+// the local fact this page turns on: the trees here shed all year, so the
+// twice-a-year rule that suits a city gutter does not always suit a block
+// with a eucalypt over it.
+const definitionBody: TextBlockBody[] = [
+  'Gutter cleaning is the removal of leaves, bark, silt and debris from the gutters, valleys and downpipes of a house so rainwater runs off the roof and away from the building. TLB Cleaning clears gutters across the Northern Rivers, the Tweed and the Southern Gold Coast, as a one-off or on a set schedule.',
+  'Gutters here fill faster than most. Eucalypts, paperbarks and tea trees drop leaves, bark and seed capsules right through the year rather than in one autumn, and a wet summer turns that into a packed mat that holds water instead of moving it. That is why a gutter three streets away can be fine while yours is overflowing.',
+];
+
+// §3 What happens on the day. `PhotoGallery`'s `story` variant, which is the
+// one section in this library built for a sequence: a step kicker, alternating
+// sides and a connector drawn between the steps. It is the right shape for a
+// job the client will not watch, because they will be at work.
+//
+// Three steps, and three of this page's four photos. The hero carries the
+// fourth. Nothing is reused twice on the page, per IMAGE-GUIDELINES §5.
+const storySteps = [
+  {
+    step: 'First',
+    heading: 'We look at what is actually in there',
+    body: [
+      'A gutter that looks full from the ground can be holding anything from dry leaf litter to a mat of soil with plants growing in it. We get eyes on it before we quote a schedule, because the two take very different amounts of time.',
+      'We also check the fall, the joins and the fascia while we are up there. If a gutter is rusted through or pulling away from the house, cleaning it will not fix the leak and we will tell you that instead of taking the money.',
+    ],
+    image: {
+      ratio: '4/3',
+      label:
+        'A blocked house gutter packed with damp brown eucalypt leaves, bark and twigs, with a small seedling growing out of the debris and a stain running down the wall below',
+      src: blockedImg,
+    },
+  },
+  {
+    step: 'Then',
+    heading: 'It comes out by hand, into a bucket',
+    body: [
+      'Debris is lifted out by hand into a bucket on the ladder, not blown off the roof into your garden and not flushed down the downpipes to block them further along. Wet litter is heavy and it stains, so it goes into a bag on a tarp rather than onto your lawn.',
+      'Then the bags come with us. You should not be left with four wet sacks of leaf litter beside the bins and no way to get rid of them.',
+    ],
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner in uniform on the lawn tipping a teal bucket of damp leaf litter into a grey garden bag on a tarpaulin, with a ladder against the roof edge behind her',
+      src: baggingImg,
+    },
+  },
+  {
+    step: 'Last',
+    heading: 'We flush it and check the downpipes',
+    body: [
+      'A clear gutter is only half the job. Water goes through with a hose to prove the fall is right and the outlets are running, because a blocked downpipe puts the overflow straight back over the edge in the next storm.',
+      'You get told what we found: a sagging bracket, a rusted join, a downpipe that will not clear, a valley that fills every time. Small things now, rather than a wet ceiling in February.',
+    ],
+    image: {
+      ratio: '4/3',
+      label:
+        'A completely clear house gutter, the bare metal channel empty and swept, with clean water running freely into an unblocked downpipe',
+      src: clearImg,
+    },
+  },
+];
+
+// §4 The warning. `Callout` `warning` tone, which this library reserves for
+// "do not do this" rather than "worth knowing". It is used once on the page
+// and it is the honest use of it: falls from ladders at home are a genuine
+// and serious hazard, and the whole service exists because of it.
+//
+// ⚠️ VERIFY THE WORDING. This is a statement about risk, so it names no
+// figure. Australian work health and safety law requires a business to manage
+// the risk of a fall from height, and the practical guidance that follows from
+// it (a ladder set on firm level ground, not overreaching, not standing on
+// the top rungs, not leaning it on the gutter itself) is standard. If TLB
+// wants a source on the page, Safe Work Australia is the authoritative one
+// and BFD 3.3 already names it.
+const ladderCallout = {
+  heading: 'Please do not do this one yourself',
+  body: [
+    'Most gutter jobs go wrong in the same few ways. The ladder is set on soft garden bed or on a slope, it leans against the gutter rather than the fascia and flexes when weight comes on it, and then somebody reaches sideways for the last arm length of leaves instead of getting down and moving it. That last reach is the one that hurts people, and it happens on single-storey houses.',
+    'A fall from gutter height is not a small injury. If you are going to do it anyway, do it with someone else at home, keep your hips between the stiles, move the ladder rather than stretching and stay off it entirely in wind or after rain.',
+  ],
+};
+
+// §5 What a blocked gutter actually costs. `ContentGrid` at three columns
+// with `feature` cells: icon, heading, short body. Chosen over
+// `ServiceBlocks`' icon grid because this block is not a scope of work, it is
+// four consequences, and one of them is deliberately tinted to break the row.
+//
+// ⚠️ EVERY ITEM IS ORDINARY BUILDING PHYSICS, not a TLB claim, and each one
+// is checkable. The bushfire item is the one to have someone confirm the
+// phrasing on: clearing gutters before the bushfire season is standard advice
+// from the NSW Rural Fire Service and Queensland Fire Department, and it is
+// worded here as a reason to book rather than as a promise of protection.
+const consequenceBlocks = [
+  {
+    type: 'feature' as const,
+    icon: 'bloom' as const,
+    heading: 'Water into the roof, not off it',
+    body: [
+      'A packed gutter overflows backwards under the roof sheeting as often as it does over the front edge. That water gets into the eaves, the fascia and sometimes the ceiling, and the first sign is usually a stain that appears after a storm and never quite dries.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'idea' as const,
+    heading: 'Rot, rust and mosquitoes',
+    body: [
+      'Wet leaf litter sits against the metal and holds it damp, which is how a gutter rusts from the inside. Standing water in a blocked section also breeds mosquitoes through summer, which is a nuisance you feel long before you notice the gutter.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'spark' as const,
+    heading: 'Ember fuel in the wrong season',
+    body: [
+      'Dry leaf litter in a gutter is fuel sitting on top of your house, which is why fire services ask people to clear gutters before the bushfire season. Booking it in spring rather than after the first bad day is the whole point.',
+    ],
+    tone: 'inverse' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'And the tank, if you have one',
+    body: [
+      'On a rural block the roof is often the water supply. Debris, bird droppings and the first flush off a dirty roof all end up in the tank, so we tell you before we flush anything and work around the diverter if there is one.',
+      'If the roof feeds drinking water, say so when you book. It changes the order we do things in.',
+    ],
+    span: 3,
+  },
+];
+
+// §6 Who comes. Short dark block rather than persona cards: this page has one
+// audience, which is somebody who wants the job off their list.
+//
+// ⚠️ [insured] inherited from the commercial hub, where the bracket is already
+// open. One answer fixes every page.
+const whoBody: TextBlockBody[] = [
+  'The same small local team who does the rest of your cleaning. Not a stranger from a call centre and not a different pair every visit.',
+  {
+    list: [
+      'We are local, [insured] and there is one number to ring if something is not right.',
+      'You get told what we found on the roof, in plain words, with no upsell attached to it.',
+      'It can go on a schedule with your regular clean, so the gutters get done before the wet season without you having to remember.',
+    ],
+  },
+  'That last one matters more here than most places. The rain that fills a gutter and the rain that finds your ceiling are usually the same week in February, and by then everyone is booked.',
+];
+
+// §7 Before and after. SAMPLE illustrations, not photographs. See the window
+// page's §6 note, which applies verbatim.
+//
+// THE PHOTO BRIEF for a real pair: one run of gutter, shot from a fixed
+// position at the top of a ladder or from a first-floor window, before and
+// after, with nothing moved between the frames. A packed gutter with a
+// seedling in it is the most persuasive frame in this category.
+const gutterPair = {
+  before: { src: sampleGutterBefore, alt: 'Sample illustration: a gutter packed with leaf litter, with a seedling growing out of it and overflow staining the wall below' },
+  after: { src: sampleGutterAfter, alt: 'Sample illustration: the same gutter run clear and swept, with clean water running into the downpipe' },
+  caption: 'One run of gutter, packed and then cleared',
+  start: 40,
+};
+
+// §8 The rest of the cluster. Shared data, this page's own href filtered out.
+const siblingItems = otherOutsideServices('/gutter-cleaning/');
+
+// §9 Comparison table. Shared rows from src/data/comparison.ts.
+//
+// ⚠️ CONDITIONAL. Row one is "employed by TLB, not subcontracted". If gutter
+// work is subcontracted to a height-access operator, this table contradicts
+// the page it sits on and comes off. See the file header.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'You are not buying an hour of labour. You are buying somebody who will tell you what they saw up there and be reachable next season.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §10 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+// Never invent a quote or a name. Avatars stay labelled placeholders because
+// IMAGE-GUIDELINES §7 forbids a generated face beside a client name.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client whose gutters were overflowing in a storm, ideally one who had put it off. The relief is the story on this page, not the leaves.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB gutter cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a client on a hinterland or acreage block with trees over the roof, about how often it needs doing. That reader is the one this page converts.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB gutter cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from an older client or an absentee owner about not having to get on a ladder. Say it in their words, not ours.]',
+    name: '[Client first name, TBC]',
+    role: '[Suburb, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB gutter cleaning client' },
+  },
+];
+
+// §11 Branded FAQs, in the customer's voice. Self-contained 40 to 80 word
+// answers, per BFD 3.5.
+const brandedFaqItems = [
+  {
+    question: 'When is the best time to get our gutters done?',
+    answer:
+      'Late spring, before the storm season, and again in early autumn if you have trees over the roof. Spring also gets it done before the bushfire season, which is when fire services ask people to clear their gutters. If your ceiling has ever stained after a storm, do it now rather than at the next change of season.',
+  },
+  {
+    question: 'What do you do with all the leaves?',
+    answer:
+      'They come out by hand into a bucket, go into bags on a tarp and leave with us. Nothing gets blown into your garden, flushed down your downpipes or left beside your bins. If you would rather keep it for compost, say so and we will tip it where you want it instead.',
+  },
+  {
+    question: 'Can you do a two-storey house?',
+    answer:
+      // ⚠️ BLOCKER. Confirm the real cut-off. See the file header.
+      'Often yes, and it depends on access more than height: firm level ground for the ladder, room to set it at the right angle, and no power line in the way. [Confirm TLB’s height limit and what is declined.] If a section is not safe to reach we will say so and tell you what sort of operator can do it.',
+  },
+  {
+    question: 'Do you need anything from us on the day?',
+    answer:
+      'Side access, the gate unlocked, dogs sorted out and cars moved off the driveway where we need to set a ladder. A tap we can use for the flush. If the roof feeds a rainwater tank, tell us when you book, because we work around the diverter.',
+  },
+  {
+    question: 'What happens if you find damage up there?',
+    answer:
+      'We photograph it, show you and tell you what it is in plain words. Rusted joins, sagging brackets, a valley that fills every storm and cracked pointing on a tiled roof are the usual ones. We do not do roof repairs, so there is nothing in it for us either way.',
+  },
+];
+
+// §12 Non-branded FAQs. The long-tail block.
+//
+// ⚠️ VERIFICATION PASS REQUIRED:
+//   - Frequency. An observation, hedged, with the local tree cover as the
+//     variable rather than a rule stated as fact.
+//   - Overflow under the roof sheeting, rust from trapped moisture and
+//     mosquito breeding in standing water are all ordinary building physics.
+//   - Gutter guard reducing rather than ending maintenance is the honest
+//     position and matches manufacturer guidance.
+//   - Blowers and pressure washers pushing debris into downpipes is standard
+//     trade knowledge.
+//   - Pricing bracketed on purpose. A "from $X" that turns out wrong is worse
+//     than no number, and the ACCC treats from-pricing as a claim.
+const nonBrandedFaqItems = [
+  {
+    question: 'How often should gutters be cleaned?',
+    answer:
+      'Twice a year suits most homes, and once a year is enough only on a block with nothing overhanging the roof. With eucalypts, paperbarks or tea trees over the house it is realistically three or four times, because those trees shed bark and leaves all year rather than in one season. The roof tells you: if litter is visible from the ground, it is overdue.',
+  },
+  {
+    question: 'What happens if you never clean your gutters?',
+    answer:
+      'Water stops leaving the roof properly. It backs up under the sheeting into the eaves and fascia, spills over the front edge onto garden beds and foundations, sits in the low sections and rusts the gutter from the inside, and breeds mosquitoes through summer. Dry litter also gives an ember somewhere to land in fire season.',
+  },
+  {
+    question: 'Should gutters be cleaned by hand or with a blower?',
+    answer:
+      'By hand for anything damp or packed. A blower moves dry leaves quickly but sprays them across the roof and the garden, and it pushes fines straight into the downpipes, which is where the next blockage forms. Pressure washing a gutter does the same thing, and it can force water back under the roof sheeting.',
+  },
+  {
+    question: 'Is gutter guard worth it?',
+    answer:
+      // ⚠️ BRACKET. Whether TLB supplies or installs it is unknown.
+      'It reduces the work rather than ending it. Good mesh keeps leaves and embers out and is genuinely useful under trees, but fine debris still builds up on top of it and in the valleys, so it needs checking. Guard installed badly can also hold litter against the roof. [Confirm whether TLB supplies or installs gutter guard.]',
+  },
+  {
+    question: 'How much does gutter cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE. See the note above this array.
+      'Gutter cleaning is usually priced on the length of gutter and the access, with a minimum charge for small jobs, and it moves with height, roof pitch, how packed the gutters are and whether valleys and a second storey are involved. Ask for a price against a written scope rather than an hourly rate. [TLB’s pricing basis and minimum charge. Confirm.]',
+  },
+];
+
+// §13 Closing CTA.
+const closingCta = {
+  kicker: 'Gutter cleaning',
+  heading: 'Book it before the wet season.',
+  lead: 'Tell us roughly how big the house is and what is growing over it. We will come back with a price, a date and an honest word on how often it will need doing.',
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    {/* imagePosition is LEFT here and RIGHT on the window page. Both are the
+        same variant and the same grid, mirrored: it is the cheapest honest
+        way to keep five sibling pages from opening identically. */}
+    <Hero
+      variant="split-single-image"
+      imagePosition="left"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    {/* One photo behind both sections, under a Cream scrim at 75%, focused on
+        the open lawn the shot was composed for. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75} focus="bottom">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PhotoGallery
+      variant="story"
+      heading="What happens on the day"
+      lead="You will probably be at work, so here is the whole job."
+      steps={storySteps}
+    />
+
+    <Callout tone="warning" heading={ladderCallout.heading} body={ladderCallout.body} cta={quoteCta} />
+
+    <ContentGrid
+      heading="What a blocked gutter actually costs"
+      lead="None of this shows up on the day it starts. It shows up in the storm after."
+      columns={3}
+      blocks={consequenceBlocks}
+    />
+
+    <BeforeAfter
+      heading="Packed, then cleared."
+      lead="Drag the handle across the photo to see one run of gutter both ways."
+      pairs={[gutterPair]}
+      note="Illustrative sample, shown while we collect before and after photos from real TLB jobs."
+    />
+
+    <TextBlock theme="dark" align="left" heading="Who turns up" body={whoBody} cta={quoteCta} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="The rest of the outside"
+      lead="Gutters are usually booked with the roof, because the same trees cause both."
+      items={siblingItems}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    <Faq heading="Gutter cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

@@ -11,22 +11,30 @@
 //
 // Region order and town order are the homepage brief's own, verbatim.
 //
-// ⚠️ Every town links to /locations/<slug>/ and MOST OF THOSE PAGES DON'T
-// EXIST YET — the header mega-menu only lists 15. Shipping 56 links means
-// shipping ~41 404s, which hurts the "[service] [suburb]" ranking this
-// section exists to serve more than an unlinked pill would. Either the
-// location pages land alongside these pages, or the unbuilt towns ship as
-// plain unlinked pills (drop their `href` — TagCloud already renders a
-// <span> when there isn't one). Flagged rather than silently chosen: which
-// towns have pages is TLB's answer, not a guess. Now ONE fix, here, serves
-// every page.
+// ✅ RESOLVED — every town here now has a page. This used to carry a standing
+// warning that the 56 links meant ~41 404s, because only 15 town pages were
+// planned and none were built. src/pages/locations/[town].astro now builds
+// one page per town in these arrays, from src/data/townPages.ts, so this list
+// and the pages it links to cannot fall out of step: adding a town here
+// creates its page, and removing one deletes it.
 //
-// ⚠️ The header mega-menu (navigation.ts) still lists 15 towns and folds the
-// Tweed into "Northern Rivers NSW". Nothing there contradicts this list —
-// it's a subset — but the mega-menu is what a visitor actually navigates by,
-// so growing it to match is the remaining half of this reconciliation. Left
-// alone here because how many towns belong in a nav menu is a layout call,
-// not a data one.
+// ⚠️ What is NOT resolved is whether all 56 SHOULD be published. As built
+// they share one layout and differ by a town name, which is what Google calls
+// a doorway page. townPages.ts' header sets out the two honest options and is
+// the place that decision gets recorded. If the answer turns out to be "ship
+// only the towns with real local copy", the mechanism is unchanged from what
+// this warning always said: drop the `href` and TagCloud renders a plain
+// <span> instead of a link.
+//
+// ⚠️ Still 404ing, and unrelated to the town pages: the three region overview
+// pages the mega-menu links ("All of Northern Rivers" and friends) and
+// /locations/ itself, which every footer on the site links to.
+//
+// The header mega-menu (navigation.ts) is now built from these same arrays
+// rather than its old hand-typed 15-town subset, so "Areas we clean" and
+// every page's "Where we clean" section can no longer disagree. That also
+// means the 404 warning above applies to the nav menu too: whichever way the
+// unbuilt towns are handled, handle them here.
 import type { TagGroup } from '../components/sections/TagCloud.astro';
 
 // Slugs are derived rather than hand-written — 56 hand-typed hrefs is 56

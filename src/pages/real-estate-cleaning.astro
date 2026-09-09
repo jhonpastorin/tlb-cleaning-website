@@ -1,0 +1,676 @@
+---
+// Real estate and property management cleaning — one of the three LEAF
+// pages under the "Specialist cleaning" group in the Home Cleaning
+// mega-menu (navigation.ts). Sibling of /airbnb-cleaning/ and
+// /ndis-cleaning/, built in the same pass as the first of those and sharing
+// its structure deliberately.
+//
+// THIS PAGE HAS THREE INBOUND LINKS ALREADY WAITING FOR IT, which is
+// unusual and shapes it:
+//   - the homepage's persona card 3, "I manage properties"
+//   - the footer and homepage service list, "Real estate and property
+//     management"
+//   - why-tlb.md §10, whose approved copy is "Agencies: give us the
+//     difficult property. The one with the tight window or the awkward exit
+//     condition. That is the job that tells you something."
+// The last one is a promise made on another page, so this page picks that
+// thread up rather than opening a new argument: it is the closing CTA below,
+// verbatim.
+//
+// NO CONTENT BRIEF EXISTS in content-plans/ for this page. As with
+// /airbnb-cleaning/, it is not drafted from nothing — the Brand Foundation
+// Document has a full audience section (§7 "Audience 3: real estate
+// agencies and property managers", plus §3's fourth differentiator and §5's
+// approved headline/CTA sets), and the agency relationship is the single
+// most-repeated proof point on the whole site. Positioning traces to that
+// document; page copy still needs sign-off.
+//
+// BLOCKS LAUNCH:
+//   - INVOICING AND WHO PAYS. The BFD names "invoicing simplicity" as a
+//     procurement criterion for this audience, and the page cannot say how
+//     it works: does TLB invoice the agency, the owner, or the outgoing
+//     tenant, and is it per job or consolidated monthly? A property manager
+//     will not move a rent roll without knowing. Bracketed in §4 and
+//     branded FAQ 4.
+//   - CAPACITY. "A team with the capacity for your rent roll" is already
+//     published on the homepage. How many vacancies a week can TLB actually
+//     absorb, and what is the turnaround commitment? Bracketed in §4 and
+//     branded FAQ 2.
+//   - THE RE-CLEAN POLICY. What happens when an exit inspection fails.
+//     Bracketed in §4 and branded FAQ 3, and it is the most important
+//     bracket on the page — see the warning below.
+//   - [insured] and [police-checked], inherited from every sibling. One
+//     answer fixes the site.
+//
+// ⚠️ DO NOT FILL THE RE-CLEAN BRACKET WITH THE WORDS "BOND BACK GUARANTEE"
+// unless TLB genuinely offers one and can honour it. No cleaner controls
+// whether a bond is returned — that is the landlord's and the tribunal's
+// call, and it turns on damage, rent and wear as well as cleanliness. A
+// guarantee worded as though it covers the bond is an ACCC problem and it
+// misleads the tenant, not the agency. A re-clean commitment ("we come back
+// free if the exit inspection fails on cleaning") is honest, is what an
+// agency actually wants, and is what the bracket asks for.
+//
+// NOT BUILT, deliberately: hero video, credibility signals, logo bar. The
+// LogoBar component exists and an agency logo wall would be the strongest
+// possible proof on this page — and it must not be built until TLB has
+// written permission to display each mark. BFD §5.3 and §"Client and partner
+// proof" both require it. See the reserved slot in the render below.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Callout from '../components/sections/Callout.astro';
+import BeforeAfter from '../components/sections/BeforeAfter.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// The hero and cards 1 and 3 are this page's own, generated per
+// IMAGE-GUIDELINES; the prompts are in src/assets/real_estate/IMAGE-PROMPTS.md.
+//
+// Card 2 is REUSED from the end-of-lease page's folder, per IMAGE-GUIDELINES
+// §5 ("reuse before generating; same subject = same file"). It is a property
+// manager at a vacant handover with the keys on the benchtop, which is
+// exactly this card's subject — generating a second version of that frame
+// would make one idea look like two.
+//
+// ⚠️ NOT REUSED: src/assets/home/rental-property-cleaning-two-storey-house-exterior.jpg
+// (and its duplicate service-real-estate-and-property-management.jpg), which
+// is what the homepage runs for its "I manage properties" persona card. That
+// photo is a North American suburban street — asphalt-shingle roof, board
+// and batten gables, a sidewalk and front lawn to the kerb. It is not the
+// Northern Rivers and it is not Australia. It predates the prompt sheets and
+// has no prompt of its own. The homepage should be repointed at
+// real-estate-cleaning-two-cleaners-arriving-at-a-rental-house.jpg below —
+// see the sheet's opening note.
+import heroImg from '../assets/real_estate/real-estate-cleaning-finishing-an-empty-vacated-rental.jpg';
+import cardVacancyImg from '../assets/real_estate/real-estate-cleaning-two-cleaners-arriving-at-a-rental-house.jpg';
+import cardInspectionImg from '../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-property-manager-at-a-vacant-handover.jpg';
+import cardRoutineImg from '../assets/real_estate/real-estate-cleaning-routine-clean-in-a-tenanted-rental-kitchen.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as every sibling.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+// Before/after SAMPLES, shared with five other pages. See §7.
+import sampleKitchenBeforeImg from '../assets/home_cleaning/before_after/sample-kitchen-before.png';
+import sampleKitchenAfterImg from '../assets/home_cleaning/before_after/sample-kitchen-after.png';
+import sampleOvenBeforeImg from '../assets/home_cleaning/before_after/sample-oven-before.png';
+import sampleOvenAfterImg from '../assets/home_cleaning/before_after/sample-oven-after.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+
+// §0 Metadata. "Real estate cleaners" is the menu label and the phrase a
+// property manager searches; "property management cleaning" is what the
+// homepage and footer call this page. Both appear, the search term first.
+const pageMeta = {
+  title: 'Real Estate Cleaners and Property Management Cleaning | TLB Cleaning',
+  description:
+    'Vacancy turnarounds, bond cleans and routine managed-property cleans for agencies across the Northern Rivers, the Tweed and the Southern Gold Coast. Nine full-time cleaners, one point of contact.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/real-estate-cleaning/',
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  // BOTH STATES, like /airbnb-cleaning/ and unlike the commercial and NDIS
+  // pages. Deliberate: the BFD's audience section for this reader names
+  // agencies "across the Northern Rivers and Southern Gold Coast", and its
+  // differentiator section says TLB holds contracts in "the Northern Rivers
+  // and parts of the Southern Gold Coast". So the full `locationGroups` runs
+  // below rather than `nswLocationGroups`.
+  //
+  // ⚠️ "and parts of" is the BFD's own hedge on the Queensland side. The
+  // suburb list here does not repeat it. If the QLD coverage for agency work
+  // is genuinely partial, this page should say which parts.
+  areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The H1 is the BFD's own approved headline for this audience
+// ("Stop chasing cleaners between tenancies.") and the CTA is its approved
+// CTA from the same set ("Book a call with TLB") rather than the sitewide
+// "Get an instant quote" — a rent roll is not a form-fillable job, and the
+// procurement path the BFD describes for this reader is a relationship, not
+// a checkout. quoteCta.href is still the destination, so there is one form
+// to build, not two.
+//
+// The lead leads with capacity, because that is the one claim a sole
+// operator cannot match and the one the trust bar already makes.
+//
+// A SCENE PHOTO (family A): an empty, freshly finished rental with the keys
+// on the bench. The emptiness is the point — it is a property between
+// tenancies, which is the only moment this reader is buying. `imageFit` is
+// unset and takes Placeholder's `cover` default; `ratio` is 1/1 because the
+// source is 1024×1024, so a box matching the file crops nothing.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. A person who does not exist, in the
+// IMAGE-GUIDELINES §3 canonical uniform, honest as generic service imagery
+// and not presented as a named team member (§7). A real photo from a real
+// handover would do more — and on this page it is unusually easy to get,
+// since an empty property has no tenant to consent and nothing identifying
+// in frame.
+const hero = {
+  kicker: 'Real estate and property management cleaning',
+  headingLines: ['Stop chasing cleaners', 'between tenancies.'],
+  lead:
+    'Nine full-time employed cleaners, one point of contact, and vacancy cleans that pass the first inspection. Working with agencies across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+  cta: { label: 'Book a call with TLB', href: quoteCta.href },
+  image: {
+    ratio: '1/1',
+    label:
+      'A cleaner in an aqua polo and dark teal apron finishing the last window of an empty, freshly vacated rental home, with the keys left on the kitchen bench',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. The answer-target block for the focus keyword and the
+// first place the phrase appears in body copy. Paragraph two does the
+// synonym work ("vacancy clean", "exit clean", "bond clean", "make-ready")
+// so one page answers all of them.
+//
+// ⚠️ Paragraph two draws the bond-clean line at /end-of-lease-cleaning/ ON
+// PURPOSE, rather than competing with it. That page is built, it is aimed at
+// tenants AND agencies (its own §3 has cards for both), and its card 2
+// already sends property managers here. Two pages both trying to own "bond
+// clean" would split the term between them.
+const definitionBody: TextBlockBody[] = [
+  'Real estate cleaning is the cleaning a managing agency arranges rather than a tenant: vacancy cleans between tenancies, exit cleans measured against an outgoing condition report, and routine cleans on the properties an agency looks after. TLB Cleaning works with agencies and property managers across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+  'A vacancy clean, an exit clean, a make-ready and a bond clean are close relatives with different payers. If you are a tenant cleaning your own place before the final inspection, the page you want is end of lease and bond cleaning. This page is for the person who has a vacancy on the board, a landlord asking when it will be listed, and no interest in ringing four cleaners to find out who is free.',
+];
+
+// §3 Pathway cards. The three jobs an agency hands out, in the order a
+// property manager thinks about them: the urgent one, the one that gets
+// measured, and the standing one.
+//
+// Destinations: the quote flow, the end-of-lease page (which owns the
+// standard the inspection is measured against), and /why-tlb/. A leaf that
+// links only to a form strands the property manager who is trialling.
+const pathwayCards = {
+  heading: 'Agencies hand us three kinds of job.',
+  headingAccent: 'Which one is on your desk?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        label:
+          'Two cleaners in aqua polos and dark teal aprons walking up the front path of a well-kept coastal rental house, each carrying a cleaning caddy',
+        src: cardVacancyImg,
+      },
+      title: 'A vacancy, and a window that is already too tight',
+      description:
+        'Keys back Friday, photos Monday, open home Saturday. We can put more than one cleaner on a property to compress a turnaround, which is the whole reason to use a team rather than a sole operator on a vacancy.',
+      cta: { label: 'Book a call with TLB', href: quoteCta.href },
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label: 'A property manager reviewing a vacant handover in an empty rental kitchen, keys on the benchtop',
+        src: cardInspectionImg,
+      },
+      title: 'An exit clean that has to pass first time',
+      description:
+        'Cleaned against the condition report, not against a general idea of tidy — ovens, tracks, fans, filters and the marks that get written up. The second inspection is the expensive one, for you and for the tenant.',
+      cta: { label: 'End of lease standard', href: '/end-of-lease-cleaning/' },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        label:
+          'A cleaner in an aqua polo and dark teal apron wiping down the benchtop of a tidy, furnished rental kitchen during a routine scheduled clean',
+        src: cardRoutineImg,
+      },
+      title: 'Standing work across the rent roll',
+      description:
+        // ⚠️ Two brackets, inherited from the hub pages. One answer fixes
+        // every page they appear on.
+        'Routine cleans on managed and holiday-let properties, common areas, and the owner-occupied jobs your landlords ask you to recommend somebody for. A local business, [insured] and [police-checked], with one number to ring.',
+      cta: { label: 'Why TLB', href: '/why-tlb/' },
+    },
+  ],
+};
+
+// §4 What working with us looks like. THE MOST IMPORTANT BLOCK ON THIS PAGE.
+//
+// The BFD is unusually specific about how this audience buys: they procure
+// through relationships, trial on a handful of jobs, and "value invoicing
+// simplicity, communication and capacity above the lowest quote". So this
+// block is deliberately NOT a cleaning task list — the task list lives on
+// /end-of-lease-cleaning/. It is the operational answer to those three
+// criteria, which is what actually wins a rent roll.
+//
+// ⚠️ THREE OF THE SIX CARRY BRACKETS, and they are the three a property
+// manager will decide on. See the file header, including the warning about
+// how the re-clean bracket must NOT be filled.
+const workingWithUsItems = [
+  {
+    icon: 'suitcase' as const,
+    title: 'One contact, not a phone tree',
+    description:
+      'You send the job to one place and it is booked. You are not managing which cleaner is free, chasing a confirmation, or explaining the property twice — and when something needs a decision, the person who rings you knows the job.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Capacity, in writing',
+    description:
+      // ⚠️ Real bracket. "Capacity for your rent roll" is already published
+      // on the homepage; the number behind it has never been stated.
+      'Nine full-time employed cleaners means a vacancy does not wait for one person to be free, and two or three can go on a property to compress a turnaround. [How many vacancy cleans a week we can absorb, and our standard turnaround from keys to done. Confirm — this is the number that wins the trial.]',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Cleaned against the condition report',
+    description:
+      'We clean to the standard the exit inspection is measured against, not to a general idea of clean — which means the oven, the rangehood filter, window tracks, fan blades, skirtings and the spots that reliably get written up.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'If it fails on cleaning, we come back',
+    description:
+      // ⚠️ THE most important bracket on the page. Read the file header
+      // before filling it: do NOT word this as a bond guarantee.
+      'A re-clean is not a negotiation and not an invoice. [Our re-clean commitment: the window it applies in, what it covers, and whether it is free. Confirm. Word it as a re-clean, never as a bond back guarantee — no cleaner controls whether a bond is returned.]',
+  },
+  {
+    icon: 'office' as const,
+    title: 'Invoicing that suits your trust accounting',
+    description:
+      // ⚠️ Real bracket, and the quiet dealbreaker. The BFD names invoicing
+      // simplicity as a procurement criterion for this reader.
+      'Referenced to the property so it can be coded without a phone call. [Whether we invoice the agency, the owner or the outgoing tenant, per job or consolidated, and our terms. Confirm.]',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'You hear about it from us first',
+    description:
+      'Damage, something abandoned, a property that was worse than the notes said, or work that needs an owner’s approval before we do it — you get told while you can still act on it, with photos, not after the fact.',
+  },
+];
+
+// §5 "Worth knowing" — the interruption block. Callout, tone="note".
+//
+// The lever for this reader is the BFD's own consequence framing: what
+// inaction costs an agency is not a dirty property, it is rework and
+// reputational exposure. The cheapest quote is the one most likely to
+// produce a second inspection, and a second inspection costs a property
+// manager a morning they do not have.
+const worthKnowing = {
+  heading: 'The cheap vacancy clean is not cheap. It is a second inspection.',
+  body: [
+    'A clean that comes in eighty dollars under still has to pass someone else’s written report. When it does not, the cost is not the eighty dollars — it is your re-inspection, the days the property sits unlisted, the landlord asking why, and the tenant who now has a dispute with you rather than with the cleaner.',
+    'That is why agencies here tend to procure on capacity and communication rather than on price, and it is why we would rather be trialled on a hard property than a cheap one.',
+  ],
+};
+
+// §6 Why sole operators fail on a rent roll. TextBlock dark — the
+// long-form persuasion slot the sibling pages all carry.
+//
+// Written as what a property manager should ask, not as what TLB claims.
+// That register is the commercial hub's, and it is the one that survives a
+// reader who has been sold to before.
+const whyTeamsBody: TextBlockBody[] = [
+  'Most cleaners who take agency work are one person with a car, and for a while that is fine — they are often excellent, and they are cheap. The problem is structural rather than personal. A rent roll produces vacancies in clusters, at the end of the month and around the school terms, and one person can physically do one property a day. So the week you have four exits is the week you find out that your reliable cleaner has three of them and someone else has to take the fourth, on Thursday, with the photos booked for Friday.',
+  'Then there is what happens when they are sick, or on holiday, or they take a full-time job — which is common, because cleaning is one of the highest-turnover trades in the country. When a sole operator stops, your entire cleaning arrangement stops with them, and you are back to ringing around with a vacancy already on the board.',
+  'Three questions sort it out quickly, and they are worth asking us as readily as anyone else. How many people do you actually employ, as opposed to subcontract? What happens to my job when the person who normally does it is away? And who answers the phone at four on a Friday when the keys have come back and the property is worse than the notes said?',
+];
+
+// §7 Before/after. The shared SAMPLE pairs, now on a seventh page.
+//
+// The pairs chosen here differ from the airbnb page's on purpose: kitchen
+// and OVEN rather than kitchen and shower. The oven is the single most
+// commonly failed item on an exit inspection, so it is the pair that speaks
+// to this reader.
+//
+// ⚠️ THESE ARE ILLUSTRATIVE SAMPLES, not TLB jobs, and the `note` on the
+// render is what tells the reader so. Do not remove the note without
+// removing the images.
+//
+// THE PHOTO BRIEF: one fixed tripod position, nothing moved between frames.
+// An oven and a shower on a real vacancy clean are the two easiest real
+// pairs on this site to obtain, because a vacant property has no tenant in
+// it and nothing identifying in frame.
+//
+// ⚠️ Consent conditions, from the end-of-lease page's brief and applying
+// equally here: written permission from the agency AND from the outgoing
+// tenant where the property is identifiable, and no identifying detail in
+// frame — no house numbers, street signs, mail, people or names on doors.
+const beforeAfterPairs: BeforeAfterPair[] = [
+  {
+    before: {
+      src: sampleOvenBeforeImg,
+      alt: 'Sample illustration: oven interior and door glass before a vacancy clean, with baked-on grease and carbon',
+    },
+    after: {
+      src: sampleOvenAfterImg,
+      alt: 'Sample illustration: the same oven after the clean, racks and door glass back to bare metal and clear glass',
+    },
+    caption: 'Oven, racks and door glass',
+  },
+  {
+    before: {
+      src: sampleKitchenBeforeImg,
+      alt: 'Sample illustration: kitchen benchtop and tiled splashback before a vacancy clean, with stained grout and baked-on spills',
+    },
+    after: {
+      src: sampleKitchenAfterImg,
+      alt: 'Sample illustration: the same kitchen benchtop and splashback after the clean, grout clean and surfaces gleaming',
+    },
+    caption: 'Kitchen benchtop and splashback',
+  },
+];
+
+// §8 What we do for agencies. The pills are the actual service lines an
+// agency hands out, which doubles as internal linking into the cluster.
+//
+// ⚠️ Hrefs: the six that point at existing pages are real. The rest point at
+// the quote flow rather than at a guessed slug, because unlike the
+// commercial premises list there is no menu entry for them to match — a
+// made-up slug here would be a 404 with nothing planned behind it.
+const serviceTags = [
+  { label: 'Vacancy and exit cleans', href: '/end-of-lease-cleaning/' },
+  { label: 'Bond cleans', href: '/end-of-lease-cleaning/' },
+  { label: 'Routine managed-property cleans', href: '/house-cleaning/' },
+  { label: 'Pre-listing and photography cleans', href: quoteCta.href },
+  { label: 'Deep cleans between tenancies', href: '/deep-cleaning/' },
+  { label: 'Mould treatment and removal', href: '/mould-cleaning-and-removal/' },
+  { label: 'Holiday let turnovers', href: '/airbnb-cleaning/' },
+  { label: 'Strata and common areas', href: '/commercial-cleaning/' },
+  { label: 'Carpet cleaning', href: '/commercial-carpet-cleaning/' },
+  { label: 'Driveways and exterior washing', href: '/commercial-pressure-cleaning/' },
+];
+
+// §9 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+//
+// ⚠️ THIS PAGE'S TESTIMONIALS ARE THE MOST VALUABLE ON THE SITE and the
+// most constrained. A named agency is the proof every other page borrows
+// ("Trusted by leading Northern Rivers real estate agencies" appears in the
+// trust bar on every page and in the comparison table). BFD §5.3 requires
+// written permission before naming a client at all, and the agency's
+// permission is a marketing-approval question at principal level, not a
+// favour a property manager can grant in a text message.
+//
+// Never invent a quote, an agency, a property manager or a suburb. Avatars
+// stay as labelled placeholders — IMAGE-GUIDELINES §7 forbids generating a
+// face for a testimonial.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a property manager at a contracted agency about a hard turnaround that landed — the tight window, the awkward exit condition, the Friday keys. This is the single most valuable testimonial on the entire site. Written permission required at principal level to name the agency; a role and suburb without the agency name is still worth having.]',
+    name: '[Agency name — permission required, TBC]',
+    role: '[Property manager, town, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Property manager at a TLB contracted agency' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about the standing relationship rather than one job — an agency several years in. This one has to prove the arrangement held, not that a clean went well, which is what a rent roll is actually buying.]',
+    name: '[Agency name — permission required, TBC]',
+    role: '[Principal or department manager, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Principal at a long-standing TLB agency client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about an exit clean that passed first time, ideally where the previous cleaner had failed one. If a property manager has ever put that in an email, ask whether we can quote the email.]',
+    name: '[Agency name — permission required, TBC]',
+    role: '[Property manager, town, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Property manager who moved work to TLB' },
+  },
+];
+
+// §10 Comparison table. The shared approved rows, now on a sixth page — and
+// this is the page they were written for. Row 5 ("Ongoing contracts with the
+// region's leading real estate agencies") is on-target here in a way it is
+// not anywhere else on the site, and row 1 (employed, not subcontracted) is
+// the exact distinction §6 above spends three paragraphs on.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'Every cleaner is reliable for the first three jobs. What an agency is buying is the twentieth one, in a week when four properties came back at once.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §11 Branded FAQs — what property managers ask us. Three carry brackets;
+// all three are launch-blocking (see the file header).
+const brandedFaqItems = [
+  {
+    question: 'Can we trial you on a few properties first?',
+    answer:
+      'Yes, and we would rather you did. Give us the difficult one — the tight window, the awkward exit condition, the property the last cleaner would not go back to. An easy job tells you nothing about how we handle a hard week, and there is no lock-in contract either way.',
+  },
+  {
+    question: 'How quickly can you turn a vacancy around?',
+    answer:
+      // ⚠️ Bracketed. The first question a property manager asks.
+      'We can put more than one cleaner on a property, so a turnaround is limited by access rather than by one person’s day. [Our standard turnaround from keys to done, and how much notice we need for an urgent one. Confirm.] Tell us the photography or open-home date and we will work back from it.',
+  },
+  {
+    question: 'What happens if the exit inspection fails on cleaning?',
+    answer:
+      // ⚠️ Bracketed, and do not fill it with the words "bond back
+      // guarantee" — see the file header.
+      'We come back and fix it. [Our re-clean commitment: the window it applies in, what it covers, and whether it is free. Confirm.] What we will not do is argue with your report — if we missed something, we missed it, and the fastest route back to a released bond is us being there tomorrow.',
+  },
+  {
+    question: 'How does invoicing work?',
+    answer:
+      // ⚠️ Bracketed, and the quiet dealbreaker for this reader.
+      'Referenced to the property so your team can code it without ringing us. [Whether we invoice the agency, the owner or the outgoing tenant, per job or consolidated monthly, and our terms. Confirm.]',
+  },
+  {
+    question: 'Are your cleaners employed or subcontracted?',
+    answer:
+      // Approved claim: the comparison table's first row, and the BFD's
+      // headline differentiator for the business as a whole.
+      'Employed. Nine full-time cleaners on our own team, not contractors booked through a platform, which is why we can guarantee who turns up and cover a property when someone is away. We are [insured] and [police-checked], and we are a local business rather than a franchise routing your call somewhere else.',
+  },
+];
+
+// §12 Non-branded FAQs — the long-tail block, aimed at what agencies and
+// landlords search rather than what they ask us.
+//
+// ⚠️ VERIFICATION PASS REQUIRED, and FAQ 2 is the sensitive one. What a
+// tenancy agreement can require of an outgoing tenant is set by residential
+// tenancy law and differs between NSW and QLD, and it is contested — carpet
+// cleaning and professional-cleaning clauses in particular. It is answered
+// here at the level of "there are limits, and here is where to check" and
+// points at the guide the nav already promises, rather than stating a rule.
+// Do not "improve" it by adding a specific without a compliance read.
+//
+// The guide link (/guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/)
+// is taken verbatim from navigation.ts, where it is listed and unbuilt. It
+// will 404 until that guide ships.
+const nonBrandedFaqItems = [
+  {
+    question: 'What is the difference between a vacancy clean and a routine clean?',
+    answer:
+      'A routine clean maintains a property somebody lives in: surfaces, floors, bathrooms and kitchen, on a schedule. A vacancy or exit clean resets an empty property to the standard a written condition report is measured against, which brings in everything a routine clean reasonably leaves alone — inside the oven and rangehood filter, window tracks and sills, fan blades, light fittings, skirtings, inside cupboards and wardrobes, walls where they are marked. It is a different scope and a different price, and it takes two to four times as long.',
+  },
+  {
+    question: 'Can a tenant be required to have the property professionally cleaned?',
+    answer:
+      'Not as broadly as many agreements imply. In both NSW and Queensland a tenant’s obligation is generally to leave the property in the same condition it was in at the start, fair wear and tear excepted — which is a comparison against the entry condition report rather than a professional-cleaning receipt. Blanket clauses requiring professional cleaning or professional carpet cleaning regardless of condition are the ones most often challenged, and pets can change the position. This is general information rather than advice: check the current requirements with NSW Fair Trading or the Queensland RTA, and read our guide on what the law actually says.',
+  },
+  {
+    question: 'Who pays for the bond clean — the tenant, the landlord or the agency?',
+    answer:
+      'Usually the outgoing tenant arranges and pays for it, because it is their obligation to return the property in the agreed condition. The agency arranges and bills it to the owner where the tenant has not done it, where the tenant has vacated without cleaning, or where it is a make-ready between tenancies rather than an exit obligation. Deducting a cleaning cost from a bond is a separate process with its own evidence requirements, and it needs the condition report to support it.',
+  },
+  {
+    question: 'How long does a vacancy clean take?',
+    answer:
+      'A two-bedroom unit is usually four to six hours for one cleaner. A four-bedroom house with two bathrooms is a full day, or half a day with two or three cleaners on it, which is how a same-week turnaround gets done. Carpet cleaning and exterior washing are separate jobs on top, and carpet needs drying time before the photographer arrives — which is the scheduling trap on a tight vacancy.',
+  },
+  {
+    question: 'What should an agency ask a cleaner before adding them to a preferred trades list?',
+    answer:
+      'Five things, and none of them is the price. How many cleaners do you employ rather than subcontract. What happens to my job when the usual person is away. What is your commitment if an exit inspection fails on cleaning. Are you insured, and can I see the certificate of currency. And how do you invoice — per property, referenced how, on what terms. A cleaner who answers all five without hedging is a different proposition from the cheapest quote.',
+  },
+];
+
+// §13 Closing CTA. This is why-tlb.md §10's approved copy, picked up
+// verbatim, because that page sends this reader here on exactly that
+// promise. A page that is linked with a specific offer and then does not
+// make it reads as a bait.
+const closingCta = {
+  kicker: 'Real estate and property management cleaning',
+  heading: 'Give us the difficult property.',
+  lead: 'The one with the tight window or the awkward exit condition. That is the job that tells you something — and it is a better trial than the easy one. No lock-in, no obligation.',
+  cta: { label: 'Book a call with TLB', href: quoteCta.href },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    {/* Trust bar and definition share ONE photo behind a Cream scrim, laid
+        across both sections. 75% keeps Dark Teal body copy above 4.5:1 over
+        the darkest part of the frame. Same treatment as every sibling. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What working with us looks like"
+      lead="An agency is not buying a clean. It is buying not having to think about the clean, so this is the operational side rather than the task list."
+      items={workingWithUsItems}
+      cta={{ label: 'Book a call with TLB', href: quoteCta.href }}
+    />
+
+    <Callout tone="note" heading={worthKnowing.heading} body={worthKnowing.body} />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Why a sole operator eventually fails on a rent roll"
+      body={whyTeamsBody}
+    />
+
+    {/* Drag the handle to wipe between the two frames of each pair. These
+        four images are SAMPLES — the `note` is what tells the reader that;
+        delete it with the imports. See the §7 comment for the photo brief
+        and the consent conditions. */}
+    <BeforeAfter
+      heading="The standard an inspection is measured against."
+      lead="Drag the handle across each photo to see the same spot before and after a clean."
+      pairs={beforeAfterPairs}
+      note="Illustrative samples, shown while we collect before and after photos from real TLB cleans."
+    />
+
+    {/* ⚠️ RESERVED SLOT: agency logo wall (LogoBar.astro, variant="list").
+
+        This is the strongest proof available to this page and to the site.
+        The trust bar above already claims "Preferred supplier for real
+        estate agencies in the region" in words; the marks would make it
+        checkable, and BFD §"Client and partner proof" specifically notes
+        that competitors display agency logos and TLB should seek permission
+        to reference its agency relationships.
+
+        NOT BUILT because permission is required per mark, at principal
+        level, and none has been recorded. A logo wall assembled without it
+        is both a trademark problem and the exact "fake proof"
+        IMAGE-GUIDELINES §7 rules out. Drop it in here, between the
+        before/after and the service pills, once the permissions exist. */}
+
+    <TagCloud
+      heading="What we do for agencies"
+      subheading="Across the Northern Rivers, the Tweed and the Southern Gold Coast."
+      tags={serviceTags}
+      note={["Something not on the list? Ask us anyway."]}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What property managers say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Real Estate Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

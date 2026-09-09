@@ -1,0 +1,398 @@
+---
+// THE LOCATION PAGE, once, for all 56 towns at /locations/<town>/.
+//
+// This started life as a single hand-built sample, src/pages/locations/
+// lismore.astro. That file is gone: it became this route the moment a second
+// town was wanted, because the alternative was 56 copies of one layout and a
+// guarantee that they would drift apart. locations.ts' own header documents
+// what that costs — four copies of one town list, three of them stale. The
+// layout lives here once; everything town-specific lives in
+// src/data/townPages.ts.
+//
+// TO ADD OR CHANGE A TOWN, DON'T TOUCH THIS FILE. Towns come from
+// locations.ts (the same arrays the header mega-menu and every "Where we
+// clean" section render), and per-town substance — the local paragraph,
+// hand-picked neighbours, a different hero — comes from townPages.ts.
+//
+// ⚠️ READ townPages.ts' HEADER BEFORE PUBLISHING THESE. As things stand 55 of
+// the 56 pages differ only by a town name and six suburb links, which is the
+// definition of a doorway page. The route is ready; the content decision is
+// not made, and it is not this file's to make.
+//
+// ⚠️ Copy below is drafted by this build in the house-cleaning brief's voice.
+// There is no content plan for location pages in content-plans/, unlike every
+// service page on this site. Treat it as a first draft to react to.
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import BeforeAfter from '../../components/sections/BeforeAfter.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+// Before/after: the SAME four sample illustrations house-cleaning.astro runs,
+// deliberately reused rather than regenerated. They carry a visible SAMPLE
+// badge and `sample-` filenames precisely so nothing here can be mistaken for
+// a real job in a named town — which on a location page would be the most
+// misleading version of that claim. Swap for real paired photography when it
+// exists and drop the `note`; see house-cleaning.astro §9 for the shooting
+// and consent brief.
+import sampleKitchenBeforeImg from '../../assets/home_cleaning/before_after/sample-kitchen-before.png';
+import sampleKitchenAfterImg from '../../assets/home_cleaning/before_after/sample-kitchen-after.png';
+import sampleShowerBeforeImg from '../../assets/home_cleaning/before_after/sample-shower-before.png';
+import sampleShowerAfterImg from '../../assets/home_cleaning/before_after/sample-shower-after.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
+import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
+import type { TagGroup } from '../../components/sections/TagCloud.astro';
+import type { ServiceIconName } from '../../components/ui/ServiceIcon.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+  serviceLinks,
+} from '../../data/navigation';
+import { trustBarCards } from '../../data/trust';
+import { townSlug } from '../../data/locations';
+import { townPages, type TownPage } from '../../data/townPages';
+
+export const getStaticPaths = (() =>
+  townPages.map((page) => ({
+    params: { town: page.slug },
+    props: { page },
+  }))) satisfies GetStaticPaths;
+
+const { page } = Astro.props as { page: TownPage };
+const { town, region, nearby, hero: heroImage, local } = page;
+
+// "The Tweed" reads wrong after another article ("the surrounding The
+// Tweed"), so prose drops the leading article and the label keeps it for
+// headings and the kicker where it stands alone.
+const regionProse = region.label.replace(/^The /, '');
+const state = region.state;
+
+// Page metadata. The title follows the "[service] [suburb]" shape this whole
+// location-page programme exists to rank for.
+const pageMeta = {
+  title: `Cleaners in ${town} - House & Commercial Cleaning | TLB Cleaning`,
+  description: `Local cleaners in ${town}, ${regionProse}. Regular home cleans, deep cleans, end of lease and commercial cleaning, with the same team every visit. Get a price in under a minute.`,
+  // Domain is a placeholder on every page in this repo — confirm before launch.
+  canonical: `https://example.com${townSlug(town)}`,
+};
+
+// ⚠️ `areaServed` and `addressLocality` are the two fields that should NOT be
+// the site-wide three-region string every service page uses. A LocalBusiness
+// whose area of service is the town the page is about is the whole point of
+// the page existing.
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: town,
+    addressRegion: state,
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: `${town} and the surrounding ${regionProse}, ${state}`,
+  description: pageMeta.description,
+};
+
+// Hero. `full-width-photo` rather than the service pages'
+// `split-single-image`: those run a cut-out figure on a transparent backdrop,
+// and this page's asset is a scene photo — a place, which is what a location
+// page opens on. The variant floats a solid content card over the photo, so
+// the copy's legibility never depends on the photo behind it.
+//
+// The photo and its alt text both come from townPages.ts, where the rule that
+// no hero may name a town or a landmark is documented and enforced in one
+// place. Don't write a label here.
+const hero = {
+  headingLines: [`Cleaners in ${town}.`],
+  lead: `The same local team, on the same day, every time. Homes, holiday lets and businesses across ${town} and the surrounding ${regionProse}.`,
+  cta: quoteCta,
+  image: { ratio: '16/9', label: heroImage.label, src: heroImage.src },
+};
+
+// Opening paragraph — the answer-target block for "cleaners <town>".
+//
+// ⚠️ The two sentences below are true of every town TLB services. `local` is
+// what stops this page being a template with a name in it, and it is empty
+// for every town but the one that gets written first. See townPages.ts.
+const introBody: TextBlockBody[] = [
+  `TLB Cleaning works across ${town} and the surrounding ${regionProse} — regular home cleans on a set day, one-off deep cleans, end of lease cleans measured against the inspection, and commercial cleaning for offices and shopfronts.`,
+  'You get the same team each visit, a price up front rather than a quote you wait on, and no lock-in.',
+  ...local,
+];
+
+// Services. `serviceLinks` is the same six the footer column and the homepage
+// grid render, reused rather than retyped so a seventh service appears on all
+// 56 pages automatically. Descriptions are the homepage brief's verbatim and
+// are deliberately NOT reworded per town: rewriting six service descriptions
+// 56 times is how a site ends up with 336 slightly different accounts of the
+// same six services.
+//
+// ⚠️ The `list` variant renders a fixed 120px icon segment on every row, so an
+// item with no icon leaves a solid empty block — these icons are required by
+// the variant, not decoration. Keyed by href rather than by array index so
+// reordering serviceLinks can't silently shuffle them, and matched to the
+// homepage's own "What we do" icons where the same service appears there.
+const serviceIcons: Record<string, ServiceIconName> = {
+  '/house-cleaning/': 'house',
+  '/deep-cleaning/': 'spray-bottle',
+  '/end-of-lease-cleaning/': 'bloom',
+  '/airbnb-cleaning/': 'suitcase',
+  '/real-estate-cleaning/': 'key',
+  '/commercial-cleaning/': 'office',
+};
+
+const serviceItems = serviceLinks.map((service) => ({
+  icon: serviceIcons[service.href],
+  title: service.title,
+  description: service.description,
+  href: service.href,
+}));
+
+// A quick comparison of the three things people search a town name for. The
+// rows are the same distinctions the service pages already draw; the table
+// exists here so a visitor who landed on a town page rather than a service
+// page can self-select without reading three pages first.
+const chooseTable = {
+  heading: 'Which clean do you actually need?',
+  cornerLabel: 'Three most-booked',
+  columns: [
+    { label: 'Regular clean' },
+    { label: 'Deep clean' },
+    { label: 'End of lease', highlight: true },
+  ],
+  rows: [
+    {
+      label: 'What it is',
+      values: [
+        'An ongoing visit that keeps a lived-in house on top of things',
+        'A one-off room-by-room reset, back to a baseline',
+        'Cleaned to the standard your exit inspection is measured against',
+      ],
+    },
+    {
+      label: 'Book it when',
+      values: [
+        'You want it handled and off your list',
+        "It's got away from you, or people are coming",
+        "You're handing the keys back",
+      ],
+    },
+    {
+      label: 'How often',
+      values: ['Weekly, fortnightly or monthly', 'Once, or seasonally', 'Once, at the end'],
+    },
+  ],
+  footnote:
+    "Not sure? Tell us the size of your place and roughly what condition it's in, and we'll tell you which one it needs rather than quoting for the bigger job by default.",
+};
+
+const beforeAfterPairs: BeforeAfterPair[] = [
+  {
+    before: {
+      src: sampleKitchenBeforeImg,
+      alt: 'Sample illustration: kitchen benchtop and tiled splashback before the clean, with stained grout and spills',
+    },
+    after: {
+      src: sampleKitchenAfterImg,
+      alt: 'Sample illustration: the same kitchen benchtop and splashback after the clean, grout clean and surfaces gleaming',
+    },
+    caption: 'Kitchen benchtop and splashback',
+  },
+  {
+    before: {
+      src: sampleShowerBeforeImg,
+      alt: 'Sample illustration: shower screen and tiles before the clean, with soap scum on the glass and mould in the grout',
+    },
+    after: {
+      src: sampleShowerAfterImg,
+      alt: 'Sample illustration: the same shower screen and tiles after the clean, glass clear and grout white',
+    },
+    caption: 'Shower screen and tiles',
+  },
+];
+
+// Testimonials. Two [TBC] slots, same convention as every other page — never
+// fill these with invented names or words.
+//
+// ⚠️ On a location page the `role` line should carry the TOWN. A quote from a
+// named suburb is the only part of this page a competitor cannot copy, and
+// with 56 pages running one template it is also the only thing that will ever
+// make them genuinely different from each other. Collecting two per town is
+// the highest-value content job on this site.
+const testimonials = [
+  {
+    quote: `[TBC — ask Teagan for a quote from a ${town} client, ideally naming the suburb and how long they've been with TLB.]`,
+    name: '[Client name — TBC]',
+    role: `[${town} — property type TBC]`,
+    rating: 5,
+    avatar: { ratio: '1/1', label: `Long-standing TLB client in ${town}` },
+  },
+  {
+    quote: `[TBC — a second ${town} quote, ideally a different job type to the first: a rental turnover, a business, or a deep clean.]`,
+    name: '[Client name — TBC]',
+    role: `[${town} — property type TBC]`,
+    rating: 5,
+    avatar: { ratio: '1/1', label: `TLB client in ${town}` },
+  },
+];
+
+// Nearby suburbs: a per-town group, not the site-wide 56-town list. This
+// section's job on a location page is internal linking to its actual
+// neighbours, and the full list is already in the header mega-menu.
+//
+// Every one of these links now resolves, because this route builds all 56
+// towns — which is the other thing it fixed. Before it existed, locations.ts
+// carried a standing warning that the mega-menu shipped ~41 dead links.
+const nearbyGroups: TagGroup[] = [
+  {
+    label: `Near ${town}`,
+    tags: nearby.map((suburb) => ({ label: suburb, href: townSlug(suburb) })),
+  },
+];
+
+// FAQs. Six questions, all of them the ones a person searching a town name
+// actually asks: coverage, timing, access, pricing. The generic
+// what-is-included questions stay on the service pages where they belong.
+// Twelve identical FAQs across 56 town pages would be the single biggest
+// block of duplicate text on the site.
+//
+// ⚠️ Two answers make operational promises — no travel charge, and lead time —
+// that need Teagan's confirmation before launch. They are now on 56 pages
+// rather than one, so a wrong answer here is wrong 56 times. Same handling as
+// the service pages' [CONFIRM] answers: strip the marker, flag inline, ship.
+//
+// ⚠️ THE TRAVEL CHARGE ANSWER IS THE ONE TO CHECK. It asserts that every town
+// in all three regions is inside the regular run, including the far edges of
+// the map. If there is a town TLB charges travel to, or reaches less often,
+// that town needs an override rather than this blanket answer.
+const faqItems = [
+  {
+    question: `Do you clean in ${town}?`,
+    answer: `Yes. ${town} is one of our service areas, along with the surrounding ${regionProse}. If you're just outside it, ask anyway — we'd rather tell you than have you guess.`,
+  },
+  {
+    question: 'Is there a travel charge?',
+    answer: `No. ${town} is inside our regular run, so the price you're quoted is the price.`,
+  },
+  {
+    question: 'How soon can you start?',
+    answer:
+      'Usually within a week or two for a regular clean, and sooner for a one-off if there is a gap. End of lease cleans are best booked as soon as you have your handover date.',
+  },
+  {
+    question: 'Do I need to be home?',
+    answer:
+      "No. Most of our regular clients are at work. How we get in is agreed when you book, and you'll get a message when the team is on their way.",
+  },
+  {
+    question: 'Will I get the same cleaner every time?',
+    answer:
+      "Yes, wherever we can. Your home is assigned to a team and that's who you'll see. If someone's away, another member of your team covers and we let you know beforehand.",
+  },
+  {
+    question: 'How much does a clean cost?',
+    answer:
+      "It depends on the size of your place, its condition and how often we come, which is why we quote rather than publish a flat rate that would be wrong for most homes. Tell us the basics and you'll have a price back quickly, with no obligation.",
+  },
+];
+
+const closingCta = {
+  heading: `Get a price for your place in ${town}.`,
+  lead: "Tell us the size of it and roughly what condition it's in, and we'll come back with a number.",
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="full-width-photo"
+      kicker={`${region.label} ${state}`}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <TrustBar variant="card" cards={trustBarCards} />
+
+    <TextBlock theme="light" align="left" heading={`Cleaning in ${town}.`} body={introBody} />
+
+    {/* `list` variant rather than the homepage's image tiles: six rows of text
+        link out cleanly and, unlike photo tiles, don't imply that the photo
+        was taken in this town — which across 56 towns would be 56 implied
+        claims about where a photo came from. */}
+    <ServiceBlocks
+      variant="list"
+      heading={`What we do in ${town}`}
+      lead="Every service below is available across the town and the suburbs around it."
+      items={serviceItems}
+    />
+
+    <ComparisonTable
+      heading={chooseTable.heading}
+      cornerLabel={chooseTable.cornerLabel}
+      columns={chooseTable.columns}
+      rows={chooseTable.rows}
+      footnote={chooseTable.footnote}
+    />
+
+    <BeforeAfter
+      heading="The difference, on real jobs."
+      lead="Drag the handle across each photo to see the same spot before and after a clean."
+      pairs={beforeAfterPairs}
+      note="Illustrative samples, shown while we collect before and after photos from real TLB cleans."
+    />
+
+    <TestimonialCarousel heading={`What ${town} clients say`} testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading={`Suburbs we clean around ${town}`}
+      subheading={`${town} and the surrounding ${regionProse}.`}
+      groups={nearbyGroups}
+      note={["If a suburb isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading={`Cleaning in ${town}: your questions`} items={faqItems} />
+
+    <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>
