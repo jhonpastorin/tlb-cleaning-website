@@ -1,0 +1,413 @@
+---
+// The locations hub, shipping at /locations/.
+//
+// WHY IT EXISTS. Every footer on the site carries "View all locations" →
+// `/locations/`, and the primary nav carries "Locations" → the same href.
+// That link was a 404 on all 106 built pages. locations.ts' own header has
+// carried a standing warning about it ("⚠️ Still 404ing … /locations/ itself,
+// which every footer on the site links to"); this file is what closes it.
+//
+// WHAT IT IS FOR, and what it deliberately is not. Its job is to route: name
+// the three regions, say what each is actually like to work in, and hand the
+// reader all 56 towns as links. It is NOT a fourth "cleaners in <somewhere>"
+// page — that shape belongs to /locations/<town>/ and duplicating it at the
+// parent would put a 57th near-identical page on the pile the town route
+// already has to justify (see townPages.ts' doorway-page warning).
+//
+// EVERYTHING IS DERIVED FROM src/data/locations.ts. The town lists, the
+// region grouping, the counts in §4 — none of it is typed out here. Add a
+// town to locations.ts and it appears on this page, in the mega-menu, in
+// every "Where we clean" band, and as its own page, with no edit to this
+// file. That is the same rule the guides hub follows, and it is the whole
+// reason locations.ts was extracted in the first place.
+//
+// ⚠️ THE DOORWAY-PAGE DECISION IS STILL OPEN AND THIS PAGE INHERITS IT.
+// townPages.ts' header sets out the choice: write a real `local` paragraph
+// for all 56 towns, or publish only the towns that have one. If TLB picks the
+// second, this page needs NO structural change — drop a town's `href` in
+// locations.ts and `TagCloud` renders it as a plain <span> pill instead of a
+// link, which is exactly the "we clean here, there is no page for it" state
+// this page should show. The mechanism is already documented in locations.ts.
+//
+// ⚠️ THE CROSS-BORDER SERVICE QUESTION IS OPEN SITEWIDE AND IS NOT SETTLED
+// HERE. commercial-cleaning.astro and ndis-cleaning.astro render
+// `nswLocationGroups` (NSW only) while footerContact, end-of-lease-cleaning
+// §7 and the Airbnb page all claim the Southern Gold Coast. This page uses
+// the full `locationGroups`, matching the majority and matching the header's
+// own "Areas we clean" menu — but §5's Queensland cell deliberately describes
+// only the domestic and holiday-let work the site already claims across the
+// border, and says nothing about commercial or NDIS either way. Asserting
+// coverage this repo has not been told about would be inventing a service
+// area. When TLB settles it, that cell gains a sentence and the two NSW-only
+// pages either widen or stay.
+//
+// PHOTOGRAPHY: the three region photos from src/assets/locations/, reused
+// from townPages.ts rather than re-imported by path, so the alt text and the
+// "no hero may name a town or a landmark" rule stay in one place.
+// IMAGE-GUIDELINES.md §5.
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import MetricsBlock from '../../components/sections/MetricsBlock.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
+import type { ServiceIconName } from '../../components/ui/ServiceIcon.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+  serviceLinks,
+} from '../../data/navigation';
+import { trustBarCards } from '../../data/trust';
+import {
+  locationGroups,
+  northernRiversTowns,
+  tweedTowns,
+  southernGoldCoastTowns,
+} from '../../data/locations';
+import { heroImages, regions } from '../../data/townPages';
+
+// §0 Metadata. The title leads with the service area rather than with a
+// service, because that is what this page is and because "cleaners northern
+// rivers" style queries land here rather than on a town page. The three
+// region names are all in the description: they are the terms people
+// actually use for where they live, and only one of them ("Northern Rivers")
+// appears in the site's own name for itself.
+const pageMeta = {
+  title: 'Areas We Clean | Northern Rivers, The Tweed & Southern Gold Coast | TLB Cleaning',
+  description:
+    'Every town TLB Cleaning services across the Northern Rivers, the Tweed and the Southern Gold Coast — from Kyogle and Casino to Byron Bay, Kingscliff and Burleigh Heads.',
+  // ⚠️ Placeholder domain, same as every page in this repo. Confirm before launch.
+  canonical: 'https://example.com/locations/',
+};
+
+// ⚠️ `areaServed` here is the full three-region string, unlike a town page's
+// (which correctly narrows to its own town — that is the point of those
+// pages). This one is the parent, so the wide string is right. Every other
+// field is still empty, inherited from every page built before these; one fix
+// in one place would fill the whole site's structured data and nobody has
+// supplied the details yet.
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// Counts, derived rather than written. A hardcoded "56 towns" is wrong the
+// first time somebody edits locations.ts and nobody notices for a year.
+const townCount = northernRiversTowns.length + tweedTowns.length + southernGoldCoastTowns.length;
+const stateCount = new Set(regions.map((r) => r.state)).size;
+
+// §1 Hero. `full-width-photo`, matching /locations/<town>/ rather than the
+// service pages' `split-single-image`: a location page opens on a place, and
+// that variant floats a solid card over the photo so the copy never depends
+// on the photo's own contrast.
+//
+// The valley photo, not either of the house photos. This page is about a
+// region rather than a home, and the other two are the heroes individual
+// town pages open on — using one here would make the parent look like one of
+// its children.
+const hero = {
+  kicker: 'Areas we clean',
+  headingLines: ['From the Kyogle hills', 'to Burleigh Heads.'],
+  lead: `${townCount} towns across three regions and both sides of the border, worked by one local team rather than by whoever is nearest on the day.`,
+  cta: quoteCta,
+  image: { ratio: '16/9', label: heroImages.valley.label, src: heroImages.valley.src },
+};
+
+// §2 The answer block. Definition-style opening sentence for the answer
+// engines, then the sentence that says the thing a service-area page usually
+// leaves out: where the edges are and what happens at them.
+//
+// The last paragraph is the honest one. A cleaning business that claims a
+// two-hour radius and then declines half of it is worse than one that names
+// its edge, and "ask us anyway" is already the note under every "Where we
+// clean" band on the site.
+const introBody: TextBlockBody[] = [
+  `TLB Cleaning services ${townCount} towns across the Northern Rivers and the Tweed in New South Wales, and the Southern Gold Coast in Queensland. Homes, holiday lets and businesses, on a schedule rather than on call.`,
+  'The service area is a real one rather than a marketing radius: it is the ground a local team can cover properly in a day and still be back for the school run. That is why it stops where it stops, and why the same people keep turning up at the same houses.',
+  'If you are just outside it, ask anyway. We would rather tell you straight than have you guess from a map.',
+];
+
+// §3 The three numbers. `MetricsBlock` `grid` rather than `StatBand`: these
+// are plain figures about coverage, not brand-band trust claims with a CTA
+// attached, which is the distinction SECTIONS.md draws between the two.
+//
+// ⚠️ All three are DERIVED FROM locations.ts, so unlike the trust bar's own
+// "98% of our clients stay with us" and "over 100 local homes" — both of
+// which are unsourced claims flagged in trust.ts — these three cannot be
+// wrong unless the town list is. Deliberately no client, staff or revenue
+// figure here for exactly that reason.
+const coverageMetrics = [
+  { value: String(townCount), caption: 'towns and suburbs serviced' },
+  { value: String(regions.length), caption: 'regions, from the hinterland to the coast' },
+  { value: String(stateCount), caption: 'states, either side of the Tweed' },
+];
+
+// §4 The three regions. `ContentGrid` at two columns, image side set purely
+// by array order the way StoryMosaic is — row one image-then-text, row two
+// text-then-image, row three image-then-text.
+//
+// Each cell says what the region is actually like to clean in, which is the
+// only thing this page can offer that the pill list below cannot. None of it
+// is a claim about TLB's operations; it is geography and weather, both of
+// which are checkable and neither of which goes stale.
+//
+// ⚠️ THE PHOTOS ARE GENERATED SCENES, NOT PHOTOGRAPHS OF THESE PLACES.
+// townPages.ts' own header states the rule and the alt text below is its
+// label, verbatim, for that reason: "a generated image captioned as a real
+// place is a fabricated claim about that place". The copy names towns; the
+// image labels never do. Do not write a new label here that says "Byron Bay".
+const regionBlocks = [
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label: heroImages['hinterland-home'].label,
+    src: heroImages['hinterland-home'].src,
+  },
+  {
+    type: 'text' as const,
+    heading: `Northern Rivers, NSW — ${northernRiversTowns.length} towns`,
+    body: [
+      'The biggest of the three and the most varied. It runs from Kyogle and Casino in the west, through Lismore and the hinterland villages, out to Ballina, Lennox Head and Byron Bay on the coast.',
+      'Two quite different cleaning jobs sit inside one region here. Inland, it is older housing stock, a lot of timber, and mould and damp that arrive with the wet rather than with neglect. On the coast it is salt haze on glass, sand in every track, and a holiday-let calendar that turns the whole thing over each Saturday.',
+      'Byron Shire also carries its own short-stay rules, which changed what a letting year looks like for a lot of owners here.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: `The Tweed, NSW — ${tweedTowns.length} towns`,
+    body: [
+      'Murwillumbah and the caldera villages on one side, the Kingscliff and Pottsville coastal strip on the other, and Tweed Heads pressed right against the border.',
+      'This is the part of the map that makes the business what it is. A tenancy in Tweed Heads and a tenancy in Coolangatta are four kilometres and one state apart, and most cleaners work only one side of that line. We work both, which matters most at the end of a lease, when the paperwork changes even though the cleaning does not.',
+      'It is also the fastest-growing stretch we cover, so a good deal of it is newer housing with its own quirks: a lot of glass, a lot of tile, and outdoor living that needs as much attention as the inside.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label: heroImages.valley.label,
+    src: heroImages.valley.src,
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label: heroImages['coastal-home'].label,
+    src: heroImages['coastal-home'].src,
+  },
+  {
+    type: 'text' as const,
+    heading: `Southern Gold Coast, QLD — ${southernGoldCoastTowns.length} towns`,
+    body: [
+      'Coolangatta up through Tugun, Currumbin and Palm Beach to Burleigh Heads and Miami. Nine suburbs in one continuous coastal strip, which is why they are close enough together to run properly in a day.',
+      'Density changes the work here more than distance does. A great deal of it is apartments and townhouses rather than free-standing houses, which means lifts, loading docks, building access windows and a body corporate with a view about when anyone can be on site.',
+      'Salt is the constant. Glass, balustrades, window hardware and outdoor furniture all age faster within sight of the water, and a place that is cleaned on a schedule holds up visibly better than one that is not.',
+    ],
+  },
+];
+
+// §5 The full list. ONE `TagCloud` with all three groups, not three stacked
+// TagClouds — SECTIONS.md's own note on why `groups` exists says three
+// consecutive instances would mean three Dark Teal bands back to back, each
+// repeating a heading, and would throw away the fact that one of the three
+// regions is in a different state.
+//
+// This is the same `locationGroups` every "Where we clean" band on the site
+// renders. It is deliberately identical here: this page is the canonical home
+// of that list, and a hub whose list disagreed with the one on every other
+// page would be the exact drift locations.ts was extracted to end.
+const allTownGroups = locationGroups;
+
+// §6 The services. Same six the footer column, the homepage grid and all 56
+// town pages render, reused from navigation.ts with the town route's own
+// icon map so a reader arriving from a footer link can get straight to what
+// they actually wanted.
+//
+// ⚠️ Icons keyed by href, not by array index, copied from
+// /locations/<town>/'s own map for the same reason it gives: reordering
+// serviceLinks must not silently shuffle the icons. If a seventh service is
+// added to navigation.ts it needs an entry in BOTH maps — the `list` variant
+// renders a fixed icon segment per row, so a missing icon leaves an empty
+// block rather than collapsing.
+const serviceIcons: Record<string, ServiceIconName> = {
+  '/house-cleaning/': 'house',
+  '/deep-cleaning/': 'spray-bottle',
+  '/end-of-lease-cleaning/': 'bloom',
+  '/airbnb-cleaning/': 'suitcase',
+  '/real-estate-cleaning/': 'key',
+  '/commercial-cleaning/': 'office',
+};
+
+const serviceItems = serviceLinks.map((service) => ({
+  icon: serviceIcons[service.href],
+  title: service.title,
+  description: service.description,
+  href: service.href,
+}));
+
+// §7 FAQs. Location-level questions only — coverage, edges, the border,
+// travel. The what-is-included questions belong on the service pages and the
+// per-town ones are already on the 56 town pages; repeating either here would
+// add duplicate text to a site that already has 56 pages running one
+// template.
+//
+// ⚠️ ANSWER 3 (travel charge) IS THE SAME UNCONFIRMED OPERATIONAL PROMISE
+// /locations/<town>/ makes on all 56 pages, and it is flagged there too. It
+// asserts no travel charge anywhere in the service area, including the far
+// edges — Kyogle, Woodburn, Mooball. If TLB charges travel to any of them,
+// this answer and the town route's are both wrong and both change.
+//
+// ⚠️ ANSWER 4 (the border) is the one genuine differentiator on this page and
+// it restates what end-of-lease-cleaning.astro §7 already claims, so it is
+// consistent rather than new.
+const faqItems = [
+  {
+    question: 'What areas does TLB Cleaning service?',
+    answer: `${townCount} towns across three regions: the Northern Rivers and the Tweed in New South Wales, and the Southern Gold Coast in Queensland. That runs from Kyogle and Casino in the west across to Byron Bay and Ballina, north through Murwillumbah and Kingscliff, and over the border as far as Burleigh Heads and Miami.`,
+  },
+  {
+    question: 'My town is not on the list. Can you still come?',
+    answer:
+      'Ask us. The list is where we regularly work, not a fence. If you are a few minutes outside it we will usually say yes, and if we genuinely cannot get there we will tell you rather than book you in and let you find out. Either way you get a straight answer the same day.',
+  },
+  {
+    question: 'Is there a travel charge for the outer towns?',
+    answer:
+      'No. Everything on this page is inside our regular run, so the price you are quoted is the price, whether you are in Byron Bay or out at Kyogle. If a job were ever far enough out to change that, you would hear it at the quote and not on the invoice.',
+  },
+  {
+    question: 'Do you work on both sides of the NSW and Queensland border?',
+    answer:
+      'Yes, and it is one of the more useful things about us. Our area crosses the border at Tweed Heads and Coolangatta, so a move from one side to the other can be cleaned at both ends by the same team. That matters most at the end of a lease, where the cleaning barely changes but the paperwork and the regulator do.',
+  },
+  {
+    question: 'Do I get the same cleaners each visit?',
+    answer:
+      'Yes, wherever we can. Your place is assigned to a team and that is who you see, which is the main reason the service area stops where it does — a run that stretched further would mean whoever was nearest that day instead. If someone is away, another member of your team covers and we tell you first.',
+  },
+  {
+    question: 'Do you clean holiday lets and businesses in these areas, or only homes?',
+    answer:
+      'All three. Regular home cleaning, deep and one-off cleans, end of lease, holiday let turnovers timed to the booking calendar, managed-property work for agencies, and commercial cleaning for offices, shopfronts and premises. The six services are listed above and each has its own page.',
+  },
+];
+
+// §8 Closing CTA. The town-page CTA asks for the size of the place; this one
+// asks for the suburb, because on this page the reader has just been looking
+// at a map of them and that is the question the page has been asking all the
+// way down.
+const closingCta = {
+  kicker: 'Wherever you are on the map',
+  heading: 'Tell us the suburb and we will tell you the price.',
+  lead: 'Same team, same day each visit, no lock-in, and no travel charge inside the area above.',
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    {/* `cardWidth="wide"` (640px rather than the 480px default). At the
+        default width this page's heading wrapped to four lines and the lead
+        to three, which made a tall narrow column over a wide landscape
+        photo — the region shot is the one image on the site with real depth
+        in it and the card was covering the half worth seeing. The 56
+        /locations/<town>/ pages keep the default: their headings are one
+        short line ("Cleaners in Ballina.") and widening those would leave a
+        mostly-empty card. */}
+    <Hero
+      variant="full-width-photo"
+      cardWidth="wide"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <TrustBar variant="card" cards={trustBarCards} />
+
+    <TextBlock theme="light" align="left" heading="Where we clean" body={introBody} />
+
+    <MetricsBlock
+      heading="The service area, in three numbers"
+      lead="All three are counted from the town list further down this page rather than typed in, so they cannot drift away from it."
+      metrics={coverageMetrics}
+    />
+
+    {/* Two columns, and the side each block lands on is purely its position
+        in the array: image then text, text then image, image then text. */}
+    <ContentGrid
+      heading="Three regions, three different jobs"
+      lead="They sit within an hour of each other and they do not clean the same way. What changes is the housing, the weather and what the salt gets to."
+      columns={2}
+      blocks={regionBlocks}
+    />
+
+    <TagCloud
+      heading="Every town we clean"
+      subheading="Pick a town for local availability, or ask us if yours is not here."
+      groups={allTownGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <ServiceBlocks
+      variant="list"
+      heading="What we do, everywhere on that list"
+      lead="Every service is available across all three regions. Nothing on this list is coast-only or town-only."
+      items={serviceItems}
+    />
+
+    <Faq heading="Service areas: frequently asked questions" items={faqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

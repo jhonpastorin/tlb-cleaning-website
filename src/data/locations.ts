@@ -26,15 +26,26 @@
 // this warning always said: drop the `href` and TagCloud renders a plain
 // <span> instead of a link.
 //
-// ⚠️ Still 404ing, and unrelated to the town pages: the three region overview
-// pages (no longer linked from the mega-menu, which now lists towns only) and
-// /locations/ itself, which every footer on the site links to.
+// ✅ RESOLVED — /locations/ exists. src/pages/locations/index.astro is the
+// hub every footer's "View all locations" and the primary nav's "Locations"
+// point at, and it renders `locationGroups` below as its canonical town list,
+// so the hub cannot disagree with the mega-menu or with any page's "Where we
+// clean" band. Its counts are derived from these arrays too.
+//
+// The three REGION overview pages still do not exist, and nothing links to
+// them any more: the mega-menu lists towns only (its "All of <region>" rows
+// were removed at the client's request) and the new hub groups by region
+// rather than linking to a region page. So this is now a deliberate gap
+// rather than a broken link. If region pages are ever wanted, the hub's §4
+// region cells are the copy they would start from.
 //
 // The header mega-menu (navigation.ts) is now built from these same arrays
 // rather than its old hand-typed 15-town subset, so "Areas we clean" and
-// every page's "Where we clean" section can no longer disagree. That also
-// means the 404 warning above applies to the nav menu too: whichever way the
-// unbuilt towns are handled, handle them here.
+// every page's "Where we clean" section can no longer disagree — and neither
+// can the /locations/ hub, which renders the same arrays. That also means the
+// open doorway-page question above reaches all three at once: whichever way
+// the thin towns are handled, handle them here, and the menu, the hub and
+// every "Where we clean" band follow.
 import type { TagGroup } from '../components/sections/TagCloud.astro';
 
 // Slugs are derived rather than hand-written — 56 hand-typed hrefs is 56

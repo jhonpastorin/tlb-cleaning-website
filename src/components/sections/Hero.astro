@@ -75,6 +75,18 @@ interface Props {
    *  subject is flush with the bottom of its own frame, so it stands on the
    *  section edge rather than floating above it. */
   imageFit?: 'cover' | 'contain' | 'contain-bottom';
+  /** full-width-photo only: how wide the floating copy card runs at desktop
+   *  widths. Default 'default' (480px), which is the width every caller had
+   *  before this prop existed — the 56 /locations/<town>/ pages included, so
+   *  they are unaffected. 'wide' (640px) is for a card whose heading wants
+   *  fewer wrapped lines, or which sits over a landscape photo with enough
+   *  room to give up. Below --bp-sm both collapse to the full container
+   *  width, as they always did.
+   *
+   *  A prop rather than a sixth variant, per this file's own rule: the
+   *  layout family is identical and only one measurement changes — the same
+   *  call `imagePosition` and `minimal`'s `align` already make. */
+  cardWidth?: 'default' | 'wide';
   /** split-collage only: images flow alternately into two stacked columns (works with any count >= 1). No wide/offset — each image's own ratio does the sizing. */
   collageImages?: ImageBlock[];
   /** minimal only: content alignment. Default 'left'. */
@@ -95,6 +107,7 @@ const {
   image,
   imagePosition = 'left',
   imageFit = 'cover',
+  cardWidth = 'default',
   collageImages = [],
   align = 'left',
   stats = [],
@@ -159,7 +172,13 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
     </div>
 
     <div class="container">
-      <div class="hero__card">
+      {/* Discrete modifier class, not an inline style or an inline custom
+          property: the --bp-sm breakpoint has to be able to override this
+          width, and inline-origin CSS beats a stylesheet rule at equal
+          specificity even when a custom property sits in between. That is
+          the ContentGrid.astro gotcha, documented in SECTIONS.md, and it
+          applies here for the same reason. */}
+      <div class:list={['hero__card', cardWidth === 'wide' && 'hero__card--wide']}>
         {logo && (
           <div class="hero__logo">
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
@@ -469,6 +488,18 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
 
   .hero--full-width-photo .hero__card .lead {
     max-width: 40ch;
+  }
+
+  /* `cardWidth="wide"`. Both rules below tie on specificity with the two
+     they override (two classes, then three), so SOURCE ORDER is what makes
+     them win — they must stay after the base .hero__card rules and BEFORE
+     the --bp-sm block, which has to keep beating them on small screens. */
+  .hero--full-width-photo .hero__card--wide {
+    max-width: 640px;
+  }
+
+  .hero--full-width-photo .hero__card--wide .lead {
+    max-width: 52ch;
   }
 
   /* mirrors --bp-md */
