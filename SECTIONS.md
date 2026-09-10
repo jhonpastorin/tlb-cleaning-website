@@ -196,6 +196,44 @@ menu labels rather than search terms (`/construction-site/`, `/factories/`);
 both pages lead their `<title>` and `<h1>` with the real head term ("builders
 clean", "factory cleaning") and say so in their file headers.
 
+`guides.ts` holds the nine editorial pages under the header's "Guides"
+mega-menu, plus the hub at `/guides/`:
+
+| Export | What it is |
+|---|---|
+| `guidePages` | The nine, in mega-menu order, each with the full-question `label`, a `shortLabel` for cross-link rows (the full question wraps to three lines and stops being scannable), the `cluster` it sits in ("End of lease & tenancy" / "Homes, hosting & commercial"), a `blurb`, and an `icon`. |
+| `relatedGuides(self, extras?)` | The "More guides" pill list: the other eight, then any page-specific extras (usually the service pages that guide leans on), then the hub. **Excluding `self` is why this is a function** — same call `relatedPremises` and `otherOutsideServices` make. |
+| `otherGuides(self, only?)` | The richer "Read next" row, shaped for `ServiceBlocks`' `list` variant. `only` narrows it to the handful that genuinely follow on, because eight rows is a wall; pass `self` as `null` on the hub, which legitimately wants all of them. |
+| `guidesBusiness(description)` | The `LocalBusinessInfo` all ten hand `Base.astro`. ⚠️ Still mostly empty, inherited from every page built before them. `areaServed` names both states here, unlike `premises.ts`' NSW-only string — two of the guides are specifically about the NSW/QLD difference. |
+| `lastReviewed` | The review-date line the two *regulatory* guides carry. ⚠️ A real editorial commitment: a page stamped with a date nobody reviews is worse than an undated one. |
+
+`GuideHref` is a string-literal union of the nine slugs, same guard as
+`PremisesHref` and `MeetTheTeamHref`. Ten real consumers.
+
+⚠️ **The hub at `src/pages/guides/index.astro` derives its two sections from
+`guidePages` by `cluster`** rather than hand-listing them, so a tenth guide
+added to this file appears on the hub with no edit. It exists because
+`navigation.ts` gives the Guides mega-menu item its own `href: '/guides/'`,
+and without it that header link — and every "All guides" pill on the nine
+leaf pages — is a 404.
+
+⚠️ **Two of the nine describe live law or planning policy** (the NSW/QLD end
+of lease guide, the Byron Shire cap guide) and **must not publish without
+verification**. Both file headers carry a numbered list of exactly what to
+check and against which authority. Both also state on the page, to the
+reader, that they are not legal or planning advice.
+
+⚠️ **The two cost guides publish the *structure* of a price with the numbers
+as visible `[CONFIRM]` brackets**, because inventing a range is a misleading
+price representation under BFD 5.3 and "contact us" wastes the query. Those
+brackets cannot ship half-filled: fill them, or delete the section and keep
+the rest of the page.
+
+⚠️ **These pages are editorial and `Base.astro` only emits `LocalBusiness`
+JSON-LD.** An `Article`/`FAQPage` prop would be additive and would not touch
+the other pages, but it is a shared-layout change and was deliberately not
+made — raise it before launch.
+
 ---
 
 ## Sections — `src/components/sections/`

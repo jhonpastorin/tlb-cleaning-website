@@ -1,0 +1,476 @@
+---
+// Guide: "How much does house cleaning cost?". Fourth of the nine guides;
+// the cluster's shared data is in src/data/guides.ts.
+//
+// ⚠️ SAME PRICING PROBLEM AS THE BOND CLEAN COST GUIDE, SAME SOLUTION.
+// The repo has never been given TLB's rates. Publishing an invented range is
+// a misleading price representation under BFD 5.3, and publishing "contact
+// us" wastes the query. So this page publishes the STRUCTURE of the price in
+// full and leaves the numbers as [CONFIRM] brackets that cannot ship
+// half-filled. See the header of
+// how-much-does-end-of-lease-cleaning-cost.astro for the full reasoning; it
+// is not repeated here.
+//
+// ⚠️ FIVE BRACKETED SLOTS in §5. If Teagan will not publish numbers, DELETE
+// §5 rather than softening it. The rest of the page stands without it.
+//
+// WHAT MAKES THIS PAGE DIFFERENT FROM THE BOND CLEAN COST GUIDE, so the two
+// do not read as one article published twice:
+//   * Its central question is hourly versus fixed, which does not arise on a
+//     bond clean (that job is almost always fixed).
+//   * Its second question is the first clean versus the ones after it, which
+//     is specific to ongoing work and is the number one source of "why was
+//     the first invoice higher" complaints in this category.
+//   * Its warning section is about the cash rate rather than the cheap
+//     quote — the undercutting mechanism is genuinely different for ongoing
+//     domestic work than for one-off bond work, and this is the page where
+//     TLB's "employed, not subcontracted" position is actually load-bearing.
+//
+// ⚠️ THE EMPLOYMENT ARGUMENT IN §6 IS THE STRONGEST THING ON THE PAGE AND IT
+// RESTS ON A CLAIM THIS REPO INHERITED. src/data/comparison.ts row 1 says
+// "Nine full-time cleaners employed by TLB, not subcontracted". Every page on
+// the site carries it. §6 explains the cost consequence of it, which is a
+// legitimate extension, but if the employment position ever changes then §6
+// is the section that becomes false first.
+//
+// PHOTOGRAPHY: reused. IMAGE-GUIDELINES.md §5.
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import heroImg from '../../assets/home/house-cleaning-team-vacuuming-open-plan-living-room.jpg';
+import definitionBgImg from '../../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../../data/navigation';
+import { locationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { otherGuides, relatedGuides } from '../../data/guides';
+
+const selfHref = '/guides/how-much-does-house-cleaning-cost/' as const;
+
+const pageMeta = {
+  title: 'How Much Does House Cleaning Cost? | TLB Cleaning',
+  description:
+    'Hourly against fixed price, what the first clean costs compared with the ones after it, and what actually sits inside a house cleaning rate in the Northern Rivers and the Tweed.',
+  // ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
+  canonical: `https://example.com${selfHref}`,
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The heading states the thing that makes an hourly rate almost
+// useless as a comparison tool, which is the page's whole argument.
+const hero = {
+  kicker: 'Guide · Homes and hosting',
+  headingLines: ['An hourly rate tells you', 'almost nothing on its own.'],
+  lead:
+    'What actually sits inside a house cleaning price, why the first clean costs more than the ones after it, and how to compare two cleaners when one quotes by the hour and the other by the job.',
+  cta: quoteCta,
+  image: {
+    ratio: '4/3',
+    label:
+      'Two cleaners in aqua polos working through an open-plan living room, one vacuuming and one wiping down a side table',
+    src: heroImg,
+  },
+};
+
+// §2 The answer block. Definition-first, then the sentence that reframes the
+// query: the useful number is cost per visit at a stated scope, not the
+// hourly rate, and almost every price page in this category gets that
+// backwards.
+const definitionBody: TextBlockBody[] = [
+  'House cleaning is priced either by the hour or as a fixed price per visit, and in both cases the number that matters is the cost of one visit at a stated scope, not the rate on its own. A low hourly rate over more hours is not a saving, and a fixed price with half the tasks in it is not a bargain.',
+  'TLB Cleaning cleans homes across the Northern Rivers, the Tweed and the Southern Gold Coast, on weekly, fortnightly and monthly schedules as well as one-off. What follows is how the pricing in this category actually works, whoever you end up booking.',
+];
+
+// §3 Hourly against fixed. A real ComparisonTable — genuinely tabular, two
+// compared models, one feature per row.
+//
+// NEITHER COLUMN IS HIGHLIGHTED, on purpose. There is no "us" here: both
+// models are legitimate and which suits you depends on your house. Tinting
+// one would be a claim the page does not actually want to make, and the
+// footnote says so.
+//
+// ⚠️ If TLB prices one way and not the other, this table needs one added
+// sentence saying which — and §5's [CONFIRM] block is where that lands.
+const modelTable = {
+  heading: 'Hourly or fixed price',
+  cornerLabel: 'Two ways the same clean gets sold',
+  lead: 'Both are honest models. They fail in different directions, and the one that suits you depends on how predictable your house is.',
+  columns: [{ label: 'Hourly' }, { label: 'Fixed price per visit' }],
+  rows: [
+    {
+      label: 'What you are buying',
+      values: ['A block of time', 'An agreed list of tasks'],
+    },
+    {
+      label: 'What happens if the house is worse than usual',
+      values: ['It costs more, or less gets done', 'It takes longer at the same price'],
+    },
+    {
+      label: 'What happens if it is better than usual',
+      values: ['You pay less', 'You pay the same'],
+    },
+    {
+      label: 'Easy to compare between cleaners',
+      values: ['Only if the hours are also quoted', 'Yes, if the task list is published'],
+    },
+    {
+      label: 'Suits',
+      values: ['A one-off, or a house that varies a lot week to week', 'A regular clean on a house in steady condition'],
+    },
+    {
+      label: 'The way it goes wrong',
+      values: ['Slow work is rewarded', 'A scope nobody wrote down is argued about later'],
+    },
+  ],
+  footnote:
+    'Neither model is the trick. The trick is a rate with no scope attached, or a fixed price with no task list attached. Ask for the missing half in both cases and the two become directly comparable.',
+};
+
+// §4 What moves the price. ContentGrid text cells, six, three rows at two
+// columns.
+//
+// Deliberately different variables from the bond clean cost guide's six —
+// frequency and pets do not appear there, and condition-versus-size is
+// framed differently because on ongoing work the condition is a function of
+// the frequency you chose.
+const priceDriverBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'Frequency, more than anything',
+    body: [
+      'A weekly clean of the same house costs less per visit than a monthly one, because a house cleaned weekly is never far from clean. A month of build-up is a genuinely bigger job than a week of it.',
+      'This is the one lever most people do not realise they are pulling. Stretching a fortnightly clean to monthly rarely halves the annual cost, because each visit grows.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Size, but mostly wet areas',
+    body: [
+      'Bathrooms and kitchens carry most of the detail work in a regular clean. A fourth bedroom adds a floor and a set of surfaces; a third bathroom adds a screen, a base, a toilet and a fan.',
+      'That is why two houses with the same floor area can quote differently, and why bedroom count alone is a poor guide.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'How lived-in it is',
+    body: [
+      'Children, pets, a home office, people working from home five days a week. All of it is completely normal and all of it makes a house a bigger job than the floor plan suggests.',
+      'Nobody is judging the state of your house. It just has to be priced honestly, and a quote given without seeing it is a quote that may move.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Pets, specifically',
+    body: [
+      'Hair is the reason. It travels further than dust, it sits in upholstery and skirtings rather than on them, and it adds vacuuming time to every room rather than to one.',
+      'Say so up front. A cleaner who finds out on arrival has to either run over or under-do it, and neither is what you wanted.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'What is actually on the list',
+    body: [
+      'Inside the oven, inside the fridge, interior windows, wall spot cleaning, changing the beds, the balcony. Some cleaners include some of these and almost nobody includes all of them in a standard visit.',
+      'This is where two prices that look far apart usually turn out to be for two different jobs.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Where you are, and when',
+    body: [
+      'Travel time is real in a region this spread out. A hinterland property forty minutes off the highway is a different proposition from a unit in town, and most cleaners price it in somewhere.',
+      'School hours on a weekday are the cheapest slot almost everywhere. Weekends and late afternoons are the ones everybody wants.',
+    ],
+  },
+];
+
+// §5 The first clean. `note` tone.
+//
+// This section exists because it is the single most common billing surprise
+// in ongoing domestic cleaning, and explaining it in advance turns a
+// complaint into a reasonable expectation. It is also a genuine trust signal:
+// saying "the first one costs more, here is why" before you book is the
+// opposite of what a cheap operator does.
+//
+// ⚠️ CONFIRM TLB ACTUALLY WORKS THIS WAY. Some cleaners charge a higher
+// first visit, some quote a separate initial deep clean, some absorb it. The
+// page currently describes the first two as the category norm and does not
+// state which one TLB does — §6's bracket is where that answer goes.
+const firstCleanCallout = {
+  heading: 'The first clean costs more, and it should',
+  body: [
+    'Almost every cleaner charges more for the first visit to a new house, or quotes a separate initial clean before the regular schedule starts. It is not an upsell. A house that has never been professionally cleaned, or has not been for a while, carries a backlog that a normal visit has no time in it for: the oven, the tracks, the skirtings, the grout, the tops of things.',
+    'Once that backlog is cleared, a regular visit is maintaining a standard rather than reaching one, and it fits the hours it is priced for. A cleaner who charges you the ongoing rate for the first visit is either going to run badly over or leave the backlog exactly where it was.',
+    'The version to be wary of is the one nobody mentions until the invoice arrives. Ask before you book, and ask whether the higher first visit is a one-off or a separate deep clean quoted on its own.',
+  ],
+};
+
+// §6 The bracketed pricing block. Same treatment as the bond clean guide.
+//
+// ⚠️⚠️ [CONFIRM] × 5. Cannot publish half-filled. Delete the section rather
+// than vaguing it out if the numbers are not coming.
+const pricingBody: TextBlockBody[] = [
+  'Here is how ours works, in plain terms.',
+  {
+    list: [
+      'Basis: [CONFIRM. Does TLB price regular home cleaning hourly, as a fixed price per visit, or both depending on the job?]',
+      'Typical visit: [CONFIRM. A range for a common property size at a common frequency, with the variables named. A range, never a single figure, and never a figure that has not been checked against recent jobs.]',
+      'The first clean: [CONFIRM. Higher first visit, a separately quoted initial deep clean, or neither.]',
+      'Minimum booking: [CONFIRM whether there is a minimum visit length or minimum charge.]',
+      'What is included as standard, and what is an extra: [CONFIRM the standard task list, and specifically whether inside the oven, inside the fridge, interior windows and bed changes are in it.]',
+    ],
+  },
+  'Whatever the answer, the useful thing to ask any cleaner is the same: what does one visit cost, and what is on the list for that visit. Two numbers without two lists cannot be compared.',
+];
+
+// §7 What is inside the rate. Warning tone, used once.
+//
+// THE section where TLB's employment position does real work, and the reason
+// this page exists at all rather than just the bond clean one. It is written
+// as an explanation of what a rate has to cover, not as an accusation about
+// anybody's arrangements — which is both fairer and considerably safer.
+//
+// ⚠️ Deliberately makes NO claim about the legality or tax status of anyone
+// else's business. It describes costs. Keep it that way.
+const rateCallout = {
+  heading: 'Why one rate is half another',
+  body: [
+    'A cleaning rate is not wages. Out of it come insurance, superannuation, leave, workers compensation, equipment, chemicals, vehicle costs, travel time between jobs, training and the office hours that book you in and answer the phone. A rate that covers all of that cannot sit at the same number as one that covers none of it.',
+    'So when a rate looks remarkably low, the useful question is not whether the person is worth it. It is which of those things the rate is not paying for, and what that means for you if someone is hurt in your house, if something is damaged, or if the person who cleans your home each week has no cover when they are sick.',
+    'We employ our cleaners rather than subcontracting them, which is a cost decision as much as an ethical one and it is priced in. It is also why the same person turns up each visit, which is the thing most clients say they actually wanted.',
+  ],
+};
+
+// §8 How to compare two quotes properly. Six items, icon-grid.
+const compareItems = [
+  {
+    icon: 'target' as const,
+    title: 'Ask for cost per visit, not per hour',
+    description:
+      'Then ask what is on the list for that visit. Those two facts make any two cleaners directly comparable, whichever model they price on.',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'Check the four usual extras',
+    description:
+      'Inside the oven, inside the fridge, interior windows and changing the beds. Most standard visits exclude some of these, and it is where most price gaps hide.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Ask what the first visit costs',
+    description:
+      'And whether it is a one-off higher rate or a separate initial clean. This is the most common billing surprise in the category and one question removes it.',
+  },
+  {
+    icon: 'key' as const,
+    title: 'Ask who turns up, and whether it is the same person',
+    description:
+      'A rotating roster and a consistent cleaner are different products at similar prices. If continuity matters to you, it is worth asking before you book rather than after the third change.',
+  },
+  {
+    icon: 'suitcase' as const,
+    title: 'Ask about insurance and employment',
+    description:
+      'Whether the cleaner is employed or subcontracted, and what cover is in place. It costs nothing to ask and it tells you what the rate is actually made of.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Ask what happens when something is missed',
+    description:
+      'Everyone misses something eventually. What separates cleaners is whether there is a number to call and somebody who answers it, not whether it never happens.',
+  },
+];
+
+// §9 Next reads.
+const nextGuides = otherGuides(selfHref, [
+  '/guides/what-is-included-in-a-deep-clean/',
+  '/guides/steam-dry-or-shampoo-which-carpet-cleaning-method/',
+  '/guides/how-much-does-end-of-lease-cleaning-cost/',
+]);
+
+// §10 The pill band.
+const moreGuideTags = relatedGuides(selfHref, [
+  { label: 'Regular home cleaning', href: '/house-cleaning/' },
+  { label: 'Deep cleaning', href: '/deep-cleaning/' },
+  { label: 'NDIS cleaning', href: '/ndis-cleaning/' },
+]);
+
+// §11 FAQs. No dollar figures anywhere, same rule as the bond clean cost
+// guide and for the same reason.
+const faqItems = [
+  {
+    question: 'How much does house cleaning cost?',
+    answer:
+      'It is priced either by the hour or as a fixed price per visit, and the useful figure is the cost of one visit at a stated scope. Frequency moves it most, then the number of wet areas, then how lived-in the house is. Ask any cleaner for cost per visit plus the task list, and two quotes become comparable.',
+  },
+  {
+    question: 'Is hourly or fixed price better?',
+    answer:
+      'Fixed price suits a regular clean on a house in steady condition, because you know what you are paying and the cleaner carries the risk of a bad week. Hourly suits a one-off, or a house that varies a lot. The problem is never the model, it is a rate with no scope or a price with no list.',
+  },
+  {
+    question: 'Why is the first clean more expensive?',
+    answer:
+      'Because it clears a backlog rather than maintaining a standard. Ovens, tracks, skirtings, grout and the tops of things all take time a regular visit is not priced for. Once that is done, a normal visit fits its hours. Ask whether the higher first visit is a one-off rate or a separately quoted initial deep clean.',
+  },
+  {
+    question: 'Is fortnightly cheaper than weekly?',
+    answer:
+      'Cheaper per year, usually, but not by half, because each visit is a bigger job. A weekly clean is never far from clean; a fortnightly one has fourteen days of living in it. If budget is the constraint, a shorter weekly visit sometimes beats a longer fortnightly one for the same annual spend.',
+  },
+  {
+    question: 'Do I need to supply the products and equipment?',
+    answer:
+      'Usually not, and you should ask, because it changes what a rate means. A cleaner bringing their own vacuum, chemicals and cloths is carrying a real cost. One using yours is not, and the rate should reflect that. Either arrangement is fine as long as it is agreed before the first visit.',
+  },
+  {
+    question: 'Does a cleaner cost more if I have pets?',
+    answer:
+      'Often a little, yes. Hair adds vacuuming time to every room rather than to one, and it sits in soft furnishings rather than on hard surfaces. It is not a penalty, it is just more work. Mention it when you ask for a quote so the price you are given is the price that holds.',
+  },
+];
+
+// §12 Closing CTA.
+const closingCta = {
+  kicker: 'Regular home cleaning',
+  heading: 'Ask us for cost per visit and the list.',
+  lead: 'Tell us the property, how often you want us and what state it is in. You get a price for a visit and the tasks that price covers.',
+  cta: { label: 'See regular home cleaning', href: '/house-cleaning/' },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={80} focus="center">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <ComparisonTable
+      heading={modelTable.heading}
+      cornerLabel={modelTable.cornerLabel}
+      lead={modelTable.lead}
+      columns={modelTable.columns}
+      rows={modelTable.rows}
+      footnote={modelTable.footnote}
+    />
+
+    <ContentGrid
+      heading="What moves the price"
+      lead="Six variables, in roughly the order they change a quote by."
+      columns={2}
+      blocks={priceDriverBlocks}
+    />
+
+    <Callout tone="note" heading={firstCleanCallout.heading} body={firstCleanCallout.body} />
+
+    <TextBlock theme="dark" align="left" heading="How we price ours" body={pricingBody} />
+
+    <Callout tone="warning" heading={rateCallout.heading} body={rateCallout.body} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="Six questions that make two quotes comparable"
+      lead="None of them are awkward to ask, and any cleaner worth booking will have an answer ready."
+      items={compareItems}
+      cta={quoteCta}
+    />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Read next"
+      lead="The three guides that follow on from this one."
+      items={nextGuides}
+    />
+
+    <Faq heading="House cleaning costs: frequently asked questions" items={faqItems} />
+
+    <TagCloud
+      heading="More guides"
+      subheading="Everything else we have written down."
+      tags={moreGuideTags}
+      note={['Something we have not covered? Ask us and we will write it.']}
+    />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

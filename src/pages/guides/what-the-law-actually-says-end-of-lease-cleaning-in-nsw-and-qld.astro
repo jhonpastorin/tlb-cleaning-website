@@ -1,0 +1,562 @@
+---
+// Guide: "What the law actually says: end of lease cleaning in NSW and QLD",
+// shipping at the long slug navigation.ts' Guides mega-menu already commits
+// to. First of the nine guides; the cluster's shared data is in
+// src/data/guides.ts.
+//
+// WHY THIS PAGE EXISTS. end-of-lease-cleaning.astro §5 carries an explicit
+// note asking for exactly this: "outbound links to NSW Fair Trading and the
+// Queensland Residential Tenancies Authority should be added (BFD 3.3 asks
+// for authoritative external sources) once there is a guides section to host
+// them." This is that host. §7 of this page is those links.
+//
+// ⚠️⚠️ THIS IS THE HIGHEST-RISK PAGE IN THE REPO AND IT MUST NOT PUBLISH
+// WITHOUT REVIEW. It describes how two states' residential tenancy law works.
+// Everything below was drafted, not supplied, and the standard applied was:
+//
+//   * State the STRUCTURE (which Act, which body holds the bond, which
+//     tribunal hears a dispute, what the condition report is for). Structure
+//     changes rarely and is checkable in a minute.
+//   * State the PRINCIPLE ("the same condition, fair wear and tear
+//     excepted"). It is the operative phrase in both states and it is the
+//     whole point of the page.
+//   * State NO timeframes, NO dollar figures, NO entitlements, and NO advice
+//     about what a reader should do in their own dispute. Every one of those
+//     differs by state, changes without notice, and turns a guide into legal
+//     advice TLB is not qualified or insured to give.
+//
+// Three specific claims need checking against the current instruments before
+// launch, each marked ⚠️ VERIFY at its definition:
+//   1. The NSW carpet-cleaning / fumigation term and its animal condition.
+//   2. The NSW and QLD condition-report forms and who completes them.
+//   3. The QLD dispute path running through the RTA before QCAT.
+// A tenancy lawyer or an experienced local property manager can clear all
+// three in one read. Do that read.
+//
+// ⚠️ NOT LEGAL ADVICE, and the page says so to the reader in §3, not just
+// here in a comment. BFD 5.3 forbids guaranteeing outcomes TLB cannot
+// control; the same logic applies to telling someone what the law entitles
+// them to. The page explains the framework and then points at the two
+// regulators.
+//
+// THE THESIS, and it is the reason the guide is worth publishing: the
+// standard in both states is the CONDITION the property is left in, measured
+// against the condition report, not a receipt from a professional cleaner.
+// That single sentence is what most tenants in this region do not know, it is
+// what makes the page linkable, and it is also — awkwardly and honestly — an
+// argument that a tenant does not strictly have to hire TLB. The page makes
+// it anyway. BFD 3.1's voice is "straight with you", and a guide that shades
+// the law toward the seller is worth nothing to a reader and nothing to the
+// site's authority.
+//
+// NO GUARANTEE ANYWHERE. Same rule as end-of-lease-cleaning.astro: nothing on
+// this page promises a bond, a pass or a refund.
+//
+// PHOTOGRAPHY: reused, not generated. IMAGE-GUIDELINES.md §5 — "Reuse before
+// generating. Same subject = same file." The handover photo already means
+// "the inspection moment" on the end-of-lease page and it means the same here.
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import heroImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-property-manager-at-a-vacant-handover.jpg';
+import definitionBgImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-wiping-out-an-empty-kitchen-cupboard.jpg';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../../data/navigation';
+import { locationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { otherGuides, relatedGuides, lastReviewed } from '../../data/guides';
+
+const selfHref = '/guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/' as const;
+
+// §0 Metadata. The title leads with the question a tenant types, not with
+// the Acts. "End of lease cleaning laws NSW" and the QLD equivalent are the
+// real queries; the legislation names belong in the body where they can be
+// cited rather than in the title where they read as a law-firm page.
+const pageMeta = {
+  title: 'End of Lease Cleaning Laws in NSW and QLD | TLB Cleaning',
+  description:
+    'What tenancy law in NSW and Queensland actually requires when you move out: the condition report standard, fair wear and tear, and whether a professional clean can be demanded.',
+  // ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
+  canonical: `https://example.com${selfHref}`,
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The kicker names the section, so a reader arriving from search
+// knows this is an article rather than a service page before they read a
+// word of it. Every guide in the cluster uses the same two-part kicker.
+//
+// The heading is the thesis, compressed. It is also the answer to the query.
+const hero = {
+  kicker: 'Guide · End of lease and tenancy',
+  headingLines: ['The law asks how clean it is,', 'not who cleaned it.'],
+  lead:
+    'What tenancy law in New South Wales and Queensland actually requires at the end of a tenancy, what "fair wear and tear" really means, and when a professional clean can and cannot be insisted on.',
+  cta: quoteCta,
+  image: {
+    ratio: '4/3',
+    label:
+      'A property manager standing at the kitchen bench of an empty rental with a tablet and a set of keys, taking notes at handover',
+    src: heroImg,
+  },
+};
+
+// §2 The answer block. Definition-style opening sentence, subject-predicate-
+// object second sentence, per BFD 3.6.2 — this is the passage most likely to
+// be lifted whole into an AI overview, so it has to be correct standing on
+// its own with no surrounding page.
+//
+// ⚠️ The phrase "the same condition, fair wear and tear excepted" is the
+// operative standard in both states and is stated deliberately, in quotes, as
+// the thing the reader should recognise on their own agreement. VERIFY the
+// wording against the current NSW standard form agreement and the current QLD
+// general tenancy agreement before launch. The concept is not in doubt; the
+// exact words are what a lawyer will check.
+const definitionBody: TextBlockBody[] = [
+  'End of lease cleaning is the cleaning a tenant does before handing back the keys, and in both New South Wales and Queensland the standard it is measured against is the condition the property was in when the tenancy started, fair wear and tear excepted. That standard is about the state of the property. It is not, on its own, a requirement to hire anybody.',
+  'The comparison is made against the condition report completed at the start of the tenancy. That document, not a general idea of "clean", is what an exit inspection is checked against, which is why a tenant who never filled theirs in properly is at a disadvantage before anyone picks up a cloth.',
+  lastReviewed,
+];
+
+// §3 The disclaimer, and it goes high on the page rather than in a footer.
+// `note` tone, not `warning`: this is "worth knowing before you read on",
+// not "do not do this".
+//
+// A cleaning company writing about tenancy law has an obvious incentive
+// problem, and the honest move is to name it in the second paragraph rather
+// than hope nobody notices. That paragraph is doing brand work as well as
+// compliance work — BFD 3.1.
+const disclaimerCallout = {
+  heading: 'This is a guide, not legal advice.',
+  body: [
+    'We clean properties, we do not practise law. What follows is a plain-English summary of how the process works in each state, written to help you read your own agreement and your own condition report. It is general information, it is not advice about your tenancy, and it can go out of date when a rule changes. The two regulators listed further down are the authorities, and both publish free, current guidance.',
+    'It is also worth saying plainly that we are a cleaning company writing about whether you are required to hire a cleaning company. The answer below is not the one that suits us best. It is the one that is true.',
+  ],
+};
+
+// §4 The side-by-side. A real ComparisonTable rather than two text columns,
+// because "which body, which form, which tribunal" is genuinely tabular and
+// the whole value of the section is that a reader can run their eye down one
+// column and across one row. ContentGrid cannot keep a row aligned across two
+// entities, which is the exact gap SECTIONS.md says this component was built
+// to fill.
+//
+// Neither column is highlighted. A highlight in this component means "this is
+// us"; there is no "us" in a table comparing two states, and tinting one
+// state would imply a preference the page does not hold.
+//
+// ⚠️ VERIFY EVERY CELL. These are structural facts, checkable in minutes on
+// each regulator's own site, and they are the cells a reader will trust most
+// because they look the most definite:
+//   - NSW: Residential Tenancies Act 2010 (NSW); bond held by NSW Fair
+//     Trading (Rental Bonds Online); disputes to NCAT.
+//   - QLD: Residential Tenancies and Rooming Accommodation Act 2008 (Qld);
+//     bond held by the Residential Tenancies Authority; RTA dispute
+//     resolution before QCAT.
+//   - The condition report form names and numbers, particularly the QLD
+//     entry (Form 1a) and exit (Form 14a) reports, which are cited here by
+//     number and are the single easiest thing on the page to get wrong.
+// No timeframes appear in any cell, on purpose. Do not add any.
+const stateTable = {
+  heading: 'The same idea, two sets of paperwork',
+  cornerLabel: 'How it works on each side of the border',
+  lead:
+    'Our service area crosses the border at Tweed Heads, so plenty of people here move from one system to the other without realising the paperwork changed. The cleaning does not change much. This does.',
+  columns: [{ label: 'New South Wales' }, { label: 'Queensland' }],
+  rows: [
+    {
+      label: 'The law',
+      values: ['Residential Tenancies Act 2010 (NSW)', 'Residential Tenancies and Rooming Accommodation Act 2008 (Qld)'],
+    },
+    {
+      label: 'The regulator',
+      values: ['NSW Fair Trading', 'Residential Tenancies Authority (RTA)'],
+    },
+    {
+      label: 'Who holds your bond',
+      description: '(Not the agent, and not the owner)',
+      values: ['NSW Fair Trading, through Rental Bonds Online', 'The RTA'],
+    },
+    {
+      label: 'The document you are measured against',
+      values: ['The condition report from the start of the tenancy', 'The entry condition report (Form 1a), compared with the exit report (Form 14a)'],
+    },
+    {
+      label: 'The cleaning standard',
+      values: [
+        'The condition at the start, fair wear and tear excepted',
+        'The condition at the start, fair wear and tear excepted',
+      ],
+    },
+    {
+      label: 'Where a disagreement goes',
+      values: ['NSW Civil and Administrative Tribunal (NCAT)', "The RTA's free dispute resolution service first, then QCAT"],
+    },
+  ],
+  footnote:
+    'Both systems rest on the same idea: your bond is held by a government body rather than by the agent, and nobody can simply take money out of it because they are unhappy. If you and the agent disagree, somebody independent decides.',
+};
+
+// §5 Fair wear and tear. The concept that decides more bond arguments than
+// any other and the one nobody explains to a first-time renter.
+//
+// ContentGrid text cells at two columns rather than a bullet list, because
+// each of the four needs a sentence of reasoning after the example — a list
+// would flatten "this is not a cleaning failure" into "this is fine", which
+// is a different and wrong claim.
+//
+// ⚠️ These are ILLUSTRATIONS OF A PRINCIPLE, not rulings. Every example is
+// deliberately generic and none of them says "you will not be charged for
+// this", because whether a specific mark is wear or damage is a question of
+// fact that a tribunal decides. Keep it that way.
+const wearBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'Wear is what time does',
+    body: [
+      'Carpet that has flattened along the hallway, paint that has faded on the sunny wall, a bench that has dulled, tapware that has lost its shine. Nobody did anything to cause it except live there for the length of a lease.',
+      'Cleaning cannot reverse any of it, and it is not supposed to. A clean returns a surface to its condition; it does not return it to its age.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Damage is what an event does',
+    body: [
+      'A burn in the benchtop, a hole in the plaster, a torn flyscreen, a stain that went through the carpet backing. Something happened, on a particular day, that would not have happened just from time passing.',
+      'That is a repair question, not a cleaning question, and no cleaner can make it go away. What a good one can do is tell you which of your marks are which before the inspection rather than after it.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Dirt is neither, and it is the only one cleaning fixes',
+    body: [
+      'Grease in the oven, soap scum on the screen, dust on the tracks, the ring in the toilet. None of it is wear and none of it is damage. It is simply not clean yet, and it is entirely within your control.',
+      'This is the part of the exit report that a bond clean is actually aimed at, and it is where almost every deduction that could have been avoided comes from.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'The condition report decides the argument',
+    body: [
+      'If a mark was there on day one and the report says so, it is not yours to fix. If a mark was there on day one and the report does not say so, you are arguing about memory, and memory loses.',
+      'Which is why the most valuable ten minutes of any tenancy are the ones spent filling in the entry report properly, with photographs, before the first box comes off the truck.',
+    ],
+  },
+];
+
+// §6 The professional-cleaning question. THE section people arrive for, and
+// the one with the most misinformation around it in this category.
+//
+// `warning` tone, used once on the page. It is a "do not just accept this"
+// message, which is exactly the tone's stated job in SECTIONS.md.
+//
+// ⚠️⚠️ VERIFY BEFORE LAUNCH, THIS IS THE CLAIM THAT MATTERS MOST.
+// The position stated: in both states the standard is the condition of the
+// property, and a general blanket term requiring professional cleaning
+// regardless of condition is not automatically enforceable. NSW is the more
+// specific of the two — the standard form agreement permits an additional
+// term requiring carpet cleaning or fumigation at the end of the tenancy only
+// where the tenant was permitted to keep an animal at the property. That
+// carve-out is stated below and it is the single most checkable, most
+// citable, most wrong-if-wrong sentence on the page. Check it against the
+// current Residential Tenancies Regulation and the current standard form
+// agreement, not against a blog.
+//
+// The last paragraph deliberately does NOT tell the reader to refuse. It
+// tells them to ask what the agreement says and to talk to the regulator.
+// That is the line between explaining and advising, and the page stays on the
+// explaining side of it.
+const professionalCallout = {
+  heading: '"Professional cleaning required" is not the end of the conversation',
+  body: [
+    'A term in an agreement that requires the property to be professionally cleaned at the end of the tenancy, no matter what condition it is in, is a different thing from the legal standard, which is about condition. Plenty of agreements carry one anyway. Whether it can be enforced against you is a question about your agreement and your circumstances, and it is not settled by the words being printed on the page.',
+    'New South Wales is more specific than most people realise. The standard form agreement allows an additional term requiring carpets to be professionally cleaned, or the premises fumigated, at the end of the tenancy only where the tenant was permitted to keep an animal at the property. Outside that, a blanket professional-cleaning term sits on much shakier ground.',
+    'None of which means you should ignore a clause. It means you should read it, check it against what the regulator for your state publishes, and ask the agent which specific items on the report they say are outstanding. An agent who can name them is describing a cleaning job. An agent who cannot is describing a receipt.',
+  ],
+};
+
+// §7 The outbound links this whole guides section was waiting for, per
+// end-of-lease-cleaning.astro §5's own note.
+//
+// ServiceBlocks `list` rather than prose, because none of the prose
+// components in this library can render a link inside a paragraph — every
+// text prop is escaped (checked, not assumed: TextBlock, Callout, Faq and
+// ContentGrid all interpolate their strings rather than using set:html). A
+// row list with a real `href` is the honest way to get an outbound link onto
+// the page without adding an HTML-injection prop to a shared component.
+//
+// ⚠️ These two URLs are the front doors of each regulator, chosen over
+// deep links on purpose: a deep link into a specific guidance page rots
+// within a year and a regulator's home page does not. Confirm both resolve
+// before launch, and note neither opens in a new tab — ServiceBlocks' list
+// rows render a plain <a>. That is a component change if TLB wants it, not a
+// page one.
+const regulatorLinks = [
+  {
+    icon: 'idea' as const,
+    title: 'NSW Fair Trading',
+    description:
+      'The authority for tenancies in Ballina, Byron, Lismore, Tweed and everywhere else on the New South Wales side. Holds your bond, publishes the standard form agreement, and runs a free enquiry line.',
+    href: 'https://www.fairtrading.nsw.gov.au/',
+  },
+  {
+    icon: 'house' as const,
+    title: 'Residential Tenancies Authority (Queensland)',
+    description:
+      'The authority for tenancies in Coolangatta, Currumbin, Palm Beach and north. Holds your bond, publishes the entry and exit condition report forms, and offers a free dispute resolution service.',
+    href: 'https://www.rta.qld.gov.au/',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Your own tenant advocacy service',
+    description:
+      'Both states fund free tenant advice services independent of the regulator. If money is actually in dispute rather than merely discussed, that is the call worth making before the one to a cleaner.',
+    // ⚠️ Placeholder. NSW runs the Tenants Union / local Tenants Advice and
+    // Advocacy Services; QLD has Tenants Queensland. Both have stable URLs.
+    // Left pointing at the NSW regulator rather than guessing a service name
+    // and a URL for a cross-border readership — CONFIRM the two real
+    // destinations and split this row in two if TLB wants both named.
+    href: 'https://www.fairtrading.nsw.gov.au/',
+  },
+];
+
+// §8 What actually happens to the bond. Process, not entitlement — no
+// timeframes, no amounts, no "you are owed".
+//
+// Dark TextBlock: it is the one genuinely procedural passage on the page and
+// the dark band separates it from the argument above it.
+const bondBody: TextBlockBody[] = [
+  'Your bond is not the agent’s money and it is not sitting in the agency’s account. It is lodged with a government body, and it comes back to you unless somebody makes a claim on it and that claim stands up.',
+  'Broadly, and in both states, the sequence is the same:',
+  {
+    list: [
+      'The tenancy ends and an exit inspection is done, compared against the condition report from the start.',
+      'If nothing is claimed, the bond is released to you.',
+      'If something is claimed, the other party is told what for and can agree or disagree.',
+      'If it is disputed, an independent body decides. In Queensland that starts with the RTA’s free dispute resolution; in New South Wales it goes to NCAT.',
+    ],
+  },
+  'Each state sets its own time limits at almost every step of that list, and they are the detail most likely to change, so we have deliberately not put numbers on any of it. Get those from the regulator for your state, and get them early rather than after a deadline has passed.',
+];
+
+// §9 Where this leaves you, practically. The bridge from law to service, and
+// it has to be honest about the fact that the law does not require TLB.
+//
+// Note the last sentence: it sells time and certainty, not compliance,
+// because compliance is not what a cleaner sells. BFD 4.5.
+const practicalBody: TextBlockBody[] = [
+  'So: nobody can make you produce a receipt for cleaning that the property did not need, and a clean you do yourself to the right standard is a clean. That is genuinely the law, and it is why this page does not tell you that you must book anybody.',
+  'What a bond clean actually buys you is the other three things. Somebody who has seen a few hundred exit reports and knows which lines get marked. The equipment for the jobs that beat a domestic kit, which in this region usually means the oven, the shower screen and the tracks. And a week of your life back at the exact point in a move where you have none left to spend.',
+  'If you decide that trade is worth making, our end of lease page publishes the full task list before you book, so you can hold the quote against it.',
+];
+
+// §10 Next reads. Three of the eight, chosen rather than dumped — the two
+// end-of-lease siblings a reader of this page genuinely wants next, plus the
+// deep-clean explainer for the reader who has worked out this is not the job
+// they need.
+const nextGuides = otherGuides(selfHref, [
+  '/guides/the-end-of-lease-cleaning-checklist/',
+  '/guides/how-much-does-end-of-lease-cleaning-cost/',
+  '/guides/what-is-included-in-a-deep-clean/',
+]);
+
+// §11 The pill band: every other guide, plus the two service pages this one
+// leans on. Shared helper, this page's own href filtered out.
+const moreGuideTags = relatedGuides(selfHref, [
+  { label: 'End of lease and bond cleaning', href: '/end-of-lease-cleaning/' },
+  { label: 'Real estate and property management', href: '/real-estate-cleaning/' },
+]);
+
+// §12 FAQs. Non-branded and answer-targeted — these are the long-tail
+// queries the page is built to catch, and each answer stands alone at 40 to
+// 80 words per BFD 3.5.
+//
+// ⚠️ SAME REVIEW APPLIES HERE AS TO THE BODY. Answer 1 is the page's thesis
+// restated and carries the same verification burden as §6. Answer 5 states
+// that neither state's standard is "spotless", which is a characterisation
+// rather than a quotation and is the sentence most likely to need softening
+// after review.
+const faqItems = [
+  {
+    question: 'Do I legally have to get a professional end of lease clean?',
+    answer:
+      'In both New South Wales and Queensland the legal standard is the condition of the property at the end of the tenancy, measured against the condition report and allowing for fair wear and tear. It is a standard about condition, not about who does the work. A term in your agreement may say otherwise, and whether it binds you is a question for your regulator rather than for your agent.',
+  },
+  {
+    question: 'What does "fair wear and tear" actually mean?',
+    answer:
+      'It is the deterioration that happens from ordinary use over time: flattened carpet in a hallway, faded paint, dulled fittings. It is excluded from what a tenant has to put right at the end of a tenancy. Damage is different, because something specific caused it, and dirt is different again, because cleaning removes it.',
+  },
+  {
+    question: 'Can the agent keep my bond for cleaning?',
+    answer:
+      'Not on their own. The bond is held by NSW Fair Trading or by the Queensland RTA, not by the agency, and money only comes out of it by agreement or by decision. If a claim is made and you disagree with it, there is a process: the RTA’s dispute resolution in Queensland, and NCAT in New South Wales.',
+  },
+  {
+    question: 'Does a lease clause requiring carpet cleaning stand up?',
+    answer:
+      'It depends on the state and on the clause. In New South Wales the standard form agreement permits an end-of-tenancy carpet cleaning or fumigation term only where the tenant was allowed to keep an animal at the property. Elsewhere, a blanket requirement that ignores the actual condition of the carpet is on weaker ground. Check yours with the regulator.',
+  },
+  {
+    question: 'Is the standard "spotless" or "the same as when I moved in"?',
+    answer:
+      'The same as when you moved in, fair wear and tear excepted, which is a lower bar than spotless and a higher bar than tidy. If the entry report recorded a stain in the carpet before you arrived, that stain is not yours. If it recorded nothing and there is one now, the conversation is about the stain and not about the standard.',
+  },
+  {
+    question: 'What if I am moving from NSW to Queensland, or the other way?',
+    answer:
+      'Then you are closing a tenancy under one system and opening one under the other, often in the same week and four kilometres apart. Two bonds with two different bodies, two condition reports on two different forms. The cleaning itself barely changes. The paperwork and the deadlines both do, so read each one on its own terms.',
+  },
+];
+
+// §13 Closing CTA. Points at the service, not at a hard sell, because a
+// reader who has just been told they may not need to hire anyone will not
+// respond to one.
+const closingCta = {
+  kicker: 'End of lease and bond cleaning',
+  heading: 'Or hand the whole thing to us.',
+  lead: 'The full task list is published on our end of lease page, and the quote comes before the work does. No bond-back promises, because nobody can honestly make one.',
+  cta: { label: 'See what a bond clean covers', href: '/end-of-lease-cleaning/' },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={78} focus="center">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <Callout tone="note" heading={disclaimerCallout.heading} body={disclaimerCallout.body} />
+
+    <ComparisonTable
+      heading={stateTable.heading}
+      cornerLabel={stateTable.cornerLabel}
+      lead={stateTable.lead}
+      columns={stateTable.columns}
+      rows={stateTable.rows}
+      footnote={stateTable.footnote}
+    />
+
+    <ContentGrid
+      heading="Wear, damage, dirt"
+      lead="Three different things, and only one of them is a cleaning job. Most bond arguments are really an argument about which category a mark belongs in."
+      columns={2}
+      blocks={wearBlocks}
+    />
+
+    <Callout tone="warning" heading={professionalCallout.heading} body={professionalCallout.body} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Where to check, rather than take our word for it"
+      lead="Both regulators publish current, free, plain-English guidance, and both of them outrank a cleaning company on this subject."
+      items={regulatorLinks}
+    />
+
+    <TextBlock theme="dark" align="left" heading="What actually happens to the bond" body={bondBody} />
+
+    <TextBlock
+      theme="light"
+      align="left"
+      heading="So what does this mean for your move?"
+      body={practicalBody}
+    />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Read next"
+      lead="The three guides that follow on from this one."
+      items={nextGuides}
+    />
+
+    <Faq heading="End of lease cleaning laws: frequently asked questions" items={faqItems} />
+
+    <TagCloud
+      heading="More guides"
+      subheading="Everything else we have written down."
+      tags={moreGuideTags}
+      note={['Something we have not covered? Ask us and we will write it.']}
+    />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

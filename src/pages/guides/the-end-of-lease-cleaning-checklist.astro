@@ -1,0 +1,494 @@
+---
+// Guide: "The end of lease cleaning checklist". Second of the nine guides;
+// the cluster's shared data is in src/data/guides.ts.
+//
+// WHAT THIS PAGE IS FOR, AND HOW IT DIFFERS FROM THE SERVICE PAGE.
+// end-of-lease-cleaning.astro already publishes an inclusions list (§4 of
+// that file, six ContentGrid cells, one comma-separated sentence per room).
+// That list answers "what am I buying". THIS page answers "what do I do", so
+// it is deliberately a different shape:
+//
+//   * Granular. One task per line, not one sentence per room, because a
+//     reader is ticking these off rather than pricing them.
+//   * Ordered. §4 below is the sequence the job is actually worked in, which
+//     is the single most useful thing an experienced cleaner knows and the
+//     thing no competitor checklist bothers to include.
+//   * Written for the tenant doing it themselves. That is the honest framing
+//     of a checklist guide, and it is the same call the law guide makes.
+//
+// ⚠️ THE TWO LISTS MUST NOT DRIFT. If TLB's real scope of works changes, the
+// service page's §4 and this page's §5 both change. They are not shared in
+// src/data/ because they are genuinely different documents at different
+// granularities — a shared array would force one of them into the other's
+// shape — but they describe the same job and a reader will compare them.
+//
+// ⚠️ THE WHOLE LIST IS DRAFTED, NOT SUPPLIED. Same standing as the service
+// page: no scope of works was ever given to this repo. It is drafted from
+// what a bond clean conventionally covers in NSW and QLD. Whoever quotes
+// these jobs has to read §5 line by line before launch, because a tenant
+// will hold TLB to a published checklist against money.
+//
+// NO GUARANTEE ANYWHERE, per BFD 5.3 and 3.5. Nothing here promises a bond,
+// a pass or a refund, and §6 says out loud that a finished checklist is not
+// a promise about what an agent will write.
+//
+// PHOTOGRAPHY: reused. IMAGE-GUIDELINES.md §5.
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import heroImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-wiping-out-an-empty-kitchen-cupboard.jpg';
+import definitionBgImg from '../../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-empty-room-on-moving-out-day.jpg';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../../data/navigation';
+import { locationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { otherGuides, relatedGuides } from '../../data/guides';
+
+const selfHref = '/guides/the-end-of-lease-cleaning-checklist/' as const;
+
+// §0 Metadata. "End of lease cleaning checklist" is the head term and it is
+// a checklist query, which means the searcher wants the list itself on the
+// page rather than a form. The description promises exactly that.
+const pageMeta = {
+  title: 'The End of Lease Cleaning Checklist | TLB Cleaning',
+  description:
+    'A room-by-room end of lease cleaning checklist for NSW and QLD rentals, in the order the job is actually worked, with the lines property managers mark first.',
+  // ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
+  canonical: `https://example.com${selfHref}`,
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The heading is the one insight that separates this checklist from
+// the fifty others: the order matters, because working out of order means
+// cleaning the same floor twice.
+const hero = {
+  kicker: 'Guide · End of lease and tenancy',
+  headingLines: ['Everything that gets checked,', 'in the order to do it.'],
+  lead:
+    'The full end of lease cleaning checklist for a rental in the Northern Rivers, the Tweed or the Southern Gold Coast. Room by room, top to bottom, floors last.',
+  cta: quoteCta,
+  image: {
+    ratio: '4/3',
+    label:
+      'A cleaner in an aqua polo wiping out an empty kitchen cupboard in a vacated rental, drawers open and bench cleared',
+    src: heroImg,
+  },
+};
+
+// §2 The answer block. Definition-first for the answer engines, then the one
+// sentence that reframes the whole task for a first-time renter: the list is
+// not somebody's opinion of clean, it is a reconstruction of what the exit
+// inspection walks through.
+const definitionBody: TextBlockBody[] = [
+  'An end of lease cleaning checklist is the room-by-room list of tasks a rental property is cleaned against before the keys are handed back. It exists because an exit inspection is a walk-through against a document, so the reliable way to pass one is to work from a document of your own.',
+  'The list below is the one TLB Cleaning works to across the Northern Rivers, the Tweed and the Southern Gold Coast. It is written so you can use it yourself. If you would rather not, our end of lease page prices the same list.',
+];
+
+// §3 How to use it. `note` tone — "worth knowing before you start", exactly
+// the tone's stated job.
+//
+// The condition-report point is the highest-value sentence on the page and
+// it is not a cleaning tip at all, which is precisely why it goes first.
+const howToCallout = {
+  heading: 'Do two things before you touch anything',
+  body: [
+    'Find your condition report from the start of the tenancy and read it. It is the document your exit inspection is compared against, and anything already recorded on it is not yours to fix. People clean marks off walls that were photographed as pre-existing on day one, every single week.',
+    'Then photograph the property empty and clean, room by room, once you have finished. Not as evidence you distrust anyone, but because two months later nobody remembers what a laundry looked like, and a dated photo settles it faster than a conversation does.',
+  ],
+};
+
+// §4 The order of work. THE section that makes this page worth linking to,
+// and the part that comes from actually doing the job rather than from
+// listing its parts.
+//
+// Dark TextBlock with a list: it is short, sequential, and it wants to read
+// as a rule rather than as a section of prose. Dark band separates it from
+// the checklist itself below.
+const orderBody: TextBlockBody[] = [
+  'Most of the wasted hours in a bond clean come from working in the wrong order. Everything falls downwards, so anything you clean before the thing above it gets dirty again.',
+  {
+    list: [
+      'Empty first. A bond clean on a furnished property takes roughly twice as long and never comes out as well, because every surface has to be worked around instead of worked on.',
+      'Start the oven. Whatever you use in it needs time to sit, so it goes on before anything else and gets finished last. The same is true of a heavily marked shower.',
+      'Top to bottom in every room. Cobwebs, light fittings, fans, then walls and doors, then benches and skirtings, then floors.',
+      'Wet rooms before dry rooms. Kitchen, bathrooms and laundry carry the jobs that need soaking, so they get started early and revisited.',
+      'Windows, tracks and flyscreens before the final floors. Tracks in particular throw grit everywhere the moment you touch them.',
+      'Floors last, and work backwards out of the property. Vacuum every room including edges and corners, then mop your way to the front door.',
+      'Carpets last of all, if they are being steam cleaned. Book that after your clean, not before it, or you will walk over damp carpet all day.',
+    ],
+  },
+  'A two-bedroom unit in reasonable condition is a solid day of work done this way. It is closer to two if you have never done one before, and the oven alone will surprise you.',
+];
+
+// §5 The checklist itself. ContentGrid `text` cells, two columns, one cell
+// per room, one TASK PER BODY ENTRY rather than one sentence per room.
+//
+// Why one task per entry: the cell renders each body string as its own <p>
+// with a --space-xs gap, so a list of short lines reads as a scannable
+// checklist without needing a bullet variant this component does not have.
+// Checked in the component, not assumed. The service page's own inclusions
+// grid deliberately does the opposite (one flowing sentence per room)
+// because it is being read as a scope of works, not ticked off.
+//
+// ⚠️ CONFIRM EVERY LINE WITH TEAGAN. This is the most consequential block on
+// the page. Eight cells is four clean rows at two columns, so nothing needs
+// a span.
+//
+// ⚠️ Three cells describe work the service page lists as QUOTED SEPARATELY
+// (carpets, exterior windows, balconies and garages). They are still on this
+// checklist because the checklist is what the PROPERTY needs, not what a TLB
+// quote covers, and leaving them off would make the guide wrong. §7 draws
+// that distinction explicitly. Keep the two in step.
+const checklistBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'Kitchen',
+    body: [
+      'Oven: racks, trays, door glass inside and between the panes, seals and the cavity.',
+      'Cooktop, knobs and the trim around them.',
+      'Rangehood, filters and the underside of the canopy.',
+      'Every cupboard and drawer, inside and out, including the tops of the overheads.',
+      'Benchtops, splashback and the join behind the bench.',
+      'Sink, drain, plughole and taps, including the base of the taps.',
+      'The fridge cavity, its walls and the floor under where the fridge stood.',
+      'Dishwasher: filter, seals, spray arms and the door edge.',
+      'Bin cupboard, and the smell in it.',
+      'Floors, including the edges, the corners and under the toe-kick.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Bathrooms, ensuites and toilets',
+    body: [
+      'Shower screen, both faces of the glass, and the metal frame.',
+      'Shower tiles, grout, the base and the drain.',
+      'Bath, including the underside of the lip and the seal along the wall.',
+      'Vanity inside and out, drawers, and the join where it meets the wall.',
+      'Basin, taps, plughole and overflow.',
+      'Mirrors and the shelf or cabinet behind them.',
+      'Exhaust fan cover and the dust in the vents.',
+      'Toilet: bowl, under the rim, seat and hinges, cistern, and the base and the floor around it.',
+      'Towel rails, hooks and the toilet roll holder.',
+      'Floors, skirting and the corners behind the door.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Bedrooms and living areas',
+    body: [
+      'Wardrobes inside: shelves, rails, drawers and the floor of the robe.',
+      'Wardrobe doors, tracks and mirrors.',
+      'Skirting boards, all of them, all the way round.',
+      'Doors, door frames, architraves and the tops of the doors.',
+      'Light switches, power points and the wall around them.',
+      'Ceiling fans, blades and the light fitting under them.',
+      'Cobwebs in the ceiling corners and above the curtain rails.',
+      'Air conditioner filters and the vent face.',
+      'Window sills, reveals and the inside of the glass.',
+      'Vacuum including edges, corners and under anything left behind, then mop.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Laundry',
+    body: [
+      'Tub inside and out, taps and the plughole.',
+      'Behind and beside the washer and dryer, where they can be moved safely.',
+      'Dryer lint filter and the vent.',
+      'Cupboards and shelves inside and out.',
+      'Benches and the splashback.',
+      'Floor, including under the appliances and along the skirting.',
+      'The floor waste and its grate.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Windows, tracks and screens',
+    body: [
+      'Inside glass in every room, including the sliding doors.',
+      'Tracks vacuumed first, then washed out, then dried.',
+      'Flyscreens brushed or washed and put back in the right window.',
+      'Frames, reveals and sills.',
+      'Outside glass where it can be reached safely from the ground.',
+      'Anything above ground level is a job for a pole system or a ladder and is not worth an injury.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Walls, marks and spots',
+    body: [
+      'Spot clean scuffs and marks where the paint surface allows it.',
+      'Behind doors, along hallways and at switch height, which is where the marks actually are.',
+      'Light fittings and shades, and the insects in them.',
+      'Air vents and returns throughout.',
+      'Know when to stop. Scrubbing through low-sheen paint turns a mark into a repair, and a repair costs more than the mark did.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Outside, balconies and garages',
+    body: [
+      'Sweep or blow the balcony, patio and entry.',
+      'Cobwebs under the eaves and around the doorframes.',
+      'Garage or carport swept out, including the corners.',
+      'Oil marks on the driveway or garage floor, if the report recorded none.',
+      'Bins emptied, rinsed and returned to where they live.',
+      'Garden and lawn to the state the agreement asks for, which is a gardening job rather than a cleaning one.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'The last twenty minutes',
+    body: [
+      'Every cupboard door and drawer opened and checked once more, because something is always still in one.',
+      'Remove your own rubbish. A bin left full is a line on the report.',
+      'Smoke alarms and remotes left where they belong, spare keys and fobs accounted for.',
+      'Photograph every room, empty and finished.',
+      'Mop out backwards and leave through the front door.',
+    ],
+  },
+];
+
+// §6 The lines that get marked first. ServiceBlocks icon-grid — six items,
+// which is two clean rows, and each one is a genuine pattern rather than a
+// generic tip.
+//
+// ⚠️ DRAFTED FROM CATEGORY EXPERIENCE, NOT FROM TLB'S OWN RECORDS. If TLB
+// keeps any record of what exit reports actually come back marked for, that
+// is real proprietary data and it would make this the strongest section on
+// the site. Ask.
+const markedItems = [
+  {
+    icon: 'target' as const,
+    title: 'The oven, every time',
+    description:
+      'It is the single most commonly marked item on an exit report and the one a domestic clean most often under-does. The glass between the door panels is the part people miss, and it is the part that gets photographed.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'Shower screens and grout',
+    description:
+      'Soap scum is a film rather than a mark, so it survives an ordinary wipe and reappears the moment the glass dries. If it still hazes when dry, it is still there.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Window and door tracks',
+    description:
+      'Nobody thinks of them and everybody with a clipboard checks them, because they are the fastest way to tell whether a clean was thorough or fast.',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Skirting boards and door tops',
+    description:
+      'Both are at the height an inspection notices and neither gets touched in ordinary life. Run a finger along the top of a door frame and you will see the point.',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'Inside cupboards, and the fridge cavity',
+    description:
+      'Crumbs in an empty drawer, a sticky ring on a shelf, the floor under where the fridge stood. All of it invisible while you lived there and all of it obvious once the place is empty.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'The exhaust fan in the bathroom',
+    description:
+      'Grey, furred and directly overhead in a small room with nothing else to look at. It takes two minutes and it is missed almost every time.',
+  },
+];
+
+// §7 What is NOT a cleaning job. Warning tone, used once.
+//
+// This exists to stop the checklist over-promising. A tenant who works
+// through §5 and still gets marked for a carpet stain or a lawn will feel
+// misled by the page unless the page told them first.
+const notCleaningCallout = {
+  heading: 'Some of this list is not cleaning, and some of it is not yours',
+  body: [
+    'Gardens, lawns, repairs, painting and rubbish removal all appear on exit reports and none of them are cleaning. Read what your agreement actually requires and sort them separately, because a cleaner will not do them and a cleaning quote will not cover them.',
+    'Carpet steam cleaning, exterior windows at height, pest control and full wall washing are quoted as separate jobs by us and by nearly everyone else. They are on the checklist above because the property may need them, not because a standard bond clean price includes them. Ask for them with your quote rather than after the inspection.',
+    'And finishing this list is not a promise about the outcome. What an agent writes in a report is their call. Working to the list is how you give yourself the best case, not how you guarantee one — be wary of anybody who tells you otherwise.',
+  ],
+};
+
+// §8 Next reads. Three chosen, not eight dumped.
+const nextGuides = otherGuides(selfHref, [
+  '/guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/',
+  '/guides/how-much-does-end-of-lease-cleaning-cost/',
+  '/guides/what-is-included-in-a-deep-clean/',
+]);
+
+// §9 The pill band.
+const moreGuideTags = relatedGuides(selfHref, [
+  { label: 'End of lease and bond cleaning', href: '/end-of-lease-cleaning/' },
+  { label: 'Carpet and rug cleaning', href: '/carpet-and-rug-cleaning/' },
+  { label: 'Oven, BBQ and appliance cleaning', href: '/oven-bbq-and-appliance-cleaning/' },
+]);
+
+// §10 FAQs. Answer-targeted, 40 to 80 words each, per BFD 3.5.
+const faqItems = [
+  {
+    question: 'How long does an end of lease clean take?',
+    answer:
+      'A two-bedroom unit in reasonable condition is around a full day for one person working to this list, and closer to two if it is your first. A team of two on a three-bedroom house is usually most of a day. Condition matters far more than floor area: a well-kept four-bedroom can be quicker than a neglected two-bedroom.',
+  },
+  {
+    question: 'What order should I clean in?',
+    answer:
+      'Empty the property, start the oven soaking, then work top to bottom in each room: cobwebs and fans, then walls and doors, then benches and skirtings, then floors. Do the wet rooms early because they need revisiting, do windows and tracks before the final floors, and mop your way out the front door.',
+  },
+  {
+    question: 'Do I have to clean the carpets?',
+    answer:
+      'That depends on your agreement, your state and the condition of the carpet, not on a general rule. Many leases raise it and some raise it only where a pet was kept. If carpets are being steam cleaned, book them after your clean rather than before, so nobody walks over damp carpet all day.',
+  },
+  {
+    question: 'What do property managers check first?',
+    answer:
+      'The oven, the shower screen and grout, window and door tracks, the tops of doors and skirtings, inside cupboards and the fridge cavity, and the bathroom exhaust fan. They are all quick to check, all invisible during a tenancy, and all reliable signals of whether a clean was thorough or rushed.',
+  },
+  {
+    question: 'Should I clean before or after I move my furniture out?',
+    answer:
+      'After. Always. A bond clean on a furnished property takes roughly twice as long, costs more if somebody else is doing it, and never comes out as well, because half the surfaces are being worked around. Book the clean for the day after the truck, not the day before.',
+  },
+  {
+    question: 'Can I use this checklist if I hire a cleaner?',
+    answer:
+      'Yes, and you should. Hand it to whoever quotes and ask them which lines are in their price and which are extra. A quote that comes back matching the list is a scope of works. A quote that comes back as one number with no list attached is a guess you cannot compare to anything.',
+  },
+];
+
+// §11 Closing CTA.
+const closingCta = {
+  kicker: 'End of lease and bond cleaning',
+  heading: 'Or give the list to us.',
+  lead: 'We work to this list, we quote against it before we start, and we tell you which items are extras rather than finding out at the inspection.',
+  cta: { label: 'Get an end of lease quote', href: '/end-of-lease-cleaning/' },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={80} focus="center">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <Callout tone="note" heading={howToCallout.heading} body={howToCallout.body} />
+
+    <TextBlock theme="dark" align="left" heading="Work in this order" body={orderBody} />
+
+    <ContentGrid
+      heading="The checklist, room by room"
+      lead="Eight groups. Work the wet rooms first and the floors last, and tick as you go."
+      columns={2}
+      blocks={checklistBlocks}
+    />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="The six lines that get marked first"
+      lead="Every one of them is quick to check, invisible while you live there, and a reliable tell for whether a clean was thorough."
+      items={markedItems}
+      cta={quoteCta}
+    />
+
+    <Callout tone="warning" heading={notCleaningCallout.heading} body={notCleaningCallout.body} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Read next"
+      lead="The three guides that follow on from this one."
+      items={nextGuides}
+    />
+
+    <Faq heading="End of lease cleaning checklist: frequently asked questions" items={faqItems} />
+
+    <TagCloud
+      heading="More guides"
+      subheading="Everything else we have written down."
+      tags={moreGuideTags}
+      note={['Something we have not covered? Ask us and we will write it.']}
+    />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

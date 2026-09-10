@@ -1,0 +1,504 @@
+---
+// Guide: "What is included in a deep clean?". Sixth of the nine guides; the
+// cluster's shared data is in src/data/guides.ts.
+//
+// ⚠️ THE CONSISTENCY PROBLEM ON THIS PAGE IS THE SHARPEST OF THE NINE.
+// deep-cleaning.astro already answers this exact question in its §5, from a
+// SUPPLIED brief with approved copy — the only inclusions list on this site
+// that is not drafted. So this guide must not restate it in different words,
+// or the site publishes two scopes of work for one service and the drafted
+// one silently competes with the approved one.
+//
+// The resolution: this page answers the question the SERVICE page cannot,
+// which is the comparative one. A reader searching "what is included in a
+// deep clean" is almost never asking for a task list in the abstract. They
+// are asking one of three things:
+//   1. Is this different from what my regular cleaner already does? → §4.
+//   2. Is this the same as a bond clean? → §5's table.
+//   3. Will it fix the specific thing that is bothering me? → §6.
+// So the page is built around the LINE BETWEEN the three cleans, drawn task
+// by task, and it hands the actual scope of works to the service page rather
+// than reprinting it.
+//
+// ⚠️ WHERE THE TASK LISTS DO APPEAR (§4's three columns), EVERY LINE IS
+// TAKEN FROM THE APPROVED deep-cleaning.astro §5 COPY OR FROM
+// end-of-lease-cleaning.astro §4, not newly written. If either of those
+// changes, this page changes with it. The regular-clean column is the one
+// exception and it is DRAFTED, because no regular-clean scope of works
+// exists anywhere in this repo — house-cleaning.astro describes the service
+// without publishing a task list. That column is flagged at its definition.
+//
+// ⚠️ The exclusions in §7 are deep-cleaning.astro's own §5b exclusions,
+// which are themselves marked [CONFIRM] on that page. They inherit the same
+// flag here. One answer fixes both pages.
+//
+// PHOTOGRAPHY: reused. IMAGE-GUIDELINES.md §5 — the "comparing clean types
+// with a checklist" frame already means exactly this on the end-of-lease
+// page's third pathway card, which is the same idea this whole guide is.
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import heroImg from '../../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-tidy-living-room-kept-up-by-regular-visits.jpg';
+import definitionBgImg from '../../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-comparing-clean-types-with-a-checklist.jpg';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../../data/navigation';
+import { locationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { otherGuides, relatedGuides } from '../../data/guides';
+
+const selfHref = '/guides/what-is-included-in-a-deep-clean/' as const;
+
+const pageMeta = {
+  title: 'What Is Included in a Deep Clean? | TLB Cleaning',
+  description:
+    'What a deep clean covers that a regular clean does not, where it stops short of a bond clean, and how to tell which of the three your house actually needs.',
+  // ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
+  canonical: `https://example.com${selfHref}`,
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The heading is the definition compressed to one idea: a deep
+// clean is about the things that never get touched, not about doing the
+// normal things harder. That distinction is what the whole page rests on.
+const hero = {
+  kicker: 'Guide · Homes and hosting',
+  headingLines: ['A deep clean is not', 'a regular clean done harder.'],
+  lead:
+    'What is actually in a deep clean, what a regular clean leaves alone on purpose, where a bond clean goes further, and how to tell which of the three your house needs.',
+  cta: quoteCta,
+  image: {
+    ratio: '4/3',
+    label: 'A calm, tidy living room with clear surfaces and a made-up sofa, kept up by regular visits',
+    src: heroImg,
+  },
+};
+
+// §2 The answer block. Definition first, then the sentence that does the
+// actual work — the distinction is horizontal versus vertical, or rather
+// surfaces you use versus surfaces you do not.
+const definitionBody: TextBlockBody[] = [
+  'A deep clean is a one-off, room-by-room reset that covers the surfaces a regular clean does not reach: inside and behind things, up high, down low, and the built-up grime that a weekly visit has no time in it for. It returns a house to a baseline. A regular clean then holds it there.',
+  'The simplest way to tell the two apart is what gets touched. A regular clean works on the surfaces you use. A deep clean works on the ones you do not: the tops of doors, behind the appliances, the tracks, the grout, the skirtings, the vents and the light fittings.',
+];
+
+// §3 What makes it a deep clean. ContentGrid text cells, six, three rows.
+//
+// These are CATEGORIES of work rather than a task list, which is how this
+// page stays out of the service page's territory. The service page publishes
+// the scope; this page explains the logic behind it, which is genuinely
+// different content and is the thing a reader can use to judge somebody
+// else's quote too.
+const categoryBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'Up high',
+    body: [
+      'Cornices and ceiling corners, the tops of doors and door frames, light fittings and shades, ceiling fan blades, the tops of wardrobes and cupboards, exhaust fan covers, air vents and returns.',
+      'None of it is visible from where you sit and all of it is obvious the moment someone looks up. It is also where a house holds most of its dust.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Down low',
+    body: [
+      'Skirting boards all the way round, the edges and corners of every floor, behind doors, under the toe-kick, the floor waste in the laundry.',
+      'Vacuuming a room and vacuuming its edges are different amounts of time, and the edges are where the difference between a tidy house and a clean one actually shows.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Inside and behind',
+    body: [
+      'Inside and outside of cupboards, behind and beside the appliances where they can be moved safely, inside the rangehood, the fridge seals, the dishwasher filter.',
+      'This is the group people mean when they say a house feels clean rather than looks clean, and it is almost entirely absent from a regular visit for the good reason that there are not enough hours in one.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Build-up rather than mess',
+    body: [
+      'Soap scum on a shower screen, grout that has gone grey, the film on a splashback, the tide line in a toilet, the greasy haze above a cooktop.',
+      'None of it appears overnight and none of it comes off in a normal wipe. It takes dwell time and the right product, which is the part a rushed clean skips because it looks like waiting around.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'The detail work',
+    body: [
+      'Window sills, reveals and tracks, light switches and power points, door handles, architraves, wardrobe rails and shelves, curtain and blind dusting.',
+      'Individually trivial and collectively most of the hours. A deep clean is not one big job, it is roughly two hundred small ones.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'What it is still not',
+    body: [
+      'It is not a repair, it is not a declutter and it is not a renovation. Cleaning removes what has settled on a surface; it does not restore a surface that has worn, faded, chipped or stained through.',
+      'A good deep clean tells you which is which. Some of what looks like dirt is a finish that has gone, and knowing that saves you paying twice to find out.',
+    ],
+  },
+];
+
+// §4 The three-way comparison. THE section of the page.
+//
+// ⚠️ PROVENANCE OF EACH COLUMN, and this matters more here than anywhere
+// else on the page:
+//   - The DEEP CLEAN column is deep-cleaning.astro §5's approved brief copy,
+//     compressed. Approved content.
+//   - The BOND CLEAN column is end-of-lease-cleaning.astro §4 and §4b, which
+//     are themselves marked [CONFIRM] on that page.
+//   - The REGULAR CLEAN column is DRAFTED. No regular-clean scope of works
+//     exists anywhere in this repo. house-cleaning.astro sells the service
+//     without publishing a task list, so this column is what a weekly or
+//     fortnightly visit conventionally covers, not what TLB's covers.
+//     ⚠️ CONFIRM IT WITH TEAGAN, and consider publishing a real regular-clean
+//     task list on house-cleaning.astro — the absence of one is the reason
+//     this column had to be invented.
+//
+// The deep clean column is highlighted because this is the deep clean guide
+// and the highlight marks the subject, which is also the "this is us"
+// convention the component states. index.astro, deep-cleaning.astro and
+// end-of-lease-cleaning.astro each highlight their own service in their own
+// version of this table, so the pattern is already established.
+const cleanTable = {
+  heading: 'Regular, deep, or bond',
+  cornerLabel: 'Which clean covers what',
+  lead: 'The same house, three different jobs. Read down the column you think you want, then check the rows you were not expecting.',
+  columns: [{ label: 'Regular clean' }, { label: 'Deep clean', highlight: true }, { label: 'End of lease clean' }],
+  rows: [
+    {
+      label: 'What it is for',
+      values: [
+        'Holding a standard week to week',
+        'Getting back to a standard once',
+        'Meeting somebody else’s checklist',
+      ],
+    },
+    {
+      label: 'Benches, basins, toilets, floors',
+      values: [true, true, true],
+    },
+    {
+      label: 'Skirtings, door frames, switches, vents',
+      values: ['Rotated, a few each visit', true, true],
+    },
+    {
+      label: 'Inside the oven',
+      values: [false, 'Quoted separately', true],
+    },
+    {
+      label: 'Inside cupboards and drawers',
+      values: [false, true, true],
+    },
+    {
+      label: 'Window tracks and interior glass',
+      values: ['Sills only', true, true],
+    },
+    {
+      label: 'Behind and beside appliances',
+      values: [false, 'Where they move safely', 'Where they move safely'],
+    },
+    {
+      label: 'Grout and shower screen build-up',
+      values: ['Surface only', true, true],
+    },
+    {
+      label: 'Inside the fridge',
+      values: [false, 'Quoted separately', 'The cavity, once it is empty'],
+    },
+    {
+      label: 'Carpet steam cleaning',
+      values: [false, 'Quoted separately', 'Quoted separately, and often required'],
+    },
+    {
+      label: 'Measured against',
+      values: ['Last visit', 'A baseline you set', 'The entry condition report'],
+    },
+  ],
+  footnote:
+    'Most people book a deep clean first and set up a regular clean afterwards. It costs less that way round, because the deep clean does the heavy work once rather than paying for a very long first regular visit.',
+};
+
+// §5 The ordering advice. `note` tone.
+//
+// This is deep-cleaning.astro's own footnote argument expanded into its own
+// section, because it is the most actionable thing on the page and it is
+// worth money to the reader.
+const orderCallout = {
+  heading: 'Deep clean first, then regular. Not the other way around.',
+  body: [
+    'If you are setting up an ongoing clean for a house that has not had one, the cheapest order is a deep clean once and then a regular schedule on top of it. The heavy work gets done at the right price for heavy work, and every visit after that fits the hours it is priced for.',
+    'Going the other way means either a very long, expensive first regular visit, or three or four normal visits during which the backlog is slowly chipped at while you pay full price and wonder why the house does not feel finished. It usually costs more and it always feels worse.',
+  ],
+};
+
+// §6 Will it fix my actual problem. ServiceBlocks icon-grid, six items.
+//
+// This is the section that answers the real question behind the query, and
+// three of the six answers are "no, and here is what will", which is the
+// same honesty the roof and carpet pages use. A page that says a deep clean
+// fixes everything is a page nobody believes.
+const willItFixItems = [
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Grey grout',
+    description:
+      'Usually yes, substantially. Grout that is dirty comes back a long way with dwell time and agitation. Grout that is stained through, or that has failed and gone porous, is a regrouting job and no amount of scrubbing changes that.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'A shower screen that never looks clean',
+    description:
+      'Usually yes. Soap scum is a film and it comes off with the right product and enough contact time. Etched glass, where minerals have pitted the surface itself, does not, and it looks the same until someone tries.',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'A smell you cannot find',
+    description:
+      'Sometimes. Kitchen bins, fridge seals, the dishwasher filter and the laundry floor waste account for most of them. If it is damp in a wall or a carpet backing, that is a different problem and a deep clean will not touch it.',
+  },
+  {
+    icon: 'house' as const,
+    title: 'Mould spotting in the bathroom',
+    description:
+      'Surface mould on tiles and silicone, often. Anything growing behind paint, in a ceiling or through a wall is not a cleaning job at all, and we have a separate page about that for a reason.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Carpet that has gone dull in the traffic lanes',
+    description:
+      'No, not from a deep clean. That is carpet cleaning, which is a separate job with separate equipment, and it is quoted separately by nearly everyone including us.',
+  },
+  {
+    icon: 'target' as const,
+    title: 'A house that is just cluttered',
+    description:
+      'No, and it is worth saying plainly. Cleaning around belongings is slower and finishes worse than cleaning an empty surface. An hour of putting things away before we arrive is the highest-value hour of the whole job.',
+  },
+];
+
+// §7 The exclusions. Warning tone, used once.
+//
+// ⚠️ INHERITED [CONFIRM]. These are deep-cleaning.astro §5b's own exclusion
+// groups, which carry a [CONFIRM] on that page. Same answer fixes both.
+const exclusionsCallout = {
+  heading: 'What is quoted separately, and what is not cleaning at all',
+  body: [
+    'Quoted separately, by us and by most cleaners: inside the oven, inside the fridge, carpet steam cleaning, exterior windows, walls needing a full wash rather than spot cleaning, balconies, garages and anything at height. They are real jobs with real time in them, and a deep clean price that silently includes all of them is a price that will move on the day.',
+    'Not cleaning at all: repairs, painting, gardening, rubbish and hard waste removal, decluttering, pest control, and anything that needs a licensed trade. If a property needs one of those we will say so when we quote, rather than leaving you to find out afterwards.',
+    'And the honest one: cleaning cannot restore a finish that has gone. Worn timber, etched glass, failed grout, stained silicone and faded paint all look like dirt from across a room. We would rather tell you which is which before you pay than afterwards.',
+  ],
+};
+
+// §8 When to book one. Dark TextBlock with a list.
+//
+// The six occasions are deep-cleaning.astro §6's own list, reused
+// deliberately rather than reinvented, so the guide and the service page
+// agree on when this service is for.
+const whenBody: TextBlockBody[] = [
+  'A deep clean is a one-off, so the question is usually when rather than how often. The six occasions that account for almost all of them:',
+  {
+    list: [
+      'Moving in, before the furniture arrives, which is the easiest version of this job and the one that finishes best.',
+      'Before guests, particularly the ones staying a while over Christmas.',
+      'After a party, which is self-explanatory.',
+      'Before a property goes to market, because photographs are unforgiving and buyers read a dirty house as a neglected one.',
+      'The spring reset, or on this coast the after-the-wet reset, which lands a little later.',
+      'After a long absence, an illness, or a stretch where the house got away from you. This one is more common than the other five put together and nobody needs to explain it.',
+    ],
+  },
+  'If none of those is you and the house just needs holding steady, a regular clean is the cheaper answer and we will say so.',
+];
+
+// §9 Next reads.
+const nextGuides = otherGuides(selfHref, [
+  '/guides/how-much-does-house-cleaning-cost/',
+  '/guides/the-end-of-lease-cleaning-checklist/',
+  '/guides/steam-dry-or-shampoo-which-carpet-cleaning-method/',
+]);
+
+// §10 The pill band.
+const moreGuideTags = relatedGuides(selfHref, [
+  { label: 'Deep cleaning', href: '/deep-cleaning/' },
+  { label: 'Regular home cleaning', href: '/house-cleaning/' },
+  { label: 'Mould cleaning and removal', href: '/mould-cleaning-and-removal/' },
+]);
+
+// §11 FAQs.
+const faqItems = [
+  {
+    question: 'What is included in a deep clean?',
+    answer:
+      'The surfaces a regular clean does not reach: up high, down low, inside and behind. Cornices, tops of doors, light fittings, fan blades, vents, skirtings, floor edges, inside cupboards, behind appliances, window tracks, grout and shower screen build-up. Our deep cleaning page publishes the full room-by-room list.',
+  },
+  {
+    question: 'What is the difference between a deep clean and a regular clean?',
+    answer:
+      'A regular clean works on the surfaces you use and holds a standard week to week. A deep clean works on the ones you do not and gets back to that standard once. It is not the same job done harder; the task lists genuinely differ, most obviously on inside cupboards, tracks, skirtings and build-up.',
+  },
+  {
+    question: 'Is a deep clean the same as a bond clean?',
+    answer:
+      'No. A bond clean is measured against the entry condition report and includes work a deep clean quotes separately, most notably inside the oven and inside every cupboard and drawer. A deep clean is measured against a baseline you set. The bond clean is the more thorough and the more expensive of the two.',
+  },
+  {
+    question: 'How long does a deep clean take?',
+    answer:
+      'Longer than a regular clean, because it is detail work rather than surface work, and the honest answer depends on the size and condition of the property. It is quoted per job for that reason. An empty property is considerably faster than a furnished one, which is why moving-in deep cleans are the quickest of all.',
+  },
+  {
+    question: 'Do I need a deep clean before starting a regular clean?',
+    answer:
+      'Not always, but usually it is cheaper. A deep clean first does the backlog once at the right price, and every regular visit afterwards fits the hours it is priced for. The alternative is either a very long first visit or several normal visits spent chipping away at build-up at full rate.',
+  },
+  {
+    question: 'Should I tidy before a deep clean?',
+    answer:
+      'Yes, and it is the best hour you will spend on the job. Cleaning around belongings is slower and finishes worse than cleaning a clear surface. You do not need to clean anything, just clear the floors and the benches. Everything else is what you are paying us for.',
+  },
+];
+
+// §12 Closing CTA.
+const closingCta = {
+  kicker: 'Deep and one-off cleans',
+  heading: 'The full room-by-room list is on the service page.',
+  lead: 'Including the two groups that are quoted separately, so nothing arrives as a surprise on the day.',
+  cta: { label: 'See what a deep clean covers', href: '/deep-cleaning/' },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={80} focus="center">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <ContentGrid
+      heading="What makes a deep clean deep"
+      lead="Five groups of work, organised by where the work actually is, and one honest note about what none of them can do."
+      columns={2}
+      blocks={categoryBlocks}
+    />
+
+    <ComparisonTable
+      heading={cleanTable.heading}
+      cornerLabel={cleanTable.cornerLabel}
+      lead={cleanTable.lead}
+      columns={cleanTable.columns}
+      rows={cleanTable.rows}
+      footnote={cleanTable.footnote}
+    />
+
+    <Callout tone="note" heading={orderCallout.heading} body={orderCallout.body} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="Will it fix the thing that is actually bothering you?"
+      lead="Three of these six are a yes. The other three are worth knowing before you book, because a deep clean will not touch them."
+      items={willItFixItems}
+      cta={quoteCta}
+    />
+
+    <Callout tone="warning" heading={exclusionsCallout.heading} body={exclusionsCallout.body} />
+
+    <TextBlock theme="dark" align="left" heading="When people book one" body={whenBody} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Read next"
+      lead="The three guides that follow on from this one."
+      items={nextGuides}
+    />
+
+    <Faq heading="Deep cleaning: frequently asked questions" items={faqItems} />
+
+    <TagCloud
+      heading="More guides"
+      subheading="Everything else we have written down."
+      tags={moreGuideTags}
+      note={['Something we have not covered? Ask us and we will write it.']}
+    />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

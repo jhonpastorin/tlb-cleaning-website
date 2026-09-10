@@ -1,0 +1,547 @@
+---
+// Guide: "The Byron Shire 60-day short-stay cap: what it means for hosts".
+// Eighth of the nine guides; the cluster's shared data is in
+// src/data/guides.ts.
+//
+// ⚠️⚠️ SECOND-HIGHEST-RISK PAGE IN THE REPO, AFTER THE NSW/QLD LAW GUIDE, AND
+// IT MUST NOT PUBLISH WITHOUT VERIFICATION. It describes a live planning
+// control that affects what an owner may legally do with their property. The
+// same discipline the law guide uses applies here, and the split is
+// deliberate:
+//
+//   §3 SUMMARISES THE POLICY, in the least detail that is still useful, and
+//       points at the two authorities. It states the SHAPE of the control
+//       (what it caps, who it exempts, that precincts are mapped) and
+//       deliberately does NOT reproduce the precinct list, because a
+//       boundary map is exactly the thing that is wrong the moment it is
+//       retyped, and getting it wrong could cost an owner money.
+//   §5 ONWARDS IS WHAT TLB ACTUALLY KNOWS ABOUT, which is what a shorter
+//       letting year does to how a property is cleaned, maintained and
+//       scheduled. That half is the reason the page is worth publishing at
+//       all, it is genuinely useful, and none of it is regulatory advice.
+//
+// ⚠️ VERIFY BEFORE LAUNCH, all of these, against Byron Shire Council and the
+// NSW STRA Register / NSW planning portal rather than against news coverage:
+//   1. The cap is 60 days per year and applies to NON-HOSTED short-term
+//      rental accommodation. Hosted letting, where the host is present, is
+//      not subject to it.
+//   2. It commenced in late September 2024. The page says "since late
+//      September 2024" rather than naming a date, so a one-day error is not
+//      possible; if TLB wants the exact date it must be checked, not
+//      remembered.
+//   3. Certain mapped precincts within the Shire are excluded from the cap
+//      and remain able to let all year. THE PRECINCTS ARE NOT NAMED ON THIS
+//      PAGE. Do not add them without checking the current map; if TLB wants
+//      them named, name them from the map and re-check at every review.
+//   4. Registration on the NSW STRA Register, and compliance with the STRA
+//      Code of Conduct and the fire safety standard, apply regardless of the
+//      cap.
+// If any of the four has changed since this was written, §3 is rewritten
+// before this page goes live. The `lastReviewed` line is on the page for
+// exactly this reason.
+//
+// ⚠️ NOT PLANNING ADVICE, and the page says so to the reader in §4. TLB
+// cleans properties; it does not advise on development controls. BFD 5.3.
+//
+// ⚠️ THE PAGE TAKES NO POSITION ON WHETHER THE CAP IS GOOD POLICY. It is a
+// genuinely divisive local issue and TLB's clients sit on both sides of it —
+// hosts, property managers, and the local families who work for the
+// business. A cleaning company editorialising about housing policy gains
+// nothing and can only lose. §6 states the effects on a business, not a view
+// about whether they are deserved. Keep it that way.
+//
+// PHOTOGRAPHY: reused from src/assets/locations/ and src/assets/airbnb/.
+// IMAGE-GUIDELINES.md §5.
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import heroImg from '../../assets/locations/coastal-home-near-the-beach.jpg';
+import definitionBgImg from '../../assets/home/holiday-let-cleaning-guest-ready-cottage-living-room.jpg';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../../data/navigation';
+import { locationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { otherGuides, relatedGuides, lastReviewed } from '../../data/guides';
+
+const selfHref = '/guides/the-byron-shire-60-day-short-stay-cap-what-it-means-for-hosts/' as const;
+
+const pageMeta = {
+  title: 'The Byron Shire 60-Day Short-Stay Cap: What It Means for Hosts | TLB Cleaning',
+  description:
+    'What the Byron Shire 60-day cap on non-hosted short-term rentals covers, who it exempts, and what a shorter letting year changes about how a holiday property is cleaned and maintained.',
+  // ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
+  canonical: `https://example.com${selfHref}`,
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The heading states the operational consequence rather than the
+// policy, because the policy is two years old and every host in the Shire
+// already knows it exists. What they are still working out is the second
+// line.
+const hero = {
+  kicker: 'Guide · Homes and hosting',
+  headingLines: ['Sixty days of guests,', 'and three hundred days of empty house.'],
+  lead:
+    'What the Byron Shire cap on non-hosted short-term letting actually covers, and what a compressed letting year changes about cleaning, maintenance and scheduling a coastal property.',
+  cta: quoteCta,
+  image: {
+    ratio: '16/9',
+    label: 'A coastal home on a quiet street a short walk from the beach, shuttered and empty on a bright morning',
+    src: heroImg,
+  },
+};
+
+// §2 The answer block. Definition-style, deliberately short on the policy
+// and explicit that the detail lives with the authorities.
+//
+// ⚠️ EVERY FACTUAL CLAIM IN THIS BLOCK IS ON THE VERIFY LIST in the file
+// header. The wording is chosen so that each one is either structurally
+// stable or hedged: "much of Byron Shire" rather than a precinct list,
+// "since late September 2024" rather than a date.
+const definitionBody: TextBlockBody[] = [
+  'The Byron Shire short-stay cap limits non-hosted short-term rental accommodation to 60 days of letting per year across much of the Shire. It has applied since late September 2024. Non-hosted means the whole property is let while the host is not living there; hosted letting, where the host is present, is not subject to the cap.',
+  'Some mapped precincts within the Shire are excluded and can still let all year. Whether a particular property sits inside or outside those precincts is a question of where the boundary falls, so it is settled by Byron Shire Council’s own map rather than by anything on this page.',
+  lastReviewed,
+];
+
+// §3 The four things worth knowing. ContentGrid text cells, four, two rows.
+//
+// ⚠️ THIS IS THE POLICY SECTION AND IT IS DELIBERATELY THIN. Each cell says
+// the least that is useful and hands the detail to the authority. Resist the
+// urge to expand it: every added sentence is another thing to re-verify at
+// every review, and none of it is what TLB knows about.
+const policyBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'It is about non-hosted letting',
+    body: [
+      'The cap applies to letting the whole property while you are not there. Letting a room, or a granny flat, while you live on the property is hosted letting and is treated differently.',
+      'That distinction does a lot of work, and it is the first thing to establish about any given property before working anything else out.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Some areas are excluded',
+    body: [
+      'Parts of the Shire are mapped as exempt and can continue to let all year. Whether an address falls inside one is a boundary question, and boundary questions are answered by the map, not by what the neighbours are doing.',
+      'Check it directly with Byron Shire Council before making a decision that depends on the answer.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Registration applies either way',
+    body: [
+      'Short-term rental accommodation in New South Wales has to be registered on the state register, and there is a code of conduct and a fire safety standard that come with it.',
+      'None of that is changed by the cap. A property inside an exempt precinct still has the same registration obligations as one that is capped.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'It only affects one side of our patch',
+    body: [
+      'This is a Byron Shire control. Ballina, Lismore, Tweed and the Queensland side of the border all sit under their own arrangements, which differ from each other and change independently.',
+      'If you own in more than one of those, do not assume what you learned about one applies to the next.',
+    ],
+  },
+];
+
+// §4 The disclaimer and the two authorities. `note` tone, and it goes
+// immediately after the policy summary rather than at the foot of the page.
+//
+// No outbound links in this Callout: the component escapes its body strings
+// like every other prose component here, so the two authorities are named
+// and the ServiceBlocks list in §5 carries the actual hrefs. Same solution
+// the NSW/QLD law guide uses, for the same reason.
+const disclaimerCallout = {
+  heading: 'We clean houses. We do not advise on planning controls.',
+  body: [
+    'Everything above is a plain summary written to help a host work out which questions to ask. It is not planning advice, it is not legal advice, and it can go out of date the moment a control is amended. Two authorities hold the real answers: Byron Shire Council for the map and the local controls, and the NSW planning portal for registration and the statewide framework.',
+    'If a decision about your property turns on the answer, get it from them or from a planner, in writing. The rest of this page is about the part we do know something about, which is what happens to a house that is full for sixty days and empty for the rest.',
+  ],
+};
+
+// §5 The two authorities as real outbound links. ServiceBlocks `list`,
+// same pattern and same reason as the law guide's §7.
+//
+// ⚠️ Front doors rather than deep links, deliberately: a deep link into a
+// specific planning page rots within a year, a council home page does not.
+// Confirm both resolve before launch. Neither opens in a new tab; that is a
+// component change if TLB wants it, not a page one.
+const authorityLinks = [
+  {
+    icon: 'house' as const,
+    title: 'Byron Shire Council',
+    description:
+      'The map, the local controls, and the answer to whether a specific address sits inside an exempt precinct. This is the one that matters for your property.',
+    href: 'https://www.byron.nsw.gov.au/',
+  },
+  {
+    icon: 'office' as const,
+    title: 'NSW Planning Portal',
+    description:
+      'The statewide short-term rental accommodation framework: the register, the code of conduct and the fire safety standard, all of which apply regardless of any local cap.',
+    href: 'https://www.planningportal.nsw.gov.au/',
+  },
+];
+
+// §6 What a compressed letting year does. THE section that justifies the
+// page, and the one part of it that is genuinely TLB's own expertise.
+//
+// ⚠️ These are OBSERVATIONS ABOUT PROPERTY CARE, drafted from what happens
+// to closed-up coastal houses, not predictions about the rental market and
+// not a claim about what any individual owner should do. No figures, no
+// forecasts, no advice about whether to switch tenure.
+const effectBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'The turnovers compress into peak',
+    body: [
+      'Sixty days will not be spread evenly across a year. They will land in January, at Easter, over the school holidays and on event weekends, which is exactly when every other capped property in the Shire is also letting.',
+      'So the same number of changeovers now happens in a much smaller number of weeks, and the people who do them are the constraint. Peak-week cleaning capacity in this Shire was already tight before the cap and the cap concentrated it further. Book the season, not the booking.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'An empty coastal house is not a house at rest',
+    body: [
+      'Three hundred days closed up near the coast is its own maintenance problem, and it is the one most owners underestimate. Salt film builds on glass and hardware whether or not anybody is inside. Dust settles. Drain traps dry out and the smell comes back up through them. Insects find their way in and die on window sills.',
+      'And in a Northern Rivers wet season, a closed house with no air moving through it is the ideal place for mould to start, in wardrobes, behind bedheads and along the cold side of a bathroom wall. None of that is caused by guests. It is caused by the house being shut.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'The pre-season clean becomes a real job',
+    body: [
+      'A property that let all year was continuously maintained by its own occupancy. A property that sits closed from May to December needs a proper reset before the first guest of the season, and it is a deep clean rather than a turnover: linen out of storage and aired, every trap run, glass done properly, the whole place opened up and dried out.',
+      'It is far cheaper to book that as a scheduled deep clean in a quiet week than to discover on the 23rd of December that it was needed.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'The long gap is an opportunity, if you use it',
+    body: [
+      'The one genuine upside. Every job that used to be impossible to schedule around back-to-back bookings is now easy: carpets, upholstery, tile and grout, exterior washing, gutters, windows at height, the oven done properly.',
+      'Those jobs used to be squeezed into a Tuesday in June. Now there is a season for them, and a property maintained in the gap presents better in the sixty days that count.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Every booking matters more',
+    body: [
+      'With fewer nights available, a single bad review carries more weight and a single cancelled booking is a larger share of the year. The tolerance for a turnover that ran late or a bathroom that was still damp at check-in goes down accordingly.',
+      'That is not a reason to panic. It is a reason to have the changeover run by someone who does it every week rather than by whoever is free, and to have a number to ring when a guest is at the door and something is wrong.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Some properties change use, and that changes the cleaning',
+    body: [
+      'A number of owners in the Shire have moved to long-term or mid-term letting, or to hosted arrangements, since the cap. Whether that suits any particular property is a decision for the owner and their accountant, and we have no view on it.',
+      'What it changes for us is straightforward: a tenanted property needs routine cleaning and an end of lease clean at the end rather than fifty changeovers, and a mid-term let sits somewhere between the two. It is a different service, not a smaller one.',
+    ],
+  },
+];
+
+// §7 What changes and what does not. A ComparisonTable, and here the two
+// columns are two states of the same property rather than two products.
+//
+// NEITHER COLUMN IS HIGHLIGHTED. There is no "us" and no better option; it
+// is a description of two operating patterns.
+const patternTable = {
+  heading: 'Before the cap, and after it',
+  cornerLabel: 'What actually changed about running the property',
+  lead: 'For a non-hosted property inside the capped area. Nothing here is about revenue, which is your accountant’s question, not ours.',
+  columns: [{ label: 'Letting all year' }, { label: 'Letting sixty days' }],
+  rows: [
+    {
+      label: 'Changeovers per year',
+      values: ['Spread across twelve months', 'Compressed into peak weeks'],
+    },
+    {
+      label: 'Booking cleaning capacity',
+      values: ['Usually available at short notice', 'Needs to be locked in for the season'],
+    },
+    {
+      label: 'Deep cleans',
+      values: ['Squeezed into whatever gap appears', 'Easy to schedule, and now necessary'],
+    },
+    {
+      label: 'Condition between guests',
+      values: ['Maintained by constant use', 'Deteriorates quietly while closed'],
+    },
+    {
+      label: 'Mould and damp risk',
+      values: ['Lower, because the house is aired constantly', 'Higher, and highest over a closed-up wet season'],
+    },
+    {
+      label: 'Cost of one bad turnover',
+      values: ['One night out of many', 'One night out of sixty'],
+    },
+    {
+      label: 'Exterior work, carpets, gutters, windows',
+      values: ['Hard to fit in', 'A whole off-season to do it in'],
+    },
+  ],
+  footnote:
+    'The short version: fewer cleans, but each one matters more, and a new category of work appears that never existed when the house was never empty.',
+};
+
+// §8 The off-season maintenance calendar. ServiceBlocks icon-grid, six
+// items, each pointing at a real service the site already has a page for.
+//
+// This is the most commercially useful section on the page and it is
+// legitimately useful editorially too — the jobs genuinely are best done in
+// this order and at these times.
+//
+// ⚠️ The timings are drafted against this region's seasons, not against
+// TLB's booking data. If TLB knows when its own off-season capacity actually
+// sits, that beats a general answer.
+const calendarItems = [
+  {
+    icon: 'key' as const,
+    title: 'Straight after the last guest',
+    description:
+      'A proper close-down rather than a changeover. Fridge emptied and left open, bins out, linen laundered and stored dry rather than left made up on beds, traps run, and the place left as ventilated as security allows.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Autumn: the deep clean',
+    description:
+      'The reset the changeovers never had time for. Tracks, grout, oven, skirtings, inside cupboards, the tops of everything. Done once at the start of the quiet stretch rather than in a hurry at the end of it.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Winter: carpets and upholstery',
+    description:
+      'The one time of year drying is not fighting humidity, and the one time a floor can be out of action for a day without costing a booking. This is the right window for it and there is no longer any excuse to skip it.',
+  },
+  {
+    icon: 'house' as const,
+    title: 'Late winter: outside',
+    description:
+      'Gutters, roof, exterior washing, windows and the driveway, before the storms rather than after them. A coastal property presents most of its wear on the outside and it is the first thing in a listing photo.',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'Through the wet: check on it',
+    description:
+      'A closed house through a Northern Rivers wet season is where mould starts. Somebody should open it, look behind the wardrobes and along the cold walls, and run the exhaust fans, well before the pre-season clean.',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Before the first booking: the pre-season reset',
+    description:
+      'Dust off every surface, glass done, linen out of storage and aired, hot water and appliances checked, and the whole property walked as a guest would walk it. Book it with room to fix what it finds.',
+  },
+];
+
+// §9 Next reads.
+const nextGuides = otherGuides(selfHref, [
+  '/guides/the-airbnb-turnover-checklist/',
+  '/guides/what-is-included-in-a-deep-clean/',
+  '/guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/',
+]);
+
+// §10 The pill band. Carries more service pages than the other guides
+// because this page's whole second half is about which service a changed
+// letting year needs.
+const moreGuideTags = relatedGuides(selfHref, [
+  { label: 'Airbnb and holiday let turnovers', href: '/airbnb-cleaning/' },
+  { label: 'Deep cleaning', href: '/deep-cleaning/' },
+  { label: 'Mould cleaning and removal', href: '/mould-cleaning-and-removal/' },
+  { label: 'Real estate and property management', href: '/real-estate-cleaning/' },
+]);
+
+// §11 FAQs.
+//
+// ⚠️ Answers 1 to 3 are on the verify list. Answer 2 deliberately refuses to
+// name the exempt precincts and sends the reader to the map, which is the
+// correct and safe answer as well as the honest one.
+const faqItems = [
+  {
+    question: 'What is the Byron Shire 60-day cap?',
+    answer:
+      'A limit of 60 days of letting per year for non-hosted short-term rental accommodation across much of Byron Shire, in place since late September 2024. Non-hosted means the whole property is let while the host is not living there. Hosted letting, where the host is present on the property, is not subject to the cap.',
+  },
+  {
+    question: 'Is my property in an exempt area?',
+    answer:
+      'Some precincts within the Shire are mapped as exempt and can still let all year, but whether a specific address falls inside one is a boundary question. Check it directly with Byron Shire Council rather than relying on a summary, a neighbour, or a page like this one. It is a five-minute question with an expensive wrong answer.',
+  },
+  {
+    question: 'Does the cap apply outside Byron Shire?',
+    answer:
+      'No. It is a Byron Shire control. Ballina, Lismore, Tweed and the Queensland side of the border each sit under their own arrangements, which differ and change independently of one another. If you own in more than one area, check each of them separately.',
+  },
+  {
+    question: 'What does a shorter letting season change about cleaning?',
+    answer:
+      'Two things. Changeovers compress into peak weeks, so cleaning capacity has to be booked for the season rather than the booking. And the house is now empty for most of the year, which introduces a maintenance problem that constant occupancy used to solve on its own: dust, salt film, dry traps and, in a wet season, mould.',
+  },
+  {
+    question: 'Does an empty holiday house really get mouldy?',
+    answer:
+      'On this coast, a closed-up house through a wet summer with no air moving through it is close to ideal conditions for it, particularly in wardrobes, behind bedheads and on the cold side of a bathroom wall. It is not caused by guests. Somebody opening the place up periodically through the wet is the cheapest prevention there is.',
+  },
+  {
+    question: 'When should the off-season work be done?',
+    answer:
+      'A close-down clean straight after the last guest, a deep clean early in the quiet stretch, carpets and upholstery in winter when things actually dry, exterior work in late winter before the storms, and a pre-season reset with enough room before the first booking to fix whatever it finds.',
+  },
+];
+
+// §12 Closing CTA. Points at the Airbnb service page, since that is where a
+// host in this situation goes next.
+const closingCta = {
+  kicker: 'Holiday lets and short stays',
+  heading: 'Sixty days is not less work. It is different work.',
+  lead: 'Peak-season turnovers booked for the season, and the off-season jobs the calendar never used to have room for.',
+  cta: { label: 'See holiday let cleaning', href: '/airbnb-cleaning/' },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={80} focus="center">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <ContentGrid
+      heading="Four things worth being clear on"
+      lead="Deliberately brief. The detail belongs with the Council and the planning portal, not with a cleaning company."
+      columns={2}
+      blocks={policyBlocks}
+    />
+
+    <Callout tone="note" heading={disclaimerCallout.heading} body={disclaimerCallout.body} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Where to get the real answer"
+      lead="Both of these outrank us on this subject, and the first one is the only place that can answer the question about your specific address."
+      items={authorityLinks}
+    />
+
+    <ContentGrid
+      heading="What a compressed letting year actually changes"
+      lead="This is the part we do know about: what happens to a property that is full for sixty days and closed for the rest."
+      columns={2}
+      blocks={effectBlocks}
+    />
+
+    <ComparisonTable
+      heading={patternTable.heading}
+      cornerLabel={patternTable.cornerLabel}
+      lead={patternTable.lead}
+      columns={patternTable.columns}
+      rows={patternTable.rows}
+      footnote={patternTable.footnote}
+    />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="The off-season, in order"
+      lead="Six jobs and roughly when to do them. Every one of them used to be impossible to schedule around back-to-back bookings."
+      items={calendarItems}
+      cta={quoteCta}
+    />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Read next"
+      lead="The three guides that follow on from this one."
+      items={nextGuides}
+    />
+
+    <Faq heading="The Byron Shire cap: frequently asked questions" items={faqItems} />
+
+    <TagCloud
+      heading="More guides"
+      subheading="Everything else we have written down."
+      tags={moreGuideTags}
+      note={['Something we have not covered? Ask us and we will write it.']}
+    />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

@@ -1,0 +1,492 @@
+---
+// Guide: "The Airbnb turnover checklist". Seventh of the nine guides; the
+// cluster's shared data is in src/data/guides.ts.
+//
+// THE AUDIENCE IS DIFFERENT FROM EVERY OTHER GUIDE IN THE SET, and the page
+// is written accordingly. A tenant reading the bond clean checklist is doing
+// this once. A host reading this one is doing it fifty times a year, is
+// already competent, and is looking for the specific things that cost them
+// reviews rather than for an introduction to cleaning. So:
+//   * No explaining what a changeover is beyond the answer-target sentence.
+//   * The order section is about the CLOCK, not about gravity — a host's
+//     constraint is an eleven-to-three window, not "top to bottom".
+//   * §6 is the section that earns the page: the four failure modes that
+//     generate most bad cleanliness reviews. That is trade knowledge a host
+//     cannot get from Airbnb's own help pages.
+//
+// ⚠️ WHAT MUST STAY CONSISTENT WITH airbnb-cleaning.astro. That page already
+// sells the service, including linen and restocking, and this guide must not
+// promise operational things that page has not committed to. Anything about
+// how TLB itself runs a turnover is kept to §8 and points at the service
+// page rather than restating a scope.
+//
+// ⚠️ PLATFORM NAMING. "Airbnb" is in the slug, the title and the head term
+// because that is what people search, and it is used as the common noun for
+// short-stay letting throughout. The page is careful never to imply any
+// affiliation with, endorsement by, or partnership with Airbnb — BFD 5.3.
+// The body says "the platform" wherever the specific brand is not needed. Do
+// not add an Airbnb logo, badge or brand colour to this page.
+//
+// ⚠️ NO REVIEW-SCORE CLAIMS. Nothing here promises a rating, a Superhost
+// status or an outcome, for the same reason nothing on the end of lease page
+// promises a bond. §6 describes what causes complaints, which is an
+// observation, not a guarantee about what avoiding them will produce.
+//
+// PHOTOGRAPHY: reused, all four from src/assets/airbnb/ where they already
+// mean exactly these moments. IMAGE-GUIDELINES.md §5.
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import heroImg from '../../assets/airbnb/airbnb-turnover-making-up-a-bed-with-fresh-white-linen.jpg';
+import arrivalImg from '../../assets/airbnb/airbnb-turnover-cleaner-arriving-at-a-holiday-cottage-with-keys.jpg';
+import restockImg from '../../assets/airbnb/airbnb-turnover-restocked-guest-essentials-on-a-kitchen-bench.jpg';
+import definitionBgImg from '../../assets/airbnb/airbnb-cleaning-cleaner-finishing-a-guest-ready-holiday-apartment.jpg';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../../data/navigation';
+import { locationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { otherGuides, relatedGuides } from '../../data/guides';
+
+const selfHref = '/guides/the-airbnb-turnover-checklist/' as const;
+
+const pageMeta = {
+  title: 'The Airbnb Turnover Checklist | TLB Cleaning',
+  description:
+    'A short-stay changeover checklist for Byron, Ballina, the Tweed and the Southern Gold Coast: the run in order, the linen and restock list, and the four things that cost hosts reviews.',
+  // ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
+  canonical: `https://example.com${selfHref}`,
+};
+
+const business = {
+  name: 'TLB Cleaning',
+  url: 'https://example.com/',
+  logo: '',
+  telephone: '',
+  email: '',
+  address: {
+    streetAddress: '',
+    addressLocality: '',
+    addressRegion: '',
+    postalCode: '',
+    addressCountry: 'AU',
+  },
+  sameAs: [],
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  description: pageMeta.description,
+};
+
+// §1 Hero. The heading names the actual constraint of the job, which is the
+// thing that separates a turnover from a house clean and the thing every
+// host recognises immediately.
+const hero = {
+  kicker: 'Guide · Homes and hosting',
+  headingLines: ['Ten till two,', 'and nothing can be left to check later.'],
+  lead:
+    'The short-stay changeover in the order it is worked, the linen and consumables list, and the four small things that generate most of the cleanliness complaints in this region.',
+  cta: quoteCta,
+  image: {
+    ratio: '4/3',
+    label: 'A cleaner making up a bed with fresh white linen in a bright coastal bedroom, hospital corners half-done',
+    src: heroImg,
+  },
+};
+
+// §2 The answer block. Definition-style opener, then the sentence that
+// frames the whole guide: a turnover is a hospitality job with a deadline,
+// not a domestic clean.
+const definitionBody: TextBlockBody[] = [
+  'An Airbnb turnover is the full changeover of a short-stay property between one guest checking out and the next checking in: strip and remake, clean, restock, reset and check. It is a hospitality job on a fixed clock rather than a domestic clean, and the difference shows in what gets checked rather than in what gets wiped.',
+  'The window in most of this region is checkout at ten and check-in at two, which is four hours minus travel, minus linen, minus whatever the last guest left behind. Everything below is arranged around that.',
+];
+
+// §3 The run, in order. Dark TextBlock with a list — the same treatment the
+// bond clean checklist gives its own order section, and for the same reason:
+// it is short, sequential, and it wants to read as a method.
+//
+// The sequencing logic here is genuinely different from the bond clean's.
+// That one is about gravity (everything falls downwards). This one is about
+// the clock and about the two things that cannot be rushed at the end
+// (linen and the final look). Worth keeping distinct if either is edited.
+const runBody: TextBlockBody[] = [
+  'The order matters more here than in a house clean, because a turnover has a deadline that does not move and two tasks at the end that cannot be hurried.',
+  {
+    list: [
+      'Walk it first, before touching anything. Two minutes with your phone out. Damage, missing items, anything left behind, anything that will need the owner told. After you have cleaned is too late to say what state it was in.',
+      'Strip everything. All beds, all towels, all bathmats, the tea towels and the kitchen cloths, whether or not they look used. Out of the property and into the car before the clean starts, so nothing gets remade over a wet surface later.',
+      'Kitchen first. Dishwasher on, fridge emptied and checked, bins out. The dishwasher runs while you do everything else, which is the single biggest time saving available in a turnover.',
+      'Bathrooms next, because they need dwell time and because a damp bathroom at the end of the run is the thing guests notice first.',
+      'Bedrooms and living areas, then make the beds. Beds are made after the room is cleaned, never before, and they are the job you must not be rushing.',
+      'Restock and reset. Consumables, welcome items, remotes and cushions back where the listing photos show them.',
+      'Floors last, backing out of the property.',
+      'Then the final look. Stand in the doorway of each room from where a guest first sees it and look at the room rather than at your list.',
+    ],
+  },
+  'That final look is the step people drop when they are behind, and it is the step that catches almost everything the list does not.',
+];
+
+// §4 The checklist proper. ContentGrid text cells, one task per body entry,
+// same treatment and same reasoning as the bond clean checklist page: the
+// cell's --space-xs gap stacks short lines as a scannable list.
+//
+// Six cells, three clean rows at two columns.
+//
+// ⚠️ THE LINEN AND CONSUMABLES CELLS DESCRIBE A CONVENTIONAL SHORT-STAY
+// STANDARD, NOT TLB'S SERVICE. What TLB supplies, launders or restocks is
+// on airbnb-cleaning.astro and is not restated here. If a host reads this as
+// a promise of what turns up in the van, the page has failed — §8 draws that
+// line explicitly.
+const checklistBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'Arrival and inspection',
+    body: [
+      'Photograph anything broken, marked or missing, before touching it.',
+      'Check for items left behind, including in drawers, under beds and in the fridge.',
+      'Note anything the owner or manager needs to know today rather than at the end of the month.',
+      'Check the last guest actually left. It happens.',
+      'Open the place up. Windows and doors, air moving, especially after a humid week.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Linen and beds',
+    body: [
+      'Strip every bed, used or not.',
+      'Check mattress protectors and pillow protectors, every time, not just when something is obvious.',
+      'Look at the mattress itself while it is bare. This is the only moment anyone ever does.',
+      'Make up with fresh linen, pressed or steamed if the listing photos show it that way.',
+      'Cushions, throws and bed runners back to the photographed arrangement.',
+      'Count what leaves and what returns. Linen loss is the quiet cost of hosting.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Kitchen',
+    body: [
+      'Dishwasher emptied, then loaded and running early.',
+      'Fridge and freezer emptied of guest food, shelves wiped, seals checked.',
+      'Every item put back where the listing and the house guide say it lives.',
+      'Cutlery, crockery and glassware counted and checked for chips.',
+      'Kettle, toaster, coffee machine emptied, wiped and descaled as needed.',
+      'Oven, cooktop and rangehood, and the wall behind the cooktop.',
+      'Bins emptied, liners replaced, bin taken to the kerb if it is collection day.',
+      'Benches, splashback, sink and taps.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Bathrooms',
+    body: [
+      'Shower screen, tiles, base and drain, including the hair in it.',
+      'Toilet inside and out, base and behind.',
+      'Vanity, basin, taps and mirror, front and edges.',
+      'Exhaust fan cover, which greys quickly in a coastal bathroom.',
+      'Fresh towels, hand towels and bathmats, folded to match the photos.',
+      'Consumables restocked and presented, not just left on the bench.',
+      'Floor last, and dry. A damp bathroom floor at check-in reads as unclean even when it is not.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Living areas and outside',
+    body: [
+      'Surfaces, sills, skirtings and the tops of things guests do not see but photograph.',
+      'Remotes located, wiped, batteries checked, and put where the guide says.',
+      'Sofa cushions lifted, crumbs and sand out, cushions plumped and squared.',
+      'Glass doors and the sliding door track, which on this coast is always full of sand.',
+      'Balcony, deck or courtyard swept, outdoor furniture wiped, ashtrays and glasses cleared.',
+      'Barbecue cleaned if there is one, because nobody wants to be the guest who finds it.',
+      'Floors vacuumed including edges, then mopped, working backwards to the door.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Restock and reset',
+    body: [
+      'Toilet paper, hand soap, dish liquid, dishwasher tablets, bin liners, laundry powder.',
+      'Tea, coffee, sugar and whatever the listing promises.',
+      'Welcome items presented the way they are photographed.',
+      'House guide, wifi details and keys back in place.',
+      'Air conditioning and heating off, or set to whatever the owner’s standing instruction is.',
+      'Lights, appliances and hot water as they should be for an empty property.',
+      'Lock up, and report anything outstanding before you leave the driveway.',
+    ],
+  },
+];
+
+// §5 The four failure modes. THE section of the page, and the reason a host
+// would bookmark it.
+//
+// ⚠️ THESE ARE OBSERVATIONS ABOUT WHAT GENERATES COMPLAINTS, drafted from
+// category experience rather than from TLB's own records. They are stated as
+// patterns, not as statistics — no percentages, no "most reviews", nothing
+// that implies data this repo does not have.
+//
+// ⚠️ If TLB does hold real data on what its hosts' guests complain about,
+// that is proprietary and would make this the strongest section on the site.
+// Ask Teagan.
+const failureItems = [
+  {
+    icon: 'spark' as const,
+    title: 'Hair',
+    description:
+      'One hair on a pillow or in a shower base undoes an otherwise faultless turnover, because it is the one thing a guest reads as "nobody cleaned this". Check the drain, the base, the bed and the bathroom floor specifically, after you think you have finished.',
+  },
+  {
+    icon: 'idea' as const,
+    title: 'Smell, not dirt',
+    description:
+      'A closed-up coastal property in February smells damp within a day, and guests notice a smell before they notice a surface. Air the place while you work, run the exhaust fans, and if a property smells at the end of every turnover, that is a ventilation problem rather than a cleaning one.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'The thing that is missing',
+    description:
+      'A single wine glass, a missing remote, no dishwasher tablets, one bath towel short for a party of four. Guests forgive a smudge and complain about a shortfall, because a shortfall is something they have to solve on their holiday.',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Sand and salt',
+    description:
+      'Specific to where we work, and it catches every new host. Sand in the sliding door track, in the sofa, in the shower base, on the deck. Salt haze on the glass facing the water. Both are invisible in your own home and glaring in someone else’s holiday.',
+  },
+];
+
+// §6 What to photograph, and why. `note` tone.
+//
+// This is an operational habit that protects a host in a damage claim, and
+// it costs nothing. It is also the closest this page comes to advice about a
+// platform's process, so it stays general and makes no claim about what any
+// platform will or will not accept.
+const photoCallout = {
+  heading: 'Photograph on arrival, not on departure',
+  body: [
+    'A finished-property photo proves the place was clean. An arrival photo proves what state it was left in, which is the one that matters if something has to be raised with a guest. Take both, and take the arrival one before you have moved a single thing.',
+    'The set worth having every time is short: each bedroom from the doorway, each bathroom, the kitchen bench, the living area, and a close-up of anything at all that is damaged, marked or missing. Timestamped, and kept somewhere that is not a phone that might be replaced next year.',
+    'None of this is about distrusting guests, almost all of whom are fine. It is that the alternative is arguing from memory about a property you clean fifty times a year.',
+  ],
+};
+
+// §7 The two things a turnover is not. ContentGrid, two image/text rows —
+// image position by array order, the same way the roof page does it.
+//
+// This section exists because the two most expensive mistakes a host makes
+// with cleaning are both scheduling mistakes rather than cleaning ones, and
+// nobody tells them.
+const misconceptionBlocks = [
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label: 'A cleaner in an aqua polo arriving at the front door of a holiday cottage with a set of keys and a caddy',
+    src: arrivalImg,
+  },
+  {
+    type: 'text' as const,
+    heading: 'A turnover is not a deep clean, and it never becomes one',
+    body: [
+      'A changeover holds a standard. It does not reach the standard, and it cannot: the tracks, the grout, the oven, the skirtings, inside the cupboards and the tops of things all need time that a four-hour window does not contain.',
+      'So a short-stay property needs a deep clean on a cycle of its own, booked into a gap between bookings, in addition to the turnovers. Hosts who skip that find the property slowly declines over a season while every individual turnover was done properly.',
+      'The honest scheduling advice is to book the deep clean when the calendar has a gap anyway, rather than waiting until a guest mentions the grout.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: 'Linen is a logistics problem, not a cleaning one',
+    body: [
+      'The turnover itself is rarely what runs late. What runs late is linen: not enough sets in rotation, one washing machine, a wet load on a humid day and a same-day changeover.',
+      'Three sets per bed is the number most hosts settle on eventually. One on the bed, one clean and ready, one in the wash. Two sets works until the day it does not, and the day it does not is always a Saturday in January.',
+      'Commercial linen hire solves it outright and costs more per changeover than washing at home. Whether that trade is worth it is a maths question about your occupancy, not a cleaning question.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label: 'Restocked guest essentials arranged on a kitchen bench: soap, tea, coffee and folded tea towels',
+    src: restockImg,
+  },
+];
+
+// §8 What we actually do. Short, and it points at the service page rather
+// than restating a scope, for the reason in the file header.
+const ourServiceBody: TextBlockBody[] = [
+  'We do turnovers across the Northern Rivers, the Tweed and the Southern Gold Coast, timed to the booking calendar rather than to a run sheet that suits us.',
+  'The parts hosts usually want to settle before booking anyone are the same three every time: who supplies and launders the linen, who restocks the consumables and how that is billed, and what happens when a guest checks out late. Those answers are on our Airbnb and holiday let page rather than here, because they are commitments rather than general advice, and a guide is the wrong place to make a commitment.',
+  'What is worth saying here is the general version: the property should be handed over by the same small team often enough that they notice when something is different, and there should be one number to ring when a guest is at the door and something is wrong.',
+];
+
+// §9 Next reads. Includes the Byron cap guide, which is the natural next
+// read for a host in this specific region and is the strongest internal link
+// on the page.
+const nextGuides = otherGuides(selfHref, [
+  '/guides/the-byron-shire-60-day-short-stay-cap-what-it-means-for-hosts/',
+  '/guides/what-is-included-in-a-deep-clean/',
+  '/guides/steam-dry-or-shampoo-which-carpet-cleaning-method/',
+]);
+
+// §10 The pill band.
+const moreGuideTags = relatedGuides(selfHref, [
+  { label: 'Airbnb and holiday let turnovers', href: '/airbnb-cleaning/' },
+  { label: 'Deep cleaning', href: '/deep-cleaning/' },
+  { label: 'Hospitality, venues and holiday parks', href: '/hospitality-venues-and-holiday-parks/' },
+]);
+
+// §11 FAQs.
+const faqItems = [
+  {
+    question: 'How long should an Airbnb turnover take?',
+    answer:
+      'It depends on the property and how the last guests left it, but the constraint is usually the window rather than the work: checkout at ten and check-in at two leaves about four hours minus travel and linen. A one-bedroom apartment is comfortable in that. A four-bedroom house with a same-day changeover needs either two people or a later check-in.',
+  },
+  {
+    question: 'What should be on an Airbnb cleaning checklist?',
+    answer:
+      'An arrival inspection with photos, a full strip of all linen and towels, kitchen with the dishwasher started early, bathrooms, bedrooms with beds made after cleaning, living areas and outdoor spaces, restocking of consumables, floors last, and a final look from each doorway. The last step catches more than the list does.',
+  },
+  {
+    question: 'Do I need a deep clean as well as turnovers?',
+    answer:
+      'Yes, on a cycle of its own. A turnover holds a standard within a four-hour window and cannot reach one: tracks, grout, ovens, skirtings and inside cupboards all need time a changeover does not have. Book it into a gap in the calendar rather than waiting for a guest to mention it.',
+  },
+  {
+    question: 'How many sets of linen do I need?',
+    answer:
+      'Three per bed is what most hosts settle on: one on the bed, one clean and ready, one in the wash. Two works until a same-day changeover lands on a humid weekend, and then it does not. Commercial hire removes the problem entirely at a higher cost per changeover.',
+  },
+  {
+    question: 'What do guests actually complain about?',
+    answer:
+      'Hair, smell, something missing, and sand. Rarely a surface that was missed. A single hair in a shower base does more damage to a review than a dusty skirting board, a closed-up property in humid weather smells before it looks dirty, and a shortfall of towels or dishwasher tablets is a problem the guest has to solve on their holiday.',
+  },
+  {
+    question: 'Should I use a cleaner or do turnovers myself?',
+    answer:
+      'Plenty of hosts do their own and do them well. The point at which it stops working is usually not the cleaning, it is the calendar: back-to-back changeovers, a late checkout, or being an hour away on the day it matters. If a single missed turnover would cost you a booking, that is the answer.',
+  },
+];
+
+// §12 Closing CTA.
+const closingCta = {
+  kicker: 'Airbnb and holiday let turnovers',
+  heading: 'Hand the window to somebody else.',
+  lead: 'Timed to your bookings, restocked and guest-ready before check-in, with one number to ring when something is not right.',
+  cta: { label: 'See Airbnb and holiday let turnovers', href: '/airbnb-cleaning/' },
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={80} focus="center">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <TextBlock theme="dark" align="left" heading="The run, in order" body={runBody} />
+
+    <ContentGrid
+      heading="The changeover checklist"
+      lead="Six groups. Strip before you clean, make the beds after, and leave the floors until you are walking out."
+      columns={2}
+      blocks={checklistBlocks}
+    />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="The four things that actually cost you reviews"
+      lead="None of them are a missed surface. All four are quick to check once you know to look."
+      items={failureItems}
+      cta={quoteCta}
+    />
+
+    <Callout tone="note" heading={photoCallout.heading} body={photoCallout.body} />
+
+    {/* Two columns, image side set purely by array order: row one is image
+        then text, row two text then image. */}
+    <ContentGrid
+      heading="Two things a turnover is not"
+      lead="Both of the expensive mistakes hosts make with cleaning are scheduling mistakes rather than cleaning ones."
+      columns={2}
+      blocks={misconceptionBlocks}
+    />
+
+    <TextBlock theme="light" align="left" heading="How we run them" body={ourServiceBody} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Read next"
+      lead="The three guides that follow on from this one."
+      items={nextGuides}
+    />
+
+    <Faq heading="Airbnb turnovers: frequently asked questions" items={faqItems} />
+
+    <TagCloud
+      heading="More guides"
+      subheading="Everything else we have written down."
+      tags={moreGuideTags}
+      note={['Something we have not covered? Ask us and we will write it.']}
+    />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>
