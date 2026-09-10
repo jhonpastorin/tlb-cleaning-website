@@ -1,0 +1,545 @@
+---
+// Office cleaning — the first and most-searched of the THIRTEEN "by type of
+// premises" leaf pages under the /commercial-cleaning/ hub (navigation.ts,
+// "By type of premises" group). Built in one pass with its twelve siblings.
+//
+// NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
+// not supplied, and needs sign-off before launch. Where a claim depends on a
+// fact only TLB holds, it ships as a visible [bracket] per house convention
+// rather than as a plausible guess.
+//
+// This is the cluster's DEFAULT page and it carries the fullest structure of
+// the thirteen: the hub's own meta description names office cleaning, and the
+// hub's §3 card 1 CTA already points here. The twelve siblings each drop or
+// swap sections below the trust strip so the cluster does not read as one
+// page with the nouns changed — but every one of them keeps the hero,
+// Backdrop(TrustBar + definition), the premises cross-link band, the service
+// area band, two FAQ blocks and the closing CTA, because those six are the
+// site's own convention (BFD 3.5) and not this page's invention.
+//
+// BLOCKS LAUNCH, shared across all thirteen:
+//   - [insured] and [police-checked] in the pathway cards. Open on the hub
+//     and on both commercial service pages already. One answer fixes fifteen
+//     pages.
+//   - Pricing basis. Every one of the thirteen is deliberately silent on a
+//     dollar figure and says "priced per visit against a written scope"
+//     instead. If TLB has a real minimum charge or a per-square-metre rate,
+//     it belongs in the cost FAQ on each page.
+//   - Whether commercial work stops at the NSW border. `nswLocationGroups`
+//     here follows the hub; footerContact still claims the Southern Gold
+//     Coast. See the comment in src/data/premises.ts.
+//
+// BLOCKS LAUNCH, specific to this page:
+//   - "The same cleaner every week" is the page's central promise and it is
+//     an operational commitment, not a marketing line. Confirm TLB will hold
+//     it for office contracts before this ships. If the honest answer is "the
+//     same small team, not always the same person", the hero lead, pathway
+//     card 3 and branded FAQ 2 all need rewording together.
+//   - Whether TLB supplies consumables (hand towel, toilet paper, bin
+//     liners). Bracketed in the scope block and in a non-branded FAQ. This is
+//     the single most common thing an office manager asks that this page
+//     currently cannot answer.
+//
+// NOT BUILT, deliberately: before/after slider. BeforeAfter.astro needs real
+// paired photography from a locked-off tripod and none exists for commercial
+// work; the brief for it is written out at the reserved slot in the render.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PathwayCards from '../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Callout from '../components/sections/Callout.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own frames are in src/assets/commercial_cleaning/premises/;
+// the prompts are in that folder's IMAGE-PROMPTS.md.
+//
+// Pathway card 2 REUSES the hub's walkthrough frame from `../`, per
+// IMAGE-GUIDELINES §5 ("reuse before generating; same subject = same file").
+// Card 2's subject is the conversation where a scope gets agreed, which is
+// exactly what the hub uses that frame to mean, and its label is the hub's
+// verbatim so one photo never carries two different alt texts.
+import heroImg from '../assets/commercial_cleaning/premises/office-cleaner-wiping-a-boardroom-table-after-hours.jpg';
+import cardBinsImg from '../assets/commercial_cleaning/premises/office-cleaner-emptying-desk-bins-along-a-workstation-bank.jpg';
+import cardWalkthroughImg from '../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
+import cardKitchenetteImg from '../assets/commercial_cleaning/premises/office-cleaner-restocking-a-kitchenette-and-wiping-the-sink.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub and
+// both commercial service pages.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+
+// §0 Metadata. Focus keyword leads the title, matching the hub's pattern and
+// both commercial service pages.
+const pageMeta = {
+  title: 'Office Cleaning | TLB Cleaning',
+  description:
+    'Office cleaning across the Northern Rivers and the Tweed. The same local cleaner every week, a scope in writing, and no lock-in contract. Book a site walkthrough.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/office-cleaning/',
+};
+
+const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+
+// §1 Hero. The kicker carries the focus keyword so someone arriving from a
+// search result gets confirmation above the H1, which is then free to be the
+// benefit rather than the keyword. Same call the hub and both service pages
+// make.
+//
+// A SCENE PHOTO, not a cut-out figure, following the call the hub made at
+// TLB's direction: a studio cut-out on a plain background says "a cleaner"
+// without saying commercial. Here the boardroom table, the desk bank behind
+// the glass and the empty monitors are what carry it.
+//
+// `ratio` is 16/9 because the SOURCE is 16:9, so a box matching the file
+// crops nothing. Regenerate at the same ratio if this is ever reshot, or
+// change both together.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. An AI image of a person who does not exist,
+// in the IMAGE-GUIDELINES §3 canonical uniform (aqua polo, dark teal apron,
+// teal gloves). Honest as generic service imagery and NOT presented as a
+// named team member, which §7 forbids. A real photo of a real TLB cleaner on
+// a real site would still do more, so treat this as a good placeholder
+// rather than the finished job. True of all thirteen premises pages.
+const hero = {
+  kicker: 'Office cleaning',
+  headingLines: ['Your team should walk in', 'to a finished office.'],
+  lead:
+    'Office cleaning across the Northern Rivers and the Tweed, done after you leave. The same local cleaner every week, a scope you can hold us to, and one number to ring.',
+  cta: walkthroughCta,
+  image: {
+    ratio: '16/9',
+    label:
+      'A cleaner in an aqua polo and dark teal apron wiping down a boardroom table in an open plan office after hours',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. The answer-target block for the focus keyword and the first
+// place the phrase appears in body copy. Paragraph two does the synonym work
+// ("commercial office cleaning", "office cleaners near me") so this one page
+// answers all three queries instead of three thin pages competing.
+const definitionBody: TextBlockBody[] = [
+  'Office cleaning is the regular cleaning of a workplace, usually outside trading hours, covering desks and shared surfaces, kitchenettes, bathrooms, floors and internal glass on a fixed schedule. TLB Cleaning cleans offices across the Northern Rivers and the Tweed, from three-person studios to whole floors.',
+  'An office clean and a commercial clean are the same trade under two names, and an office is simply the most common kind of commercial premises. What makes it its own job is that people work in the room you are cleaning. Their keyboards, their mugs, their paperwork and their bins are personal, which is why the useful question to ask a cleaner is not what they charge but exactly what they touch.',
+];
+
+// §3 Pathway cards. The three situations an office manager actually arrives
+// with, in their own words. Same framing as the hub, re-pointed at offices.
+//
+// Destinations are the quote flow, the hub and /why-tlb/. A leaf that links
+// only to a quote form strands the reader who is not ready to ask for one.
+const pathwayCards = {
+  heading: 'People arrive here in three situations.',
+  headingAccent: 'Which one is yours?',
+  cards: [
+    {
+      number: 1,
+      image: {
+        ratio: '4/3',
+        label:
+          'A cleaner emptying an under-desk bin into a janitorial caddy along a bank of empty office workstations',
+        src: cardBinsImg,
+      },
+      title: 'Our current cleaner has gone quiet',
+      description:
+        'The bins get done and the bathrooms do not. Messages go unanswered. Nobody leaves a cleaner over the cleaning, they leave because the relationship stopped working. We start with a walkthrough and a written scope so there is nothing to argue about later.',
+      cta: walkthroughCta,
+    },
+    {
+      number: 2,
+      image: {
+        ratio: '4/3',
+        label:
+          'A TLB cleaner and an office manager talking through the job in an office reception area',
+        src: cardWalkthroughImg,
+      },
+      title: 'We are setting up a new office',
+      description:
+        'New lease, new fitout, or the team has outgrown taking turns with the vacuum. We walk the floor with you, work out what actually needs doing and how often, and put it in writing before anyone signs anything.',
+      cta: { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
+    },
+    {
+      number: 3,
+      image: {
+        ratio: '4/3',
+        label:
+          'A cleaner wiping down the stainless sink of an office kitchenette with the bench cleared',
+        src: cardKitchenetteImg,
+      },
+      title: 'I need to know who is in the building',
+      description:
+        // ⚠️ Two brackets, both inherited from the hub. Same answer fixes
+        // every page in the cluster.
+        'The same person you have met, in TLB uniform, not a roster of strangers sent out by a call centre. We are a local business, [insured] and [police-checked], and if something is not right you ring a local number and get a local answer.',
+      cta: { label: 'Why TLB', href: '/why-tlb/' },
+    },
+  ],
+};
+
+// §4 Scope of work. THE MOST IMPORTANT BLOCK ON THIS PAGE.
+//
+// commercial-cleaning.astro flags in its own source that the site tells
+// readers four times to demand a written scope and never shows one. The
+// commercial carpet page closed that gap for a single service; this closes it
+// for the default ongoing contract, which is the harder and more valuable
+// half.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard commercial practice, not supplied
+// by TLB. Confirm each one and cut anything TLB does not actually do. An
+// overstated scope is worse than a short one, because this is the block a
+// client will hold us to.
+//
+// The deliberate structure is frequency, not room order: what happens every
+// visit, what happens less often, and what is not included at all. An office
+// manager comparing two quotes is comparing frequencies, and a flat room list
+// hides exactly the difference they are trying to see.
+const scopeItems = [
+  {
+    icon: 'office' as const,
+    title: 'Every visit: the floors',
+    description:
+      'Vacuum all carpet including under and around desks, mop hard floors, and spot clean marks on entry matting. Traffic lanes and the run from the lift get the attention they actually need rather than one pass with everything else.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Every visit: the touch points',
+    description:
+      'Door handles, light switches, lift buttons, rails, shared desk edges and the fridge and microwave handles. These take five minutes and they are the first thing to disappear from a cheap scope, because nobody notices them being skipped.',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Every visit: kitchenette and bathrooms',
+    description:
+      'Benches and sink wiped down, dishwasher emptied if it has finished, bins emptied and relined, toilets and basins cleaned and disinfected, mirrors done, floors mopped. Bathrooms are the part of an office a visitor judges you on.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'Every visit: desks, on your terms',
+    description:
+      'We wipe clear desk surfaces and leave anything with paper, a keyboard or a coffee cup on it alone unless you tell us otherwise. Some offices want a clear-desk rule and full wipe-down. Both are fine. What matters is that it is written down, not assumed.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Periodically: the things you forget',
+    description:
+      'Internal glass and partitions, skirtings, air vents, window sills, high dusting, fridge interiors and the top of the kitchen cupboards. These go on the scope with a frequency against each one, so they happen on a date rather than when someone complains.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Not included, and said out loud',
+    description:
+      // ⚠️ Real brackets. Consumables is the most-asked question this page
+      // cannot currently answer, and carpet extraction is a separate service
+      // with its own page.
+      'Carpet extraction, external windows above ground level and pressure cleaning are separate services rather than part of a nightly scope, and we quote them separately. Consumables are [supplied by us / supplied by you. Confirm]. We do not handle clinical or hazardous waste.',
+  },
+];
+
+// §5 Callout. The one thing an office manager most often gets wrong when
+// comparing quotes, said as an interruption rather than as another paragraph.
+//
+// This is a `note`, not a `warning`: it corrects a belief rather than warning
+// the reader off an action. Callout.astro's own docs draw exactly that line.
+const hourlyCallout = {
+  heading: 'An hourly rate tells you nothing.',
+  body: [
+    'Two quotes at the same hourly rate are not the same offer, because the number of hours is the variable and it is the one nobody writes down. A cleaner who is in your office for 45 minutes and one who is there for two hours can quote the same rate and deliver completely different cleans.',
+    'Ask for a price per visit against a written scope instead. Then you are comparing what gets done, which is the thing you actually care about, and the cleaner carries the risk of it taking longer than they thought rather than you.',
+  ],
+};
+
+// §6 "Worth knowing". The hub's equivalent block is the strongest copy on the
+// site and it works by making the reader distrust the cheapest quote rather
+// than by making claims about TLB. Same job here, and on offices the lever is
+// the Award: a rate below it is not a better deal, it is a liability.
+//
+// ⚠️ VERIFICATION PASS REQUIRED, and it is the same pass the hub needs.
+// Cleaning Services Award 2020 (MA000022) is correct and is what the hub
+// already cites. No rate is quoted here ON PURPOSE — Award rates change
+// every 1 July and an undated specific goes stale silently. Recommended
+// before launch: a visible "last reviewed" date on this block.
+const worthKnowingBody: TextBlockBody[] = [
+  'The cheapest office quote in your inbox is usually cheap for one of three reasons, and none of them are efficiency. Either the scope is thinner than the one you asked for, or the hours are shorter than the work takes, or the person doing it is not being paid the Cleaning Services Award. The first two you find out about in a month. The third one is the one that can land on you.',
+  'Cleaning is one of the most commonly underpaid trades in the country, and it is the reason a subcontracted model can quote a number an employer cannot match. If the cleaner in your office is not a legitimate employee, your business is exposed to that in ways an office manager should not have to think about. Our nine cleaners are employed by TLB, paid to the Award, and covered by our insurance. That is what the price reflects.',
+];
+
+// §7 Related pages. The other twelve premises types, the two commercial
+// services and the hub, from src/data/premises.ts — one list, shared by all
+// thirteen, with this page filtered out of its own band.
+const relatedTags = relatedPremises('/office-cleaning/');
+
+// §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+// Never invent a quote or a business name. BFD 5.3 requires written
+// permission before naming a client at all.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from an office client who switched from another cleaner, ideally naming what had been getting missed. The switching story is the most useful one this page can carry, because every reader on it already has a cleaner. A named business and a role, with written permission.]',
+    name: '[Business name, TBC]',
+    role: '[Role, for example office manager, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB office cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from an office on an ongoing contract of a year or more. This one has to prove the schedule held and the cleaner stayed the same, not that a single clean went well.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Long-standing TLB commercial client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote that mentions the written scope by name, from a client who had been burned by a vague one. That answers the objection this page spends most of its words on.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Client who moved to a written cleaning scope' },
+  },
+];
+
+// §9 Comparison table. The shared rows from src/data/comparison.ts, now on a
+// fifth page.
+//
+// ⚠️ Row one is "Nine full-time cleaners employed by TLB, not subcontracted".
+// That claim is load-bearing on this page in a way it is not elsewhere,
+// because §6 above builds the whole argument on it. If office work is ever
+// subcontracted, §6 and this table both come off together.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'Anyone can clean an office once. The hard part is being the same people, at the same standard, on week forty.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §10 Branded FAQs. Written in the CUSTOMER'S voice, where "we" means the
+// reader's business rather than TLB. That register is the hub's, and it is
+// held across all thirteen premises pages deliberately: a leaf that switches
+// voice reads as bolted on.
+const brandedFaqItems = [
+  {
+    question: 'Can you clean after we close?',
+    answer:
+      'Yes, and most office work is done that way. We clean in the evening or early morning so your team walks in on a finished floor and nobody works around a vacuum. After hours and weekend work attracts penalty rates under the Cleaning Services Award, so both options go on the quote with their own price and you choose.',
+  },
+  {
+    question: 'Will it be the same cleaner every week?',
+    answer:
+      // ⚠️ This is the page's central promise and an operational commitment.
+      // See the file header. If the honest answer is "the same small team",
+      // this answer, the hero lead and pathway card 3 change together.
+      'Yes. You get the same person on the same day, and you meet them before you sign anything. When they take leave you get someone from the same small team who has already been briefed on your scope, not a stranger from an agency. That continuity is most of the reason our office clients stay.',
+  },
+  {
+    question: 'Do we need a lock-in contract?',
+    answer:
+      'No. Our office work runs on an ongoing schedule with no lock-in term, and you can change frequency or cancel with reasonable notice. A cleaner who needs to trap you in a two-year term is telling you something about how they expect the service to go.',
+  },
+  {
+    question: 'What if something gets missed?',
+    answer:
+      'You ring or message the local number and we fix it on the next visit, or sooner if it matters. Because you have a written scope, "missed" is a fact rather than an opinion, which is what makes that conversation short. We would rather hear about it in week one than lose the contract in month six.',
+  },
+  {
+    question: 'Do you bring your own equipment and products?',
+    answer:
+      // ⚠️ Consumables bracket, second of two on the page.
+      'Yes. Vacuums, mops, cloths and cleaning products all come with us, and we do not use your kitchen sponge on the bathroom. Consumables such as hand towel, toilet paper and bin liners are [supplied by us / supplied by you. Confirm], and whichever it is goes on the scope so it is never a surprise.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We walk your office with you, usually for twenty minutes, and ask what has been going wrong. Then you get a written scope and a price per visit, with an after hours option shown separately. No obligation. If it suits, we book a start date and you meet your cleaner before they start.',
+  },
+];
+
+// §11 Non-branded FAQs. The long-tail block, aimed at what people search
+// rather than what they ask us.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. These claims are checkable:
+//   - Cleaning Services Award 2020 (MA000022) covers commercial cleaning and
+//     sets penalty rates for weekends and late shifts. Correct, and
+//     consistent with the hub, which says the same.
+//   - Public liability insurance is not legally mandatory for a cleaning
+//     business in NSW but is universally required by commercial clients and
+//     landlords. Stated carefully below for that reason.
+//   - No dollar figure appears anywhere in this block, because the honest
+//     answer depends on a number TLB has not supplied.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does office cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE. The most searched question on the topic, and
+      // the page cannot answer it without a number from TLB. A "from $X" that
+      // turns out to be wrong is worse than no number, and the ACCC treats
+      // from-pricing as a claim.
+      'Office cleaning is normally priced per visit rather than per hour, and the price moves with floor area, how many bathrooms and kitchenettes there are, how often you want it done and whether the work is after hours. Ask every quote for a price per visit against a written scope so you are comparing the same job. [TLB’s pricing basis and any minimum charge. Confirm.]',
+  },
+  {
+    question: 'How often should an office be cleaned?',
+    answer:
+      'It comes down to headcount and whether there are client-facing rooms, not floor area. A small office with a handful of desks and one bathroom usually works on two or three visits a week. Anything with a reception, a shared kitchen used daily or twenty-plus people generally needs daily. Bathrooms are what set the floor: once they are shared by more than about ten people, every second day stops being enough.',
+  },
+  {
+    question: 'What is included in a standard office clean?',
+    answer:
+      'Floors vacuumed and mopped, bins emptied and relined, kitchenette benches and sink cleaned, bathrooms cleaned and disinfected, and shared touch points wiped. Anything beyond that — internal glass, high dusting, skirtings, fridge interiors, carpet extraction — should appear on the scope with a frequency against it. If a quote does not name those, assume they are not happening.',
+  },
+  {
+    question: 'Should an office cleaner be insured?',
+    answer:
+      'Yes, and you should ask to see the certificate rather than take the word for it. Public liability cover is what protects your business if a cleaner damages equipment or a third party is injured on your premises, and most commercial leases and building managers require it of any contractor working on site. Ask for the currency date too, since a certificate that expired last year is worth nothing.',
+  },
+  {
+    question: 'Is it cheaper to hire a cleaner directly?',
+    answer:
+      'It looks cheaper and it usually is not, once you count what comes with being an employer: superannuation, leave, workers compensation, Award rates and penalty rates, plus equipment, products and cover when they are sick. A contracted cleaning business absorbs all of that and turns up regardless. Direct hire makes sense at the point where you need someone on site all day, every day.',
+  },
+  {
+    question: 'What is the difference between office cleaning and commercial cleaning?',
+    answer:
+      'None, in practice. Commercial cleaning is the whole category for any premises that is not a home, and offices are the largest single type within it. The term matters only when a cleaner specialises: a clinic, a commercial kitchen and a warehouse each need things an office scope does not cover, which is why those are quoted differently.',
+  },
+];
+
+// §12 Closing CTA. Same offer as the hero, worded as what actually happens.
+const closingCta = {
+  kicker: 'Office cleaning',
+  heading: 'Start with a walkthrough.',
+  lead: 'Twenty minutes on site, then a written scope and a price per visit. You meet your cleaner before they start, and there is no lock-in term.',
+  cta: walkthroughCta,
+};
+
+const business = commercialBusiness(pageMeta.description);
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    {/* Trust bar and definition share ONE photo behind a Cream scrim, laid
+        across both sections. 75% keeps Dark Teal body copy above 4.5:1 over
+        the darkest part of the frame. Same treatment as the hub, and the
+        same on all thirteen premises pages. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What goes on the scope"
+      lead="Grouped by how often it happens, not by which room it is in. That is the difference two quotes are actually hiding."
+      items={scopeItems}
+      cta={walkthroughCta}
+    />
+
+    <Callout tone="note" heading={hourlyCallout.heading} body={hourlyCallout.body} />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Why the cheapest office quote is the expensive one"
+      body={worthKnowingBody}
+    />
+
+    {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
+
+        NOT BUILT because BeforeAfter has no reserved-slot mode by design: its
+        `src` is required, since a comparison slider with nothing to compare
+        has no meaningful empty state. It needs real paired photography and
+        none exists for commercial work.
+
+        THE PHOTO BRIEF for this page: one office bathroom or one kitchenette,
+        shot from a fixed tripod position, before and after, with NOTHING
+        moved between the two frames. A shifted camera or a mug picked up
+        reads as a glitch rather than as cleaning. Two pairs is plenty. Drop
+        it in here, between "Worth knowing" and the related pages. */}
+
+    <TagCloud
+      heading="Other premises we clean"
+      subheading="Commercial cleaning for every kind of workplace across the Northern Rivers and the Tweed."
+      tags={relatedTags}
+      note={[]}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Office Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

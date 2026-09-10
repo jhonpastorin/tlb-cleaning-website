@@ -1,0 +1,573 @@
+---
+// Breweries — the thirteenth and last of the "by type of premises" leaf pages
+// under the /commercial-cleaning/ hub (navigation.ts, "By type of premises"
+// group). Built in one pass with its twelve siblings.
+//
+// NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
+// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// blockers shared across the whole cluster.
+//
+// ⚠️ WHY THIS PAGE EXISTS AT ALL, given that "Breweries" looks like the
+// oddest entry in a thirteen-item menu: the Northern Rivers and the Tweed
+// have an unusually dense craft brewing scene for their population, and a
+// brewery is genuinely its own premises type rather than a factory with a
+// bar attached. It is the only entry in the cluster that is a PRODUCTION
+// SITE and a HOSPITALITY VENUE in one building, on one lease, cleaned by one
+// contractor, to two completely different standards on either side of a
+// glass wall. That is the page.
+//
+// ⚠️ THE ONE LINE NOBODY MAY CROSS, and it is the whole editorial spine:
+// CIP — clean in place, the cleaning of the inside of tanks, lines and
+// vessels — IS THE BREWERS' JOB AND ONLY THE BREWERS' JOB. It is part of
+// making beer, it uses caustic and acid at concentrations that will injure
+// someone untrained, it happens in and around confined spaces, and it is the
+// step that determines whether a batch is infected. A cleaning contractor
+// who offers it is offering to ruin beer and hurt people. §3 refuses it in
+// the first substantive block and the refusal is repeated in the scope and
+// in two FAQs, because this is the one thing on the page a keen salesperson
+// might try to soften.
+//
+// WHAT MAKES THIS PAGE DIFFERENT structurally:
+//   - `Hero variant="split-collage"` — THE ONLY USE OF THAT VARIANT IN THE
+//     CLUSTER, and it earns it: the page's argument is that this is two
+//     buildings in one, so the hero shows both sides at once rather than
+//     picking a side.
+//   - `Callout tone="warning"` on CIP, first.
+//   - `ServiceBlocks variant="highlight"` for the two zones plus the
+//     boundary — the second use of `highlight` after the medical page, and
+//     for the same reason: the reader picks the side of the wall they are
+//     asking about.
+//   - `ContentGrid columns={2}` on drains, which sounds like a small subject
+//     and is the single most important surface in a brewery.
+//   - No `ComparisonTable`, no `MetricsBlock`.
+//
+// BLOCKS LAUNCH, specific to this page:
+//   - Does TLB do breweries today? Nothing in the brand foundation document
+//     says so. Along with factories, this is the most speculative of the
+//     thirteen.
+//   - Whether TLB will work on a brew deck AT ALL while the brewery is
+//     operating, given wet floors, hot liquor, CO2 in cellar spaces and
+//     caustic in use nearby. Bracketed in §3. If the answer is no, this page
+//     honestly covers the taproom and the amenities only, and §4's first
+//     panel comes off.
+//   - CO2 AND OXYGEN DEPLETION. Fermentation and cellar spaces can hold CO2
+//     at levels that displace oxygen with no warning to the person walking
+//     in. Whether TLB's team is briefed on this and whether sites provide
+//     monitoring is bracketed in §3, and it is the most serious safety
+//     bracket on the page.
+//   - Spent grain and trade waste: whether TLB touches either. Bracketed in
+//     §4. Both have their own arrangements and neither is a cleaning job.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import ImageBand from '../components/sections/ImageBand.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own frames are in src/assets/commercial_cleaning/premises/;
+// the prompts are in that folder's IMAGE-PROMPTS.md.
+//
+// ⚠️ UNIFORM NOTE. The two production-side frames use the canonical aqua
+// polo and dark teal apron from IMAGE-GUIDELINES §3 but swap shoes for tall
+// rubber gumboots, because a brew deck floor is wet by design and a frame of
+// someone standing in running water in sneakers would be a photo of a
+// hazard. No hi-vis vest here, unlike the construction, warehouse and
+// factory pages: a small brewery production space is not a vehicle traffic
+// zone, and adding a vest would misrepresent the setting.
+//
+// ⚠️ NO BEER BRANDING ANYWHERE, and this is stricter than the sitewide "no
+// text" rule. The taproom frame's tap bank is deliberately unbadged and the
+// tanks are unlabelled. A generated brewery photo with invented brand marks
+// on the taps would be a fabricated brand asset (IMAGE-GUIDELINES §4) AND
+// would read as a real client's premises, which §7 forbids.
+import brewDeckImg from '../assets/commercial_cleaning/premises/brewery-cleaner-hosing-down-the-brew-deck-floor.jpg';
+import kegLineImg from '../assets/commercial_cleaning/premises/brewery-keg-line-and-floor-drains-cleaned.jpg';
+import taproomImg from '../assets/commercial_cleaning/premises/brewery-taproom-reset-before-opening.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+
+// §0 Metadata. "Brewery cleaning" is the head term. The description names the
+// CIP boundary, because a brewer searching this phrase is often looking for
+// exactly the thing this page refuses, and they should be able to tell from
+// the search result rather than after a phone call.
+const pageMeta = {
+  title: 'Brewery Cleaning | TLB Cleaning',
+  description:
+    'Brewery cleaning across the Northern Rivers and the Tweed. Brew deck floors and drains, the cellar, and the taproom reset before you open. Tanks and lines stay with your brewers.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/breweries/',
+};
+
+const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+
+// §1 Hero. `split-collage` — THE ONLY USE OF THIS VARIANT IN THE CLUSTER.
+//
+// It earns it here and nowhere else: this page's entire argument is that a
+// brewery is two buildings on one lease, so the hero has to show both sides
+// of the glass wall at once. Every other premises page has one subject and a
+// single frame is the right answer; picking one frame here would pick a side
+// and lose half the reader's recognition.
+//
+// `collageImages` flows alternately into two stacked columns (index 0 left,
+// 1 right, 2 left), so the order below is: brew deck, taproom, keg line.
+// Production, hospitality, production — which is the page in miniature.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page,
+// plus the uniform and no-branding notes in the imports above.
+const hero = {
+  kicker: 'Brewery cleaning',
+  headingLines: ['Two buildings.', 'One lease.'],
+  lead:
+    'Brewery cleaning across the Northern Rivers and the Tweed. The brew deck, the cellar and the drains on one standard, the taproom on another, and a scope that knows the difference. Tanks and lines stay with your brewers.',
+  cta: walkthroughCta,
+  collageImages: [
+    {
+      ratio: '4/3',
+      label:
+        'A cleaner in gumboots hosing down the concrete floor of a small craft brewery brew deck, the stainless tanks clean behind her',
+      src: brewDeckImg,
+    },
+    {
+      ratio: '4/3',
+      label:
+        'A cleaner wiping down the timber bar top of a small brewery taproom before opening, the stainless tap bank polished behind her',
+      src: taproomImg,
+    },
+    {
+      ratio: '4/3',
+      label:
+        'A cleaner squeegeeing water towards a stainless trench drain beside a row of clean stainless kegs in a brewery cellar',
+      src: kegLineImg,
+    },
+  ],
+};
+
+// §2 Definition. Answer-target block. Paragraph two draws the CIP line in the
+// reader's own vocabulary before §3 refuses it formally, because a brewer
+// who reaches §3 without this paragraph will read the refusal as ignorance
+// rather than as discipline.
+const definitionBody: TextBlockBody[] = [
+  'Brewery cleaning is the cleaning of a brewery’s environment: brew deck and cellar floors, trench drains and floor waste, tank exteriors and the walls and skirtings around them, the keg and packaging area, plus the taproom, bar, bathrooms and back of house. TLB Cleaning does this work across the Northern Rivers and the Tweed for craft breweries, taprooms and cellar door venues.',
+  'It stops at the outside of the vessel, and that is not a limitation we are apologising for. Cleaning in place — the caustic and acid cycles that clean the inside of tanks, lines and hoses — is part of making beer. It sits with your brewers, on your own schedule, with your own chemistry and your own verification, because it is the step that decides whether a batch is sound. Everything outside the vessel is a cleaning job, and there is a lot more of it than most brewery scopes account for.',
+];
+
+// §3 CIP and CO2. `warning`, and FIRST — before any scope.
+//
+// THE SPINE OF THE PAGE. See the file header: this is the one block a keen
+// salesperson might try to soften, and it must not be softened.
+//
+// ⚠️ VERIFICATION PASS REQUIRED, and this block is as serious as the
+// construction page's silica callout:
+//   - CIP uses caustic (typically sodium hydroxide) and acid cycles at
+//     concentrations and temperatures that cause serious chemical burns and
+//     eye injury. Correct.
+//   - Tank interiors are confined spaces; entry requires a permit,
+//     atmospheric testing and specific training. Correct.
+//   - Fermentation produces CO2 in large volumes; CO2 is heavier than air,
+//     collects at low level and in cellars and tank pits, and displaces
+//     oxygen with essentially no warning to the person entering. Correct,
+//     and it is a documented cause of death in breweries and wineries.
+//     NO PPM FIGURE IS QUOTED, on purpose — exposure standards move and a
+//     wrong number in a safety warning is worse than none.
+//   - Whether monitoring is present is a site question, which is why the
+//     paragraph asks rather than asserts.
+//   - SafeWork NSW and Safe Work Australia are the right primary sources and
+//     the brand foundation document §3.3 already approves them.
+const cipCallout = {
+  heading: 'We do not touch the inside of a tank, a line or a hose. Ever.',
+  body: [
+    'Clean in place is brewing, not cleaning. The cycles run caustic and acid at concentrations and temperatures that cause serious burns and permanent eye injury, the vessels themselves are confined spaces that need a permit and atmospheric testing before anyone goes in, and the whole process is what determines whether your next batch is infected. It belongs to your brewers, with your chemistry and your verification records, and any cleaning contractor offering to take it over is offering to ruin your beer with the best of intentions.',
+    'The second thing, and the one we would rather over-explain than under-explain: CO2. Fermentation produces it in volumes that matter, it is heavier than air, and it pools at floor level, in cellars and in tank pits with no smell and no warning — people have died walking into brewery spaces that looked completely ordinary. So our team is briefed to treat any low or enclosed space as unsafe until your people say otherwise, and to walk out rather than push on. [Whether TLB’s team is formally briefed on CO2 and oxygen depletion, and whether sites are asked to provide monitoring or a sign-off before entry. Confirm before this page ships.]',
+  ],
+};
+
+// §4 The two sides plus the boundary. `ServiceBlocks variant="highlight"` —
+// the second use of that variant in the cluster after the medical page, and
+// for the same reason: the reader picks rather than reads through. A brewer
+// wants the production panel, a venue manager wants the taproom panel, and
+// the owner of a small brewery wants both plus the boundary spelled out.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
+// Panel one carries the brew-deck access bracket and panel three the spent
+// grain and trade waste brackets.
+const zoneItems = [
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner in gumboots hosing down the concrete floor of a small craft brewery brew deck, the stainless tanks clean behind her',
+      src: brewDeckImg,
+    },
+    title: 'Production side: floors, drains and tank surrounds',
+    description:
+      // ⚠️ Real bracket. Whether TLB works this side at all decides how much
+      // of this page is honest.
+      'Brew deck and cellar floors washed down and squeegeed to the drain rather than left standing, trench drains and floor waste cleaned out and the grates lifted, tank and vessel exteriors and their legs and feet, hose racks, the walls and skirtings behind the line, and the keg and packaging area floor. [Whether TLB works on a live brew deck at all, or only during a production stand-down. Confirm.] Everything here is outside the vessel.',
+    cta: walkthroughCta,
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner wiping down the timber bar top of a small brewery taproom before opening, the stainless tap bank polished behind her',
+      src: taproomImg,
+    },
+    title: 'Taproom side: the reset before you open',
+    description:
+      'Bar top, the front and rail of the bar, the drip trays and the outside of the tap bank, tables and bench seats including the undersides, floors swept and mopped, glass and the roller door track, bathrooms cleaned and restocked, bins emptied, courtyard furniture and the paving swept. Finished and dry before your first customer. Beer lines and the inside of the taps are your cellar work, not ours.',
+    cta: walkthroughCta,
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner squeegeeing water towards a stainless trench drain beside a row of clean stainless kegs in a brewery cellar',
+      src: kegLineImg,
+    },
+    title: 'The boundary: what stays with you',
+    description:
+      // ⚠️ Two real brackets. Neither spent grain nor trade waste is a
+      // cleaning job, but both get asked for.
+      'CIP of tanks, lines and hoses. Confined space entry of any kind. Keg washing, which is a CIP process. Beer line cleaning. Anything requiring isolation of plant that has not been locked and tagged by your team. [Whether TLB handles spent grain removal, and whether TLB touches trade waste or the grease and solids arrestor. Confirm — both have their own arrangements and neither is cleaning.]',
+    cta: walkthroughCta,
+  },
+];
+
+// §5 Drains. `ContentGrid columns={2}` with `feature` cells.
+//
+// This looks like a small subject and it is the most important surface in the
+// building, which is exactly why it gets its own section rather than a line
+// in the scope. Every brewer already knows this; every venue manager and
+// every landlord does not.
+const drainBlocks = [
+  {
+    type: 'feature' as const,
+    icon: 'idea' as const,
+    heading: 'A drain is a biology problem',
+    body: [
+      'Trench drains in a brewery carry sugar, yeast and beer all day, which is the ideal feedstock for the exact organisms you spend your working life keeping out of your beer. A drain left to itself becomes a reservoir of wild yeast and lactic bacteria, twenty centimetres from your open vessels.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'spray-bottle' as const,
+    heading: 'Hosing is not cleaning it',
+    body: [
+      'A hose down the trench moves the visible material and leaves the biofilm on the channel walls and under the grate, which is where it actually lives. Grates come up, the channel gets scrubbed, and the corners and the outfall get done. That is a fortnightly job at minimum, not an annual one.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'target' as const,
+    heading: 'And a hose makes it airborne',
+    body: [
+      'High-pressure water into a dirty drain aerosolises everything in it and puts it into the air of the room, which is the worst possible outcome in a space with open vessels or a packaging line. Low pressure, mechanical scrubbing and a squeegee, in that order, is the method.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'puzzle' as const,
+    heading: 'The taproom has them too',
+    body: [
+      'Bar floor wastes, the drip tray drain and the cellar floor waste under the keg stack all do the same thing on a smaller scale, and they are the usual answer to a taproom that smells stale first thing in the morning before anyone has poured anything.',
+    ],
+  },
+];
+
+// §6 "Worth knowing". The lever here is unique in the cluster: on every other
+// premises type poor cleaning costs money slowly. In a brewery it can cost a
+// whole batch, and a brewer can price that themselves.
+//
+// ⚠️ VERIFICATION PASS REQUIRED:
+//   - Beer spoilage organisms of concern include wild yeast (notably
+//     Brettanomyces) and lactic acid bacteria (Lactobacillus, Pediococcus).
+//     Correct.
+//   - Drains, floors and hose ends are recognised environmental reservoirs
+//     for these organisms in breweries. Correct in substance.
+//   - Beer is a food for regulatory purposes in Australia and a brewery is a
+//     food business, so premises cleanliness obligations under the Food
+//     Standards Code apply. Correct in substance; no clause quoted.
+//   - A taproom serving food has the same obligations as any other food
+//     service premises. Correct.
+//   - NO SPOILAGE STATISTIC OR DOLLAR FIGURE IS QUOTED, because any specific
+//     number would need a source this page cannot cite, and the paragraph
+//     asks the reader to do their own sum instead.
+const worthKnowingBody: TextBlockBody[] = [
+  'A brewery is the only premises type on this site where poor environmental cleaning can cost you an entire batch. The organisms that spoil beer — wild yeast, Lactobacillus, Pediococcus — do not usually arrive from outside. They live in the building: in drains, in floor corners, on the ends of hoses left on a wet floor, in the biofilm under a grate nobody lifts. Your CIP protects the inside of the vessel beautifully and does nothing at all about the room the vessel is standing in. Take a batch, multiply by your wholesale value, and that is the number the floor and the drains are actually protecting.',
+  'The regulatory side is simpler than people expect and catches breweries out anyway. Beer is a food, which makes a brewery a food business, so the same obligation to keep premises, fixtures, fittings and equipment clean and sanitary applies to you as to a commercial kitchen — and if your taproom serves food, that side of the wall carries the full food service obligations too. Councils inspect both. The practical consequence is that your cleaning needs to exist as a written schedule with frequencies against each area, because that is the only form of it an inspector or a wholesale customer can actually look at.',
+];
+
+// §7 Related pages. Hospitality and commercial kitchen are the two nearest
+// neighbours — a taproom is a venue and most of them now serve food — and
+// factories is the production-side neighbour.
+const relatedTags = relatedPremises('/breweries/');
+
+// §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+//
+// ⚠️ Same warning as the factories page: this is one of the two most
+// speculative pages in the cluster. Do not fill these with a generic quote.
+// A vague testimonial on a page about CIP boundaries and CO2 reads as a
+// business talking about work it has not done. Also: never quote a taproom
+// customer — they are a third party's patron, not our client.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a head brewer or owner about the drains and the floor, ideally someone who has had an environmental contamination scare. That is §6’s argument in the only voice that can carry it. Named brewery and role, with written permission. If TLB has no brewery client yet, CUT this whole section rather than filling it.]',
+    name: '[Brewery name, TBC]',
+    role: '[Role, for example head brewer, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB brewery cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about the taproom being reset and dry before opening, from a venue that runs production and hospitality in one building. The two-standards point is what this page is for.]',
+    name: '[Brewery name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Taproom manager, TLB client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about us knowing where our work stopped. A brewer valuing a contractor who refused to touch the CIP is the single most on-brand thing this page could carry. ⚠️ Do NOT use a taproom customer — see the §8 comment in this file.]',
+    name: '[Brewery name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Craft brewery owner, TLB client' },
+  },
+];
+
+// §9 Branded FAQs, in the CUSTOMER'S voice — a brewer, owner or taproom
+// manager.
+const brandedFaqItems = [
+  {
+    question: 'Will you do our CIP?',
+    answer:
+      // ⚠️ The page's spine. This answer must not be softened, and it is the
+      // reason the same refusal appears in §2, §3, §4 and twice in the FAQs.
+      'No, and you should be wary of anyone who says yes. CIP is brewing rather than cleaning: it runs caustic and acid at injuring concentrations, the vessels are confined spaces, and the cycle is what decides whether your batch is sound. It stays with your brewers, your chemistry and your verification records. We clean the room your tanks are standing in, which is the part that is usually under-served.',
+  },
+  {
+    question: 'Can you work while we are brewing?',
+    answer:
+      // ⚠️ Real bracket, and it decides how much of the production side TLB
+      // can actually offer.
+      'Some of it, and not all of it. The taproom, the amenities and the packaging area are straightforward. A live brew deck has hot liquor, caustic in use, wet floors and hose runs underfoot, so the honest answer depends on your layout and your day. [Whether TLB works on a live brew deck, or only during a production stand-down. Confirm.] We would rather book around your brew calendar than be an extra body on the deck on transfer day.',
+  },
+  {
+    question: 'Do you clean the beer lines and the taps?',
+    answer:
+      'No. Beer line cleaning is cellar work on the same side of the boundary as CIP, and it affects what your customer tastes, so it stays with your team or your line-cleaning contractor. We clean the outside of the tap bank, the drip trays, the bar top and the floor and drain under it, which is where the stale smell in a taproom almost always comes from rather than from the lines.',
+  },
+  {
+    question: 'How often should the drains be done?',
+    answer:
+      'Fortnightly at minimum on the production side, and weekly for a brewery running most days, with the grates lifted and the channel scrubbed rather than hosed. Taproom floor wastes and the drip tray drain want doing weekly. It sounds like over-servicing until you have had an environmental contamination scare, at which point it reads as the cheapest line on the scope.',
+  },
+  {
+    question: 'Are you across the CO2 risk?',
+    answer:
+      // ⚠️ The most serious safety bracket on the page.
+      'It is the first thing we ask a brewery about, before floor area or frequency. CO2 is heavier than air, it pools in cellars, tank pits and any low space, and it displaces oxygen without smell or warning. [Whether TLB’s team is formally briefed on CO2 and oxygen depletion, and what sign-off or monitoring TLB asks a site to provide before entry. Confirm.] Our people are instructed to walk out of any space they are unsure about and ask, rather than finish the job.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We walk both sides of the wall with you and ask about your brew calendar before your floor area. Then you get a written scope split into production and taproom with a frequency against every line, the boundary written down explicitly, and a price per visit. No obligation, and we will tell you plainly which parts of your building we are not the right contractor for.',
+  },
+];
+
+// §10 Non-branded FAQs, the long-tail block.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. Checkable claims:
+//   - CIP definition and its caustic/acid cycles. Correct.
+//   - Tank interiors are confined spaces requiring permit and testing.
+//     Correct.
+//   - CO2 is heavier than air, pools at low level, displaces oxygen, and has
+//     caused deaths in breweries and wineries. Correct; no ppm figure quoted.
+//   - Beer spoilage organisms: wild yeast including Brettanomyces, and lactic
+//     acid bacteria including Lactobacillus and Pediococcus. Correct.
+//   - Beer is a food and a brewery a food business under the Food Standards
+//     Code; premises cleanliness obligations apply. Correct in substance; no
+//     clause quoted.
+//   - Trade waste from a brewery is typically regulated by the local water
+//     authority under a trade waste agreement. Correct in substance.
+//   - Spent grain is usually collected as stockfeed under its own
+//     arrangement. Correct in substance.
+//   - No dollar figure anywhere, same as every sibling page.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does brewery cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
+      'It is priced per visit against a written scope, and a good quote splits the production side from the taproom because they are different jobs at different frequencies. The number moves with how much trench drain there is, how tight the tank surrounds are, whether the taproom serves food, and how many days a week you are open and brewing. [TLB’s pricing basis. Confirm.]',
+  },
+  {
+    question: 'What is CIP in a brewery?',
+    answer:
+      'Clean in place: circulating cleaning solutions through tanks, lines and hoses without dismantling them, usually as a caustic cycle to remove organic soil and protein, a rinse, then an acid cycle to remove mineral scale, followed by sanitising. It is done by the brewing team as part of production because it determines whether a batch is microbiologically sound, and because the chemicals involved cause serious injury without training and the right equipment.',
+  },
+  {
+    question: 'Why is CO2 dangerous in a brewery?',
+    answer:
+      'Because fermentation produces a lot of it and it behaves in the least intuitive way possible. CO2 is heavier than air, so it collects at floor level and in cellars, tank pits and any enclosed low space rather than dispersing upward. It has no smell at the concentrations that matter and it displaces oxygen, so someone can walk into an ordinary-looking space and lose consciousness with no warning. It has killed people in breweries and wineries. Monitoring, ventilation and never entering alone are the controls.',
+  },
+  {
+    question: 'What causes beer spoilage from the brewery environment?',
+    answer:
+      'Wild yeast, particularly Brettanomyces, and lactic acid bacteria such as Lactobacillus and Pediococcus. They rarely arrive from outside the building; they establish inside it, in drains, floor corners, biofilm under grates, and on the ends of hoses left lying on a wet floor. CIP protects the inside of a vessel and does nothing for the room, which is why environmental cleaning is a microbiological control rather than a cosmetic one.',
+  },
+  {
+    question: 'Is a brewery a food business in Australia?',
+    answer:
+      'Yes. Beer is a food for regulatory purposes, which makes a brewery a food business with the usual obligation to keep premises, fixtures, fittings and equipment clean and sanitary under the Food Standards Code, subject to inspection by the local council. If the taproom serves food as well, the full food service obligations apply to that side too. Your council and your own food safety documentation are the authoritative sources. This is general information, not compliance advice.',
+  },
+  {
+    question: 'Who deals with spent grain and trade waste?',
+    answer:
+      'Both sit outside a cleaning contract. Spent grain is normally collected under its own arrangement, most often as stockfeed for a local farm, on a schedule set by brew days. Trade waste — the wastewater a brewery discharges to sewer — is normally regulated by the local water authority under a trade waste agreement, with its own monitoring and its own arrestor servicing. A cleaning contractor can keep the surrounds of both clean and flag a problem, and that is the extent of it.',
+  },
+];
+
+// §11 Closing CTA.
+const closingCta = {
+  kicker: 'Brewery cleaning',
+  heading: 'We will walk both sides of the wall.',
+  lead: 'And we will ask about your brew calendar before your floor area. Then a written scope split into production and taproom, with the boundary written down rather than assumed.',
+  cta: walkthroughCta,
+};
+
+const business = commercialBusiness(pageMeta.description);
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    {/* §1 — the only `split-collage` hero in the cluster. Three frames,
+        production / hospitality / production, because the page's argument is
+        that this is two buildings on one lease and a single hero image would
+        have to pick a side. */}
+    <Hero
+      variant="split-collage"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      collageImages={hero.collageImages}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    {/* §3 — the spine of the page, before any scope. Not to be softened; see
+        the file header. */}
+    <Callout tone="warning" heading={cipCallout.heading} body={cipCallout.body} />
+
+    {/* §4 — the second `highlight` in the cluster after the medical page. The
+        reader picks the side of the wall they are asking about rather than
+        reading through all three. */}
+    <ServiceBlocks
+      variant="highlight"
+      heading="Two standards, one building"
+      lead="Pick the side you are asking about. The third panel is the boundary, and it is the most important of the three."
+      items={zoneItems}
+    />
+
+    {/* The drain frame, given a band of its own because §5 is about to argue
+        that this unglamorous strip of stainless is the most important surface
+        in the building, and the photo makes that legible before the argument
+        starts.
+
+        ⚠️ Source is 4:3 in a 16/9 box, so `cover` crops top and bottom.
+        Checked: the trench drain, the lifted grate end and the kegs all
+        survive the crop, which is everything the caption claims. */}
+    <ImageBand
+      ratio="16/9"
+      label="A cleaner squeegeeing water towards a stainless trench drain beside a row of clean stainless kegs in a brewery cellar"
+      caption="Grates up, channel scrubbed, squeegeed dry. The most important surface in the building."
+      src={kegLineImg}
+    />
+
+    <ContentGrid
+      heading="Four things about drains"
+      lead="Every brewer already knows this. Every landlord and most venue managers do not."
+      columns={2}
+      blocks={drainBlocks}
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Your CIP protects the vessel. Nothing protects the room."
+      body={worthKnowingBody}
+    />
+
+    <TagCloud
+      heading="Other premises we clean"
+      subheading="Commercial cleaning for every kind of premises across the Northern Rivers and the Tweed."
+      tags={relatedTags}
+      note={[]}
+    />
+
+    <TestimonialCarousel heading="What brewers say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Brewery Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

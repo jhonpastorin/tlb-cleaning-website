@@ -1,0 +1,510 @@
+---
+// Aged care, retirement and seniors — one of the THIRTEEN "by type of
+// premises" leaf pages under the /commercial-cleaning/ hub (navigation.ts,
+// "By type of premises" group). Built in one pass with its twelve siblings.
+//
+// NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
+// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// blockers shared across the whole cluster.
+//
+// ⚠️ THE NAMING PROBLEM, and it is the reason §3 exists.
+// navigation.ts already flags this in its own source: this page is
+// COMMERCIAL cleaning of aged care PREMISES — a residential village, a
+// retirement complex, an independent living unit block — bought by an
+// operator or a village manager. It is NOT the domestic cleaning of an older
+// person's own home under a Home Care Package or DVA, which
+// content-plans/home-cleaning.md §3 links to as /senior-home-cleaning/ and
+// which currently has no mega-menu entry and no page.
+//
+// The menu label says "and seniors", so a family member searching for help
+// for their mum will land here. Sending them away in the first screen is the
+// single most valuable thing this page does, and §3's Callout does it before
+// any commercial copy. Once /senior-home-cleaning/ exists, that Callout's
+// href stops being a dead link — until then it is the ONE KNOWN 404 this
+// page ships with, deliberately, because the alternative is silently keeping
+// a reader on the wrong page.
+//
+// WHAT MAKES THIS PAGE DIFFERENT from its twelve siblings, structurally:
+//   - `Callout tone="note"` in position three, above everything commercial.
+//     No sibling interrupts itself that early. Here it has to.
+//   - `StoryMosaic theme="dark"` on cleaning around people who live there,
+//     which is this premises type's whole difficulty and has no analogue on
+//     an office or a warehouse page.
+//   - The scope block is grouped by INFECTION RISK, not by frequency (the
+//     office page's grouping) or by area (strata's). That is the grouping an
+//     aged care operator's own cleaning policy uses.
+//
+// BLOCKS LAUNCH, specific to this page:
+//   - Does TLB do aged care work today? Nothing in the brand foundation
+//     document mentions it. This may be ambition rather than a service.
+//   - POLICE CHECKS ARE NOT OPTIONAL HERE. The cluster-wide
+//     [police-checked] bracket is a launch blocker everywhere; on this page
+//     it is a gate. Aged care providers are required to screen people who
+//     work with residents, and an operator will ask for evidence before a
+//     walkthrough, not after. If TLB cannot evidence screening for every
+//     cleaner, this page should not ship at all.
+//   - Whether TLB will take single independent living units, or only whole
+//     sites. Bracketed in branded FAQ 1, and it changes who this page is for.
+//   - Nothing on this page claims accreditation, an Aged Care Quality
+//     Standards audit history, or clinical cleaning capability. Do not add
+//     one without evidence: those are auditable claims.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import StoryMosaic from '../components/sections/StoryMosaic.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import ComparisonTable from '../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own frames are in src/assets/commercial_cleaning/premises/;
+// the prompts are in that folder's IMAGE-PROMPTS.md. Both were generated
+// warm and homely rather than clinical, on purpose: a village corridor that
+// photographs like a hospital corridor sells the wrong service.
+import heroImg from '../assets/commercial_cleaning/premises/aged-care-cleaner-mopping-a-retirement-village-corridor.jpg';
+import loungeImg from '../assets/commercial_cleaning/premises/aged-care-cleaner-wiping-handrails-in-a-communal-lounge.jpg';
+// REUSED from the hub's folder per IMAGE-GUIDELINES §5. The subject is the
+// walkthrough conversation where a scope gets agreed, which is exactly what
+// the hub uses this frame to mean, and the label is the hub's verbatim.
+import walkthroughImg from '../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+
+// §0 Metadata. The title leads with "aged care and retirement village
+// cleaning" rather than the menu's "and seniors", because the menu label is
+// what causes the confusion §3 exists to fix and the meta description is the
+// first chance to prevent the wrong click.
+const pageMeta = {
+  title: 'Aged Care and Retirement Village Cleaning | TLB Cleaning',
+  description:
+    'Cleaning for aged care homes, retirement villages and independent living units across the Northern Rivers and the Tweed. A screened local team, a written scope, and residents treated like neighbours.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/aged-care-retirement-and-seniors/',
+};
+
+const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+
+// §1 Hero. `split-single-image` with the image LEFT, mirroring the office
+// page's right. Reading order puts the photo first here on purpose: the
+// reader's real question is whether this looks like the place their residents
+// live, and the corridor answers it faster than the lead does.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
+const hero = {
+  kicker: 'Aged care and retirement living',
+  headingLines: ['People live here.', 'We clean like it.'],
+  lead:
+    'Cleaning for aged care homes, retirement villages and independent living units across the Northern Rivers and the Tweed. A screened local team, on a written scope, working around residents rather than through them.',
+  cta: walkthroughCta,
+  image: {
+    ratio: '16/9',
+    label:
+      'A cleaner mopping the vinyl floor of a bright retirement village corridor, leaving a clear path to walk past her',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. Answer-target block. Paragraph two draws the line the whole
+// page depends on, in the reader's own words, before §3 acts on it.
+const definitionBody: TextBlockBody[] = [
+  'Aged care cleaning is the cleaning of a residential aged care home, retirement village or independent living unit complex: resident rooms and units, corridors and handrails, communal lounges and dining rooms, common bathrooms, laundries and the administration areas. TLB Cleaning does this work across the Northern Rivers and the Tweed for operators, village managers and boards.',
+  'It is not the same job as cleaning an older person’s own house, and it is not a nursing service. This page is for the person who is responsible for a site. If you are a family member looking for someone to help your mum or dad at home, the next block is for you.',
+];
+
+// §3 The redirect. THE MOST IMPORTANT BLOCK ON THIS PAGE, and the reason it
+// sits above every piece of commercial copy.
+//
+// `note`, not `warning` — it corrects a belief the reader arrived with
+// (that this page is about their parent), which is exactly the line
+// Callout.astro's docs draw between the two tones.
+//
+// ⚠️ KNOWN 404. /senior-home-cleaning/ is referenced by
+// content-plans/home-cleaning.md §3 and does not exist yet. Linking a dead
+// page is the lesser evil here: a reader who needs the other service is
+// better served by a named destination they can search for than by being
+// kept on a page written for an operator. When that page ships, this href
+// starts working with no change needed. If the decision is that it will
+// never ship, change this to /house-cleaning/ rather than deleting the
+// block.
+const wrongPageCallout = {
+  heading: 'Looking for help for your mum or dad at home?',
+  body: [
+    'Then this is the wrong page, and we would rather tell you than keep you here. This one is about cleaning contracts for aged care sites and retirement villages, bought by the people who run them.',
+    'What you are after is a regular clean of a private home, usually fortnightly, often paid through a Home Care Package or DVA. It is a different service with a different price and a different conversation, and it is one of the kinder things we do.',
+  ],
+  cta: { label: 'Cleaning for seniors at home', href: '/senior-home-cleaning/' },
+};
+
+// §4 Scope, grouped BY INFECTION RISK rather than by frequency or by area.
+// That is the grouping an aged care operator's own cleaning policy uses, and
+// it is the one that makes a scope auditable: high-touch, wet areas,
+// everything else. No sibling page groups this way.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
+// Confirm each one, and be conservative: this is the page where an
+// overstated scope has the worst consequences.
+//
+// ⚠️ Nothing below claims clinical or infection-control cleaning
+// certification, and the last item says out loud what we do not do. Do not
+// soften that item to win work.
+const scopeItems = [
+  {
+    icon: 'target' as const,
+    title: 'High-touch points, every visit',
+    description:
+      'Handrails the length of every corridor, door handles and push plates, light switches, lift buttons, bed rails and chair arms in communal rooms, and the shared kitchen and laundry handles. These are the surfaces an outbreak travels on and they are the first thing a thin scope drops.',
+  },
+  {
+    icon: 'spray-bottle' as const,
+    title: 'Wet areas, with separate cloths',
+    description:
+      'Resident and common bathrooms, ensuites, shower chairs and grab rails, sluice and laundry areas. Colour-coded cloths and mop heads so nothing crosses from a bathroom to a dining table, changed between rooms rather than between wings.',
+  },
+  {
+    icon: 'house' as const,
+    title: 'Resident rooms and independent living units',
+    description:
+      'Floors, surfaces, ensuite, bins, and the things residents actually notice: the window sill, the top of the wardrobe, under the bed. We knock, we introduce ourselves, and if a resident would rather we came back later, we come back later.',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Communal lounges and dining',
+    description:
+      'Dining tables and chairs including the legs and feet, lounge upholstery vacuumed, hard floors mopped and carpet vacuumed, and glass at the height people actually touch it. Dining rooms turn over three times a day and need a clean between sittings, not once at night.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Periodically, on a named month',
+    description:
+      'Carpet extraction in corridors and lounges, upholstery cleaning, high dusting, vents, window sills and external glass at ground level. Each one goes on the schedule with a month against it so it happens on a date rather than before an audit.',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'What we do not do, said plainly',
+    description:
+      'No personal care of any kind. No handling of clinical or sharps waste, no cleaning of clinical equipment, no terminal cleans and no outbreak decontamination. Those need clinically trained staff under your own infection control procedures, and a cleaning contractor claiming otherwise is a risk to you.',
+  },
+];
+
+// §5 Cleaning around people who live there. `StoryMosaic theme="dark"` —
+// this premises type's whole difficulty, and it has no analogue on the office
+// or warehouse pages. Array order IS the layout (see SECTIONS.md).
+const residentsBlocks = [
+  {
+    type: 'text' as const,
+    body: [
+      'An office is empty when we clean it. A village never is. Somebody is having lunch, somebody is asleep, somebody has family visiting, and somebody has had a bad morning and does not want a stranger with a mop in their room. That is not an obstacle to work around. It is the job.',
+      'So we work slowly and we work the same way every time. Half a corridor stays walkable while the other half dries, because a wet floor sign is not a plan for someone with a walker. We knock and wait. We put things back exactly where they were, because a chair moved thirty centimetres is genuinely disorienting for a resident with dementia.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A cleaner wiping down a brushed-metal handrail at the edge of a bright communal lounge in a retirement village',
+    src: loungeImg,
+  },
+  {
+    type: 'text' as const,
+    body: [
+      'The other half is continuity, and in aged care it is worth more than it is anywhere else on this site. Residents come to know the person who cleans their room. They will tell that person things they will not put on a feedback form: that the shower is not draining, that the neighbour has not been out in two days, that they are worried about something.',
+      'A cleaner who changes every fortnight never gets told any of it. Ours are employed by TLB rather than subcontracted, they stay, and they are briefed to pass on what they notice to your staff instead of to each other. That is not an add-on service. It is what having the same people does on its own.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A TLB cleaner and a manager talking through the job in a reception area',
+    src: walkthroughImg,
+  },
+];
+
+// §6 "Worth knowing". On this page the lever is not price, it is screening
+// and turnover — the two things an operator is actually accountable for.
+//
+// ⚠️ VERIFICATION PASS REQUIRED, and be careful here:
+//   - Aged care providers in Australia are required to screen people who
+//     work with residents, and police certificate or worker screening
+//     requirements apply to contractors as well as employees. Correct in
+//     substance. NO SECTION, ACT OR SCHEME NAME IS QUOTED on purpose — the
+//     screening framework has changed names and thresholds more than once
+//     and an undated specific goes stale silently.
+//   - "Ask for evidence, not assurance" is the useful, safe version of the
+//     point and it is what the paragraph lands on.
+//   - Nothing here states TLB's own screening status. That is the
+//     [police-checked] bracket, and on this page it is a gate rather than a
+//     to-do. See the file header.
+const worthKnowingBody: TextBlockBody[] = [
+  'The question that matters most on an aged care site is not what a cleaner charges, it is who they are sending. Providers are accountable for screening the people who work around residents, and that accountability extends to contractors. A cleaning company that answers "our team is all police-checked" without being able to produce the evidence per person, on request, has just made their problem your problem.',
+  'The second question is turnover. Cleaning has one of the highest staff turnover rates of any trade, and a subcontracted or platform-sourced workforce is the reason: nobody stays because nobody is employed. On an aged care site that shows up as strangers in resident rooms every few weeks, a scope nobody has actually read, and no one who notices that Mr Hall’s shower has stopped draining. Ask any cleaner how long their people have been there. It tells you more than the quote does.',
+];
+
+// §7 Related pages, with this page filtered out of its own band.
+const relatedTags = relatedPremises('/aged-care-retirement-and-seniors/');
+
+// §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+//
+// ⚠️ HARDER RULES HERE THAN ANYWHERE ELSE ON THE SITE. Never quote a
+// resident or a resident's family, even with permission — a testimonial from
+// someone in residential care raises consent questions a cleaning company is
+// not equipped to answer, and it would put a vulnerable person's words in a
+// marketing asset. These slots ask for the operator or manager only.
+// IMAGE-GUIDELINES §7 already forbids generating a face for any of them.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a village or facility manager about screening and paperwork being right the first time. That is the thing an operator is buying. Role and town, with written permission — and confirm the operator is happy to be named.]',
+    name: '[Facility or village manager, TBC]',
+    role: '[Role and town, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB aged care cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about the same cleaners staying on site for a long stretch. Continuity is this page’s central argument and an operator saying it is worth more than us saying it.]',
+    name: '[Operator, TBC]',
+    role: '[Role and town, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Aged care operator, long-standing TLB client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about how our team behaves around residents, from a manager who has watched it. ⚠️ Do NOT source this from a resident or a resident’s family — see the §8 comment in this file.]',
+    name: '[Care manager, TBC]',
+    role: '[Role and town, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Care manager at a TLB client site' },
+  },
+];
+
+// §9 Comparison table. The shared rows from src/data/comparison.ts.
+//
+// Kept on this page, unlike on the strata page where it was dropped: rows
+// one, three and four are about who the person in the building is and
+// whether they stay, which is the exact thing an aged care operator is
+// buying. The lead is rewritten to say so, since the shared rows' own
+// descriptions are worded for a home.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'On an aged care site, the questions below stop being marketing points and start being compliance ones. Who is the person in the building, are they employed, and will they still be here in a year.',
+  columns: comparisonColumns,
+  rows: comparisonRows,
+};
+
+// §10 Branded FAQs, in the CUSTOMER'S voice — here that is an operator, a
+// village manager or a board member.
+const brandedFaqItems = [
+  {
+    question: 'Do you take single units, or only whole sites?',
+    answer:
+      // ⚠️ Real bracket, and it decides who this page is for.
+      'We quote whole sites and we also do independent living unit turnovers between residents, which is closer to an end of lease clean than to a regular visit. [Whether TLB takes individual occupied units inside a village, and whether that is billed to the village or the resident. Confirm.] If a resident wants their own unit cleaned privately, we are happy to arrange that separately from your contract.',
+  },
+  {
+    question: 'Are your cleaners screened?',
+    answer:
+      // ⚠️ This is the page's gate, not a to-do. See the file header.
+      'Our cleaners are employed by TLB rather than subcontracted, which is what makes screening possible to evidence at all: there is no third party in between holding the paperwork. [TLB’s screening: what checks are held for every cleaner, how often they are renewed, and what evidence can be produced on request. Confirm before this page ships.] Ask us for it in writing at the walkthrough and hold us to producing it.',
+  },
+  {
+    question: 'Can you work around care routines and meal times?',
+    answer:
+      'Yes, and the schedule is built backwards from them. We take your daily rhythm at the walkthrough — meals, medication rounds, physio, visiting hours, when residents nap — and place each area in the gaps. Dining rooms get done between sittings. Corridors get done in halves. Nothing noisy happens before eight or during a rest period.',
+  },
+  {
+    question: 'What happens during an outbreak?',
+    answer:
+      'We follow your infection control procedures, not our own, because you are the ones accountable for them. In practice that usually means increased high-touch cleaning, separate equipment for affected areas and our team following the same PPE and movement rules as your staff. What we do not do is terminal cleans or decontamination, which need clinically trained staff. We will say so rather than take the work.',
+  },
+  {
+    question: 'Will it be the same cleaners each time?',
+    answer:
+      'Yes, and on this page that answer matters more than on any other. You get the same small team, they meet your staff before they start, and they are briefed on your site rather than handed an address. When someone takes leave, their cover comes from the same team and has already walked the site. Residents should recognise the person cleaning their room.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We walk the site with you, including the areas that never make it onto a quote: the sluice room, the laundry, the back of the kitchen. Then you get a written scope grouped the way your own cleaning policy is grouped, a price per visit, and a schedule for the periodic work. No obligation.',
+  },
+];
+
+// §11 Non-branded FAQs, the long-tail block.
+//
+// ⚠️ VERIFICATION PASS REQUIRED, and this block is the most legally
+// sensitive on the whole cluster. Every answer below is deliberately general
+// and points the reader at a primary source rather than asserting a standard:
+//   - The Aged Care Quality Standards do require a safe, clean and
+//     comfortable service environment. Correct in substance, and named
+//     without quoting a standard number, since the framework has been
+//     revised.
+//   - Cleaning is not clinical care and cleaners are not care workers.
+//     Correct and important — it is the distinction the last answer makes.
+//   - Nothing here should be read as compliance advice, and the answers say
+//     so where it matters.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does aged care cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
+      'It is priced per visit against a written scope. The number moves with how many resident rooms and bathrooms there are, how much communal and corridor floor, whether wet areas and laundries are included, and how many visits a day the dining rooms need. A village of independent living units and a residential care home are different jobs at different prices. [TLB’s pricing basis. Confirm.]',
+  },
+  {
+    question: 'What are the cleaning requirements for aged care homes in Australia?',
+    answer:
+      'Approved providers are required to give residents a service environment that is safe, clean, well maintained and comfortable, and that obligation sits within the Aged Care Quality Standards. The Standards set the outcome rather than a task list, so each provider translates it into its own cleaning policy, schedule and records. Your own policy is the document a cleaning contractor should be quoting against. This is general information, not compliance advice.',
+  },
+  {
+    question: 'How often should aged care facilities be cleaned?',
+    answer:
+      'High-touch surfaces and shared bathrooms are daily at minimum, and more often in a home with higher care needs. Dining rooms need cleaning between sittings rather than once a day. Resident rooms are usually daily for floors and bins with a fuller clean weekly. Corridors, handrails and communal lounges are daily. Carpet extraction, upholstery and high dusting are periodic, on a set month.',
+  },
+  {
+    question: 'What is high-touch cleaning?',
+    answer:
+      'It is the targeted cleaning and disinfecting of the surfaces hands actually land on: handrails, door handles and push plates, light switches, lift buttons, bed and chair rails, tap handles and shared appliance handles. It matters because infection moves by contact far more than by floor, and yet floors are what a cheap scope spends its time on because floors are what people see.',
+  },
+  {
+    question: 'Do aged care cleaners need police checks?',
+    answer:
+      'Providers are accountable for screening the people who work with residents, and that extends to contractors as well as their own staff. In practice that means a cleaning company working on an aged care site should be able to evidence current screening for every individual who attends, not just assert it at a company level. Ask for it per person and ask when each one was last renewed.',
+  },
+  {
+    question: 'Can a cleaner help a resident with personal care?',
+    answer:
+      'No, and a cleaning company that lets it happen informally is creating a serious problem for the provider. Helping someone up, into a shower or in and out of bed is personal care, it requires training and it sits under the provider’s own duty of care. Our team is briefed to help by finding a staff member, and nothing else. It is not unkindness. It is the line that keeps residents safe.',
+  },
+];
+
+// §12 Closing CTA.
+const closingCta = {
+  kicker: 'Aged care and retirement living',
+  heading: 'Start with a walk of the site.',
+  lead: 'Including the sluice room, the laundry and the back of the kitchen. Then a written scope grouped the way your cleaning policy is, and a price per visit.',
+  cta: walkthroughCta,
+};
+
+const business = commercialBusiness(pageMeta.description);
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="left"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    {/* §3 — deliberately above every piece of commercial copy on the page.
+        See the file header: the mega-menu label "and seniors" sends family
+        members here and the kindest thing this page can do is send them on. */}
+    <Callout
+      tone="note"
+      heading={wrongPageCallout.heading}
+      body={wrongPageCallout.body}
+      cta={wrongPageCallout.cta}
+    />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What goes on the scope"
+      lead="Grouped by infection risk, the way your own cleaning policy is grouped, rather than room by room."
+      items={scopeItems}
+      cta={walkthroughCta}
+    />
+
+    <StoryMosaic theme="dark" heading="An office is empty. A village never is." blocks={residentsBlocks} />
+
+    <TextBlock
+      theme="light"
+      align="left"
+      heading="The two questions worth more than the quote"
+      body={worthKnowingBody}
+    />
+
+    <TagCloud
+      heading="Other premises we clean"
+      subheading="Commercial cleaning for every kind of site across the Northern Rivers and the Tweed."
+      tags={relatedTags}
+      note={[]}
+    />
+
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
+    <TestimonialCarousel heading="What operators and managers say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Aged Care Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

@@ -1,0 +1,432 @@
+---
+// Retail and shopfronts — one of the THIRTEEN "by type of premises" leaf
+// pages under the /commercial-cleaning/ hub (navigation.ts, "By type of
+// premises" group). Built in one pass with its twelve siblings.
+//
+// NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
+// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// blockers shared across the whole cluster.
+//
+// ⚠️ THIS IS THE SMALLEST-TICKET PAGE IN THE CLUSTER, and the page is built
+// around that rather than pretending otherwise. A single shopfront on a main
+// street in Bangalow or Mullumbimby is a thirty-minute daily visit, which is
+// below the point where a site walkthrough and a written scope pay for
+// themselves in the way they do on the other twelve.
+//
+// So this is the ONE page in the cluster that does not lead with "Book a site
+// walkthrough". It leads with the sitewide `quoteCta` instead, because for a
+// small shop the honest, low-friction path really is a quote rather than a
+// meeting — and the brand foundation document's §2.4 lists "Get an instant
+// quote" as a preferred CTA precisely for this kind of buyer. The walkthrough
+// CTA still appears further down, for the reader with a strip of tenancies or
+// a larger store.
+//
+// WHAT ELSE MAKES THIS PAGE DIFFERENT structurally:
+//   - `ServiceBlocks variant="list"` for the scope, with rows ordered by the
+//     CLOCK rather than by area or frequency: what happens before you open,
+//     during trade, after close, periodically. Strata also uses `list`, but
+//     for areas; this is the only clock-ordered scope in the cluster.
+//   - `Callout tone="note"` on the shared-mall problem, which is genuinely
+//     confusing for a tenant and costs them money in both directions.
+//   - `ImageBand` on the shopfront glass, because glass IS the product on
+//     this premises type and the frame argues it better than a paragraph.
+//   - No `ComparisonTable`, no `MetricsBlock`. This page is short on purpose:
+//     a shop owner reading it is doing so between customers.
+//
+// BLOCKS LAUNCH, specific to this page:
+//   - MINIMUM CHARGE. This is the page where it matters most and it is
+//     bracketed twice. A thirty-minute visit has to clear a minimum or the
+//     job loses money, and a shop owner should find that out from the page
+//     rather than from a quote that surprises them.
+//   - Whether TLB will do external shopfront glass, and up to what height.
+//     Bracketed in §5.
+//   - Whether TLB takes multi-tenancy or shopping-centre work, which is a
+//     different sale entirely. Bracketed in branded FAQ 6.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import ImageBand from '../components/sections/ImageBand.astro';
+import Callout from '../components/sections/Callout.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own frames are in src/assets/commercial_cleaning/premises/;
+// the prompts are in that folder's IMAGE-PROMPTS.md. Both are shot before
+// opening with no shoppers in frame, which is both honest about when the work
+// happens and the only way to photograph a shop floor without inventing
+// customers.
+import heroImg from '../assets/commercial_cleaning/premises/retail-cleaner-mopping-a-shop-floor-before-opening.jpg';
+import glassImg from '../assets/commercial_cleaning/premises/shopfront-glass-and-entry-cleaned-before-opening.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+
+// §0 Metadata. "Shop cleaning" and "retail cleaning" are both head terms and
+// "shopfront" is the local word, so all three concepts sit in the title and
+// description.
+const pageMeta = {
+  title: 'Retail and Shopfront Cleaning | TLB Cleaning',
+  description:
+    'Shop and retail cleaning across the Northern Rivers and the Tweed. Floors, glass and the entry finished before you unlock the door, from a local team on a written scope.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/retail-and-shopfronts/',
+};
+
+// ⚠️ NOTE THE TWO CTAs, and the order of them. This is the only page in the
+// cluster that leads with the sitewide quote CTA rather than the walkthrough,
+// for the reason set out in the file header: a thirty-minute daily visit does
+// not justify a meeting, and the brand document's §2.4 names "Get an instant
+// quote" as a preferred CTA for exactly this buyer.
+//
+// The walkthrough is offered further down, once the page has established
+// that a bigger store or a strip of tenancies is a different conversation.
+const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+
+// §1 Hero. `split-single-image`, image right, and the CTA is `quoteCta`.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
+const hero = {
+  kicker: 'Retail and shopfront cleaning',
+  headingLines: ['They decide before', 'they walk in.'],
+  lead:
+    'Shop and retail cleaning across the Northern Rivers and the Tweed. Floors, glass and the entry finished before you unlock the door, by the same local person every time.',
+  cta: quoteCta,
+  image: {
+    ratio: '16/9',
+    label:
+      'A cleaner mopping the polished concrete floor of a bright coastal homewares shop before opening',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. Answer-target block. Paragraph two names what is genuinely
+// different about retail: the cleaning is merchandising, and the surface that
+// matters most is the one the customer never touches.
+const definitionBody: TextBlockBody[] = [
+  'Retail cleaning is the daily cleaning of a shop or shopfront: floors, entry and matting, internal and external glass, the counter and fitting rooms, shelving and display surfaces, staff areas and the bathroom. TLB Cleaning does this work across the Northern Rivers and the Tweed for single shops, cafés and takeaway front of house, salons, galleries and strips of tenancies.',
+  'In retail the cleaning is part of the merchandising rather than maintenance, and the priority order is not what most people expect. Glass comes first, because a customer decides whether to come in from the footpath and the only thing between them and the stock is a pane of glass with the morning sun on it. Then the floor, then the entry, then the counter. Everything else is real work, but those four are what a browser reacts to before anyone has said hello.',
+];
+
+// §3 Scope. `ServiceBlocks variant="list"` — ordered BY THE CLOCK: before you
+// open, during trade, after close, periodically. Strata also uses `list` but
+// for areas; this is the only clock-ordered scope in the cluster, and it is
+// the order a shop owner actually thinks in.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
+// The external glass row carries a real bracket.
+const clockItems = [
+  {
+    icon: 'spark' as const,
+    title: 'Before you open',
+    description:
+      'Internal glass and the entry doors done first, floors swept and mopped or vacuumed and dry before trade, entry matting lifted and cleaned underneath, counter and card terminal wiped, bins emptied and relined, fitting room mirrors and floors done. Finished and dry, not finished and wet with a sign out.',
+    href: '/commercial-cleaning/',
+  },
+  {
+    icon: 'target' as const,
+    title: 'External glass and the footpath',
+    description:
+      // ⚠️ Real bracket. Height and reach decide whether this is a cleaning
+      // job or a licensed one.
+      'Shopfront glass outside as well as in, the frames and the threshold, and the footpath immediately outside swept. Coastal shopfronts collect salt film that fresh water alone will not shift, so the glass needs washing rather than wiping. [Whether TLB does external glass, and up to what height. Confirm.] Anything above ground level needs its own plan.',
+    href: '/window-cleaning/',
+  },
+  {
+    icon: 'house' as const,
+    title: 'Back of house, which nobody quotes',
+    description:
+      'Staff bathroom cleaned and restocked, kitchenette and sink, the stockroom floor swept and kept clear, and the bin area. The stockroom is the room a scope always leaves out and the room a health or fire inspection actually looks at, because a blocked exit path starts as a delivery nobody unpacked.',
+    href: '/commercial-cleaning/',
+  },
+  {
+    icon: 'bloom' as const,
+    title: 'Display surfaces, on your terms',
+    description:
+      'Shelf and plinth surfaces dusted, mirrors and cabinet glass done, and the tops of fixtures nobody can see from the floor but everybody can see from the mezzanine. We do not move or restyle merchandise. We dust around it, or we dust it and put it back exactly as it was, and which of those it is goes on the scope rather than being assumed.',
+    href: '/commercial-cleaning/',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Periodically, outside trade',
+    description:
+      'Carpet extraction where there is carpet, hard floor machine scrubbing or polishing, high dusting and light fittings, air vents, and pressure cleaning the footpath and entry threshold. All of it booked into a closed day or an early morning, because none of it can happen with customers in the shop.',
+    href: '/commercial-pressure-cleaning/',
+  },
+];
+
+// §4 The shared-mall problem. `note` — it corrects a belief a tenant
+// commonly holds and it costs them money in both directions: paying for
+// cleaning their lease already covers, or assuming cover they do not have.
+//
+// UNIQUE TO THIS PAGE, and it is the retail equivalent of the strata page's
+// common-property-versus-lots distinction.
+const tenancyCallout = {
+  heading: 'Check your lease before you buy any of this.',
+  body: [
+    'If your shop is inside a centre or a managed strip, the landlord’s cleaning contract usually covers the mall floor, the shared bathrooms, the loading dock and the common bin area, and you are already paying for it through outgoings. What it almost never covers is anything inside your lease line, which is your floor, your glass, your fitting rooms, your counter and your stockroom.',
+    'The two ways that costs a tenant money are opposite. Some pay for a scope that duplicates what outgoings already fund. Others assume the centre’s cleaner does their glass and never notice it has not been done in a year. Read the cleaning clause, or send it to us and we will quote to your lease line rather than over it.',
+  ],
+  cta: quoteCta,
+};
+
+// §5 "Worth knowing". The lever here is that a shop's cleaning failure is
+// visible from the street to people who never come in, so the cost is
+// invisible in a way an office's is not.
+const worthKnowingBody: TextBlockBody[] = [
+  'The thing about a shop is that the people you lose never come in, so you never find out. A browser looks at your window from the footpath, and if the glass is streaked or fingerprinted or has last month’s tape residue on it, they read the whole business through it and keep walking. There is no complaint and no data. It is the only premises type in this cluster where the cost of poor cleaning is entirely invisible to the person paying for it.',
+  'That is also why glass is worth insisting on rather than treating as an extra. Coastal shopfronts in this region get a salt film that a dry cloth just smears, and the low morning sun on a main street shows every mark on it. Washed properly and squeegeed it disappears; wiped, it looks worse than before it was touched. If you only buy one line on the scope, buy that one, and buy it often enough that it is never a job someone has to notice.',
+];
+
+// §6 Related pages. Window cleaning and pressure cleaning are appended as
+// extras, because both are genuinely the thing a shopfront reader wants next
+// and both already exist.
+const relatedTags = relatedPremises('/retail-and-shopfronts/', [
+  { label: 'Window cleaning', href: '/window-cleaning/' },
+]);
+
+// §7 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+//
+// ⚠️ Never quote a shopper. These slots ask for the owner or manager only.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a shop owner about the glass, ideally someone who noticed foot traffic change. That is §5’s argument in a client’s own words and it is the only version of it a reader will believe. Named business and role, with written permission.]',
+    name: '[Business name, TBC]',
+    role: '[Owner, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB retail cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about the visit being finished and dry before opening, every day, from a shop that had a cleaner who used to still be there at trade. Reliability on a thirty-minute job is the whole product.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Shop owner, long-standing TLB client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a tenant in a centre or a managed strip about the lease line being sorted out properly, which is §4’s point. If no such client exists yet, cut this slot rather than filling it with a generic one.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Retail tenant, TLB client' },
+  },
+];
+
+// §8 Branded FAQs, in the CUSTOMER'S voice — a shop owner or manager. The
+// small-ticket reality of this page shows up here more than anywhere: two of
+// the six answers are about money and minimums.
+const brandedFaqItems = [
+  {
+    question: 'Our shop is small. Is that too small for you?',
+    answer:
+      // ⚠️ Real bracket, and it is the most important one on the page.
+      'No, and small shops are a lot of what this work is. What a small shop does run into is a minimum charge: a fifteen minute visit costs almost the same to get to as a forty minute one, so there is a floor below which a daily service cannot be priced honestly. [TLB’s minimum charge per visit. Confirm.] Often the better answer for a small shop is three visits a week rather than five, and we will say so.',
+  },
+  {
+    question: 'Can you be finished before we open?',
+    answer:
+      'Yes, and that is the whole point of an early visit. Floors dry, glass done, entry clear, before you unlock. A cleaner still working at trade is worse than no cleaner: you are paying for a service that is now costing you sales, and a wet floor sign in a doorway turns browsers around. If your opening time changes seasonally, tell us and the visit moves with it.',
+  },
+  {
+    question: 'Do you do the windows too?',
+    answer:
+      // ⚠️ Same bracket as §3.
+      'Internal glass is part of every retail scope. External shopfront glass at ground level is [included / a separate line. Confirm], and it needs washing rather than wiping in a coastal town because of salt film. Anything above ground level is a different job with different equipment, and we will tell you which yours is rather than quoting and then discovering it.',
+  },
+  {
+    question: 'Will you touch our stock or displays?',
+    answer:
+      'Not unless you ask us to. The default is that we dust around merchandise and never move, restyle or reposition it, because a display someone spent an hour on is not ours to improve. If you would rather we lifted pieces to dust the plinth and put them back exactly as they were, we will, and that goes on the scope in writing so it is never a surprise either way.',
+  },
+  {
+    question: 'What if we get a spill or a mess mid-trade?',
+    answer:
+      'Ring the local number. For clients on an ongoing scope we will get to a mid-trade problem the same day where we can, and tell you honestly if we cannot rather than leaving you waiting. Most retail messes are a fifteen minute job that becomes a real one if it dries, so it is worth calling early rather than mopping it with paper towel and hoping.',
+  },
+  {
+    question: 'Do you take on a whole strip or a centre?',
+    answer:
+      // ⚠️ Real bracket. A different sale, and worth knowing whether TLB
+      // wants it.
+      'That is a different and larger conversation than a single shop, and it is the one case on this page where a site walkthrough genuinely pays for itself. [Whether TLB takes multi-tenancy, managed strip or shopping centre common area work. Confirm.] If you manage a strip rather than trade from one, the strata and common area page is closer to what you need.',
+  },
+];
+
+// §9 Non-branded FAQs, the long-tail block.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. Checkable claims:
+//   - Slips, trips and falls are a leading cause of injury in retail
+//     workplaces and a wet floor during trade is a recognised hazard.
+//     Correct in substance; no statistic quoted.
+//   - Salt aerosol deposits on coastal glass and needs washing with a
+//     detergent solution rather than dry wiping. Correct.
+//   - A retail lease's cleaning clause typically distinguishes common area
+//     cleaning funded through outgoings from cleaning inside the lease line.
+//     Correct in substance and hedged to "typically", because leases vary.
+//   - No dollar figure anywhere, same as every sibling page.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does shop cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, and here the minimum matters more than the
+      // rate.
+      'Retail is priced per visit against a written scope, and for a small shop the minimum charge matters more than the rate does, because travel and setup are most of a short visit. The number moves with floor area and floor type, how much glass there is, whether external glass is included, and how many visits a week. [TLB’s pricing basis and minimum charge per visit. Confirm.]',
+  },
+  {
+    question: 'How often should a shop be cleaned?',
+    answer:
+      'Daily for anywhere with food, a fitting room or high foot traffic, and three times a week is usually enough for a low-traffic boutique or gallery. Glass is the exception and wants doing every visit regardless, because it is the surface customers judge from the footpath. Floors in a shop with a street entry get dirty faster than floor area suggests, since everything walks in from outside.',
+  },
+  {
+    question: 'Who is responsible for cleaning in a retail lease, the tenant or the landlord?',
+    answer:
+      'Typically the landlord’s contract covers common areas — mall floors, shared bathrooms, the loading dock, common bin areas — and the cost is recovered from tenants through outgoings. Anything inside the lease line is usually the tenant’s: your floor, your glass, your fitting rooms, your stockroom. Leases vary, so the cleaning clause in your own lease is the answer rather than the general rule. Read it before you buy a scope.',
+  },
+  {
+    question: 'Why does shopfront glass in a coastal town streak?',
+    answer:
+      'Because it is salt rather than dust. Sea air deposits a fine salt film that attracts moisture and cannot be removed by dry wiping — a cloth just moves it around and leaves a haze that shows badly in low morning sun. It needs washing with a detergent solution and squeegeeing off, the same way a professional does a window, which is why wiped shopfront glass often looks worse afterwards than before.',
+  },
+  {
+    question: 'Should a shop floor be cleaned during trading hours?',
+    answer:
+      'Only for spills. A routine clean during trade creates a slip hazard exactly where your customers are, and slips are among the most common causes of injury in retail workplaces. It also reads badly: a mop and bucket in a doorway turns browsers away more effectively than almost anything else. Routine cleaning belongs before opening or after close, with mid-trade attention reserved for genuine spills.',
+  },
+  {
+    question: 'What is usually left out of a retail cleaning quote?',
+    answer:
+      'Four things, consistently: external glass, under the entry matting, the stockroom floor, and the tops of fixtures. All four are invisible on the day and all four are noticed within a month. The stockroom is the one worth insisting on, because a stockroom that is never cleaned becomes a stockroom with a blocked exit path, and that is a fire and work health and safety problem rather than a tidiness one.',
+  },
+];
+
+// §10 Closing CTA. `walkthroughCta` here rather than the quote CTA the hero
+// used, because by this point in the page the reader who is still going is
+// the one with a bigger store or a strip of tenancies — the one for whom a
+// walkthrough genuinely pays for itself. See the file header.
+const closingCta = {
+  kicker: 'Retail and shopfront cleaning',
+  heading: 'Send us your floor plan or your lease clause.',
+  lead: 'For a single shop we can quote from that and a few photos. For a bigger store or a strip of tenancies, a walkthrough is worth the twenty minutes.',
+  cta: walkthroughCta,
+};
+
+const business = commercialBusiness(pageMeta.description);
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <ServiceBlocks
+      variant="list"
+      heading="What happens, and when"
+      lead="Ordered by the clock rather than by room, because that is the order a shop actually runs on."
+      items={clockItems}
+    />
+
+    {/* Glass gets a band of its own because on this premises type glass IS
+        the product, and §5 spends two paragraphs arguing it. The photo makes
+        the case faster than the prose does.
+
+        ⚠️ Source is 4:3 in a 16/9 box, so `cover` crops top and bottom.
+        Checked: the squeegeed swathe, the entry door and the street beyond
+        all survive it, which is everything the caption claims. */}
+    <ImageBand
+      ratio="16/9"
+      label="A cleaner squeegeeing the inside of a large shopfront window before opening, the quiet street bright beyond the glass"
+      caption="Glass first, every visit. It is the only thing between a browser on the footpath and your stock."
+      src={glassImg}
+    />
+
+    {/* §4 — the retail equivalent of the strata page's common-property line,
+        and it costs a tenant money in both directions. */}
+    <Callout tone="note" heading={tenancyCallout.heading} body={tenancyCallout.body} cta={tenancyCallout.cta} />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="The customers you lose never come in"
+      body={worthKnowingBody}
+    />
+
+    <TagCloud
+      heading="Other premises we clean"
+      subheading="Commercial cleaning for every kind of premises across the Northern Rivers and the Tweed."
+      tags={relatedTags}
+      note={[]}
+    />
+
+    <TestimonialCarousel heading="What shop owners say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Retail Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

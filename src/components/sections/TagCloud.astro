@@ -1,5 +1,10 @@
 ---
-interface Tag {
+// Exported because src/data/premises.ts builds TagCloud pill lists for the
+// thirteen "by type of premises" pages and needs to name this shape. Same
+// reason `TagGroup` below is exported: a shared data module that hands this
+// component its content should be typed against the component's own contract
+// rather than a structurally-identical copy that can drift out of step.
+export interface Tag {
   label: string;
   href?: string;
 }

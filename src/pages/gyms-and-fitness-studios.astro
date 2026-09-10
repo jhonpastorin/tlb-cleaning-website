@@ -1,0 +1,476 @@
+---
+// Gyms and fitness studios — one of the THIRTEEN "by type of premises" leaf
+// pages under the /commercial-cleaning/ hub (navigation.ts, "By type of
+// premises" group). Built in one pass with its twelve siblings.
+//
+// NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
+// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// blockers shared across the whole cluster.
+//
+// WHAT MAKES THIS PAGE DIFFERENT structurally:
+//   - `ServiceBlocks variant="image-cards"` for the three zones. This is the
+//     ONLY use of that variant in the cluster, and it earns it: a gym is
+//     three physically distinct rooms (the floor, the studio, the change
+//     rooms) and the reader recognises them by sight faster than by name.
+//     Three photos with a footer link each is the right shape; an icon grid
+//     would throw away the recognition.
+//   - `Callout tone="note"` on the 24/7 access problem, which is unique to
+//     this premises type. No other kind of premises has a business model
+//     where there is no closing time to clean inside.
+//   - `ContentGrid columns={2}` on what actually causes gym odour, because it
+//     is the one thing every reader of this page has already lost a member
+//     over and almost none of them have diagnosed correctly.
+//   - No `ComparisonTable`. Same call as strata, construction, medical and
+//     schools: the shared rows are written for someone choosing who enters
+//     their home.
+//
+// BLOCKS LAUNCH, specific to this page:
+//   - Does TLB do gyms today? Nothing in the brand foundation document says
+//     so. May be ambition rather than a service.
+//   - Whether TLB will clean a 24/7 access gym, which means working with
+//     members in the room. Bracketed in §3 and it decides whether this page
+//     addresses half its market or all of it.
+//   - Whether TLB does rubber floor deep cleaning, which needs a scrubber
+//     and the right chemistry rather than a mop. Bracketed in §4.
+//   - Mould in wet areas. This region is humid and a gym change room is the
+//     worst case; /mould-cleaning-and-removal/ exists and is cross-linked,
+//     but whether TLB will take on remediation in a commercial wet area is
+//     bracketed in branded FAQ 5.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Callout from '../components/sections/Callout.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own frames are in src/assets/commercial_cleaning/premises/;
+// the prompts are in that folder's IMAGE-PROMPTS.md. All three were
+// generated bright and airy rather than dark and moody, which is against
+// gym-photography convention and deliberately so: this is a cleaning page,
+// and a moody gym photo hides exactly what the reader is trying to see.
+import heroImg from '../assets/commercial_cleaning/premises/gym-cleaner-wiping-down-strength-equipment.jpg';
+import studioImg from '../assets/commercial_cleaning/premises/gym-studio-floor-and-mats-cleaned.jpg';
+import changeRoomImg from '../assets/commercial_cleaning/premises/gym-change-room-and-showers-cleaned.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+
+// §0 Metadata. "Gym cleaning" leads because it is the head term; studios are
+// named because a boutique studio owner does not think of their space as a
+// gym and would otherwise not recognise the page as theirs.
+const pageMeta = {
+  title: 'Gym and Fitness Studio Cleaning | TLB Cleaning',
+  description:
+    'Cleaning for gyms, fitness studios and 24/7 access clubs across the Northern Rivers and the Tweed. Equipment, mats, rubber floors and change rooms, done daily on a written scope.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/gyms-and-fitness-studios/',
+};
+
+const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+
+// §1 Hero. `split-single-image`, image right.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
+const hero = {
+  kicker: 'Gym and fitness studio cleaning',
+  headingLines: ['Members do not cancel', 'over the equipment.'],
+  lead:
+    'Cleaning for gyms, studios and 24/7 access clubs across the Northern Rivers and the Tweed. Equipment, mats, rubber floors and change rooms, on a scope written for a room people sweat in.',
+  cta: walkthroughCta,
+  image: {
+    ratio: '16/9',
+    label:
+      'A cleaner wiping down the padded bench of a strength machine in a bright, modern fitness studio',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. Answer-target block. Paragraph two names the thing that
+// makes this premises type different from every other page in the cluster:
+// the soiling is human and it is deposited deliberately, all day.
+const definitionBody: TextBlockBody[] = [
+  'Gym cleaning is the daily cleaning of a fitness facility: equipment and upholstery, mats and rubber flooring, mirrors and glass, change rooms and showers, and the high-touch surfaces members put their hands on between sets. TLB Cleaning does this work across the Northern Rivers and the Tweed for gyms, boutique studios, 24/7 access clubs and studio spaces inside larger venues.',
+  'What makes it its own trade is what the soiling actually is. An office collects dust. A gym collects sweat, skin, hair and body oil, deposited deliberately, on upholstery and rubber and into porous surfaces, all day, by dozens of people. That is a biological load rather than a dirt load, and it means a gym cannot be cleaned with an office scope done more often. The products, the order of work and the wet areas all change.',
+];
+
+// §3 The access problem. `note` — it corrects an assumption the reader may
+// not have examined (that cleaning happens "after close") rather than warning
+// them off an action.
+//
+// UNIQUE TO THIS PAGE in the cluster: every other premises type has a closing
+// time. A 24/7 gym does not, and pretending otherwise is how a cleaning
+// contract for one falls apart in week two.
+const accessCallout = {
+  heading: 'If you are open 24 hours, there is no "after close".',
+  body: [
+    'Most cleaning contracts assume an empty building. A 24/7 access club never has one: three in the morning is quiet, not empty, and the person who is in there at that hour is often the member who cares most about the place. So the schedule has to be built around presence rather than absence, which means quiet-hour visits, working zone by zone rather than room by room, and never taking a whole change room out of service at once.',
+    'It also changes who we send. A cleaner working an unstaffed gym at five in the morning is alone in a building with members, which is a work health and safety question for us and a member-experience question for you. [Whether TLB will service unstaffed 24/7 access hours. Confirm.] If the answer is no, the honest version of this page covers staffed studios and staffed hours, and we should say so rather than quote and then renegotiate.',
+  ],
+  cta: walkthroughCta,
+};
+
+// §4 The three zones. `ServiceBlocks variant="image-cards"` — THE ONLY USE OF
+// THIS VARIANT IN THE CLUSTER.
+//
+// It earns it because a gym is three physically distinct rooms and a reader
+// recognises them by sight faster than by name. The variant renders each
+// item's `cta` as a full-width footer bar rather than a pill (see
+// SECTIONS.md), which suits a zone card better than a button would.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
+// The rubber floor item carries a real bracket.
+const zoneItems = [
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner wiping down the padded bench of a strength machine in a bright, modern fitness studio',
+      src: heroImg,
+    },
+    title: 'The floor: equipment and upholstery',
+    description:
+      'Every bench pad, seat back, handle, grip and adjustment lever wiped and disinfected, not just the ones at eye level. Cardio consoles, screens and rails. Dumbbell handles and racks, kettlebell handles, barbell sleeves and knurling, the pull-up bar and the cable attachments. Frames wiped down to the floor, because sweat runs down and dries where nobody looks.',
+    cta: walkthroughCta,
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner mopping the timber floor of a bright, empty group fitness studio with the mats stacked at the rear',
+      src: studioImg,
+    },
+    title: 'The studio: mats and floors',
+    description:
+      // ⚠️ Real bracket. Rubber flooring is the item most gyms are being
+      // under-served on, and it needs equipment rather than effort.
+      'Mats cleaned on both sides and stood to dry rather than stacked wet, which is what makes a mat cupboard smell. Sprung timber and vinyl mopped with the right dilution so it is not left slippery. Rubber flooring deep cleaned with a scrubber and the right chemistry rather than a mop, because a mop on rubber just moves the film around. [Whether TLB has a scrubber for rubber flooring. Confirm.]',
+    cta: walkthroughCta,
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A clean, empty change room in a modern fitness studio, lockers and bench dry and finished with the showers behind',
+      src: changeRoomImg,
+    },
+    title: 'The change rooms: the part that loses members',
+    description:
+      'Showers including the grout, the screen track and the drain, floors mopped and squeegeed rather than left wet, toilets and basins, mirrors, benches, locker tops and the gaps between lockers. Consumables restocked. Drains and grout treated as scheduled work rather than as a response to a complaint, because by the time a member mentions it, three have already left.',
+    cta: walkthroughCta,
+  },
+];
+
+// §5 What actually causes the smell. `ContentGrid columns={2}` with `feature`
+// cells.
+//
+// Included because every reader of this page has already lost a member over
+// odour and almost none of them have diagnosed it correctly — they buy an air
+// freshener or a stronger disinfectant, which treats the symptom and makes
+// the room smell like a disinfected gym instead of a gym.
+const odourBlocks = [
+  {
+    type: 'feature' as const,
+    icon: 'idea' as const,
+    heading: 'It is bacteria, not dirt',
+    body: [
+      'Sweat itself is close to odourless. The smell is what bacteria produce feeding on the skin, oils and sweat left on upholstery, rubber and grout. That is why a room can look clean and smell awful, and why an air freshener makes it worse rather than better: you now have both smells.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'spray-bottle' as const,
+    heading: 'Wiping is not disinfecting',
+    body: [
+      'A spray wiped straight off has not had its contact time, so it removes the visible mark and leaves most of the load behind. Disinfectant has to stay wet on the surface for the time on its own label. It is the single most common thing done wrong in a gym, including by members with the provided bottle.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'target' as const,
+    heading: 'The mats are stacked wet',
+    body: [
+      'A mat cleaned on one side and stacked before it dries is a sealed, damp, warm surface with a food source on it. Cleaned both sides and stood on edge to dry, the same mat is fine. Nothing else on this list costs so little to fix.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'puzzle' as const,
+    heading: 'It is coming from the drain',
+    body: [
+      'Shower and floor drains hold biofilm and, in a dry trap, let sewer gas straight back into the room. A change room that smells worst first thing in the morning, before anyone has trained, is telling you it is the drain rather than the members. Scheduled drain treatment fixes it; more disinfectant on the floor does not.',
+    ],
+  },
+];
+
+// §6 "Worth knowing". The lever here is churn, and unlike most pages in this
+// cluster the cost is directly calculable by the reader — which is why the
+// paragraph asks them to do the sum rather than quoting one.
+//
+// ⚠️ VERIFICATION PASS REQUIRED:
+//   - Cleanliness consistently appears among the top reasons members leave a
+//     gym in industry surveys. Correct in substance and worded generally.
+//     NO PERCENTAGE IS QUOTED, because any specific figure would need a
+//     source this page cannot cite, and trust.ts already carries a standing
+//     warning about unsourced numbers on this site.
+//   - Tinea, plantar warts and staph-type skin infections are genuinely
+//     associated with shared gym wet areas and equipment. Correct, and
+//     deliberately not dramatised.
+const worthKnowingBody: TextBlockBody[] = [
+  'Nobody cancels a membership because a bench was dusty. They cancel because the change room smelled, or because they put their hand on a grip that was still wet from someone else. Cleanliness turns up near the top of every survey of why members leave a gym, and it is the only one of those reasons a gym owner can fix outright rather than compete on. Take your monthly membership fee, multiply it by twelve, and that is what one avoidable cancellation costs. Two a month is a cleaning budget.',
+  'The second thing is that a gym is the one premises type in this cluster where poor cleaning has a health consequence for the people paying you. Shared wet areas and shared equipment are how tinea, plantar warts and skin infections move between members. Not often, and not dramatically, but often enough that a change room floor and a bench pad are not cosmetic surfaces. That is the argument for a written scope here: it makes the shower grout and the drain someone’s named job on a named day, instead of the thing everyone assumed was included.',
+];
+
+// §7 Related pages. Mould is appended as an extra — a humid Northern Rivers
+// change room is the site's single worst mould case, and that page exists.
+const relatedTags = relatedPremises('/gyms-and-fitness-studios/', [
+  { label: 'Mould cleaning and removal', href: '/mould-cleaning-and-removal/' },
+]);
+
+// §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+//
+// ⚠️ Never quote a gym member. A member is a third party's customer and
+// their words belong to their own review of the gym, not to our marketing.
+// These slots ask for the owner or manager only.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a gym owner about the change room specifically, ideally from somewhere that had an odour problem before we started. That is §5’s argument in a client’s own words and it is the most persuasive thing this page could carry. Named business and role, with written permission.]',
+    name: '[Business name, TBC]',
+    role: '[Role, for example owner, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB gym cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a studio owner about the schedule surviving a busy term, since a boutique studio runs on a class timetable with almost no gaps in it.]',
+    name: '[Studio name, TBC]',
+    role: '[Owner, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Fitness studio owner, TLB client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote mentioning member feedback improving. ⚠️ Do NOT use a member review — see the §8 comment in this file. The gym owner reporting what members told them is fine; republishing a member is not.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Gym manager, TLB client' },
+  },
+];
+
+// §9 Branded FAQs, in the CUSTOMER'S voice — a gym or studio owner or
+// manager.
+const brandedFaqItems = [
+  {
+    question: 'When would you clean, if we never close?',
+    answer:
+      // ⚠️ Same bracket as §3.
+      'In your quietest window, zone by zone rather than room by room, so nothing is ever fully out of service. For a staffed gym that is usually before opening or after the last class. For a 24/7 club it is the small hours, and there will still be members in the building. [Whether TLB services unstaffed 24/7 hours. Confirm.] If we cannot cover a window, we will tell you at the walkthrough rather than after you have signed.',
+  },
+  {
+    question: 'Do you clean the equipment itself, or just the floors?',
+    answer:
+      'The equipment is most of the job here. Every pad, grip, handle, lever and console gets wiped and disinfected with proper contact time, frames included down to the floor. Floors matter, but a member’s hands never touch the floor and they touch forty pieces of equipment in an hour. A gym quote that talks mostly about floors is an office quote with a different heading on it.',
+  },
+  {
+    question: 'Will you use products that damage upholstery?',
+    answer:
+      'No, and it is worth asking every cleaner. Alcohol-heavy and solvent-based sprays crack and dry out vinyl bench upholstery over months, which is how a gym ends up replacing pads it should not have needed to. We use products rated for gym vinyl and rubber, at the right dilution. If your equipment manufacturer specifies something, theirs wins and it goes on the scope.',
+  },
+  {
+    question: 'Can you deal with the change room drains and grout?',
+    answer:
+      'Yes, and they belong on the schedule rather than in a complaint. Grout gets agitated and treated periodically instead of mopped over, and drains get cleaned out and treated on a set interval, because biofilm in a drain is a smell you cannot chase with floor cleaner. Both go on the scope with a frequency, which is the only way either one actually happens.',
+  },
+  {
+    question: 'What if we already have mould in the showers?',
+    answer:
+      // ⚠️ Real bracket. Commercial wet-area remediation is a bigger job
+      // than a cleaning contract and it needs its own answer.
+      'Surface mould on grout and silicone in a wet area is normal in this climate and comes back if only wiped, so it needs treating and then a schedule to keep it down. Anything growing behind a wall or under a floor is remediation rather than cleaning, and that is a different job. [Whether TLB takes on commercial wet-area mould remediation, or treats surface mould only. Confirm.] We have a page on mould and we will tell you honestly which side of the line yours is.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We walk the gym at the quietest hour you have, look at the change room drains and the underside of the equipment rather than the reception desk, and tell you what is actually going on. Then you get a written scope split by zone, a price per visit and a schedule for the periodic work. No obligation.',
+  },
+];
+
+// §10 Non-branded FAQs, the long-tail block.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. Checkable claims:
+//   - Disinfectants require a stated wet contact time to work and wiping dry
+//     immediately defeats them. Correct, and the single most useful thing in
+//     this block.
+//   - Tinea, plantar warts and staph-type skin infections are associated with
+//     shared gym floors, wet areas and equipment. Correct, not dramatised.
+//   - Rubber gym flooring is porous and needs a scrubber or autoscrubber
+//     rather than a mop for a real clean. Correct.
+//   - Sweat is largely odourless and the smell is bacterial. Correct.
+//   - No dollar figure anywhere, same as every sibling page.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does gym cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
+      'It is priced per visit against a written scope. The number moves with how many pieces of equipment there are rather than floor area, how many change rooms and showers, whether the rubber flooring needs machine cleaning, and how many visits a day your traffic justifies. A boutique studio and a full gym with two change rooms are different jobs. [TLB’s pricing basis. Confirm.]',
+  },
+  {
+    question: 'How often should a gym be cleaned?',
+    answer:
+      'Daily at minimum for equipment, floors and change rooms, and twice daily for change rooms in a busy club. Equipment touch points ideally get a pass between peak periods as well, which is what the member-facing spray bottle is meant to cover and largely does not. Rubber floor machine cleaning, grout, drains and upholstery treatment are periodic, on a set interval.',
+  },
+  {
+    question: 'Why does my gym smell even though it looks clean?',
+    answer:
+      'Because the smell is bacterial rather than visual. Sweat is close to odourless on its own; what you are smelling is bacteria feeding on skin, oils and sweat absorbed into upholstery, rubber flooring, mats and grout. Three usual culprits: disinfectant wiped off before its contact time, mats stacked before they dried, and biofilm in a shower or floor drain. None of the three are fixed by more air freshener.',
+  },
+  {
+    question: 'What is the correct way to disinfect gym equipment?',
+    answer:
+      'Clean first, then disinfect, then leave it wet. Wipe the visible soil off, apply the disinfectant, and let it stay wet on the surface for the contact time printed on its own label — usually a minute or several — before it dries or is wiped. Spraying and immediately wiping dry is the most common error and it largely wastes the product. Grips, levers and adjustment pins matter as much as the pads.',
+  },
+  {
+    question: 'Can you catch anything from a gym?',
+    answer:
+      'Occasionally, and it is worth being straight about rather than alarmed. Shared wet areas are associated with tinea and plantar warts, and shared equipment surfaces with staph-type skin infections, particularly where someone has a break in the skin. It is not common and it is largely preventable by the same things that stop the room smelling: real disinfection with contact time, dry change room floors, and clean mats.',
+  },
+  {
+    question: 'How do you clean rubber gym flooring?',
+    answer:
+      'With a scrubber and a neutral cleaner rated for rubber, not with a mop and not with anything solvent-based or high-pH. Rubber is porous and slightly tacky, so a mop mostly redistributes the film of sweat and oil across it, which is why a mopped rubber floor still feels sticky. Harsh chemicals degrade the surface and shorten the life of a floor that is expensive to replace.',
+  },
+];
+
+// §11 Closing CTA.
+const closingCta = {
+  kicker: 'Gym and fitness studio cleaning',
+  heading: 'We will look at the drains first.',
+  lead: 'A walkthrough at your quietest hour, at the change room drains and the underside of the equipment rather than the reception desk. Then a written scope by zone and a price per visit.',
+  cta: walkthroughCta,
+};
+
+const business = commercialBusiness(pageMeta.description);
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    {/* §3 — unique to this premises type. Every other page in the cluster can
+        assume an empty building; a 24/7 club never has one. */}
+    <Callout tone="note" heading={accessCallout.heading} body={accessCallout.body} cta={accessCallout.cta} />
+
+    {/* §4 — the only `image-cards` in the cluster. A gym is three physically
+        distinct rooms and a reader recognises them by sight faster than by
+        name, so three photos with a footer link each beats an icon grid. */}
+    <ServiceBlocks
+      variant="image-cards"
+      heading="Three zones, three different problems"
+      lead="A gym cannot be cleaned with an office scope done more often. The soiling is biological, and each of these rooms holds it differently."
+      items={zoneItems}
+    />
+
+    <ContentGrid
+      heading="Why it smells when it looks clean"
+      lead="Four causes, in the order they are usually responsible. None of them are fixed by a stronger air freshener."
+      columns={2}
+      blocks={odourBlocks}
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Two cancellations a month is a cleaning budget"
+      body={worthKnowingBody}
+    />
+
+    {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
+
+        THE PHOTO BRIEF for this page: shower grout, and a rubber floor
+        section. Both from a locked-off tripod, before and after, nothing
+        moved between frames. Rubber flooring is the best before/after
+        subject on this cluster after carpet, because the change is dramatic
+        and the surface is what a member's hands and feet are actually on.
+        Drop it in here, between "Worth knowing" and the related pages. */}
+
+    <TagCloud
+      heading="Other premises we clean"
+      subheading="Commercial cleaning for every kind of premises across the Northern Rivers and the Tweed."
+      tags={relatedTags}
+      note={[]}
+    />
+
+    <TestimonialCarousel heading="What owners say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Gym Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

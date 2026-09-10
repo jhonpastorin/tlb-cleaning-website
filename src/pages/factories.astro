@@ -1,0 +1,556 @@
+---
+// Factories — one of the THIRTEEN "by type of premises" leaf pages under the
+// /commercial-cleaning/ hub (navigation.ts, "By type of premises" group).
+// Built in one pass with its twelve siblings.
+//
+// NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
+// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// blockers shared across the whole cluster.
+//
+// ⚠️ SLUG. navigation.ts calls this "Factories" and points at /factories/,
+// which is a literal menu label rather than anything anyone searches. The
+// head term is "factory cleaning". Kept as-is because changing it means
+// changing navigation.ts, this file and src/data/premises.ts together, and
+// that is a launch decision. The TITLE and H1 lead with "factory cleaning".
+//
+// ⚠️ THIS PAGE AND /warehouses-and-industrial-sites/ OVERLAP, and the overlap
+// is real rather than an oversight in this build — the mega-menu ships both.
+// They are separated on ONE axis and it is the only honest one: a warehouse
+// stores things and a factory makes them. That single difference produces
+// everything this page has that the warehouse page does not:
+//   - PRODUCTION RESIDUE, which is specific to what the site makes and is
+//     the reason a factory scope cannot be written from a template.
+//   - SHUTDOWNS. A factory is cleaned in a window that is scheduled months
+//     out and cannot move, which is a completely different commercial
+//     relationship from a nightly contract.
+//   - ISOLATION. Cleaning around plant means lockout and tagout, and that is
+//     the boundary this page refuses at (§3).
+// If the two pages ever get merged, this page's §4 and §5 are what has to
+// survive the merge.
+//
+// WHAT MAKES THIS PAGE DIFFERENT structurally:
+//   - `ServiceBlocks variant="slider"` for the shutdown sequence, the second
+//     use of that variant in the cluster after the construction page — and
+//     for the same reason: the content has an inherent order and the reader
+//     moves through it rather than picking from it.
+//   - `Callout tone="warning"` on isolation and lockout, first, before scope.
+//   - `StoryMosaic theme="dark"` on the shutdown relationship, which has no
+//     analogue anywhere else in the cluster.
+//   - No `ComparisonTable`, no `MetricsBlock`.
+//
+// BLOCKS LAUNCH, specific to this page:
+//   - Does TLB do factories today? Almost certainly not, on the evidence of
+//     the brand foundation document. This page is the most speculative of
+//     the thirteen and should be the last one published.
+//   - ISOLATION. Whether TLB's team will work on plant that has been locked
+//     and tagged out by the client, and whether anyone holds their own
+//     isolation training. Bracketed in §3. If the answer is no, the honest
+//     version of this page covers floors, amenities and equipment exteriors
+//     only, and §4's stage two comes off.
+//   - Food-grade work. Whether TLB will clean inside a food production
+//     environment to a client's HACCP-based food safety program. Bracketed
+//     in §4 and branded FAQ 3. This is the difference between a large market
+//     and a small one in this region.
+//   - Chemical handling: whether TLB's team is trained to use caustic and
+//     acidic industrial cleaners and read a Safety Data Sheet. Bracketed in
+//     branded FAQ 5.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import StoryMosaic from '../components/sections/StoryMosaic.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own frames are in src/assets/commercial_cleaning/premises/;
+// the prompts are in that folder's IMAGE-PROMPTS.md.
+//
+// ⚠️ THE HI-VIS EXCEPTION applies to the two production-floor frames, same
+// as on the construction and warehouse pages — see the import comment in
+// src/pages/warehouses-and-industrial-sites.astro for the full reasoning.
+// The wash-down frame also adds a plain white hair net, because that is what
+// a food production environment requires and a frame without one would be a
+// photo of a breach. The crib room frame keeps the apron and drops the vest,
+// because a crib room is not a traffic zone.
+import heroImg from '../assets/commercial_cleaning/premises/factory-cleaner-scrubbing-a-production-floor-walkway.jpg';
+import washDownImg from '../assets/commercial_cleaning/premises/factory-wash-down-of-stainless-production-equipment.jpg';
+import cribRoomImg from '../assets/commercial_cleaning/premises/factory-crib-room-cleaned-for-shift-change.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+
+// §0 Metadata. "Factory cleaning" leads because it is the head term even
+// though the slug is the menu's literal label. The description names the
+// shutdown, because that is the word a production manager searches with.
+const pageMeta = {
+  title: 'Factory Cleaning | TLB Cleaning',
+  description:
+    'Factory and production cleaning across the Northern Rivers and the Tweed. Floors, plant surrounds, wash-downs and crib rooms, booked to your shutdown window and finished inside it.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/factories/',
+};
+
+const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+
+// §1 Hero. `split-single-image`, image left — mirroring the aged care and
+// kitchen pages. The copy has to establish the shutdown idea before the
+// photo can only show one moment of it, so the words carry the frame here
+// rather than the reverse.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED, and note the hi-vis exception above.
+const hero = {
+  kicker: 'Factory and production cleaning',
+  headingLines: ['You get one window.', 'We finish inside it.'],
+  lead:
+    'Factory and production cleaning across the Northern Rivers and the Tweed. Floors, plant surrounds, wash-downs and amenities, booked to a shutdown that was scheduled months ago and cannot move.',
+  cta: walkthroughCta,
+  image: {
+    ratio: '16/9',
+    label:
+      'A cleaner in a high-visibility vest scrubbing a marked pedestrian walkway on a bright factory production floor with the line shut down',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. Answer-target block, and it has to do the warehouse/factory
+// separation the file header describes — because a reader who is on the
+// wrong one of the two pages will not otherwise notice.
+const definitionBody: TextBlockBody[] = [
+  'Factory cleaning is the cleaning of a production site: the production floor and pedestrian walkways, the surrounds and exteriors of plant and equipment, wash-down areas and drains, the dry store, and the crib rooms, bathrooms and locker areas your shifts use. TLB Cleaning does this work across the Northern Rivers and the Tweed, scheduled into shutdowns rather than around them.',
+  'A warehouse stores things and a factory makes them, and that single difference is why the two need different scopes. A factory has production residue that is specific to what it produces, plant that has to be isolated before anyone touches near it, and a cleaning window that was set on a production calendar months ago. If your site stores and picks rather than manufactures, the warehouse page is written for you and this one is not.',
+];
+
+// §3 Isolation. `warning`, and FIRST — before any scope. Same structural
+// pattern as the construction page's silica, the medical page's clinical
+// waste, the kitchen page's canopy certification and the warehouse page's
+// four refusals.
+//
+// ⚠️ VERIFICATION PASS REQUIRED, and take this one as seriously as the
+// silica block on the construction page:
+//   - Plant must be isolated from all energy sources before cleaning or
+//     maintenance work is carried out on or near it, and lockout/tagout is
+//     the standard control. Correct in substance under the model WHS
+//     framework and the plant provisions of the WHS Regulation. NO
+//     REGULATION NUMBER IS QUOTED, on purpose.
+//   - Unexpected start-up of plant during cleaning is a recognised cause of
+//     serious injury and fatality. Correct.
+//   - Stored energy — hydraulic pressure, compressed air, gravity, residual
+//     heat, capacitance — can remain after power is off. Correct, and the
+//     point most people miss.
+//   - Confined space entry requires a permit and specific training. Correct.
+//   - The DUTY TO ISOLATE SITS WITH THE SITE, not the cleaner. Correct, and
+//     it is the framing of the whole block: this is us refusing to accept a
+//     transfer of that duty.
+//   - SafeWork NSW is the right primary source, already approved by the
+//     brand foundation document §3.3.
+const isolationCallout = {
+  heading: 'Nobody from our team touches plant that has not been isolated.',
+  body: [
+    'Before any cleaning happens on or near a machine, that machine has to be shut down and isolated from every energy source, and locked and tagged out by your people under your own procedure. Not switched off. Isolated. The duty to do that sits with the site rather than with the contractor, and we will not accept it being handed to us informally at the start of a shutdown because the paperwork is running late.',
+    'The reason is that the things that hurt people are the ones that are not obvious. A machine with the power off can still hold hydraulic pressure, compressed air, a gravity load, residual heat or stored charge, and unexpected start-up during cleaning is one of the recognised ways people are killed in factories. So we clean what is isolated and tagged, we clean exteriors and surrounds of what is not, and we do not enter confined spaces at all, which need a permit and training we do not hold. [Whether anyone at TLB holds their own isolation training, or whether we work strictly under the client’s permit. Confirm.]',
+  ],
+};
+
+// §4 The shutdown sequence. `ServiceBlocks variant="slider"` — the second use
+// of that variant in the cluster after the construction page, and for the
+// same reason: the content has an inherent order, so navigation through a
+// sequence rather than a selection between alternatives (see SECTIONS.md on
+// the `highlight` versus `slider` distinction).
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
+// Stage two carries the isolation bracket and stage three the food-grade one,
+// and those two brackets are what decide how large this page's market is.
+const stageItems = [
+  {
+    image: {
+      ratio: '16/9',
+      label:
+        'A cleaner in a high-visibility vest scrubbing a marked pedestrian walkway on a bright factory production floor with the line shut down',
+      src: heroImg,
+    },
+    title: 'Stage one: the floor and the walkways',
+    description:
+      'Swept, then machine scrubbed where a machine fits, and hand-scrubbed in the plant surrounds where it does not. Pedestrian walkway markings and line markings done rather than skipped. Floor channels and grates lifted, cleaned out and put back. Product residue is treated as its own problem: flour, sugar, oil, timber dust and plastic swarf all behave differently and none of them come up with the same method.',
+      cta: walkthroughCta,
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner in a high-visibility vest and hair net wiping down the stainless steel housing of a food-production conveyor during a shutdown wash-down',
+      src: washDownImg,
+    },
+    title: 'Stage two: plant surrounds and the wash-down',
+    description:
+      // ⚠️ The isolation bracket, restated where it actually applies.
+      'Equipment exteriors, guarding, frames and the floor and wall behind and under the line. Stainless washed down and dried rather than left to air spot. Where a machine has been isolated and tagged out by your team, we clean into the opened guarding; where it has not, we clean the surrounds and stop at the guard. [Confirm which of those two TLB will offer.] The distinction goes on the scope, not into a conversation on the day.',
+    cta: walkthroughCta,
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner wiping down the table of a clean, empty factory crib room, kitchenette and lockers behind her, ready for the next shift',
+      src: cribRoomImg,
+    },
+    title: 'Stage three: amenities, and the food-grade question',
+    description:
+      // ⚠️ The food-grade bracket. It decides the size of this page's market.
+      'Crib rooms, kitchenettes, bathrooms, lockers, the first aid room and the front office, cleaned to be ready for the shift that walks in after the shutdown ends. In a food production site there is a second layer: cleaning inside a food environment has to run to your own HACCP-based food safety program, with your products and your verification. [Whether TLB will work inside a food production environment. Confirm.]',
+    cta: walkthroughCta,
+  },
+];
+
+// §5 The shutdown relationship. `StoryMosaic theme="dark"` — UNIQUE TO THIS
+// PAGE in the cluster. Every other premises type buys a recurring visit; a
+// factory buys a fixed window that cannot move, and that is a different
+// commercial relationship rather than a different task list.
+//
+// Array order IS the layout (see SECTIONS.md).
+const shutdownBlocks = [
+  {
+    type: 'text' as const,
+    body: [
+      'A shutdown is not a booking. It is a date that was set on a production calendar months ago, that a maintenance contractor, an electrician, a calibration technician and possibly an auditor are all working to, and that costs the business real money for every hour it runs over. Nobody in that window is waiting on the cleaner, and nobody in it can absorb a cleaner who has underestimated the job.',
+      'So the only useful thing a cleaning contractor can offer a production manager is an honest number of hours and enough people to hit it. That means walking the site during production rather than during the shutdown, counting the plant surrounds properly, and telling you if the window you have is too short. We would rather lose the job at the walkthrough than be the reason a line restarts late.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A cleaner in a high-visibility vest and hair net wiping down the stainless steel housing of a food-production conveyor during a shutdown wash-down',
+    src: washDownImg,
+  },
+  {
+    type: 'text' as const,
+    body: [
+      'The other half is what happens between shutdowns. Most factories only think about cleaning in the window, which means the site degrades for eleven weeks and then gets rescued in one. It is the most expensive way to do it: residue that has been baked on for a quarter takes several times longer to remove than residue from a fortnight ago, so the shutdown job grows every cycle.',
+      'The cheaper pattern is a small recurring visit for amenities, walkways and the floor, with the heavy plant work saved for the window. Then the shutdown is a shutdown rather than a recovery, and the hours you are buying in it stay predictable from one quarter to the next.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A cleaner wiping down the table of a clean, empty factory crib room, kitchenette and lockers behind her, ready for the next shift',
+    src: cribRoomImg,
+  },
+];
+
+// §6 What decides the price. `ContentGrid columns={2}` with `feature` cells —
+// the four variables, because on this premises type a quote given without
+// walking the site is worthless and naming the variables is more useful than
+// a number this page does not have.
+const priceDriverBlocks = [
+  {
+    type: 'feature' as const,
+    icon: 'idea' as const,
+    heading: 'What you actually make',
+    body: [
+      'Flour, sugar, oil, resin, timber dust and metal swarf are six different cleaning problems with six different methods, and one of them will be yours. This is the single biggest variable and it is the reason a factory scope cannot be written from a template or quoted over the phone.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'chart-pie' as const,
+    heading: 'How much of it a machine can reach',
+    body: [
+      'Open floor is fast. Plant surrounds, the gaps between units, under a conveyor and behind a guard are all hand work, and hand work is where the hours go. Two sites with the same floor area can differ threefold on this alone.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'key' as const,
+    heading: 'How long the window is',
+    body: [
+      'A job that fits comfortably into a three-day shutdown and the same job compressed into an overnight are different prices, because the second one needs more people at once and often penalty rates. The window is the constraint, not the work.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'target' as const,
+    heading: 'How long since the last one',
+    body: [
+      'Residue hardens, and hardened residue takes several times longer than fresh. The first clean on a site that has never had a proper one is always the biggest number you will see from us, and it should come down markedly by the second cycle. If it does not, ask us why.',
+    ],
+  },
+];
+
+// §7 "Worth knowing". The lever here is that in a factory the cleaning is
+// upstream of production quality and of the audit, which moves it out of the
+// facilities budget and into the operations one.
+//
+// ⚠️ VERIFICATION PASS REQUIRED:
+//   - Food businesses must keep premises, fixtures, fittings and equipment
+//     clean and sanitary under the Food Standards Code, and food production
+//     sites typically operate a HACCP-based food safety program with cleaning
+//     as a prerequisite program. Correct in substance; no clause quoted.
+//   - Third-party certification schemes and customer audits routinely examine
+//     cleaning records and verification. Correct in substance, and worded
+//     generally because the specific scheme varies by customer.
+//   - Accumulated combustible dust (flour, sugar, timber, some plastics and
+//     metals) is a recognised fire and explosion risk. Correct, and the same
+//     claim the warehouse page makes.
+//   - Pest activity is driven by residue and harbourage. Correct.
+const worthKnowingBody: TextBlockBody[] = [
+  'In a factory, cleaning sits upstream of production rather than beside it, which is why it usually belongs in an operations budget rather than a facilities one. Residue on a line is a contamination risk and a quality risk before it is a tidiness one. Residue on a floor is a slip risk in a building full of moving plant. Residue in the roof structure, if what you make is flour, sugar, timber or certain plastics and metals, is a fire and explosion risk. And residue anywhere is what feeds a pest problem, because pests follow food and harbourage rather than dirt.',
+  'The other thing that moves it upstream is the audit. If you produce food, your premises, fixtures, fittings and equipment have to be kept clean and sanitary, and in practice cleaning is a prerequisite program inside your own HACCP-based food safety plan — with named tasks, frequencies, products and verification records. Customer and certification audits go looking for exactly that documentation. A cleaning arrangement that exists as a verbal understanding with a contractor cannot produce it, no matter how well the site is actually being cleaned. That is the real argument for a written scope here, and it is why we write ours to be filed rather than quoted.',
+];
+
+// §8 Related pages. Warehouses is the nearest neighbour by a long way, then
+// breweries (a production site with a public front) and commercial kitchens
+// (the food-grade overlap).
+const relatedTags = relatedPremises('/factories/');
+
+// §9 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+//
+// ⚠️ On this page in particular, do not fill these with a generic quote. This
+// is the most speculative of the thirteen pages (see the file header) and a
+// vague testimonial on a page about isolation procedure and food safety
+// audits reads as a business talking about work it has not done.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a production or maintenance manager about a shutdown finishing on time. That is the only thing that reader cares about and §5 spends four paragraphs on it. Named business and role, with written permission. If TLB has no factory client yet, CUT this whole section rather than filling it.]',
+    name: '[Business name, TBC]',
+    role: '[Role, for example production manager, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB factory cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about the recurring between-shutdown visits keeping the window predictable. That is §5’s second argument and it is the one that grows a contract.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Production site on a recurring TLB scope' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about cleaning records standing up in a customer or certification audit. Only use this if it is genuinely true and the client is comfortable referencing an audit at all.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Food production client, TLB' },
+  },
+];
+
+// §10 Branded FAQs, in the CUSTOMER'S voice — a production, maintenance or
+// site manager.
+const brandedFaqItems = [
+  {
+    question: 'Can you work inside our shutdown window?',
+    answer:
+      'That is the whole job, and the answer depends on an honest count rather than on enthusiasm. We walk the site during production, count the plant surrounds and the hand-work areas properly, and give you an hours figure and the crew size needed to hit your window. If the window is too short for the scope you want, we will tell you at the walkthrough and offer you a shorter scope instead of a longer shutdown.',
+  },
+  {
+    question: 'Who isolates the plant?',
+    answer:
+      // ⚠️ Same bracket as §3. This answer must not be softened.
+      'You do, under your own procedure, and it has to be done and tagged before we start. That duty sits with the site rather than with us, and we will not take it on informally because a shutdown is running behind. [Whether TLB works strictly under the client’s permit, or holds any isolation training of its own. Confirm.] We clean what is isolated and tagged, we clean surrounds and exteriors of what is not, and we do not enter confined spaces at all.',
+  },
+  {
+    question: 'Can you clean inside a food production environment?',
+    answer:
+      // ⚠️ The food-grade bracket. It decides the size of this page's market.
+      'That depends on your food safety program rather than on our willingness. Cleaning inside a food environment has to run to your own HACCP-based plan: your approved products, your dilutions, your sequence and your verification records, with our work documented so it can be audited. [Whether TLB will work inside a food production environment, and whether the team has food safety training on record. Confirm.] If we cannot meet your program, we will say so rather than work around it.',
+  },
+  {
+    question: 'Do you do the recurring work as well as shutdowns?',
+    answer:
+      'Yes, and it is usually the cheaper way to run it. Amenities, walkways, the floor and the accessible plant surrounds on a weekly or fortnightly visit, with the heavy plant work saved for the shutdown. Residue that is a fortnight old takes a fraction of the time that residue baked on for a quarter does, so the recurring visit tends to pay for itself in shutdown hours you do not buy.',
+  },
+  {
+    question: 'What chemicals would you use on our site?',
+    answer:
+      // ⚠️ Real bracket. Industrial chemistry is a training question, not a
+      // purchasing one.
+      'Whatever your site approves, and nothing else. Industrial degreasers and descalers include caustic and acidic products that damage the wrong substrate and injure people who use them without training, so the product list belongs on the scope with the Safety Data Sheets attached rather than in a cleaner’s van. [Whether TLB’s team is trained in industrial chemical handling and SDS interpretation. Confirm.] Where your program names a product, yours wins.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We walk the site while it is running, which is the only way to see where the residue actually goes, and we ask what you make before we ask how big the floor is. Then you get a written scope by stage, an hours estimate against your window, a crew size, and a recommendation on what should be recurring rather than in the shutdown. No obligation.',
+  },
+];
+
+// §11 Non-branded FAQs, the long-tail block.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. Checkable claims:
+//   - Plant isolation and lockout/tagout before cleaning or maintenance;
+//     stored energy persisting after power-off. Correct in substance under
+//     the model WHS framework; no regulation number quoted.
+//   - Confined space entry requires a permit and training. Correct.
+//   - Food Standards Code cleanliness obligation; cleaning as a prerequisite
+//     program within a HACCP-based food safety plan. Correct in substance;
+//     no clause quoted.
+//   - Combustible dust risk in flour, sugar, timber, some plastics and
+//     metals. Correct.
+//   - Cleaning validation and verification (visual, swab, ATP) are used in
+//     food production. Correct in substance and worded generally.
+//   - No dollar figure anywhere, same as every sibling page.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does factory cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
+      'Shutdown work is priced per job on an hours estimate, and recurring work per visit, and a good quote shows them separately. The number moves with what the site produces, how much of the area is hand work rather than machine work, how long the window is, and how long since the last proper clean. A phone quote for a factory is a guess. [TLB’s pricing basis. Confirm.]',
+  },
+  {
+    question: 'What is lockout tagout and why does cleaning need it?',
+    answer:
+      'It is the process of isolating plant from every energy source and physically locking and tagging the isolation so it cannot be reversed while someone is working on the machine. Cleaning needs it because cleaning puts hands, cloths and water inside guarding, and unexpected start-up during that work is a recognised cause of serious injury and death. Switching a machine off is not isolation: hydraulic pressure, compressed air, gravity loads, residual heat and stored electrical charge can all remain.',
+  },
+  {
+    question: 'What are the cleaning requirements for a food factory in Australia?',
+    answer:
+      'Food businesses must keep premises, fixtures, fittings and equipment in a clean and sanitary condition under the Food Standards Code, and a food production site normally meets that through a HACCP-based food safety program in which cleaning is a prerequisite program — documented tasks, frequencies, approved chemicals and verification records. Customer and certification audits look for that documentation. Your own program and your regulator are the authoritative sources. This is general information, not compliance advice.',
+  },
+  {
+    question: 'How is a factory clean verified?',
+    answer:
+      'In a general industrial site, visually and against the written scope. In food production it goes further: visual inspection plus swab or ATP testing on food contact surfaces, recorded against the cleaning schedule, so there is evidence the clean achieved something rather than that it happened. Verification is your program’s responsibility rather than the contractor’s, but the contractor’s records have to be good enough to sit inside it.',
+  },
+  {
+    question: 'Is factory dust dangerous?',
+    answer:
+      'Some of it, and it depends what you make. Flour, sugar, timber, and certain plastics and metals produce combustible dust, and once it accumulates on ledges, plant and roof structure it becomes a fire and, in the right conditions, explosion risk. Metal swarf and fine mineral dust are abrasive and respiratory concerns instead. The common thread is that the dangerous accumulation is usually the one nobody can reach without an elevating work platform.',
+  },
+  {
+    question: 'What is the difference between warehouse and factory cleaning?',
+    answer:
+      'A warehouse stores product and a factory makes it, and everything else follows from that. Warehouse cleaning is largely floors, racking, docks and amenities, priced on area and access, and done on a recurring schedule. Factory cleaning adds production residue specific to what is made, plant that must be isolated before anyone works near it, and a shutdown window that is fixed months in advance. Same trade, materially different job.',
+  },
+];
+
+// §12 Closing CTA.
+const closingCta = {
+  kicker: 'Factory and production cleaning',
+  heading: 'Tell us what you make first.',
+  lead: 'Then we walk the site while it is running, count the hand work honestly, and give you an hours figure against your window. If the window is too short, you will hear it from us before you book it.',
+  cta: walkthroughCta,
+};
+
+const business = commercialBusiness(pageMeta.description);
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="left"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    {/* §3 — before any scope. The boundary this page refuses at, and the one
+        block on it that nobody should soften to win work. */}
+    <Callout tone="warning" heading={isolationCallout.heading} body={isolationCallout.body} />
+
+    {/* §4 — the second `slider` in the cluster after the construction page.
+        Three stages that genuinely happen in order inside one window, so
+        navigation through a sequence rather than a selection between
+        alternatives. See SECTIONS.md on the distinction. */}
+    <ServiceBlocks
+      variant="slider"
+      heading="One window, three stages"
+      lead="In this order, because the floor gets dirty again while the plant is being done and the amenities have to be ready for the shift that walks in at the end."
+      items={stageItems}
+    />
+
+    {/* §5 — unique to this page in the cluster. Every other premises type
+        buys a recurring visit; a factory buys a fixed window that cannot
+        move, which is a different commercial relationship rather than a
+        different task list. */}
+    <StoryMosaic theme="dark" heading="A shutdown is not a booking" blocks={shutdownBlocks} />
+
+    <ContentGrid
+      heading="What actually decides the price"
+      lead="Four variables, and the first one is why nobody can quote your factory over the phone."
+      columns={2}
+      blocks={priceDriverBlocks}
+    />
+
+    <TextBlock
+      theme="light"
+      align="left"
+      heading="Here, cleaning sits upstream of production"
+      body={worthKnowingBody}
+    />
+
+    <TagCloud
+      heading="Other premises we clean"
+      subheading="Commercial cleaning for every kind of site across the Northern Rivers and the Tweed."
+      tags={relatedTags}
+      note={[]}
+    />
+
+    <TestimonialCarousel heading="What production managers say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Factory Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

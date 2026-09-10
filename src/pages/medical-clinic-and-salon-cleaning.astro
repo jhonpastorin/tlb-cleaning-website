@@ -1,0 +1,476 @@
+---
+// Medical, clinic and salon cleaning — one of the THIRTEEN "by type of
+// premises" leaf pages under the /commercial-cleaning/ hub (navigation.ts,
+// "By type of premises" group). Built in one pass with its twelve siblings.
+//
+// NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
+// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// blockers shared across the whole cluster.
+//
+// ⚠️ THIS PAGE IS THREE AUDIENCES IN ONE URL, and that is the mega-menu's
+// choice, not this page's. A GP practice, an allied health clinic and a hair
+// salon have genuinely different requirements, and the honest options were
+// three pages or one page that says so out loud. One page, because the menu
+// already promises one and because the shared half — wet areas, high-touch
+// surfaces, floors, waiting rooms, being finished before you open — is most
+// of the job.
+//
+// The structural answer is §4: `ServiceBlocks variant="highlight"`, three
+// settings the reader picks between, each with its own panel. That is the
+// only place in the cluster that variant is used, and this is the only page
+// whose content is actually a selection rather than a list. If TLB ever wants
+// these split into three URLs, §4's three items are already the three pages.
+//
+// WHAT ELSE MAKES THIS PAGE DIFFERENT structurally:
+//   - `Callout tone="warning"` on clinical waste, in the position where
+//     other pages put persuasion. It has to come before the scope, because
+//     a practice manager's first question is what we will and will not touch.
+//   - No `ComparisonTable`. Same call as the strata page: the shared rows are
+//     written for someone choosing who enters their home. A practice manager
+//     is procuring a contractor against an infection control policy, and the
+//     rows would read as beside the point. Deliberate omission.
+//
+// BLOCKS LAUNCH, specific to this page:
+//   - Does TLB do clinical premises today? Nothing in the brand foundation
+//     document says so. May be ambition rather than a service.
+//   - Whether TLB holds, or will write, a documented cleaning procedure a
+//     practice can attach to its own infection control policy. An accrediting
+//     GP practice will ask for this. Bracketed in branded FAQ 2.
+//   - Colour-coded equipment and whether cloths and mop heads are laundered
+//     or disposable. Bracketed in the scope. A practice manager asks this
+//     second, right after clinical waste.
+//   - Nothing on this page claims accreditation support, TGA-listed
+//     disinfectant use, or infection control certification. Do not add one
+//     without evidence — those are auditable claims.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own frames are in src/assets/commercial_cleaning/premises/;
+// the prompts are in that folder's IMAGE-PROMPTS.md. All three were
+// generated deliberately calm rather than sterile: a treatment room shot
+// like an operating theatre promises a service this page explicitly does not
+// offer (see §3).
+import heroImg from '../assets/commercial_cleaning/premises/clinic-cleaner-disinfecting-a-treatment-room.jpg';
+import waitingRoomImg from '../assets/commercial_cleaning/premises/medical-waiting-room-cleaned-before-opening.jpg';
+import salonImg from '../assets/commercial_cleaning/premises/salon-cleaner-sweeping-a-hair-salon-after-close.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+
+// §0 Metadata. Three settings in the title because three different searches
+// have to land here and the menu label already commits to all three.
+const pageMeta = {
+  title: 'Medical, Clinic and Salon Cleaning | TLB Cleaning',
+  description:
+    'Cleaning for medical practices, allied health clinics and hair and beauty salons across the Northern Rivers and the Tweed. Wet areas and high-touch surfaces done properly, finished before you open.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/medical-clinic-and-salon-cleaning/',
+};
+
+const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+
+// §1 Hero. `split-single-image`, image right — the office page's framing,
+// used here because the copy has to do the work of naming three settings
+// before the photo can only show one of them.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
+const hero = {
+  kicker: 'Medical, clinic and salon cleaning',
+  headingLines: ['Your first patient', 'walks into a clean room.'],
+  lead:
+    'Cleaning for medical practices, allied health clinics and hair and beauty salons across the Northern Rivers and the Tweed. Done between close and open, on a scope written against your own procedures.',
+  cta: walkthroughCta,
+  image: {
+    ratio: '16/9',
+    label:
+      'A cleaner disinfecting the vinyl upholstery of a treatment bed in a bright allied health treatment room',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. Answer-target block. Paragraph two is the one that earns the
+// three-in-one URL: it names what the three settings share, which is the
+// argument for them being one page rather than an apology for it.
+const definitionBody: TextBlockBody[] = [
+  'Clinical and salon cleaning is the regular cleaning of premises where people are treated: GP and specialist practices, dental and allied health clinics, physiotherapy and podiatry rooms, day spas, and hair and beauty salons. TLB Cleaning does this work across the Northern Rivers and the Tweed, outside your consulting hours.',
+  'Three quite different businesses sit under that heading and they share more than they differ. All three have treatment surfaces that people lie or sit on, wet areas that get used all day, a waiting room that decides what a client thinks before anyone speaks to them, and a hard deadline: everything must be finished and dry before the first appointment. What changes between them is the risk, and that is what changes the scope.',
+];
+
+// §3 Clinical waste. `warning`, not `note` — it warns the reader off an
+// arrangement rather than correcting a belief, which is the line
+// Callout.astro's docs draw.
+//
+// Placed BEFORE the scope on purpose. A practice manager's first question is
+// not what we clean, it is what we will refuse to touch, and a page that
+// buries the answer past three sections looks like it is hoping not to be
+// asked.
+const wasteCallout = {
+  heading: 'We do not touch clinical waste. Nobody honest does.',
+  body: [
+    'Sharps containers, contaminated dressings, pathology specimens, anything in a yellow bin: none of it is general waste and none of it is a cleaner’s job. It has to be segregated by your clinical staff at the point of use and collected by a licensed waste contractor, and a cleaning company that offers to take care of it is offering you a compliance breach with a discount attached.',
+    'What we do instead is clean around it properly, empty general waste and recycling, and tell you when a bin is being used for the wrong thing. If a sharps container is over its fill line, you will hear about it from us that night rather than at your next accreditation visit.',
+  ],
+};
+
+// §4 The three settings. `ServiceBlocks variant="highlight"` — click a card,
+// its panel opens. THE ONLY USE OF THIS VARIANT IN THE CLUSTER, and it is
+// here because this page's content is genuinely a selection rather than a
+// list: a reader is one of these three and does not need the other two.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
+// Confirm each one and be conservative — medical is the setting where an
+// overstated capability does the most damage.
+//
+// These three items are also the natural split if this URL is ever broken
+// into three pages. Kept in one array for that reason.
+const settingItems = [
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner wiping down the arm of a waiting room chair in a bright medical practice waiting room before opening',
+      src: waitingRoomImg,
+    },
+    title: 'Medical and dental practices',
+    description:
+      'Consulting rooms, treatment rooms, waiting room and reception, staff areas and bathrooms. High-touch surfaces and hard floors every visit, upholstery and vents periodically, and a written scope your practice can attach to its own infection control policy. We clean the environment; your clinical staff clean clinical equipment and segregate clinical waste. That line is drawn in writing before we start.',
+    cta: walkthroughCta,
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner disinfecting the vinyl upholstery of a treatment bed in a bright allied health treatment room',
+      src: heroImg,
+    },
+    title: 'Allied health and clinics',
+    description:
+      'Physio, chiro, podiatry, psychology, massage and day spa rooms. The difference here is upholstery and floor contact: treatment beds, plinths, bolsters and mats take skin contact all day and need disinfecting rather than wiping, and gym and rehab floors get walked on barefoot. We treat those as wet-area surfaces even though the room is dry.',
+    cta: walkthroughCta,
+  },
+  {
+    image: {
+      ratio: '4/3',
+      label:
+        'A cleaner sweeping the floor beneath a styling chair in a bright hair salon after close',
+      src: salonImg,
+    },
+    title: 'Hair and beauty salons',
+    description:
+      'Salons generate a mess no office scope anticipates: hair everywhere including under and behind everything, colour on floors and basins, wax and product residue, and a basin area that is a wet area whether or not it is tiled. Floors swept and mopped, chairs and dryers wiped down, basins and traps cleaned, mirrors and glass done, and bins that need lining properly rather than tipping.',
+    cta: walkthroughCta,
+  },
+];
+
+// §5 The shared scope. `ContentGrid` with `feature` cells — four things that
+// are true across all three settings, in a shape that reads as a checklist
+// rather than as the six-item grid the office and aged care pages use.
+//
+// ⚠️ The colour-coding item carries a real bracket. It is the second thing a
+// practice manager asks, right after clinical waste.
+const sharedScopeBlocks = [
+  {
+    type: 'feature' as const,
+    icon: 'target' as const,
+    heading: 'High-touch, every visit',
+    body: [
+      'Door handles, light switches, reception counter, EFTPOS terminal, chair arms in the waiting room, tap handles, the sanitiser dispenser itself and the treatment bed or chair adjustment levers. These are the surfaces that carry infection between people, and they take minutes.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'spray-bottle' as const,
+    heading: 'Colour-coded equipment',
+    body: [
+      // ⚠️ Real bracket. Confirm before launch.
+      'Separate cloths and mop heads for bathrooms, treatment rooms and general areas, so nothing crosses from a toilet to a treatment bed. Ours are [laundered between sites / single-use and disposed of. Confirm], and whichever it is goes on the scope in writing.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'house' as const,
+    heading: 'Floors, and the edges of them',
+    body: [
+      'Vinyl mopped, coving and the join between floor and wall cleaned rather than skipped, carpet vacuumed including under the waiting room chairs. In a clinic the floor edge is where dust and hair collect, and it is the first thing an accreditation surveyor kneels down to look at.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'chart-bars' as const,
+    heading: 'Dry before you open',
+    body: [
+      'Every visit finishes with the floors dry and the room usable. This is not a detail: a damp treatment room floor at 8am is a slip risk for a patient on crutches, and a clinic cannot run its first appointment in a room that is still wet.',
+    ],
+  },
+];
+
+// §6 "Worth knowing". On this page the lever is that a clinic is judged on
+// cleaning by someone other than its patients — an accreditation surveyor, an
+// insurer, a health inspector — and a cheap cleaner leaves no evidence
+// behind.
+//
+// ⚠️ VERIFICATION PASS REQUIRED, and this block is deliberately vague where
+// specifics would go stale:
+//   - General practices in Australia are accredited against the RACGP
+//     Standards, which do require an infection prevention and control
+//     approach covering the practice environment. Correct in substance.
+//     NO EDITION OR CRITERION NUMBER IS QUOTED — the Standards are revised
+//     and a stale citation is worse than none.
+//   - Skin penetration premises (tattooing, piercing, some beauty
+//     treatments) are separately regulated in NSW and inspected by local
+//     councils. Correct, and hedged to "some beauty treatments" on purpose.
+//   - Nothing here claims TLB's documentation exists yet. See the file
+//     header and branded FAQ 2.
+const worthKnowingBody: TextBlockBody[] = [
+  'A clinic is the one kind of premises where somebody other than your clients audits your cleaning. An accredited general practice has to show an infection prevention approach that covers the practice environment, not just clinical procedure. A salon offering skin penetration treatments can be inspected by its local council. Neither of those goes well if the only record of what gets cleaned is a verbal arrangement with a contractor.',
+  'That is the practical reason to insist on a written scope here rather than anywhere else: it is the document that turns "we have a cleaner" into evidence. It should name each room, the surfaces in it, what they are cleaned with and how often. We write ours to be attached to your own procedures rather than to sit in a drawer, and if your procedures already specify something different from what we would normally do, yours wins.',
+];
+
+// §7 Related pages. Aged care is appended as an extra — it is the nearest
+// neighbour to this page's clinical half, and a reader responsible for a
+// clinic inside a village needs both.
+const relatedTags = relatedPremises('/medical-clinic-and-salon-cleaning/');
+
+// §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+//
+// ⚠️ NEVER quote a patient or a salon client. A testimonial from someone
+// receiving treatment identifies them as a patient of a named practice,
+// which is a privacy problem a cleaning company should not create. These
+// slots ask for the practice manager, clinician or salon owner only.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a practice manager about the written scope being usable in their accreditation paperwork. That is the thing this page argues hardest for. Named practice and role, with written permission.]',
+    name: '[Practice name, TBC]',
+    role: '[Role, for example practice manager, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB medical practice cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from an allied health or day spa client about treatment surfaces and upholstery specifically, since that is what separates a clinic from an office clean.]',
+    name: '[Clinic name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Allied health clinic client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a salon owner about hair and colour, ideally from someone who had been through a cleaner who treated a salon like an office. ⚠️ Do NOT source this from a salon client — see the §8 comment in this file.]',
+    name: '[Salon name, TBC]',
+    role: '[Owner, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Hair and beauty salon owner' },
+  },
+];
+
+// §9 Branded FAQs, in the CUSTOMER'S voice — a practice manager, clinician
+// or salon owner.
+const brandedFaqItems = [
+  {
+    question: 'Can you clean between close and open?',
+    answer:
+      'Yes, and it is the only way this work makes sense. We clean in the evening after your last appointment or early enough in the morning that everything is dry before your first. Both windows attract penalty rates under the Cleaning Services Award and both appear on the quote with their own price, so you can see what the timing costs.',
+  },
+  {
+    question: 'Will you follow our infection control policy?',
+    answer:
+      // ⚠️ Real bracket. An accrediting practice will ask for this document.
+      'Yes. Where your policy specifies a product, a method or a frequency, yours wins over our standard scope and we write it in. [Whether TLB has a documented cleaning procedure a practice can attach to its own policy, and whether it names the products used. Confirm.] If your policy needs a particular disinfectant used a particular way, tell us at the walkthrough and it goes on the scope rather than into someone’s memory.',
+  },
+  {
+    question: 'Do you clean treatment beds and clinical equipment?',
+    answer:
+      'We clean and disinfect treatment bed and chair upholstery, plinths, bolsters and the frames they sit on, because those are environmental surfaces. We do not clean clinical equipment, instruments, autoclaves or anything that touches a patient in a procedure. That is clinical staff work under your own procedures, and it stays there.',
+  },
+  {
+    question: 'What about hair, colour and wax in a salon?',
+    answer:
+      'It is why a salon needs its own scope rather than an office one. Hair travels further than anyone expects and collects behind and under everything, so floors get swept before they are mopped and the edges get done rather than the middle. Colour is treated as a stain on the day, not next week. Basins and traps are cleaned, and wax residue comes off with the right solvent rather than a scourer.',
+  },
+  {
+    question: 'Are your cleaners police-checked?',
+    answer:
+      // ⚠️ Cluster-wide bracket. See office-cleaning.astro's header.
+      'Our cleaners are employed by TLB rather than subcontracted, so there is no third party between you and the person who attends. [TLB’s screening: what checks are held and how often they are renewed. Confirm.] For a practice holding patient records on site, ask for that in writing along with the insurance certificate, and ask any other cleaner for the same.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We walk the premises after hours with you, room by room, and ask what your own procedures require. Then you get a written scope naming each room and its surfaces, a price per visit and an after hours option shown separately. No obligation, and nothing to sign on the night.',
+  },
+];
+
+// §10 Non-branded FAQs, the long-tail block.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. Checkable claims below:
+//   - Clinical waste must be segregated at the point of generation and
+//     collected by a licensed contractor. Correct in substance across
+//     Australian jurisdictions; no specific regulation is cited on purpose.
+//   - Cleaning and disinfecting are two different steps and cleaning must
+//     come first because organic soil inactivates most disinfectants.
+//     Correct, and the single most useful thing in this block.
+//   - Skin penetration premises in NSW are regulated under public health
+//     legislation and inspected by local councils. Correct; no section
+//     quoted.
+//   - No dollar figure anywhere, same as every sibling page.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does medical or clinic cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
+      'It is priced per visit against a written scope. The number moves with how many consulting or treatment rooms there are, how many bathrooms, how much of the floor is vinyl versus carpet, and whether the visit has to happen inside a narrow window between close and open. A three-room clinic and a ten-room practice are different jobs. [TLB’s pricing basis. Confirm.]',
+  },
+  {
+    question: 'What is the difference between cleaning and disinfecting?',
+    answer:
+      'Cleaning physically removes soil, and disinfecting kills what is left. The order matters and it is where most cleaning goes wrong: spraying disinfectant onto a surface that still has organic soil on it largely wastes the disinfectant, because soil inactivates it. Surfaces get cleaned first, then disinfected, and the disinfectant is left wet for its stated contact time rather than wiped straight off.',
+  },
+  {
+    question: 'Who is responsible for clinical waste in a practice?',
+    answer:
+      'The practice is. Clinical and related waste has to be segregated at the point it is generated, by the clinical staff who generate it, into the correct containers, and then collected and disposed of by a licensed waste contractor. A general cleaning contractor handles general waste and recycling only. Anyone offering to take your sharps away as part of a cleaning contract is not licensed to.',
+  },
+  {
+    question: 'How often should a clinic be cleaned?',
+    answer:
+      'Daily at minimum for any premises seeing patients or clients, with high-touch surfaces, bathrooms and floors done every visit. Treatment surfaces are cleaned between patients by clinical staff, which is separate from the daily environmental clean. Carpet extraction, upholstery, vents and high dusting are periodic. A busy salon usually needs daily as well, driven by hair and product rather than by infection risk.',
+  },
+  {
+    question: 'Do salons have cleaning regulations in NSW?',
+    answer:
+      'Some do. Premises offering skin penetration treatments — tattooing, piercing, and certain beauty procedures that break the skin — are regulated under NSW public health legislation and can be inspected by the local council, with requirements covering cleanliness, sterilisation and waste. A hairdressing-only salon has no equivalent scheme but still has work health and safety duties. Check with your council rather than assuming which category you are in.',
+  },
+  {
+    question: 'Should a cleaner have their own insurance to work in a clinic?',
+    answer:
+      'Yes, and you should sight the certificate and its expiry date rather than take the word for it. Public liability cover is what protects your practice if a contractor damages equipment or a patient is injured because of their work, and workers compensation covers the cleaner themselves. Ask for both, and ask whether the people attending are employees of the company or subcontractors, because that changes who is actually covered.',
+  },
+];
+
+// §11 Closing CTA.
+const closingCta = {
+  kicker: 'Medical, clinic and salon cleaning',
+  heading: 'Start with an after-hours walkthrough.',
+  lead: 'Room by room, against your own procedures. Then a written scope you can attach to your policy, and a price per visit.',
+  cta: walkthroughCta,
+};
+
+const business = commercialBusiness(pageMeta.description);
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    {/* §3 — before the scope, not after it. See the file header. */}
+    <Callout tone="warning" heading={wasteCallout.heading} body={wasteCallout.body} />
+
+    {/* §4 — the only `highlight` in the cluster. Three settings the reader
+        picks between, because a reader is one of them and does not need the
+        other two. Also the natural split if this ever becomes three URLs. */}
+    <ServiceBlocks
+      variant="highlight"
+      heading="Three settings, one deadline"
+      lead="Pick the one you run. What changes between them is the risk, and that is what changes the scope."
+      items={settingItems}
+    />
+
+    <ContentGrid
+      heading="What every one of them gets"
+      lead="Four things that are true whether you run a practice, a clinic or a salon."
+      columns={2}
+      blocks={sharedScopeBlocks}
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Somebody other than your clients audits this"
+      body={worthKnowingBody}
+    />
+
+    <TagCloud
+      heading="Other premises we clean"
+      subheading="Commercial cleaning for every kind of premises across the Northern Rivers and the Tweed."
+      tags={relatedTags}
+      note={[]}
+    />
+
+    <TestimonialCarousel heading="What practices and salons say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Clinic and Salon Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

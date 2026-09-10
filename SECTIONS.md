@@ -171,6 +171,31 @@ itself — five real consumers, well past this file's two-consumer bar.
 `label`/`href` are `navigation.ts`' own mega-menu values verbatim, so the
 menu and the page bodies can't drift into two names for one service.
 
+`premises.ts` holds the thirteen-page "By type of premises" cluster under
+`/commercial-cleaning/` (office, strata, aged care, medical/clinic/salon,
+construction, hospitality, commercial kitchen, schools/childcare, gyms,
+retail, warehouses, factories, breweries) and four things all thirteen
+share:
+
+| Export | What it is |
+|---|---|
+| `premisesPages` | The thirteen, in mega-menu order, each with a `blurb` so the pages describe each other in one voice. |
+| `relatedPremises(self, extras?)` | The "Other premises we clean" pill list for one page: the other twelve, then any page-specific extras, then the two commercial services, then the hub. **Excluding `self` is why this is a function** — a page that links to itself in its own related band reads as an unchecked template and wastes a slot. |
+| `commercialBusiness(description)` | The `LocalBusinessInfo` every commercial page hands `Base.astro`. ⚠️ Almost every field is still empty, inherited from the sibling pages built before this cluster; one fix here fills all thirteen. |
+| `walkthroughCtaLabel` | `'Book a site walkthrough'` — the commercial CTA that replaces the sitewide `quoteCta` label, because commercial work is priced on a walkthrough rather than a form. One line changes it for the whole cluster. |
+
+`PremisesHref` is a string-literal union of the thirteen slugs rather than
+`string`, so a page cross-linking a sibling that doesn't exist is an `astro
+check` error instead of a 404 a reader finds. Fourteen real consumers,
+counting the hub — well past this file's two-consumer bar, and the
+alternative was 156 hand-typed hrefs.
+
+⚠️ Every href in it is still the flat kebab-case guess `navigation.ts` made
+from its literal menu label, same as the rest of the site's slugs. Two are
+menu labels rather than search terms (`/construction-site/`, `/factories/`);
+both pages lead their `<title>` and `<h1>` with the real head term ("builders
+clean", "factory cleaning") and say so in their file headers.
+
 ---
 
 ## Sections — `src/components/sections/`
@@ -966,6 +991,13 @@ resolving to the first section's heading. Fixed with a build-time random
 suffix per instance — the same fix `ServiceBlocks.astro` and `Faq.astro`
 already apply, for the same reason. Found by building that page, not
 reported by anyone.
+
+**Patch note:** the `Tag` interface is now **exported** alongside `TagGroup`.
+`src/data/premises.ts` builds pill lists for the thirteen "by type of
+premises" pages and needs to name this shape; a shared data module that
+hands this component its content should be typed against the component's own
+contract rather than against a structurally-identical copy that can drift.
+No behaviour change — `export` on an interface is erased at build time.
 
 ⚠️ **`isHighlighted` no longer exists.** The `Tag` interface is `{ label,
 href? }` only — every pill uses the outlined Mint Green treatment now (see

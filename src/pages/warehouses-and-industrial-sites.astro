@@ -1,0 +1,506 @@
+---
+// Warehouses and industrial sites — one of the THIRTEEN "by type of premises"
+// leaf pages under the /commercial-cleaning/ hub (navigation.ts, "By type of
+// premises" group). Built in one pass with its twelve siblings.
+//
+// NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
+// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// blockers shared across the whole cluster.
+//
+// ⚠️ THIS PAGE HAS TWO READERS WITH OPPOSITE BUDGETS, and getting the order
+// right is the whole editorial decision. A warehouse manager searching
+// "warehouse cleaning" usually wants the FLOOR — a scrubber down the aisles,
+// dust off the racking, the dock swept. What they get quoted, and what they
+// actually get complaints about, is the AMENITIES: the crib room, the
+// bathrooms, the office. On an industrial site the amenities are the whole
+// staff experience and they are the first line cut from a scope.
+//
+// So the page leads with the floor (which is what the search wanted) and
+// spends its persuasion on the amenities (which is what the reader needs).
+// §6 is that argument and it is deliberately the longest block on the page.
+//
+// WHAT MAKES THIS PAGE DIFFERENT structurally:
+//   - `Callout tone="warning"` on the boundary FIRST, before any scope. On an
+//     industrial site the dangerous thing is a cleaner who says yes to
+//     everything: heights, plant, racking, spills of unknown substance. Same
+//     pattern as the construction, medical and kitchen pages.
+//   - `ServiceBlocks variant="icon-grid"` grouped by ZONE, then a second
+//     `ContentGrid` that argues for the smallest zone. The asymmetry is the
+//     point — see above.
+//   - `ImageBand` twice is avoided; the dock frame goes in the ContentGrid as
+//     an image cell instead, which is the only page in the cluster to use
+//     `ContentGrid`'s `image` cell type.
+//   - No `ComparisonTable`. Same call as strata, construction, medical,
+//     schools and gyms: the shared rows are written for someone choosing who
+//     enters their home.
+//
+// BLOCKS LAUNCH, specific to this page:
+//   - EQUIPMENT. A warehouse floor needs a ride-on or walk-behind
+//     autoscrubber. A mop on 2,000 square metres of concrete is not a
+//     service. Bracketed in §4 and it decides whether this page is honest.
+//   - Whether TLB will work at height at all. Bracketed in §3. High-level
+//     racking dusting and high-bay light cleaning both need an EWP and a
+//     licence, and the answer is probably no.
+//   - Whether TLB will touch a spill of unknown substance. The answer must
+//     be no. Stated as no in §3; confirm nobody softens it.
+//   - Site induction and PPE requirements: whether TLB's team can meet a
+//     typical industrial site induction. Bracketed in branded FAQ 1.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own frames are in src/assets/commercial_cleaning/premises/;
+// the prompts are in that folder's IMAGE-PROMPTS.md.
+//
+// ⚠️ THE HI-VIS EXCEPTION applies here, same as on the construction page.
+// IMAGE-GUIDELINES §3 sets the canonical uniform as aqua polo, dark teal
+// apron and teal gloves, and the palette rule forbids yellow. On a warehouse
+// or industrial floor a cleaner wears a high-visibility vest, and
+// fluorescent lime-green is the standard Australian hi-vis colour and the
+// closest real one to the brand's Mint Green. A frame of a cleaner in an
+// apron in a forklift aisle would be a photo of something that must not
+// happen. The amenities frames keep the apron, because a crib room is not a
+// traffic zone — which is itself the §6 argument in miniature.
+import heroImg from '../assets/commercial_cleaning/premises/warehouse-cleaner-with-a-floor-scrubber-in-a-storage-aisle.jpg';
+import dockImg from '../assets/commercial_cleaning/premises/warehouse-loading-dock-swept-and-clear.jpg';
+import lunchroomImg from '../assets/commercial_cleaning/premises/warehouse-mezzanine-office-and-lunchroom-cleaned.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+
+// §0 Metadata. "Warehouse cleaning" is the head term and leads; "industrial"
+// is in the title because a light-industrial tenancy owner does not call
+// their unit a warehouse.
+const pageMeta = {
+  title: 'Warehouse and Industrial Cleaning | TLB Cleaning',
+  description:
+    'Warehouse and industrial cleaning across the Northern Rivers and the Tweed. Aisles machine scrubbed, docks and racking cleared, and the crib room and amenities done properly.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/warehouses-and-industrial-sites/',
+};
+
+const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+
+// §1 Hero. `full-width-photo` — a warehouse aisle is an establishing shot and
+// the scale of the space is the thing a manager is checking for. Same
+// reasoning as the strata lobby and the construction new build.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED, and note the hi-vis exception above.
+const hero = {
+  kicker: 'Warehouse and industrial cleaning',
+  headingLines: ['A concrete floor', 'is not a mopping job.'],
+  lead:
+    'Warehouse and industrial cleaning across the Northern Rivers and the Tweed. Aisles machine scrubbed, docks and racking cleared, amenities done properly, and a scope that says which is which.',
+  cta: walkthroughCta,
+  image: {
+    ratio: '16/9',
+    label:
+      'A cleaner in a high-visibility vest walking a compact floor scrubbing machine down a wide aisle in a bright, tidy warehouse',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. Answer-target block. Paragraph two names the split that the
+// rest of the page is built on and that most quotes silently get wrong.
+const definitionBody: TextBlockBody[] = [
+  'Warehouse and industrial cleaning is the scheduled cleaning of a storage, distribution or light-industrial site: the floor and aisles, racking and shelving, the loading dock and hardstand, mezzanine offices, and the crib room, bathrooms and locker areas your team uses every shift. TLB Cleaning does this work across the Northern Rivers and the Tweed.',
+  'It is two jobs in one contract and they have almost nothing in common. The floor is a machine job on a large area with a forklift moving through it, priced on square metres and access. The amenities are a small, detailed, daily job priced on fixtures. Quotes get compared badly because one contractor has assumed the amenities are included and another has not, so the useful thing to settle first is which of the two you are actually buying.',
+];
+
+// §3 The boundary. `warning`, and FIRST — before any scope.
+//
+// On an industrial site the dangerous contractor is the one who says yes to
+// everything, so this block is the page refusing four things by name. Same
+// structural pattern as the construction page's silica callout, the medical
+// page's clinical waste and the kitchen page's canopy certification.
+//
+// ⚠️ VERIFICATION PASS REQUIRED, and all four refusals below are checkable:
+//   - Work at height above two metres attracts specific fall-prevention
+//     duties in NSW, and using an elevating work platform requires
+//     appropriate training and, above a boom length threshold, a high risk
+//     work licence. Correct in substance. NO HEIGHT OR BOOM FIGURE IS QUOTED
+//     as a licensing threshold, on purpose — those numbers move and a wrong
+//     one here would be actively dangerous.
+//   - Forklift operation requires a high risk work licence in NSW. Correct.
+//   - Pallet racking inspection is a specialist engineering assessment, not a
+//     cleaning observation. Correct.
+//   - A spill of unknown substance requires the site's own emergency
+//     procedure and the Safety Data Sheet, not a general cleaner with a mop.
+//     Correct, and the most important of the four.
+//   - Safe Work Australia and SafeWork NSW are the right primary sources, and
+//     the brand foundation document (§3.3) already approves them.
+const boundaryCallout = {
+  heading: 'Four things we will say no to, and you should want us to.',
+  body: [
+    'Working at height. Dusting the top of racking, cleaning high-bay light fittings or getting to the underside of a roof needs an elevating work platform and the training and licensing that goes with operating one, plus a fall-prevention plan for the site. [Whether TLB will do any work at height. Confirm — the likely honest answer is no.] Driving your forklift or a reach truck to get us up there is not a workaround; that needs a high risk work licence.',
+    'Racking inspection, and spills of anything we cannot identify. A cleaner who notices a bent upright should tell you, and ours will, but a racking inspection is an engineering assessment and no cleaning contract substitutes for one. And if something has leaked and nobody can tell us what it is, we stop and we come and find you. Your emergency procedure and the Safety Data Sheet decide what happens next, not a mop and a guess. A contractor who cleans it up anyway is doing you harm with good intentions.',
+  ],
+};
+
+// §4 Scope, grouped BY ZONE — floor, racking, dock, amenities, office,
+// periodic. That is the grouping a warehouse manager walks the site in, and
+// it differs from the office page's frequency grouping, strata's area
+// grouping and the kitchen page's difficulty grouping.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
+// The floor item carries the biggest bracket on the page: without a machine,
+// this page is not honest.
+const zoneItems = [
+  {
+    icon: 'office' as const,
+    title: 'The floor: machine scrubbed, not mopped',
+    description:
+      // ⚠️ THE bracket. See the file header.
+      'Aisles and open floor swept then scrubbed with a walk-behind or ride-on autoscrubber, which lifts the tyre rubber, dust and film that a mop just redistributes. Line markings and pedestrian walkways done rather than skipped. [Whether TLB owns or hires an autoscrubber, and what area it can cover in a shift. Confirm.] A mop on two thousand square metres of concrete is not a service.',
+  },
+  {
+    icon: 'chart-bars' as const,
+    title: 'Racking, shelving and stock surfaces',
+    description:
+      'Beam faces, upright bases, the accessible levels of shelving and the tops of anything reachable from the ground. Dust on racking is not cosmetic in a food, pharmaceutical or electronics warehouse and it is a pest harbourage everywhere else. Anything above safe reach from the floor needs an EWP and is not part of this scope.',
+  },
+  {
+    icon: 'key' as const,
+    title: 'Loading dock and hardstand',
+    description:
+      'Dock apron and edge swept, pallet wrap and strapping cleared, dock levellers and the edge plate cleaned, drains checked clear, and the hardstand outside swept. Concrete in this region goes dark with algae through a wet season, so the apron needs pressure cleaning periodically rather than sweeping.',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Crib room, bathrooms and lockers',
+    description:
+      'Tables and benches, kitchenette and sink, microwave and fridge inside and out, bins emptied and relined, bathrooms cleaned and disinfected and restocked, locker tops and the floor mopped. Daily, not weekly. This is the section this page argues hardest for and the one every quote thins out first.',
+  },
+  {
+    icon: 'suitcase' as const,
+    title: 'Mezzanine and front office',
+    description:
+      'Desks, floors, kitchenette, bathrooms and the internal glass looking down onto the floor, which shows every mark from both sides. Reception and the visitor area, because that is where a customer forms their view of how the operation is run before they see any of it.',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'Periodically, booked to a shutdown',
+    description:
+      'Deep floor scrub or re-seal where the concrete needs it, pressure cleaning the dock and hardstand, high dusting within safe reach, internal and external glass at ground level, and vents. Booked into a shutdown or a stocktake weekend, because none of it fits around a live pick face.',
+  },
+];
+
+// §5 The amenities argument. `ContentGrid columns={2}` with an `image` cell —
+// THE ONLY USE OF ContentGrid's `image` cell type IN THE CLUSTER, and it is
+// here because the argument needs the reader to look at a crib room and a
+// dock and notice that one of them is the one their team actually lives in.
+//
+// This is the asymmetry the file header describes: the floor got six lines in
+// §4, and the smallest zone gets its own section.
+const amenitiesBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'The crib room is not the small line',
+    body: [
+      'On a warehouse quote the amenities are usually a rounding error against the floor, so they are the first thing trimmed when a price needs to come down. Then they are cleaned three times a week instead of daily, and within a month the crib room is the thing your team talks about. Nobody complains about the floor. They complain about the microwave, the bathroom, and the fridge nobody has emptied since March.',
+      'That matters more on an industrial site than almost anywhere, because the amenities are the entire non-working experience of the shift. A picker spends eight hours in a space with no windows and one room to eat in. Cleaning that room properly, every day, is one of the cheapest retention levers on the site, and it costs a fraction of what the floor does.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A cleaner wiping down the table of a clean, empty staff lunchroom on a warehouse mezzanine, the warehouse floor visible through the window behind her',
+    src: lunchroomImg,
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A cleaner in a high-visibility vest sweeping the concrete apron of a clean, empty warehouse loading dock with the roller door up',
+    src: dockImg,
+  },
+  {
+    type: 'text' as const,
+    heading: 'The dock is where your housekeeping is judged',
+    body: [
+      'The other zone that gets under-scoped is the dock, and it is the one every visitor sees. Drivers, customers, auditors and your own insurer form a view of how the site is run from the state of the apron: whether there is pallet wrap blowing around, whether the drains are clear, whether the edge plate is buried under debris.',
+      'It is also a genuine safety zone rather than a presentation one. Strapping and wrap on a dock floor is a slip and a trip hazard in the one place on site where people work alongside moving vehicles, and a blocked drain on an apron in this region means water across that same floor within an hour of a storm.',
+    ],
+  },
+];
+
+// §6 "Worth knowing". The lever here is that a warehouse floor and a
+// warehouse's dust are both safety items rather than cosmetic ones, which
+// reframes the whole spend.
+//
+// ⚠️ VERIFICATION PASS REQUIRED:
+//   - A person conducting a business or undertaking has a primary duty under
+//     the model WHS laws to provide and maintain a work environment without
+//     risks to health and safety, and housekeeping sits inside that.
+//     Correct in substance. NO SECTION NUMBER IS QUOTED, on purpose.
+//   - Slips, trips and falls are a leading cause of workplace injury in
+//     Australia. Correct in substance; no statistic quoted, because
+//     trust.ts already carries a standing warning about unsourced figures on
+//     this site.
+//   - Accumulated combustible dust is a recognised fire and, in the right
+//     conditions, explosion risk in industrial settings. Correct, and
+//     deliberately hedged to the settings where it applies.
+//   - Sealed concrete deteriorates faster under tyre rubber and abrasive dust
+//     if not cleaned; re-sealing is a capital cost. Correct in substance.
+const worthKnowingBody: TextBlockBody[] = [
+  'A warehouse floor is a safety item, not a presentation one, and that changes who should be signing off the cleaning scope. Slips and trips are among the most common causes of workplace injury in the country, and on a concrete floor the mechanism is almost always the same: a film of tyre rubber, dust and moisture that a mop spreads rather than removes, in a building where people walk alongside forklifts. A machine-scrubbed floor is not a tidier floor. It is a floor with more grip.',
+  'Dust does two things worth budgeting for. In the wrong setting — timber, grain, flour, some plastics and metals — accumulated combustible dust on racking and roof structure is a recognised fire and explosion risk, and it is exactly the dust nobody can reach without an EWP. Everywhere else it is quieter and slower: abrasive dust and tyre rubber ground into sealed concrete shortens the life of the seal, and re-sealing a warehouse floor is a capital job that comes out of a different budget than cleaning does. A business has a duty to provide and maintain a work environment without risks to health and safety, and on an industrial site housekeeping is a large part of how that duty is actually met.',
+];
+
+// §7 Related pages. Factories is the nearest neighbour and construction the
+// second, since a new industrial unit gets a builders clean before it gets a
+// contract. Pressure cleaning is appended because the hardstand is half of
+// what a visitor sees.
+const relatedTags = relatedPremises('/warehouses-and-industrial-sites/');
+
+// §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a warehouse or operations manager about the crib room and bathrooms specifically. That is §5’s argument in a client’s own words and it is the one this page most needs backing. Named business and role, with written permission.]',
+    name: '[Business name, TBC]',
+    role: '[Role, for example warehouse manager, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB warehouse cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about the floor, ideally from a site that had been mopped by a previous contractor and noticed the difference after machine scrubbing. If TLB does not own a machine, cut this slot rather than filling it — see the §4 bracket.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Industrial site client, TLB' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about the work fitting around shifts and a live pick face without stopping anything. On a distribution site that is the objection that kills contracts.]',
+    name: '[Business name, TBC]',
+    role: '[Role, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Operations manager, TLB client' },
+  },
+];
+
+// §9 Branded FAQs, in the CUSTOMER'S voice — a warehouse, operations or site
+// manager.
+const brandedFaqItems = [
+  {
+    question: 'Can your team meet our site induction?',
+    answer:
+      // ⚠️ Real bracket. An industrial site will not let anyone past the
+      // gate without this.
+      'They have to, and it should be a condition of the contract rather than a formality. Most industrial sites require a site-specific induction, a sign-in, high-visibility clothing and safety footwear as a minimum, and some require more. [What inductions, tickets and PPE TLB’s team can meet, and whether that includes a general construction induction card. Confirm.] Tell us your requirements at the walkthrough and we will tell you honestly what we hold.',
+  },
+  {
+    question: 'When would you be on site, if we run two shifts?',
+    answer:
+      'In whatever gap genuinely exists, and if there is not one, zone by zone around live work. Amenities can be done between shifts because they empty out. Floor scrubbing needs an aisle with nothing moving in it, so it gets done aisle by aisle in your quietest window rather than in one pass. If you run around the clock, the floor becomes a weekend or shutdown job and we will say so rather than promise a nightly pass.',
+  },
+  {
+    question: 'Do you do the floor with a machine?',
+    answer:
+      // ⚠️ Same bracket as §4. This is the page's honesty test.
+      'That is the right question to ask every contractor quoting you, because it is the difference between a service and an appearance. [Whether TLB owns or hires an autoscrubber, and the area it covers in a shift. Confirm.] A mop and bucket on a warehouse floor moves the tyre rubber and dust film around instead of lifting it, which is why a mopped concrete floor can look wet-clean and still be slippery.',
+  },
+  {
+    question: 'Can you work around forklifts?',
+    answer:
+      'We work around them by not being in the same aisle at the same time, which is a scheduling answer rather than a bravery one. Our team stays in pedestrian walkways, wears high-visibility clothing, and clears an aisle with your supervisor before working in it. What we will not do is drive your plant, ride on it, or work under a raised load. None of those are negotiable.',
+  },
+  {
+    question: 'Will you clear the pallet wrap and strapping?',
+    answer:
+      'Yes, that is part of the dock and floor scope, and it is one of the best-value lines on it: wrap and strapping on a floor is a trip hazard in the one part of the site where people and vehicles share space. Where it goes matters though. It gets bagged and put in your waste stream, and if you want it taken off site or separated for recycling, that goes on the scope with its own price.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We walk the site with you and look at four things: the floor and how much of it a machine can actually reach, the racking, the dock, and the crib room and bathrooms. Then you get a written scope split by zone with a frequency against each, a price per visit, and the periodic work booked to a shutdown. No obligation.',
+  },
+];
+
+// §10 Non-branded FAQs, the long-tail block.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. Checkable claims:
+//   - Autoscrubbers remove soil rather than redistributing it, and are the
+//     standard method for large sealed concrete floors. Correct.
+//   - Concrete floor sealing and its deterioration under abrasive soil.
+//     Correct in substance.
+//   - Model WHS duty to provide and maintain a work environment without
+//     risks. Correct; no section quoted.
+//   - Combustible dust risk applies in specific industries. Correct and
+//     hedged.
+//   - Forklift operation requires a high risk work licence in NSW. Correct.
+//   - No dollar figure anywhere, same as every sibling page.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does warehouse cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
+      'The floor is usually priced per square metre and the amenities per visit, and a good quote shows them separately so you can see what you are buying. The number moves with how much of the floor a machine can actually reach around racking and stock, how many bathrooms and crib rooms there are, whether the dock and hardstand are included, and whether there is a gap in your shifts. [TLB’s pricing basis. Confirm.]',
+  },
+  {
+    question: 'How often should a warehouse floor be cleaned?',
+    answer:
+      'Aisles and pedestrian walkways weekly to fortnightly for a normal storage site, and daily to weekly for a busy distribution centre or anywhere handling food. The driver is forklift traffic rather than floor area, because tyre rubber and the dust it grinds in are what actually build up. Amenities and bathrooms are daily regardless of how quiet the floor is.',
+  },
+  {
+    question: 'Why use a floor scrubber instead of a mop?',
+    answer:
+      'Because a mop and a scrubber do different things. A scrubber applies solution, agitates the floor with a brush or pad, and vacuums the dirty water straight back off, so the soil leaves the building. A mop puts solution down, moves the soil around in it, and leaves most of it behind in a thin film as the floor dries. On a large sealed concrete floor that film is what makes a "clean" floor slippery.',
+  },
+  {
+    question: 'Is warehouse cleaning a work health and safety requirement?',
+    answer:
+      'Not as a named task, but the outcome is. A business has a primary duty under the model work health and safety laws to provide and maintain a work environment without risks to health and safety, and on an industrial site housekeeping is a large part of how that is met: clear walkways, floors with grip, dock aprons without trip hazards, drains that are not blocked. Your regulator, SafeWork NSW, is the right primary source. This is general information, not safety advice.',
+  },
+  {
+    question: 'Is dust in a warehouse a fire risk?',
+    answer:
+      'It can be, and it depends what the dust is. In sites handling timber, grain, flour, sugar, some plastics and some metals, accumulated combustible dust on racking, ledges and roof structure is a recognised fire and, in the right conditions, explosion risk. In a general storage warehouse it is a pest and product-contamination issue rather than a fire one. Either way the dust that matters most is usually the dust nobody can reach without an elevating work platform.',
+  },
+  {
+    question: 'Can a cleaner clean high-level racking?',
+    answer:
+      'Not from the floor, and not from a forklift. Anything beyond safe reach needs an elevating work platform, which requires appropriate training to operate and, above certain machine types, a high risk work licence, plus a fall-prevention plan for the site. Riding a pallet on a forklift to get up there is unlawful and is how people die in warehouses. High-level work is a separate specialist engagement, usually booked into a shutdown.',
+  },
+];
+
+// §11 Closing CTA.
+const closingCta = {
+  kicker: 'Warehouse and industrial cleaning',
+  heading: 'We will look at the crib room too.',
+  lead: 'A walk of the site at the floor, the racking, the dock and the amenities. Then a written scope split by zone, with the floor and the amenities priced separately so you can see both.',
+  cta: walkthroughCta,
+};
+
+const business = commercialBusiness(pageMeta.description);
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="full-width-photo"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    {/* §3 — the four refusals, before any scope. On an industrial site the
+        dangerous contractor is the one who says yes to everything. */}
+    <Callout tone="warning" heading={boundaryCallout.heading} body={boundaryCallout.body} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="What goes on the scope"
+      lead="Grouped by zone, in the order you would walk the site. The floor and the amenities are two different jobs and a good quote prices them separately."
+      items={zoneItems}
+      cta={walkthroughCta}
+    />
+
+    {/* §5 — the only use of ContentGrid's `image` cell type in the cluster.
+        Array order is the layout, so this reads text / photo / photo / text:
+        the crib room argument beside the crib room, then the dock beside the
+        dock. The asymmetry with §4 is deliberate — see the file header. */}
+    <ContentGrid
+      heading="The two zones every quote thins out"
+      lead="Both are small against the floor. Both are what your team and your visitors actually judge the site on."
+      columns={2}
+      blocks={amenitiesBlocks}
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="A machine-scrubbed floor is a floor with more grip"
+      body={worthKnowingBody}
+    />
+
+    {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
+
+        THE PHOTO BRIEF for this page: one aisle of sealed concrete, shot from
+        a locked-off tripod, before and after a machine scrub. Concrete is the
+        third-best before/after subject on this cluster after carpet and
+        rubber gym flooring, and it is the one that makes the §4 machine
+        argument visible rather than assertable. Nothing moved between the two
+        frames. Drop it in here, between "Worth knowing" and the related
+        pages. */}
+
+    <TagCloud
+      heading="Other premises we clean"
+      subheading="Commercial cleaning for every kind of site across the Northern Rivers and the Tweed."
+      tags={relatedTags}
+      note={[]}
+    />
+
+    <TestimonialCarousel heading="What site managers say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Warehouse Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

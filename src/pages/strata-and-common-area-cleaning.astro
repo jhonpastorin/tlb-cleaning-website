@@ -1,0 +1,509 @@
+---
+// Strata and common area cleaning — one of the THIRTEEN "by type of premises"
+// leaf pages under the /commercial-cleaning/ hub (navigation.ts, "By type of
+// premises" group). Built in one pass with its twelve siblings.
+//
+// NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
+// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// blockers shared across the whole cluster ([insured], [police-checked],
+// pricing basis, whether commercial work crosses the NSW border).
+//
+// WHAT MAKES THIS PAGE DIFFERENT from its twelve siblings, structurally:
+//   - `ServiceBlocks variant="list"` instead of `icon-grid` for the scope.
+//     Strata scope is naturally one row per common area, and each row can
+//     carry an `href` to the service that actually does that area (carpet
+//     extraction for the corridors, pressure cleaning for the driveway).
+//     No other page in the cluster has that cross-sell shape.
+//   - `StoryMosaic` on "who we actually report to". Unique to strata: the
+//     person reading this page is usually NOT the person who pays the
+//     invoice, and no other premises type has that split.
+//   - `Callout tone="warning"` on bin rooms, not a `note`. It warns the
+//     committee off a specific decision (leaving the bin room out of scope
+//     to save money), which is what `warning` is for per Callout's own docs.
+//   - No `ComparisonTable`. The shared comparison rows are written for a
+//     homeowner choosing a cleaner ("the person in your home"), and a strata
+//     committee is not choosing someone to enter their home. Forcing the
+//     table on would put copy on the page that contradicts its own audience.
+//     This is a deliberate omission, not an oversight — see §9.
+//
+// BLOCKS LAUNCH, specific to this page:
+//   - Does TLB do strata work at all today, and at what scale? The brand
+//     foundation document names homes, Airbnb and real estate agencies as
+//     the three audiences and never mentions strata. This page may be
+//     ambition rather than a service. Confirm before it ships.
+//   - Bin room and waste work. Presenting or returning bins is the single
+//     most common strata add-on and it is a real physical job. Bracketed in
+//     the scope list.
+//   - Whether TLB carries the insurance level strata managers typically
+//     require of contractors, which is often higher than a domestic
+//     cleaner's. Bracketed in a non-branded FAQ.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import StoryMosaic from '../components/sections/StoryMosaic.astro';
+import Callout from '../components/sections/Callout.astro';
+import ImageBand from '../components/sections/ImageBand.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+// This page's own frames are in src/assets/commercial_cleaning/premises/;
+// the prompts are in that folder's IMAGE-PROMPTS.md.
+import heroImg from '../assets/commercial_cleaning/premises/strata-cleaner-mopping-an-apartment-lobby.jpg';
+import balustradeImg from '../assets/commercial_cleaning/premises/strata-cleaner-cleaning-a-lift-lobby-glass-balustrade.jpg';
+import binRoomImg from '../assets/commercial_cleaning/premises/strata-bin-room-hosed-out-and-tidy.jpg';
+import carparkImg from '../assets/commercial_cleaning/premises/strata-carpark-and-driveway-swept.jpg';
+// §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
+import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { nswLocationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+
+// §0 Metadata. "Strata cleaning" is the head term people actually search;
+// "common area cleaning" is the phrase committees and managers use in their
+// own paperwork. Both are in the title because they are the same page.
+const pageMeta = {
+  title: 'Strata and Common Area Cleaning | TLB Cleaning',
+  description:
+    'Strata and common area cleaning across the Northern Rivers and the Tweed. Lobbies, lifts, stairwells, carparks and bin rooms on a written schedule, with a report you can take to the committee.',
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://example.com/strata-and-common-area-cleaning/',
+};
+
+const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+
+// §1 Hero. `full-width-photo` rather than the cluster's usual
+// `split-single-image`, because a lobby is an establishing shot: the whole
+// point of the photo is the space, and a half-width panel crops the thing
+// the reader is trying to recognise as their own building.
+//
+// ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page
+// — see office-cleaning.astro's §1 comment.
+const hero = {
+  kicker: 'Strata and common area cleaning',
+  headingLines: ['The first thing an owner sees', 'is the front door.'],
+  lead:
+    'Common area cleaning for apartment blocks, townhouse complexes and mixed-use buildings across the Northern Rivers and the Tweed. A written schedule, the same cleaner each week, and a record the committee can actually read.',
+  cta: walkthroughCta,
+  image: {
+    ratio: '16/9',
+    label:
+      'A cleaner mopping the tiled floor of a bright apartment building lobby with the glass entry doors behind her',
+    src: heroImg,
+  },
+};
+
+// §2 Definition. Answer-target block for the focus keyword. Paragraph two
+// does the thing this page exists to do that no sibling does: separate common
+// property from lots, because the reader's first real question is what they
+// are even allowed to buy on the body corporate's money.
+const definitionBody: TextBlockBody[] = [
+  'Strata cleaning is the regular cleaning of the shared parts of a building that no single owner is responsible for: the entry and lobby, lifts, stairwells and landings, corridors, common bathrooms, the carpark and driveway, and the bin room. TLB Cleaning cleans common areas across the Northern Rivers and the Tweed for owners corporations, strata managers and building managers.',
+  'The line that matters is common property versus lots. We clean common property, which is what the levies pay for. Inside an apartment is the owner or tenant’s own business, and if they want that done it is a separate arrangement with us rather than something quietly folded into the building’s contract. Keeping that line clean is what stops a common area budget from turning into an argument at the next general meeting.',
+];
+
+// §3 Scope. `ServiceBlocks variant="list"` — one row per common area, each
+// with an `href`. This is the shape strata scope naturally takes, and it is
+// the one place in the cluster where the scope itself can carry the
+// cross-sell honestly: the corridors really do need carpet extraction and
+// the driveway really does need pressure cleaning, and both are separate
+// services with their own pages.
+//
+// ⚠️ EVERY ITEM IS DRAFTED against standard strata practice, not supplied by
+// TLB. Confirm each one. The bin room row carries a real bracket.
+const areaItems = [
+  {
+    icon: 'house' as const,
+    title: 'Entry, lobby and letterboxes',
+    description:
+      'Glass doors and sidelights inside and out, entry matting, the floor mopped or vacuumed, letterbox bank wiped, cobwebs off the ceiling and light fittings. This is the ten square metres that sets what a prospective buyer thinks of the whole building.',
+    href: '/commercial-cleaning/',
+  },
+  {
+    icon: 'office' as const,
+    title: 'Lifts, stairwells and landings',
+    description:
+      'Lift floors, walls and the stainless doors and buttons, stair treads and risers, handrails, and the glass balustrades that show every fingerprint. Landings get the corners and the skirtings, which is where a cheap scope stops.',
+    href: '/commercial-cleaning/',
+  },
+  {
+    icon: 'spark' as const,
+    title: 'Corridors and common carpet',
+    description:
+      'Vacuumed on the schedule, with spot treatment as things happen. Carpet in a corridor wears in one narrow lane and needs extraction once or twice a year on top of vacuuming, or the traffic path goes permanently grey.',
+    href: '/commercial-carpet-cleaning/',
+  },
+  {
+    icon: 'key' as const,
+    title: 'Carpark, driveway and hard surfaces',
+    description:
+      'Swept, litter and leaves cleared, drains checked clear, oil spots treated. Concrete driveways, paths and the ramp go dark with algae in a Northern Rivers wet season and need pressure cleaning periodically rather than sweeping.',
+    href: '/commercial-pressure-cleaning/',
+  },
+  {
+    icon: 'puzzle' as const,
+    title: 'Bin room and waste area',
+    description:
+      // ⚠️ Real bracket. Bin presentation is a physical job with its own
+      // roster and it is the most common strata add-on.
+      'Floor hosed and squeegeed to the drain, walls and the chute door wiped, deodorised, and loose rubbish cleared from around the bins. Presenting and returning bins on collection day is [included / a separate add-on. Confirm], because it is a scheduled task rather than a cleaning task.',
+    href: '/commercial-cleaning/',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Common bathrooms, laundries and pool surrounds',
+    description:
+      'Where the building has them: toilets and basins cleaned and disinfected, mirrors, floors mopped, laundry benches and machine tops wiped, and the hard surround of a pool or BBQ area swept and hosed. Not the pool water, which is a pool contractor.',
+    href: '/commercial-cleaning/',
+  },
+];
+
+// §4 Who we report to. `StoryMosaic` and UNIQUE TO THIS PAGE in the cluster:
+// on every other premises page the reader is the decision maker, and here
+// they usually are not. A committee member, a strata manager and an on-site
+// building manager each want a different thing from the same contract, and a
+// page that talks to only one of them loses the other two.
+//
+// Array order IS the layout (see SECTIONS.md) — text, image, text, image.
+const reportingBlocks = [
+  {
+    type: 'text' as const,
+    body: [
+      'Three different people read this page and they want three different things. A committee member wants to stop hearing complaints in the owners group chat. A strata manager wants a contractor who invoices correctly, holds current insurance and does not generate phone calls. An on-site building manager wants someone who turns up when they said and does not need supervising.',
+      'We write the scope so all three can use it. It names each area, what happens in it, and how often, with nothing left as "general tidy". That one document is what a committee approves, what a manager files, and what a building manager checks against.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A cleaner wiping down a glass balustrade on the open landing of an apartment building, the lift lobby behind her',
+    src: balustradeImg,
+  },
+  {
+    type: 'text' as const,
+    body: [
+      'The other half of it is being visible without being intrusive. Residents live here. We work in the morning where we can, keep half a corridor walkable while we mop it, and never leave a cord across a fire stair. If a resident stops one of our team to ask about something inside their own apartment, we tell them honestly that it is not on the building’s scope and give them our number.',
+      'And you get told what happened. Not a glossy report nobody reads, just a short record of the visit and anything we found: a blown light in the stairwell, a lock that is not catching, a bin room door propped open again. Most of what a building manager needs to know, someone with a mop notices first.',
+    ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label:
+      'A cleaner sweeping the concrete floor of a clean apartment basement carpark towards the daylight at the ramp',
+    src: carparkImg,
+  },
+];
+
+// §5 Callout. `warning`, not `note` — it warns a committee off a specific
+// decision rather than correcting a belief, which is the line Callout's own
+// docs draw.
+const binRoomCallout = {
+  heading: 'Do not cut the bin room to save money.',
+  body: [
+    'It is the first line a committee strikes out of a quote and it is the one that comes back hardest. A bin room that is not hosed and deodorised on a schedule becomes a smell in the lift lobby within a fortnight in a Northern Rivers summer, then a cockroach problem, then a pest control invoice larger than the cleaning line you saved.',
+    'It is also the area most likely to put the owners corporation in the wrong. Waste that is overflowing, blocking access or sitting outside the room is a work health and safety exposure on common property, and it is exactly what a resident photographs and sends to council.',
+  ],
+};
+
+// §6 The three ways a strata scope goes wrong. `ContentGrid` with `feature`
+// cells — three short diagnoses, which is a different shape from the
+// six-item scope list above it and from the prose blocks either side.
+const scopeFailureBlocks = [
+  {
+    type: 'feature' as const,
+    icon: 'idea' as const,
+    heading: 'It says "general clean"',
+    body: [
+      'Two words that cover everything and guarantee nothing. When a resident complains about the stairwell, nobody can point at a line that was or was not met, so it becomes a matter of opinion between the committee and the contractor. Every area on a real scope has a task and a frequency against it.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'chart-pie' as const,
+    heading: 'The frequency was set once, in 2019',
+    body: [
+      'Buildings change. A block that fills with short-stay tenants generates more lobby traffic and more bin room work than the same block did full of owner-occupiers. A scope that has never been reviewed is usually either paying for visits the building does not need or missing the ones it does.',
+    ],
+  },
+  {
+    type: 'feature' as const,
+    icon: 'suitcase' as const,
+    heading: 'Periodic work was never scheduled',
+    body: [
+      'Carpet extraction, external glass, pressure cleaning the driveway and high dusting are not weekly jobs, so they fall off a weekly scope entirely and only happen when something looks bad enough to trigger a special quote. Put them on the schedule with a month against each one and the building stops degrading between panics.',
+    ],
+  },
+];
+
+// §7 Related pages. The other twelve premises types, the two commercial
+// services and the hub, from src/data/premises.ts, with this page filtered
+// out of its own band. Airbnb is appended as an extra: a strata building full
+// of short-stay lots is a real and growing case, and it is the one link a
+// committee member reading this page might genuinely need next.
+const relatedTags = relatedPremises('/strata-and-common-area-cleaning/', [
+  { label: 'Airbnb cleaning', href: '/airbnb-cleaning/' },
+]);
+
+// §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
+// Never invent a quote or a business name. BFD 5.3 requires written
+// permission before naming a client at all.
+//
+// ⚠️ Naming a building is more sensitive than naming a business. A strata
+// plan number or an address identifies where people live, so these slots ask
+// for the manager or committee role and the town, not the building.
+const testimonials = [
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a strata manager, ideally about invoicing and insurance paperwork being right rather than about the cleaning itself. That is what wins the second and third building from the same manager. Role and town, with written permission — do not name the building or the plan number.]',
+    name: '[Strata manager, TBC]',
+    role: '[Role and town, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'TLB strata cleaning client' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote from a committee member about complaints stopping. The measurable thing a committee cares about is how many emails they get, not how the lobby looks.]',
+    name: '[Committee member, TBC]',
+    role: '[Role and town, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Owners corporation committee member' },
+  },
+  {
+    quote:
+      '[TBC. Ask Teagan for a quote about the bin room specifically, from a building that had a smell problem before we started. It is the least glamorous line on the scope and the one this page argues hardest for.]',
+    name: '[Building manager, TBC]',
+    role: '[Role and town, TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Building manager at a TLB strata client' },
+  },
+];
+
+// §9 Branded FAQs, in the CUSTOMER'S voice — here that voice is a committee
+// member or a manager, which is why "we" means the building.
+//
+// NOTE: no ComparisonTable on this page, deliberately. See the file header.
+// These FAQs carry the two comparison rows that survive the audience change
+// (employed not subcontracted, and local) as answers instead, where they can
+// be worded for a contractor relationship rather than for someone letting a
+// cleaner into their home.
+const brandedFaqItems = [
+  {
+    question: 'Who do you invoice, us or the strata manager?',
+    answer:
+      'Whichever the owners corporation prefers. Most of our strata work is invoiced monthly to the strata manager against the approved scope, with the committee copied so nobody is surprised at the next meeting. If the building is self-managed we invoice the treasurer directly. Either way the invoice references the scope, so it can be checked without a phone call.',
+  },
+  {
+    question: 'Can you give us something to take to the committee?',
+    answer:
+      'Yes, and it is the main thing we produce. After the walkthrough you get a written scope with every common area listed, the tasks in it and the frequency of each, and a price per visit. It is written to be read out at a meeting and voted on, not to be interpreted. If the committee wants two options at different frequencies, we quote both.',
+  },
+  {
+    question: 'Do you use subcontractors?',
+    answer:
+      'No. Our nine cleaners are employed by TLB and paid to the Cleaning Services Award, which matters more in strata than almost anywhere else: a subcontracted chain is how a building ends up with a different person in its stairwell every week and no clear answer about who is insured. You get the same cleaner, and we can tell you their name.',
+  },
+  {
+    question: 'What if a resident asks our cleaner to do something extra?',
+    answer:
+      'They tell them politely that it is not on the building’s scope and hand over our number. Nothing gets added to a common area visit informally, because the levy payers as a whole are paying for that time and one resident cannot reallocate it. If they want their own apartment cleaned, that is a separate private arrangement with us.',
+  },
+  {
+    question: 'Will you work around residents?',
+    answer:
+      'Yes. We clean common areas in the morning where the building allows it, keep a walkable path while floors are wet, never block a fire exit or run a cord across a stair, and keep noise down before eight. If your by-laws set contractor hours, tell us at the walkthrough and the schedule is built inside them.',
+  },
+  {
+    question: 'What happens if I get in touch?',
+    answer:
+      'We walk the building with you, top to bottom including the bin room and the carpark, and note what is actually happening rather than what the last scope said. Then you get a written scope, a price per visit and a suggested schedule for the periodic work. No obligation, and nothing to sign at the walkthrough.',
+  },
+];
+
+// §10 Non-branded FAQs, the long-tail block.
+//
+// ⚠️ VERIFICATION PASS REQUIRED. The legal framing below is the part to
+// check, and it is deliberately kept general:
+//   - In NSW, an owners corporation's duty to maintain and keep common
+//     property in a state of good and serviceable repair sits in the Strata
+//     Schemes Management Act 2015. Correct in substance. NO SECTION NUMBER IS
+//     QUOTED here on purpose: a wrong or superseded section reference is
+//     worse than none, and the honest answer for a reader who needs the
+//     detail is their strata manager or NSW Fair Trading.
+//   - Cleaning is maintenance of common property in practice, but whether a
+//     specific task is the owners corporation's or a lot owner's depends on
+//     the by-laws of that scheme. Hedged accordingly.
+//   - Nothing here should be read as legal advice, and the last answer says
+//     so plainly rather than in a disclaimer nobody reads.
+const nonBrandedFaqItems = [
+  {
+    question: 'How much does strata cleaning cost?',
+    answer:
+      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
+      'Common area cleaning is priced per visit against a written scope, and the number moves with how many levels and lifts the building has, how much common carpet and glass there is, whether there is a carpark and bin room, and how often you want it done. A weekly single-level townhouse complex and a three-times-weekly high-rise are different jobs entirely. [TLB’s pricing basis and any minimum charge. Confirm.]',
+  },
+  {
+    question: 'How often should common areas be cleaned?',
+    answer:
+      'Lobbies and lifts in a building with more than about twenty lots generally need two or three visits a week, because entry glass and lift floors show traffic immediately. Stairwells, corridors and carparks usually work weekly or fortnightly. Bin rooms want at least weekly year round and more often over summer. Periodic work — carpet extraction, external glass, pressure cleaning — is once or twice a year on a set month.',
+  },
+  {
+    question: 'Is the owners corporation required to clean common property?',
+    answer:
+      'In New South Wales an owners corporation has a duty to properly maintain common property and keep it in a state of good and serviceable repair, and in practice regular cleaning is part of meeting it. What that means for a particular task depends on the scheme’s own by-laws. Your strata manager or NSW Fair Trading is the right source for your building. This is general information, not legal advice.',
+  },
+  {
+    question: 'What is the difference between common property and a lot?',
+    answer:
+      'Broadly, a lot is the part an individual owns — usually the inside of the apartment or townhouse — and common property is everything shared: entry, lobby, lifts, stairs, corridors, external walls and roof, driveways and the bin room. Cleaning contracts paid from levies cover common property only. Where the boundary sits in a specific building is set by its strata plan, so check yours rather than assuming.',
+  },
+  {
+    question: 'Do strata cleaners need insurance and inductions?',
+    answer:
+      // ⚠️ Bracket. Strata managers commonly require a higher public
+      // liability level than a domestic cleaner carries, plus a contractor
+      // induction. Confirm what TLB holds.
+      'Yes. Any contractor working on common property should hold current public liability cover and workers compensation, and most strata managers set a minimum level and ask for the certificate annually. Larger buildings also require a site induction and a signed-in visit. [TLB’s public liability level and whether it meets the common strata minimum. Confirm.]',
+  },
+  {
+    question: 'Can the same cleaner do the common areas and individual apartments?',
+    answer:
+      'They can, but the two should never sit on one invoice. Common area work is paid from levies on behalf of every owner, and an individual apartment is a private arrangement. Mixing them is how a committee ends up unable to explain a line item. We are happy to do both in one building, quoted and billed entirely separately.',
+  },
+];
+
+// §11 Closing CTA.
+const closingCta = {
+  kicker: 'Strata and common area cleaning',
+  heading: 'Start with a walk of the building.',
+  lead: 'Top to bottom, including the bin room and the carpark. Then a written scope, a price per visit and a schedule for the periodic work, ready to take to the committee.',
+  cta: walkthroughCta,
+};
+
+const business = commercialBusiness(pageMeta.description);
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="full-width-photo"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <ServiceBlocks
+      variant="list"
+      heading="Every common area, with a frequency against it"
+      lead="Six areas, and the periodic work that keeps each one from degrading between panics. Follow a row through to the service that does it."
+      items={areaItems}
+    />
+
+    <Callout tone="warning" heading={binRoomCallout.heading} body={binRoomCallout.body} />
+
+    {/* The photo the callout above is arguing for. `ImageBand`'s caption is
+        the whole point of the component, and this is the one place on the
+        cluster where a single image carries an argument by itself: a bin
+        room that looks like this is the outcome being sold.
+
+        ⚠️ Source is 4:3 and the box is 16/9, so `cover` crops the top and
+        bottom a little. Checked against the frame: the bins, the drain and
+        the wet floor all survive the crop, which is everything the caption
+        claims. Regenerate at 16:9 if this is ever reshot. */}
+    <ImageBand
+      ratio="16/9"
+      label="A clean, empty communal bin room in an apartment building, freshly hosed out with the floor draining"
+      caption="A bin room on a schedule. This is what the line item you were about to cut actually buys."
+      src={binRoomImg}
+    />
+
+    <StoryMosaic theme="dark" heading="Three people read this page" blocks={reportingBlocks} />
+
+    <ContentGrid
+      heading="Three ways a strata scope goes wrong"
+      lead="All three are visible in the document before a single visit happens."
+      columns={3}
+      blocks={scopeFailureBlocks}
+    />
+
+    {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
+
+        THE PHOTO BRIEF for this page: a bin room, and a driveway or entry
+        path with algae on it. Both from a locked-off tripod, before and
+        after, nothing moved between frames. Those two are the highest-value
+        pair on the whole cluster, because they are the two jobs a committee
+        is most likely to have been told are not worth paying for. Drop it in
+        here, between the scope-failure grid and the related pages. */}
+
+    <TagCloud
+      heading="Other premises we clean"
+      subheading="Commercial cleaning for every kind of building across the Northern Rivers and the Tweed."
+      tags={relatedTags}
+      note={[]}
+    />
+
+    <TestimonialCarousel heading="What managers and committees say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers and the Tweed."
+      groups={nswLocationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    <Faq heading="Strata Cleaning FAQs" items={nonBrandedFaqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>
