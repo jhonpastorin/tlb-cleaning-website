@@ -231,7 +231,12 @@ export const headerNav: MegaMenuNavItem[] = [
   },
   {
     label: 'Meet the team',
-    href: '/about/', // guessed destination — no dedicated team page given yet
+    // ✅ RESOLVED — all four pages in this menu now exist, and the labels and
+    // hrefs below are mirrored in src/data/meetTheTeam.ts, which the four
+    // pages read to cross-link each other. This is the same arrangement
+    // premises.ts has with the Commercial menu: edit a label or a slug here
+    // and there, or the menu and the page bodies drift apart.
+    href: '/about/', // the item's own page IS "About TLB and Teagan" (src/pages/about.astro)
     megaMenu: [
       {
         label: 'The people',
@@ -243,7 +248,15 @@ export const headerNav: MegaMenuNavItem[] = [
       {
         label: 'Proof',
         items: [
-          { label: 'Reviews', href: '/reviews/' }, // sheet fills this cell pink, unlike every other item's orange — unclear what that signals (existing page? different owner?), flagging rather than guessing
+          // The source sheet filled this cell pink where every other item was
+          // orange, which was flagged rather than guessed at. Built as a page
+          // like its three siblings; if the pink meant something (a different
+          // owner, an existing off-site profile), it still needs saying.
+          //
+          // ⚠️ The page it points at has no published review on it yet. Every
+          // quote slot is a briefing bracket and there is deliberately no star
+          // average anywhere — see src/pages/reviews.astro's header.
+          { label: 'Reviews', href: '/reviews/' },
           { label: 'How booking works', href: '/how-booking-works/' },
         ],
       },

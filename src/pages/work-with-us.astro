@@ -1,0 +1,407 @@
+---
+// Work with us. Second of the four "Meet the team" pages
+// (src/data/meetTheTeam.ts), and the only page on this site whose reader is
+// not a client. Everything about it follows from that: the trust bar is the
+// employment one rather than the client one, the CTA is a conversation
+// rather than a quote, and the proof it needs is about how the team is
+// treated rather than how the cleaning turns out.
+//
+// NO CONTENT PLAN EXISTS FOR THIS PAGE, and unlike /about/ it has almost no
+// published facts to build on either. Its foundations are:
+//   1. "TLB Cleaning - Brand Foundation.md" §1.2, §1.3 and §1.5.6, which are
+//      explicit that flexible, family-first hours are the employment model
+//      and the reason the team stays.
+//   2. why-tlb.astro §8, the same argument written for clients.
+//   3. index.astro's v6 FAQ, for what the business already tells clients
+//      about equipment and cover.
+//
+// BLOCKS LAUNCH. Four things on this page are statements about a real
+// employment relationship, and a careers page that gets one wrong is worse
+// than no careers page:
+//  1. THE HIRING PROCESS IS A PROPOSAL. Nothing in the repo or the brand
+//     foundation describes how TLB actually hires. The three steps below are
+//     written as a sensible default and marked as such here. Confirm them
+//     with Teagan or cut the section.
+//  2. PAY IS NOT ON THE PAGE, deliberately. There is no rate, band or award
+//     reference anywhere in the repo. Do not let anyone fill it with a guess
+//     or a "competitive rates" line, which tells an applicant nothing and
+//     reads as evasive. Name the award and the band once confirmed.
+//  3. THE TRANSPORT AND EQUIPMENT CONDITIONS are asserted below (own
+//     transport between properties, gear and products supplied). The second
+//     is what index.astro already tells clients. The first is not published
+//     anywhere. Confirm both.
+//  4. THE EMPLOYEE CLAIM. This page tells applicants they are employed
+//     rather than engaged under an ABN, and the callout explains the
+//     difference to them. That has to be true of every hire, including
+//     casuals, or the page misleads the person it is recruiting.
+//
+// ⚠️ Every CTA here points at /contact/, which DOES NOT EXIST. primaryNav
+// has linked it sitewide since navigation.ts was written, so the 404 is
+// pre-existing rather than introduced here, but this is the first page whose
+// only conversion route is that link. An applicant cannot use "get an
+// instant quote".
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+// Hero: two cleaners working a kitchen together, generated for this page.
+// The subject is deliberately the pair rather than one person alone, because
+// the offer on this page is a team and a set run, not shift work.
+import heroImg from '../assets/work_with_us/work-with-us-two-cleaners-working-together-in-a-kitchen.jpg';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { locationGroups } from '../data/locations';
+import { meetTheTeamBusiness, otherMeetTheTeamPages } from '../data/meetTheTeam';
+
+const pageMeta = {
+  title: 'Work With Us | Cleaning Jobs in the Northern Rivers | TLB Cleaning',
+  description:
+    'TLB Cleaning employs local cleaners across the Northern Rivers and the Tweed on set runs and hours built around family. See what the work involves and how to get in touch.',
+  canonical: 'https://example.com/work-with-us/',
+};
+
+const business = meetTheTeamBusiness(pageMeta.description);
+
+// The applicant's CTA, used in the hero and again at the close. Deliberately
+// NOT the sitewide quoteCta, which asks the reader to price a clean they do
+// not want. The label is the brand foundation's own preferred CTA (§2.4).
+const applyCta = { label: 'Talk to Teagan and the team', href: '/contact/' };
+
+const hero = {
+  kicker: 'Work with us',
+  headingLines: ['Cleaning work that fits', 'around school pick-up.'],
+  lead:
+    'We employ local cleaners right across the Northern Rivers and the Tweed, on set days, in the towns they already live in.',
+  cta: applyCta,
+  image: {
+    ratio: '4/3',
+    label: 'Two TLB cleaners working through a kitchen together on a morning run',
+    src: heroImg,
+  },
+};
+
+// The employment-side trust bar, not the client one. src/data/trust.ts holds
+// five client proof points ("98% of our clients stay with us", "Over 100
+// local homes, hosts and businesses") and every one of them answers a
+// question an applicant is not asking. Using it here would be the drift that
+// file was extracted to prevent, in reverse.
+//
+// `divided` rather than `card`: three short phrases in a hairline row, which
+// is what that variant is for. The card variant overlaps the hero and is the
+// site's client-facing signature, so keeping it off this page also keeps the
+// two audiences visually distinct.
+//
+// ⚠️ All three are employment claims. See blockers 3 and 4 at the top.
+const trustItems = [
+  'Employed on the books, not sent out under an ABN',
+  'Hours built around school pick-up',
+  'Work in the town you already live in',
+];
+
+// What the job is, before what it offers. An applicant who reads three
+// paragraphs of benefits and then finds out on day one that the work is
+// physical and clock-driven does not stay, which defeats the entire point of
+// the model this page is selling.
+const theJobBody: TextBlockBody[] = [
+  'Most of the work is regular home cleaning on a set run: the same houses, the same days, week after week or fortnight after fortnight. You get to know the places and the people in them, and they get to know you.',
+  'Alongside that there are holiday let turnovers, which are quicker and tied to a check-in time, bond cleans at the end of a tenancy, which are checked against an inspection standard, and commercial work outside trading hours.',
+  'It is physical work and the standard is high. The same client sees your work again next fortnight, which is the best and the hardest thing about the job.',
+];
+
+// What the arrangement offers. Four cells, two columns, so the pairs read
+// across. Written as things that either happen or do not, per the same rule
+// /about/'s values grid follows.
+//
+// ⚠️ Cell 3 (gear and products supplied) is what index.astro's v6 FAQ
+// already tells clients, so it is consistent. Cell 4 (training against a
+// written standard) is NOT published anywhere and is the strongest claim in
+// this section. Confirm it exists before launch, because an applicant will
+// arrive expecting it.
+const offerBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'A run of your own',
+    body: [
+      'You get your own clients and your own days rather than a roster that changes every week. When you are away someone from your team covers, and you do the same for them, which is how nobody has to work sick.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'Hours that fit the school day',
+    body: [
+      'Tell us the window you can genuinely work and we build the run around it. Most of the team is doing pick-up, so this is how the business already operates rather than a concession made for one person.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'Gear and products supplied',
+    body: [
+      'You do not need to buy a vacuum, a caddy or chemicals to work here. We turn up with everything, which is also how the standard stays the same whichever member of the team is at the door.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'Shown the standard first',
+    body: [
+      'Bond cleans and holiday let turnovers are measured against a standard rather than a feeling. You get shown that standard, and worked alongside, before you are sent out to meet it on your own.',
+    ],
+    tone: 'muted' as const,
+  },
+];
+
+// What we ask, as a short list between two lines of prose, which is exactly
+// why TextBlock's `body` is polymorphic (see its own note on that).
+//
+// ⚠️ The transport line is a real condition of employment and it is not
+// published anywhere in the repo. If TLB has team members who work a single
+// town on foot, this sentence turns them away for no reason.
+const asksBody: TextBlockBody[] = [
+  'Two things matter more here than experience does:',
+  {
+    list: [
+      'Turning up when you said you would, because a client has planned their day around it.',
+      'Telling us early when you cannot, so the visit gets covered before anyone is left waiting at home.',
+    ],
+  },
+  'Experience helps and it is not a requirement. A driver licence and your own transport between properties is, because the work is spread across towns rather than sitting in one building.',
+];
+
+// The employment-model callout. This page's equivalent of why-tlb.astro's
+// contract-literacy section, pointed at an applicant instead of a client:
+// the same "here is what to check before you sign" move, which is the one
+// piece of genuinely useful writing a cleaning careers page can offer.
+//
+// tone="note" rather than "warning": it is worth knowing rather than don't
+// do this. The thing being warned against is somebody else's arrangement,
+// and telling an applicant that a contracting offer is a mistake is not
+// ours to say.
+const abnCallout = {
+  heading: 'You do not need an ABN to clean with us',
+  body: [
+    'A lot of cleaning work in this region is offered as contracting. You invoice the business, you supply your own gear, you carry your own insurance, and the rights that come with a job do not come with it.',
+    'Ours is a job. It is worth asking any cleaning business which of the two they are offering you, and asking before you buy a vacuum rather than after.',
+  ],
+};
+
+// The work we take on, staff-facing. Icon-grid rather than the `list`
+// variant this site usually reaches for, because these are not links: an
+// applicant is reading what the days look like, not choosing a service to
+// buy. Icons are the four that exist in ServiceIcon.astro and actually mean
+// something here.
+const workTypeItems = [
+  {
+    icon: 'house' as const,
+    title: 'Regular home cleaning',
+    description: 'The core of the work. Set houses, set days, weekly or fortnightly, in your own patch.',
+  },
+  {
+    icon: 'suitcase' as const,
+    title: 'Holiday let turnovers',
+    description: 'Quicker visits against a check-in time. Beds made up, essentials restocked, the place left guest-ready.',
+  },
+  {
+    icon: 'key' as const,
+    title: 'Bond and end of lease cleans',
+    description: 'A vacant property brought up to inspection standard, usually as a team rather than on your own.',
+  },
+  {
+    icon: 'office' as const,
+    title: 'Commercial cleaning',
+    description: 'Offices, shopfronts and premises, cleaned around how the business trades. Often early or after hours.',
+  },
+];
+
+// ⚠️ THE THREE STEPS BELOW ARE A PROPOSAL, NOT TLB'S PROCESS. See blocker 1
+// at the top of this file. They are written as the default a small local
+// employer would actually run, and they are specific on purpose: a vague
+// "we will be in touch" is what makes people not bother applying. Confirm or
+// replace, and if step 3 is paid, say so, because that is the detail an
+// applicant is weighing.
+//
+// Numbered in the headings rather than with a numbered component:
+// PathwayCards is the numbered one and it needs a photo and a CTA per card,
+// neither of which a three-step process has.
+const processBlocks = [
+  {
+    type: 'text' as const,
+    heading: '1. Send us a message',
+    body: [
+      'Tell us which town you are in, the hours you could genuinely work, and whether you have cleaned professionally before. A couple of paragraphs is plenty. There is no application form to fill in.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: '2. A chat with Teagan',
+    body: [
+      'A conversation rather than an interview panel, usually over the phone. What the runs near you look like, what hours suit, and anything you want to ask about how the work is organised.',
+    ],
+  },
+  {
+    type: 'text' as const,
+    heading: '3. A shift alongside the team',
+    body: [
+      'You work a run with someone who already does it, so you see the standard and we see how you work. Nobody gets handed a set of keys and a house on their first day.',
+    ],
+  },
+];
+
+// FAQs, applicant-facing. Answers 1, 3, 4 and 5 restate conditions stated
+// elsewhere on this page or already published to clients. Answer 6 is
+// deliberately hedged, because where the next run opens depends on where the
+// work is, and promising an applicant a job in their town would be the one
+// dishonest sentence on the page.
+//
+// ⚠️ "What does it pay?" IS NOT HERE. See blocker 2. It is the first thing
+// an applicant wants and the one thing this repo cannot supply. Add it as
+// soon as there is an award and a band to name.
+const faqItems = [
+  {
+    question: 'Do I need cleaning experience?',
+    answer:
+      'No. Plenty of the team started without it. What we cannot train is turning up reliably and telling us early when something changes, so those matter more at the point of hiring than a work history in cleaning does.',
+  },
+  {
+    question: 'Am I an employee or a contractor?',
+    answer:
+      'An employee, on the books. You do not invoice us, you do not need an ABN, and you do not supply your own equipment or insurance. If another cleaning business offers you work, it is worth asking them the same question.',
+  },
+  {
+    question: 'Do you supply the equipment and products?',
+    answer:
+      'Yes. You arrive to a caddy, a vacuum and the products already sorted, the same as our clients are told. Using the same gear across the team is part of how the standard stays consistent from one visit to the next.',
+  },
+  {
+    question: 'Do I need my own car?',
+    answer:
+      'Yes. A driver licence and reliable transport between properties are conditions of the work, because a run covers several places across a town or two rather than one building you clock into.',
+  },
+  {
+    question: 'Can I work school hours only?',
+    answer:
+      'Yes, and most of the team does. Tell us the window you can actually commit to and we build a run inside it. That is the whole employment model rather than an exception somebody has negotiated.',
+  },
+  {
+    question: 'Which towns are you hiring in?',
+    answer:
+      'We take applications from right across the Northern Rivers and the Tweed. Where the next run opens depends on where the work is, so tell us your town and we will be straight with you about what is near you.',
+  },
+];
+
+// Cross-links to the other three pages in this cluster. An applicant reading
+// this page is also, quietly, checking whether the business is real, and
+// /about/ and /reviews/ are where they go to do that.
+const clusterItems = otherMeetTheTeamPages('/work-with-us/');
+
+const closingCta = {
+  kicker: 'Work with us',
+  heading: 'Tell us what hours you can work.',
+  lead: 'Send us your town, your hours and a bit about yourself. Teagan reads them.',
+  cta: applyCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    <TrustBar items={trustItems} />
+
+    <TextBlock theme="muted" align="left" heading="What the work actually is" body={theJobBody} />
+
+    <ContentGrid
+      heading="What the arrangement offers"
+      lead="Four things that either happen at a cleaning job or do not."
+      columns={2}
+      blocks={offerBlocks}
+    />
+
+    <TextBlock theme="dark" align="left" heading="What we ask of you" body={asksBody} />
+
+    <Callout tone="note" heading={abnCallout.heading} body={abnCallout.body} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading="The kinds of work in a week"
+      lead="Most of the team spends most of its time on the first one. The rest turns up depending on the season and the run."
+      items={workTypeItems}
+    />
+
+    <ContentGrid
+      heading="How to apply"
+      lead="Three steps, and no application portal anywhere in them."
+      columns={3}
+      blocks={processBlocks}
+    />
+
+    <TagCloud
+      heading="Where we work"
+      subheading="Across the Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If your town isn't listed, tell us anyway. Runs tend to start where a new team member lives."]}
+    />
+
+    <Faq heading="Working at TLB: FAQs" items={faqItems} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Checking us out first?"
+      lead="Fair enough. This is the rest of what there is to read about how TLB runs."
+      items={clusterItems}
+    />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

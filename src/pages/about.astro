@@ -1,0 +1,409 @@
+---
+// About TLB and Teagan. First of the four "Meet the team" pages
+// (src/data/meetTheTeam.ts): the header mega-menu has listed all four since
+// the IA sheet was transcribed into navigation.ts, and none of them existed.
+//
+// NO CONTENT PLAN EXISTS FOR THIS PAGE. There is no content-plans/about.md
+// the way every other page on this site has one. The copy below is written
+// from two sources only, and nothing here is invented beyond them:
+//   1. "TLB Cleaning - Brand Foundation.md" (MNO Ventures, Sept 2026), the
+//      document that calls itself the single source of truth for messaging.
+//   2. Facts already published on this site, chiefly index.astro's v6
+//      "Local team, run properly" block, which is the short version of the
+//      story this page tells at length.
+// Get it reviewed as copy, not just as a build.
+//
+// BLOCKS LAUNCH:
+//  1. THIS PAGE OWES NAMES AND FACES AND CANNOT PAY. why-tlb.astro promises
+//     them three times and points here each time ("Names and faces, before
+//     anyone knocks on your door"; "neither can introduce you to her"; its
+//     closing CTA). index.astro's team block points here too. The team
+//     section below is therefore a grid of reserved, labelled slots, not a
+//     team. Real photographs of real employees, with their written consent,
+//     are the only thing that fills it: IMAGE-GUIDELINES §7 forbids
+//     generating a person presented as a named staff member, and a generated
+//     "Teagan" is the single worst image this site could carry.
+//  2. Teagan's own portrait in the story block below is a reserved slot for
+//     the same reason. Do not generate it either.
+//  3. HEADCOUNT IS UNSETTLED SITEWIDE AND THIS PAGE DELIBERATELY DOES NOT
+//     STATE ONE. The brand foundation says nine full-time staff and a team
+//     of local mothers. index.astro's v6 brief removed both from the
+//     homepage. why-tlb.astro leads its H1 with "Nine local mums" and flags
+//     the contradiction as its own blocker 1. An about page is where a
+//     reader most expects a number, so the omission is conspicuous: settle
+//     it, then add it here. What this page does carry is why-tlb §8's
+//     careful version of the family-first claim ("most of us are doing it"),
+//     which agrees with the homepage rather than contradicting it.
+//  4. The FAQ's insurance and background-check answers are HELD BACK, not
+//     drafted. See the note above faqItems.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import StoryMosaic from '../components/sections/StoryMosaic.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import PhotoGallery from '../components/sections/PhotoGallery.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+// Hero: the team arriving, generated for this page. Generic service imagery,
+// not a photograph of TLB's actual employees, and captioned as such nowhere.
+// See src/assets/about/IMAGE-PROMPTS.md for the line that separates the two.
+import heroImg from '../assets/about/about-tlb-cleaning-team-in-a-home-entry-hall.jpg';
+// Behind the word-of-mouth block. The subject is the run itself: gear going
+// into a car at the start of a morning, in a street like the ones we clean in.
+import wordOfMouthBgImg from '../assets/about/about-cleaners-loading-the-car-before-a-morning-run.jpg';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { meetTheTeamBusiness, otherMeetTheTeamPages } from '../data/meetTheTeam';
+
+const pageMeta = {
+  title: 'About TLB Cleaning | The Local Team Behind Every Clean',
+  description:
+    'TLB Cleaning is a locally owned cleaning company started in Alstonville by Teagan Burke. Meet the team cleaning homes and holiday lets across the Northern Rivers and the Tweed.',
+  canonical: 'https://example.com/about/',
+};
+
+const business = meetTheTeamBusiness(pageMeta.description);
+
+// Hero. The H1 is the promise the rest of the page has to keep, and it is
+// the one why-tlb.astro sends readers here for. Deliberately not "About us"
+// as a heading: a reader who clicked "Meet the team" knows where they are.
+const hero = {
+  kicker: 'About us',
+  headingLines: ["You'll know who's coming,", 'before anyone knocks.'],
+  lead:
+    'TLB Cleaning is a locally owned cleaning company, started in Alstonville by Teagan Burke and grown one recommendation at a time.',
+  cta: quoteCta,
+  image: {
+    ratio: '4/3',
+    label: 'Three TLB cleaners with their caddies in the entry hall of a bright coastal home',
+    src: heroImg,
+  },
+};
+
+// Definition block, sharing the hero's backdrop photo with the trust bar
+// above it. Written as answer-target sentences (subject, predicate, object)
+// per the brand foundation's GEO guidance §3.6.2, because "who is TLB
+// Cleaning" is a question an answer engine will field about this business
+// long before a human reads the page.
+const definitionBody: TextBlockBody[] = [
+  'TLB Cleaning is a locally owned cleaning company that cleans homes, holiday lets, rental properties and commercial premises across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+  'It employs its cleaners rather than subcontracting them. That is the whole reason we can promise a set day and the same faces, and it is the main practical difference between us and a franchise or an app.',
+  'There has never been an advertisement. Every client so far came from somebody recommending us to somebody else.',
+];
+
+// The story. StoryMosaic renders blocks in array order, so image-first here
+// puts the portrait on the left and the prose on the right.
+//
+// ⚠️ THE PORTRAIT SLOT IS RESERVED, NOT MISSING. It renders as a labelled
+// dashed box until a real photograph of Teagan arrives, with her permission
+// to publish it. Do not generate one, and do not substitute a stock portrait
+// or another woman from the library's generated photos: this paragraph names
+// a real person, so a face beside it is a claim about her.
+//
+// Length note: index.astro's v6 team block is the three-sentence version of
+// this story and stays as it is. This is the long version, written not to
+// repeat its sentences, per the brand foundation's "cover each point once".
+const storyBlocks = [
+  {
+    type: 'image' as const,
+    ratio: '3/4',
+    label: 'Teagan Burke, who started TLB Cleaning',
+  },
+  {
+    type: 'text' as const,
+    body: [
+      'Teagan started out cleaning houses around Alstonville herself, with a car full of gear and a few clients who told their friends about her. The friends told their friends. That is the entire marketing history of this business.',
+      'What she did next is the part that matters. Rather than taking on more work than one person can do properly, she hired local people and put them on the books, then built the roster around the towns they already live in. Nobody drives an hour to get to your place.',
+      'The result is a business that behaves like a small one and runs like a larger one. You get a set day, a team you recognise and a message before we come, without a call centre in between.',
+    ],
+  },
+];
+
+// The values: the brand foundation's core values reworded into things a
+// client can check rather than adjectives. Two columns, so each pair reads
+// across, and the section leads with how the team is treated because
+// everything a client notices is downstream of it.
+//
+// ⚠️ Cell 3 states that TLB's cleaners are employees, not contractors. That
+// is asserted across this whole site (index.astro's comparison table,
+// why-tlb.astro's central argument) and it is a claim with legal weight in
+// Australia. It is repeated here because this is the page a reader checks it
+// on. Confirm it is accurate for every current team member.
+const valueBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'Family first',
+    body: [
+      'The roster is built around school pick-up, because most of us are doing it. Flexible hours are not a perk here, they are the reason people stay, and staying is what gets you the same cleaner next fortnight.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'Local, and not a franchise',
+    body: [
+      'Nobody buys the right to trade under our name. When you book TLB you are booking the people who answer the phone, and they live between Lismore and the Tweed the same as you do.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'Employed, not subcontracted',
+    body: [
+      'Our cleaners are on the books rather than sent out under an ABN with their own gear. It is the more expensive way to run a cleaning business and it is the only way to promise you the same faces.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'The last five minutes',
+    body: [
+      'The details you actually notice all happen at the end: the tap dried off, the bin liner replaced, the cushions straightened, the door locked the way you asked. That is the part we train.',
+    ],
+    tone: 'muted' as const,
+  },
+];
+
+// The word-of-mouth section, dark, over a photo. This is the page's pivot:
+// everything above it is who we are, everything below it is how you check.
+const wordOfMouthBody: TextBlockBody[] = [
+  'TLB grew to a full team, with work coming from real estate agencies across the region, before it had a website. It got there on recommendations from people who had us in their own homes.',
+  'That is a slower way to grow and it has one large advantage. Nobody here has ever had to win work by being the cheapest quote in an inbox, so nobody has to make it back by rushing your clean.',
+];
+
+// The team. FOUR RESERVED SLOTS, and the count is deliberately not a claim
+// about the size of the team: this section exists to make the gap visible.
+// See blocker 1 at the top of this file.
+//
+// PhotoGallery's `grid` variant, not `filmstrip`: filmstrip grows the frame
+// you click, which is an interaction with nothing behind it while every
+// frame is an empty box. Names go under each photo as the `label` once real
+// photographs and consent exist, at which point this should probably become
+// a proper profile grid (ContentGrid with image cells, or a new component)
+// rather than a bare photo grid.
+const teamGallery = {
+  heading: 'The team',
+  lead:
+    'This is where our cleaners belong, by name, so you can see who would be coming before you book. We are not going to put invented faces here in the meantime, so the frames stay held open until the photographs are taken.',
+  images: [
+    { ratio: '1/1', label: 'TLB team member, photographed with permission' },
+    { ratio: '1/1', label: 'TLB team member, photographed with permission' },
+    { ratio: '1/1', label: 'TLB team member, photographed with permission' },
+    { ratio: '1/1', label: 'TLB team member, photographed with permission' },
+  ],
+};
+
+// The one thing a reader of this page is actually deciding: whether a
+// stranger is coming. Answered as an interruption rather than as prose,
+// because it is the answer they came for.
+//
+// ⚠️ This restates index.astro's v6 promise ("You'll meet whoever is looking
+// after your place before the first visit"). That is client copy on the
+// homepage, so it is treated as approved, but it commits the business to an
+// introduction on every new booking. Confirm it is operationally true,
+// because this page makes it a heading.
+const introductionCallout = {
+  heading: 'You can meet your cleaner before the first visit',
+  body: [
+    'Ask when you book and we will introduce whoever is looking after your place, by phone or at the door, before they clean anything. Plenty of clients skip it and would rather come home to it done. Both are fine, and you can change your mind later.',
+  ],
+};
+
+// Cross-links to the other three pages in this cluster, from the shared list
+// so the four cannot end up describing each other differently. Icon-less
+// `list` variant, the same call why-tlb.astro made: ServiceIcon's set is
+// abstract and has no glyph for "reviews" or "how booking works".
+const clusterItems = otherMeetTheTeamPages('/about/');
+
+// ⚠️ PLACEHOLDER TESTIMONIALS, not real client quotes. Same discipline as
+// every other page on this site: do not fill these with invented names,
+// towns or words. The two briefs below are chosen for what THIS page has to
+// prove (that the people are real, and that they stay), not generic praise.
+const testimonials = [
+  {
+    quote:
+      '[TBC - ask Teagan for a quote from a client who names their cleaner. This page is about the people, and a client using a first name is the one proof of that which cannot be manufactured.]',
+    name: '[Client name - TBC]',
+    role: '[Town / property type - TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Long-standing TLB client' },
+  },
+  {
+    quote:
+      '[TBC - ask Teagan for a quote from a client who came from a recommendation, ideally saying who recommended us. The word-of-mouth claim above is the whole page and currently has no voice behind it.]',
+    name: '[Client name - TBC]',
+    role: '[Town / property type - TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Client who came to TLB on a recommendation' },
+  },
+];
+
+// FAQs. Every answer comes from facts already published on this site
+// (index.astro's v6 FAQ, its comparison table, why-tlb.astro) or from the
+// brand foundation, written as self-contained 40 to 80 word passages per the
+// brand foundation §3.5.
+//
+// ⚠️ TWO QUESTIONS ARE HELD BACK, deliberately, and both are ones a reader of
+// an about page looks for:
+//   - "Are you insured?" Public liability cover is a yes or no with a policy
+//     behind it. The repo has no insurer and no figure, and a trust page is
+//     the worst place on the site to guess.
+//   - "Are your cleaners background checked?" The brand foundation lists
+//     police checks as a category table stake, and index.astro's v6 brief
+//     REMOVED that proof point from the homepage, which suggests it may not
+//     be in place. Answer it once it is, and say what the check actually is.
+// Both belong on this page. Get them confirmed rather than softened.
+const faqItems = [
+  {
+    question: 'Who owns TLB Cleaning?',
+    answer:
+      'Teagan Burke, who started the business cleaning houses around Alstonville herself and still runs it. TLB is locally owned and locally run. It is not a franchise, a licensee, or a trading name for a larger company somewhere else.',
+  },
+  {
+    question: 'Are your cleaners employees or contractors?',
+    answer:
+      'Employees. They are on the books, on set days, with the same clients each week. That costs more to run than dispatching contractors, and it is what makes a set team possible rather than whoever happens to be available that morning.',
+  },
+  {
+    question: 'Will I get the same cleaner every time?',
+    answer:
+      'Yes, wherever we can. Your place is assigned to a team and that is who you will see. If someone is away, another member of your team covers the visit and we let you know beforehand rather than surprising you at the door.',
+  },
+  {
+    question: 'Where is TLB Cleaning based?',
+    answer:
+      'The business started in Alstonville, and the team lives right across the Northern Rivers and the Tweed, inland and on the coast. We also cross the border into Coolangatta, Palm Beach and Burleigh Heads. Our cleaners work in the towns they already live in.',
+  },
+  {
+    question: 'Can I meet my cleaner before the first clean?',
+    answer:
+      'Yes. Ask when you book and we will introduce whoever is looking after your place before they start. Most clients are happy to skip it and come home to the work done, so it is offered rather than assumed.',
+  },
+  {
+    question: 'Am I locked into a contract?',
+    answer:
+      'No. There is no minimum term, no exit fee, and you can pause or skip a visit when you need to. Most clients stay because the arrangement is working, not because they signed something at the start.',
+  },
+  {
+    question: 'Do you bring your own equipment and products?',
+    answer:
+      'Yes, we arrive with everything we need. If you would rather we used a particular product on a particular surface, leave it out and tell us, and it becomes part of the notes for your place so nobody has to be told twice.',
+  },
+];
+
+const closingCta = {
+  kicker: 'Meet the team',
+  heading: 'Get to know us the easy way.',
+  lead: "Tell us which town you're in and what your place needs, and we'll come back with a price.",
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    {/* Trust bar and definition block share ONE photo behind the Cream
+        scrim, laid out across both — see index.astro for why a per-section
+        background cannot do this. 75% keeps Dark Teal body copy above 4.5:1
+        over the brightest part of the frame. */}
+    <Backdrop image={heroImg} tint="muted" opacity={75} focus="center">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <StoryMosaic theme="light" heading="How TLB started" blocks={storyBlocks} />
+
+    <ContentGrid
+      heading="What we actually mean by local"
+      lead="Four things that are either true of a cleaning business or not, rather than four adjectives."
+      columns={2}
+      blocks={valueBlocks}
+    />
+
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading="Grown by word of mouth, not advertising."
+      body={wordOfMouthBody}
+      backgroundImage={wordOfMouthBgImg}
+      scrimOpacity={82}
+    />
+
+    <PhotoGallery heading={teamGallery.heading} lead={teamGallery.lead} images={teamGallery.images} />
+
+    <Callout tone="note" heading={introductionCallout.heading} body={introductionCallout.body} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="More about how we work"
+      lead="The rest of this part of the site: what clients say, what happens after you book, and what it is like working here."
+      items={clusterItems}
+    />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Frequently asked questions" items={faqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

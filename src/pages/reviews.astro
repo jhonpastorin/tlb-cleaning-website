@@ -1,0 +1,391 @@
+---
+// Reviews. Third of the four "Meet the team" pages
+// (src/data/meetTheTeam.ts), and the hardest page on this site to build
+// honestly, because it is the one page whose entire content is proof and
+// this business has not published a single verified review yet.
+//
+// THE RULE THIS PAGE IS BUILT ON. Every quote slot below is a briefing
+// bracket, not a testimonial. Nothing here invents a client, a name, a
+// town, a star average or a review count. That is not caution, it is the
+// brand foundation's own instruction (§3.6.3: "Do not fabricate or import
+// testimonials, case studies or statistics") and IMAGE-GUIDELINES §7's
+// ("fake proof: awards, certificates, review screenshots, badges"). A
+// fabricated review is also conduct the ACCC pursues, so this is the page
+// where a well-meaning placeholder does real damage.
+//
+// WHAT IS DELIBERATELY ABSENT, so nobody adds it back as an improvement:
+//  1. NO STAR AVERAGE AND NO REVIEW COUNT. Not in the hero, not as a
+//     Hero `stats` row, not as a badge. There is no verified figure to state.
+//  2. NO GOOGLE OR FACEBOOK REVIEW WIDGET, and no link to a profile, because
+//     `meetTheTeamBusiness`' `sameAs` is still empty. The moment those
+//     profiles exist, fill sameAs in src/data/meetTheTeam.ts and link them
+//     from the callout below and from FAQ 1.
+//  3. NO AGENCY LOGOS. The logo band is reserved slots. An agency's mark is
+//     their property and their endorsement, and the brand foundation §3.5 is
+//     explicit that permission has to be sought first. Do not generate one.
+//  4. NO GUARANTEE LANGUAGE. Competitors promote bond-back and satisfaction
+//     guarantees; the brand foundation §3.5 says do not copy that unless
+//     Teagan formally adopts one, and to use "cleaned to inspection
+//     standard" phrasing until then. FAQ 2 does exactly that.
+//
+// BLOCKS LAUNCH:
+//  1. The page needs at least three real, permissioned quotes before it is
+//     worth publishing. Four slots are briefed below, by audience, so
+//     Teagan can collect against a plan rather than at random.
+//  2. The two numbers in the shared trust bar ("98% of our clients stay with
+//     us", "Over 100 local homes, hosts and businesses") sit on this page in
+//     the one context where an unsubstantiated figure is most exposed. They
+//     came from the homepage brief and src/data/trust.ts already flags them.
+//     On a page about proof, substantiate them or drop them.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import LogoBar from '../components/sections/LogoBar.astro';
+import BeforeAfter from '../components/sections/BeforeAfter.astro';
+import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+// SAMPLE illustrations, not photographs. See the block above
+// beforeAfterPairs, and the `note` the section renders in the reader's own
+// view. These are the homepage's own pair, reused deliberately rather than
+// generating two more sample scenes: they are the two rooms every service on
+// this site touches, so they read for the whole business, which is what this
+// page needs them to do.
+import sampleKitchenBeforeImg from '../assets/home_cleaning/before_after/sample-kitchen-before.png';
+import sampleKitchenAfterImg from '../assets/home_cleaning/before_after/sample-kitchen-after.png';
+import sampleShowerBeforeImg from '../assets/home_cleaning/before_after/sample-shower-before.png';
+import sampleShowerAfterImg from '../assets/home_cleaning/before_after/sample-shower-after.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { trustBarCards } from '../data/trust';
+import { meetTheTeamBusiness, otherMeetTheTeamPages } from '../data/meetTheTeam';
+
+const pageMeta = {
+  title: 'Reviews | What TLB Cleaning Clients Say',
+  description:
+    'TLB Cleaning grew across the Northern Rivers and the Tweed on recommendations rather than advertising. Read what clients say, and how we handle it when a clean is not right.',
+  canonical: 'https://example.com/reviews/',
+};
+
+const business = meetTheTeamBusiness(pageMeta.description);
+
+// HERO IS `minimal`, WITH NO PHOTO, AND THAT IS A DELIBERATE DEPARTURE from
+// the split-single-image opening every other page on this site uses.
+//
+// Two reasons. A photograph of a clean room is not evidence of anything, so
+// leading a proof page with one is the exact move this page argues against.
+// And the honest alternative is worse: the library has no photograph that
+// means "a real client said this", and generating one would put a face
+// beside a quote that does not exist yet. `minimal` opens on the claim
+// itself, which is the only thing on this page that is currently verifiable.
+//
+// ⚠️ Revisit once real quotes and real client photography exist, with
+// consent. At that point this hero should probably match its siblings.
+//
+// No `stats` row. See absence 1 at the top of this file.
+const hero = {
+  kicker: 'Reviews',
+  headingLines: ['Every client we have', 'came from a recommendation.'],
+  lead:
+    'TLB grew to a full team, and to steady work with real estate agencies across the region, without ever running an advertisement. This is the page where that gets checked.',
+  cta: quoteCta,
+};
+
+// How the reputation was built. This is the page's substance while the
+// quotes are still being collected, and it is all verifiable from facts
+// already published on this site.
+const reputationBody: TextBlockBody[] = [
+  'Word of mouth is a slower way to grow a cleaning business and a harder one to fake. Nobody recommends their cleaner to a neighbour on the strength of an advertisement. They do it because the house was right, again, on the day it was supposed to be.',
+  'It also means our reputation has always been held by other people rather than by us. The reviews below are being collected from clients who have had us in their homes for years, in their words rather than ours.',
+];
+
+// FOUR RESERVED QUOTE SLOTS, briefed by audience rather than by sentiment,
+// so the set proves the four things this business actually does instead of
+// saying "great service" four times. `uniform` because four cards should sit
+// as equals: the centre-emphasis treatment needs an odd count to have a
+// centre.
+//
+// ⚠️ DO NOT FILL THESE WITH INVENTED CONTENT. Swap each slot for a real,
+// permissioned quote as it is collected, and delete any slot still empty at
+// launch rather than shipping a bracket to a reader.
+//
+// Consent, per the brand foundation §3.6.3 and IMAGE-GUIDELINES §7: written
+// permission for the words, separate permission for a first name and town,
+// and the avatar stays the TLB monogram unless a client supplies their own
+// photo. A generated headshot beside a client name invents a customer.
+const testimonials = [
+  {
+    quote:
+      '[TBC - a regular home cleaning client, ideally naming how long TLB has been coming. Tenure is the proof this page needs most, because it is the one thing a new competitor cannot claim.]',
+    name: '[Client name - TBC]',
+    role: '[Town / regular home clean - TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Long-standing regular home cleaning client' },
+  },
+  {
+    quote:
+      '[TBC - an Airbnb or holiday let host, ideally on turnovers being handled around their booking calendar without them organising it. Hosting is where TLB does the most work a competitor does not.]',
+    name: '[Host name - TBC]',
+    role: '[Town / holiday let - TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Airbnb and holiday let host' },
+  },
+  {
+    quote:
+      '[TBC - a property manager or agency principal, on bond cleans passing inspection or on vacancy turnarounds. This is the quote that carries the agency claim made across this whole site.]',
+    name: '[Property manager name - TBC]',
+    role: '[Agency / town - TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Property manager at a local agency' },
+  },
+  {
+    quote:
+      '[TBC - a commercial client, on the premises being usable when they open rather than on the cleaning itself. Commercial has a real page and no proof of any kind behind it yet.]',
+    name: '[Business name - TBC]',
+    role: '[Premises type / town - TBC]',
+    rating: 5,
+    avatar: { ratio: '1/1', label: 'Local business TLB cleans for' },
+  },
+];
+
+// The agency band. RESERVED SLOTS, not logos.
+//
+// LogoBar's `list` variant, because each row pairs a mark with a short quote
+// and a relationship line, which is exactly the shape agency proof takes.
+// The `carousel` variant is for a long strip of marks with no words attached,
+// which would be the weaker version of this even once the logos exist.
+//
+// ⚠️ THREE THINGS ARE REQUIRED BEFORE THIS BAND CAN PUBLISH, and none of them
+// are code:
+//   1. Written permission from each agency to use their name and mark.
+//   2. The mark itself, supplied by them. Never a generated approximation,
+//      never a screenshot from their website.
+//   3. A quote attributed to a person who agreed to be quoted.
+// Until then the frames render as labelled dashed boxes, which is the honest
+// state. If permission is refused, the section comes out rather than being
+// filled with something vaguer.
+//
+// The `tag` line is the relationship, and it must be literally true: "since
+// 2023" means since 2023. This site already claims agency work in its shared
+// trust bar and on /real-estate-cleaning/, so this band is where that claim
+// either gets substantiated or gets softened everywhere.
+const agencyLogos = [
+  {
+    logo: { ratio: '2/1', label: 'Real estate agency mark, supplied with permission' },
+    quote:
+      '[TBC - a quote from a property manager about bond cleans passing inspection first time, or about being able to hand TLB a difficult vacate at short notice.]',
+    company: '[Agency name - TBC]',
+    tag: '[Relationship, e.g. "Managed properties since [year]" - TBC]',
+  },
+  {
+    logo: { ratio: '2/1', label: 'Real estate agency mark, supplied with permission' },
+    quote:
+      '[TBC - a second agency, ideally one on the Queensland side of the border, since this site claims work in both states.]',
+    company: '[Agency name - TBC]',
+    tag: '[Relationship - TBC]',
+  },
+];
+
+// ⚠️ THE IMAGES BELOW ARE SAMPLES, NOT PHOTOGRAPHS, and on this page that
+// matters more than anywhere else on the site. They are flat vector
+// illustrations from scripts/make-before-after-samples.mjs, each stamped with
+// a visible SAMPLE badge, and their filenames start with `sample-` precisely
+// so they cannot be mistaken for real jobs. A fabricated "before and after
+// from a real job" on a page about proof is not filler, it is a false trust
+// claim, and FAQ 6 tells the reader plainly that these are illustrations.
+//
+// Shoot each real pair from ONE FIXED POSITION: the slider wipes one frame
+// over the other in place, so a moved camera reads as a glitch rather than as
+// cleaning. Two consent conditions are on TLB before real photos publish,
+// both unchanged from the homepage's own block: written client permission,
+// and no identifying detail in frame (no house numbers, street signs, mail,
+// people, or names on doors).
+const beforeAfterPairs: BeforeAfterPair[] = [
+  {
+    before: {
+      src: sampleKitchenBeforeImg,
+      alt: 'Sample illustration: kitchen benchtop and tiled splashback before the clean, with stained grout and spills',
+    },
+    after: {
+      src: sampleKitchenAfterImg,
+      alt: 'Sample illustration: the same kitchen benchtop and splashback after the clean, grout clean and surfaces gleaming',
+    },
+    caption: 'Kitchen benchtop and splashback',
+  },
+  {
+    before: {
+      src: sampleShowerBeforeImg,
+      alt: 'Sample illustration: shower screen and wall tiles before the clean, with soap scum on the glass and mould in the grout',
+    },
+    after: {
+      src: sampleShowerAfterImg,
+      alt: 'Sample illustration: the same shower screen and tiles after the clean, glass clear and grout back to colour',
+    },
+    caption: 'Shower screen and tiles',
+  },
+];
+
+// The honesty callout. This is the page telling the reader what it does not
+// have, which is the only way a proof page with empty slots keeps any
+// credibility at all. It is also the most on-brand thing on the page: the
+// brand foundation calls the voice "quietly confident" and the site's whole
+// argument is that TLB is the more honest option.
+//
+// ⚠️ Add the Google Business Profile and Facebook links here the day they
+// exist, and fill `sameAs` in src/data/meetTheTeam.ts at the same time. The
+// second paragraph promises a place to leave a review and currently cannot
+// point at one.
+const honestyCallout = {
+  heading: 'Why there is no rating on this page yet',
+  body: [
+    'TLB has been booked by word of mouth for years and has only just built a website, so there is no long review history to show you. We would rather say that than put up a number nobody can check.',
+    'The quotes on this page are being collected from real clients, with their permission, and they will appear here with their first name and their town. If we have cleaned for you and you are willing to say so, tell us and we will point you at where to leave it.',
+  ],
+};
+
+// Cross-links to the other three pages in this cluster.
+const clusterItems = otherMeetTheTeamPages('/reviews/');
+
+// FAQs. Every answer here is either a fact already published on this site or
+// a statement of general law, and two of them exist specifically to be
+// answered honestly rather than favourably (2 and 6).
+//
+// FAQ 2 uses the brand foundation's required "cleaned to inspection
+// standard" phrasing and does NOT promise a bond-back or satisfaction
+// guarantee. If Teagan formally adopts one, this answer changes and so does
+// every other page that touches bond cleaning.
+//
+// FAQ 3's characterisation of the consumer guarantees is the same one
+// why-tlb.astro's non-branded FAQ makes, and is sound as a general statement
+// of the Australian Consumer Law.
+const faqItems = [
+  {
+    question: 'Where can I read reviews of TLB Cleaning?',
+    answer:
+      'Reviews are being collected from clients as the website launches, and they will appear on this page in their own words. [TBC - add the Google Business Profile and Facebook page links here, and to sameAs in src/data/meetTheTeam.ts, as soon as those profiles exist.]',
+  },
+  {
+    question: 'Do you guarantee my bond back?',
+    answer:
+      'No, and be careful with anyone who does, because a bond is released by an agent or a tribunal rather than by a cleaner. What we do is clean to the standard your exit inspection is measured against, and come back and fix anything the inspection picks up on the cleaning.',
+  },
+  {
+    question: 'What happens if a clean is not up to standard?',
+    answer:
+      'Tell us and we come back. Under the Australian Consumer Law a service has to be provided with due care and skill and be fit for the purpose you asked for, and you are entitled to a remedy when it is not. Reporting it within a day or two makes it much easier to put right.',
+  },
+  {
+    question: 'Can I speak to an existing client before I book?',
+    answer:
+      'Ask us. We will not hand out a client list, but plenty of people are happy to be asked, and in a region this size you may well already know somebody we clean for. That is how nearly every client we have found us.',
+  },
+  {
+    question: 'Do you work with real estate agencies?',
+    answer:
+      'Yes. Bond cleans, vacancy turnarounds and routine cleans on managed properties are a steady part of what we do, and agency work is where the standard is least forgiving. [TBC - name the agencies here once each has given written permission.]',
+  },
+  {
+    question: 'Are the before and after photos on this site real jobs?',
+    answer:
+      'Not yet. The comparison sliders on this site currently use sample illustrations, each marked SAMPLE, so the feature could be built before any client photography existed. Real pairs replace them only with written client permission and nothing identifying in frame.',
+  },
+];
+
+const closingCta = {
+  kicker: 'Reviews',
+  heading: 'Ask the person who recommended us.',
+  lead: "Then tell us which town you're in and what your place needs, and we'll come back with a price.",
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="minimal"
+      align="left"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+    />
+
+    {/* The shared client trust bar, no Backdrop photo behind it. Every other
+        page pairs the card with a photo laid across it and the block below;
+        here the block below is dark prose, and a scrim over a photo would put
+        a decorative room behind a section about evidence. See blocker 2. */}
+    <TrustBar variant="card" cards={trustBarCards} />
+
+    <TextBlock theme="muted" align="left" heading="A reputation held by other people" body={reputationBody} />
+
+    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+
+    <LogoBar
+      heading="Trusted by local agencies"
+      lead="Bond cleans and vacancy turnarounds for real estate agencies across the region. These slots hold their marks and their words, with permission, or they stay empty."
+      logos={agencyLogos}
+    />
+
+    {/* Drag the handle to wipe between the two frames of each pair. Both
+        pairs are SAMPLE illustrations and the `note` says so on the page. */}
+    <BeforeAfter
+      heading="The difference, room by room"
+      lead="Drag the handle across each frame to see the same spot before and after a clean."
+      pairs={beforeAfterPairs}
+      note="These two comparisons are sample illustrations, not photographs of a client's home. Real before and after pairs go up only with written permission and nothing identifying in frame."
+    />
+
+    <Callout tone="note" heading={honestyCallout.heading} body={honestyCallout.body} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Other ways to check us out"
+      lead="Who we are, what happens after you book, and what it is like working here."
+      items={clusterItems}
+    />
+
+    <Faq heading="Reviews and standards: FAQs" items={faqItems} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

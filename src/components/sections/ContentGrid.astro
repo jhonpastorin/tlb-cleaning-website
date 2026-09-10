@@ -62,6 +62,20 @@ interface Props {
 
 const { heading, lead, columns = 3, blocks } = Astro.props;
 
+// Build-time random suffix per instance, so two ContentGrids on one page
+// cannot share a heading id — the same fix Faq.astro, TagCloud.astro,
+// ServiceBlocks.astro, TextBlock.astro and ComparisonTable.astro all
+// already carry, for the same reason. This file had kept the literal
+// 'content-grid-heading', which was harmless only while no page rendered
+// two HEADED instances: four pages (deep-cleaning, end-of-lease,
+// mould-cleaning, why-tlb) already run two ContentGrids each, but in every
+// case at least one has no `heading` and so renders no id at all.
+// work-with-us.astro is the first page with two headed ones, and it shipped
+// two elements sharing one id with the second section's `aria-labelledby`
+// resolving to the FIRST section's heading. Found by grepping the built
+// HTML for duplicate ids, not by reading the source.
+const headingId = `content-grid-heading-${Math.random().toString(36).slice(2, 9)}`;
+
 // Discrete modifier classes, not an inline custom property: a mobile
 // breakpoint needs to override this per-instance value, and an inline style
 // (custom-property-valued or not) always beats a stylesheet rule trying to
@@ -78,11 +92,11 @@ const cells = blocks.map((block) => {
 });
 ---
 
-<section class="content-grid" aria-labelledby={heading ? 'content-grid-heading' : undefined}>
+<section class="content-grid" aria-labelledby={heading ? headingId : undefined}>
   <div class="container">
     {heading && (
       <div class="content-grid__intro">
-        <h2 id="content-grid-heading">{heading}</h2>
+        <h2 id={headingId}>{heading}</h2>
         {lead && <p class="lead">{lead}</p>}
       </div>
     )}

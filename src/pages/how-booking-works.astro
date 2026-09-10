@@ -1,0 +1,401 @@
+---
+// How booking works. Fourth of the four "Meet the team" pages
+// (src/data/meetTheTeam.ts), and the one the brand foundation asks for
+// explicitly: §3.5 names "a simple three-step how booking works section"
+// as a category convention, with the three steps as check your area, choose
+// your service, pick a date, because it "reduces friction for clients moving
+// from a text-message habit to online booking".
+//
+// This page is that section, expanded into its own page. The homepage keeps
+// the short version ("Easy to book, local to the core", index.astro v6,
+// client copy, verbatim); this page is where the detail goes so the homepage
+// does not have to carry it. The two are written not to repeat each other,
+// per the brand foundation's "cover each point once".
+//
+// SOURCES. Everything factual here comes from index.astro's v6 copy and FAQ,
+// which is client-supplied and therefore approved: booking by online, text,
+// phone or email; a reminder in the lead-up and a message on the way; not
+// needing to be home; how we get in being agreed at booking; quoting on the
+// actual place; no lock-in, no minimum term, no exit fee; first clean taking
+// longer. Nothing on this page is invented past that.
+//
+// BLOCKS LAUNCH:
+//  1. PAYMENT IS NOT ANSWERED ANYWHERE ON THIS PAGE, and this is the page a
+//     reader looks for it on. There is nothing in the repo about invoicing,
+//     card payment, timing, deposits or cancellation fees. It is HELD BACK
+//     rather than guessed: a wrong answer about money on the booking page is
+//     the most expensive kind of placeholder. Add a "How do I pay?" FAQ and
+//     a cancellation-window answer as soon as both are confirmed. Note that
+//     why-tlb.astro's own FAQ tells readers most cleaning businesses publish
+//     a 24 to 48 hour cancellation window, so a reader arrives here already
+//     expecting TLB to state its own.
+//  2. THE TWO BOOKING URLS DO NOT EXIST. /book-online/ and /quote/ are the
+//     guessed slugs navigation.ts has carried sitewide since it was written.
+//     Every page links them, but this is the page whose entire subject is
+//     that flow, so it is the page where the 404 is least survivable.
+//  3. "Book online in a couple of minutes" is index.astro's own client copy
+//     and this page repeats the promise in its H1. Confirm the booking flow
+//     genuinely takes a couple of minutes before launch, because the page
+//     sets that expectation twice.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Backdrop from '../components/ui/Backdrop.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import PhotoGallery from '../components/sections/PhotoGallery.astro';
+import ContentGrid from '../components/sections/ContentGrid.astro';
+import Callout from '../components/sections/Callout.astro';
+import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import Faq from '../components/sections/Faq.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+// Hero: the moment the booking turns into a person at your door, generated
+// for this page. Booking itself is a screen, and IMAGE-GUIDELINES §4 bans
+// lettering in frame, so a photograph of the flow is not possible: the
+// honest subject is what the flow produces.
+import heroImg from '../assets/how_booking_works/how-booking-works-cleaner-greeted-at-the-front-door.jpg';
+// Step photos. All three are REUSED, per IMAGE-GUIDELINES §5's "reuse before
+// generating": each already means, elsewhere on this site, exactly what its
+// step needs it to mean here.
+//   1. a home in the hinterland, from the locations set (unused until now)
+//   2. a homeowner and a cleaner talking, from the appliances set
+//   3. a living room kept up by regular visits, from the deep cleaning set
+import stepAreaImg from '../assets/locations/weatherboard-home-with-hinterland-hills.jpg';
+import stepBriefImg from '../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
+import stepSettledImg from '../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-tidy-living-room-kept-up-by-regular-visits.jpg';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { locationGroups } from '../data/locations';
+import { trustBarCards } from '../data/trust';
+import { meetTheTeamBusiness, otherMeetTheTeamPages } from '../data/meetTheTeam';
+
+const pageMeta = {
+  title: 'How Booking Works | Book a Cleaner Online | TLB Cleaning',
+  description:
+    'Check we clean your town, tell us about your place, pick a day. How booking a cleaner with TLB works across the Northern Rivers and the Tweed, and what happens on the day.',
+  canonical: 'https://example.com/how-booking-works/',
+};
+
+const business = meetTheTeamBusiness(pageMeta.description);
+
+// This page leads with "Book your clean online" rather than the sitewide
+// "Get an instant quote", because it is the one page whose subject is the
+// booking flow itself. It is the same headerSecondaryCta every page's header
+// already carries, so it is not a new label to maintain, and the brand
+// foundation §2.4 names it the primary website CTA.
+const bookCta = headerSecondaryCta;
+
+const hero = {
+  kicker: 'How booking works',
+  headingLines: ['Set it up once,', 'then stop thinking about it.'],
+  lead:
+    "Book online in a couple of minutes, or send a text if that's what you'd actually do. Either way, here is exactly what happens next.",
+  cta: bookCta,
+  image: {
+    ratio: '4/3',
+    label: 'A TLB cleaner with her caddy being greeted at the front door of a home',
+    src: heroImg,
+  },
+};
+
+// The definition block, sharing the hero photo behind a Cream scrim with the
+// trust bar. Answer-target sentences per the brand foundation §3.6.2: "how
+// do I book a cleaner in the Northern Rivers" is the query this page exists
+// to answer, and the answer should survive being lifted out of the page.
+const definitionBody: TextBlockBody[] = [
+  'Booking a clean with TLB takes three steps: check we clean your town, tell us what your place needs, then pick a day. You can do all three online, or by text, phone or email if you would rather talk it through.',
+  'Nothing about it locks you in. There is no minimum term and no exit fee, so the first booking is a first booking rather than a commitment.',
+];
+
+// The three steps, as PhotoGallery's `story` variant. That variant exists
+// for exactly this: a sequence with a step label, a connector drawn between
+// consecutive steps, and sides that alternate by array order.
+//
+// Deliberately NOT PathwayCards, which numbers cards to route different
+// audiences to different destinations. These three are one route in order,
+// and the numbering means sequence rather than choice.
+//
+// The steps are the brand foundation §3.5's own three, with its wording kept
+// as the intent and the copy written to this site's voice.
+const bookingSteps = [
+  {
+    step: 'Step 1',
+    heading: 'Check we clean your town',
+    body: [
+      'We work right across the Northern Rivers and the Tweed, inland and on the coast, and cross the border into Coolangatta, Palm Beach and Burleigh Heads. The full list of towns is further down this page.',
+      "If your town isn't on it, ask anyway. Our teams live across the region rather than driving out from one depot, so the answer depends on where the nearest run already goes.",
+    ],
+    image: {
+      ratio: '4/3',
+      label: 'A weatherboard home on a quiet street with the Northern Rivers hinterland behind it',
+      src: stepAreaImg,
+    },
+  },
+  {
+    step: 'Step 2',
+    heading: 'Tell us about your place',
+    body: [
+      "Size, condition and how often you want us. We quote on your actual place rather than a published rate that would be wrong for most homes, so the more you tell us the closer the number is.",
+      "If it turns out you need less than you asked for, we'll say so. A one-off deep clean followed by a fortnightly usually works out better than paying for a long first regular clean.",
+    ],
+    image: {
+      ratio: '4/3',
+      label: 'A homeowner and a TLB cleaner talking through what the house needs',
+      src: stepBriefImg,
+    },
+  },
+  {
+    step: 'Step 3',
+    heading: 'Pick a day, and keep it',
+    body: [
+      "Choose the day that suits and we'll put you with the team that covers your area, on that day, at that frequency. You'll get a reminder in the lead-up so it never sneaks up on you, and a message when we're on our way.",
+      "After that there is nothing to organise. Most clients never think about the booking again until something in their week changes, and then they text us.",
+    ],
+    image: {
+      ratio: '4/3',
+      label: 'A tidy living room kept up by regular fortnightly visits',
+      src: stepSettledImg,
+    },
+  },
+];
+
+// What happens on the day. Dark, because it is the pivot: everything above
+// is the arrangement, everything below is the practical detail.
+const onTheDayBody: TextBlockBody[] = [
+  "Some clients want a quick chat and a walk through before we start. Others would rather we let ourselves in and they come home to it done. Both are completely fine, and you can change your mind whenever you like.",
+  "You don't need to be home. Most of our clients aren't, and how we get in is agreed when you book rather than worked out at the door.",
+];
+
+// The four practical answers, two columns. Written as the questions a client
+// asks in the first week rather than as features.
+//
+// ⚠️ A FIFTH CELL IS MISSING AND IT IS THE ONE ABOUT MONEY. See blocker 1 at
+// the top of this file. Do not add it until payment terms and a cancellation
+// window are confirmed.
+const practicalBlocks = [
+  {
+    type: 'text' as const,
+    heading: 'Getting in',
+    body: [
+      'Agreed when you book, and written into the notes for your place. A key, a lockbox, a code, or you let us in. If it changes, tell us once and the notes change with it.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'What we bring',
+    body: [
+      'Everything. Vacuum, caddy, cloths and products. If you would rather we used something specific on a particular surface, leave it out and tell us, and that becomes part of your notes too.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'The first clean',
+    body: [
+      'It usually takes longer and costs more, and we will tell you that upfront. The first visit starts from wherever the house actually is rather than holding a standard that is already set. After that, visits settle into a predictable window.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'Skipping or moving a visit',
+    body: [
+      'Text us. You can skip a week, move a day or pause the whole arrangement while you are away. There is no minimum term and no exit fee, so none of it costs you anything to ask.',
+    ],
+    tone: 'muted' as const,
+  },
+];
+
+// The callout that makes the page's real point. Every competitor's booking
+// page is an argument for their app; the brand foundation §1.5.5 is explicit
+// that TLB's position is big-brand convenience without giving up the person,
+// which means the online flow has to be offered rather than insisted on.
+const notOnlineCallout = {
+  heading: "You don't have to book online",
+  body: [
+    'Online, text, phone or email, whichever you would actually use. Plenty of people would rather talk the first one through than guess at a form, and we would rather that too.',
+    'The reminders and the set schedule work the same either way. Booking online is faster, not better.',
+  ],
+};
+
+// Booking for something other than a house. Three rows, each to the page
+// that covers it, because the flow genuinely differs for these three and a
+// host or an agency reading the three steps above will wonder if it applies
+// to them.
+const otherBookingItems = [
+  {
+    title: 'Booking turnovers for a holiday let',
+    description:
+      'We work straight off your booking calendar rather than a fixed day, so turnovers happen around your guests without you organising each one.',
+    href: '/airbnb-cleaning/',
+  },
+  {
+    title: 'Booking as an agency or property manager',
+    description:
+      'Vacancy turnarounds and bond cleans at short notice, on a rent roll rather than one job at a time.',
+    href: '/real-estate-cleaning/',
+  },
+  {
+    title: 'Booking a commercial clean',
+    description:
+      'Priced on a walkthrough rather than a form, because nobody can quote a building from a set of dropdowns.',
+    href: '/commercial-cleaning/',
+  },
+];
+
+// Cross-links to the other three pages in this cluster.
+const clusterItems = otherMeetTheTeamPages('/how-booking-works/');
+
+// FAQs. Every answer is index.astro's v6 client copy, restated for this
+// page's context rather than repeated verbatim, or a direct consequence of
+// it.
+//
+// ⚠️ TWO QUESTIONS ARE HELD BACK, both about money, and both belong here:
+// "How do I pay?" and "What happens if I cancel late?" See blocker 1.
+const faqItems = [
+  {
+    question: 'How do I book a cleaner with TLB?',
+    answer:
+      'Online in a couple of minutes, or by text, phone or email. You tell us your town, the size and condition of your place and how often you want us, and we come back with a price. Nothing is locked in at that point.',
+  },
+  {
+    question: 'How far ahead should I book?',
+    answer:
+      'The sooner the better for a regular slot, because a set day with a set team means waiting for that day to be free in your area. One-off cleans, bond cleans and turnovers are easier to fit in at shorter notice.',
+  },
+  {
+    question: 'Do I need to be home for the clean?',
+    answer:
+      'No, and most of our clients are not. How we get in is agreed when you book, and we message you when we are on the way. If you would rather be there for the first one and not after that, that is completely normal.',
+  },
+  {
+    question: 'Can I change my regular day?',
+    answer:
+      'Yes. Text us and we will move you to another day that your area is covered on. It is not always the same week, because the runs are built around towns rather than one big roster, so tell us early if you can.',
+  },
+  {
+    question: 'Can I skip a visit while I am away?',
+    answer:
+      'Yes. Skip a week, pause for a month, or stop entirely. There is no minimum term and no exit fee. Tell us when you are back and we will put you on the next available day in your area.',
+  },
+  {
+    question: 'Will I know who is coming?',
+    answer:
+      'Yes. Your place is assigned to a team, and you can meet whoever looks after it before the first visit if you ask. If somebody is away, another member of your team covers and we let you know beforehand.',
+  },
+  {
+    question: 'What if I only want one clean?',
+    answer:
+      'That is fine, and for anyone changing cleaners we would suggest exactly that. Book one, see how it goes, then decide about a regular. Nobody here is going to push you to commit before you have seen the work.',
+  },
+];
+
+const closingCta = {
+  kicker: 'How booking works',
+  heading: 'Pick a day and it starts running itself.',
+  lead: "Tell us which town you're in and what your place needs, and we'll come back with a price.",
+  cta: bookCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="split-single-image"
+      imagePosition="right"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+      image={hero.image}
+    />
+
+    {/* Trust bar and definition block share ONE photo behind the Cream
+        scrim, laid out across both. 75% keeps Dark Teal body copy above
+        4.5:1 over the brightest part of the frame. */}
+    <Backdrop image={heroImg} tint="muted" opacity={75} focus="center">
+      <TrustBar variant="card" cards={trustBarCards} />
+      <TextBlock theme="muted" align="left" body={definitionBody} />
+    </Backdrop>
+
+    <PhotoGallery
+      variant="story"
+      heading="Three steps, and none of them are hard"
+      lead="The whole arrangement, from checking your town to a day you never have to think about again."
+      steps={bookingSteps}
+    />
+
+    <TextBlock theme="dark" align="left" heading="What happens on the day" body={onTheDayBody} />
+
+    <ContentGrid
+      heading="The practical bits"
+      lead="The questions clients ask in the first week."
+      columns={2}
+      blocks={practicalBlocks}
+    />
+
+    <Callout tone="note" heading={notOnlineCallout.heading} body={notOnlineCallout.body} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Booking something other than a house"
+      lead="The three steps above are written for a home. These three work a bit differently."
+      items={otherBookingItems}
+    />
+
+    <TagCloud
+      heading="Where we clean"
+      subheading="Across the Northern Rivers, the Tweed and the Southern Gold Coast."
+      groups={locationGroups}
+      note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    <Faq heading="Booking: FAQs" items={faqItems} />
+
+    <ServiceBlocks
+      variant="list"
+      heading="Before you book"
+      lead="Who we are, what clients say, and what it is like working here."
+      items={clusterItems}
+    />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

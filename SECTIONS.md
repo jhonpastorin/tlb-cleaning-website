@@ -196,6 +196,26 @@ menu labels rather than search terms (`/construction-site/`, `/factories/`);
 both pages lead their `<title>` and `<h1>` with the real head term ("builders
 clean", "factory cleaning") and say so in their file headers.
 
+`meetTheTeam.ts` holds the four pages under the header's "Meet the team"
+mega-menu (`/about/`, `/work-with-us/`, `/reviews/`,
+`/how-booking-works/`) and the three things all four share:
+
+| Export | What it is |
+|---|---|
+| `meetTheTeamPages` | The four, in mega-menu order, each with the `group` it sits in ("The people" / "Proof") and a `blurb` so the pages describe each other in one voice. |
+| `otherMeetTheTeamPages(self)` | The other three, shaped for `ServiceBlocks`' `list` variant. **Excluding `self` is why this is a function** — the same call `relatedPremises` and `otherOutsideServices` make. |
+| `meetTheTeamBusiness(description)` | The `LocalBusinessInfo` all four hand `Base.astro`. ⚠️ Still mostly empty, inherited from every page built before them; `sameAs` matters most here, since `/reviews/` is a page about third-party proof with no profile to link. |
+
+`MeetTheTeamHref` is a string-literal union of the four slugs rather than
+`string`, same guard as `PremisesHref`. Four real consumers, each
+cross-linking the other three.
+
+⚠️ These four pages had no content plan in `content-plans/`, unlike every
+other page on the site. Each one's file header records what its copy was
+built from and what it deliberately holds back (headcount, pay, insurance,
+background checks, payment terms, any review score) — read those before
+editing the copy.
+
 `guides.ts` holds the nine editorial pages under the header's "Guides"
 mega-menu, plus the hub at `/guides/`:
 
@@ -1781,6 +1801,20 @@ Use this when: a page needs an N-column grid where cell type/size varies by
 position, or specifically for a 2-column text/image section that should be
 grouped with this file's other examples rather than built with
 `StoryMosaic.astro`.
+
+**Patch note:** the heading `id`/`aria-labelledby` pair used to be the literal
+string `"content-grid-heading"` — the fifth occurrence of the bug
+`Faq.astro`, `TagCloud.astro`, `ServiceBlocks.astro`, `TextBlock.astro` and
+`ComparisonTable.astro` were each already patched for. It stayed invisible
+longer here because a heading-less instance renders no `id` at all, and all
+four pages that already run two `ContentGrid`s (deep-cleaning, end-of-lease,
+mould-cleaning, why-tlb) have at least one without a `heading`.
+`work-with-us.astro` is the first page with two HEADED instances, and it
+shipped two elements sharing one `id`, with the second section's
+`aria-labelledby` resolving to the first section's heading. Same build-time
+random suffix per instance as its five siblings. Found by grepping the BUILT
+HTML for duplicate ids, not by reading the source — worth doing on any page
+that renders the same section twice.
 
 ### `ComparisonTable.astro`
 
