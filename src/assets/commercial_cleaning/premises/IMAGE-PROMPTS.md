@@ -44,11 +44,44 @@ dark teal apron, dark teal rubber gloves — with three documented exceptions:
 | Plain white hair net added | `factory-wash-down-of-stainless-production-equipment` | Food production requires it. A frame without one would be a photo of a breach. |
 | Tall rubber gumboots, no vest | both brewery production frames | A brew deck floor is wet by design. It is not a vehicle traffic zone, so a vest would misrepresent the setting. |
 
+**"One woman" is not a strong enough instruction, and it silently failed
+once.** Every prompt here opens with "One woman in a plain aqua polo…", and
+34 frames out of 34 came back as women except
+`factory-wash-down-of-stainless-production-equipment`, which came back as a
+man and shipped that way until a visual review caught it. It matters because
+TLB's brand story is a team of local mothers (Brand Foundation §1.1, §1.3),
+so a single male frame in a 34-image library reads as a stock photo rather
+than as the team. Nothing in `astro check` or the build will catch this —
+only looking at the picture will.
+
+The regenerated prompt front-loads the gender three times and adds an
+exclusion, and that held:
+
+```
+A female commercial cleaner, a woman, wiping down …
+…
+ONE WOMAN ONLY, female, aged around thirty-five, dark hair tied back in a
+ponytail underneath the hair net. She wears …
+… No men in the frame.
+```
+
+Use that pattern for any regeneration. Note the alt text on every page is
+written gender-neutrally ("A cleaner in a high-visibility vest and hair
+net…"), so a drifted frame does not create a false alt-text claim — but it
+does create a brand inconsistency.
+
 **The palette line is not optional, and it is the line that fails most often.**
 Generators reach for a complementary pop colour unless told not to, and
 cleaning equipment is the worst case: real extractors, buckets and machines are
 almost always yellow, red or bright blue. Every prompt names the machine's
 colours part by part for that reason. Keep the palette block (§2) verbatim.
+
+**Two accepted palette departures.** The warehouse and factory frames contain
+yellow safety bollards and yellow racking uprights, which the PALETTE block
+forbids. Kept: they are what those things actually are in an Australian
+warehouse, and a grey bollard would read as a stylised set rather than a real
+site. The rule exists to stop the generator inventing a decorative pop
+colour, not to repaint statutory safety equipment.
 
 ---
 

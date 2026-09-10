@@ -6,6 +6,12 @@
 // Maple" story (section 3) and, via theme="light" + an optional cta, as the
 // "Who Can We Help?" AudienceCollage (section 7). Don't fork a new
 // component for a variant of this shape — add a prop instead.
+//
+// ⚠️ This component rendered NOTHING BUT dashed placeholder boxes until the
+// "by type of premises" cluster was built, because `StoryBlock` had no `src`
+// field and this file never passed one to Placeholder. See the note on
+// StoryBlock in src/data/types.ts — four pages shipped seven empty slots with
+// the real photos already imported and sitting unused.
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
 import type { StoryBlock, ButtonData } from '../../data/types';
@@ -27,7 +33,9 @@ const { theme = 'dark', heading, blocks, cta } = Astro.props;
     <div class="story__grid">
       {blocks.map((block) =>
         block.type === 'image' ? (
-          <Placeholder ratio={block.ratio} label={block.label} class="story__image" />
+          <div class="story__image">
+            <Placeholder ratio={block.ratio} label={block.label} src={block.src} />
+          </div>
         ) : (
           <div class="story__text">
             {block.body.map((paragraph) => (
@@ -80,8 +88,17 @@ const { theme = 'dark', heading, blocks, cta } = Astro.props;
     align-items: center;
   }
 
+  /* Wrapped in a <div> authored here rather than passed to Placeholder as a
+     class, per the passthrough scoping rule this library learned twice
+     already (Hero.astro's note, and PathwayCards.astro's patch note): a class
+     handed to a component lands under THAT component's scope, not this
+     file's, so `.story__image` on Placeholder's own root element never
+     matched and this border-radius silently did nothing. Invisible while
+     every slot was an empty dashed box — the box inherits its corners from
+     elsewhere — and visible the moment real photos went in. */
   .story__image {
     border-radius: var(--radius-md);
+    overflow: hidden;
   }
 
   .story__text {

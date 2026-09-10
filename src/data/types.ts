@@ -40,9 +40,19 @@ export interface MosaicImage extends ImageBlock {
   offset?: boolean;
 }
 
+// ⚠️ `src` was MISSING from the image variant until the thirteen "by type of
+// premises" pages were built, and its absence was invisible: a caller passing
+// `src` got no error (excess-property checking doesn't fire on a
+// const-inferred array handed to a prop — the same gotcha TagCloud's
+// `isHighlighted` note in SECTIONS.md describes) and StoryMosaic silently
+// dropped it, so four pages shipped seven dashed placeholder boxes with real
+// photos sitting unused in src/assets/. Optional, matching ImageBlock: omit
+// it and the slot correctly renders the reserved dashed box, which is still
+// the right state for index.astro's team photo (no real one exists, and
+// IMAGE-GUIDELINES §7 forbids generating one).
 export type StoryBlock =
   | { type: 'text'; body: string[] }
-  | { type: 'image'; ratio: string; label: string };
+  | { type: 'image'; ratio: string; label: string; src?: ImageMetadata };
 
 export interface ButtonData {
   label: string;

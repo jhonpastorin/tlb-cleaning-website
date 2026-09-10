@@ -560,6 +560,32 @@ Use this when: any page needs an alternating text/image editorial block —
 brand story, service explainer, "who we help," etc. **Do not build an
 `AudienceCollage.astro`** — that was the trap this component exists to avoid.
 
+**Patch note — this component could not display a photograph at all.**
+`StoryBlock`'s image variant was `{ type: 'image'; ratio; label }` with no
+`src`, and this file never passed one to `Placeholder`, so every image block
+it has ever rendered was a dashed placeholder box. It went unnoticed for the
+same reason `TagCloud`'s stale `isHighlighted` did: excess-property checking
+doesn't fire on a `const`-inferred array handed to a prop, so a caller
+passing `src` got **no error from `astro check`** and no output either.
+Found by auditing *rendered HTML* rather than page source while building the
+thirteen "by type of premises" pages — the source-level audit had reported
+all slots filled, because the `src` was right there in the caller. Four
+pages (strata, aged care, schools/childcare, factories) had shipped seven
+empty slots with the real photos imported and unused in `src/assets/`.
+Fixed by adding `src?: ImageMetadata` to the type and passing it through.
+`index.astro`'s team-photo slot is *correctly* still empty — no real team
+photo exists and IMAGE-GUIDELINES §7 forbids generating one.
+
+**Patch note:** `.story__image` was a class passed straight into
+`<Placeholder class="story__image" />` — the same passthrough scoping bug
+`Hero.astro`'s note and `PathwayCards.astro`'s patch note already describe,
+so its `border-radius` never applied. Harmless while every slot was an empty
+dashed box (which inherits its corners from elsewhere) and visible the
+instant real photos went in. Fixed by wrapping in a `<div class="story__image">`
+authored here, with `overflow: hidden` so the photo is actually clipped to
+the radius. **Third occurrence of this bug in this library** — if you hand a
+class to a component, assume it does not apply.
+
 ### `StatBand.astro`
 
 Purpose: yellow band of four stat callouts (icon badge + big figure +
