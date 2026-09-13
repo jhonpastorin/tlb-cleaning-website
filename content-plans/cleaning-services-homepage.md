@@ -1,5 +1,19 @@
 # Content plan: "Cleaning Services & Cleaners" page
 
+> [!WARNING]
+> **SUPERSEDED IN FULL. Do not draft from this document.**
+> This is the v5 homepage plan. It was replaced by the v6 brief, which the
+> built page (`src/pages/index.astro`) is written from, and index.astro's own
+> header says so: "Treat this file, not the v5 plan, as current."
+>
+> v6 removed the "nine full-time cleaners" and "local mums" proof points and
+> restated the region as the Northern Rivers and the Tweed. Brand Foundation
+> v2.0 (September 2026) later made those changes site-wide policy: §2.4, §9.3
+> and §2.1 respectively. This plan predates both.
+>
+> Kept for the record of what the homepage used to argue, and for its section
+> mapping, which is still accurate. Nothing else here is current.
+
 Source: TLB Cleaning homepage content brief (focus keyword `cleaning
 services`). Maps every content block to a section component from
 [`SECTIONS.md`](../SECTIONS.md), states image/text positioning, and flags

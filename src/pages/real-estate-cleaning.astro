@@ -117,6 +117,7 @@ import {
 import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { locationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. "Real estate cleaners" is the menu label and the phrase a
 // property manager searches; "property management cleaning" is what the
@@ -124,7 +125,7 @@ import { trustBarCards } from '../data/trust';
 const pageMeta = {
   title: 'Real Estate Cleaners and Property Management Cleaning | TLB Cleaning',
   description:
-    'Vacancy turnarounds, bond cleans and routine managed-property cleans for agencies across the Northern Rivers, the Tweed and the Southern Gold Coast. Nine full-time cleaners, one point of contact.',
+    'Vacancy turnarounds, bond cleans and routine managed-property cleans for agencies across the Northern Rivers, the Tweed and the Southern Gold Coast. A local team, one point of contact.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
   canonical: 'https://example.com/real-estate-cleaning/',
 };
@@ -184,7 +185,7 @@ const hero = {
   kicker: 'Real estate and property management cleaning',
   headingLines: ['Stop chasing cleaners', 'between tenancies.'],
   lead:
-    'Nine full-time employed cleaners, one point of contact, and vacancy cleans that pass the first inspection. Working with agencies across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+    `A team with the capacity for a rent roll, one point of contact, and vacancy cleans that pass the first inspection. Working with agencies across the Northern Rivers, the Tweed and the Southern Gold Coast. ${theLine.fast}`,
   cta: { label: 'Book a call with TLB', href: quoteCta.href },
   image: {
     ratio: '1/1',
@@ -288,7 +289,7 @@ const workingWithUsItems = [
     description:
       // ⚠️ Real bracket. "Capacity for your rent roll" is already published
       // on the homepage; the number behind it has never been stated.
-      'Nine full-time employed cleaners means a vacancy does not wait for one person to be free, and two or three can go on a property to compress a turnaround. [How many vacancy cleans a week we can absorb, and our standard turnaround from keys to done. Confirm — this is the number that wins the trial.]',
+      'A vacancy does not wait for one person to be free, and two or three of our team can go on a property to compress a turnaround. [How many vacancy cleans a week we can absorb, and our standard turnaround from keys to done. Confirm, this is the number that wins the trial.]',
   },
   {
     icon: 'target' as const,
@@ -322,28 +323,59 @@ const workingWithUsItems = [
 
 // §5 "Worth knowing" — the interruption block. Callout, tone="note".
 //
-// The lever for this reader is the BFD's own consequence framing: what
-// inaction costs an agency is not a dirty property, it is rework and
-// reputational exposure. The cheapest quote is the one most likely to
-// produce a second inspection, and a second inspection costs a property
-// manager a morning they do not have.
+// The lever for this reader is the consequence framing: what inaction costs
+// an agency is not a dirty property, it is rework and reputational exposure.
+//
+// ✅ REWRITTEN (Brand Foundation v2.0 §3.2) — the heading was "The cheap
+// vacancy clean is not cheap. It is a second inspection." and the body used
+// "cheap" twice more. §3.2: "Never use the words cheap, budget, affordable,
+// competitive rates or premium. Each signals in a direction we do not want.
+// The position is certainty, not a price point."
+//
+// The argument is unchanged and is not about a competitor — it is about what
+// a rejected clean costs the reader, which is §7.3's named worry ("A bond
+// dispute... creates a tribunal matter, an unhappy tenant and an unhappy
+// landlord"). Only the vocabulary changed, and the last line now makes the
+// point through what TLB would rather be judged on.
 const worthKnowing = {
-  heading: 'The cheap vacancy clean is not cheap. It is a second inspection.',
+  heading: 'The quote is not the cost. A second inspection is the cost.',
   body: [
-    'A clean that comes in eighty dollars under still has to pass someone else’s written report. When it does not, the cost is not the eighty dollars — it is your re-inspection, the days the property sits unlisted, the landlord asking why, and the tenant who now has a dispute with you rather than with the cleaner.',
-    'That is why agencies here tend to procure on capacity and communication rather than on price, and it is why we would rather be trialled on a hard property than a cheap one.',
+    'A clean that comes in eighty dollars under still has to pass someone else’s written report. When it does not, the cost is not the eighty dollars. It is your re-inspection, the days the property sits unlisted, the landlord asking why, and the tenant who now has a dispute with you rather than with the cleaner.',
+    'That is why agencies here tend to procure on capacity and communication rather than on price, and it is why we would rather be trialled on a hard property than an easy one.',
   ],
 };
 
-// §6 Why sole operators fail on a rent roll. TextBlock dark — the
-// long-form persuasion slot the sibling pages all carry.
+// §6 What a rent roll actually needs. TextBlock dark — the long-form
+// persuasion slot the sibling pages all carry.
 //
 // Written as what a property manager should ask, not as what TLB claims.
 // That register is the commercial hub's, and it is the one that survives a
-// reader who has been sold to before.
+// reader who has been sold to before. Paragraph 3 is unchanged for exactly
+// that reason: it invites the reader to ask US the same questions.
+//
+// ✅ REWRITTEN (Brand Foundation v2.0) — this section was titled "Why sole
+// operators fail on a rent roll" and opened "Most cleaners who take agency
+// work are one person with a car, and for a while that is fine — they are
+// often excellent, and they are cheap."
+//
+// Three breaches:
+//   1. §10.2 — "Never suggest an independent cleaner does worse work,
+//      because the reader has probably had a good one." A section whose
+//      heading is why they fail does exactly that, and in this market the
+//      property manager reading it very likely uses one.
+//   2. §3.2 — "Never use the words cheap, budget, affordable, competitive
+//      rates or premium."
+//   3. §9.4 — two paragraphs of running text about what somebody else
+//      cannot do.
+//
+// The structural insight is genuinely useful and it survives: vacancies
+// arrive in clusters, and capacity is what absorbs a cluster. §10.3 actively
+// endorses that kind of published specific as how TLB wins. What changed is
+// that the paragraphs are now about the shape of the work rather than about
+// the shortcomings of the person currently doing it.
 const whyTeamsBody: TextBlockBody[] = [
-  'Most cleaners who take agency work are one person with a car, and for a while that is fine — they are often excellent, and they are cheap. The problem is structural rather than personal. A rent roll produces vacancies in clusters, at the end of the month and around the school terms, and one person can physically do one property a day. So the week you have four exits is the week you find out that your reliable cleaner has three of them and someone else has to take the fourth, on Thursday, with the photos booked for Friday.',
-  'Then there is what happens when they are sick, or on holiday, or they take a full-time job — which is common, because cleaning is one of the highest-turnover trades in the country. When a sole operator stops, your entire cleaning arrangement stops with them, and you are back to ringing around with a vacancy already on the board.',
+  'A rent roll does not produce vacancies evenly. They arrive in clusters, at the end of the month and around the school terms, and a cluster is the week that decides whether a cleaning arrangement is working. Four exits in one week is a capacity question, not a quality question, and it is worth asking about before the week arrives rather than during it.',
+  'The same is true of absence. Somebody is away, or unwell, or has taken other work, and the question is simply whether the arrangement continues without you having to do anything. Ours does: the property goes to somebody else on the same team, and you hear about it from us rather than finding out when the photographer arrives.',
   'Three questions sort it out quickly, and they are worth asking us as readily as anyone else. How many people do you actually employ, as opposed to subcontract? What happens to my job when the person who normally does it is away? And who answers the phone at four on a Friday when the keys have come back and the property is worse than the notes said?',
 ];
 
@@ -497,7 +529,7 @@ const brandedFaqItems = [
     answer:
       // Approved claim: the comparison table's first row, and the BFD's
       // headline differentiator for the business as a whole.
-      'Employed. Nine full-time cleaners on our own team, not contractors booked through a platform, which is why we can guarantee who turns up and cover a property when someone is away. We are [insured] and [police-checked], and we are a local business rather than a franchise routing your call somewhere else.',
+      'Employed, on our own team. That is what lets us tell you who is attending before they do, and cover a property from within the same team when someone is away. We are [insured] and [police-checked], and there is one local number to ring.',
   },
 ];
 
@@ -539,7 +571,7 @@ const nonBrandedFaqItems = [
   {
     question: 'What should an agency ask a cleaner before adding them to a preferred trades list?',
     answer:
-      'Five things, and none of them is the price. How many cleaners do you employ rather than subcontract. What happens to my job when the usual person is away. What is your commitment if an exit inspection fails on cleaning. Are you insured, and can I see the certificate of currency. And how do you invoice — per property, referenced how, on what terms. A cleaner who answers all five without hedging is a different proposition from the cheapest quote.',
+      'Five things, and none of them is the price. How many cleaners do you employ rather than subcontract. What happens to my job when the usual person is away. What is your commitment if an exit inspection fails on cleaning. Are you insured, and can I see the certificate of currency. And how do you invoice — per property, referenced how, on what terms. A cleaner who answers all five without hedging is a different proposition from the lowest quote.',
   },
 ];
 
@@ -598,7 +630,7 @@ const closingCta = {
     <TextBlock
       theme="dark"
       align="left"
-      heading="Why a sole operator eventually fails on a rent roll"
+      heading="What a rent roll actually needs from a cleaner"
       body={whyTeamsBody}
     />
 
@@ -650,6 +682,23 @@ const closingCta = {
       subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
       groups={locationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.recurring, ...theLineBody.condition]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

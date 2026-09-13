@@ -2,21 +2,34 @@
 // Why TLB page, built from content-plans/why-tlb.md — section choices and
 // every "don't invent this" call trace back to that document's 🚩 list.
 //
-// BLOCKS LAUNCH (all four flagged in the plan, none resolvable in code):
-//  1. "Nine local mums" in the H1 and meta description contradicts the
-//     homepage's "nine full-time cleaners, most of them mums as well"
-//     (index.astro:150) — and §8 of this page's own copy says "most of us".
-//     A factual claim about nine real people, in an <h1>, on the page whose
-//     argument is that TLB is more honest than the alternatives. Shipped as
-//     the brief wrote it; it needs settling, not silently softening.
-//  2. Branded FAQ "Am I locked into anything?" is [TBC] and is HELD BACK.
-//     The plan's point stands: on a page teaching contract literacy, silence
-//     reads as an answer. Do not launch without it.
-//  3. The four non-branded FAQs assert checkable numbers about third-party
-//     contracts and cite an unnamed "published case". Built, because they
-//     are the page's strongest asset — but they need a substantiation pass.
-//  4. §6's comparison table rows are DERIVED, not supplied. See its own
-//     comment block.
+// ── UPDATED to Brand Foundation v2.0 (September 2026) ────────────────────
+// This page was the worst-affected on the site. It opened with an H1 that
+// v2.0 rules out twice over, on the page whose own argument is that TLB is
+// more honest than the alternatives. §1, §2, §5, §6, §7 and §8 were all
+// rewritten; each carries its own ✅ note saying what changed and which rule
+// required it.
+//
+// BLOCKERS, as they now stand:
+//  1. ✅ RESOLVED — "Nine local mums" in the H1 and meta description. v2.0
+//     §2.4 settles it: the full-time headcount "is not accurate and it has
+//     been removed from all page copy", and §9.3 keeps "local mums" out of
+//     positioning copy entirely. The H1 is now §1.1 verbatim. This page and
+//     the homepage no longer disagree, because neither makes the claim.
+//  2. ✅ RESOLVED — branded FAQ "Am I locked into anything?" was [TBC] and
+//     held back. v2.0 §11.5 supplies the answer in full, so it is published
+//     below. The plan's point was right: on a page teaching contract
+//     literacy, silence read as an answer.
+//  3. ⚠️ STILL OPEN — the four non-branded FAQs assert checkable numbers
+//     about third-party contracts and cite an unnamed "published case". They
+//     are the page's strongest asset, but §12.2 forbids unverifiable
+//     statistics. They need a substantiation pass before launch.
+//  4. ✅ RESOLVED — §6's comparison table. See its own comment block.
+//
+// ⚠️ STILL OPEN, and now the only thing on this page that blocks launch
+// besides 3: the hero has no photograph. This page argues "the part none of
+// the others can show you: names and faces", and promises them three times.
+// A hero with no faces on it is the weakest possible opening for that
+// argument. §12.1 is blunt about which asset does the work here.
 //
 // Two component extensions were added for this page: `kicker` on Hero.astro
 // and on CallToAction.astro (§1 and §14 both need an eyebrow label). Both
@@ -59,9 +72,13 @@ import { trustBarCards } from '../data/trust';
 
 const pageMeta = {
   title: 'Best House Cleaning Services Near You | TLB Cleaning',
-  // ⚠️ Carries the "Nine local mums" claim — see blocker 1 in the header.
+  // ✅ RESOLVED (Brand Foundation v2.0) — was "Nine local mums, no anonymous
+  // contractors and no franchise fees", which breached three rules in one
+  // sentence: §2.4 (the full-time headcount is not accurate), §9.3 ("local
+  // mums" is out of positioning copy) and §9.4 (competitor framing belongs in
+  // the table, not in prose, and a meta description is prose).
   description:
-    'Nine local mums, no anonymous contractors and no franchise fees. See how TLB compares, and why changing cleaners is easier than you think.',
+    'A local team on a set day, and the same faces each visit. See how TLB compares, and why changing cleaners is easier than you think.',
   canonical: 'https://example.com/why-tlb/',
 };
 
@@ -88,8 +105,8 @@ const business = {
 // here, sentences 2 and 3 open §2's TextBlock. Nothing is lost.
 //
 // `kicker` is the new Hero prop: "WHY TLB" sits above the <h1>, outside it.
-// Folding it into headingLines would make the heading read "WHY TLB Nine
-// local mums, and no anonymous contractors".
+// Folding it into headingLines would make the heading read "WHY TLB Local
+// team, run properly."
 //
 // Hero style matches the homepage, house cleaning and deep cleaning pages:
 // `split-single-image`, copy left, image right. NO ASSET YET — `image` is
@@ -113,24 +130,62 @@ const business = {
 // faces". A hero with no faces on it is the weakest possible opening for
 // that argument, so a real team photo does more work here than almost
 // anywhere else.
+// ✅ RESOLVED (Brand Foundation v2.0) — the H1 was "Nine local mums, and no
+// anonymous contractors." and the lead was "We grew to nine full-time staff
+// and won contracts with the region's leading real estate agencies without
+// ever running an advertisement."
+//
+// Four separate breaches, on the page whose own argument is that TLB is more
+// honest than the alternatives:
+//   - "Nine" and "full-time" (§2.4: not accurate, and removed everywhere)
+//   - "local mums" in an <h1> (§9.3: not in positioning copy)
+//   - "no anonymous contractors" (§9.4: competitor framing out of prose)
+//   - the agency-contracts claim (§2.4 lists it as unconfirmed, and the
+//     wording has to match whether these are formal preferred-supplier
+//     arrangements or ongoing contracts)
+//
+// The replacement H1 is §1.1 verbatim. The lead keeps the ONE claim §2.4
+// marks confirmed ("Grown by word of mouth, without advertising") and drops
+// the two it does not.
 const hero = {
   kicker: 'Why TLB',
-  headingLines: ['Nine local mums, and no anonymous contractors.'],
-  lead: "We grew to nine full-time staff and won contracts with the region's leading real estate agencies without ever running an advertisement.",
+  headingLines: ['Local team, run properly.'],
+  lead: 'We grew across the Northern Rivers one recommendation at a time, without ever running an advertisement. This is what people were recommending.',
   cta: quoteCta,
   image: {
     ratio: '4/3',
-    label: 'The TLB team — the nine local cleaners this page names',
+    label: 'The TLB team, the local cleaners this page names',
   },
 };
 
 // §2 Thesis + definition. Entries 1–2 are the hero overflow (see §1).
 // Entry 3 is the answer-target block — it names all four competitor
 // categories in one sentence, which is what the rest of the page unpacks.
+// ✅ RESOLVED (Brand Foundation v2.0) — entry 3 was "It employs nine full-time
+// cleaners rather than subcontracting, which is the main difference between
+// TLB and the national franchises, booking platforms and sole operators
+// working the same area."
+//
+// Two breaches: the headcount and "full-time" (§2.4), and naming three
+// competitor categories in a definition sentence (§9.4, "no characterising
+// what a national brand or an independent cleaner fails to do, in running
+// text"). §10.2 is the sharper one here: the sentence lumped sole operators
+// into the thing TLB is better than, and "the reader has probably had a good
+// one".
+//
+// The replacement is still an answer-target block (§14) — it states what TLB
+// is, where it works and how it runs, in a form an AI assistant can lift
+// whole. It just no longer defines TLB by what other people are.
+//
+// Geography per §2.1: the Northern Rivers leads and is the identity, the
+// Tweed and the Southern Gold Coast are extensions. The old line said
+// "Northern Rivers and Southern Gold Coast", which skipped the Tweed
+// entirely — and §2.1 is explicit that Kingscliff, Pottsville and Tweed Heads
+// are "neither Northern Rivers nor Gold Coast to anyone who lives there".
 const definitionBody: TextBlockBody[] = [
   'Every client came from somebody recommending us to somebody else.',
   'This page is the honest version of why.',
-  'TLB Cleaning is a locally owned cleaning company serving the Northern Rivers and Southern Gold Coast. It employs nine full-time cleaners rather than subcontracting, which is the main difference between TLB and the national franchises, booking platforms and sole operators working the same area.',
+  'TLB Cleaning is a locally owned cleaning company working across the Northern Rivers, the Tweed and the Southern Gold Coast. Everyone who works for TLB lives in the region. Every client has a set day and a set team, a reminder before the visit and a message when we are on the way, and when something has to change they hear it from us first.',
 ];
 
 // §3 Routing cards. Unlike the other pages' cards, all three route WITHIN
@@ -162,8 +217,9 @@ const pathwayCards = {
       number: 3,
       // ⚠️ This promises named faces. So does §7's "neither can introduce
       // you to her", and so does §14's closing CTA. Three promises pointing
-      // at /about/ — confirm that page will actually show nine named
-      // cleaners with photos, or the page's central claim doesn't land.
+      // at /about/ — confirm that page will actually show the team named and
+      // photographed, or the page's central claim doesn't land. (Headcount
+      // deliberately not stated here: v2.0 §2.4.)
       image: { ratio: '4/3', label: 'The TLB cleaning team, named and photographed' },
       title: 'Who would actually come?',
       description:
@@ -177,27 +233,45 @@ const pathwayCards = {
 // sections rather than one prose block. The two middle paragraphs are
 // deliberately parallel ("solved X / what you give up is Y"), so putting them
 // side by side lets the reader see the symmetry before reading a word.
+// ✅ REWRITTEN (Brand Foundation v2.0 §9.4) — this section used to be built
+// on an explicit two-sided competitor contrast: "Until recently you had to
+// pick one: convenience or a person you know", then one cell on what a
+// platform makes you give up and one on what an independent cleaner makes you
+// give up.
+//
+// §9.4 rules out that whole construction, and names this exact phrasing:
+// "No 'nobody turns up'. No 'you have to choose'. No characterising what a
+// national brand or an independent cleaner fails to do, in running text."
+// §10.2 adds the sharper objection to the second cell: "Never suggest an
+// independent cleaner does worse work, because the reader has probably had a
+// good one... In this region that is a real person the reader knows."
+//
+// The structure survives intact — setup, two parallel cells, dark resolution.
+// Only the subject changes. It now describes TLB's two halves (§3.1) instead
+// of two competitors' two weaknesses, so the section says what TLB does and
+// the comparison table immediately below it at §6 carries the comparison.
+// That is §9.4's prescribed swap: "Same point, reads as information."
+//
+// Copy is §3.1 and §3.3 almost verbatim, including the closing line, which is
+// the brand document's own sanctioned way to make this point.
 const tradeOffSetup: TextBlockBody[] = [
-  'Until recently you had to pick one: convenience or a person you know.',
+  'Two halves, and both matter.',
 ];
 
-// ⚠️ The two cell headings are NEW COPY, not in the brief. They name the two
-// things the setup line above already names, so they're a labelling choice
-// rather than an argument — but they are an addition.
 const tradeOffBlocks = [
   {
     type: 'text' as const,
-    heading: 'Convenience',
+    heading: 'Local and embedded',
     body: [
-      'The national platforms and franchises solved the convenience problem properly. You can book at eleven at night, you get a confirmation, and there is a number to ring if something goes wrong. What you give up is knowing who is coming.',
+      'Everyone who works for TLB lives here. Our teams are spread right across the Northern Rivers and the Tweed, inland and on the coast, and they clean in the same towns they live in and shop in. Somebody you could run into at the shops, which cuts both ways and we know it.',
     ],
     tone: 'muted' as const,
   },
   {
     type: 'text' as const,
-    heading: 'A person you know',
+    heading: 'Run properly',
     body: [
-      'Independent local cleaners solved the other half. You know her name, she knows your dog, and the work is better because she cares. What you give up is the organising: phone tag, a paper diary, and no cover when she is away.',
+      'Every client has a set day and a set team. You know who is coming and when, you get a message when we are on the way, and if something has to change you hear it from us first. There is cover when somebody is away, and there is someone accountable when something is not right.',
     ],
     tone: 'muted' as const,
   },
@@ -205,33 +279,37 @@ const tradeOffBlocks = [
 
 // Dark, because it's the pivot the whole page turns on — and this page runs
 // long on centred light prose, so it needs the tonal break.
+//
+// This line is §3.1's own closing sentence, used verbatim. §9.4 bans "you
+// have to choose" as a claim ABOUT competitors; §3.1 makes it about the
+// reader's assumption and is the brand document's approved wording.
 const tradeOffResolution: TextBlockBody[] = [
-  'We built TLB to not make you choose. That is the whole idea, and everything below is downstream of it.',
+  'Most people assume they have to choose between the two. TLB does not ask them to.',
 ];
 
 // §6 Comparison table — the SAME table as the homepage's §8, sharing its
 // columns and rows from src/data/comparison.ts. That copy was supplied
 // directly by TLB with desktop and mobile mockups, so it is approved content.
 //
-// This REPLACES an earlier four-column table (TLB / franchise / platform /
-// solo cleaner) whose rows I derived from this page's own prose because the
-// brief supplied none. Approved copy beats derived copy — but see the two
-// notes below, because the swap changes what this section argues.
-//
 // Only the heading and cornerLabel are set here; the substance is shared, so
 // editing a row updates both pages at once.
 //
-// ⚠️ THE PAGE NOW PROMISES MORE THAN THE TABLE DELIVERS. §3's card 1 says
-// "A franchise, an online platform, a solo cleaner or a local team. They are
-// genuinely different things and each is right for someone", and §5 concedes
-// the platforms "solved the convenience problem properly". This table is
-// two columns — TLB vs "Other Brands" — with TLB ticking every row and Other
-// Brands crossing every row. It does not distinguish the four models, and it
-// does not show anything being right for someone else. Either card 1's copy
-// softens to match, or the table needs the extra columns.
+// ✅ RESOLVED — "THE PAGE NOW PROMISES MORE THAN THE TABLE DELIVERS." The
+// shared table used to be two columns (TLB vs "Other Brands") with TLB
+// ticking every row and Other Brands crossing every row, which distinguished
+// none of the models §3's card 1 promises and showed nothing being right for
+// somebody else. src/data/comparison.ts now holds the homepage's approved
+// three-column prose table instead, so a national brand or app and an
+// independent cleaner get a column each, TLB does not win every row, and the
+// cells state what happens rather than scoring it. Card 1's copy needs no
+// softening: the table now delivers what it promises.
 //
-// ⚠️ Row 2 ("Owned and run by local mums from the Northern Rivers") restates
-// the claim in blocker 1 at the top of this file. Same fact, same question.
+// ✅ RESOLVED — the "Owned and run by local mums from the Northern Rivers"
+// row is gone with the rest of the old table (v2.0 §9.3).
+//
+// This table is now carrying MORE weight than it used to. §5 and §7 above
+// were rewritten to stop characterising competitors in prose (§9.4), and this
+// is where that argument went. Do not thin these rows out.
 const comparisonTable = {
   // Deliberately NOT the homepage's "Why TLB Cleaning is different" — that
   // would restate the page's own name inside it. Reframed for this context.
@@ -241,26 +319,55 @@ const comparisonTable = {
   rows: comparisonRows,
 };
 
-// §7 The model explanation. The strongest writing in the brief — straight
-// prose, no list, no image. Don't break it up.
+// §7 The model explanation. Straight prose, no list, no image. Don't break
+// it up.
+//
+// ✅ REWRITTEN (Brand Foundation v2.0 §9.4) — this was two paragraphs
+// explaining how a franchise network and a booking platform work, closing on
+// "Neither can introduce you to her." Genuinely good writing, and it was the
+// strongest thing in the v1.0 brief. It is also a paragraph of running text
+// whose entire subject is what two competitor models cannot do, which is the
+// one thing §9.4 rules out: "A page that spends its time on what other people
+// get wrong sounds defensive, and invites the reader to wonder who we are
+// arguing with."
+//
+// The point is not lost. It moved. "Who cleans your home" and "When someone
+// is away" are now rows one and two of the comparison table at §6, where
+// §9.4 says a comparison belongs and where it "reads as information rather
+// than complaint".
+//
+// What replaces it is the same argument made positively, and it keeps the
+// heading, which still works: a brand can be bought, a person cannot.
 const modelBody: TextBlockBody[] = [
-  'In a franchise network, local operators buy the right to trade under a corporate name. The brand does the marketing and the phone number, and an operator you have never heard of does the work. On a booking platform, an algorithm dispatches a vetted contractor. Both are legitimate ways to run a cleaning business and both are genuinely convenient.',
-  'Neither can introduce you to her. To match that, they would have to employ the cleaners rather than dispatch them, keep them long enough for you to learn their names, and let you see who they are before they arrive. That is not a feature that ships in the next release. It is a different company.',
+  'Everyone who cleans for TLB lives in the region, and they stay. That is the part that takes years rather than a release cycle, and it is the reason you can be introduced to the people who would be in your house before anybody knocks on your door.',
+  'It is also why the schedule holds. The same team each visit means nobody is relearning your house, nobody has to be told again about the side gate or the dog, and the person who noticed the shower screen last month is the person coming back this month.',
 ];
 
-// §8 Flexible hours.
+// §8 Why people stay.
 //
-// ⚠️ "because most of us are doing it" — MOST, not all. This is the same
-// fact the H1 states as "nine local mums", stated more carefully two thirds
-// of the way down the same page. It agrees with the homepage and disagrees
-// with this page's own headline. See blocker 1.
+// ✅ RESOLVED (Brand Foundation v2.0 §2.2) — "Our team is built around school
+// pick-up, because most of us are doing it" was the mother-led framing
+// arriving two thirds of the way down a positioning page, and it used to be
+// the thing that made this page's H1 ("Nine local mums") disagree with its
+// own body copy ("most of us").
 //
-// ⚠️ "Cleaning has a staff turnover problem across the whole industry" is an
-// industry claim with no source supplied — same substantiation question as
-// the non-branded FAQs.
+// §2.2 does not delete that story, it relocates it: it belongs on the about
+// page, the team section, social content and recruitment copy, and NOT in
+// "service page positioning". This page is positioning. The flexible-hours
+// mechanism is genuinely true and genuinely persuasive, so it should be told
+// properly at /about/ and /work-with-us/ rather than deleted here.
+//
+// What stays is the part a client is actually buying (§1.5): people stay, so
+// you are not meeting somebody new every fortnight. The retention argument is
+// §3.1's, and it survives without describing the workforce.
+//
+// ⚠️ STILL OPEN — "Cleaning has a staff turnover problem across the whole
+// industry" is an industry claim with no source supplied. Same substantiation
+// question as the non-branded FAQs below. §12.1 wants numbers, but only once
+// confirmed.
 const flexibleHoursBody: TextBlockBody[] = [
   'Cleaning has a staff turnover problem across the whole industry, driven by rigid hours and low engagement. Somebody treated as interchangeable behaves as though the job is interchangeable, and the person whose house it is can tell.',
-  'Our team is built around school pick-up, because most of us are doing it. That is why people stay, and why you are not meeting somebody new every fortnight. A team that loves the work does better work, and there is no clever version of that idea.',
+  'We built TLB so that people stay, and they do. That is why you are not meeting somebody new every fortnight, and why the team looking after your place this year is the team that looked after it last year. A team that loves the work does better work, and there is no clever version of that idea.',
 ];
 
 // §9a Switching guide intro.
@@ -363,23 +470,33 @@ const testimonials = [
   },
 ];
 
-// §12 Branded FAQs — 3 of 4.
+// §12 Branded FAQs — now 4 of 4.
 //
-// HELD BACK: "Am I locked into anything?" The brief's own bracket reads
-// "[TBC — confirm commercial terms before publishing. This is the single most
-// important question on this page and it cannot be answered with a guess.]"
+// ✅ RESOLVED — "Am I locked into anything?" was held back on a [TBC] reading
+// "confirm commercial terms before publishing. This is the single most
+// important question on this page and it cannot be answered with a guess."
+// It is answered below, and the answer is not a guess: Brand Foundation v2.0
+// §3.2 and §11.5 both state the commercial terms as settled fact ("No
+// minimum term, no exit fee. Skip a visit when you are away and your spot
+// stays yours"). §11 exists precisely so these answers stop being invented
+// page by page.
 //
-// ⚠️ Note this is NOT a normal hold-back. On a page that spends its length
-// teaching people to read their cleaning contract, omitting the question
-// about TLB's own contract is itself an answer. The page should not launch
-// with this missing — get the terms confirmed.
+// This mattered more than a normal hold-back. On a page that spends its
+// length teaching people to read their cleaning contract, omitting the
+// question about TLB's own contract was itself an answer.
 //
-// ⚠️ Also worth checking before launch: non-branded FAQ 3 below warns readers
-// about non-solicitation clauses. Confirm TLB's own terms don't contain one.
+// ⚠️ STILL WORTH CHECKING before launch: non-branded FAQ 3 below warns
+// readers about non-solicitation clauses. Confirm TLB's own terms don't
+// contain one, or the page argues against itself.
 //
-// All three below answer by CONCEDING something. That's the page's voice
+// All four below answer by CONCEDING something. That's the page's voice
 // working — keep any additions in the same register.
 const brandedFaqItems = [
+  {
+    question: 'Am I locked into anything?',
+    answer:
+      'No minimum term and no exit fee. Skip a visit when you are away and your spot stays yours, and if it stops suiting you, tell us and we will stop.',
+  },
   {
     question: 'Can I book one clean without committing to a schedule?',
     answer: 'Yes, and for anyone changing over we would suggest you do exactly that.',
@@ -490,7 +607,7 @@ const closingCta = {
 
     <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
 
-    <TextBlock theme="light" align="left" heading="The trade-off everyone is actually making." body={tradeOffSetup} />
+    <TextBlock theme="light" align="left" heading="Local and embedded, professionally run." body={tradeOffSetup} />
 
     <ContentGrid columns={2} blocks={tradeOffBlocks} />
 
@@ -521,7 +638,7 @@ const closingCta = {
 
     <TextBlock theme="light" align="left" heading="A brand can be bought. A person cannot." body={modelBody} />
 
-    <TextBlock theme="dark" align="left" heading="Flexible hours are not a perk. They are the mechanism." body={flexibleHoursBody} />
+    <TextBlock theme="dark" align="left" heading="The same faces is not luck. It is the whole design." body={flexibleHoursBody} />
 
     {/* Anchor target for §3's card 2. */}
     <div id="switching">

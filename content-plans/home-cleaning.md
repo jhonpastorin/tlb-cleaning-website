@@ -1,5 +1,21 @@
 # Regular House Cleaning — content plan
 
+> [!WARNING]
+> **Superseded in part by Brand Foundation v2.0 (September 2026).**
+> This plan was written against Brand Foundation v1.0 and still contains
+> v1.0-era framing that v2.0 reverses: the "local mums" / "team of local
+> mothers" positioning (v2.0 §9.3 keeps it out of positioning copy and §2.2
+> confines it to the about page, the team section, social and recruitment),
+> the "nine full-time staff" claim (v2.0 §2.4: "It is not accurate"), and
+> competitor contrast written into body copy (v2.0 §9.4: comparisons live in
+> a comparison table, never in prose).
+>
+> The BUILT PAGE has been corrected. This plan has not been rewritten.
+> Where the two disagree, the built page and
+> [`TLB Cleaning - Brand Foundation v2.0.md`](../TLB%20Cleaning%20-%20Brand%20Foundation%20v2.0.md)
+> are current. Do not draft new copy from the framing below without checking
+> it against v2.0 first.
+
 Source: the "TLB Cleaning — Regular House Cleaning" brief (second revision,
 supplied 2026-09-08). Supersedes the first brief this page was built from.
 Built at `src/pages/house-cleaning.astro`.

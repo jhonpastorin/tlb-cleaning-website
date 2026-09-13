@@ -1,49 +1,102 @@
-// The TLB vs. other brands comparison — the substance of the table, shared
-// by the homepage (index.astro §8) and the Why TLB page.
-//
-// Copy was supplied directly by TLB with desktop and mobile mockups; it is
-// approved content, not derived. Extracted here once a second page needed the
-// identical rows: two real consumers is the same bar this codebase sets
-// elsewhere for sharing (see navigation.ts, ServiceIcon.astro).
+// The TLB comparison table — the substance of the table, shared by the
+// homepage (index.astro §8), the Why TLB page and commercial-cleaning.
 //
 // Only `columns` and `rows` live here — the substance. Each page sets its own
 // `heading`, `cornerLabel` and `lead`, since the framing differs by context
 // even when the claims don't.
 //
-// ⚠️ Two row labels carry a trailing "*" with no footnote text supplied
-// alongside them. Kept verbatim rather than dropped or invented; add the
-// footnote (via ComparisonTable's `footnote` prop) once that text exists.
-// Because this is now shared, adding it fixes both pages at once.
+// ── REPLACED against Brand Foundation v2.0 (September 2026) ───────────────
+//
+// This file used to hold a two-column TLB-vs-"Other Brands" tick table. Four
+// of its five rows breached v2.0: three claimed "Nine full-time cleaners"
+// (§2.4, "Never claim that the team is employed full-time. It is not
+// accurate"), one led on "local mums" and "Led by Teagan" (§9.3 bans both in
+// positioning copy, §2.2 credits Teagan as founder rather than fronting her
+// as the brand), and one asserted "ongoing contracts with the region's
+// leading real estate agencies" (§2.4 lists that as unconfirmed). Two also
+// carried a trailing "*" with no footnote text anywhere on either page.
+//
+// The rows below are NOT a rewrite. They are the homepage's own v6 table,
+// supplied by TLB and approved, moved here verbatim — previously inline in
+// index.astro, whose comment said exactly this: "Kept local rather than
+// rewriting the shared file out from under two pages this brief doesn't
+// cover — reconcile once those pages get their own v6 briefs." That is what
+// this is. Using approved client copy beats drafting new rows, and it means
+// the site now has ONE comparison table instead of two that disagree.
+//
+// Why the approved table is already v2.0-compliant, which is what made the
+// promotion safe:
+//
+//  1. Three columns, not two. "Other Brands" lumped a national platform in
+//     with the sole operator a neighbour recommended, and a cross against
+//     that single column says the independent cleaner does worse work, which
+//     §10.2 forbids outright ("Never suggest an independent cleaner does
+//     worse work, because the reader has probably had a good one... In this
+//     region that is a real person the reader knows"). §10 defines three
+//     competitor types; there is now a column per type.
+//
+//  2. Facts, not ticks and crosses. §9.4: "keep the rows neutral and factual.
+//     'Whoever is rostered that day' is a fact. 'They will let you down' is
+//     not." A boolean can only say better/worse. A string says what actually
+//     happens, which is why these rows read as information rather than as an
+//     argument — the whole point of §9.4 moving comparisons out of prose.
+//
+//  3. TLB does not win every row. "Who cleans your home" gives the
+//     independent cleaner an equal answer and "Reminders" gives the app a
+//     good one. §10.1's named "mistake to avoid" is conceding convenience to
+//     the platforms; the honest way to claim it is to show where they
+//     genuinely have it.
+//
+// Column ORDER is the approved one and is load-bearing: TLB sits last and
+// highlighted, so the reader arrives at it having already read the two
+// alternatives. Do not reorder to put TLB first.
+//
+// Mobile: ComparisonTable's <768px layout stacks one chip per column with the
+// header pulled in via `data-label`, so it is column-count agnostic. Desktop
+// is a plain <table> with `overflow-x: auto`. Three columns needed no
+// component change.
 
 export const comparisonColumns = [
+  { label: 'A national brand or app' },
+  { label: 'An independent cleaner' },
   { label: 'TLB Cleaning', highlight: true },
-  { label: 'Other Brands' },
 ];
 
 export const comparisonRows = [
   {
-    label: 'Nine full-time cleaners employed by TLB, not subcontracted*',
-    description: '(The person in your home is on our team, not booked through a platform)',
-    values: [true, false],
+    label: 'Who cleans your home',
+    values: ['Whoever is rostered that day', 'The same person', 'Your own local team, known by name'],
   },
   {
-    label: 'Owned and run by local mums from the Northern Rivers',
-    description: '(Led by Teagan, staffed by mothers who live where they clean)',
-    values: [true, false],
+    label: 'When someone is away',
+    values: [
+      'A different contractor',
+      'Rebook for another week',
+      'Someone from your team covers, and we let you know first',
+    ],
   },
   {
-    label: 'Grew to nine full-time cleaners without ever advertising',
-    description: '(Every client so far arrived on a recommendation)',
-    values: [true, false],
+    label: 'How you book',
+    values: ['Online only', 'Text or a phone call', 'Online, text, phone or email'],
   },
   {
-    label: 'You see the cleaners who work your area, by name and face, before you book',
-    description: '(Nine local cleaners, photographed and named, not a stock photo)',
-    values: [true, false],
+    label: 'Reminders',
+    values: ['Automated', 'Usually none', "Before the day, and again when we're on our way"],
   },
   {
-    label: "Ongoing contracts with the region's leading real estate agencies*",
-    description: '(Our work is inspected by local property managers every week)',
-    values: [true, false],
+    label: 'Holiday lets',
+    values: ['A standard turnover', 'Depends on availability', 'Worked straight off your booking calendar'],
+  },
+  {
+    label: 'Your schedule',
+    values: ['Whatever slot is available', 'Whenever they can fit you in', 'A set day and a set team'],
+  },
+  {
+    label: 'Commitment',
+    values: ['Often a subscription', 'None', 'No lock-in, no minimum term, no exit fee'],
+  },
+  {
+    label: 'Where they live',
+    values: ['Wherever the contractor is based', 'Locally', 'In the towns they clean in, across the region'],
   },
 ];

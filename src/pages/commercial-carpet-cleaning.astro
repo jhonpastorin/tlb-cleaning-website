@@ -86,6 +86,7 @@ import {
 import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { nswLocationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. Focus keyword leads the title, matching the hub's pattern.
 const pageMeta = {
@@ -147,7 +148,7 @@ const hero = {
   kicker: 'Commercial carpet cleaning',
   headingLines: ['Your carpet is the first thing anyone walks on.'],
   lead:
-    'Carpet cleaning for offices, clinics, venues and strata across the Northern Rivers and the Tweed. Done after you close, dry before you open.',
+    `Carpet cleaning for offices, clinics, venues and strata across the Northern Rivers and the Tweed. Done after you close, dry before you open. ${theLine.fast}`,
   cta: { label: 'Book a site walkthrough', href: quoteCta.href },
   image: {
     ratio: '1/1',
@@ -215,7 +216,7 @@ const pathwayCards = {
       title: 'I want to know who is in the building',
       description:
         // ⚠️ Two brackets, both inherited from the hub. Same answer fixes both.
-        'The same small team you have met, in TLB uniform. Never a roster of strangers sent out by a call centre. We are a local business, [insured] and [police-checked], and there is one local number to ring if something is not right.',
+        'The same small team each visit, in TLB uniform, and you can meet them before the first one. We are a local business, [insured] and [police-checked], and there is one local number to ring if something is not right.',
       cta: { label: 'Why TLB', href: '/why-tlb/' },
     },
   ],
@@ -293,7 +294,7 @@ const scopeItems = [
 // verification read by someone who prices carpet work.
 const worthKnowingBody: TextBlockBody[] = [
   'A bad carpet clean and a good one look the same on the day. The difference turns up three weeks later. Over-wetting leaves moisture in the backing, which is how you get an odour that will not shift and, in a humid Northern Rivers summer, mould under a floor that looks fine from above. Too much detergent left in the pile is worse in its own way: it stays tacky, so the carpet re-soils faster than before it was cleaned and the traffic lanes come back darker than they started.',
-  'The other thing worth knowing is that most commercial carpet is still under a manufacturer warranty, and most of those warranties require periodic hot water extraction by a professional. A cheap bonnet clean can technically void one. So ask any cleaner which method they use, what they do about drying, and whether their work meets your carpet maker’s maintenance requirements. We put the method and the price in writing before we start, and we tell you straight when a mark is not coming out.',
+  'The other thing worth knowing is that most commercial carpet is still under a manufacturer warranty, and most of those warranties require periodic hot water extraction by a professional. A bonnet clean can technically void one. So ask any cleaner which method they use, what they do about drying, and whether their work meets your carpet maker’s maintenance requirements. We put the method and the price in writing before we start, and we tell you straight when a mark is not coming out.',
 ];
 
 // §6 Related pages. NOT the hub's full fifteen-pill premises list, which
@@ -490,7 +491,7 @@ const closingCta = {
     <TextBlock
       theme="dark"
       align="left"
-      heading="Why the cheap carpet clean costs more"
+      heading="What a low carpet quote usually leaves out"
       body={worthKnowingBody}
     />
 
@@ -533,6 +534,23 @@ const closingCta = {
       subheading="Across the Northern Rivers and the Tweed."
       groups={nswLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

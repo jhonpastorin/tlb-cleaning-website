@@ -86,6 +86,7 @@ import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { locationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { otherOutsideServices } from '../data/outsideYourHome';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. The menu label leads the title. "House washing", "exterior
 // cleaning" and "soft wash" are the synonyms and are carried in body copy.
@@ -124,7 +125,7 @@ const hero = {
   kicker: 'Exterior house washing',
   headingLines: ['Your house is not', 'that colour. Not really.'],
   lead:
-    'Walls, eaves, soffits, downpipes and window frames, soft washed across the Northern Rivers, the Tweed and the Southern Gold Coast. Low pressure, so nothing gets stripped.',
+    `Walls, eaves, soffits, downpipes and window frames, soft washed across the Northern Rivers, the Tweed and the Southern Gold Coast. Low pressure, so nothing gets stripped. ${theLine.fast}`,
   cta: quoteCta,
   image: {
     ratio: '1/1',
@@ -168,7 +169,7 @@ const carouselCards = [
     },
     heading: 'This is the same wall, washed',
     body: [
-      'No paint, no render, no repairs. This is the reason people book it before selling, before Christmas and before the family arrives: it is the cheapest thing you can do to a house that changes how the whole place reads from the street.',
+      'No paint, no render, no repairs. This is the reason people book it before selling, before Christmas and before the family arrives: it is the least expensive thing you can do to a house that changes how the whole place reads from the street.',
     ],
   },
   {
@@ -196,7 +197,7 @@ const scopeItems = [
     icon: 'chart-bars' as const,
     title: 'Top down, always',
     description:
-      'Eaves and gables first, then the walls, then the window frames, then whatever the run-off landed on. Washing bottom up means the dirty water runs over what you just cleaned, which is why a cheap job leaves streaks on the lower boards.',
+      'Eaves and gables first, then the walls, then the window frames, then whatever the run-off landed on. Washing bottom up means the dirty water runs over what you just cleaned, which is why a rushed job leaves streaks on the lower boards.',
   },
   {
     icon: 'spray-bottle' as const,
@@ -388,7 +389,7 @@ const nonBrandedFaqItems = [
   {
     question: 'How often should a house exterior be washed?',
     answer:
-      'Every one to two years suits most homes here, and shaded, coastal or tree covered houses sit at the shorter end of that. Humidity is the driver: the further inland and the more sun a wall gets, the longer it stays clean. Doing it before the growth is thick is faster and cheaper than rescuing it.',
+      'Every one to two years suits most homes here, and shaded, coastal or tree covered houses sit at the shorter end of that. Humidity is the driver: the further inland and the more sun a wall gets, the longer it stays clean. Doing it before the growth is thick is faster and costs less than rescuing it.',
   },
   {
     question: 'Can old fibre cement cladding be washed?',
@@ -485,6 +486,23 @@ const closingCta = {
       subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
       groups={locationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
     <Faq heading="Frequently asked questions" items={brandedFaqItems} />

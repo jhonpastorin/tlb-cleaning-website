@@ -32,6 +32,7 @@ import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
 import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
 import TagCloud from '../components/sections/TagCloud.astro';
 import { locationGroups } from '../data/locations';
+import { comparisonColumns, comparisonRows } from '../data/comparison';
 import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
@@ -70,6 +71,7 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
+import { theLine, theLineHeading, managedForYou } from '../data/brand-lines';
 
 const pageMeta = {
   title: 'Cleaning Services & Cleaners | TLB Cleaning',
@@ -105,7 +107,7 @@ const business = {
 // one. Every other [Button] in the brief is built where it was asked for.
 const hero = {
   headingLines: ['TLB Cleaning.', 'Your reliable local cleaners.'],
-  lead: 'A local team across the Northern Rivers and the Tweed. Easy to book, instant pricing, cost effective.',
+  lead: `A local team across the Northern Rivers and the Tweed. ${theLine.instant}`,
   cta: quoteCta,
   image: {
     ratio: '1364/1032',
@@ -253,59 +255,27 @@ const pricingBody = [
 
 // Comparison table — copy supplied directly in the brief, verbatim.
 //
-// NOT src/data/comparison.ts: that file holds the older two-column
-// TLB-vs-Other-Brands tick table, which why-tlb.astro and
-// commercial-cleaning.astro still render. v6 replaces the homepage's table
-// with a three-way comparison whose cells are prose, not ticks, so the two
-// tables no longer share substance. Kept local rather than rewriting the
-// shared file out from under two pages this brief doesn't cover —
-// reconcile once those pages get their own v6 briefs.
+// ✅ RESOLVED — this table's rows now live in src/data/comparison.ts and are
+// shared. They used to be inline here, because that shared file held an older
+// two-column TLB-vs-Other-Brands tick table which why-tlb.astro and
+// commercial-cleaning.astro still rendered, and this comment said: "reconcile
+// once those pages get their own v6 briefs." Brand Foundation v2.0 is that
+// reconciliation. The old tick table breached §2.4 (the "nine full-time
+// cleaners" claim), §9.3 ("local mums") and §10.2 (a cross against a single
+// "Other Brands" column says the independent cleaner does worse work), so it
+// was replaced by THIS table, verbatim, rather than the other way round.
+//
+// So the substance below is unchanged and still the brief's own. It simply
+// serves three pages now instead of one, and the site no longer ships two
+// comparison tables that disagree about the same business.
+//
+// Heading and cornerLabel stay local: §9.4 wants the framing to differ by
+// context even when the claims don't.
 const comparisonTable = {
   heading: 'How TLB Cleaning compares',
   cornerLabel: 'Why TLB Cleaning is different',
-  columns: [
-    { label: 'A national brand or app' },
-    { label: 'An independent cleaner' },
-    { label: 'TLB Cleaning', highlight: true },
-  ],
-  rows: [
-    {
-      label: 'Who cleans your home',
-      values: ['Whoever is rostered that day', 'The same person', 'Your own local team, known by name'],
-    },
-    {
-      label: 'When someone is away',
-      values: [
-        'A different contractor',
-        'Rebook for another week',
-        'Someone from your team covers, and we let you know first',
-      ],
-    },
-    {
-      label: 'How you book',
-      values: ['Online only', 'Text or a phone call', 'Online, text, phone or email'],
-    },
-    {
-      label: 'Reminders',
-      values: ['Automated', 'Usually none', "Before the day, and again when we're on our way"],
-    },
-    {
-      label: 'Holiday lets',
-      values: ['A standard turnover', 'Depends on availability', 'Worked straight off your booking calendar'],
-    },
-    {
-      label: 'Your schedule',
-      values: ['Whatever slot is available', 'Whenever they can fit you in', 'A set day and a set team'],
-    },
-    {
-      label: 'Commitment',
-      values: ['Often a subscription', 'None', 'No lock-in, no minimum term, no exit fee'],
-    },
-    {
-      label: 'Where they live',
-      values: ['Wherever the contractor is based', 'Locally', 'In the towns they clean in, across the region'],
-    },
-  ],
+  columns: comparisonColumns,
+  rows: comparisonRows,
 };
 
 // Testimonials — every quote, name and role below is a PLACEHOLDER, not a
@@ -578,8 +548,8 @@ const closingCta = {
     <TextBlock
       theme="muted"
       align="left"
-      heading="Easy to book, instant pricing, cost effective"
-      body={["You'll know the price before we start, not after.", ...pricingBody]}
+      heading={theLineHeading.instant}
+      body={[managedForYou.recurring, "You'll know the price before we start, not after.", ...pricingBody]}
       cta={hero.cta}
     />
 

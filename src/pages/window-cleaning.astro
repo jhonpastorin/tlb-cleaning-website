@@ -86,6 +86,7 @@ import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { locationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { otherOutsideServices } from '../data/outsideYourHome';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. Focus keyword leads the title, matching every sibling. "Window
 // washing" and "window cleaner" are the common synonyms and are carried in
@@ -133,7 +134,7 @@ const hero = {
   kicker: 'Window cleaning',
   headingLines: ['You paid for the view.', 'Have a look at it.'],
   lead:
-    'Glass, frames, sills and tracks, inside and out, across the Northern Rivers, the Tweed and the Southern Gold Coast. We bring the ladders, the poles and the water.',
+    `Glass, frames, sills and tracks, inside and out, across the Northern Rivers, the Tweed and the Southern Gold Coast. We bring the ladders, the poles and the water. ${theLine.fast}`,
   cta: quoteCta,
   image: {
     ratio: '1/1',
@@ -184,7 +185,7 @@ const pathwayCards = {
       },
       title: 'The high ones have not been done in years',
       description:
-        'Nobody wants to carry a ladder around the side of the house, and on a slope nobody should. First-floor glass gets reached from the ground with a water-fed pole, which is safer for us and cheaper for you than scaffolding.',
+        'Nobody wants to carry a ladder around the side of the house, and on a slope nobody should. First-floor glass gets reached from the ground with a water-fed pole, which is safer for us and costs you less than scaffolding.',
       cta: { label: 'Get an instant quote', href: quoteCta.href },
     },
     {
@@ -305,13 +306,13 @@ const windowPair = {
 
 // §7 What to ask. Persuasive block, dark TextBlock, no claim about TLB in it.
 // Two questions, both of which a competent operator answers straight away and
-// a cheap one talks around.
+// a thin one talks around.
 const askBody: TextBlockBody[] = [
   'Two questions sort out a window cleaner quickly, and neither of them is about price.',
   {
     list: [
       'How do you reach the upstairs glass? A pole from the ground is safe and needs nothing from you. A ladder leaned against a gutter bends the gutter, and a ladder on soft ground beside a paved courtyard is how people get hurt on a job that was meant to be simple.',
-      'What is included besides the glass? If frames, sills, tracks and screens are extra, the quote you are comparing is not the same job. This is where a cheap number usually comes from.',
+      'What is included besides the glass? If frames, sills, tracks and screens are extra, the quote you are comparing is not the same job. This is where a low number usually comes from.',
     ],
   },
   'The other thing worth knowing is that clean glass shows every mark on everything around it. Windows are usually the first exterior job people book and the one that makes them look at the walls, the gutters and the roof for the first time in years. That is normal, and it is why we quote the outside of a house as a whole when you ask us to.',
@@ -531,6 +532,23 @@ const closingCta = {
       subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
       groups={locationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
     <Faq heading="Frequently asked questions" items={brandedFaqItems} />

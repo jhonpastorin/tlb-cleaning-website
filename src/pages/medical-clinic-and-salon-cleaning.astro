@@ -81,6 +81,7 @@ import {
 import { nswLocationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. Three settings in the title because three different searches
 // have to land here and the menu label already commits to all three.
@@ -103,7 +104,7 @@ const hero = {
   kicker: 'Medical, clinic and salon cleaning',
   headingLines: ['Your first patient', 'walks into a clean room.'],
   lead:
-    'Cleaning for medical practices, allied health clinics and hair and beauty salons across the Northern Rivers and the Tweed. Done between close and open, on a scope written against your own procedures.',
+    `Cleaning for medical practices, allied health clinics and hair and beauty salons across the Northern Rivers and the Tweed. Done between close and open, on a scope written against your own procedures. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -450,6 +451,23 @@ const business = commercialBusiness(pageMeta.description);
       subheading="Across the Northern Rivers and the Tweed."
       groups={nswLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

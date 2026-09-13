@@ -90,6 +90,7 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
+import { theLine, theLineHeading, managedForYou } from '../data/brand-lines';
 
 // §0 Page metadata. Title and description both drafted in the brief and
 // shipping verbatim — the description that used to be a placeholder here is
@@ -135,7 +136,7 @@ const business = {
 // Same ruling as house-cleaning.astro.
 const hero = {
   headingLines: ['One clean to reset the whole house'],
-  lead: "Before the guests arrive, after the party, when you move in, or when it's just got away from you. Easy to book, instant pricing, cost effective.",
+  lead: `Before the guests arrive, after the party, when you move in, or when it's just got away from you. ${theLine.fast}`,
   cta: quoteCta,
   image: {
     ratio: '16/9',
@@ -458,8 +459,18 @@ const heroVideo = {
   },
 };
 
-// §10 Easy to book, instant pricing, cost effective — new section, and the
-// hero's second sentence expanded under those same three words.
+// §10 The Line as a section heading, with the hero's second sentence
+// expanded under those same three words.
+//
+// ⚠️ `fast`, not `instant`. This page read "instant pricing" until v2.0 §13.2
+// was applied, and §13.2 names deep cleans specifically as work instant
+// pricing "works badly for". The heading, the hero lead and paragraph two of
+// bookingBody below all said it, so all three moved together. See
+// data/brand-lines.ts for why there are two variants at all.
+//
+// §1.4 "Managed for you" is prepended at the call site as this block's
+// standfirst, the `oneOff` wording because a deep clean has no set day or
+// set team to promise.
 //
 // TextBlock `dark` rather than `light`: it sits between the video slot and
 // the testimonials, both of which are light, and it carries the page's
@@ -468,8 +479,8 @@ const heroVideo = {
 // paragraphs of running prose, not a centred pull quote.
 const bookingBody: TextBlockBody[] = [
   "Book online in a couple of minutes, or send a text, ring us or drop us an email, whichever you'd actually do.",
-  "You get a price straight away rather than waiting on a quote. It's based on the house as it actually is, so tell us honestly what condition it's in when you book. Nothing you say will surprise us, and it means we allow the right amount of time rather than running short on the day.",
-  "Cost effective because one deep clean does the heavy work in a single visit. If you're setting up a regular clean afterwards, this is the cheaper way round. And if the place needs more time than we've quoted, you'll hear that before we start rather than on the invoice.",
+  "You get a quote back fast rather than waiting days on someone to come out. It's based on the house as it actually is, so tell us honestly what condition it's in when you book. Nothing you say will surprise us, and it means we allow the right amount of time rather than running short on the day.",
+  "Cost effective because one deep clean does the heavy work in a single visit. If you're setting up a regular clean afterwards, this is the better way round. And if the place needs more time than we've quoted, you'll hear that before we start rather than on the invoice.",
 ];
 
 // §11 Social proof — bracketed [TBC] briefing slots, NOT real testimonials.
@@ -586,7 +597,7 @@ const faqItems = [
   {
     question: 'Can I book a deep clean and then set up a regular one?',
     answer:
-      "Yes, and most people do. It's the cheaper way round, because the deep clean does the heavy work once and the regular visits hold it there.",
+      "Yes, and most people do. It's the better way round, because the deep clean does the heavy work once and the regular visits hold it there.",
   },
   {
     question: 'Can I book over the phone instead of online?',
@@ -674,8 +685,8 @@ const closingCta = {
     <TextBlock
       theme="dark"
       align="left"
-      heading="Easy to book, instant pricing, cost effective"
-      body={bookingBody}
+      heading={theLineHeading.fast}
+      body={[managedForYou.oneOff, ...bookingBody]}
       cta={quoteCta}
     />
 

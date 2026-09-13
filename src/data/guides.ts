@@ -27,7 +27,7 @@
 //
 // PROVENANCE. No content brief exists for any of the nine. Same standing as
 // the end-of-lease page: voice, terminology and claim rules trace to
-// "TLB Cleaning - Brand Foundation.md" (the BFD); the substance is drafted.
+// "TLB Cleaning - Brand Foundation v2.0.md" (the BFD); the substance is drafted.
 // Where a guide states something about law, policy or price, the page itself
 // carries the flag — see each file's header.
 import type { LocalBusinessInfo } from '../layouts/Base.astro';
@@ -90,7 +90,7 @@ export const guidePages: GuidePage[] = [
     shortLabel: 'What a bond clean costs',
     href: '/guides/how-much-does-end-of-lease-cleaning-cost/',
     cluster: 'End of lease & tenancy',
-    blurb: 'What moves the price, what a cheap quote has left out, and how to compare two of them properly.',
+    blurb: 'What moves the price, what a low quote has left out, and how to compare two of them properly.',
     icon: 'chart-bars',
   },
   {
@@ -138,7 +138,7 @@ export const guidePages: GuidePage[] = [
     shortLabel: 'Choosing a commercial cleaner',
     href: '/guides/how-to-choose-a-commercial-cleaner/',
     cluster: 'Homes, hosting & commercial',
-    blurb: 'What to ask before you sign, and which cheap quote is cheap because something was left out.',
+    blurb: 'What to ask before you sign, and which low quote is low because something was left out.',
     icon: 'office',
   },
 ];

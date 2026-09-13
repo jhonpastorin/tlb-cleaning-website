@@ -81,6 +81,7 @@ import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { nswLocationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. Leads with hospitality because that is the broadest search,
 // and names holiday parks explicitly because it is the term with the least
@@ -104,7 +105,7 @@ const hero = {
   kicker: 'Hospitality, venues and holiday parks',
   headingLines: ['Your reviews are written', 'about the cleaning.'],
   lead:
-    'Cleaning for cafés, restaurants, function venues, cabins and holiday parks across the Northern Rivers and the Tweed. Scheduled around your bookings and your service, not around our roster.',
+    `Cleaning for cafés, restaurants, function venues, cabins and holiday parks across the Northern Rivers and the Tweed. Scheduled around your bookings and your service, not around our roster. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -263,7 +264,7 @@ const turnaroundMetrics = [
 // cost — and that makes the argument for itself without any claim about TLB.
 const worthKnowingBody: TextBlockBody[] = [
   'Look at the one and two star reviews for any accommodation business in this region and count how many are about cleaning. It is most of them. Not the location, not the price, not the beds: hair in the shower, crumbs in the drawer, a bin that was not emptied, a bathroom that smelled. Each of those is a fifteen minute failure that sits on your listing for years and gets read by everyone deciding between you and the park up the road.',
-  'The economics of that are brutal and they run the other way to how cleaning usually gets budgeted. Trimming a cabin turnover from ninety minutes to sixty saves you half an hour of labour and costs you a review, and the review costs more than the season’s savings. Which is why the thing to buy here is not the cheapest turnover, it is a turnover that happens the same way every single time, by people who have done that cabin before and know which drawer the last guest used.',
+  'The economics of that are brutal and they run the other way to how cleaning usually gets budgeted. Trimming a cabin turnover from ninety minutes to sixty saves you half an hour of labour and costs you a review, and the review costs more than the season’s savings. Which is why the thing to buy here is not the lowest-priced turnover, it is a turnover that happens the same way every single time, by people who have done that cabin before and know which drawer the last guest used.',
 ];
 
 // §8 Related pages. Airbnb, real estate and commercial pressure cleaning are
@@ -501,6 +502,23 @@ const business = commercialBusiness(pageMeta.description);
       subheading="Across the Northern Rivers and the Tweed."
       groups={nswLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

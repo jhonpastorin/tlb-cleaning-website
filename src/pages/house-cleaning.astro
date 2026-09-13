@@ -91,6 +91,7 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
+import { theLine, theLineHeading, managedForYou } from '../data/brand-lines';
 
 // §0 Page metadata — title tag and description both drafted in full.
 //
@@ -147,7 +148,7 @@ const business = {
 // than one. The brief's other two buttons (§11, §15) ARE built.
 const hero = {
   headingLines: ['House cleaning you never have to chase.'],
-  lead: 'The same local team, on the same day, every time. Easy to book, instant pricing, cost effective.',
+  lead: `The same local team, on the same day, every time. ${theLine.instant}`,
   cta: quoteCta,
   image: {
     ratio: '1364/1032',
@@ -187,7 +188,7 @@ const pathwayCards = {
       image: { ratio: '4/3', label: 'TLB cleaner vacuuming a living room during a one-off deep clean', src: cardDeepCleanImg },
       title: "It's got away from me a bit.",
       description:
-        'Start with a one-off deep clean, then set up a fortnightly. That way round works out cheaper than doing it the other way.',
+        'Start with a one-off deep clean, then set up a fortnightly. That way round works out better than doing it the other way.',
       cta: { label: 'Deep cleaning', href: '/deep-cleaning/' },
     },
     {
@@ -718,8 +719,8 @@ const closingCta = {
     <TextBlock
       theme="dark"
       align="left"
-      heading="Easy to book, instant pricing, cost effective"
-      body={bookingBody}
+      heading={theLineHeading.instant}
+      body={[managedForYou.recurring, ...bookingBody]}
       cta={quoteCta}
     />
 

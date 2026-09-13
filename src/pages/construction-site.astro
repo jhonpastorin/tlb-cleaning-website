@@ -96,6 +96,7 @@ import {
 import { nswLocationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. "Builders clean" leads the title because it is the head term,
 // even though the slug is the menu's literal label. See the file header.
@@ -119,7 +120,7 @@ const hero = {
   kicker: 'Builders clean and construction site cleaning',
   headingLines: ['The last trade on site', 'is the one they remember.'],
   lead:
-    'Builders cleans and final detail cleans for new builds, renovations and fitouts across the Northern Rivers and the Tweed. Booked to your handover date, not to ours.',
+    `Builders cleans and final detail cleans for new builds, renovations and fitouts across the Northern Rivers and the Tweed. Booked to your handover date, not to ours. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -162,7 +163,7 @@ const silicaCallout = {
   heading: 'Dry sweeping construction dust is not cleaning. It is exposure.',
   body: [
     'The dust on a new build is not house dust. Cutting, grinding and even sweeping concrete, brick, tile, render and engineered stone puts respirable crystalline silica into the air, and it is fine enough to stay there for hours and small enough to reach the deepest part of the lung. It causes silicosis, and silicosis does not get better. Engineered stone benchtops were banned outright in Australia from 1 July 2024 because of it.',
-    'So a cleaner who turns up to a builders clean with a broom and a domestic vacuum is not being cheap, they are generating an exposure on your site and putting it in your incident history rather than theirs. The controls are not exotic: wet methods where the surface allows, an H-class vacuum with the right filtration rather than a shop vac, and respiratory protection worn properly. Ask any cleaner quoting your site which of those three they are bringing.',
+    'So a cleaner who turns up to a builders clean with a broom and a domestic vacuum is not saving you anything, they are generating an exposure on your site and putting it in your incident history rather than theirs. The controls are not exotic: wet methods where the surface allows, an H-class vacuum with the right filtration rather than a shop vac, and respiratory protection worn properly. Ask any cleaner quoting your site which of those three they are bringing.',
   ],
 };
 
@@ -319,7 +320,7 @@ const brandedFaqItems = [
     question: 'Do you take the rubbish away?',
     answer:
       // ⚠️ Same bracket as §4 stage one.
-      'Debris and packaging get cleared and bagged as part of the clean. Taking it off site is [included / a separate line with a tip fee. Confirm], because it needs a vehicle and a disposal cost rather than just labour. Bins on site make it cheaper for everyone, so if there is still a skip when we arrive, say so.',
+      'Debris and packaging get cleared and bagged as part of the clean. Taking it off site is [included / a separate line with a tip fee. Confirm], because it needs a vehicle and a disposal cost rather than just labour. Bins on site cost everyone less, so if there is still a skip when we arrive, say so.',
   },
   {
     question: 'What about the windows?',
@@ -474,6 +475,23 @@ const business = commercialBusiness(pageMeta.description);
       subheading="Across the Northern Rivers and the Tweed."
       groups={nswLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

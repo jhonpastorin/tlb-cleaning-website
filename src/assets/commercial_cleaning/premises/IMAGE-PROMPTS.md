@@ -49,9 +49,19 @@ once.** Every prompt here opens with "One woman in a plain aqua polo…", and
 34 frames out of 34 came back as women except
 `factory-wash-down-of-stainless-production-equipment`, which came back as a
 man and shipped that way until a visual review caught it. It matters because
-TLB's brand story is a team of local mothers (Brand Foundation §1.1, §1.3),
-so a single male frame in a 34-image library reads as a stock photo rather
-than as the team. Nothing in `astro check` or the build will catch this —
+a single odd frame in a 34-image library reads as a stock photo rather than
+as the team, and §12.2 of the Brand Foundation forbids "stock imagery
+presented as our own work".
+
+⚠️ UPDATED for Brand Foundation v2.0 (September 2026). This note used to
+justify the instruction as "TLB's brand story is a team of local mothers
+(Brand Foundation §1.1, §1.3)". That is no longer the positioning: v2.0
+§3.1 is "local and embedded, professionally run", and §2.2 confines the
+mother-led story to the about page, the team section, social and
+recruitment. The reason to keep the prompts consistent is now CONSISTENCY
+itself, not the workforce claim. Most of the TLB team are women and the
+frames should keep reflecting the real team, but do not brief new imagery
+as though "local mums" were the proposition. Nothing in `astro check` or the build will catch this —
 only looking at the picture will.
 
 The regenerated prompt front-loads the gender three times and adds an

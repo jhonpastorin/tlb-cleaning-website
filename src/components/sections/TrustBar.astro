@@ -35,9 +35,14 @@ interface Props {
   items?: string[];
   /** card only: icon + bold title + supporting line per item. */
   cards?: TrustCard[];
+  /** card only: the ground below the hero's edge. Default `muted` (Cream)
+   *  runs into a `muted` TextBlock with no seam; `plain` (Off White) is for
+   *  pages whose next section is a `light` one, where Cream would read as a
+   *  stray band instead of a continuation. */
+  surface?: 'muted' | 'plain';
 }
 
-const { variant = 'divided', items = [], cards = [] } = Astro.props;
+const { variant = 'divided', items = [], cards = [], surface = 'muted' } = Astro.props;
 
 // `card`'s desktop row is one 1fr column per cell, which is right for the
 // three proof points every page carried until now. The deep-cleaning brief
@@ -63,7 +68,7 @@ const cardsWrapFive = variant === 'card' && cards.length === 5;
 )}
 
 {variant === 'card' && (
-  <section class="trust-bar trust-bar--card" aria-label="Why choose us">
+  <section class:list={['trust-bar', 'trust-bar--card', surface === 'plain' && 'trust-bar--plain']} aria-label="Why choose us">
     <div class="container">
       <ul class:list={['trust-bar__card', cardsWrapFive && 'trust-bar__card--wrap-5']}>
         {cards.map((card) => (
@@ -179,6 +184,12 @@ const cardsWrapFive = variant === 'card' && cards.length === 5;
     position: relative;
     z-index: 1;
     margin-top: calc(-1 * var(--trust-bar-overlap));
+  }
+
+  /* Same hard-stop gradient, Off White below the hero's edge. Overrides only
+     the fill token so the overlap geometry above stays the single source. */
+  .trust-bar--plain {
+    --trust-bar-fill: var(--color-surface);
   }
 
   .trust-bar__card {

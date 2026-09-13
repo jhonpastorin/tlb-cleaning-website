@@ -24,8 +24,15 @@
 //     cancellation rules from the NDIS Pricing Arrangements, which are
 //     REISSUED ANNUALLY. Compliance read + "last reviewed" date required.
 //
-// Team size is NINE throughout, per TLB's ruling (the brief's §11 said
-// "[five]" while its own trust bar said 9).
+// ✅ NO TEAM SIZE IS STATED ANYWHERE ON THIS PAGE. This note used to read
+// "Team size is NINE throughout, per TLB's ruling (the brief's §11 said
+// '[five]' while its own trust bar said 9)". Brand Foundation v2.0 §2.4
+// settles it the other way: "Never claim that the team is employed
+// full-time. It is not accurate and it has been removed from all page copy."
+// The headcount went with it, since the disagreement between "five" and
+// "nine" was itself evidence the number was not confirmed. §2.4's guidance
+// where a figure is unconfirmed is to "use a process promise instead rather
+// than deleting the sentence", which is what the §11 story block now does.
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
@@ -69,6 +76,7 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 const pageMeta = {
   // Brief said "NDIS Cleaning Service |  TLB Cleaning" — singular, and with a
@@ -138,7 +146,7 @@ const business = {
 // that matters most.
 const hero = {
   headingLines: ['The same trusted local faces, treating your home with genuine care.'],
-  lead: 'Consistent, respectful in-home cleaning you can rely on. Experience the comfort of a safe environment, familiar local faces, and a completely stress-free schedule.',
+  lead: `Consistent, respectful in-home cleaning you can rely on. Experience the comfort of a safe environment, familiar local faces, and a completely stress-free schedule. ${theLine.instant}`,
   cta: quoteCta,
   image: {
     ratio: '1/1',
@@ -321,11 +329,15 @@ const whyChooseBlocks = [
   },
   {
     type: 'text' as const,
-    heading: 'The same familiar faces — not a call centre',
+    heading: 'The same familiar faces, every visit',
     body: [
       "You shouldn't have to explain your home to a stranger every fortnight.",
       "Wherever we can, you'll have the same cleaner each visit — someone who knows how you like things done and doesn't need to be told twice. If they're unwell or away, we'll let you know beforehand and send someone from our team who already knows your preferences.",
-      "We're a local team, not a national network routing your call through a head office somewhere else. When you ring us, you're talking to someone who lives here.",
+      // ✅ v2.0 §9.4 — was "not a national network routing your call through
+      // a head office somewhere else", which characterises a competitor in
+      // running text. The positive half of the sentence was always the
+      // stronger half; it now stands on its own.
+      "We're a local team, and there is one local number to ring. When you ring us, you're talking to someone who lives here.",
     ],
     tone: 'muted' as const,
   },
@@ -333,9 +345,21 @@ const whyChooseBlocks = [
     type: 'text' as const,
     heading: 'A real local business, and a real name behind it',
     body: [
-      // Team size is NINE per TLB's ruling — the brief said "[five]" here
-      // while its own trust bar said 9.
-      'TLB was started by Teagan, a local mum who wanted the job done properly. It grew from one person to a team of nine without a dollar spent on advertising — every client came from someone who had already been looked after.',
+      // ✅ RESOLVED (Brand Foundation v2.0) — was "TLB was started by Teagan,
+      // a local mum who wanted the job done properly. It grew from one person
+      // to a team of nine without a dollar spent on advertising".
+      //
+      // The headcount is gone: §2.4 removes it from all page copy. "A local
+      // mum" is gone from the sentence's positioning role: §2.2 allows the
+      // founder story on the about page, the team section, social and
+      // recruitment, and this is a service page.
+      //
+      // What survives is what §2.4 marks CONFIRMED — "Founded by Teagan
+      // Burke, Alstonville" and "Grown by word of mouth, without advertising"
+      // — plus §2.2's instruction on how to name her: credited as the
+      // founder, not fronted as the brand. Hence "TLB" and "our team" in the
+      // surrounding copy, and her full name stated once.
+      'TLB was started by Teagan Burke, an Alstonville local who wanted the job done properly. It grew from one person to a team across the region without a dollar spent on advertising, and every client came from someone who had already been looked after.',
       "Most of our team are local women. If you'd feel more comfortable with a woman in your home, tell us and we'll do our best to arrange it.",
       // ⚠️ Two visible brackets, per TLB's bracket convention. Both are
       // launch-blocking: worker vetting is a safety representation on a page
@@ -402,7 +426,7 @@ const brandedFaqItems = [
   {
     question: 'What makes TLB different from other cleaners doing NDIS work?',
     answer:
-      "We're the reliable middle: big enough to rely on, local enough to care. A proper local team with backup — not a call centre, and not one person who might not show.",
+      "A local team with backup. Big enough that your clean still happens when someone is unwell, and local enough that the person who comes knows you and knows the area.",
   },
   {
     question: "What if I'm not happy with the clean, or I want things done differently?",
@@ -549,6 +573,23 @@ const closingCta = {
         insurance, plan types accepted, worker consistency and cancellation
         terms. Write NDIS-specific rows or leave it out — an off-target
         table costs more credibility than it earns. */}
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `instant` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.instant}
+      body={[managedForYou.recurring, ...theLineBody.regular]}
+    />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
     <Faq heading="NDIS Cleaning FAQs" items={nonBrandedFaqItems} />

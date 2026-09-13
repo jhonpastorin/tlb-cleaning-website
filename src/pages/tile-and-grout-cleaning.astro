@@ -55,6 +55,7 @@ import heroImg from '../assets/home_cleaning/appliances/tile_and_grout/cleaner-s
 import cardBathroomImg from '../assets/home_cleaning/appliances/tile_and_grout/bathroom-floor-tiles-and-grout-lines.jpg';
 import cardQuoteImg from '../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
 import cardTeamImg from '../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
+import { whoIsInYourHomeCard } from '../data/whoIsInYourHome';
 import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 import type { TextBlockBody } from '../components/sections/TextBlock.astro';
@@ -71,6 +72,7 @@ import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { locationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { otherApplianceServices } from '../data/appliance-services';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 const OWN_HREF = '/tile-and-grout-cleaning/';
 
@@ -103,7 +105,7 @@ const hero = {
   kicker: 'Tile and grout cleaning',
   headingLines: ['The tiles are fine. It is the lines between them.'],
   lead:
-    'Tile and grout cleaning for bathrooms, kitchens and floors across the Northern Rivers and the Tweed. We will tell you how far it will come back before we start.',
+    `Tile and grout cleaning for bathrooms, kitchens and floors across the Northern Rivers and the Tweed. We will tell you how far it will come back before we start. ${theLine.fast}`,
   cta: { label: 'Get an instant quote', href: quoteCta.href },
   image: {
     ratio: '1/1',
@@ -143,21 +145,10 @@ const pathwayCards = {
       },
       title: 'We are selling or the inspection is coming',
       description:
-        'Grout is one of the first things an agent, a buyer or a property manager looks at, because it reads as how the whole place has been kept. It is also one of the cheapest things to fix before a photo shoot.',
+        'Grout is one of the first things an agent, a buyer or a property manager looks at, because it reads as how the whole place has been kept. It is also one of the least expensive things to fix before a photo shoot.',
       cta: { label: 'End of lease cleaning', href: '/end-of-lease-cleaning/' },
     },
-    {
-      number: 3,
-      image: {
-        ratio: '4/3',
-        label: 'A TLB cleaner in uniform with her caddy in the entry hall of a home',
-        src: cardTeamImg,
-      },
-      title: 'I want to know who is in my home',
-      description:
-        'The same local team you have met, not a roster of strangers from a call centre. We are local mums who clean where we live, [insured] and [police-checked], and there is one local number to ring.',
-      cta: { label: 'Why TLB', href: '/why-tlb/' },
-    },
+    whoIsInYourHomeCard(cardTeamImg),
   ],
 };
 
@@ -409,6 +400,23 @@ const closingCta = {
       subheading="Across the Northern Rivers and the Southern Gold Coast."
       groups={locationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
     <Faq heading="Frequently asked questions" items={brandedFaqItems} />

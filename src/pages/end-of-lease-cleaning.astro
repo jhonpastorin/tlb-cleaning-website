@@ -4,7 +4,7 @@
 // PROVENANCE, AND WHY IT MATTERS HERE. Every other page in this repo was
 // built from a supplied content brief with approved copy. This one was NOT.
 // There is no end-of-lease brief. The copy below is DRAFTED from
-// "TLB Cleaning - Brand Foundation.md" (the BFD), which is a brand and voice
+// "TLB Cleaning - Brand Foundation v2.0.md" (the BFD), which is a brand and voice
 // document, not a content brief. So:
 //
 //   * Voice, terminology, CTA wording, the claim rules and the compliance
@@ -109,6 +109,7 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // Section 0. Page metadata.
 //
@@ -152,7 +153,7 @@ const business = {
 // honest version of the promise a competitor makes with a guarantee badge.
 const hero = {
   headingLines: ['Cleaned to the standard the inspection measures'],
-  lead: 'Bond cleans for tenants, and end of lease cleans for the agencies that manage the property. Both sides of the border, quoted before we start, with the task list published on this page.',
+  lead: `Bond cleans for tenants, and end of lease cleans for the agencies that manage the property. Both sides of the border, quoted before we start, with the task list published on this page. ${theLine.fast}`,
   cta: quoteCta,
   image: {
     // 1/1, like the mould page and for the same reason: the panel is a
@@ -460,7 +461,7 @@ const comparisonTable = {
     },
   ],
   footnote:
-    'A bond clean is the most thorough of the three and priced accordingly, because it has to satisfy someone else’s checklist rather than your own. Book it for an empty property wherever you can. It is faster, cheaper and better when there is nothing left to clean around.',
+    'A bond clean is the most thorough of the three and priced accordingly, because it has to satisfy someone else’s checklist rather than your own. Book it for an empty property wherever you can. It is faster, costs less and comes out better when there is nothing left to clean around.',
 };
 
 // Section 9. Credibility signals.
@@ -757,6 +758,23 @@ const closingCta = {
       subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
       groups={locationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.oneOff, ...theLineBody.condition]}
     />
 
     <Faq heading="Frequently asked questions" items={faqItems} />

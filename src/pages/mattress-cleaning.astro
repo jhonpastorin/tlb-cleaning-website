@@ -63,6 +63,7 @@ import heroImg from '../assets/home_cleaning/appliances/mattress/cleaner-cleanin
 import cardBedImg from '../assets/home_cleaning/appliances/mattress/stripped-bed-ready-for-mattress-cleaning.jpg';
 import cardQuoteImg from '../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
 import cardTeamImg from '../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
+import { whoIsInYourHomeCard } from '../data/whoIsInYourHome';
 import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 import type { TextBlockBody } from '../components/sections/TextBlock.astro';
@@ -79,6 +80,7 @@ import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { locationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { otherApplianceServices } from '../data/appliance-services';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 const OWN_HREF = '/mattress-cleaning/';
 
@@ -113,7 +115,7 @@ const hero = {
   kicker: 'Mattress cleaning',
   headingLines: ['You wash the sheets every week. The mattress, never.'],
   lead:
-    'Mattress cleaning in your home across the Northern Rivers and the Tweed. A low moisture clean, done in the morning, dry in time for bed.',
+    `Mattress cleaning in your home across the Northern Rivers and the Tweed. A low moisture clean, done in the morning, dry in time for bed. ${theLine.fast}`,
   cta: { label: 'Get an instant quote', href: quoteCta.href },
   image: {
     ratio: '1/1',
@@ -156,18 +158,7 @@ const pathwayCards = {
         'A wet bed, a sick child, a spilled drink. Fresh is far better than dry, so ring us sooner rather than after it has set. We will be straight with you about how deep it has gone.',
       cta: { label: 'Talk to us', href: '/contact/' },
     },
-    {
-      number: 3,
-      image: {
-        ratio: '4/3',
-        label: 'A TLB cleaner in uniform with her caddy in the entry hall of a home',
-        src: cardTeamImg,
-      },
-      title: 'I want to know who is in my home',
-      description:
-        'The same local team you have met, not a roster of strangers from a call centre. We are local mums who clean where we live, [insured] and [police-checked], and there is one local number to ring.',
-      cta: { label: 'Why TLB', href: '/why-tlb/' },
-    },
+    whoIsInYourHomeCard(cardTeamImg),
   ],
 };
 
@@ -316,7 +307,7 @@ const nonBrandedFaqItems = [
   {
     question: 'Is it worth cleaning an old mattress?',
     answer:
-      'It depends on what is left of it. If the mattress still supports you properly and has a few years in it, a clean is a cheap way to make it pleasant again. If it sags in the middle, has broken down at the edges or has been soaked through at some point, cleaning it is money spent on something that needs replacing.',
+      'It depends on what is left of it. If the mattress still supports you properly and has a few years in it, a clean is an inexpensive way to make it pleasant again. If it sags in the middle, has broken down at the edges or has been soaked through at some point, cleaning it is money spent on something that needs replacing.',
   },
   {
     question: 'How much does mattress cleaning cost?',
@@ -406,6 +397,23 @@ const closingCta = {
       subheading="Across the Northern Rivers and the Southern Gold Coast."
       groups={locationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
     <Faq heading="Frequently asked questions" items={brandedFaqItems} />

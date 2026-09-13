@@ -76,6 +76,7 @@ import {
 import { nswLocationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. "Strata cleaning" is the head term people actually search;
 // "common area cleaning" is the phrase committees and managers use in their
@@ -101,7 +102,7 @@ const hero = {
   kicker: 'Strata and common area cleaning',
   headingLines: ['The first thing an owner sees', 'is the front door.'],
   lead:
-    'Common area cleaning for apartment blocks, townhouse complexes and mixed-use buildings across the Northern Rivers and the Tweed. A written schedule, the same cleaner each week, and a record the committee can actually read.',
+    `Common area cleaning for apartment blocks, townhouse complexes and mixed-use buildings across the Northern Rivers and the Tweed. A written schedule, the same cleaner each week, and a record the committee can actually read. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -141,7 +142,7 @@ const areaItems = [
     icon: 'office' as const,
     title: 'Lifts, stairwells and landings',
     description:
-      'Lift floors, walls and the stainless doors and buttons, stair treads and risers, handrails, and the glass balustrades that show every fingerprint. Landings get the corners and the skirtings, which is where a cheap scope stops.',
+      'Lift floors, walls and the stainless doors and buttons, stair treads and risers, handrails, and the glass balustrades that show every fingerprint. Landings get the corners and the skirtings, which is where a thin scope stops.',
     href: '/commercial-cleaning/',
   },
   {
@@ -320,7 +321,7 @@ const brandedFaqItems = [
   {
     question: 'Do you use subcontractors?',
     answer:
-      'No. Our nine cleaners are employed by TLB and paid to the Cleaning Services Award, which matters more in strata than almost anywhere else: a subcontracted chain is how a building ends up with a different person in its stairwell every week and no clear answer about who is insured. You get the same cleaner, and we can tell you their name.',
+      'No. Our cleaners are employed by TLB and paid to the Cleaning Services Award, which matters more in strata than almost anywhere else, because it is what keeps one clear answer about who attends your building and who is insured. You get the same cleaner, and we can tell you their name.',
   },
   {
     question: 'What if a resident asks our cleaner to do something extra?',
@@ -483,6 +484,23 @@ const business = commercialBusiness(pageMeta.description);
       subheading="Across the Northern Rivers and the Tweed."
       groups={nswLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

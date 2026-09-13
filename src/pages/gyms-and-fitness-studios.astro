@@ -75,6 +75,7 @@ import {
 import { nswLocationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. "Gym cleaning" leads because it is the head term; studios are
 // named because a boutique studio owner does not think of their space as a
@@ -96,7 +97,7 @@ const hero = {
   kicker: 'Gym and fitness studio cleaning',
   headingLines: ['Members do not cancel', 'over the equipment.'],
   lead:
-    'Cleaning for gyms, studios and 24/7 access clubs across the Northern Rivers and the Tweed. Equipment, mats, rubber floors and change rooms, on a scope written for a room people sweat in.',
+    `Cleaning for gyms, studios and 24/7 access clubs across the Northern Rivers and the Tweed. Equipment, mats, rubber floors and change rooms, on a scope written for a room people sweat in. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -450,6 +451,23 @@ const business = commercialBusiness(pageMeta.description);
       subheading="Across the Northern Rivers and the Tweed."
       groups={nswLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

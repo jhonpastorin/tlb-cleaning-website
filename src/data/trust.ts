@@ -1,4 +1,4 @@
-// The five trust-bar proof points — the substance of the Dark Teal card that
+// The four trust-bar proof points — the substance of the Dark Teal card that
 // overlaps the hero on every page.
 //
 // Extracted here once the same five points had been copied verbatim into
@@ -19,6 +19,15 @@
 // brief so they ship — confirm both are real and current. Now ONE fix, here,
 // serves every page.
 //
+// ⚠️ Was five. "Holiday lets / Cleaning five-star holiday lets across the
+// region" was dropped by request so the card lays out on ONE row: at exactly
+// five, TrustBar's `card` variant switches to its 3-over-2 wrap; at four it
+// uses the default one-column-per-cell row, so this is a data change with no
+// component change behind it. That wrap-5 path now has no caller — leave it,
+// it is the component's documented rule for five, not dead page code. The
+// holiday-let proposition still has its own page (/airbnb-cleaning/) and its
+// own row in the homepage's "What we do", so nothing about it is now unsaid.
+//
 // ⚠️ Two proof points were LOST bringing the older pages across, because the
 // section is now identical everywhere by request:
 //   - ndis-cleaning's "NDIS aligned / Bound by the NDIS Code of Conduct"
@@ -27,9 +36,9 @@
 // The NDIS one is the one that matters: it was the only place on that page
 // stating the Code of Conduct, which is the trust signal a participant or
 // support coordinator looks for. If it should stay, the answer is a
-// page-specific sixth point appended to this array at the call site, not a
-// second divergent set — TrustBar's `card` variant only has a laid-out rule
-// for five, so a sixth needs a component change first.
+// page-specific fifth point appended to this array at the call site, not a
+// second divergent set — but note that a fifth trips the 3-over-2 wrap and
+// gives that page a two-row card, which is the shape just removed here.
 import type { TrustBarIconName } from '../components/sections/TrustBar.astro';
 
 export const trustBarCards: { icon: TrustBarIconName; title: string; description: string }[] = [
@@ -42,11 +51,6 @@ export const trustBarCards: { icon: TrustBarIconName; title: string; description
     icon: 'shield-check',
     title: 'They stay',
     description: '98% of our clients stay with us',
-  },
-  {
-    icon: 'sparkle',
-    title: 'Holiday lets',
-    description: 'Cleaning five-star holiday lets across the region',
   },
   {
     icon: 'building',

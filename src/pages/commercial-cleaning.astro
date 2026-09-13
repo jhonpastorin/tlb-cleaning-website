@@ -70,6 +70,7 @@ import {
 import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { nswLocationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 const pageMeta = {
   // Brief said "Commercial Cleaning Service |  TLB Cleaning" — singular, and
@@ -157,7 +158,7 @@ const business = {
 const hero = {
   kicker: 'Commercial cleaning',
   headingLines: ['Cleaning should not be one of your jobs.'],
-  lead: 'Ongoing office and commercial cleaning across the Northern Rivers and the Tweed. We agree the scope in writing, then you stop thinking about it.',
+  lead: `Ongoing office and commercial cleaning across the Northern Rivers and the Tweed. We agree the scope in writing, then you stop thinking about it. ${theLine.fast}`,
   cta: { label: 'Book a site walkthrough', href: quoteCta.href },
   image: {
     ratio: '1/1',
@@ -260,7 +261,7 @@ const pathwayCards = {
         // this page tells readers to ask providers which checks their team
         // hold, so leaving TLB's own answer unresolved is worse here than on
         // a page that never raised the question.
-        'The same small team you have met, in TLB uniform. Never a roster of strangers sent out by a call centre. We are a local business, [insured] and [police-checked], and there is one local number to ring if something is not right.',
+        'The same small team each visit, in TLB uniform, and you can meet them before the first one. We are a local business, [insured] and [police-checked], and there is one local number to ring if something is not right.',
       cta: { label: 'Why TLB', href: '/why-tlb/' },
     },
   ],
@@ -449,7 +450,7 @@ const brandedFaqItems = [
   {
     question: 'Who is actually in our building after hours?',
     answer:
-      'The same small team you have met, in TLB uniform. Never a roster of strangers sent out by a call centre. You will know their names, and there is one local number to ring if something is not right.',
+      'The same small team each visit, in TLB uniform, and you can meet them before the first one. You will know their names, and there is one local number to ring if something is not right.',
   },
   {
     question: 'We have used a big cleaning company before. What is different here?',
@@ -637,6 +638,23 @@ const closingCta = {
       subheading="Across the Northern Rivers and the Tweed."
       groups={nswLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

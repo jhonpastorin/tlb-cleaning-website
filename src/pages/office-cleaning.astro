@@ -89,6 +89,7 @@ import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { nswLocationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. Focus keyword leads the title, matching the hub's pattern and
 // both commercial service pages.
@@ -126,7 +127,7 @@ const hero = {
   kicker: 'Office cleaning',
   headingLines: ['Your team should walk in', 'to a finished office.'],
   lead:
-    'Office cleaning across the Northern Rivers and the Tweed, done after you leave. The same local cleaner every week, a scope you can hold us to, and one number to ring.',
+    `Office cleaning across the Northern Rivers and the Tweed, done after you leave. The same local cleaner every week, a scope you can hold us to, and one number to ring. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -192,7 +193,7 @@ const pathwayCards = {
       description:
         // ⚠️ Two brackets, both inherited from the hub. Same answer fixes
         // every page in the cluster.
-        'The same person you have met, in TLB uniform, not a roster of strangers sent out by a call centre. We are a local business, [insured] and [police-checked], and if something is not right you ring a local number and get a local answer.',
+        'The same person each visit, in TLB uniform, and you can meet them before the first one. We are a local business, [insured] and [police-checked], and if something is not right you ring a local number and get a local answer.',
       cta: { label: 'Why TLB', href: '/why-tlb/' },
     },
   ],
@@ -226,7 +227,7 @@ const scopeItems = [
     icon: 'spray-bottle' as const,
     title: 'Every visit: the touch points',
     description:
-      'Door handles, light switches, lift buttons, rails, shared desk edges and the fridge and microwave handles. These take five minutes and they are the first thing to disappear from a cheap scope, because nobody notices them being skipped.',
+      'Door handles, light switches, lift buttons, rails, shared desk edges and the fridge and microwave handles. These take five minutes and they are the first thing to disappear from a thin scope, because nobody notices them being skipped.',
   },
   {
     icon: 'target' as const,
@@ -281,8 +282,8 @@ const hourlyCallout = {
 // every 1 July and an undated specific goes stale silently. Recommended
 // before launch: a visible "last reviewed" date on this block.
 const worthKnowingBody: TextBlockBody[] = [
-  'The cheapest office quote in your inbox is usually cheap for one of three reasons, and none of them are efficiency. Either the scope is thinner than the one you asked for, or the hours are shorter than the work takes, or the person doing it is not being paid the Cleaning Services Award. The first two you find out about in a month. The third one is the one that can land on you.',
-  'Cleaning is one of the most commonly underpaid trades in the country, and it is the reason a subcontracted model can quote a number an employer cannot match. If the cleaner in your office is not a legitimate employee, your business is exposed to that in ways an office manager should not have to think about. Our nine cleaners are employed by TLB, paid to the Award, and covered by our insurance. That is what the price reflects.',
+  'An office quote can come in well under the others for one of three reasons, and none of them is efficiency. Either the scope is thinner than the one you asked for, or the hours are shorter than the work takes, or the person doing it is not being paid the Cleaning Services Award. The first two you find out about in a month. The third one is the one that can land on you.',
+  'Cleaning is one of the most commonly underpaid trades in the country, which is why it is worth asking any quote how the number is built. If the cleaner in your office is not a legitimate employee, your business is exposed to that in ways an office manager should not have to think about. Our cleaners are employed by TLB, paid to the Award, and covered by our insurance. That is what the price reflects.',
 ];
 
 // §7 Related pages. The other twelve premises types, the two commercial
@@ -414,9 +415,9 @@ const nonBrandedFaqItems = [
       'Yes, and you should ask to see the certificate rather than take the word for it. Public liability cover is what protects your business if a cleaner damages equipment or a third party is injured on your premises, and most commercial leases and building managers require it of any contractor working on site. Ask for the currency date too, since a certificate that expired last year is worth nothing.',
   },
   {
-    question: 'Is it cheaper to hire a cleaner directly?',
+    question: 'Does it cost less to hire a cleaner directly?',
     answer:
-      'It looks cheaper and it usually is not, once you count what comes with being an employer: superannuation, leave, workers compensation, Award rates and penalty rates, plus equipment, products and cover when they are sick. A contracted cleaning business absorbs all of that and turns up regardless. Direct hire makes sense at the point where you need someone on site all day, every day.',
+      'It looks like less and it usually is not, once you count what comes with being an employer: superannuation, leave, workers compensation, Award rates and penalty rates, plus equipment, products and cover when they are sick. A contracted cleaning business absorbs all of that and turns up regardless. Direct hire makes sense at the point where you need someone on site all day, every day.',
   },
   {
     question: 'What is the difference between office cleaning and commercial cleaning?',
@@ -480,7 +481,7 @@ const business = commercialBusiness(pageMeta.description);
     <TextBlock
       theme="dark"
       align="left"
-      heading="Why the cheapest office quote is the expensive one"
+      heading="What sits behind the number on an office quote"
       body={worthKnowingBody}
     />
 
@@ -519,6 +520,23 @@ const business = commercialBusiness(pageMeta.description);
       subheading="Across the Northern Rivers and the Tweed."
       groups={nswLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
+    />
+
+    {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
+        The copy, and the reason this page gets `fast` rather than the other
+        variant, both live in data/brand-lines.ts. Change it there, not here.
+
+        `muted`, not `dark`: TagCloud above paints --color-brand and Faq below
+        paints --color-surface, so Cream between them keeps the page
+        alternating instead of stacking two dark bands.
+
+        No CTA prop. §9.5 wants one primary CTA per page, repeated, and the
+        closing CallToAction is directly under the FAQs. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={theLineHeading.fast}
+      body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
