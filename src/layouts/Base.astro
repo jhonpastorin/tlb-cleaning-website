@@ -80,7 +80,18 @@ const jsonLd = {
     {ogImage && <meta name="twitter:image" content={ogImage} />}
 
     <meta name="theme-color" content="#234B51" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {/* Favicon set lives in public/ and is served from the site root. The
+        .ico carries the legacy/desktop sizes; the PNGs are what modern
+        browsers actually pick, and apple-touch-icon is the iOS home screen.
+        No .svg in the set — the one that used to sit here was the previous
+        brand's placeholder mark. */}
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-48x48.png" type="image/png" sizes="48x48" />
+    <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href={poppinsBoldWoff2} as="font" type="font/woff2" crossorigin />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
