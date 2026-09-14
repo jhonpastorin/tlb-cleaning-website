@@ -8,7 +8,11 @@
 // Page-specific content still lives in each page file — only the chrome
 // every page repeats lives here.
 import type { MegaMenuGroup, MegaMenuNavItem, NavItem, ButtonData } from './types';
-import { northernRiversTowns, tweedTowns, southernGoldCoastTowns, townSlug } from './locations';
+import {
+  visibleNorthernRiversTowns,
+  visibleSouthernGoldCoastTowns,
+  townSlug,
+} from './locations';
 
 // The one quote CTA used by the header, both heroes, and the closing CTA
 // blocks. href guessed — no booking/quote URL given, confirm before launch.
@@ -92,8 +96,8 @@ export const primaryNav: NavItem[] = [
 // stays services-only, reusing whatWeDoItems' already-real hrefs instead.
 //
 // Home Cleaning and Commercial each carry a `megaMenu` transcribed from the
-// "IA & Menu" content roadmap sheet; Areas we clean now builds its columns
-// from locations.ts instead (see regionColumns above) — Level A = the
+// "IA & Menu" content roadmap sheet; Areas we clean builds its columns from
+// a curated subset of locations.ts (see regionColumns below) — Level A = the
 // item itself, Level B = its children, [bracketed] rows = non-clickable
 // group labels (no `label` maps to no `href`, matching MegaMenuGroup).
 // None of the sheet's hrefs were specified; every child slug below is a
@@ -109,20 +113,25 @@ export const primaryNav: NavItem[] = [
 // that one is commercial cleaning of aged-care premises, this is regular
 // domestic cleaning for older clients at home (Home Care Packages, DVA).
 // /senior-home-cleaning/ currently has no mega-menu entry of its own.
-// "Areas we clean" mega-menu columns, built from the same town lists the
-// homepage's "Where we clean" TagCloud renders (src/data/locations.ts) —
-// previously this menu carried its own hand-typed 15-town subset from the
-// "IA & Menu" sheet, which is exactly the drift locations.ts was extracted
-// to end. The menu now IS the homepage list, so there is one place to edit
-// a town.
+
+// "Areas we clean" mega-menu columns.
 //
-// 56 towns in one row of columns would be either six columns wide or thirty
-// rows tall, so each region's list is split across at most REGION_COL_ROWS
-// rows per column, balanced so the columns of a region are within one row
-// of each other. Only a region's FIRST column carries the region label —
-// MegaMenuGroup makes `label` optional precisely so a continuation column
-// can render as a bare list under the heading above it. That lands the
-// panel at four columns, the same width Home Cleaning's already runs.
+// The curated town list this menu shows now lives in locations.ts
+// (`visibleNorthernRiversTowns` / `visibleSouthernGoldCoastTowns`) rather than
+// here, because the /locations/ hub and every page's "Where we clean" band
+// hide the same towns — one subset, one place to edit. That file's own header
+// explains what is hidden, what is merely unlinked, and how to un-hide it.
+//
+// Region headings are the client's exact wording ("Northern Rivers NSW",
+// "Southern Gold Coast QLD") and come through locations.ts' groups too, so the
+// menu and the hub cannot label the same region differently.
+// Kept from when this menu rendered all 56 towns: each region's list is split
+// across at most REGION_COL_ROWS rows per column, balanced so the columns of a
+// region are within one row of each other. Only a region's FIRST column
+// carries the region label — MegaMenuGroup makes `label` optional precisely so
+// a continuation column can render as a bare list under the heading above it.
+// With the curated list every region fits one column, but the split stays so
+// restoring towns doesn't also mean restoring the layout logic.
 const REGION_COL_ROWS = 20;
 
 // Towns only: the region itself is the column heading, not a link. The
@@ -217,16 +226,11 @@ export const headerNav: MegaMenuNavItem[] = [
   {
     label: 'Areas we clean',
     href: '/locations/',
-    // Reconciled: this menu used to run the "IA & Menu" sheet's 15-town
-    // subset while the homepage ran locations.ts' 56 towns in three regions.
-    // The homepage list wins — it's the fuller one, it already covers every
-    // town the sheet listed (Evans Head and Casino included), and it's what
-    // the "Where we clean" section on every page renders. Nothing was
-    // dropped; the sheet's list is superseded rather than merged.
+    // Shows the curated subset from locations.ts, not the full town list.
+    // Every hidden town keeps its page; it just isn't linked from anywhere.
     megaMenu: [
-      ...regionColumns('Northern Rivers', northernRiversTowns),
-      ...regionColumns('The Tweed', tweedTowns),
-      ...regionColumns('Southern Gold Coast', southernGoldCoastTowns),
+      ...regionColumns('Northern Rivers NSW', visibleNorthernRiversTowns),
+      ...regionColumns('Southern Gold Coast QLD', visibleSouthernGoldCoastTowns),
     ],
   },
   {
