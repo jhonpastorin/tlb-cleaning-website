@@ -90,22 +90,75 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, managedForYou } from '../data/brand-lines';
+import { theLine, theLineHeading } from '../data/brand-lines';
 
 // §0 Page metadata. Title and description both drafted in the brief and
 // shipping verbatim — the description that used to be a placeholder here is
 // now real copy (see the file header).
 const pageMeta = {
   title: 'House Deep Cleaning Services - One-Off | TLB Cleaning',
+  // ⚠️ REWRITTEN 14 Sep 2026 (copy review). Three jobs in one 146-character
+  // line: it carries the standing geo phrase "across the Northern Rivers and
+  // the Tweed" verbatim, it comes in under 150, and it puts the mapped
+  // primary `house deep cleaning services` into a meta description for the
+  // first time (the old one contained the primary nowhere).
+  //
+  // ⚠️ The geo phrase stops at the Tweed, so the Queensland side of the
+  // footprint is absent HERE while the hero, the body and the town list all
+  // carry it. That is a deliberate trade against the 150-character limit.
+  // When the same standing rule reaches the Coolangatta, Palm Beach and
+  // Burleigh Heads rows it will read oddly there and those rows likely need
+  // an exception.
   description:
-    'A one-off deep clean that resets the whole house, room by room, across the Northern Rivers and the Tweed. Published task list, quoted before we start.',
+    'House deep cleaning services across the Northern Rivers and the Tweed. A one-off, room-by-room reset. Published task list, quoted before we start.',
   // Domain still a placeholder, same as the other pages — confirm before launch.
-  canonical: 'https://example.com/deep-cleaning/',
+  canonical: 'https://tlbcleaning.com.au/deep-cleaning/',
 };
+
+// ⚠️ PAGE-LOCAL CTA LABEL. The shared `quoteCta` still reads "Get an instant
+// quote" everywhere, and on THIS page that contradicted the sentence next to
+// it: the hero lead, the §10 heading and the booking copy all say quoting is
+// fast, not instant, because BFD §13.2 names deep cleans as work instant
+// pricing works badly for. The button was the last thing still saying
+// "instant".
+//
+// Overridden here rather than in navigation.ts because that export serves
+// every page, including the genuinely instant-priceable ones. The site-wide
+// split is still the Phase 2.3 / step 7 job in WEBSITE-UPDATE-PLAN-BFD-V2.md
+// — this is the deep-clean page taking its own half of it early. `href` is
+// unchanged, so it routes exactly where it did.
+//
+// Header and footer chrome keep the shared label deliberately: that is site
+// navigation, not this page's argument.
+const pageQuoteCta = { ...quoteCta, label: 'Get a fast quote' };
+
+// TRUST BAR: the shared `trustBarCards` from data/trust.ts, same as the other
+// fifty pages. Rendered directly below — this page holds no local set.
+//
+// ── REMOVED by request (September 2026) ───────────────────────────────────
+//
+// This page used to be the ONLY one of fifty-one running a page-local trust
+// bar. It replaced the four shared cards with four process promises ("Set day,
+// set team", "Told first" and so on) to avoid the two unsourced figures the
+// shared set carries: "98% of our clients stay with us" and "Over 100 local
+// homes, hosts and businesses".
+//
+// The reasoning was sound and is worth keeping on the record, because the
+// underlying issue has NOT gone away. BFD §2.4 marks three of the four shared
+// cards "Confirm", and those two numbers are exactly what a competitor or the
+// ACCC can ask TLB to substantiate. What the override got wrong was the
+// SCOPE: one page quietly telling a different story about the same business
+// is a worse problem than the one it solved, and it is the same divergence
+// data/trust.ts was extracted to end (see its own header).
+//
+// ⚠️ SO THE OPEN QUESTION MOVED, IT DID NOT CLOSE. If those two figures
+// cannot be verified, the fix belongs in data/trust.ts where it reaches all
+// fifty-one pages at once — not here. The process-promise wording is in git
+// history if it is wanted as the site-wide replacement.
 
 const business = {
   name: 'TLB Cleaning',
-  url: 'https://example.com/',
+  url: 'https://tlbcleaning.com.au/',
   logo: '',
   telephone: '',
   email: '',
@@ -134,10 +187,15 @@ const business = {
 //
 // CTA sits here, not on §2's TextBlock: Hero.astro's `cta` prop is required.
 // Same ruling as house-cleaning.astro.
+// ⚠️ H1 gained one word, 14 Sep 2026. "One clean to reset the whole house"
+// carried none of the mapped primary; "One deep clean" fixes that without
+// touching the rhythm or the meaning. The lead now names the service and the
+// region in its first sentence and picks up `move in cleaning`, with the
+// emotional hook and The Line both intact behind it.
 const hero = {
-  headingLines: ['One clean to reset the whole house'],
-  lead: `Before the guests arrive, after the party, when you move in, or when it's just got away from you. ${theLine.fast}`,
-  cta: quoteCta,
+  headingLines: ['One deep clean to reset the whole house'],
+  lead: `A one-off deep clean across the Northern Rivers, the Tweed and the Southern Gold Coast. Before the guests arrive, when you move in, or when it's just got away from you. ${theLine.fast}`,
+  cta: pageQuoteCta,
   image: {
     ratio: '16/9',
     label:
@@ -149,8 +207,12 @@ const hero = {
 // §2 Definition paragraph — unchanged between the two briefs. The
 // answer-target block for `house deep cleaning services`; stays the first
 // prose after the hero.
+// The middle sentence was added 14 Sep 2026. It absorbs three variants the
+// page had no coverage for at all — `once off house cleaning`, `one off
+// cleaning` and `move in cleaning` — and it does it the way a person
+// clarifying would, rather than as a list of search terms.
 const definitionBody: TextBlockBody[] = [
-  "A deep clean is a one-off, room-by-room reset that covers the detail work a regular clean doesn't reach. TLB Cleaning provides house deep cleaning services across the Northern Rivers, the Tweed and the Southern Gold Coast.",
+  "A deep clean is a one-off, room-by-room reset that covers the detail work a regular clean doesn't reach. Some people call it a once-off clean or a move in clean, and it's the same job. TLB Cleaning provides house deep cleaning services across the Northern Rivers, the Tweed and the Southern Gold Coast.",
 ];
 
 // §3 Situation cards — copy verbatim, split into title (the opening
@@ -271,11 +333,21 @@ const inclusionBlocks = [
 // client didn't expect is the complaint that actually happens. The FAQ "What
 // isn't included in a deep clean?" restates this list, so the two have to be
 // settled together and kept in step.
+// The third line and the CTA were added 14 Sep 2026. `deep cleaning
+// checklist` is 170/mo with an AI Overview firing, and the guide it points at
+// has almost nothing linking to it.
+//
+// The link runs through Callout's existing `cta` prop rather than inline
+// markup: Callout renders each body string inside <p>{paragraph}</p>, so
+// Astro escapes any HTML in it. The anchor text still carries the phrase,
+// which is the part that matters, and no component changed to get it.
 const exclusionsCallout = {
   body: [
     'Quoted separately: inside the oven, carpet steam cleaning, exterior windows, blinds, inside the fridge, cleaning at height.',
     'Not included: dishes, laundry, tidying or organising belongings.',
+    'Want it as something you can print and tick off before we arrive? The full deep cleaning checklist is in our guide.',
   ],
+  cta: { label: 'The deep cleaning checklist', href: '/guides/what-is-included-in-a-deep-clean/' },
 };
 
 // §6 When people book one — the same six occasions as the first brief, under
@@ -288,9 +360,14 @@ const exclusionsCallout = {
 // into one run-on line.
 const momentsBlocks = [
   {
+    // Second sentence added 14 Sep 2026. `move in cleaning` is 290/mo and the
+    // page had no coverage of it; naming the term here also does the tile's
+    // emotional work, which a keyword insertion usually cannot.
     type: 'text' as const,
     heading: 'Moving in',
-    body: ["Before the furniture, while the place is empty and it's easy."],
+    body: [
+      "Before the furniture goes in, while the place is empty and it's easy. A move in clean takes someone else's house back to a baseline before it becomes yours.",
+    ],
   },
   {
     type: 'text' as const,
@@ -301,7 +378,9 @@ const momentsBlocks = [
   {
     type: 'text' as const,
     heading: 'Before it goes to market',
-    body: ['Photos, open homes and first impressions.'],
+    // Extended 14 Sep 2026, to give this tile the same concreteness as the
+    // others around it.
+    body: ["Photos, open homes and first impressions, and the detail an agent's camera picks up."],
   },
   {
     type: 'text' as const,
@@ -452,8 +531,13 @@ const beforeAfterPairs: BeforeAfterPair[] = [
 // §9 Hero video — reserved 16/9 slot. The brief specifies the content ("a
 // before-and-after video showing a deep clean"), not the heading;
 // `headingLines` is placeholder copy.
+//
+// ⚠️ Heading rewritten 14 Sep 2026 to carry the keyword and to set an
+// accurate expectation of what the frame contains. The frame itself is still
+// EMPTY: fill it or remove the section before launch. A promised video that
+// isn't there is a trust cost at the exact moment the reader is deciding.
 const heroVideo = {
-  headingLines: ['Watch a house come back.'],
+  headingLines: ['Watch a deep clean, room by room.'],
   video: {
     ratio: '16/9',
     label: 'Before-and-after video of a TLB deep clean, room by room',
@@ -478,11 +562,59 @@ const heroVideo = {
 // second CTA. It's also the one block on the page that argues rather than
 // lists, so it shouldn't look like §5 or §6. `align="left"` — three
 // paragraphs of running prose, not a centred pull quote.
+//
+// ⚠️ The standfirst is PAGE-LOCAL from 14 Sep 2026, replacing the shared
+// `managedForYou.oneOff`. That line was a feature list — date, confirmation,
+// message, told first — read in the order TLB does them rather than the order
+// a client feels them. The rewrite names the frustration first (BFD §5.2's
+// real objection: the organising, not the cleaning) and then resolves it with
+// the same four promises. Kept here rather than pushed back into
+// brand-lines.ts because every other one-off page still wants the short form.
+const managedForYouDeepClean =
+  "Managed for you. The part people put off isn't the cleaning, it's the organising: working out who to ask, waiting on a quote that never lands, then wondering whether anyone's actually coming. You pick a date that suits you, you get it confirmed in writing, you get a message when we're on the way, and if anything changes you hear it from us first.";
+
 const bookingBody: TextBlockBody[] = [
   "Book online in a couple of minutes, or send a text, ring us or drop us an email, whichever you'd actually do.",
   "You get a quote back fast rather than waiting days on someone to come out. It's based on the house as it actually is, so tell us honestly what condition it's in when you book. Nothing you say will surprise us, and it means we allow the right amount of time rather than running short on the day.",
-  "Cost effective because one deep clean does the heavy work in a single visit. If you're setting up a regular clean afterwards, this is the better way round. And if the place needs more time than we've quoted, you'll hear that before we start rather than on the invoice.",
+  // "your home", not "the place", from 14 Sep 2026: it picks up the
+  // `home deep cleaning services` phrasing, which sits in the same 590/mo
+  // cluster as the mapped primary but barely appears on a page that is
+  // otherwise entirely about houses.
+  "Cost effective because one deep clean does the heavy work in a single visit. If you're setting up a regular clean afterwards, this is the better way round. And if your home needs more time than we've quoted, you'll hear that before we start rather than on the invoice.",
 ];
+
+// §10b What a deep clean costs — NEW section, added 14 Sep 2026.
+//
+// Three of the four competitors on page one of `deep cleaning services`
+// publish a real number and TLB publishes nothing. This targets roughly
+// 120/mo of direct pricing intent (`deep cleaning prices`, `deep clean cost`,
+// `how much does a deep clean cost`) plus the second-most-asked People Also
+// Ask question on the primary term.
+//
+// ⚠️ BLOCKING, AND IT IS WHY THIS DOES NOT RENDER YET. The price band is
+// Teagan's to supply and nobody else's to estimate. `pricingConfirmed` stays
+// false until it lands, which keeps the whole section off the page — a live
+// pricing section reading "[Teagan to confirm]" is a worse outcome than no
+// pricing section at all, and it is the one place on this page where the
+// reserved-slot convention used for the testimonials and the video misfires:
+// an unfinished price is read as a price.
+//
+// The same flag governs FAQ 5 below, so the two move together. While it is
+// false the FAQ keeps its current self-contained answer; the moment it is
+// true the section appears and the FAQ starts pointing up at it. Flip the
+// flag, drop the real band into `pricingBand`, and both land in one change.
+// This is the single most valuable outstanding item on the page.
+const pricingConfirmed = false;
+const pricingBand = '[Teagan to confirm: price band for a 3 bed / 2 bath deep clean]';
+
+const pricingSection = {
+  heading: 'What a deep clean costs',
+  body: [
+    `A deep clean is priced on the size of the place and the condition it's in, not on a flat hourly rate that would be wrong for most houses. A three bedroom, two bathroom home in reasonable condition sits around ${pricingBand}. If it's been a while, it runs higher, and you'll hear that when we quote rather than on the invoice.`,
+    'What moves the number: how many bathrooms, whether the kitchen needs the rangehood and cupboard interiors done, how much is stored on the floor, and whether anything from the quoted-separately list is going in.',
+    "You get the figure back fast, based on your actual place rather than a guess. And if a regular clean would serve you better than a deep one, we'll tell you that before you book rather than after.",
+  ],
+};
 
 // §11 Social proof — bracketed [TBC] briefing slots, NOT real testimonials.
 // Same convention index.astro and house-cleaning.astro both use: the visible
@@ -563,9 +695,15 @@ const faqItems = [
       "Considerably longer than a regular clean, because it's the detail work. A three-bedroom home in reasonable condition is usually most of a day for a team. If it's been a while, longer. We'll give you a realistic window when we quote.",
   },
   {
+    // Two answers, one flag. Once §10b's pricing section ships this question
+    // repeats it, so the confirmed version stops re-explaining and sends the
+    // reader up to the actual figure instead. While `pricingConfirmed` is
+    // false that section does not exist and a pointer to it would be a dead
+    // reference, so the original self-contained answer stands.
     question: 'How much does a deep clean cost?',
-    answer:
-      "It depends on the size of the house and the condition it's in, which is why we quote rather than publish a flat rate. Tell us the basics and you'll have a price back quickly, with no obligation attached.",
+    answer: pricingConfirmed
+      ? "It depends on the size of the house and the condition it's in. There's a price guide further up this page, and you'll have a firm number back quickly once you tell us the basics. No obligation attached."
+      : "It depends on the size of the house and the condition it's in, which is why we quote rather than publish a flat rate. Tell us the basics and you'll have a price back quickly, with no obligation attached.",
   },
   {
     // ⚠️ [CONFIRM the full exclusions list.] This restates §5b's Callout —
@@ -604,15 +742,29 @@ const faqItems = [
     question: 'Can I book over the phone instead of online?',
     answer: 'Yes. Online, text, phone or email, whichever suits you.',
   },
+  {
+    // Added 14 Sep 2026. `apartment deep clean` is 140/mo, up roughly 80%
+    // year on year, with a local pack firing, and the page spoke only about
+    // houses. The strata sentence is the half that earns the question: lift
+    // bookings and contractor access rules are what actually goes wrong on
+    // the day.
+    question: 'Do you deep clean apartments and units?',
+    answer:
+      "Yes. An apartment deep clean is the same task list in a smaller footprint, so it usually takes less time than a house with the same number of bedrooms. Strata buildings sometimes have lift bookings or access rules for contractors, so tell us the building when you book and we'll sort that out beforehand rather than on the day.",
+  },
 ];
 
 // §14 Closing block — in the brief this time, so it's no longer this build's
 // own addition echoing the hero. Real copy, split at the sentence break: the
 // promise as the heading, the ask as the lead.
+// Reworked 14 Sep 2026. The heading takes the same one-word fix as the H1, so
+// the page opens and closes on the term. The second sentence of the lead
+// lands the BFD §1.5 payoff the whole page has been building toward and had
+// never quite said out loud.
 const closingCta = {
-  heading: 'One clean, and the house starts again.',
-  lead: "Tell us the condition it's in and we'll quote for what's actually there.",
-  cta: quoteCta,
+  heading: 'One deep clean, and the house starts again.',
+  lead: "Tell us the condition your home is in and we'll quote for what's actually there. Most people book this once, then set up a fortnightly and stop thinking about the house altogether.",
+  cta: pageQuoteCta,
 };
 ---
 
@@ -649,13 +801,17 @@ const closingCta = {
     <ContentGrid
       columns={2}
       heading="What's included in a deep clean"
-      lead="Everything in a regular clean, plus the detail work underneath it."
+      lead="Everything in a regular clean, plus the detail work underneath it. This is the full deep cleaning checklist, published before you book rather than after."
       blocks={inclusionBlocks}
     />
 
-    <Callout tone="note" body={exclusionsCallout.body} />
+    <Callout tone="note" body={exclusionsCallout.body} cta={exclusionsCallout.cta} />
 
-    <ContentGrid columns={3} heading="When people book one" blocks={momentsBlocks} />
+    {/* Heading rewritten 14 Sep 2026. "When people book one" referred back
+        to a heading the reader may have scrolled past and carried no
+        keyword; the new one works as a standalone answer, which is what
+        BFD §14 asks of every service-page section. */}
+    <ContentGrid columns={3} heading="When people book a deep clean" blocks={momentsBlocks} />
 
     {/* Wrapper carries the #compare anchor PathwayCards card 3 links to —
         ComparisonTable takes no id prop, and adding one just for an anchor
@@ -673,9 +829,14 @@ const closingCta = {
     {/* Drag the handle to wipe between the two frames of each pair — see
         the block above `beforeAfterPairs` for why this is a slider and not
         a gallery, and for the fact that these four images are SAMPLES. The
-        `note` is what tells the reader that; delete it with the imports. */}
+        `note` is what tells the reader that; delete it with the imports.
+
+        Heading rewritten 14 Sep 2026: "the difference, on real jobs"
+        asserted the jobs were real while the images are labelled
+        illustrative. The new one carries the keyword and describes what the
+        module actually shows. */}
     <BeforeAfter
-      heading="The difference, on real jobs."
+      heading="The difference a deep clean makes."
       lead="Drag the handle across each photo to see the same spot before and after a deep clean."
       pairs={beforeAfterPairs}
       note="Illustrative samples, shown while we collect before and after photos from real TLB cleans."
@@ -687,12 +848,40 @@ const closingCta = {
       theme="dark"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...bookingBody]}
-      cta={quoteCta}
+      body={[managedForYouDeepClean, ...bookingBody]}
+      cta={pageQuoteCta}
     />
 
-    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+    {/* §10b, gated on `pricingConfirmed` — see the block above
+        `pricingSection`. Renders nothing until Teagan's price band lands,
+        and FAQ 5 swaps to point at it on the same flag. */}
+    {pricingConfirmed && (
+      <TextBlock theme="muted" align="left" heading={pricingSection.heading} body={pricingSection.body} />
+    )}
 
+    {/* ⚠️ The two cards below are still bracketed [TBC] briefing slots, not
+        testimonials. They are fine in a staging build (the convention is
+        shared with index.astro and house-cleaning.astro) but they must NOT
+        go live: visible instructions to the founder are a credibility
+        failure, and BFD §12.2 forbids writing substitutes. If the two real
+        quotes are not collected before launch, hide this section rather
+        than publishing it — an absent testimonial block is neutral. */}
+    <TestimonialCarousel heading="What our deep clean clients say" testimonials={testimonials} uniform />
+
+    {/* The Tweed was being folded into its neighbours. BFD §2.1 lists it
+        separately on purpose: Kingscliff, Pottsville and Tweed Heads are
+        neither Northern Rivers nor Gold Coast to anyone who lives there, and
+        grouping them wrongly is the small error that tells a local you don't
+        know the area.
+
+        ⚠️ The GROUPS below still show only the eight towns the client asked
+        for in Sept 2026, with the Tweed group hidden entirely (see
+        data/locations.ts). So this line now names three regions while the
+        list shows two. It is accurate about where TLB cleans and it looks
+        short on the page, and closing that gap is NOT this page's call:
+        restoring the full 56-town, three-group list is a site-wide data
+        change against a standing client instruction. Raise it before
+        touching locations.ts. */}
     <TagCloud
       heading="Where we clean"
       subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
@@ -700,7 +889,9 @@ const closingCta = {
       note={["If a town isn't listed, ask us anyway."]}
     />
 
-    <Faq heading="Frequently asked questions" items={faqItems} />
+    {/* The generic heading was identical on every service page, which gives
+        Google and an AI assistant nothing to tell them apart. */}
+    <Faq heading="Frequently asked questions about deep cleaning" items={faqItems} />
 
     <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
   </main>
