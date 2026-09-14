@@ -59,7 +59,7 @@ table, and the FAQ set (now ten questions in one block, not 4 + 5 in two).
 | Meta description | "A one-off deep clean that resets the whole house, room by room, across the Northern Rivers and the Tweed. Published task list, quoted before we start." | ✅ Real copy now — was the 🚩1 placeholder. |
 | URL | `/deep-cleaning/` | |
 | Focus keyword | `house deep cleaning services` | Answer-targeted by §2, verbatim. |
-| Canonical | `https://example.com/deep-cleaning/` | ⚠️ Placeholder domain, same as every other page. Confirm before launch. |
+| Canonical | `https://tlbcleaning.com.au/deep-cleaning/` | ✅ Real domain now — was the `example.com` placeholder. Resolved site-wide 2026-09-15. |
 | Google Classification Type · Related keywords · Query fan-outs · Entities | — | Still **blank** in the brief, as in revision 1. Tools named, no output pasted. |
 
 ⚠️ The description says "the Northern Rivers and the Tweed" while §2 and §12
@@ -513,7 +513,10 @@ the `lead`.
 - Trust bar copy now diverges from all five other pages (§4).
 - Suburb lists still disagree across `navigation.ts`, this page and
   `commercial-cleaning.astro` (§12, flag 1).
-- Canonical domain is still `example.com` site-wide.
+- ✅ Canonical domain — resolved: **`tlbcleaning.com.au`**. The `example.com`
+  placeholder was swapped site-wide on 2026-09-15, across all 89 occurrences
+  in 55 files, plus `astro.config.mjs`'s `site`. `Base.astro` feeds `og:url`
+  from the same prop, so both tags moved together.
 
 **Not verified in a browser.** `astro check` reports 0 errors and the build
 passes, and the rendered HTML was checked for the new sections, the

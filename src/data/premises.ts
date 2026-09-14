@@ -159,7 +159,7 @@ export const relatedPremises = (self: PremisesHref, extras: Tag[] = []): Tag[] =
  */
 export const commercialBusiness = (description: string): LocalBusinessInfo => ({
   name: 'TLB Cleaning',
-  url: 'https://example.com/',
+  url: 'https://tlbcleaning.com.au/',
   logo: '',
   telephone: '',
   email: '',

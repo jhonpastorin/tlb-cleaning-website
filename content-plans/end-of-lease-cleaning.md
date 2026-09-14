@@ -82,7 +82,7 @@ FAQ 2 **together**. Do not add it to one of them.
 | Meta description | "Bond cleaning across the Northern Rivers and Southern Gold Coast, cleaned to the standard your exit inspection is measured against. Published task list, quoted before we start." | Drafted. Deliberately no bond-back claim. |
 | URL | `/end-of-lease-cleaning/` | Matches every existing reference in `navigation.ts`. |
 | Focus keyword | `bond cleaning` / `end of lease cleaning` | Both answer-targeted by section 2, verbatim. |
-| Canonical | `https://example.com/end-of-lease-cleaning/` | ⚠️ Placeholder domain, same as every other page. |
+| Canonical | `https://tlbcleaning.com.au/end-of-lease-cleaning/` | ✅ Real domain now — was the `example.com` placeholder. Resolved site-wide 2026-09-15. |
 
 Unlike the deep-cleaning description, this one **keeps the Southern Gold
 Coast**, because the cross-border service area is a genuine differentiator
@@ -504,7 +504,8 @@ consistent with the rest of the page.
   supply real photos with permission.
 
 **Inherited, not introduced here:**
-- Canonical domain is still `example.com` site-wide.
+- ✅ Canonical domain — resolved: **`tlbcleaning.com.au`**, swapped site-wide
+  on 2026-09-15. No longer an open item on any page.
 - `trust.ts`'s two unsourced numbers ("98% of our clients stay with us", "over
   100 local homes, hosts and businesses").
 - `locations.ts`'s ~41 town pages that do not exist yet.

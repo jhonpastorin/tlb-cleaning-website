@@ -99,7 +99,7 @@ export const otherMeetTheTeamPages = (self: MeetTheTeamHref) =>
  */
 export const meetTheTeamBusiness = (description: string): LocalBusinessInfo => ({
   name: 'TLB Cleaning',
-  url: 'https://example.com/',
+  url: 'https://tlbcleaning.com.au/',
   logo: '',
   telephone: '',
   email: '',

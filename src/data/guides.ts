@@ -189,7 +189,7 @@ export const otherGuides = (self: GuideHref | null, only?: GuideHref[]) =>
  */
 export const guidesBusiness = (description: string): LocalBusinessInfo => ({
   name: 'TLB Cleaning',
-  url: 'https://example.com/',
+  url: 'https://tlbcleaning.com.au/',
   logo: '',
   telephone: '',
   email: '',

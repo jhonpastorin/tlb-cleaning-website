@@ -84,7 +84,7 @@ foundation and the page needs rewriting rather than patching.
 | Meta description | "Surface mould cleaned from bathrooms, walls, ceilings and wardrobes across the Northern Rivers and Southern Gold Coast. We remove what is there and tell you straight what is causing it." | Drafted. Claims surface cleaning, not remediation, and promises nothing about it staying away. |
 | URL | `/mould-cleaning-and-removal/` | Matches `navigation.ts`. |
 | Focus keyword | `mould cleaning` / `mould removal` | Both answer-targeted by section 2. |
-| Canonical | `https://example.com/mould-cleaning-and-removal/` | ⚠️ Placeholder domain, same as every page. |
+| Canonical | `https://tlbcleaning.com.au/mould-cleaning-and-removal/` | ✅ Real domain now — was the `example.com` placeholder. Resolved site-wide 2026-09-15. |
 
 ---
 

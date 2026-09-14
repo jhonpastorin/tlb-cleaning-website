@@ -45,8 +45,9 @@ visit, police checked and insured." Both the "local mums" framing and the
 "police checked and insured" claim are gone from this revision; the new line
 ships as written. 🟢
 
-`canonical` is still `https://example.com/house-cleaning/` — the real domain
-is unset across every page in this repo. Open item, not new here.
+`canonical` is `https://tlbcleaning.com.au/house-cleaning/`. The `example.com`
+placeholder that stood here was swapped for the real domain site-wide on
+2026-09-15. Closed, not deferred.
 
 ---
 
@@ -699,7 +700,9 @@ and ruled out first.
    `commercial-cleaning.astro` (12). The mega-menu should grow to match.
 3. **`/senior-home-cleaning/` has no mega-menu entry** (§4), and must not be
    confused with `/aged-care-retirement-and-seniors/`.
-4. **`canonical` is `https://example.com/`** on every page in this repo (§0).
+4. ✅ **`canonical`** — resolved: **`https://tlbcleaning.com.au/`** (§0). The
+   `example.com` placeholder was swapped on every page 2026-09-15, along with
+   `astro.config.mjs`'s `site`. No longer a blocker.
 
 ### ⚠️ Copy awaiting Teagan
 
