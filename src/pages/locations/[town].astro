@@ -119,9 +119,11 @@ const business = {
 // page opens on. The variant floats a solid content card over the photo, so
 // the copy's legibility never depends on the photo behind it.
 //
-// The photo and its alt text both come from townPages.ts, where the rule that
-// no hero may name a town or a landmark is documented and enforced in one
-// place. Don't write a label here.
+// The photo and its alt text both come from townPages.ts. Each town now has
+// its own scene there rather than sharing one of three region photos, but the
+// rule that a label may never name a town, a landmark or a street is
+// unchanged and is the reason a generated scene is publishable at all — see
+// the townHeroes header. Don't write a label here.
 const hero = {
   headingLines: [`Cleaners in ${town}.`],
   lead: `The same local team, on the same day, every time. Homes, holiday lets and businesses across ${town} and the surrounding ${regionProse}.`,
