@@ -102,11 +102,34 @@ const { heading, stats, buttons } = Astro.props;
     gap: var(--space-xs);
   }
 
+  /* ⚠️ WAS background:--color-inverse + color:--color-brand, WHICH RENDERED
+     NOTHING AT ALL. tokens.css Layer 2 resolves --color-brand and
+     --color-inverse to the same Dark Teal (#234B51), and `.stat-band` above
+     already paints the band --color-brand. So this was a teal circle on a
+     teal band holding a teal icon: three identical colours, the badge
+     invisible against the band and the icon invisible against the badge.
+     The <svg> children draw with stroke="currentColor", so they inherit
+     whatever `color` is set here.
+
+     A 96px circle is there to be SEEN, so the badge now takes the light ink
+     role the band already uses for its heading (--color-on-brand, Off White)
+     as its fill, with Dark Teal icons on top at 8.33:1.
+
+     ⚠️ THIS FIX IS UNVERIFIED AGAINST A REAL RENDERING, because nothing
+     consumes this component: locations/index.astro considered it and chose
+     MetricsBlock instead, and that comment is the only mention of StatBand
+     in the repo. The colours are the obvious reading of the original intent
+     (light badge, dark icon, dark band) rather than something checked on a
+     page. Look at it before shipping the first consumer.
+
+     Same brand re-skin leftover as PathwayCards' heading accent, and the
+     same bug class Callout.astro's style block warns about. When two roles
+     resolve to one colour, a component that stacks them disappears. */
   .stat-band__badge {
     width: 96px;
     height: 96px;
     border-radius: 50%;
-    background: var(--color-inverse);
+    background: var(--color-on-brand);
     color: var(--color-brand);
     display: flex;
     align-items: center;

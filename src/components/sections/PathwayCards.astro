@@ -13,7 +13,7 @@ interface Card {
 
 interface Props {
   heading: string;
-  /** Second heading line, rendered in brand yellow — pass as a prop, never hardcode a second string. */
+  /** Second heading line, on its own line under `heading` — pass as a prop, never hardcode a second string. Styled the same Off White as the rest of the heading; see the note on `.pathway__heading-accent` for why it is no longer a contrasting colour. */
   headingAccent: string;
   cards: Card[];
 }
@@ -67,8 +67,29 @@ const { heading, headingAccent, cards } = Astro.props;
     color: var(--color-on-inverse);
   }
 
+  /* ⚠️ WAS --color-brand, AND THAT MADE THIS LINE INVISIBLE ON ALL 24 PAGES
+     USING THIS COMPONENT. The section band above is --color-inverse, and
+     tokens.css Layer 2 resolves --color-brand and --color-inverse to the
+     SAME Dark Teal (#234B51) — so the accent line was teal ink on a teal
+     band at 1:1 contrast, rendering as a blank second line under the
+     heading.
+
+     This is a leftover from the brand re-skin, not an original mistake: the
+     `headingAccent` prop is still documented as "rendered in brand yellow",
+     which it was under the previous brand's palette. That yellow has no
+     successor in the TLB brand bible, so the accent now simply matches the
+     rest of the heading rather than inventing a colour the brand does not
+     have. --color-on-inverse is Off White (#F4EFE3) at 8.33:1 on this band,
+     which is the white this site actually uses; --tlb-white is a placeholder
+     primitive, not a brand colour, so do not reach for it here.
+
+     Exactly the bug class Callout.astro's own style block already warns
+     about. If this line is ever meant to be visually distinct again, the
+     only Layer 2 role available is --color-accent (Mint Green) — check its
+     contrast on the band before using it, and change it here so all 24 pages
+     move together. */
   .pathway__heading-accent {
-    color: var(--color-brand);
+    color: var(--color-on-inverse);
   }
 
   .pathway__list {
