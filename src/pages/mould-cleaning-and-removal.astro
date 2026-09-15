@@ -254,9 +254,9 @@ const business = {
 // line to a subheading, which was overridden: the standing rule is the
 // smallest edit that lands the service term, and one word does it.
 //
-// For the record, the H1 now carries "mould cleaning" but not the full
-// primary "mould cleaning services". That phrase lands in the title, the
-// lead below and the definition paragraph, which is where it belongs.
+// That note used to end "the H1 carries `mould cleaning` but not the full
+// primary `mould cleaning services`, and that phrase belongs in the title,
+// the lead and the definition paragraph". Overruled 16 Sep 2026 — see below.
 //
 // ⚠️ LEAD REWRITTEN the same day. It opened on "Surface mould cleaned from",
 // which scored zero on the primary. It now opens on the service as people
@@ -272,9 +272,15 @@ const business = {
 // more than mould cleaning." It now names both mapped terms, `mould cleaning`
 // and `mould removal`, and lands the same promise in "that gets it off".
 //
-// ⚠️ CUT TO ONE LINE, client's wording, final. It went two lines → one
-// sentence joined on "but" → a shorter paraphrase → this, which is the client's
-// own copy taken verbatim. No full stop: their line, their punctuation.
+// ⚠️ CUT TO ONE LINE, client's wording. It went two lines → one sentence
+// joined on "but" → a shorter paraphrase → the client's own copy verbatim. No
+// full stop: their line, their punctuation.
+//
+// ⚠️ ONE WORD ADDED BACK, 16 Sep 2026, on the client's instruction: the
+// primary is `mould cleaning services` (350/mo, mapping workbook, 10 Aug
+// 2026) and the H1 was landing only the `mould cleaning` fragment of it.
+// "services" makes the H1 carry the full phrase, and `mould removal` is
+// still there in the same breath. This is the ONLY edit to their line.
 //
 // This drops the second beat entirely — the honest limit that the old line 2
 // carried ("keeping it off takes more than mould cleaning"). That position is
@@ -294,7 +300,7 @@ const business = {
 // this page already carried it, so the review's proposal to change "fast
 // quoting" to "fast quote" here does not apply. Only the button changes.
 const hero = {
-  headingLines: ['Mould cleaning and mould removal that gets it off'],
+  headingLines: ['Mould cleaning services and mould removal that gets it off'],
   lead: `Our mould cleaning services cover bathrooms, walls, ceilings and wardrobes right across the Northern Rivers, the Tweed and the Southern Gold Coast. Mould removal on the surfaces you can see, and an honest answer about what is feeding it. ${theLine.fast}`,
   cta: pageQuoteCta,
   image: {
@@ -672,6 +678,12 @@ const comparisonTable = {
 //      `list` variant has no footnote slot. It reads as a promise either
 //      way; it read slightly better last.
 // Both close for free the day a body string can carry a link.
+//
+// ⚠️ H2 RENAMED 16 Sep 2026, one word, same instruction as the H1: it read
+// "Mould cleaning for agencies…" and now reads "Mould cleaning services
+// for agencies…", so the page's only commercial heading carries the full
+// primary rather than the `mould cleaning` fragment of it. The heading text
+// itself lives on the <ServiceBlocks> call, not up here.
 //
 // NOTHING HERE IS A NEW CLAIM. Every row describes the same surface work the
 // rest of the page describes, under different scheduling pressure. The
@@ -1066,7 +1078,7 @@ const closingCta = {
         `commercialRows` for what the list shape cost. */}
     <ServiceBlocks
       variant="list"
-      heading="Mould cleaning for agencies, holiday lets and commercial premises"
+      heading="Mould cleaning services for agencies, holiday lets and commercial premises"
       lead="Most of this page is written for somebody looking at their own bathroom ceiling. The work is the same when it is not your house, but the pressure around it is different. One provider, one point of contact, and the same people who already know the building."
       items={commercialRows}
     />
