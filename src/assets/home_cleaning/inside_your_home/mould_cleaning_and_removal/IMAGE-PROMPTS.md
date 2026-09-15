@@ -1,6 +1,6 @@
 # Image prompts: mould cleaning and removal
 
-Outstanding image slots for [`src/pages/mould-cleaning-and-removal.astro`](../../../../pages/mould-cleaning-and-removal.astro).
+Outstanding image slots for [`src/pages/house-cleaning/mould-removal.astro`](../../../../pages/house-cleaning/mould-removal.astro).
 
 Read [`IMAGE-GUIDELINES.md`](../../../../../IMAGE-GUIDELINES.md) first.
 

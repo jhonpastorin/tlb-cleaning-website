@@ -73,10 +73,26 @@ import {
 import { trustBarCards } from '../data/trust';
 import { theLine, theLineHeading, managedForYou } from '../data/brand-lines';
 
+// META SET FROM THE KEYWORD WORKBOOK 16 Sep 2026, on TLB's instruction to
+// ship the workbook copy verbatim. It replaces "A local cleaning team across
+// the Northern Rivers, the Tweed and the Southern Gold Coast. Book online, by
+// text or over the phone. Set your day and we take it from there."
+//
+// Two things this reinstates that the previous revision had dropped:
+//  1. "Local mums" as the framing. house-cleaning.astro dropped the same
+//     phrase for the same reason why-tlb.md 🚩1 raises against "nine local
+//     mums". It is a headcount/composition claim about real staff, and it is
+//     back here.
+//  2. "Police checked, insured and reliable." A verifiable claim, so it
+//     needs to stay true of every cleaner sent, sitewide.
+//
+// LENGTH: 156 characters, the longest of the five workbook metas and the
+// only one over ~155, so expect Google to truncate the tail. What gets cut
+// is "Book online.", the call to action.
 const pageMeta = {
   title: 'Cleaning Services & Cleaners | TLB Cleaning',
   description:
-    'A local cleaning team across the Northern Rivers, the Tweed and the Southern Gold Coast. Book online, by text or over the phone. Set your day and we take it from there.',
+    'Local mums cleaning residential and commercial spaces across the Northern Rivers and southern Gold Coast. Police checked, insured and reliable. Book online.',
   canonical: 'https://tlbcleaning.com.au/',
 };
 
@@ -197,7 +213,7 @@ const whatWeDoItems = [
     icon: 'spray-bottle' as const,
     title: 'Around the house',
     description: 'Carpets, windows, gutters, pressure cleaning, ovens.',
-    href: '/deep-cleaning/',
+    href: '/house-cleaning/deep-cleaning/',
   },
   {
     icon: 'office' as const,
@@ -319,8 +335,8 @@ const testimonials = [
 // and used nowhere else, so it is not a stand-in for a different service.
 const serviceImages: Record<string, ImageMetadata> = {
   '/house-cleaning/': serviceRegularImg,
-  '/deep-cleaning/': serviceDeepCleanImg,
-  '/end-of-lease-cleaning/': serviceEndOfLeaseImg,
+  '/house-cleaning/deep-cleaning/': serviceDeepCleanImg,
+  '/house-cleaning/end-of-lease-cleaning/': serviceEndOfLeaseImg,
   '/airbnb-cleaning/': serviceAirbnbImg,
   '/real-estate-cleaning/': serviceRealEstateImg,
   '/commercial-cleaning/': serviceCommercialImg,

@@ -95,14 +95,26 @@ import { theLine, theLineHeading, managedForYou } from '../data/brand-lines';
 
 // §0 Page metadata — title tag and description both drafted in full.
 //
-// The description is NEW copy this revision. It replaces "Regular house
-// cleaning from local mums you actually know. Same cleaner every visit,
-// police checked and insured." — this brief drops both the "local mums"
-// framing and the police-checked/insured claim, so neither survives here.
+// META REVERTED TO THE KEYWORD WORKBOOK 16 Sep 2026, on TLB's instruction to
+// ship the workbook copy verbatim. This is the line the previous revision
+// had deliberately replaced, so that replacement is now undone: both the
+// "local mums" framing and the police-checked/insured claim are back.
+//
+// What the revert costs, recorded so it is not lost:
+//  1. The standing geo phrase "across the Northern Rivers and the Tweed" is
+//     gone from this description. Every other service page carries it. This
+//     page now names no service area at all in its meta.
+//  2. The mapped primary `house cleaning services` is no longer contiguous
+//     in the description; "Regular house cleaning" is the closest it gets.
+//     The title still carries the primary verbatim.
+//  3. "Same cleaner every visit" is a stronger promise than the page body
+//     makes. §1 and the process copy say the same TEAM on a set day, not
+//     the same individual. Worth reconciling if a client holds us to it.
+// 142 characters, so no truncation risk.
 const pageMeta = {
   title: 'House Cleaning Services - Regular Cleans | TLB Cleaning',
   description:
-    'Regular house cleaning across the Northern Rivers and the Tweed. Set day, same team, easy to book and managed for you. Get a quote in under a minute.',
+    'Regular house cleaning from local mums you actually know. Same cleaner every visit, police checked and insured. Get a quote in under a minute.',
   // §0: slug ruled as /house-cleaning/. Domain is still a placeholder,
   // same as every other page in this repo — confirm before launch.
   canonical: 'https://tlbcleaning.com.au/house-cleaning/',
@@ -189,7 +201,7 @@ const pathwayCards = {
       title: "It's got away from me a bit.",
       description:
         'Start with a one-off deep clean, then set up a fortnightly. That way round works out better than doing it the other way.',
-      cta: { label: 'Deep cleaning', href: '/deep-cleaning/' },
+      cta: { label: 'Deep cleaning', href: '/house-cleaning/deep-cleaning/' },
     },
     {
       number: 2,
@@ -197,7 +209,7 @@ const pathwayCards = {
       title: "I'm moving out.",
       description:
         "That's an end of lease clean, measured against an inspection rather than your own standard. Different page.",
-      cta: { label: 'End of lease cleaning', href: '/end-of-lease-cleaning/' },
+      cta: { label: 'End of lease cleaning', href: '/house-cleaning/end-of-lease-cleaning/' },
     },
     {
       number: 3,

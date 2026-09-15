@@ -43,12 +43,12 @@ export const serviceLinks = [
   {
     title: 'Deep and one-off cleans',
     description: "A room-by-room reset, before guests, after a party, or when it's just time.",
-    href: '/deep-cleaning/',
+    href: '/house-cleaning/deep-cleaning/',
   },
   {
     title: 'End of lease and bond cleans',
     description: 'Cleaned to the standard your exit inspection is measured against, both sides of the border.',
-    href: '/end-of-lease-cleaning/',
+    href: '/house-cleaning/end-of-lease-cleaning/',
   },
   {
     title: 'Airbnb and holiday let turnovers',
@@ -100,14 +100,17 @@ export const primaryNav: NavItem[] = [
 // a curated subset of locations.ts (see regionColumns below) — Level A = the
 // item itself, Level B = its children, [bracketed] rows = non-clickable
 // group labels (no `label` maps to no `href`, matching MegaMenuGroup).
-// None of the sheet's hrefs were specified; every child slug below is a
-// flat kebab-case guess from its literal label, following this file's
-// existing flat-slug convention (e.g. `/deep-cleaning/`) rather than
-// nesting under the parent — confirm before launch. Overlaps with slugs
-// already used elsewhere in this file are called out inline where the
-// wording differs; one remains open ("End of lease and bond cleaning"
-// here, now pointed at the existing `/end-of-lease-cleaning/` used in
-// §10's "What we do"). Note "Aged care, retirement and seniors" under
+// The three Home Cleaning children now follow the keyword workbook's own
+// URL column, which supplied hrefs the earlier IA sheet did not: they nest
+// under the parent as `/house-cleaning/deep-cleaning/`,
+// `/house-cleaning/end-of-lease-cleaning/` and `/house-cleaning/mould-removal/`.
+// That closes the open flat-vs-nested question this comment used to carry,
+// and note the third one is `mould-removal`, not the longer
+// `mould-cleaning-and-removal` the page file was named after. Every OTHER
+// child slug below is still a flat kebab-case guess from its literal label,
+// with no href specified anywhere — confirm those before launch. Overlaps
+// with slugs already used elsewhere in this file are called out inline
+// where the wording differs. Note "Aged care, retirement and seniors" under
 // Commercial → By type of premises is NOT the same page as the
 // /senior-home-cleaning/ that content-plans/home-cleaning.md §3 links to:
 // that one is commercial cleaning of aged-care premises, this is regular
@@ -156,9 +159,9 @@ export const headerNav: MegaMenuNavItem[] = [
       {
         label: 'Inside your home',
         items: [
-          { label: 'Deep cleaning', href: '/deep-cleaning/' },
-          { label: 'End of lease and bond cleaning', href: '/end-of-lease-cleaning/' }, // reconciled: menu keeps the sheet's fuller label, slug matches the one used at line 239 and in the content plans
-          { label: 'Mould cleaning and removal', href: '/mould-cleaning-and-removal/' },
+          { label: 'Deep cleaning', href: '/house-cleaning/deep-cleaning/' },
+          { label: 'End of lease and bond cleaning', href: '/house-cleaning/end-of-lease-cleaning/' }, // reconciled: menu keeps the sheet's fuller label, slug matches the one used at line 239 and in the content plans
+          { label: 'Mould cleaning and removal', href: '/house-cleaning/mould-removal/' },
         ],
       },
       {

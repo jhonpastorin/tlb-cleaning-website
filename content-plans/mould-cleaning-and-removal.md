@@ -5,7 +5,7 @@ Source: **no content brief exists.** Drafted from
 (the BFD), plus [`SECTIONS.md`](../SECTIONS.md) and the page pattern set by
 [`deep-cleaning.md`](deep-cleaning.md).
 
-Built at [`src/pages/mould-cleaning-and-removal.astro`](../src/pages/mould-cleaning-and-removal.astro),
+Built at [`src/pages/house-cleaning/mould-removal.astro`](../src/pages/house-cleaning/mould-removal.astro),
 shipping at `/mould-cleaning-and-removal/`. Slug matches the Home Cleaning
 mega-menu entry in `navigation.ts`, which was **pointing at a 404 until now**.
 
@@ -82,9 +82,9 @@ foundation and the page needs rewriting rather than patching.
 |---|---|---|
 | Title tag | `Mould Cleaning and Removal \| TLB Cleaning` | Drafted. Carries both search terms. |
 | Meta description | "Surface mould cleaned from bathrooms, walls, ceilings and wardrobes across the Northern Rivers and Southern Gold Coast. We remove what is there and tell you straight what is causing it." | Drafted. Claims surface cleaning, not remediation, and promises nothing about it staying away. |
-| URL | `/mould-cleaning-and-removal/` | Matches `navigation.ts`. |
+| URL | `/house-cleaning/mould-removal/` | Moved 16 Sep 2026 to the keyword workbook's URL column: nested under the parent AND shortened to `mould-removal`. Was `/mould-cleaning-and-removal/`; `navigation.ts` moved with it. |
 | Focus keyword | `mould cleaning` / `mould removal` | Both answer-targeted by section 2. |
-| Canonical | `https://tlbcleaning.com.au/mould-cleaning-and-removal/` | ✅ Real domain now — was the `example.com` placeholder. Resolved site-wide 2026-09-15. |
+| Canonical | `https://tlbcleaning.com.au/house-cleaning/mould-removal/` | ✅ Real domain now — was the `example.com` placeholder. Resolved site-wide 2026-09-15. |
 
 ---
 

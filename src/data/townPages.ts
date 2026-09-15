@@ -270,7 +270,7 @@ export const townOverrides: Record<string, TownOverride> = {
     // local: ⚠️ still outstanding. The strongest material for this town is
     // the 2022 flood — mould, rebuilt and repaired homes, and cleaning work
     // that has a different context here than anywhere else in the service
-    // area, linking naturally to /mould-cleaning-and-removal/. Deliberately
+    // area, linking naturally to /house-cleaning/mould-removal/. Deliberately
     // NOT drafted: inventing TLB's own account of a disaster in a community
     // they work in is not a placeholder decision to make on their behalf.
     // Also worth asking: which days the team is in Lismore, typical lead

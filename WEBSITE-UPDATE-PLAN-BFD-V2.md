@@ -57,7 +57,7 @@ pages.
 
 Left as `[CONFIRM the actual policy before this is published. Do not imply a
 guarantee that does not exist.]` Currently drafted with literal bracket
-placeholders in [end-of-lease-cleaning.astro:366-386](src/pages/end-of-lease-cleaning.astro#L366)
+placeholders in [end-of-lease-cleaning.astro:366-386](src/pages/house-cleaning/end-of-lease-cleaning.astro#L366)
 and [real-estate-cleaning.astro:305](src/pages/real-estate-cleaning.astro#L305).
 Those brackets will render to the public if the page ships as is.
 
@@ -263,8 +263,8 @@ Two caveats:
 not currently make this distinction. `Get an instant quote` is the primary CTA
 sitewide, including on pages v2.0 names as unpriceable sight-unseen:
 
-- [end-of-lease-cleaning.astro](src/pages/end-of-lease-cleaning.astro) (bond clean)
-- [mould-cleaning-and-removal.astro](src/pages/mould-cleaning-and-removal.astro) (condition-driven)
+- [end-of-lease-cleaning.astro](src/pages/house-cleaning/end-of-lease-cleaning.astro) (bond clean)
+- [mould-cleaning-and-removal.astro](src/pages/house-cleaning/mould-removal.astro) (condition-driven)
 - [high-pressure-cleaning.astro](src/pages/high-pressure-cleaning.astro), [window-cleaning.astro](src/pages/window-cleaning.astro)
 - All thirteen commercial and premises pages, via [src/data/premises.ts](src/data/premises.ts)
 - The six appliance pages, four instances each
@@ -408,7 +408,7 @@ Seven files still reference it, two as markdown links that are now dead:
 
 - [content-plans/end-of-lease-cleaning.md:4](content-plans/end-of-lease-cleaning.md#L4) (dead link)
 - [content-plans/mould-cleaning-and-removal.md:4](content-plans/mould-cleaning-and-removal.md#L4) (dead link)
-- [src/data/guides.ts:30](src/data/guides.ts#L30), [about.astro:9](src/pages/about.astro#L9), [end-of-lease-cleaning.astro:7](src/pages/end-of-lease-cleaning.astro#L7), [mould-cleaning-and-removal.astro:6](src/pages/mould-cleaning-and-removal.astro#L6), [real-estate-cleaning.astro:21](src/pages/real-estate-cleaning.astro#L21), [work-with-us.astro:11](src/pages/work-with-us.astro#L11)
+- [src/data/guides.ts:30](src/data/guides.ts#L30), [about.astro:9](src/pages/about.astro#L9), [end-of-lease-cleaning.astro:7](src/pages/house-cleaning/end-of-lease-cleaning.astro#L7), [mould-cleaning-and-removal.astro:6](src/pages/house-cleaning/mould-removal.astro#L6), [real-estate-cleaning.astro:21](src/pages/real-estate-cleaning.astro#L21), [work-with-us.astro:11](src/pages/work-with-us.astro#L11)
 
 Several cite section numbers (`§1.1`, `§1.2`, `§1.3`, `§1.5.6`) that no longer
 resolve, because v2.0 renumbered everything. `work-with-us.astro:11` cites

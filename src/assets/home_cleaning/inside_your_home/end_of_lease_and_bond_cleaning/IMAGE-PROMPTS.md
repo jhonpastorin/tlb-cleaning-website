@@ -1,6 +1,6 @@
 # Image prompts: end of lease and bond cleaning
 
-Outstanding image slots for [`src/pages/end-of-lease-cleaning.astro`](../../../../pages/end-of-lease-cleaning.astro).
+Outstanding image slots for [`src/pages/house-cleaning/end-of-lease-cleaning.astro`](../../../../pages/house-cleaning/end-of-lease-cleaning.astro).
 
 Read [`IMAGE-GUIDELINES.md`](../../../../../IMAGE-GUIDELINES.md) first. Every
 prompt below already carries the house style and the hard rules, but the

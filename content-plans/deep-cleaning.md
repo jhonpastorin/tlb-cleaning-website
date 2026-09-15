@@ -26,7 +26,7 @@ Legend: 🟢 exact match · 🟡 workable with a stretch · 🔴 gap. Content st
 **drafted** (ships as-is), **drafted, pending confirmation** (bracketed
 `[CONFIRM]` in the source), **blocked** (no usable copy or media exists).
 
-Built at [`src/pages/deep-cleaning.astro`](../src/pages/deep-cleaning.astro),
+Built at [`src/pages/house-cleaning/deep-cleaning.astro`](../src/pages/house-cleaning/deep-cleaning.astro),
 shipping at `/deep-cleaning/`. No slug conflict.
 
 ---
@@ -57,9 +57,9 @@ table, and the FAQ set (now ten questions in one block, not 4 + 5 in two).
 |---|---|---|
 | Title tag | `House Deep Cleaning Services - One-Off \| TLB Cleaning` | Drafted, unchanged between revisions. |
 | Meta description | "A one-off deep clean that resets the whole house, room by room, across the Northern Rivers and the Tweed. Published task list, quoted before we start." | ✅ Real copy now — was the 🚩1 placeholder. |
-| URL | `/deep-cleaning/` | |
+| URL | `/house-cleaning/deep-cleaning/` | Moved 16 Sep 2026 to the keyword workbook's URL column, which nests it under the parent. Was `/deep-cleaning/`. |
 | Focus keyword | `house deep cleaning services` | Answer-targeted by §2, verbatim. |
-| Canonical | `https://tlbcleaning.com.au/deep-cleaning/` | ✅ Real domain now — was the `example.com` placeholder. Resolved site-wide 2026-09-15. |
+| Canonical | `https://tlbcleaning.com.au/house-cleaning/deep-cleaning/` | ✅ Real domain now — was the `example.com` placeholder. Resolved site-wide 2026-09-15. |
 | Google Classification Type · Related keywords · Query fan-outs · Entities | — | Still **blank** in the brief, as in revision 1. Tools named, no output pasted. |
 
 ⚠️ The description says "the Northern Rivers and the Tweed" while §2 and §12

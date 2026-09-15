@@ -5,7 +5,7 @@ Source: **no content brief exists.** Drafted from
 (the BFD), plus the section library in [`SECTIONS.md`](../SECTIONS.md) and the
 page pattern set by [`deep-cleaning.md`](deep-cleaning.md).
 
-Built at [`src/pages/end-of-lease-cleaning.astro`](../src/pages/end-of-lease-cleaning.astro),
+Built at [`src/pages/house-cleaning/end-of-lease-cleaning.astro`](../src/pages/house-cleaning/end-of-lease-cleaning.astro),
 shipping at `/end-of-lease-cleaning/`. No slug conflict: that slug is already
 referenced by `navigation.ts` (footer services, the Home Cleaning mega-menu)
 and by `deep-cleaning.astro`'s pathway card 2, all of which were **pointing at
@@ -80,9 +80,9 @@ FAQ 2 **together**. Do not add it to one of them.
 |---|---|---|
 | Title tag | `End of Lease and Bond Cleaning \| TLB Cleaning` | Drafted. Carries both search terms, which is the point. |
 | Meta description | "Bond cleaning across the Northern Rivers and Southern Gold Coast, cleaned to the standard your exit inspection is measured against. Published task list, quoted before we start." | Drafted. Deliberately no bond-back claim. |
-| URL | `/end-of-lease-cleaning/` | Matches every existing reference in `navigation.ts`. |
+| URL | `/house-cleaning/end-of-lease-cleaning/` | Moved 16 Sep 2026 to the keyword workbook's URL column, which nests it under the parent. Was `/end-of-lease-cleaning/`; every reference in `navigation.ts` moved with it. |
 | Focus keyword | `bond cleaning` / `end of lease cleaning` | Both answer-targeted by section 2, verbatim. |
-| Canonical | `https://tlbcleaning.com.au/end-of-lease-cleaning/` | ✅ Real domain now — was the `example.com` placeholder. Resolved site-wide 2026-09-15. |
+| Canonical | `https://tlbcleaning.com.au/house-cleaning/end-of-lease-cleaning/` | ✅ Real domain now — was the `example.com` placeholder. Resolved site-wide 2026-09-15. |
 
 Unlike the deep-cleaning description, this one **keeps the Southern Gold
 Coast**, because the cross-border service area is a genuine differentiator

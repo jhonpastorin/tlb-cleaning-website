@@ -666,7 +666,7 @@ content and better than anything a local competitor will have.
 > Yes, where the work is child-related — a childcare centre, preschool, school or similar site. In NSW, child-related work requires a current Working With Children Check, and the business engaging the worker is responsible for verifying it. Ask any provider to confirm which of their team hold a current check before they attend a site where children are present.
 
 **Internal-link opportunities.** FAQ 2 describes deep cleaning and the site has
-[`/deep-cleaning/`](../src/pages/deep-cleaning.astro) live; FAQ 5 describes
+[`/deep-cleaning/`](../src/pages/house-cleaning/deep-cleaning.astro) live; FAQ 5 describes
 childcare sites and `/schools-and-childcare-centres/` is in the mega-menu.
 Both answers should link out — partial relief for 🚩2.
 
