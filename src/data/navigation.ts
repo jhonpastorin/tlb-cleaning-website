@@ -151,7 +151,7 @@ const regionColumns = (label: string, towns: string[]): MegaMenuGroup[] => {
   }));
 };
 
-export const headerNav: MegaMenuNavItem[] = [
+const headerNavAll: MegaMenuNavItem[] = [
   {
     label: 'Home Cleaning',
     href: '/house-cleaning/', // reconciled: the sheet labelled this "Home Cleaning" but the page ships at /house-cleaning/, matching every other reference in this file (see content-plans/home-cleaning.md §0)
@@ -300,3 +300,110 @@ export const headerNav: MegaMenuNavItem[] = [
   // transcribed since its content isn't legible. Flag if there's a 7th
   // header item still to add.
 ];
+
+// ── WHAT THE HEADER SHOWS, vs. what the site has pages for ──────────────
+//
+// ⚠️ THE ARRAY ABOVE IS NO LONGER WHAT THE HEADER DISPLAYS. At the client's
+// request (16 Sep 2026) the labels listed below are HIDDEN, NOT DELETED —
+// exactly the arrangement locations.ts already uses for the ~48 towns it
+// stopped linking to, and for the same reason: the menu is being trimmed
+// back to what TLB wants to sell now, not edited down to what it will sell
+// forever. The tree above is untouched, every page still builds, and the
+// mega-menu transcription of the IA sheet stays intact as the record of
+// what the full menu is meant to be.
+//
+// To un-hide one, delete its line from this list. To un-hide everything,
+// export `headerNavAll` directly — nothing else has to change.
+//
+// Two whole Level-A items go, children included: "Meet the team" (About TLB
+// and Teagan, Work with us, Reviews, How booking works) and "Guides" (all
+// nine guide articles). Note what that costs: "Why TLB" is now the only
+// item left in the header that is about the business rather than a service,
+// and /about/ loses its only header link even though primaryNav still
+// carries an "About" row, which is now the sole route to it.
+//
+// The rest are Level-B children. Hiding all of "Commercial services" and
+// all of "Outside your home" empties those two groups, and the filter drops
+// an emptied group rather than rendering a heading over nothing — so the
+// Home Cleaning panel goes from four columns to three and Commercial from
+// two to one.
+//
+// ⚠️ THESE PAGES ARE NOW ORPHANS, and unlinked is not the same as
+// unindexed. Every one of them is still built into dist/ and is still
+// reachable and crawlable by URL. If the intent is that nobody finds them
+// at all while they are hidden, they need `noindex` (and to come out of any
+// sitemap) as well — that is a separate decision and has NOT been made
+// here. It is the same open question locations.ts raises about its towns.
+//
+// ⚠️ THE HEADER IS NOT THE ONLY LINK TO THESE PAGES. premises.ts builds a
+// cross-link list in the BODY of all thirteen premises pages, so the eight
+// hidden premises below still link to each other and are still linked from
+// the five that stay visible. Same for meetTheTeam.ts across the four "Meet
+// the team" pages. Hiding a nav item does not orphan a page that another
+// page's copy links to — say the word if those body links should go too.
+//
+// Matching is by label, and the guard below checks every name here against
+// the tree above at build time: a label reworded or removed up there fails
+// the build instead of quietly un-hiding itself.
+const hiddenNavLabels = [
+  // Level A, children included.
+  'Meet the team',
+  'Guides',
+
+  // Commercial → Commercial services (empties the group).
+  'Commercial carpet cleaning',
+  'Commercial pressure cleaning',
+
+  // Commercial → By type of premises. Leaves office, strata, aged care,
+  // medical and construction site.
+  'Hospitality, venues and holiday parks',
+  'Commercial kitchen cleaning',
+  'Schools and childcare centres',
+  'Gyms and fitness studios',
+  'Retail and shopfronts',
+  'Warehouses and industrial sites',
+  'Factories',
+  'Breweries',
+
+  // Home Cleaning → Outside your home (empties the group).
+  'Window cleaning',
+  'Gutter cleaning',
+  'Roof cleaning',
+  'High pressure cleaning',
+  'Exterior house washing',
+];
+
+const hiddenNavLabelSet = new Set(hiddenNavLabels);
+
+const allNavLabels = new Set(
+  headerNavAll.flatMap((item) => [
+    item.label,
+    ...(item.megaMenu ?? []).flatMap((group) => group.items.map((child) => child.label)),
+  ]),
+);
+
+const missingNavLabels = hiddenNavLabels.filter((label) => !allNavLabels.has(label));
+if (missingNavLabels.length) {
+  throw new Error(
+    `Hidden nav labels no longer exist in headerNavAll: ${missingNavLabels.join(', ')}`,
+  );
+}
+
+/**
+ * The header's service band, with the hidden labels above filtered out.
+ * A group whose every item is hidden is dropped rather than rendered as a
+ * heading with no list under it; an item left with no groups at all keeps
+ * its own href and renders as a plain link.
+ */
+export const headerNav: MegaMenuNavItem[] = headerNavAll
+  .filter((item) => !hiddenNavLabelSet.has(item.label))
+  .map((item) => {
+    if (!item.megaMenu) return item;
+    const megaMenu = item.megaMenu
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((child) => !hiddenNavLabelSet.has(child.label)),
+      }))
+      .filter((group) => group.items.length > 0);
+    return megaMenu.length ? { ...item, megaMenu } : { label: item.label, href: item.href };
+  });
