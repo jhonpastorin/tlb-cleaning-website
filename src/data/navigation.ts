@@ -207,6 +207,36 @@ const headerNavAll: MegaMenuNavItem[] = [
           { label: 'Airbnb', href: '/airbnb-cleaning/' }, // reuses the existing /airbnb-cleaning/ slug from §3/§10
           { label: 'Real estate cleaners', href: '/real-estate-cleaning/' }, // reuses the existing /real-estate-cleaning/ slug from §3/§10
           { label: 'NDIS cleaning', href: '/ndis-cleaning/' },
+          // ADDED 16 Sep 2026, at the client's request, and deliberately
+          // without hrefs: none of these four has a page yet. They are in the
+          // menu so the services are advertised, and they render as plain
+          // text until there is something to send a reader to — the same
+          // MegaMenuChild no-href mechanism the unlinked rows use, put to its
+          // other purpose. Give a row an href on the day its page ships;
+          // nothing else has to change.
+          //
+          // ⚠️ "Seniors cleaning" is almost certainly the page this codebase
+          // has been calling /senior-home-cleaning/ — domestic cleaning for
+          // older clients at home (Home Care Packages, DVA), NOT the
+          // commercial aged-care premises page already in the Commercial
+          // menu. content-plans/home-cleaning.md §3 references that slug and
+          // aged-care-retirement-and-seniors.astro knowingly links it as a
+          // 404. If they are the same service, that slug is what this row
+          // gets, and that known 404 resolves itself. Confirm the label and
+          // the slug together rather than guessing one from the other.
+          //
+          // ⚠️ FORENSIC AND TRAUMA, and HOARDER AND SQUALOR, are not ordinary
+          // cleaning work. Both carry real licensing, WHS, biohazard-waste
+          // and staff-welfare obligations, and BFD 5.3 already binds what
+          // this site may claim about safety and method. Whoever writes these
+          // pages should establish what TLB is actually licensed and equipped
+          // to do BEFORE any copy exists — the mould page's header is the
+          // model for how carefully that has to be scoped, and it had less at
+          // stake than these two do.
+          { label: 'Forensic and trauma cleaning' },
+          { label: 'Hoarder and squalor cleaning' },
+          { label: 'Deceased estate cleaning' },
+          { label: 'Seniors cleaning' },
         ],
       },
     ],
@@ -405,6 +435,15 @@ if (missingNavLabels.length) {
 // leaves it in and stops it going anywhere. Use hiding when the service
 // should not be mentioned, unlinking when it should be advertised but not
 // visited yet.
+//
+// A ROW WITH NO HREF IS NOT ALWAYS AN UNLINKED ONE. The four specialist
+// services added on 16 Sep 2026 — forensic and trauma, hoarder and squalor,
+// deceased estate, seniors — have no href because they have no page yet,
+// not because a page was taken out of reach. They carry no UNLINKED comment
+// and nothing about them is temporary in the same way: they start working
+// the day someone builds the page and puts an href on the row. The
+// distinction matters when reading this menu — an UNLINKED comment means a
+// page exists and is being withheld.
 //
 // WHAT STAYS CLICKABLE, for the record: the whole of "Inside your home" —
 // deep cleaning, end of lease and bond cleaning, mould cleaning and removal
