@@ -12,8 +12,10 @@ import {
   northernRiversTowns,
   tweedTowns,
   southernGoldCoastTowns,
+  isNavigableTown,
   townSlug,
 } from './locations';
+import { regionSlugHref } from './regionPages';
 
 // The one quote CTA used by the header, both heroes, and the closing CTA
 // blocks. href guessed — no booking/quote URL given, confirm before launch.
@@ -152,74 +154,37 @@ export const primaryNav: NavItem[] = [
 // restoring towns doesn't also mean restoring the layout logic.
 const REGION_COL_ROWS = 20;
 
-// ── WHICH TOWNS ARE CLICKABLE ─────────────────────────────────
+// ✅ THE "ALL OF <REGION>" ROW IS BACK, 16 Sep 2026. It headed each column
+// once, was removed at the client's request, and could not simply be put
+// back afterwards because the region overview pages it pointed at had never
+// been built. They exist now — /locations/northern-rivers/, /the-tweed/ and
+// /southern-gold-coast/, see src/data/regionPages.ts — so each region's FIRST
+// column now leads with a link to its own page, above its towns.
 //
-// All 56 towns are LISTED in this menu. Only the fourteen below are LINKED,
-// at the client's request (16 Sep 2026). The other 42 render as plain text
-// — still named, still in their region, just not clickable — which is the
-// same no-href mechanism the service rows use, applied a row at a time
-// instead of a list at a time.
-//
-// This is the third distinct state a town can be in, so it is worth saying
-// all three out loud:
-//   • listed and linked — the fourteen below
-//   • listed, not linked — the other 42, here
-//   • not listed at all — nothing, currently; locations.ts' curated eight
-//     still governs the /locations/ hub and every "Where we clean" band, but
-//     this menu stopped reading them when it went back to all 56
-//
-// To make a town clickable, add it here. To make every town clickable again,
-// have `regionColumns` give every row an href unconditionally.
-//
-// The list is the client's own, in their order, and mixes regions: Kingscliff,
-// Pottsville, Murwillumbah and Tweed Heads are Tweed towns and appear in the
-// Tweed column, not the Northern Rivers one, even though the client's sheet
-// grouped them under the Northern Rivers heading. The menu's three-region
-// structure is unchanged; only navigability is.
-//
-// The guard below checks each name against locations.ts at build time, so a
-// town renamed or removed there fails the build rather than quietly going
-// unclickable.
-const navigableTowns = [
-  'Byron Bay',
-  'Brunswick Heads',
-  'Ballina',
-  'Lennox Head',
-  'Lismore',
-  'Alstonville',
-  'Kingscliff',
-  'Pottsville',
-  'Murwillumbah',
-  'Evans Head',
-  'Casino',
-  'Tweed Heads',
-  'Burleigh Heads',
-  'Palm Beach',
-];
-
-const navigableTownSet = new Set(navigableTowns);
-
-const allTowns = new Set([...northernRiversTowns, ...tweedTowns, ...southernGoldCoastTowns]);
-const missingTowns = navigableTowns.filter((town) => !allTowns.has(town));
-if (missingTowns.length) {
-  throw new Error(`Navigable towns no longer exist in locations.ts: ${missingTowns.join(', ')}`);
-}
-
-// Towns only: the region itself is the column heading, not a link. The
-// "All of <region>" rows that used to head each column are gone at the
-// client's request, and there is nothing to restore them to — the three
-// region overview pages do not exist (locations.ts says so, and dist/
-// confirms it: 56 town pages and the hub, no region pages).
-const regionColumns = (label: string, towns: string[]): MegaMenuGroup[] => {
+// The row carries the region's full heading label, which is what the client's
+// sheet showed and which also stops it reading as a stray town. Only the
+// first column of a multi-column region gets one: a continuation column is a
+// bare list under the heading above it, and a second "Northern Rivers NSW"
+// halfway across the panel would read as a second region.
+const regionColumns = (label: string, towns: string[], regionHref: string): MegaMenuGroup[] => {
+  // Only a navigable town gets an href — see locations.ts' `navigableTowns`.
+  // The rest render as plain text, still named and still in their region.
   const rows: MegaMenuChild[] = towns.map((town) => ({
     label: town,
-    ...(navigableTownSet.has(town) ? { href: townSlug(town) } : {}),
+    ...(isNavigableTown(town) ? { href: townSlug(town) } : {}),
   }));
+  // Split the TOWNS across columns, then put the region row on top of the
+  // first one. Doing it in this order keeps the column balance a function of
+  // the town count alone, so adding the row cannot push a town into a second
+  // column on its own.
   const colCount = Math.ceil(rows.length / REGION_COL_ROWS);
   const perCol = Math.ceil(rows.length / colCount);
   return Array.from({ length: colCount }, (_, col) => ({
     label: col === 0 ? label : undefined,
-    items: rows.slice(col * perCol, (col + 1) * perCol),
+    items: [
+      ...(col === 0 ? [{ label, href: regionHref }] : []),
+      ...rows.slice(col * perCol, (col + 1) * perCol),
+    ],
   }));
 };
 
@@ -338,9 +303,9 @@ const headerNavAll: MegaMenuNavItem[] = [
     // panel is four columns — the same width as the Home Cleaning panel, and
     // the shape this menu had before the curated subset was introduced.
     megaMenu: [
-      ...regionColumns('Northern Rivers NSW', northernRiversTowns),
-      ...regionColumns('The Tweed', tweedTowns),
-      ...regionColumns('Southern Gold Coast QLD', southernGoldCoastTowns),
+      ...regionColumns('Northern Rivers NSW', northernRiversTowns, regionSlugHref('northern-rivers')),
+      ...regionColumns('The Tweed', tweedTowns, regionSlugHref('the-tweed')),
+      ...regionColumns('Southern Gold Coast QLD', southernGoldCoastTowns, regionSlugHref('southern-gold-coast')),
     ],
   },
   {

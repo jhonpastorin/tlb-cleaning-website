@@ -176,6 +176,61 @@ const visibleTownSet = new Set(visibleTowns);
 /** Whether a town is currently linked anywhere on the site. */
 export const isVisibleTown = (town: string) => visibleTownSet.has(town);
 
+// ── WHICH TOWNS ARE CLICKABLE IN THE HEADER MENU ────────────────────
+//
+// A SECOND, SEPARATE SWITCH from `visibleTowns` above, and the two now govern
+// different surfaces. Keep them straight:
+//
+//   • `visibleTowns` (the eight) governs the /locations/ hub and every page's
+//     "Where we clean" band. A town not in it is not listed there at all.
+//   • `navigableTowns` (the fourteen, below) governs which towns are CLICKABLE
+//     in the header's "Areas we clean" menu and on a region page. That menu
+//     lists all 56 regardless; the other 42 render as plain text.
+//
+// So a town has three possible states, and all three are in use right now:
+//   listed and linked — the fourteen below
+//   listed, not linked — the other 42, in the menu and on region pages
+//   not listed at all  — the 48 the hub and the bands leave out
+//
+// The client asked for each of those separately (16 Sep 2026) and they have
+// not been reconciled into one list, deliberately: the menu is a browse
+// surface where naming a town costs nothing, and the hub and bands are
+// claims about where TLB works. If they should be the same list, the fix is
+// to point one of these exports at the other rather than to edit both.
+//
+// The order is the client's own and mixes regions — Kingscliff, Pottsville,
+// Murwillumbah and Tweed Heads are Tweed towns. The guard below checks every
+// name against the arrays at the top of this file at build time.
+export const navigableTowns = [
+  'Byron Bay',
+  'Brunswick Heads',
+  'Ballina',
+  'Lennox Head',
+  'Lismore',
+  'Alstonville',
+  'Kingscliff',
+  'Pottsville',
+  'Murwillumbah',
+  'Evans Head',
+  'Casino',
+  'Tweed Heads',
+  'Burleigh Heads',
+  'Palm Beach',
+];
+
+const navigableTownSet = new Set(navigableTowns);
+
+const everyTown = new Set([...northernRiversTowns, ...tweedTowns, ...southernGoldCoastTowns]);
+const missingNavigable = navigableTowns.filter((town) => !everyTown.has(town));
+if (missingNavigable.length) {
+  throw new Error(
+    `Navigable towns no longer exist in the full lists: ${missingNavigable.join(', ')}`,
+  );
+}
+
+/** Whether a town's page is reachable from the header menu and region pages. */
+export const isNavigableTown = (town: string) => navigableTownSet.has(town);
+
 // Region labels are the client's exact wording, state suffix included, and
 // they are deliberately the same string in the menu, the hub and every
 // "Where we clean" band. The bare names ("The Tweed", "Southern Gold Coast")
