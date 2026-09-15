@@ -188,7 +188,7 @@ const headerNavAll: MegaMenuNavItem[] = [
           { label: 'Mattress cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/mattress-cleaning/'
           { label: 'Tile and grout cleaning', href: '/tile-and-grout-cleaning/' },
           { label: 'Oven, BBQ and appliance cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/oven-bbq-and-appliance-cleaning/'
-          { label: 'Blinds, shutters and ceiling fans' }, // UNLINKED 16 Sep 2026 — was href: '/blinds-shutters-and-ceiling-fans/'
+          { label: 'Blinds, shutters and ceiling fans', href: '/blinds-shutters-and-ceiling-fans/' },
         ],
       },
       {
@@ -387,7 +387,7 @@ if (missingNavLabels.length) {
  */
 // ── UNLINKED ROWS ───────────────────────────────────────────
 //
-// Twenty-one rows in the tree above carry no `href` and a
+// Twenty rows in the tree above carry no `href` and a
 // `// UNLINKED 16 Sep 2026 — was href: ...` comment in its place. They are
 // the red cells on the client's colour-coded menu sheet of that date. Each
 // still appears in the menu, in its group, in the same order; it just is not
@@ -407,13 +407,18 @@ if (missingNavLabels.length) {
 // visited yet.
 //
 // WHAT STAYS CLICKABLE, for the record: mould cleaning and removal, carpet
-// and rug cleaning, tile and grout cleaning, Airbnb, real estate cleaners,
-// NDIS cleaning, and five of the thirteen premises — office, strata, aged
-// care, medical and construction site. Every Level-A item and all 56 towns
-// are untouched.
+// and rug cleaning, tile and grout cleaning, blinds, shutters and ceiling
+// fans, Airbnb, real estate cleaners, NDIS cleaning, and five of the
+// thirteen premises — office, strata, aged care, medical and construction
+// site. Every Level-A item and all 56 towns are untouched.
+//
+// Blinds, shutters and ceiling fans was red on the sheet and was unlinked
+// with the rest on 16 Sep 2026, then relinked the same day on the client's
+// correction. Its href is back on the row and its UNLINKED comment is gone,
+// which is exactly what relinking one of these looks like.
 //
 // ⚠️ THE HEADER IS NOT THE ONLY ROUTE TO THESE PAGES, and unlinking one row
-// does not make its page unreachable. All twenty-one still build, are still
+// does not make its page unreachable. All twenty still build, are still
 // crawlable by URL, and are still linked from page BODIES — premises.ts
 // cross-links all thirteen premises pages, the footer's own service list is
 // a separate array in this file, and pages link each other in prose. If the
