@@ -166,7 +166,7 @@ const regionColumns = (label: string, towns: string[]): MegaMenuGroup[] => {
   }));
 };
 
-export const headerNav: MegaMenuNavItem[] = [
+const headerNavAll: MegaMenuNavItem[] = [
   {
     label: 'Home Cleaning',
     href: '/house-cleaning/', // reconciled: the sheet labelled this "Home Cleaning" but the page ships at /house-cleaning/, matching every other reference in this file (see content-plans/home-cleaning.md §0)
@@ -319,3 +319,80 @@ export const headerNav: MegaMenuNavItem[] = [
   // transcribed since its content isn't legible. Flag if there's a 7th
   // header item still to add.
 ];
+
+// ── WHAT THE HEADER SHOWS, vs. what the site has pages for ──────────────
+//
+// ⚠️ THE ARRAY ABOVE IS NOT WHAT THE HEADER DISPLAYS. At the client's
+// request (16 Sep 2026) the labels below are HIDDEN, NOT DELETED — the same
+// arrangement locations.ts uses for towns, and for the same reason: the menu
+// is being trimmed to what TLB wants to sell now, not edited down to what it
+// will sell forever. The tree above is untouched, so it stays the record of
+// what the full menu is meant to be, and every page still builds.
+//
+// To un-hide one, delete its line. To un-hide everything, export
+// `headerNavAll` directly — nothing else has to change.
+//
+// Both entries are Level-A items, so their children go with them: "Meet the
+// team" takes About TLB and Teagan, Work with us, Reviews and How booking
+// works; "Guides" takes all nine guide articles. Nothing else is hidden —
+// every service, premises and town in the tree above still shows.
+//
+// What that costs, so nobody has to rediscover it:
+//  1. "Why TLB" is now the only header item that is about the business
+//     rather than a service.
+//  2. /about/ loses its only link in the service band. primaryNav still
+//     carries an "About" row, which is now the sole route to it.
+//  3. /guides/ and the nine articles lose their only site-wide link. The
+//     guides are internally linked from service-page bodies, so they are not
+//     fully orphaned, but nothing lists them as a set any more.
+//
+// ⚠️ UNLINKED IS NOT UNINDEXED. All thirteen pages still build into dist/
+// and stay reachable and crawlable by URL. If the intent is that nobody
+// finds them while they are hidden, they need `noindex` (and to come out of
+// any sitemap) too — a separate decision, NOT made here. It is the same open
+// question locations.ts raises about its towns.
+//
+// ⚠️ meetTheTeam.ts mirrors the "Meet the team" menu and cross-links those
+// four pages from each other's BODIES. Those links are untouched, so the
+// four pages still reach each other. Only the nav changed.
+//
+// Matching is by label, and the guard below checks each name against the
+// tree at build time: a label reworded or removed up there fails the build
+// instead of quietly un-hiding itself.
+const hiddenNavLabels = ['Meet the team', 'Guides'];
+
+const hiddenNavLabelSet = new Set(hiddenNavLabels);
+
+const allNavLabels = new Set(
+  headerNavAll.flatMap((item) => [
+    item.label,
+    ...(item.megaMenu ?? []).flatMap((group) => group.items.map((child) => child.label)),
+  ]),
+);
+
+const missingNavLabels = hiddenNavLabels.filter((label) => !allNavLabels.has(label));
+if (missingNavLabels.length) {
+  throw new Error(
+    `Hidden nav labels no longer exist in headerNavAll: ${missingNavLabels.join(', ')}`,
+  );
+}
+
+/**
+ * The header's service band, with the hidden labels above filtered out.
+ * Hiding works at either level: a Level-A item goes with its children, and a
+ * Level-B child can be hidden on its own. A group left with no items is
+ * dropped rather than rendered as a heading over nothing, and an item left
+ * with no groups keeps its own href and renders as a plain link.
+ */
+export const headerNav: MegaMenuNavItem[] = headerNavAll
+  .filter((item) => !hiddenNavLabelSet.has(item.label))
+  .map((item) => {
+    if (!item.megaMenu) return item;
+    const megaMenu = item.megaMenu
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((child) => !hiddenNavLabelSet.has(child.label)),
+      }))
+      .filter((group) => group.items.length > 0);
+    return megaMenu.length ? { ...item, megaMenu } : { label: item.label, href: item.href };
+  });
