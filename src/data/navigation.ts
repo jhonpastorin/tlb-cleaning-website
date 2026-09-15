@@ -174,9 +174,9 @@ const headerNavAll: MegaMenuNavItem[] = [
       {
         label: 'Inside your home',
         items: [
-          { label: 'Deep cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/house-cleaning/deep-cleaning/'
+          { label: 'Deep cleaning', href: '/house-cleaning/deep-cleaning/' },
           // Label reconciled earlier: the menu keeps the IA sheet's fuller wording, and the slug it carried matched the content plans.
-          { label: 'End of lease and bond cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/house-cleaning/end-of-lease-cleaning/'
+          { label: 'End of lease and bond cleaning', href: '/house-cleaning/end-of-lease-cleaning/' },
           { label: 'Mould cleaning and removal', href: '/house-cleaning/mould-removal/' },
         ],
       },
@@ -387,7 +387,7 @@ if (missingNavLabels.length) {
  */
 // ── UNLINKED ROWS ───────────────────────────────────────────
 //
-// Twenty rows in the tree above carry no `href` and a
+// Eighteen rows in the tree above carry no `href` and a
 // `// UNLINKED 16 Sep 2026 — was href: ...` comment in its place. They are
 // the red cells on the client's colour-coded menu sheet of that date. Each
 // still appears in the menu, in its group, in the same order; it just is not
@@ -406,30 +406,29 @@ if (missingNavLabels.length) {
 // should not be mentioned, unlinking when it should be advertised but not
 // visited yet.
 //
-// WHAT STAYS CLICKABLE, for the record: mould cleaning and removal, carpet
-// and rug cleaning, tile and grout cleaning, blinds, shutters and ceiling
-// fans, Airbnb, real estate cleaners, NDIS cleaning, and five of the
-// thirteen premises — office, strata, aged care, medical and construction
+// WHAT STAYS CLICKABLE, for the record: the whole of "Inside your home" —
+// deep cleaning, end of lease and bond cleaning, mould cleaning and removal
+// — plus carpet and rug cleaning, tile and grout cleaning, blinds, shutters
+// and ceiling fans, Airbnb, real estate cleaners, NDIS cleaning, and five of
+// the thirteen premises: office, strata, aged care, medical and construction
 // site. Every Level-A item and all 56 towns are untouched.
 //
-// Blinds, shutters and ceiling fans was red on the sheet and was unlinked
-// with the rest on 16 Sep 2026, then relinked the same day on the client's
-// correction. Its href is back on the row and its UNLINKED comment is gone,
-// which is exactly what relinking one of these looks like.
+// THREE ROWS WERE RED ON THE SHEET AND ARE LINKED ANYWAY, all corrected by
+// the client within a day of the unlinking pass: blinds, shutters and
+// ceiling fans first, then deep cleaning and end of lease and bond cleaning
+// together. The last two put "Inside your home" back to a fully clickable
+// group, which is what you would expect — they are the two most heavily
+// built pages on the site. Each was relinked by moving the href back onto
+// its row and deleting its UNLINKED comment, which is all relinking one of
+// these ever requires.
 //
 // ⚠️ THE HEADER IS NOT THE ONLY ROUTE TO THESE PAGES, and unlinking one row
-// does not make its page unreachable. All twenty still build, are still
+// does not make its page unreachable. All eighteen still build, are still
 // crawlable by URL, and are still linked from page BODIES — premises.ts
 // cross-links all thirteen premises pages, the footer's own service list is
 // a separate array in this file, and pages link each other in prose. If the
 // intent is that nobody reaches these at all, this change alone does not do
 // it; say so and the other surfaces can follow.
-//
-// ⚠️ TWO OF THESE MAY SURPRISE WHOEVER READS THIS NEXT. Deep cleaning and
-// end of lease are the two most heavily built pages on the site and were
-// both reworked the week this landed, and they are unlinked here because
-// they are red on the sheet. If that was a colouring slip rather than a
-// decision, these are the first two to put back.
 
 export const headerNav: MegaMenuNavItem[] = headerNavAll
   .filter((item) => !hiddenNavLabelSet.has(item.label))
