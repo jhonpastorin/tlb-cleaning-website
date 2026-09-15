@@ -365,6 +365,12 @@ const hiddenNavLabels = [
   'Factories',
   'Breweries',
 
+  // Home Cleaning → Appliances. Leaves carpet and rug, tile and grout, and
+  // blinds, shutters and ceiling fans.
+  'Upholstery and lounge cleaning',
+  'Mattress cleaning',
+  'Oven, BBQ and appliance cleaning',
+
   // Home Cleaning → Outside your home (empties the group).
   'Window cleaning',
   'Gutter cleaning',
