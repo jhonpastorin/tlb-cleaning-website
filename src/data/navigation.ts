@@ -7,7 +7,7 @@
 //
 // Page-specific content still lives in each page file — only the chrome
 // every page repeats lives here.
-import type { MegaMenuGroup, MegaMenuNavItem, NavItem, ButtonData } from './types';
+import type { MegaMenuChild, MegaMenuGroup, MegaMenuNavItem, NavItem, ButtonData } from './types';
 import {
   northernRiversTowns,
   tweedTowns,
@@ -152,12 +152,69 @@ export const primaryNav: NavItem[] = [
 // restoring towns doesn't also mean restoring the layout logic.
 const REGION_COL_ROWS = 20;
 
+// ── WHICH TOWNS ARE CLICKABLE ─────────────────────────────────
+//
+// All 56 towns are LISTED in this menu. Only the fourteen below are LINKED,
+// at the client's request (16 Sep 2026). The other 42 render as plain text
+// — still named, still in their region, just not clickable — which is the
+// same no-href mechanism the service rows use, applied a row at a time
+// instead of a list at a time.
+//
+// This is the third distinct state a town can be in, so it is worth saying
+// all three out loud:
+//   • listed and linked — the fourteen below
+//   • listed, not linked — the other 42, here
+//   • not listed at all — nothing, currently; locations.ts' curated eight
+//     still governs the /locations/ hub and every "Where we clean" band, but
+//     this menu stopped reading them when it went back to all 56
+//
+// To make a town clickable, add it here. To make every town clickable again,
+// have `regionColumns` give every row an href unconditionally.
+//
+// The list is the client's own, in their order, and mixes regions: Kingscliff,
+// Pottsville, Murwillumbah and Tweed Heads are Tweed towns and appear in the
+// Tweed column, not the Northern Rivers one, even though the client's sheet
+// grouped them under the Northern Rivers heading. The menu's three-region
+// structure is unchanged; only navigability is.
+//
+// The guard below checks each name against locations.ts at build time, so a
+// town renamed or removed there fails the build rather than quietly going
+// unclickable.
+const navigableTowns = [
+  'Byron Bay',
+  'Brunswick Heads',
+  'Ballina',
+  'Lennox Head',
+  'Lismore',
+  'Alstonville',
+  'Kingscliff',
+  'Pottsville',
+  'Murwillumbah',
+  'Evans Head',
+  'Casino',
+  'Tweed Heads',
+  'Burleigh Heads',
+  'Palm Beach',
+];
+
+const navigableTownSet = new Set(navigableTowns);
+
+const allTowns = new Set([...northernRiversTowns, ...tweedTowns, ...southernGoldCoastTowns]);
+const missingTowns = navigableTowns.filter((town) => !allTowns.has(town));
+if (missingTowns.length) {
+  throw new Error(`Navigable towns no longer exist in locations.ts: ${missingTowns.join(', ')}`);
+}
+
 // Towns only: the region itself is the column heading, not a link. The
 // "All of <region>" rows that used to head each column are gone at the
-// client's request — the region overview pages still exist, they just
-// aren't linked from this menu.
+// client's request, and there is nothing to restore them to — the three
+// region overview pages do not exist (locations.ts says so, and dist/
+// confirms it: 56 town pages and the hub, no region pages).
 const regionColumns = (label: string, towns: string[]): MegaMenuGroup[] => {
-  const rows: NavItem[] = towns.map((town) => ({ label: town, href: townSlug(town) }));
+  const rows: MegaMenuChild[] = towns.map((town) => ({
+    label: town,
+    ...(navigableTownSet.has(town) ? { href: townSlug(town) } : {}),
+  }));
   const colCount = Math.ceil(rows.length / REGION_COL_ROWS);
   const perCol = Math.ceil(rows.length / colCount);
   return Array.from({ length: colCount }, (_, col) => ({
