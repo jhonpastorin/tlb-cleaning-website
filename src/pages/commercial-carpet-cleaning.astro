@@ -1,9 +1,35 @@
 ---
+// ── SEO COPY REWRITE APPLIED, 16 September 2026 ─────────────────────────
+//
+// This page has been rewritten against commercial-carpet-cleaning-copy-rewrite.md
+// (workbook row 28, primary `commercial carpet cleaning services` 150/mo,
+// cluster 470/mo). Section numbers in the comments below are that brief's.
+// Implemented: approved title and meta, new H1 with the old one demoted to
+// the hero subheading line, the mapped phrase in the opening paragraph, the
+// approved CTA in all four places, the low-moisture sentence in stage five,
+// a new office H2, the renamed premises and FAQ headings, the narrowed
+// comparison table and the full-footprint town list.
+//
+// 🔴 ONE BLOCKING CHANGE REQUEST IS OPEN AND SHIPS UNRESOLVED. The approved
+// CTA, "Book a night clean", contradicts this page's own pricing section and
+// BFD §13.2. It is PLACED, per the brief's Rule 4, and it SHOULD NOT GO LIVE
+// until the workbook owner rules on the wording. Suggested replacement:
+// "Get a quote for a night clean." See `primaryCta` below.
+//
+// Not done here, because they are not copy: the URL mismatch (workbook wants
+// /commercial-cleaning/commercial-carpet-cleaning, the build is flat — a
+// redirect decision for the build team), the canonical domain, FAQ schema,
+// the header's competing "Get an instant quote", and hiding the testimonial
+// block until real quotes exist.
+//
 // Commercial carpet cleaning — a LEAF page under the /commercial-cleaning/
 // hub (navigation.ts, "Commercial services" group). Sibling of
 // /commercial-pressure-cleaning/, built in the same pass and sharing its
 // structure deliberately: two leaves off one hub that open differently read
 // as two different sites.
+//
+// NO CONTENT BRIEF EXISTED WHEN THIS PAGE WAS BUILT. One does now, and it's
+// named at the top of this file. The note below is the original build's.
 //
 // NO CONTENT BRIEF EXISTS. Every other page in src/pages/ was built from a
 // file in content-plans/; there is none for this one. All copy below is
@@ -83,19 +109,43 @@ import {
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
-import { comparisonColumns, comparisonRows } from '../data/comparison';
-import { nswLocationGroups } from '../data/locations';
+import { comparisonColumns, serviceComparisonRows } from '../data/comparison';
+import { footprintLocationGroups, footprintSubheading } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. Focus keyword leads the title, matching the hub's pattern.
 const pageMeta = {
-  title: 'Commercial Carpet Cleaning | TLB Cleaning',
+  // Approved title and meta, pasted verbatim from the brief (workbook row 28)
+  // per its Rule 3. The one added word, "Services", is what turns the head
+  // term into the mapped primary `commercial carpet cleaning services`
+  // (150/mo, Keyword Mapping & Metadata 15 Sep 2026).
+  title: 'Commercial Carpet Cleaning Services | TLB Cleaning',
+  // 140 characters. The live one was 173 and would have been truncated.
+  //
+  // ⚠️ CHANGE REQUEST, brief §3: this carries "commercial carpet cleaning"
+  // but not the full mapped phrase, so the meta component cannot score full
+  // marks. One added word fixes it and keeps the length at 149. Pasted as
+  // approved rather than edited, per Rule 3.
   description:
-    'Commercial carpet cleaning across the Northern Rivers and the Tweed. Hot water extraction after hours, traffic lanes and stains treated, and a written price before we start.',
+    'Commercial carpet cleaning for offices and workspaces, done after hours so nothing stops. Low-moisture options dry fast. Book a night clean.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
   canonical: 'https://tlbcleaning.com.au/commercial-carpet-cleaning/',
 };
+
+// §7 The primary CTA, defined once and repeated in four places per BFD §9.5:
+// the hero button, pathway card 1, the button after the six stages and the
+// closing block. The page already standardised to a single label, so this is
+// a substitution rather than a cleanup.
+//
+// 🔴 BLOCKING — DO NOT PUBLISH WITHOUT A RULING. See the file header. The
+// label below is the workbook's approved CTA, placed exactly as specified per
+// the brief's Rule 4, and it contradicts the page it sits on: §22 says
+// commercial work is priced on the site, the closing heading says "Start with
+// a walkthrough", and BFD §13.2 says instant booking works badly where
+// condition drives the price. Suggested replacement for the workbook:
+// "Get a quote for a night clean."
+const primaryCta = { label: 'Book a night clean' };
 
 const business = {
   name: 'TLB Cleaning',
@@ -146,10 +196,21 @@ const business = {
 // placeholder rather than the finished job.
 const hero = {
   kicker: 'Commercial carpet cleaning',
-  headingLines: ['Your carpet is the first thing anyone walks on.'],
+  // Brief §4. The exact phrase `commercial carpet cleaning services` is worth
+  // 15 points scored present or absent, and the old line is good writing that
+  // still lands one line lower.
+  headingLines: ['Commercial carpet cleaning services, done after you close'],
+  // Brief §5 and §6, in that order. The demoted H1 opens the lead, so it is
+  // still the first thing under the headline, and the hero paragraph follows.
+  // Hero has no separate subheading slot — `headingLines` all render inside
+  // the one <h1>, which is where a second line would be wrong — so the two
+  // run as one lead paragraph rather than as a new component prop.
+  //
+  // The mapped phrase now sits contiguously inside the first two sentences,
+  // which is the 10-point opening-paragraph component.
   lead:
-    `Carpet cleaning for offices, clinics, venues and strata across the Northern Rivers and the Tweed. Done after you close, dry before you open. ${theLine.fast}`,
-  cta: { label: 'Book a site walkthrough', href: quoteCta.href },
+    `Your carpet is the first thing anyone walks on. Commercial carpet cleaning services for offices, clinics, venues and strata across the Northern Rivers and the Tweed. Done after you close, dry before you open. ${theLine.fast}`,
+  cta: { label: primaryCta.label, href: quoteCta.href },
   image: {
     ratio: '1/1',
     label:
@@ -191,7 +252,7 @@ const pathwayCards = {
       title: 'The carpet looks tired and I need it back',
       description:
         'Traffic lanes, chair marks, spills and the grey path from the door to the lift. One extraction clean lifts most of it, and we tell you honestly which marks are permanent before we quote, not after.',
-      cta: { label: 'Book a site walkthrough', href: quoteCta.href },
+      cta: { label: primaryCta.label, href: quoteCta.href },
     },
     {
       number: 2,
@@ -269,7 +330,10 @@ const scopeItems = [
     description:
       // ⚠️ Confirm TLB offers this second method. If not, cut this card and
       // the matching sentence in non-branded FAQ 2.
-      'For a floor that has to be walked on in a few hours, encapsulation crystallises the soil so it vacuums out the next day. Lighter than extraction and much faster to dry, which is the right call for a corridor that never closes.',
+      // Brief §14. Five added words ("It is a low moisture method") are what
+      // honours the approved meta's promise of low-moisture options that dry
+      // fast. This is the one passage on the page that delivers on it.
+      'For a floor that has to be walked on in a few hours, encapsulation crystallises the soil so it vacuums out the next day. It is a low moisture method, lighter than extraction and much faster to dry, which is the right call for a corridor that never closes.',
   },
   {
     icon: 'office' as const,
@@ -295,6 +359,27 @@ const scopeItems = [
 const worthKnowingBody: TextBlockBody[] = [
   'A bad carpet clean and a good one look the same on the day. The difference turns up three weeks later. Over-wetting leaves moisture in the backing, which is how you get an odour that will not shift and, in a humid Northern Rivers summer, mould under a floor that looks fine from above. Too much detergent left in the pile is worse in its own way: it stays tacky, so the carpet re-soils faster than before it was cleaned and the traffic lanes come back darker than they started.',
   'The other thing worth knowing is that most commercial carpet is still under a manufacturer warranty, and most of those warranties require periodic hot water extraction by a professional. A bonnet clean can technically void one. So ask any cleaner which method they use, what they do about drying, and whether their work meets your carpet maker’s maintenance requirements. We put the method and the price in writing before we start, and we tell you straight when a mark is not coming out.',
+];
+
+// §17 NEW SECTION. Offices as a distinct case.
+//
+// Targets `office carpet cleaning services` 200/mo and `carpet cleaning
+// services for offices` 20/mo — 220/mo combined, which is MORE monthly volume
+// than the mapped primary carries on its own, and the page currently captures
+// none of it. It names offices six times and never addresses one.
+//
+// Why this is an H2 and not the page's primary: `office carpet cleaning
+// services` outranks the mapped primary on volume and was tested as a
+// replacement. It loses because it is narrower than the page, which also
+// serves clinics, venues and strata, and because the whole 470/mo cluster
+// sits under the commercial umbrella. The mapped primary holds.
+//
+// Placed after "What a low carpet quote usually leaves out" so the buying
+// argument comes first and the audience detail follows.
+const officeBody: TextBlockBody[] = [
+  'An office wears differently to a venue or a clinic. It goes in three places: the run from the lift to reception, the strip past the printer and the half metre of carpet under every chair. Those lanes get agitated by hand before the extraction wand goes near them, because that is where the grey comes from.',
+  'The other difference is access. Most offices are locked, alarmed and full of equipment nobody wants moved. We settle the access at the walkthrough, and the keys and alarm codes stay with the same small team every visit rather than with whoever is rostered. Desks with computers on them stay where they are and we clean around them.',
+  'Workstations, meeting rooms, boardrooms and reception get done in the one visit, so you are not letting us back in three times. Most offices land on two extraction cleans a year. A busy reception floor usually wants more than that, and a quiet upstairs office usually wants less.',
 ];
 
 // §6 Related pages. NOT the hub's full fifteen-pill premises list, which
@@ -360,7 +445,12 @@ const comparisonTable = {
   cornerLabel: 'Why TLB Cleaning is different',
   lead: 'Carpet cleaning is easy to sell once. What is hard is being the same people, at the same standard, the second and third time you are asked back.',
   columns: comparisonColumns,
-  rows: comparisonRows,
+  // Brief §19, scorecard finding 7. "Who cleans your home" becomes "your
+  // premises" on a commercial page, and the holiday-lets row comes off: an
+  // office manager or a strata committee reading it here is being shown a
+  // table written for somebody else. Every other row is neutral and factual
+  // and is unchanged. See data/comparison.ts.
+  rows: serviceComparisonRows('Who cleans your premises'),
 };
 
 // §11 Branded FAQs. Written in the CUSTOMER'S voice, where "we" means the
@@ -446,7 +536,9 @@ const closingCta = {
   kicker: 'Commercial carpet cleaning',
   heading: 'Start with a walkthrough.',
   lead: 'We come and look at the carpet, test the fibre and tell you what will lift and what will not. Then you get a written scope and a price. No obligation.',
-  cta: { label: 'Book a site walkthrough', href: quoteCta.href },
+  // 🔴 This is the clearest place the conflict shows. The heading says start
+  // with a walkthrough and the button underneath says book a night clean.
+  cta: { label: primaryCta.label, href: quoteCta.href },
 };
 ---
 
@@ -485,7 +577,7 @@ const closingCta = {
       heading="What a carpet clean actually involves"
       lead="Six stages, in this order. Skip the first two and the rest is just wet carpet."
       items={scopeItems}
-      cta={{ label: 'Book a site walkthrough', href: quoteCta.href }}
+      cta={{ label: primaryCta.label, href: quoteCta.href }}
     />
 
     <TextBlock
@@ -493,6 +585,16 @@ const closingCta = {
       align="left"
       heading="What a low carpet quote usually leaves out"
       body={worthKnowingBody}
+    />
+
+    {/* §17. New H2, per the brief. `light` between the dark "low quote"
+        band above and TagCloud's brand fill below, so the page keeps
+        alternating rather than stacking three filled bands. */}
+    <TextBlock
+      theme="light"
+      align="left"
+      heading="Office carpet cleaning services, worked around a locked building"
+      body={officeBody}
     />
 
     {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
@@ -513,7 +615,7 @@ const closingCta = {
         between "Worth knowing" and the related pages. */}
 
     <TagCloud
-      heading="Where we clean carpet"
+      heading="Where we provide commercial carpet cleaning services"
       subheading="Commercial carpet cleaning for workplaces across the Northern Rivers and the Tweed."
       tags={settingTags}
       note={[]}
@@ -531,8 +633,8 @@ const closingCta = {
 
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers."
-      groups={nswLocationGroups}
+      subheading={footprintSubheading}
+      groups={footprintLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -553,8 +655,12 @@ const closingCta = {
       body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="Commercial Carpet Cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Brief §23 and §24. The page carried two FAQ headings and the generic
+        one made the split look like a build error. This block is about
+        working with TLB, the next is about the service, and naming them that
+        way makes both useful. Title Case also breaks BFD §9.2. */}
+    <Faq heading="Booking a commercial carpet clean" items={brandedFaqItems} />
+    <Faq heading="Commercial carpet cleaning questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

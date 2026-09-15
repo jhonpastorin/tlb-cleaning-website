@@ -263,3 +263,82 @@ export const locationGroups: TagGroup[] = [
 export const nswLocationGroups: TagGroup[] = [
   toGroup('Northern Rivers NSW', visibleNorthernRiversTowns),
 ];
+
+// ── THE FULL-FOOTPRINT LIST, for the SEO copy-rewrite pages ──────────────
+//
+// Added September 2026 for the four pages rewritten against the copy-rewrite
+// briefs in content-plans/ (carpet and rug, tile and grout, commercial carpet,
+// commercial pressure). Each brief's "Where we clean" section specifies this
+// exact list by name, on the same reasoning every time: BFD §2.1 says name the
+// whole footprint and do not cherry-pick the coastal towns, §12.1 calls named
+// towns the proof, and on the live SERP the nearest competitor in each
+// category publishes twenty-three towns against these pages' six.
+//
+// ⚠️ THIS DELIBERATELY DIVERGES FROM `visibleTowns` ABOVE, which is the
+// client's own eight-town call from earlier this month and still governs every
+// OTHER page's band, the /locations/ hub and the header menu. Nothing above is
+// changed. If the client wants the wider list everywhere, the fix is to point
+// `visibleNorthernRiversTowns` and `visibleSouthernGoldCoastTowns` at these
+// arrays and delete this block — not to edit two lists in parallel.
+//
+// The briefs' lists are a SUBSET of the source arrays at the top of this file:
+// they leave out Bexhill, Dunoon, Skennars Head, Broadwater, New Brighton,
+// Federal, Bilambil, Bilambil Heights, Fingal Head, Bogangar and Mooball. That
+// is the briefs' own call, so the towns are listed literally here rather than
+// filtered, in the briefs' order. The guard below fails the build if any name
+// stops existing upstream.
+//
+// Linking follows the established rule, not a new one: `isNavigableTown`
+// decides, exactly as navigation.ts and RegionPage.astro already do, so a
+// town is NAMED here whether or not its page is currently reachable. Naming
+// the footprint is the brand and citability claim; linking 56 town pages is
+// the separate doorway-page question recorded in townPages.ts.
+export const footprintNorthernRiversTowns = [
+  'Lismore', 'Goonellabah', 'Alstonville', 'Wollongbar', 'Casino', 'Kyogle',
+  'Nimbin', 'Clunes', 'Ballina', 'East Ballina', 'Lennox Head', 'Wardell',
+  'Evans Head', 'Woodburn', 'Coraki', 'Bangalow', 'Byron Bay', 'Suffolk Park',
+  'Mullumbimby', 'Brunswick Heads', 'Ocean Shores', 'Billinudgel',
+];
+
+export const footprintTweedTowns = [
+  'Murwillumbah', 'Tweed Heads', 'Tweed Heads South', 'Banora Point',
+  'Terranora', 'Chinderah', 'Kingscliff', 'Casuarina', 'Cudgen',
+  'Cabarita Beach', 'Hastings Point', 'Pottsville', 'Uki', 'Burringbar',
+];
+
+export const footprintSouthernGoldCoastTowns = [...southernGoldCoastTowns];
+
+for (const [shown, source, region] of [
+  [footprintNorthernRiversTowns, northernRiversTowns, 'Northern Rivers'],
+  [footprintTweedTowns, tweedTowns, 'Tweed'],
+  [footprintSouthernGoldCoastTowns, southernGoldCoastTowns, 'Southern Gold Coast'],
+] as [string[], string[], string][]) {
+  const missing = shown.filter((town) => !source.includes(town));
+  if (missing.length) {
+    throw new Error(
+      `Footprint ${region} towns no longer exist in the full list: ${missing.join(', ')}`,
+    );
+  }
+}
+
+// Same construction as `toGroup`, but only the navigable towns get an href —
+// the others render as plain <span> pills, which is what TagCloud does with a
+// tag that has no href.
+const toFootprintGroup = (label: string, towns: string[]): TagGroup => ({
+  label,
+  tags: towns.map((town) => ({
+    label: town,
+    ...(isNavigableTown(town) ? { href: townSlug(town) } : {}),
+  })),
+});
+
+/** All three regions, for the pages whose brief names the whole footprint. */
+export const footprintLocationGroups: TagGroup[] = [
+  toFootprintGroup('Northern Rivers NSW', footprintNorthernRiversTowns),
+  toFootprintGroup('The Tweed', footprintTweedTowns),
+  toFootprintGroup('Southern Gold Coast QLD', footprintSouthernGoldCoastTowns),
+];
+
+/** The subheading every one of those four briefs specifies, word for word. */
+export const footprintSubheading =
+  'Across the Northern Rivers, the Tweed and the Southern Gold Coast.';

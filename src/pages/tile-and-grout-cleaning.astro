@@ -1,4 +1,47 @@
 ---
+// -- SEO COPY REWRITE APPLIED, 16 September 2026 -------------------------
+//
+// This page has been rewritten against tile-and-grout-cleaning-copy-rewrite.md
+// (workbook row 10, primary `tile and grout cleaning` 700/mo, cluster
+// 1,480/mo). Section numbers in the comments below are that brief's, and it
+// SUPERSEDES the "NO CONTENT BRIEF EXISTS" note below.
+//
+// THIS IS THE LIGHTEST REWRITE IN EITHER BATCH, AND THAT IS THE FINDING. The
+// brief scores this page 84, the strongest of the four reviewed, and says so
+// outright: the page already carried the mapped phrase in the title, the URL,
+// the opening paragraph, a heading and the meta, and it already covers its
+// whole mapped cluster, 1,480 of 1,480. Fourteen of its sections are marked
+// No change because they are already doing their job. What was holding it
+// back is not the words.
+//
+// So only four things changed in copy: the approved title and meta, the H1
+// (with the old one demoted to open the hero lead), the approved CTA in four
+// places, and the two FAQ headings. Plus the narrowed comparison table and
+// the full-footprint town list.
+//
+// DELIBERATELY NO NEW SECTION, unlike the other three pages in these two
+// batches. All seven mapped terms are word-order variants of one intent and
+// the page serves it thoroughly, so there is no gap in the cluster to write
+// against. The live SERP does show the significant Australian competitors
+// built around grout sealing, colour sealing, regrouting, shower repairs and
+// anti-slip treatment, and NONE of those terms is in the mapped cluster, but
+// there is no demand connector available to size that. It is raised as a
+// question for the workbook owner rather than written up here. Adding copy
+// against unsourced demand is how pages get padded.
+//
+// 🔴 TWO BLOCKING CHANGE REQUESTS ARE OPEN AND SHIP UNRESOLVED,
+// both against the approved meta description and both set out in full at
+// `pageMeta` below: it promises the original colour back, which this page's
+// own strongest section argues against, and it states "Sealing available"
+// while the page asks twice whether TLB offers it. The approved text is
+// placed per Rule 3. DO NOT PUBLISH THE META until the workbook owner rules.
+//
+// Not done here, because they are not copy: the URL mismatch (folder level
+// only, no keyword cost either way, so it is a redirect decision for the
+// build team), the canonical domain, FAQ schema for ten questions across two
+// blocks, dropping the header's competing "Get an instant quote", and hiding
+// the testimonial block until real quotes exist.
+//
 // Tile and grout cleaning — one of the six "Appliances" leaf pages under the
 // Home Cleaning mega-menu. See carpet-and-rug-cleaning.astro for the shared
 // reasoning behind this group, and src/data/appliance-services.ts for the
@@ -68,8 +111,8 @@ import {
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
-import { comparisonColumns, comparisonRows } from '../data/comparison';
-import { locationGroups } from '../data/locations';
+import { comparisonColumns, serviceComparisonRows } from '../data/comparison';
+import { footprintLocationGroups, footprintSubheading } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { otherApplianceServices } from '../data/appliance-services';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
@@ -77,11 +120,53 @@ import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/bra
 const OWN_HREF = '/tile-and-grout-cleaning/';
 
 const pageMeta = {
-  title: 'Tile and Grout Cleaning | TLB Cleaning',
+  // Approved title, pasted verbatim from the brief (workbook row 10) per its
+  // Rule 3. "Services" picks up `tile and grout cleaning services` 250/mo and
+  // `professional tile and grout cleaning services` 200/mo (Keyword Mapping &
+  // Metadata, 15 Sep 2026). The ampersand is a deliberate shortener and the
+  // phrase still reads as the mapped term.
+  title: 'Tile & Grout Cleaning Services | TLB Cleaning',
+  // 🔴 TWO BLOCKING CHANGE REQUESTS AGAINST THIS APPROVED META. It is
+  // pasted verbatim per Rule 3, and IT SHOULD NOT GO LIVE until the workbook
+  // owner resolves both. See the file header for the full argument.
+  //
+  //   ONE. It promises "brings back the original colour". The page's bleach
+  //   section says, in the strongest writing on the site: "Grout will not
+  //   always come back to white, and any cleaner who promises it will is
+  //   either about to disappoint you or about to do something you did not
+  //   agree to." That is not a tension. It is the page calling its own meta
+  //   description a warning sign. Suggested replacement for the workbook,
+  //   147 characters, keeping the CTA and the rooms:
+  //     "Tile and grout cleaning that brings the colour back as far as it
+  //      will come, in bathrooms, kitchens and entryways. Sealing available.
+  //      Get a fixed quote today."
+  //
+  //   TWO. It states "Sealing available" as fact. This page carries TWO live
+  //   placeholders asking whether TLB offers sealing at all (method stage
+  //   six, and branded FAQ 4), and the cost FAQ assumes it as a third. The
+  //   meta asserts it, the page asks about it. One of the two has to change
+  //   and the answer is not a copy decision.
+  //
+  // Worth telling the workbook owner: the LIVE meta being replaced already
+  // got this right, with "brought back as far as it will come, with an honest
+  // answer on the rest". The correct wording exists and does not need
+  // inventing. 140 characters; the live one was 164 and over the limit.
   description:
-    'Tile and grout cleaning across the Northern Rivers and the Tweed. Bathroom and kitchen grout brought back as far as it will come, with an honest answer on the rest.',
+    'Tile and grout cleaning that brings back the original colour in bathrooms, kitchens and entryways. Sealing available. Get a fixed quote today.',
   canonical: 'https://tlbcleaning.com.au/tile-and-grout-cleaning/',
 };
+
+// The primary CTA, defined once and repeated in four places per BFD 9.5: the
+// hero button, pathway card 1, the button after the six stages and the
+// closing block.
+//
+// NO BLOCKING CONFLICT ON THE CTA ITSELF, unlike the meta above. This fixes a
+// live breach: the page says in its own words that "the honest answer is a
+// fast quote rather than an instant one", and then put "Get an instant quote"
+// on four buttons, which BFD 13.2 rules out on condition-driven work.
+// "Fixed" is also the accurate word here, because the page promises you will
+// know the price before work starts, not after.
+const primaryCta = { label: 'Get a fixed quote today' };
 
 const business = {
   name: 'TLB Cleaning',
@@ -103,10 +188,26 @@ const business = {
 
 const hero = {
   kicker: 'Tile and grout cleaning',
-  headingLines: ['The tiles are fine. It is the lines between them.'],
+  // Brief section 4. This was the only component on the page's primary
+  // keyword score that still missed, worth 15 points scored present or
+  // absent, on a mapped phrase of 700/mo. Naming the three areas is the
+  // specificity BFD 14 asks for rather than decoration.
+  headingLines: ['Tile and grout cleaning for bathrooms, kitchens and tiled floors'],
+  // ON DEMOTING A GOOD LINE: "The tiles are fine. It is the lines between
+  // them." is the sharpest headline on the site. It is NOT being cut. It
+  // lands one line lower, opening the lead, and still does the same work,
+  // because the argument it makes is the argument the whole page runs on.
+  // Hero has no separate subheading slot; `headingLines` all render inside
+  // the one <h1>.
+  //
+  // The hero paragraph after it is UNCHANGED, per brief section 6: it
+  // already carries the mapped phrase contiguously inside its first
+  // sentence, which is the full 10-point opening-paragraph component, and
+  // its second sentence is the honest version of what the approved meta
+  // overpromises. Nothing to improve.
   lead:
-    `Tile and grout cleaning for bathrooms, kitchens and floors across the Northern Rivers and the Tweed. We will tell you how far it will come back before we start. ${theLine.fast}`,
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+    `The tiles are fine. It is the lines between them. Tile and grout cleaning for bathrooms, kitchens and floors across the Northern Rivers and the Tweed. We will tell you how far it will come back before we start. ${theLine.fast}`,
+  cta: { label: primaryCta.label, href: quoteCta.href },
   image: {
     ratio: '1/1',
     label:
@@ -134,7 +235,7 @@ const pathwayCards = {
       title: 'The grout has gone grey and mopping does nothing',
       description:
         'Because mopping is part of how it got there. Grout needs to be worked and rinsed rather than wiped, and that is a different job from the one you have been doing every week.',
-      cta: { label: 'Get an instant quote', href: quoteCta.href },
+      cta: { label: primaryCta.label, href: quoteCta.href },
     },
     {
       number: 2,
@@ -216,7 +317,7 @@ const clusterServices = otherApplianceServices(OWN_HREF);
 const testimonials = [
   {
     quote:
-      '[TBC. Ask Teagan for a quote from a client who thought their bathroom needed retiling and did not. That is the saving this page argues for. Written permission required (BFD 5.3).]',
+      '[TBC. Ask Teagan for a quote from a client who thought their bathroom needed retiling and did not. That is the saving this page argues for, and it is the most commercially valuable brief on the site because it puts a number against it. Written permission required. The permission rule is BFD 12.1 and 12.2; section 5.3 is what households worry about.]',
     name: '[First name, TBC]',
     role: '[Suburb, TBC]',
     rating: 5,
@@ -245,7 +346,11 @@ const comparisonTable = {
   cornerLabel: 'Why TLB Cleaning is different',
   lead: 'The value here is not the scrubbing. It is getting a straight answer about whether your bathroom needs cleaning or needs a trade.',
   columns: comparisonColumns,
-  rows: comparisonRows,
+  // Brief section 20, scorecard finding 7. The holiday-lets row comes off:
+  // the other seven bear on a household booking a grout clean, and this one
+  // is about a service the page does not sell. "Who cleans your home" is
+  // correct here and stays. See data/comparison.ts.
+  rows: serviceComparisonRows(),
 };
 
 const brandedFaqItems = [
@@ -324,7 +429,7 @@ const closingCta = {
   kicker: 'Tile and grout cleaning',
   heading: 'Find out how far it will come back.',
   lead: 'We look at the surface and the grout, give you a realistic view of the result and a price. If it needs a trade rather than a clean, we will say so.',
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+  cta: { label: primaryCta.label, href: quoteCta.href },
 };
 ---
 
@@ -361,7 +466,7 @@ const closingCta = {
       heading="How we clean tile and grout"
       lead="Six stages. Most of the result comes from dwell time and agitation, not from pressure."
       items={methodItems}
-      cta={{ label: 'Get an instant quote', href: quoteCta.href }}
+      cta={{ label: primaryCta.label, href: quoteCta.href }}
     />
 
     <Callout tone="note" heading={mouldCallout.heading} body={mouldCallout.body} cta={mouldCallout.cta} />
@@ -397,8 +502,8 @@ const closingCta = {
 
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers and the Southern Gold Coast."
-      groups={locationGroups}
+      subheading={footprintSubheading}
+      groups={footprintLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -419,8 +524,24 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
-    <Faq heading="Tile and grout cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Brief sections 24 and 25. The page carried two FAQ headings and the
+        pair read as a build error. This block is about working with TLB, the
+        next is about the service. Sentence case is BFD 9.2, and the mapped
+        phrase stays contiguous either way, so no keyword is at risk.
+
+        PROTECT non-branded question 2. It carries the only safety
+        information on the site, that bleach must never be mixed with an
+        acidic cleaner, with ammonia or with any other product. It is
+        correct, and it is the kind of passage an AI assistant surfaces.
+        Never cut it, and do not soften the warning symbol.
+
+        PROTECT non-branded question 3. The cleaning / sealing / regrouting
+        distinction is the clearest explanation of the category anywhere in
+        the competitive set, and it ends by saying cleaning cannot fix grout
+        that is physically gone. That sentence costs bookings and earns
+        trust, which is the trade BFD 2.3 asks for. */}
+    <Faq heading="Booking a tile and grout clean" items={brandedFaqItems} />
+    <Faq heading="Tile and grout cleaning questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

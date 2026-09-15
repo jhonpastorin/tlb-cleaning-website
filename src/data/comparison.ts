@@ -100,3 +100,28 @@ export const comparisonRows = [
     values: ['Wherever the contractor is based', 'Locally', 'In the towns they clean in, across the region'],
   },
 ];
+
+// ── PER-PAGE VARIANTS ────────────────────────────────────────────────────
+//
+// Added September 2026 for the four pages rewritten against the copy-rewrite
+// briefs in content-plans/. All four raise the same finding (their scorecard
+// finding 7) against the shared rows above, and two raise a second one:
+//
+//  1. The "Holiday lets" row is about a service none of those four pages
+//     sells. A strata committee reading a row about holiday lets on a
+//     commercial pressure cleaning page is being shown a table written for
+//     somebody else, and the same is true of a household booking a grout
+//     clean. Every other row bears on the page it sits on.
+//
+//  2. "Who cleans your home" is correct on the two residential pages and
+//     wrong on the two commercial ones, where the subject is a workplace.
+//
+// A function rather than four exported arrays, and NOT an edit to `rows`
+// above: the homepage, /why-tlb/ and commercial-cleaning still render the
+// approved table in full, and the briefs do not cover those pages. This
+// narrows a shared table for a page that needs it without rewriting it out
+// from under the three pages that don't.
+export const serviceComparisonRows = (subjectLabel = 'Who cleans your home') =>
+  comparisonRows
+    .filter((row) => row.label !== 'Holiday lets')
+    .map((row) => (row.label === 'Who cleans your home' ? { ...row, label: subjectLabel } : row));

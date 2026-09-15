@@ -1,4 +1,36 @@
 ---
+// -- SEO COPY REWRITE APPLIED, 16 September 2026 -------------------------
+//
+// This page has been rewritten against carpet-and-rug-cleaning-copy-rewrite.md
+// (workbook row 7, primary `carpet cleaning` 4,600/mo, cluster 12,250/mo, the
+// largest in the workbook). Section numbers in the comments below are that
+// brief's, and it SUPERSEDES the "NO CONTENT BRIEF EXISTS" note below.
+//
+// THE ROOT-CAUSE FINDING, and most of what changed: the mapped primary is
+// `carpet cleaning`, and the page was built on "carpet AND RUG cleaning".
+// Those three words split the phrase in the title, the URL, the H1, the
+// opening paragraph, the meta and the FAQ heading, and the scoring rules
+// treat a split phrase as absent. So the page scored nothing on the exact
+// term in five places while reading as though it was about exactly the right
+// subject. The metadata, H1, hero lead and second FAQ heading below are the
+// same fix applied five times. RUGS ARE NOT DROPPED ANYWHERE. They move a
+// few words to the right.
+//
+// Also implemented: the approved CTA in all four places, stairs landed in the
+// hero and in method stage three, a new end-of-lease H2, a new hire-machine
+// FAQ, the narrowed comparison table and the full-footprint town list.
+//
+// NO BLOCKING CONFLICT on this page. The approved CTA, "Book your clean
+// online", RESOLVES the live contradiction between the buttons and the
+// pricing paragraph rather than creating one.
+//
+// Not done here, because they are not copy: the URL mismatch (the workbook
+// wants /house-cleaning/carpet-cleaning, which is also the only one of the
+// two URLs carrying the mapped phrase contiguously, so it is a redirect
+// decision for the build team), the canonical domain, FAQ schema for eleven
+// questions across two blocks, dropping the header's competing "Get an
+// instant quote", and hiding the testimonial block until real quotes exist.
+//
 // Carpet and rug cleaning — one of the six "Appliances" leaf pages under the
 // Home Cleaning mega-menu, all built in the same pass and sharing a
 // structure. Their cluster links come from src/data/appliance-services.ts;
@@ -77,8 +109,8 @@ import {
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
-import { comparisonColumns, comparisonRows } from '../data/comparison';
-import { locationGroups } from '../data/locations';
+import { comparisonColumns, serviceComparisonRows } from '../data/comparison';
+import { footprintLocationGroups, footprintSubheading } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { otherApplianceServices } from '../data/appliance-services';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
@@ -86,11 +118,43 @@ import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/bra
 const OWN_HREF = '/carpet-and-rug-cleaning/';
 
 const pageMeta = {
-  title: 'Carpet and Rug Cleaning | TLB Cleaning',
+  // Approved title and meta, pasted verbatim from the brief (workbook row 7)
+  // per its Rule 3. THE ROOT-CAUSE FIX: the live title split the mapped
+  // primary across "carpet AND RUG cleaning", and the scoring rules treat a
+  // split phrase as absent. This carries `carpet cleaning` 4,600/mo
+  // contiguously and picks up `carpet cleaning services` 800/mo plus the
+  // steam cluster at 1,900/mo (Keyword Mapping & Metadata, 15 Sep 2026).
+  //
+  // The hyphen construction and "Steam" sitting alone read a little abruptly.
+  // Approved, well inside the limit, and it does the keyword job, so it is
+  // pasted verbatim. Raising it would be a style preference, not a finding.
+  title: 'Carpet Cleaning Services - Steam | TLB Cleaning',
+  // 144 characters. The live one was 166 and would have been truncated.
+  //
+  // WARNING: TWO PROMISES IN THIS META THE PAGE MUST KEEP.
+  //   - "Rugs and stairs included." Rugs were covered well; the word STAIRS
+  //     appeared nowhere on the live page. Landed in the hero lead and in
+  //     method stage three below. Fixed in copy.
+  //   - "steam or dry methods to suit your carpet." The page describes hot
+  //     water extraction as what TLB does, and names dry cleaning and
+  //     encapsulation only as other methods that exist. NOTHING SAYS TLB
+  //     OFFERS A DRY METHOD. That cannot be fixed in copy without an answer
+  //     from TLB. See the launch blockers in the file header.
   description:
-    'Carpet and rug cleaning across the Northern Rivers and the Tweed. Hot water extraction, wool and natural fibres tested first, and a straight answer on what will lift.',
+    'Carpet cleaning that lifts what a vacuum cannot, using steam or dry methods to suit your carpet. Rugs and stairs included. Book your clean online.',
   canonical: 'https://tlbcleaning.com.au/carpet-and-rug-cleaning/',
 };
+
+// The primary CTA, defined once and repeated in four places per BFD 9.5: the
+// hero button, pathway card 1, the button after the six stages and the
+// closing block.
+//
+// This REMOVES a live contradiction rather than creating one. The page told
+// the reader in its own words that "the honest answer is a fast quote rather
+// than an instant one", and then put "Get an instant quote" on four buttons.
+// BFD 13.2 agrees with the paragraph, not the buttons, and 3.3 is where
+// booking online in a couple of minutes comes from.
+const primaryCta = { label: 'Book your clean online' };
 
 const business = {
   name: 'TLB Cleaning',
@@ -114,10 +178,25 @@ const business = {
 
 const hero = {
   kicker: 'Carpet and rug cleaning',
-  headingLines: ['The carpet holds everything the house walks in.'],
+  // Brief section 4. `carpet cleaning` 4,600/mo is worth 15 points scored
+  // present or absent, and the region extension serves `carpet cleaning near
+  // me` 3,100/mo and `carpet cleaning services near me` 200/mo, together the
+  // second largest block of demand in the cluster.
+  //
+  // ON SAYING "CLEANING" TWICE: deliberate. "Carpet and rug cleaning" splits
+  // the target and "carpet cleaning and rugs" reads as though rugs are an
+  // afterthought. Saying it out gives both services their own noun and keeps
+  // the mapped phrase whole at the front. Rugs are not being dropped
+  // anywhere on this page; they move a few words to the right.
+  headingLines: ['Carpet cleaning and rug cleaning across the Northern Rivers and the Tweed'],
+  // Brief sections 5 and 6, in that order. The demoted H1 opens the lead, so
+  // it is still the first thing under the headline. Hero has no separate
+  // subheading slot; `headingLines` all render inside the one <h1>.
+  //
+  // Four added words honour the approved meta's stairs promise.
   lead:
-    `Carpet and rug cleaning for homes across the Northern Rivers and the Tweed. We test the fibre before we start, and tell you what will lift before you pay. ${theLine.fast}`,
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+    `The carpet holds everything the house walks in. Carpet cleaning and rug cleaning for homes across the Northern Rivers and the Tweed. Stairs and rugs included. We test the fibre before we start, and tell you what will lift before you pay. ${theLine.fast}`,
+  cta: { label: primaryCta.label, href: quoteCta.href },
   image: {
     ratio: '1/1',
     label:
@@ -148,7 +227,7 @@ const pathwayCards = {
       title: 'It looks grey and I know it is not clean',
       description:
         'The path from the door to the sofa, the patch under the coffee table, sand that never quite vacuums out. One extraction clean lifts most of it. We will tell you honestly which marks are in the fibre for good.',
-      cta: { label: 'Get an instant quote', href: quoteCta.href },
+      cta: { label: primaryCta.label, href: quoteCta.href },
     },
     {
       number: 2,
@@ -184,9 +263,13 @@ const methodItems = [
   },
   {
     icon: 'spark' as const,
-    title: 'Traffic lanes and spots by hand',
+    // Brief section 14. The approved meta promises "Rugs and stairs included"
+    // and stairs appeared nowhere on the live page. This is the stage where
+    // they genuinely belong, and the added sentence is a real specific rather
+    // than a keyword insert.
+    title: 'Traffic lanes, stairs and spots by hand',
     description:
-      'Doorways, the run past the couch and the spot where the dog sleeps wear faster than the rest. Those get pre-treated and agitated separately, and individual spots are treated by what caused them rather than with one product for everything.',
+      'Doorways, the run past the couch, the stair treads and the spot where the dog sleeps wear faster than the rest. Stair treads wear hardest of anything in a house, because every step lands in the same place. Those get pre-treated and agitated separately, and individual spots are treated by what caused them rather than with one product for everything.',
   },
   {
     icon: 'chart-bars' as const,
@@ -219,12 +302,41 @@ const worthKnowingBody: TextBlockBody[] = [
   'So the question worth asking any carpet cleaner is not the price per room. It is what they do about drying, what they will do differently on a wool rug, and whether they will tell you before they start that a mark is permanent. We would rather lose the job than shrink your rug, and we would rather say a stain is staying than take your money and hope.',
 ];
 
+// NEW SECTION, brief section 18. End of lease carpet cleaning.
+//
+// Targets `end of lease carpet cleaning` 250/mo (Keyword Mapping & Metadata,
+// 15 Sep 2026), captured at ZERO on the live page, which did not use the
+// words bond, lease or inspection anywhere.
+//
+// WHY IT IS SHORT, and deliberately so: the site already has a dedicated
+// /house-cleaning/end-of-lease-cleaning/ page with its own mapped cluster.
+// This covers the carpet-specific slice, says the useful thing, and hands
+// the reader across. Written any longer it would start competing with a
+// stronger page for the same queries, which is the mistake this kind of
+// addition usually makes.
+//
+// Placed immediately after "What a low carpet quote usually leaves out".
+const endOfLeaseBody: TextBlockBody[] = [
+  'If the carpet is being cleaned because the keys are going back, the standard is not your standard. It is whatever the outgoing inspection asks for, and some leases name professional carpet cleaning specifically. We give you a receipt that says what was done, because that is usually the thing the agent actually wants to see.',
+  'Worth knowing before you book: a bond clean and a carpet clean are two different jobs, and carpet is often the part people forget until the inspection is already booked. If you need both, it is cheaper and faster to have them done on the same visit than to bring two lots of people through an empty house.',
+];
+
+// The brief asks for this as anchor text on the heading or the last sentence.
+// TextBlock renders plain paragraphs with no inline markup, so it lands as
+// the block's own link instead. It is NAVIGATION to a sibling page, not a
+// second primary CTA: the page's one CTA is `primaryCta` and it is repeated
+// four times, per BFD 9.5.
+const endOfLeaseLink = {
+  label: 'End of lease and bond cleaning',
+  href: '/house-cleaning/end-of-lease-cleaning/',
+};
+
 const clusterServices = otherApplianceServices(OWN_HREF);
 
 const testimonials = [
   {
     quote:
-      '[TBC. Ask Teagan for a quote from a client whose carpet was close to being replaced and came back after one clean. That is the most valuable testimonial this page can carry, because it puts a dollar figure against the job. Written permission required (BFD 5.3).]',
+      '[TBC. Ask Teagan for a quote from a client whose carpet was close to being replaced and came back after one clean. That is the most valuable testimonial this page can carry, because it puts a dollar figure against the job. Written permission required. The permission rule is BFD 12.1 and 12.2; section 5.3 is what households worry about.]',
     name: '[First name, TBC]',
     role: '[Suburb, TBC]',
     rating: 5,
@@ -253,7 +365,12 @@ const comparisonTable = {
   cornerLabel: 'Why TLB Cleaning is different',
   lead: 'Anyone can run a machine over a floor once. What is harder is being the people you can ring next year, who remember which rug is the good one.',
   columns: comparisonColumns,
-  rows: comparisonRows,
+  // Brief section 20, scorecard finding 7. The holiday-lets row comes off:
+  // the other seven rows all bear on a household booking a carpet clean, and
+  // this one is about a service the page does not sell. "Who cleans your
+  // home" IS correct here and stays, unlike on the two commercial pages in
+  // the earlier batch. See data/comparison.ts.
+  rows: serviceComparisonRows(),
 };
 
 const brandedFaqItems = [
@@ -283,6 +400,24 @@ const brandedFaqItems = [
     question: 'What happens if I get in touch?',
     answer:
       'We look at the floors, test the fibre and tell you what will lift and what will not. Then you get a price. If it suits, we book a time, and we can put it on a schedule with your regular clean so you never have to think about it again.',
+  },
+  {
+    // NEW, brief section 17, added here as question 6.
+    //
+    // Targets `professional carpet cleaning` 1,000/mo (Keyword Mapping &
+    // Metadata, 15 Sep 2026), which the page captured only in passing. It
+    // made the professional case implicitly all the way through and never
+    // answered the question the searcher is actually asking. On the live
+    // SERP (16 Sep 2026) a direct local competitor leads with the DIY
+    // machine comparison, so this is a competitive gap as well as a
+    // coverage one.
+    //
+    // Answering it honestly, INCLUDING how to do it better yourself, is the
+    // BFD 2.3 move and costs almost nothing in bookings. Do not cut the last
+    // sentence: it is the part that makes the rest believable.
+    question: 'Is it worth paying someone, or should we just hire a machine?',
+    answer:
+      'A hire machine will lift surface soil and it is better than nothing. What it will not do is heat the water properly, put it in under real pressure or pull most of it back out, and that last part is what matters. A carpet left too wet is the problem, not the dirt. Most of the damage we get called to fix was done by a hire machine used with the best intentions and too much water, so if you do hire one, use half the solution you think you need and twice the dry passes.',
   },
 ];
 
@@ -335,7 +470,7 @@ const closingCta = {
   kicker: 'Carpet and rug cleaning',
   heading: 'Book your carpet clean.',
   lead: 'We test the fibre, tell you what will lift and what will not, and give you a price before we start. No obligation, and no surprises on the day.',
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+  cta: { label: primaryCta.label, href: quoteCta.href },
 };
 ---
 
@@ -372,7 +507,7 @@ const closingCta = {
       heading="How we clean a carpet"
       lead="Six stages, in this order. The first two are the ones a rushed job skips."
       items={methodItems}
-      cta={{ label: 'Get an instant quote', href: quoteCta.href }}
+      cta={{ label: primaryCta.label, href: quoteCta.href }}
     />
 
     <TextBlock
@@ -380,6 +515,17 @@ const closingCta = {
       align="left"
       heading="What a low carpet quote usually leaves out"
       body={worthKnowingBody}
+    />
+
+    {/* Brief section 18. New H2. `light` between the dark "low quote" band
+        above and the list block below, so the page keeps alternating rather
+        than stacking two filled bands. */}
+    <TextBlock
+      theme="light"
+      align="left"
+      heading="End of lease carpet cleaning"
+      body={endOfLeaseBody}
+      cta={endOfLeaseLink}
     />
 
     {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
@@ -413,8 +559,8 @@ const closingCta = {
 
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers and the Southern Gold Coast."
-      groups={locationGroups}
+      subheading={footprintSubheading}
+      groups={footprintLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -435,8 +581,19 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
-    <Faq heading="Carpet and rug cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Brief sections 24 and 25. The page carried two FAQ headings and the
+        generic one made the split look like a build error. This block is
+        about working with TLB, the next is about the service. The second
+        rename also lands the mapped phrase contiguously in a heading, which
+        is the 10-point H2 component the page only half scored.
+
+        PROTECT non-branded question 4. The pet urine answer explains
+        sub-surface contamination and says replacing the underlay is
+        sometimes the only honest answer. It costs TLB a booking to say that,
+        which is precisely why it is the most trustworthy paragraph on the
+        page. Add to it if you must, never cut it. */}
+    <Faq heading="Booking a carpet clean" items={brandedFaqItems} />
+    <Faq heading="Carpet cleaning questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"
