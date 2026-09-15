@@ -9,8 +9,9 @@
 // every page repeats lives here.
 import type { MegaMenuGroup, MegaMenuNavItem, NavItem, ButtonData } from './types';
 import {
-  visibleNorthernRiversTowns,
-  visibleSouthernGoldCoastTowns,
+  northernRiversTowns,
+  tweedTowns,
+  southernGoldCoastTowns,
   townSlug,
 } from './locations';
 
@@ -119,15 +120,29 @@ export const primaryNav: NavItem[] = [
 
 // "Areas we clean" mega-menu columns.
 //
-// The curated town list this menu shows now lives in locations.ts
-// (`visibleNorthernRiversTowns` / `visibleSouthernGoldCoastTowns`) rather than
-// here, because the /locations/ hub and every page's "Where we clean" band
-// hide the same towns — one subset, one place to edit. That file's own header
-// explains what is hidden, what is merely unlinked, and how to un-hide it.
+// ⚠️ THIS MENU NOW SHOWS ALL 56 TOWNS AGAIN, 16 Sep 2026, at the client's
+// request — the full `northernRiversTowns`, `tweedTowns` and
+// `southernGoldCoastTowns` arrays, not the eight-town curated subset it had
+// been reading. That brings the Tweed back as a region here: it was hidden in
+// full, so locations.ts has no visible Tweed list and no Tweed group, and this
+// file names that group itself.
 //
-// Region headings are the client's exact wording ("Northern Rivers NSW",
-// "Southern Gold Coast QLD") and come through locations.ts' groups too, so the
-// menu and the hub cannot label the same region differently.
+// ⚠️ READ THIS BEFORE TOUCHING EITHER FILE. The menu and the rest of the
+// site now disagree on purpose, and locations.ts' own header still claims they
+// cannot. ONLY the header menu was widened. The /locations/ hub and every
+// page's "Where we clean" band still read `locationGroups`, which is still the
+// curated eight, so a town like Kingscliff is now reachable from the header on
+// every page and is listed nowhere else on the site. That asymmetry is the
+// instruction, not an oversight — but if what was wanted is all 56 towns
+// everywhere, the change belongs in locations.ts' visible arrays instead and
+// this block goes back to reading them.
+//
+// Region headings are the client's exact wording. "Northern Rivers NSW" and
+// "Southern Gold Coast QLD" match locations.ts' groups verbatim, so the menu
+// and the hub cannot label the same region differently. "The Tweed" is this
+// codebase's own prior wording for that group, recovered from the version of
+// locations.ts that still had one, and carries no state suffix — that is how
+// it always read here, and how townPages.ts still labels it.
 // Kept from when this menu rendered all 56 towns: each region's list is split
 // across at most REGION_COL_ROWS rows per column, balanced so the columns of a
 // region are within one row of each other. Only a region's FIRST column
@@ -229,11 +244,15 @@ export const headerNav: MegaMenuNavItem[] = [
   {
     label: 'Areas we clean',
     href: '/locations/',
-    // Shows the curated subset from locations.ts, not the full town list.
-    // Every hidden town keeps its page; it just isn't linked from anywhere.
+    // Every town in locations.ts, all three regions. The column split above
+    // does the rest: Northern Rivers' 28 towns break over two columns of 14,
+    // the Tweed's 19 and the Southern Gold Coast's 9 take one each, so the
+    // panel is four columns — the same width as the Home Cleaning panel, and
+    // the shape this menu had before the curated subset was introduced.
     megaMenu: [
-      ...regionColumns('Northern Rivers NSW', visibleNorthernRiversTowns),
-      ...regionColumns('Southern Gold Coast QLD', visibleSouthernGoldCoastTowns),
+      ...regionColumns('Northern Rivers NSW', northernRiversTowns),
+      ...regionColumns('The Tweed', tweedTowns),
+      ...regionColumns('Southern Gold Coast QLD', southernGoldCoastTowns),
     ],
   },
   {
