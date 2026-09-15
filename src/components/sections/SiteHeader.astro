@@ -82,9 +82,14 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
                       <div class="site-header__mega-col">
                         {group.label && <p class="site-header__mega-group-label">{group.label}</p>}
                         <ul>
-                          {group.items.map((child) => (
-                            <li><a href={child.href}>{child.label}</a></li>
-                          ))}
+                          {group.items.map((child) => {
+                            /* No href means the page is deliberately not
+                               linked yet: render the label as plain text so
+                               the row keeps its place. Same idiom TagCloud
+                               uses for the same situation. */
+                            const Row = child.href ? 'a' : 'span';
+                            return <li><Row href={child.href}>{child.label}</Row></li>;
+                          })}
                         </ul>
                       </div>
                     ))}
@@ -136,9 +141,14 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
                       <div class="site-header__mega-col">
                         {group.label && <p class="site-header__mega-group-label">{group.label}</p>}
                         <ul>
-                          {group.items.map((child) => (
-                            <li><a href={child.href}>{child.label}</a></li>
-                          ))}
+                          {group.items.map((child) => {
+                            /* No href means the page is deliberately not
+                               linked yet: render the label as plain text so
+                               the row keeps its place. Same idiom TagCloud
+                               uses for the same situation. */
+                            const Row = child.href ? 'a' : 'span';
+                            return <li><Row href={child.href}>{child.label}</Row></li>;
+                          })}
                         </ul>
                       </div>
                     ))}
@@ -348,12 +358,23 @@ const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
     gap: var(--space-3xs);
   }
 
-  .site-header__mega-col a {
+  /* `span` is a row whose page is deliberately not linked yet (no href in
+     navigation.ts). It shares every type style with the links around it so
+     the column still reads as one list, and differs only in the two things
+     that would be a lie on a non-link: it does not take the hover colour,
+     and it is not underlined by the global link rule. */
+  .site-header__mega-col a,
+  .site-header__mega-col span {
     color: var(--color-on-surface);
     font-family: var(--font-body);
     font-weight: var(--weight-body);
     font-size: var(--text-small);
     padding-block: 2px;
+  }
+
+  .site-header__mega-col span {
+    text-decoration: none;
+    cursor: default;
   }
 
   .site-header__mega-col a:hover {

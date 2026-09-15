@@ -174,8 +174,9 @@ const headerNavAll: MegaMenuNavItem[] = [
       {
         label: 'Inside your home',
         items: [
-          { label: 'Deep cleaning', href: '/house-cleaning/deep-cleaning/' },
-          { label: 'End of lease and bond cleaning', href: '/house-cleaning/end-of-lease-cleaning/' }, // reconciled: menu keeps the sheet's fuller label, slug matches the one used at line 239 and in the content plans
+          { label: 'Deep cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/house-cleaning/deep-cleaning/'
+          // Label reconciled earlier: the menu keeps the IA sheet's fuller wording, and the slug it carried matched the content plans.
+          { label: 'End of lease and bond cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/house-cleaning/end-of-lease-cleaning/'
           { label: 'Mould cleaning and removal', href: '/house-cleaning/mould-removal/' },
         ],
       },
@@ -183,21 +184,21 @@ const headerNavAll: MegaMenuNavItem[] = [
         label: 'Appliances',
         items: [
           { label: 'Carpet and rug cleaning', href: '/carpet-and-rug-cleaning/' },
-          { label: 'Upholstery and lounge cleaning', href: '/upholstery-and-lounge-cleaning/' },
-          { label: 'Mattress cleaning', href: '/mattress-cleaning/' },
+          { label: 'Upholstery and lounge cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/upholstery-and-lounge-cleaning/'
+          { label: 'Mattress cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/mattress-cleaning/'
           { label: 'Tile and grout cleaning', href: '/tile-and-grout-cleaning/' },
-          { label: 'Oven, BBQ and appliance cleaning', href: '/oven-bbq-and-appliance-cleaning/' },
-          { label: 'Blinds, shutters and ceiling fans', href: '/blinds-shutters-and-ceiling-fans/' },
+          { label: 'Oven, BBQ and appliance cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/oven-bbq-and-appliance-cleaning/'
+          { label: 'Blinds, shutters and ceiling fans' }, // UNLINKED 16 Sep 2026 — was href: '/blinds-shutters-and-ceiling-fans/'
         ],
       },
       {
         label: 'Outside your home',
         items: [
-          { label: 'Window cleaning', href: '/window-cleaning/' },
-          { label: 'Gutter cleaning', href: '/gutter-cleaning/' },
-          { label: 'Roof cleaning', href: '/roof-cleaning/' },
-          { label: 'High pressure cleaning', href: '/high-pressure-cleaning/' },
-          { label: 'Exterior house washing', href: '/exterior-house-washing/' },
+          { label: 'Window cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/window-cleaning/'
+          { label: 'Gutter cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/gutter-cleaning/'
+          { label: 'Roof cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/roof-cleaning/'
+          { label: 'High pressure cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/high-pressure-cleaning/'
+          { label: 'Exterior house washing' }, // UNLINKED 16 Sep 2026 — was href: '/exterior-house-washing/'
         ],
       },
       {
@@ -217,8 +218,8 @@ const headerNavAll: MegaMenuNavItem[] = [
       {
         label: 'Commercial services',
         items: [
-          { label: 'Commercial carpet cleaning', href: '/commercial-carpet-cleaning/' },
-          { label: 'Commercial pressure cleaning', href: '/commercial-pressure-cleaning/' },
+          { label: 'Commercial carpet cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/commercial-carpet-cleaning/'
+          { label: 'Commercial pressure cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/commercial-pressure-cleaning/'
         ],
       },
       {
@@ -229,14 +230,14 @@ const headerNavAll: MegaMenuNavItem[] = [
           { label: 'Aged care, retirement and seniors', href: '/aged-care-retirement-and-seniors/' },
           { label: 'Medical, clinic and salon cleaning', href: '/medical-clinic-and-salon-cleaning/' },
           { label: 'Construction site', href: '/construction-site/' },
-          { label: 'Hospitality, venues and holiday parks', href: '/hospitality-venues-and-holiday-parks/' },
-          { label: 'Commercial kitchen cleaning', href: '/commercial-kitchen-cleaning/' },
-          { label: 'Schools and childcare centres', href: '/schools-and-childcare-centres/' },
-          { label: 'Gyms and fitness studios', href: '/gyms-and-fitness-studios/' },
-          { label: 'Retail and shopfronts', href: '/retail-and-shopfronts/' },
-          { label: 'Warehouses and industrial sites', href: '/warehouses-and-industrial-sites/' },
-          { label: 'Factories', href: '/factories/' },
-          { label: 'Breweries', href: '/breweries/' },
+          { label: 'Hospitality, venues and holiday parks' }, // UNLINKED 16 Sep 2026 — was href: '/hospitality-venues-and-holiday-parks/'
+          { label: 'Commercial kitchen cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/commercial-kitchen-cleaning/'
+          { label: 'Schools and childcare centres' }, // UNLINKED 16 Sep 2026 — was href: '/schools-and-childcare-centres/'
+          { label: 'Gyms and fitness studios' }, // UNLINKED 16 Sep 2026 — was href: '/gyms-and-fitness-studios/'
+          { label: 'Retail and shopfronts' }, // UNLINKED 16 Sep 2026 — was href: '/retail-and-shopfronts/'
+          { label: 'Warehouses and industrial sites' }, // UNLINKED 16 Sep 2026 — was href: '/warehouses-and-industrial-sites/'
+          { label: 'Factories' }, // UNLINKED 16 Sep 2026 — was href: '/factories/'
+          { label: 'Breweries' }, // UNLINKED 16 Sep 2026 — was href: '/breweries/'
         ],
       },
     ],
@@ -384,6 +385,47 @@ if (missingNavLabels.length) {
  * dropped rather than rendered as a heading over nothing, and an item left
  * with no groups keeps its own href and renders as a plain link.
  */
+// ── UNLINKED ROWS ───────────────────────────────────────────
+//
+// Twenty-one rows in the tree above carry no `href` and a
+// `// UNLINKED 16 Sep 2026 — was href: ...` comment in its place. They are
+// the red cells on the client's colour-coded menu sheet of that date. Each
+// still appears in the menu, in its group, in the same order; it just is not
+// clickable, because SiteHeader renders a row with no href as a <span>
+// instead of an <a> (see MegaMenuChild in types.ts).
+//
+// TEMPORARY, and the client said so when asking. Relinking one is moving the
+// href back out of its comment and deleting the comment — which is why the
+// URL is recorded inline on the row rather than in a list here: the thing you
+// need is next to the thing you are editing, and neither can drift from the
+// other.
+//
+// This is NOT the same tool as `hiddenNavLabels` below, and the difference is
+// worth keeping straight. Hiding takes a row out of the menu; unlinking
+// leaves it in and stops it going anywhere. Use hiding when the service
+// should not be mentioned, unlinking when it should be advertised but not
+// visited yet.
+//
+// WHAT STAYS CLICKABLE, for the record: mould cleaning and removal, carpet
+// and rug cleaning, tile and grout cleaning, Airbnb, real estate cleaners,
+// NDIS cleaning, and five of the thirteen premises — office, strata, aged
+// care, medical and construction site. Every Level-A item and all 56 towns
+// are untouched.
+//
+// ⚠️ THE HEADER IS NOT THE ONLY ROUTE TO THESE PAGES, and unlinking one row
+// does not make its page unreachable. All twenty-one still build, are still
+// crawlable by URL, and are still linked from page BODIES — premises.ts
+// cross-links all thirteen premises pages, the footer's own service list is
+// a separate array in this file, and pages link each other in prose. If the
+// intent is that nobody reaches these at all, this change alone does not do
+// it; say so and the other surfaces can follow.
+//
+// ⚠️ TWO OF THESE MAY SURPRISE WHOEVER READS THIS NEXT. Deep cleaning and
+// end of lease are the two most heavily built pages on the site and were
+// both reworked the week this landed, and they are unlinked here because
+// they are red on the sheet. If that was a colouring slip rather than a
+// decision, these are the first two to put back.
+
 export const headerNav: MegaMenuNavItem[] = headerNavAll
   .filter((item) => !hiddenNavLabelSet.has(item.label))
   .map((item) => {

@@ -10,13 +10,35 @@ export interface NavItem {
   hasDropdown?: boolean;
 }
 
+/** One row inside a mega-menu column.
+ *
+ *  `href` is OPTIONAL here, which is the one way this differs from NavItem,
+ *  and the reason this type exists rather than reusing it. A row with no
+ *  href renders as plain text instead of a link — SiteHeader picks the tag
+ *  the same way TagCloud already does (`const Tag = href ? 'a' : 'span'`),
+ *  so the row keeps its place in the menu, in its group, in the same order,
+ *  and simply stops being clickable.
+ *
+ *  That is deliberately a per-ROW switch, and it is NOT the same tool as
+ *  navigation.ts' `hiddenNavLabels`, which takes a row out of the menu
+ *  altogether. Unlink when the page should still be advertised but not
+ *  visited yet; hide when it should not be mentioned at all.
+ *
+ *  Optionality stops here on purpose. NavItem still requires `href`, so the
+ *  primary nav, the footer and every other consumer are unchanged and cannot
+ *  accidentally ship a nav row that goes nowhere. */
+export interface MegaMenuChild {
+  label: string;
+  href?: string;
+}
+
 /** One grouped column inside a mega-menu panel — e.g. "Inside your home"
  *  with its list of pages. `label` is a grouping heading only, not a page:
  *  it has no `href` and never renders as a link. Omit `label` entirely for
  *  an ungrouped flat list of items within the panel. */
 export interface MegaMenuGroup {
   label?: string;
-  items: NavItem[];
+  items: MegaMenuChild[];
 }
 
 /** A Level-A nav item that also has Level-B children, rendered as a
