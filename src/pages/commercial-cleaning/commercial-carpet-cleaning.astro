@@ -24,7 +24,7 @@
 //
 // Commercial carpet cleaning — a LEAF page under the /commercial-cleaning/
 // hub (navigation.ts, "Commercial services" group). Sibling of
-// /commercial-pressure-cleaning/, built in the same pass and sharing its
+// /commercial-cleaning/commercial-pressure-cleaning/, built in the same pass and sharing its
 // structure deliberately: two leaves off one hub that open differently read
 // as two different sites.
 //
@@ -65,21 +65,21 @@
 // BeforeAfter.astro is already running on five pages, but it takes real
 // paired photography and none exists for commercial work. The photo brief
 // is written out at the reserved slot in the render below.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import PathwayCards from '../components/sections/PathwayCards.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import ComparisonTable from '../components/sections/ComparisonTable.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import PathwayCards from '../../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // The §1 hero and §3 card 1 are this page's own, generated per
 // IMAGE-GUIDELINES; the prompts are in
 // src/assets/commercial_cleaning/carpet/IMAGE-PROMPTS.md.
@@ -92,14 +92,14 @@ import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 // carpet-specific frame, because it is the one card whose subject IS carpet
 // and reusing there would have put the same photo on two pages meaning two
 // different things.
-import heroImg from '../assets/commercial_cleaning/carpet/commercial-carpet-extraction-in-an-open-plan-office.jpg';
-import cardExtractionImg from '../assets/commercial_cleaning/carpet/commercial-carpet-extraction-along-an-office-corridor.jpg';
-import cardWalkthroughImg from '../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
-import cardTeamImg from '../assets/commercial_cleaning/commercial-cleaner-with-a-caddy-in-an-office-kitchenette.jpg';
+import heroImg from '../../assets/commercial_cleaning/carpet/commercial-carpet-extraction-in-an-open-plan-office.jpg';
+import cardExtractionImg from '../../assets/commercial_cleaning/carpet/commercial-carpet-extraction-along-an-office-corridor.jpg';
+import cardWalkthroughImg from '../../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
+import cardTeamImg from '../../assets/commercial_cleaning/commercial-cleaner-with-a-caddy-in-an-office-kitchenette.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -108,11 +108,11 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { comparisonColumns, serviceComparisonRows } from '../data/comparison';
-import { footprintLocationGroups, footprintSubheading } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { comparisonColumns, serviceComparisonRows } from '../../data/comparison';
+import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. Focus keyword leads the title, matching the hub's pattern.
 const pageMeta = {
@@ -130,7 +130,7 @@ const pageMeta = {
   description:
     'Commercial carpet cleaning for offices and workspaces, done after hours so nothing stops. Low-moisture options dry fast. Book a night clean.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-carpet-cleaning/',
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/commercial-carpet-cleaning/',
 };
 
 // §7 The primary CTA, defined once and repeated in four places per BFD §9.5:
@@ -387,18 +387,21 @@ const officeBody: TextBlockBody[] = [
 // where commercial carpet is the actual problem, plus the two routes back up
 // the cluster (the hub and the pressure cleaning sibling).
 //
-// ⚠️ Every href is a flat kebab-case guess from its menu label, per
-// navigation.ts. Unconfirmed sitewide.
+// ⚠️ Every href below is confirmed: the client's URL sheet of 17 Sep 2026
+// nests every Commercial row it lists under /commercial-cleaning/, and these
+// are its slugs verbatim. The exceptions are /factories/ and /breweries/,
+// which that sheet does not list — still the flat kebab-case guess, and the
+// only children of this hub whose URL sits outside it. See premises.ts.
 const settingTags = [
-  { label: 'Office cleaning', href: '/office-cleaning/' },
-  { label: 'Strata and common area cleaning', href: '/strata-and-common-area-cleaning/' },
-  { label: 'Medical, clinic and salon cleaning', href: '/medical-clinic-and-salon-cleaning/' },
-  { label: 'Aged care, retirement and seniors', href: '/aged-care-retirement-and-seniors/' },
-  { label: 'Hospitality, venues and holiday parks', href: '/hospitality-venues-and-holiday-parks/' },
-  { label: 'Retail and shopfronts', href: '/retail-and-shopfronts/' },
-  { label: 'Schools and childcare centres', href: '/schools-and-childcare-centres/' },
-  { label: 'Gyms and fitness studios', href: '/gyms-and-fitness-studios/' },
-  { label: 'Commercial pressure cleaning', href: '/commercial-pressure-cleaning/' },
+  { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
+  { label: 'Strata and common area cleaning', href: '/commercial-cleaning/strata-cleaning/' },
+  { label: 'Medical, clinic and salon cleaning', href: '/commercial-cleaning/medical-and-clinic-cleaning/' },
+  { label: 'Aged care, retirement and seniors', href: '/commercial-cleaning/aged-care-cleaning/' },
+  { label: 'Hospitality, venues and holiday parks', href: '/commercial-cleaning/hospitality-cleaning/' },
+  { label: 'Retail and shopfronts', href: '/commercial-cleaning/retail-cleaning/' },
+  { label: 'Schools and childcare centres', href: '/commercial-cleaning/school-and-childcare-cleaning/' },
+  { label: 'Gyms and fitness studios', href: '/commercial-cleaning/gym-and-fitness-cleaning/' },
+  { label: 'Commercial pressure cleaning', href: '/commercial-cleaning/commercial-pressure-cleaning/' },
   { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
 ];
 

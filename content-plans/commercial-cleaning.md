@@ -62,7 +62,7 @@ a prop). Removed; noted in `SECTIONS.md` for other callers.
 | Title tag | Pluralised to "Commercial Cleaning Services", double space removed. |
 | §1 hero | `kicker="Commercial Cleaning"` **added** (not in brief) — the H1 carries no part of the focus keyword. CTA relabelled **"Book a site walkthrough"** per 🚩5. |
 | §2 definition | **Drafted**, following the sibling two-sentence pattern. Nothing here is regulated, unlike the NDIS page's equivalent gap — but it still needs sign-off. |
-| §3 cards | **All three rewritten** per 🚩1. Card 2's NDIS copy replaced; its invoicing specifics ship as a visible bracket because that is genuine missing input. Destinations: `/office-cleaning/`, `/contact/` (stopgap), `/why-tlb/`. |
+| §3 cards | **All three rewritten** per 🚩1. Card 2's NDIS copy replaced; its invoicing specifics ship as a visible bracket because that is genuine missing input. Destinations: `/commercial-cleaning/office-cleaning/`, `/contact/` (stopgap), `/why-tlb/`. |
 | §4 trust bar | **Unchanged.** All three points are on-target here. The "employed, not subcontracted" rewording is left as an open decision rather than a unilateral edit to supplied copy. |
 | §5 worth knowing | **Verbatim**, in a dark `TextBlock` — not `Callout`. At 164 words across two paragraphs it is a section, not an aside. |
 | §6–8 | **Not built.** Empty in the brief; the deep-cleaning precedent is that guessing here gets reverted. |
@@ -190,11 +190,16 @@ choice depends on whether the child pages exist yet:
   thirteen stacked rows is a very long section and the descriptions don't
   exist.
 
-⚠️ The child slugs are **flat kebab-case guesses** from their labels, per
-[`navigation.ts:86–89`](../src/data/navigation.ts#L86-L89) — unconfirmed, and
-some are odd as standalone URLs (`/factories/`, `/breweries/`,
-`/construction-site/`, the last of which is singular where every sibling is
-plural). Confirm before wiring thirteen more links to them.
+✅ RESOLVED 17 Sep 2026 — thirteen of the fifteen child slugs are confirmed.
+The client's URL sheet nests every Commercial row it lists under
+`/commercial-cleaning/`, and those are now the slugs in
+[`navigation.ts`](../src/data/navigation.ts) and
+[`premises.ts`](../src/data/premises.ts). The odd standalone URLs went with
+it: `/construction-site/` became `/commercial-cleaning/construction-site-cleaning/`.
+
+⚠️ `/factories/` and `/breweries/` are the exception. That sheet lists neither,
+so both keep the old flat kebab-case guess and are now the only children of
+this hub whose URL sits outside it. Confirm both before launch.
 
 ### 3. The page argues that scope is what matters, then never states a scope
 
@@ -418,7 +423,7 @@ Source, verbatim:
 
 | Card | Suggested destination | Confidence |
 |---|---|---|
-| 1 (ongoing contract) | `/office-cleaning/` | Reasonable — it's the default premises type and the meta description names it |
+| 1 (ongoing contract) | `/commercial-cleaning/office-cleaning/` | Reasonable — it's the default premises type and the meta description names it |
 | 2 (billing) | ⚠️ **nothing exists** | An on-page anchor to a scope/pricing block (🚩3), or `/contact/` as a stopgap |
 | 3 (who's coming) | `/why-tlb/` or `/about/` | Both live; `/why-tlb/` is the closer match |
 
@@ -667,7 +672,7 @@ content and better than anything a local competitor will have.
 
 **Internal-link opportunities.** FAQ 2 describes deep cleaning and the site has
 [`/deep-cleaning/`](../src/pages/house-cleaning/deep-cleaning.astro) live; FAQ 5 describes
-childcare sites and `/schools-and-childcare-centres/` is in the mega-menu.
+childcare sites and `/commercial-cleaning/school-and-childcare-cleaning/` is in the mega-menu.
 Both answers should link out — partial relief for 🚩2.
 
 ⚠️ **Verification pass required — lighter than the NDIS page's, but real.**

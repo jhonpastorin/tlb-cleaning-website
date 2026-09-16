@@ -221,7 +221,7 @@ const pathwayCards = {
       title: 'I want someone reliable, every week',
       description:
         'We agree the schedule, daily, weekly or fortnightly, and put the scope in writing before we start. The same team works your building each visit, so nobody gets shown around twice.',
-      cta: { label: 'Office cleaning', href: '/office-cleaning/' },
+      cta: { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
     },
     {
       number: 2,
@@ -309,30 +309,35 @@ const worthKnowingBody: TextBlockBody[] = [
 // ServiceBlocks would want don't exist. Fifteen stacked full-width rows
 // would also be a very long section.
 //
-// ⚠️ Every href below is a flat kebab-case GUESS from its menu label, per
-// navigation.ts:86-89 — unconfirmed sitewide, and some are odd as standalone
-// URLs (/factories/, /breweries/, /construction-site/, the last singular
-// where every sibling is plural). Confirm before launch; this section wires
-// fifteen more links to them.
+// ⚠️ THIRTEEN OF THESE FIFTEEN ARE CONFIRMED, /factories/ and /breweries/
+// ARE NOT. The client's URL sheet of 17 Sep 2026 nests every Commercial row
+// it lists under this page's own URL, and those thirteen hrefs are its slugs
+// verbatim — which is also where the old oddities went: "construction site"
+// became construction-site-cleaning, and the label/slug mismatches ("Retail
+// and shopfronts" over /retail-cleaning/) are the sheet's own pairing, same
+// as in the Home Cleaning menu. Factories and breweries have no row on that
+// sheet at all, so they keep the flat kebab-case guess navigation.ts made
+// from their menu labels, and they are now the only two pills here pointing
+// outside the hub. Confirm both before launch.
 //
 // Office cleaning is highlighted as the default premises type — it is the
 // one the meta description names.
 const premisesTags = [
-  { label: 'Office cleaning', href: '/office-cleaning/' },
-  { label: 'Strata and common area cleaning', href: '/strata-and-common-area-cleaning/' },
-  { label: 'Medical, clinic and salon cleaning', href: '/medical-clinic-and-salon-cleaning/' },
-  { label: 'Aged care, retirement and seniors', href: '/aged-care-retirement-and-seniors/' },
-  { label: 'Hospitality, venues and holiday parks', href: '/hospitality-venues-and-holiday-parks/' },
-  { label: 'Commercial kitchen cleaning', href: '/commercial-kitchen-cleaning/' },
-  { label: 'Schools and childcare centres', href: '/schools-and-childcare-centres/' },
-  { label: 'Gyms and fitness studios', href: '/gyms-and-fitness-studios/' },
-  { label: 'Retail and shopfronts', href: '/retail-and-shopfronts/' },
-  { label: 'Warehouses and industrial sites', href: '/warehouses-and-industrial-sites/' },
-  { label: 'Construction site', href: '/construction-site/' },
+  { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
+  { label: 'Strata and common area cleaning', href: '/commercial-cleaning/strata-cleaning/' },
+  { label: 'Medical, clinic and salon cleaning', href: '/commercial-cleaning/medical-and-clinic-cleaning/' },
+  { label: 'Aged care, retirement and seniors', href: '/commercial-cleaning/aged-care-cleaning/' },
+  { label: 'Hospitality, venues and holiday parks', href: '/commercial-cleaning/hospitality-cleaning/' },
+  { label: 'Commercial kitchen cleaning', href: '/commercial-cleaning/commercial-kitchen-cleaning/' },
+  { label: 'Schools and childcare centres', href: '/commercial-cleaning/school-and-childcare-cleaning/' },
+  { label: 'Gyms and fitness studios', href: '/commercial-cleaning/gym-and-fitness-cleaning/' },
+  { label: 'Retail and shopfronts', href: '/commercial-cleaning/retail-cleaning/' },
+  { label: 'Warehouses and industrial sites', href: '/commercial-cleaning/warehouse-and-industrial-cleaning/' },
+  { label: 'Construction site', href: '/commercial-cleaning/construction-site-cleaning/' },
   { label: 'Factories', href: '/factories/' },
   { label: 'Breweries', href: '/breweries/' },
-  { label: 'Commercial carpet cleaning', href: '/commercial-carpet-cleaning/' },
-  { label: 'Commercial pressure cleaning', href: '/commercial-pressure-cleaning/' },
+  { label: 'Commercial carpet cleaning', href: '/commercial-cleaning/commercial-carpet-cleaning/' },
+  { label: 'Commercial pressure cleaning', href: '/commercial-cleaning/commercial-pressure-cleaning/' },
 ];
 
 // §14 Where we clean — NOT IN THE BRIEF, which had no service-area block at
@@ -497,11 +502,11 @@ const brandedFaqItems = [
 // silently.
 //
 // ⚠️ INTERNAL LINKS NOT ADDED. The plan wanted FAQ 2 to link /house-cleaning/deep-cleaning/
-// and FAQ 5 to link /schools-and-childcare-centres/, but Faq.astro renders
+// and FAQ 5 to link /commercial-cleaning/school-and-childcare-cleaning/, but Faq.astro renders
 // `answer` as plain text ({item.answer} in a <p>), so inline links would
 // need a change to a shared component's contract for one page's benefit.
 // Not worth it: /house-cleaning/deep-cleaning/ is already reachable from the header and
-// footer, and /schools-and-childcare-centres/ is linked from the premises
+// footer, and /commercial-cleaning/school-and-childcare-cleaning/ is linked from the premises
 // TagCloud above. Revisit if a second page needs rich FAQ answers.
 const nonBrandedFaqItems = [
   {

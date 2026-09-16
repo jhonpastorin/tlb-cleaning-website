@@ -2,8 +2,8 @@
 
 The prompts behind the five assets in this folder, kept so a slot can be
 regenerated consistently rather than re-invented. Three pages now draw on
-them: `/commercial-cleaning/`, `/commercial-carpet-cleaning/` and
-`/commercial-pressure-cleaning/`, so a change here is not local. Written to the template in
+them: `/commercial-cleaning/`, `/commercial-cleaning/commercial-carpet-cleaning/` and
+`/commercial-cleaning/commercial-pressure-cleaning/`, so a change here is not local. Written to the template in
 [`IMAGE-GUIDELINES.md`](../../../IMAGE-GUIDELINES.md) §8.
 
 Generated with `gemini-3-pro-image-preview` via the media-pipeline CLI.
@@ -215,7 +215,7 @@ no vignette, no distorted hands.
 
 Family B, transparent. **Currently imported by no page.** It was the hub's
 hero until `/commercial-cleaning/` moved to the foyer scene above, and
-`/commercial-carpet-cleaning/` briefly used it before being repointed at the
+`/commercial-cleaning/commercial-carpet-cleaning/` briefly used it before being repointed at the
 foyer scene too.
 
 ⚠️ It is kept rather than deleted because it is the only family B asset in the

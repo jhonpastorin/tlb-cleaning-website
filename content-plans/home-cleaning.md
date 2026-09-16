@@ -204,7 +204,7 @@ wayfinding, not marketing copy.
 
 🔴 **`/house-cleaning/senior-home-cleaning/` has no mega-menu entry.** It is *not* the same
 page as Commercial → "Aged care, retirement and seniors"
-(`/aged-care-retirement-and-seniors/`), which is cleaning aged-care premises.
+(`/commercial-cleaning/aged-care-cleaning/`), which is cleaning aged-care premises.
 Open item, unchanged from the first build.
 
 ---
@@ -699,7 +699,7 @@ and ruled out first.
    (15 towns), this page (56), `deep-cleaning.astro` (56),
    `commercial-cleaning.astro` (12). The mega-menu should grow to match.
 3. **`/house-cleaning/senior-home-cleaning/` has no mega-menu entry** (§4), and must not be
-   confused with `/aged-care-retirement-and-seniors/`.
+   confused with `/commercial-cleaning/aged-care-cleaning/`.
 4. ✅ **`canonical`** — resolved: **`https://tlbcleaning.com.au/`** (§0). The
    `example.com` placeholder was swapped on every page 2026-09-15, along with
    `astro.config.mjs`'s `site`. No longer a blocker.

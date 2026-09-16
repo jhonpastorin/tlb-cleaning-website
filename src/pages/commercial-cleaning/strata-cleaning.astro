@@ -1,10 +1,43 @@
 ---
+// ── SEO COPY REWRITE APPLIED, 16 September 2026 ───────────────────
+//
+// This page has been rewritten against
+// strata-and-common-area-cleaning-copy-rewrite.md (workbook row 27, primary
+// `strata cleaning services`). Section numbers in the comments below are that
+// brief's.
+//
+// Implemented: the approved title and meta, a new H1 carrying the mapped
+// phrase with the old one demoted into the hero lead, the mapped phrase in
+// the opening paragraph, the approved CTA in both places, a NEW comparison
+// table written for a committee (brief §19), the Strata Schemes Management
+// Act 2015 named in non-branded FAQ 3, the two em dash recasts in non-branded
+// FAQs 2 and 4, the renamed FAQ headings and the full-footprint town list.
+//
+// ⚠️ EVERY MAPPED TERM ON THIS ROW READS 0/mo, and the brief says plainly that
+// the number should not be trusted: the live SERP on 16 September 2026 showed
+// a busy national market competing on exactly these terms, citing the Act by
+// name and publishing cover levels. Treat the zeros as a data gap to re-pull,
+// not as evidence the page has no search value. The consequence for this
+// page is that the brand and conversion work IS the work, which is why
+// sixteen of the brief's sections are marked No change.
+//
+// NO BLOCKING CONFLICT on this page. The approved CTA fits it better than the
+// live label did.
+//
+// Not done here, because they are not copy: the URL mismatch (the workbook
+// wants /commercial-cleaning/strata-cleaning, which keeps `strata-cleaning`
+// contiguous where the live slug splits it — a redirect decision for the
+// build team), the canonical domain, FAQ schema, the two missing CTA buttons
+// (the walkthrough section and the bin room section both end without one),
+// the header's competing "Get an instant quote", and hiding the testimonial
+// block until real quotes exist.
+//
 // Strata and common area cleaning — one of the THIRTEEN "by type of premises"
 // leaf pages under the /commercial-cleaning/ hub (navigation.ts, "By type of
 // premises" group). Built in one pass with its twelve siblings.
 //
 // NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
-// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// not supplied. See src/pages/commercial-cleaning/office-cleaning.astro's header for the launch
 // blockers shared across the whole cluster ([insured], [police-checked],
 // pricing basis, whether commercial work crosses the NSW border).
 //
@@ -20,11 +53,15 @@
 //   - `Callout tone="warning"` on bin rooms, not a `note`. It warns the
 //     committee off a specific decision (leaving the bin room out of scope
 //     to save money), which is what `warning` is for per Callout's own docs.
-//   - No `ComparisonTable`. The shared comparison rows are written for a
+//   - A ComparisonTable with ITS OWN ROWS, not the shared ones. The original
+//     build left the table off, correctly: the shared rows are written for a
 //     homeowner choosing a cleaner ("the person in your home"), and a strata
-//     committee is not choosing someone to enter their home. Forcing the
-//     table on would put copy on the page that contradicts its own audience.
-//     This is a deliberate omission, not an oversight — see §9.
+//     committee is not choosing someone to enter their home. Brief §19 makes
+//     the opposite case and wins it — a committee is formally comparing
+//     contractors before a vote, which is the exact job a table does, and BFD
+//     §9.4 says comparisons belong in a table rather than in running text —
+//     so the table is now built from rows this page already argues in prose.
+//     See `comparisonTable` below.
 //
 // BLOCKS LAUNCH, specific to this page:
 //   - Does TLB do strata work at all today, and at what scale? The brand
@@ -37,33 +74,34 @@
 //   - Whether TLB carries the insurance level strata managers typically
 //     require of contractors, which is often higher than a domestic
 //     cleaner's. Bracketed in a non-branded FAQ.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import StoryMosaic from '../components/sections/StoryMosaic.astro';
-import Callout from '../components/sections/Callout.astro';
-import ImageBand from '../components/sections/ImageBand.astro';
-import ContentGrid from '../components/sections/ContentGrid.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import StoryMosaic from '../../components/sections/StoryMosaic.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ImageBand from '../../components/sections/ImageBand.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // This page's own frames are in src/assets/commercial_cleaning/premises/;
 // the prompts are in that folder's IMAGE-PROMPTS.md.
-import heroImg from '../assets/commercial_cleaning/premises/strata-cleaner-mopping-an-apartment-lobby.jpg';
-import balustradeImg from '../assets/commercial_cleaning/premises/strata-cleaner-cleaning-a-lift-lobby-glass-balustrade.jpg';
-import binRoomImg from '../assets/commercial_cleaning/premises/strata-bin-room-hosed-out-and-tidy.jpg';
-import carparkImg from '../assets/commercial_cleaning/premises/strata-carpark-and-driveway-swept.jpg';
+import heroImg from '../../assets/commercial_cleaning/premises/strata-cleaner-mopping-an-apartment-lobby.jpg';
+import balustradeImg from '../../assets/commercial_cleaning/premises/strata-cleaner-cleaning-a-lift-lobby-glass-balustrade.jpg';
+import binRoomImg from '../../assets/commercial_cleaning/premises/strata-bin-room-hosed-out-and-tidy.jpg';
+import carparkImg from '../../assets/commercial_cleaning/premises/strata-carpark-and-driveway-swept.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -72,24 +110,50 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { nswLocationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { comparisonColumns } from '../../data/comparison';
+import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { commercialBusiness, relatedPremises } from '../../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Strata cleaning" is the head term people actually search;
 // "common area cleaning" is the phrase committees and managers use in their
 // own paperwork. Both are in the title because they are the same page.
 const pageMeta = {
-  title: 'Strata and Common Area Cleaning | TLB Cleaning',
+  // Brief §2. The approved title, verbatim, at 53 characters. It carries
+  // `strata cleaning services` contiguously and keeps common areas in the
+  // modifier, where `common area cleaning` is captured without splitting the
+  // primary. The live title split the mapped phrase across "and Common Area".
+  title: 'Strata Cleaning Services - Common Areas | TLB Cleaning',
+  // Brief §3. The approved meta, verbatim, at 138 characters. The live one was
+  // 190 — the longest in the engagement — and would have been cut off mid
+  // sentence, most likely losing the committee report, which is the strongest
+  // thing in it.
+  //
+  // ⚠️ CHANGE REQUEST for the workbook owner, brief §3: the approved meta
+  // splits the mapped primary the same way the live one did, so the meta
+  // component cannot score full marks even once implemented, and it loses the
+  // committee report promise, which is this page's single best differentiator.
+  // Both pasted as approved rather than edited, per Rule 3. A version keeping
+  // the report line would serve this page better.
   description:
-    'Strata and common area cleaning across the Northern Rivers and the Tweed. Lobbies, lifts, stairwells, carparks and bin rooms on a written schedule, with a report you can take to the committee.',
+    'Strata and common area cleaning for apartment blocks and body corporates: lobbies, lifts, bins and car parks. Request a schedule and quote.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/strata-and-common-area-cleaning/',
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/strata-cleaning/',
 };
 
-const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+// §7 The primary CTA. Brief §7: the approved label describes what this page
+// actually delivers better than the live one did. The closing block already
+// promises "a written scope, a price per visit and a suggested schedule for
+// the periodic work, ready to take to the committee", and branded FAQ 2 is
+// entirely about producing a document a committee can vote on. This is that
+// promise on a button. One primary CTA, repeated, per BFD §9.5.
+//
+// ⚠️ This page carries only TWO CTA buttons where most carry four — the
+// walkthrough section and the bin room section both end without one. A
+// conversion gap rather than a copy error, and a template job. Brief §7.
+const walkthroughCta = { label: 'Request a schedule and quote', href: quoteCta.href };
 
 // §1 Hero. `full-width-photo` rather than the cluster's usual
 // `split-single-image`, because a lobby is an establishing shot: the whole
@@ -100,9 +164,19 @@ const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
 // — see office-cleaning.astro's §1 comment.
 const hero = {
   kicker: 'Strata and common area cleaning',
-  headingLines: ['The first thing an owner sees', 'is the front door.'],
+  // Brief §4. The exact phrase `strata cleaning services` is worth 15 points
+  // scored present or absent, and the extension is the page's actual argument
+  // rather than decoration: a committee member is the person who approves the
+  // spend, and a scope they can check is what the whole page is selling.
+  headingLines: ['Strata cleaning services on a scope the committee can check'],
+  // Brief §5 and §6, in that order. The demoted H1 opens the lead — it speaks
+  // to the owner's motive, property value and first impressions, and
+  // complements rather than repeats the new H1's committee angle — and the
+  // hero paragraph follows. Hero has no separate subheading slot, so the two
+  // run as one lead. "Common area" is not lost: it returns in the §2
+  // definition and throughout the body.
   lead:
-    `Common area cleaning for apartment blocks, townhouse complexes and mixed-use buildings across the Northern Rivers and the Tweed. A written schedule, the same cleaner each week, and a record the committee can actually read. ${theLine.fast}`,
+    `The first thing an owner sees is the front door. Strata cleaning services for apartment blocks, townhouse complexes and mixed-use buildings across the Northern Rivers and the Tweed. A written schedule, the same cleaner each week, and a record the committee can actually read. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -150,14 +224,14 @@ const areaItems = [
     title: 'Corridors and common carpet',
     description:
       'Vacuumed on the schedule, with spot treatment as things happen. Carpet in a corridor wears in one narrow lane and needs extraction once or twice a year on top of vacuuming, or the traffic path goes permanently grey.',
-    href: '/commercial-carpet-cleaning/',
+    href: '/commercial-cleaning/commercial-carpet-cleaning/',
   },
   {
     icon: 'key' as const,
     title: 'Carpark, driveway and hard surfaces',
     description:
       'Swept, litter and leaves cleared, drains checked clear, oil spots treated. Concrete driveways, paths and the ramp go dark with algae in a Northern Rivers wet season and need pressure cleaning periodically rather than sweeping.',
-    href: '/commercial-pressure-cleaning/',
+    href: '/commercial-cleaning/commercial-pressure-cleaning/',
   },
   {
     icon: 'puzzle' as const,
@@ -261,7 +335,7 @@ const scopeFailureBlocks = [
 // out of its own band. Airbnb is appended as an extra: a strata building full
 // of short-stay lots is a real and growing case, and it is the one link a
 // committee member reading this page might genuinely need next.
-const relatedTags = relatedPremises('/strata-and-common-area-cleaning/', [
+const relatedTags = relatedPremises('/commercial-cleaning/strata-cleaning/', [
   { label: 'Airbnb cleaning', href: '/house-cleaning/airbnb-cleaning/' },
 ]);
 
@@ -365,17 +439,29 @@ const nonBrandedFaqItems = [
   {
     question: 'How often should common areas be cleaned?',
     answer:
-      'Lobbies and lifts in a building with more than about twenty lots generally need two or three visits a week, because entry glass and lift floors show traffic immediately. Stairwells, corridors and carparks usually work weekly or fortnightly. Bin rooms want at least weekly year round and more often over summer. Periodic work — carpet extraction, external glass, pressure cleaning — is once or twice a year on a set month.',
+      // Brief §25. BFD §9.2 bans em dashes outright. Recast with "such as",
+      // keeping every item.
+      'Lobbies and lifts in a building with more than about twenty lots generally need two or three visits a week, because entry glass and lift floors show traffic immediately. Stairwells, corridors and carparks usually work weekly or fortnightly. Bin rooms want at least weekly year round and more often over summer. Periodic work such as carpet extraction, external glass and pressure cleaning is once or twice a year on a set month.',
   },
   {
     question: 'Is the owners corporation required to clean common property?',
     answer:
-      'In New South Wales an owners corporation has a duty to properly maintain common property and keep it in a state of good and serviceable repair, and in practice regular cleaning is part of meeting it. What that means for a particular task depends on the scheme’s own by-laws. Your strata manager or NSW Fair Trading is the right source for your building. This is general information, not legal advice.',
+      // Brief §25. The page already made the legal claim and already carried
+      // the correct disclaimer; naming the Act is the same move the
+      // commercial pressure cleaning page makes with the Protection of the
+      // Environment Operations Act 1997, so it is a house pattern this page
+      // was missing rather than a new risk. National competitors cite it by
+      // name, and a named statute is the single most citable thing a page can
+      // carry into an AI answer under BFD §14. Nine words, no new claim, and
+      // the "not legal advice" line stays exactly where it is. Still NO
+      // SECTION NUMBER, for the reason in the block comment above.
+      'In New South Wales an owners corporation has a duty under the Strata Schemes Management Act 2015 to properly maintain common property and keep it in a state of good and serviceable repair, and in practice regular cleaning is part of meeting it. What that means for a particular task depends on the scheme’s own by-laws. Your strata manager or NSW Fair Trading is the right source for your building. This is general information, not legal advice.',
   },
   {
     question: 'What is the difference between common property and a lot?',
     answer:
-      'Broadly, a lot is the part an individual owns — usually the inside of the apartment or townhouse — and common property is everything shared: entry, lobby, lifts, stairs, corridors, external walls and roof, driveways and the bin room. Cleaning contracts paid from levies cover common property only. Where the boundary sits in a specific building is set by its strata plan, so check yours rather than assuming.',
+      // Brief §25, same rule, recast with commas, not a word lost.
+      'Broadly, a lot is the part an individual owns, usually the inside of the apartment or townhouse, and common property is everything shared: entry, lobby, lifts, stairs, corridors, external walls and roof, driveways and the bin room. Cleaning contracts paid from levies cover common property only. Where the boundary sits in a specific building is set by its strata plan, so check yours rather than assuming.',
   },
   {
     question: 'Do strata cleaners need insurance and inductions?',
@@ -391,6 +477,103 @@ const nonBrandedFaqItems = [
       'They can, but the two should never sit on one invoice. Common area work is paid from levies on behalf of every owner, and an individual apartment is a private arrangement. Mixing them is how a committee ends up unable to explain a line item. We are happy to do both in one building, quoted and billed entirely separately.',
   },
 ];
+
+// §10b Comparison table — NEW, brief §19, and the one section this rewrite
+// adds rather than protects.
+//
+// This page had no table. Brief §19 makes the case for one: a committee is
+// formally comparing contractors before a vote, which is the exact job a
+// comparison table does, and BFD §9.4 says comparisons belong in a table
+// rather than in running text. The page kept all its comparison in prose,
+// which is why it stayed polite and never quite closed.
+//
+// THE ROWS ARE THIS PAGE'S OWN, not the shared ones from data/comparison.ts.
+// The shared eight are written for a household choosing a domestic cleaner;
+// rows about holiday lets, reminders and booking by text mean nothing to a
+// committee. Every row below is drawn from something this page already says
+// in prose, so the table introduces no new claim: the scope row from §16, the
+// subcontracting row from branded FAQ 3, the invoicing row from branded FAQ
+// 1, the reporting row from the residents-and-reporting block, and the
+// periodic-work row from §16's third failure mode.
+//
+// The COLUMNS are the shared, approved ones from data/comparison.ts rather
+// than the brief's own wording, so this table cannot drift from the site's
+// other four. The brief's column names ("a national contractor", "a local
+// sole operator") describe the same two models and its cell values read
+// correctly under either heading.
+//
+// Neutral and factual per BFD §9.4: "whoever is rostered, often a
+// subcontractor" describes a delivery model, it does not accuse anyone.
+//
+// ⚠️ NO VOLUME CLAIM ATTACHED. Unlike the new sections in earlier batches,
+// this one is not justified by a keyword. It is justified by the journey
+// stage and by the format rule that makes a missing comparison table on a
+// Consider stage page a mandatory flag. Said plainly so nobody looks for the
+// number later.
+const comparisonTable = {
+  heading: 'How TLB compares',
+  cornerLabel: 'Why TLB Cleaning is different',
+  lead: 'Most committees are choosing between three quotes that all say “general clean”. These are the rows worth putting side by side.',
+  columns: comparisonColumns,
+  rows: [
+    {
+      label: 'What the scope says',
+      values: [
+        'A standard schedule applied to your building',
+        'Often a verbal arrangement',
+        'Every area listed with a task and a frequency against it',
+      ],
+    },
+    {
+      label: 'Who attends',
+      values: [
+        'Whoever is rostered, often a subcontractor',
+        'The same person',
+        'The same cleaner, and we can tell you their name',
+      ],
+    },
+    {
+      label: 'Subcontracting',
+      values: ['Common', 'None', 'None. Our cleaners are employed by TLB'],
+    },
+    {
+      label: 'When someone is away',
+      values: [
+        'A different contractor',
+        'The visit is rebooked',
+        'Someone from the same team, and you are told first',
+      ],
+    },
+    {
+      label: 'Invoicing',
+      values: [
+        'Head office, on their cycle',
+        'Manual, variable',
+        'Monthly to the strata manager, referenced to the approved scope',
+      ],
+    },
+    {
+      label: 'Reporting',
+      values: [
+        'A portal login',
+        'Usually none',
+        'A short written record of each visit and anything found',
+      ],
+    },
+    {
+      label: 'Periodic work',
+      values: [
+        'Quoted separately when it looks bad',
+        'Usually not scheduled',
+        'On the schedule with a month against each item',
+      ],
+    },
+    {
+      label: 'Commitment',
+      values: ['Often a fixed term', 'None', 'No lock-in, no minimum term, no exit fee'],
+    },
+  ],
+};
 
 // §11 Closing CTA.
 const closingCta = {
@@ -461,6 +644,18 @@ const business = commercialBusiness(pageMeta.description);
       blocks={scopeFailureBlocks}
     />
 
+    {/* Brief §19, inserted immediately after the scope-failure grid exactly
+        as the brief specifies: the reader has just been given three ways to
+        audit their current contract, and this is where they turn that on the
+        quotes in front of them. Rows and reasoning at `comparisonTable`. */}
+    <ComparisonTable
+      heading={comparisonTable.heading}
+      cornerLabel={comparisonTable.cornerLabel}
+      lead={comparisonTable.lead}
+      columns={comparisonTable.columns}
+      rows={comparisonTable.rows}
+    />
+
     {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
 
         THE PHOTO BRIEF for this page: a bin room, and a driveway or entry
@@ -479,10 +674,17 @@ const business = commercialBusiness(pageMeta.description);
 
     <TestimonialCarousel heading="What managers and committees say" testimonials={testimonials} uniform />
 
+    {/* Brief §20, the full footprint rather than the six-town NSW list. The
+        hero promises the Tweed and this band dropped it, against BFD §2.1,
+        and there is a category reason too: strata density in this footprint
+        is concentrated in Tweed Heads, Kingscliff, Coolangatta and Burleigh,
+        and the page named none of them while selling apartment block
+        cleaning. The navigation on this very page already carries this exact
+        list, so it is a template fix rather than a writing task. */}
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers."
-      groups={nswLocationGroups}
+      subheading={footprintSubheading}
+      groups={footprintLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -503,8 +705,14 @@ const business = commercialBusiness(pageMeta.description);
       body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="Strata Cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Brief §22 and §23. The page carries two FAQ headings and the generic
+        one made the split look like a build error: this block is about
+        working with TLB, the next is about the category. The second heading
+        also lands the mapped phrase contiguously, which is the 10-point H2
+        component the page previously half scored, and drops Title Case,
+        which BFD §9.2 bans. */}
+    <Faq heading="Working with us on your building" items={brandedFaqItems} />
+    <Faq heading="Strata cleaning services, common questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

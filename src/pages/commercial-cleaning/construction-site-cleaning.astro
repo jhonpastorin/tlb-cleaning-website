@@ -1,20 +1,76 @@
 ---
+// ── SEO COPY REWRITE APPLIED, 16 September 2026 ───────────────────
+//
+// This page has been rewritten against construction-site-cleaning-copy-rewrite.md
+// (workbook row 30, primary `post construction cleaning services` 150/mo,
+// cluster 390/mo). Section numbers in the comments below are that brief's.
+//
+// THE PROBLEM THE BRIEF NAMES, in its own words: the writing on this page is
+// the best in the engagement and the keyword targeting was the worst. The
+// mapped primary is `post construction cleaning services` and the word "post"
+// appeared nowhere in the title, the H1, the URL, the opening paragraph or
+// the meta. The page speaks builder, which is right, and the workbook targets
+// the phrase a builder types into Google, which is also right. They just
+// never met. The changes below fix that WITHOUT touching the builder
+// language, which stays in the kicker, the demoted headline and the body.
+//
+// Implemented: the approved title and meta, a new H1 carrying the mapped
+// phrase with the old one demoted into the hero lead, the mapped phrase in
+// the opening paragraph, the approved CTA in all five places, the renamed FAQ
+// headings and the full-footprint town list.
+//
+// 🔴 ONE BLOCKING CHANGE REQUEST IS OPEN AND SHIPS UNRESOLVED. The approved
+// CTA, "Book your clean", contradicts the page it sits on: §11 says a
+// builders clean is three jobs at three moments and which ones you need has
+// to be settled first, the booking section says commercial work is priced on
+// the site, non-branded FAQ 1 says a phone quote for a builders clean is
+// usually wrong, and BFD §13.2 rules out pricing this class of work sight
+// unseen. It is PLACED, per the brief's Rule 4, and it SHOULD NOT GO LIVE
+// until the workbook owner rules on the wording. Suggested replacement, and
+// it is the page's own closing heading: "Tell us your handover date." See
+// `walkthroughCta` below.
+//
+// TWO FURTHER BLOCKING ITEMS, both blocked on the client rather than on copy,
+// and both still live as brackets in the copy below:
+//   🔴 Does TLB own an H-class vacuum? Stage two asks it of itself. §3 tells
+//     the reader to ask every cleaner which filtration they are bringing, so
+//     a page that raises the question and cannot answer it invites a reader
+//     to disqualify TLB. If the answer is no, §3 must be reworded before
+//     anything ships.
+//   🔴 Does every attending cleaner hold a current white card, and can TLB
+//     provide a SWMS? Branded FAQ 1 asks it of itself and its own bracket
+//     says "confirm before this page ships". That is correct.
+// Both are why no comparison table is supplied here: the rows a construction
+// table needs are white card, SWMS, H-class equipment and insurance, and
+// every one of them is currently an unconfirmed bracket. Writing them now
+// would mean writing claims TLB cannot stand behind, which BFD §2.4 rules
+// out. Build it once those two are answered and it will be the strongest
+// table on the site.
+//
+// Not done here, because they are not copy: the URL mismatch (the workbook
+// wants /commercial-cleaning/construction-site-cleaning; the live slug
+// contains no form of the word cleaning at all, which the brief calls the
+// worst URL in the engagement — a redirect decision for the build team), the
+// canonical domain, FAQ schema, the stage one image reusing the hero frame,
+// the header's competing "Get an instant quote", and hiding the testimonial
+// block until real quotes exist.
+//
 // Construction site cleaning — one of the THIRTEEN "by type of premises" leaf
 // pages under the /commercial-cleaning/ hub (navigation.ts, "By type of
 // premises" group). Built in one pass with its twelve siblings.
 //
 // NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
-// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// not supplied. See src/pages/commercial-cleaning/office-cleaning.astro's header for the launch
 // blockers shared across the whole cluster.
 //
-// ⚠️ SLUG. navigation.ts calls this "Construction site" and points at
-// /construction-site/, which is the literal menu label rather than a phrase
-// anyone searches. The head terms are "builders clean" and "construction
-// cleaning". The slug is kept as-is because changing it means changing
-// navigation.ts, this file and every cross-link in src/data/premises.ts
-// together, and that is a decision for launch rather than for this build.
-// The TITLE and the H1 lead with "builders clean" instead, which is where it
-// actually matters for search.
+// ✅ SLUG RESOLVED 17 Sep 2026. This page used to sit at /construction-site/
+// — the literal menu label, and a phrase nobody searches. The client's URL
+// sheet settles it as /commercial-cleaning/construction-site-cleaning/, which
+// carries one of the two head terms ("construction cleaning"; the other is
+// "builders clean"). navigation.ts still LABELS the row "Construction site",
+// which is that sheet's own label/slug pairing and not a drift to fix.
+// The TITLE and the H1 still lead with "builders clean", which is where the
+// other head term matters most for search.
 //
 // WHAT MAKES THIS PAGE DIFFERENT from its twelve siblings, structurally:
 //   - The scope is a SEQUENCE, not a set. Three cleans happen at three
@@ -49,22 +105,22 @@
 //     issue, and this is the equipment question a builder will ask.
 //   - Waste removal. Builders routinely expect the cleaner to take rubbish
 //     away. Bracketed in §4 stage one.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import Callout from '../components/sections/Callout.astro';
-import ContentGrid from '../components/sections/ContentGrid.astro';
-import ImageBand from '../components/sections/ImageBand.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import ImageBand from '../../components/sections/ImageBand.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // This page's own frames are in src/assets/commercial_cleaning/premises/;
 // the prompts are in that folder's IMAGE-PROMPTS.md.
 //
@@ -77,13 +133,13 @@ import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 // apron on a live site would be a photo of something that must not happen.
 // The apron is dropped for the same reason. Documented in the folder's
 // IMAGE-PROMPTS.md so this does not get "corrected" back later.
-import heroImg from '../assets/commercial_cleaning/premises/construction-cleaner-sweeping-a-new-build-before-handover.jpg';
-import windowsImg from '../assets/commercial_cleaning/premises/construction-cleaner-detailing-new-window-frames.jpg';
-import bathroomImg from '../assets/commercial_cleaning/premises/construction-final-detail-clean-of-a-new-bathroom.jpg';
+import heroImg from '../../assets/commercial_cleaning/premises/construction-cleaner-sweeping-a-new-build-before-handover.jpg';
+import windowsImg from '../../assets/commercial_cleaning/premises/construction-cleaner-detailing-new-window-frames.jpg';
+import bathroomImg from '../../assets/commercial_cleaning/premises/construction-final-detail-clean-of-a-new-bathroom.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -92,23 +148,55 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { nswLocationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { commercialBusiness, relatedPremises } from '../../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Builders clean" leads the title because it is the head term,
 // even though the slug is the menu's literal label. See the file header.
 const pageMeta = {
-  title: 'Builders Clean and Construction Site Cleaning | TLB Cleaning',
+  // Brief §2. The approved title, verbatim, at 49 characters. It carries
+  // `post construction cleaning services` 150/mo contiguously; the live one
+  // carried neither that phrase nor `construction site cleaning services`,
+  // because the word "and" broke both.
+  //
+  // ⚠️ CHANGE REQUEST for the workbook owner, brief §2: the approved title
+  // drops "builders clean" entirely, and that is the phrase a Northern Rivers
+  // builder actually says. The live SERP on 16 September 2026 showed
+  // Australian competitors running both phrases together, which is what the
+  // live title was doing, and there are nine spare characters. Pasted as
+  // approved per Rule 3.
+  title: 'Post Construction Cleaning Services | TLB Cleaning',
+  // Brief §3. The approved meta, verbatim, at 143 characters. The live one was
+  // 167 and would have been cut off. This opens on the mapped phrase, picks up
+  // `post renovation cleaning` and names the stage range, which is the page's
+  // own framing.
+  //
+  // 🔴 The blocking CTA below is the last sentence of this meta too. What is
+  // lost either way: the live meta said "Booked to your handover date", which
+  // is this page's single strongest promise and the thing a site supervisor
+  // actually clicks. If the workbook owner is revisiting the CTA anyway, that
+  // is the wording to return to. The H1 rescues the line in the meantime.
   description:
-    'Builders cleans and final detail cleans for new builds and renovations across the Northern Rivers and the Tweed. Booked to your handover date, with dust taken seriously.',
+    'Post construction, builders and post-renovation cleaning, from rough clean to handover detail: dust, render, stickers and glass. Book your clean.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/construction-site/',
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/construction-site-cleaning/',
 };
 
-const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+// §7 The primary CTA, defined once and repeated in five places per BFD §9.5:
+// the hero button, each of the three stage slides and the closing block.
+//
+// 🔴 BLOCKING — DO NOT PUBLISH WITHOUT A RULING. See the file header. The
+// label below is the workbook's approved CTA, placed exactly as specified per
+// the brief's Rule 4, and it promises a transaction this page spends 1,200
+// words explaining is not available yet. The conflict is at its sharpest in
+// the closing block, where the heading says "Tell us your handover date." and
+// the button beneath it says "Book your clean" on a page that has just
+// explained why the clean cannot be booked until the stages are settled.
+// Suggested replacement for the workbook: "Tell us your handover date."
+const walkthroughCta = { label: 'Book your clean', href: quoteCta.href };
 
 // §1 Hero. `full-width-photo` — an empty new build is an establishing shot
 // and the whole point of the frame is the space, same reasoning as the
@@ -117,10 +205,23 @@ const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED, and note the hi-vis exception above.
 const hero = {
+  // Brief §8. The kicker does not change. With the H1 now carrying the mapped
+  // phrase, this is where the builder's own vocabulary lives, and keeping both
+  // is how the page serves the search term and the reader at the same time.
   kicker: 'Builders clean and construction site cleaning',
-  headingLines: ['The last trade on site', 'is the one they remember.'],
+  // Brief §4. The exact phrase `post construction cleaning services` is worth
+  // 15 points scored present or absent, and the handover extension is the
+  // page's real promise rather than decoration — it also rescues the line the
+  // approved meta drops.
+  headingLines: ['Post construction cleaning services, booked to your handover date'],
+  // Brief §5 and §6, in that order. The demoted H1 opens the lead — it is the
+  // best opening line on the site, it speaks directly to a builder's standing
+  // with a client, and it survives the move intact — and the hero paragraph
+  // follows. Hero has no separate subheading slot, so the two run as one lead.
+  //
+  // Every word of the builder language is kept, moved into sentence three.
   lead:
-    `Builders cleans and final detail cleans for new builds, renovations and fitouts across the Northern Rivers and the Tweed. Booked to your handover date, not to ours. ${theLine.fast}`,
+    `The last trade on site is the one they remember. Post construction cleaning services for new builds, renovations and fitouts across the Northern Rivers and the Tweed. Builders cleans and final detail cleans, booked to your handover date, not to ours. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -268,7 +369,7 @@ const worthKnowingBody: TextBlockBody[] = [
 // §7 Related pages. Real estate and end of lease are appended as extras: a
 // builder finishing a spec home and an agent presenting it are the same
 // handover from two sides, and the reader is often both.
-const relatedTags = relatedPremises('/construction-site/', [
+const relatedTags = relatedPremises('/commercial-cleaning/construction-site-cleaning/', [
   { label: 'Real estate cleaners', href: '/house-cleaning/real-estate-cleaning/' },
   { label: 'End of lease and bond cleaning', href: '/house-cleaning/end-of-lease-cleaning/' },
 ]);
@@ -472,8 +573,8 @@ const business = commercialBusiness(pageMeta.description);
 
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers."
-      groups={nswLocationGroups}
+      subheading={footprintSubheading}
+      groups={footprintLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -494,8 +595,14 @@ const business = commercialBusiness(pageMeta.description);
       body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="Builders Clean FAQs" items={nonBrandedFaqItems} />
+    {/* Brief §24 and §25. The page carries two FAQ headings and the generic
+        one made the split look like a build error: this block is about
+        working with TLB on your build, the next is about the service. The
+        second heading also lands the mapped phrase contiguously, which is
+        the 10-point H2 component the page previously half scored, and drops
+        Title Case, which BFD §9.2 bans. */}
+    <Faq heading="Working with us on your build" items={brandedFaqItems} />
+    <Faq heading="Post construction cleaning services, common questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

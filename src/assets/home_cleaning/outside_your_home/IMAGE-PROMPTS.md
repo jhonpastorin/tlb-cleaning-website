@@ -48,7 +48,7 @@ show. A car park cannot stand in for a driveway.
 ## Five things worth knowing before regenerating
 
 **⚠️ THE UNIFORM DEVIATES FROM §3, DELIBERATELY, and it matches the call
-already made on `/commercial-pressure-cleaning/`.** The canonical uniform is
+already made on `/commercial-cleaning/commercial-pressure-cleaning/`.** The canonical uniform is
 aqua polo, dark teal apron, dark teal gloves. **The apron is dropped in all
 twelve people shots here**, replaced with dark teal work trousers and plain
 black work boots, because an apron on a wet outdoor job reads as fancy dress

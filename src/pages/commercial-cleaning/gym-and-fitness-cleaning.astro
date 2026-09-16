@@ -4,7 +4,7 @@
 // premises" group). Built in one pass with its twelve siblings.
 //
 // NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
-// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// not supplied. See src/pages/commercial-cleaning/office-cleaning.astro's header for the launch
 // blockers shared across the whole cluster.
 //
 // WHAT MAKES THIS PAGE DIFFERENT structurally:
@@ -36,33 +36,33 @@
 //     worst case; /house-cleaning/mould-removal/ exists and is cross-linked,
 //     but whether TLB will take on remediation in a commercial wet area is
 //     bracketed in branded FAQ 5.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import Callout from '../components/sections/Callout.astro';
-import ContentGrid from '../components/sections/ContentGrid.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // This page's own frames are in src/assets/commercial_cleaning/premises/;
 // the prompts are in that folder's IMAGE-PROMPTS.md. All three were
 // generated bright and airy rather than dark and moody, which is against
 // gym-photography convention and deliberately so: this is a cleaning page,
 // and a moody gym photo hides exactly what the reader is trying to see.
-import heroImg from '../assets/commercial_cleaning/premises/gym-cleaner-wiping-down-strength-equipment.jpg';
-import studioImg from '../assets/commercial_cleaning/premises/gym-studio-floor-and-mats-cleaned.jpg';
-import changeRoomImg from '../assets/commercial_cleaning/premises/gym-change-room-and-showers-cleaned.jpg';
+import heroImg from '../../assets/commercial_cleaning/premises/gym-cleaner-wiping-down-strength-equipment.jpg';
+import studioImg from '../../assets/commercial_cleaning/premises/gym-studio-floor-and-mats-cleaned.jpg';
+import changeRoomImg from '../../assets/commercial_cleaning/premises/gym-change-room-and-showers-cleaned.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -71,11 +71,11 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { nswLocationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { nswLocationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Gym cleaning" leads because it is the head term; studios are
 // named because a boutique studio owner does not think of their space as a
@@ -85,7 +85,7 @@ const pageMeta = {
   description:
     'Cleaning for gyms, fitness studios and 24/7 access clubs across the Northern Rivers and the Tweed. Equipment, mats, rubber floors and change rooms, done daily on a written scope.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/gyms-and-fitness-studios/',
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/gym-and-fitness-cleaning/',
 };
 
 const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
@@ -244,7 +244,7 @@ const worthKnowingBody: TextBlockBody[] = [
 
 // §7 Related pages. Mould is appended as an extra — a humid Northern Rivers
 // change room is the site's single worst mould case, and that page exists.
-const relatedTags = relatedPremises('/gyms-and-fitness-studios/', [
+const relatedTags = relatedPremises('/commercial-cleaning/gym-and-fitness-cleaning/', [
   { label: 'Mould cleaning and removal', href: '/house-cleaning/mould-removal/' },
 ]);
 

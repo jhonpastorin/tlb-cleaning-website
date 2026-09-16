@@ -13,9 +13,14 @@
 // below is what catches a page pointing at a premises type that no longer
 // exists.
 //
-// ⚠️ Every href here is still the flat kebab-case guess navigation.ts made
-// from its literal menu label. Unconfirmed sitewide, same as the rest of the
-// site's slugs.
+// ⚠️ ELEVEN OF THE THIRTEEN ARE CONFIRMED, FACTORIES AND BREWERIES ARE NOT.
+// The client's URL sheet of 17 Sep 2026 nests every Commercial row it lists
+// under the /commercial-cleaning/ parent, and those eleven hrefs below are
+// its slugs verbatim. /factories/ and /breweries/ have no row on that sheet,
+// so they are still the flat kebab-case guess navigation.ts made from its
+// literal menu label — and now the only two children of this hub whose URL
+// does not sit under it. Confirm both and they nest with the rest; nothing
+// here changes but the two strings and the union above.
 import type { LocalBusinessInfo } from '../layouts/Base.astro';
 import type { Tag } from '../components/sections/TagCloud.astro';
 
@@ -23,17 +28,17 @@ import type { Tag } from '../components/sections/TagCloud.astro';
  *  a sibling that does not exist is a type error rather than a 404 found by
  *  a reader. */
 export type PremisesHref =
-  | '/office-cleaning/'
-  | '/strata-and-common-area-cleaning/'
-  | '/aged-care-retirement-and-seniors/'
-  | '/medical-clinic-and-salon-cleaning/'
-  | '/construction-site/'
-  | '/hospitality-venues-and-holiday-parks/'
-  | '/commercial-kitchen-cleaning/'
-  | '/schools-and-childcare-centres/'
-  | '/gyms-and-fitness-studios/'
-  | '/retail-and-shopfronts/'
-  | '/warehouses-and-industrial-sites/'
+  | '/commercial-cleaning/office-cleaning/'
+  | '/commercial-cleaning/strata-cleaning/'
+  | '/commercial-cleaning/aged-care-cleaning/'
+  | '/commercial-cleaning/medical-and-clinic-cleaning/'
+  | '/commercial-cleaning/construction-site-cleaning/'
+  | '/commercial-cleaning/hospitality-cleaning/'
+  | '/commercial-cleaning/commercial-kitchen-cleaning/'
+  | '/commercial-cleaning/school-and-childcare-cleaning/'
+  | '/commercial-cleaning/gym-and-fitness-cleaning/'
+  | '/commercial-cleaning/retail-cleaning/'
+  | '/commercial-cleaning/warehouse-and-industrial-cleaning/'
   | '/factories/'
   | '/breweries/';
 
@@ -51,57 +56,57 @@ export interface PremisesPage {
 export const premisesPages: PremisesPage[] = [
   {
     label: 'Office cleaning',
-    href: '/office-cleaning/',
+    href: '/commercial-cleaning/office-cleaning/',
     blurb: 'Desks, kitchenettes, bathrooms and glass, after your team goes home.',
   },
   {
     label: 'Strata and common area cleaning',
-    href: '/strata-and-common-area-cleaning/',
+    href: '/commercial-cleaning/strata-cleaning/',
     blurb: 'Lobbies, lifts, stairwells, carparks and bin rooms on a set schedule.',
   },
   {
     label: 'Aged care, retirement and seniors',
-    href: '/aged-care-retirement-and-seniors/',
+    href: '/commercial-cleaning/aged-care-cleaning/',
     blurb: 'Independent living units, corridors and communal rooms, cleaned around residents.',
   },
   {
     label: 'Medical, clinic and salon cleaning',
-    href: '/medical-clinic-and-salon-cleaning/',
+    href: '/commercial-cleaning/medical-and-clinic-cleaning/',
     blurb: 'Treatment rooms, waiting rooms and wet areas, with the touch points done properly.',
   },
   {
     label: 'Construction site',
-    href: '/construction-site/',
+    href: '/commercial-cleaning/construction-site-cleaning/',
     blurb: 'Builders cleans and the final detail clean before handover.',
   },
   {
     label: 'Hospitality, venues and holiday parks',
-    href: '/hospitality-venues-and-holiday-parks/',
+    href: '/commercial-cleaning/hospitality-cleaning/',
     blurb: 'Cafés, restaurants, function rooms, cabins and amenities blocks.',
   },
   {
     label: 'Commercial kitchen cleaning',
-    href: '/commercial-kitchen-cleaning/',
+    href: '/commercial-cleaning/commercial-kitchen-cleaning/',
     blurb: 'Benches, floors, cool rooms and the grease you cannot reach mid-service.',
   },
   {
     label: 'Schools and childcare centres',
-    href: '/schools-and-childcare-centres/',
+    href: '/commercial-cleaning/school-and-childcare-cleaning/',
     blurb: 'Classrooms, playrooms and bathrooms, cleaned by a checked team after hours.',
   },
   {
     label: 'Gyms and fitness studios',
-    href: '/gyms-and-fitness-studios/',
+    href: '/commercial-cleaning/gym-and-fitness-cleaning/',
     blurb: 'Equipment, mats, change rooms and showers, every day.',
   },
   {
     label: 'Retail and shopfronts',
-    href: '/retail-and-shopfronts/',
+    href: '/commercial-cleaning/retail-cleaning/',
     blurb: 'Floors, glass and the entry, finished before you open the door.',
   },
   {
     label: 'Warehouses and industrial sites',
-    href: '/warehouses-and-industrial-sites/',
+    href: '/commercial-cleaning/warehouse-and-industrial-cleaning/',
     blurb: 'Aisles, loading docks, mezzanine offices and amenities.',
   },
   {
@@ -119,8 +124,8 @@ export const premisesPages: PremisesPage[] = [
 /** The two service-shaped children of the same hub — a premises page's
  *  reader often wants one of these next, and neither is a premises type. */
 export const commercialServiceLinks: Tag[] = [
-  { label: 'Commercial carpet cleaning', href: '/commercial-carpet-cleaning/' },
-  { label: 'Commercial pressure cleaning', href: '/commercial-pressure-cleaning/' },
+  { label: 'Commercial carpet cleaning', href: '/commercial-cleaning/commercial-carpet-cleaning/' },
+  { label: 'Commercial pressure cleaning', href: '/commercial-cleaning/commercial-pressure-cleaning/' },
 ];
 
 export const commercialHubLink: Tag = {

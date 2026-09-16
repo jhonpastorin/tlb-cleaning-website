@@ -1,10 +1,65 @@
 ---
+// ── SEO COPY REWRITE APPLIED, 16 September 2026 ───────────────────
+//
+// This page has been rewritten against medical-and-clinic-cleaning-copy-rewrite.md
+// (workbook row 31, primary `medical office cleaning services` 200/mo,
+// cluster 450/mo). Section numbers in the comments below are that brief's.
+//
+// Implemented: the approved title, the approved meta with ONE substitution
+// explained below, a new H1 carrying the mapped phrase with the old one
+// demoted into the hero lead, the mapped phrase in the opening paragraph, the
+// approved CTA in all four places, the renamed FAQ headings, the em dash and
+// Oxford comma recast in the salon regulation answer, and the full-footprint
+// town list.
+//
+// 🔴 THE ONE BLOCKING ITEM, AND WHY THE META IS NOT VERBATIM. The workbook's
+// approved meta reads "...by police-checked staff who work the same site each
+// week." Branded FAQ 5 on this very page asks "Are your cleaners
+// police-checked?" and answers it with an open bracket, and BFD §2.4 is
+// unambiguous: police checks are marked TBC and "none of them appears in any
+// copy until confirmed." So the approved meta states as fact something this
+// page cannot confirm and asks about itself four hundred words later. Unlike
+// the CTA conflicts elsewhere in this batch, which are a wording argument,
+// this is a CLAIM the brand's own rules bar from copy, so it is not placed
+// and flagged — it is replaced with the brief's own supplied alternative,
+// which swaps the unverified claim for a confirmed one and keeps everything
+// else including the CTA. See `pageMeta.description`.
+//
+// TWO ROUTES OUT, and they need a decision rather than a rewrite:
+//   1. Confirm the checks. Then the approved meta goes in as written, FAQ 5's
+//      bracket gets a real answer, and this becomes a selling point rather
+//      than a liability. The live SERP on 16 September 2026 showed Australian
+//      competitors in this category stating police checks alongside insurance
+//      levels as standard, so confirming is also the competitive move.
+//   2. Do not confirm them. Then what is below is the permanent wording.
+// ⚠️ THE IDENTICAL CONFLICT EXISTS ON THE AGED CARE PAGE, workbook row 38.
+// Resolve both together.
+//
+// ⚠️ SALONS ARE ON THE PAGE AND NOT IN THE MAPPING. A third of this page is
+// about hair and beauty salons and the mapped cluster contains no salon term
+// at all: not `salon cleaning`, not `hairdresser cleaning`, not `beauty salon
+// cleaning`. The approved title and meta do not mention salons either. That
+// means either salons are in scope, in which case row 31 needs salon
+// keywords, a revised title and a revised meta, or they are not, in which
+// case a third of the page serves an audience nobody agreed to target. Only
+// the workbook owner can say which. NOTHING IN THIS REWRITE TOUCHES THE SALON
+// CONTENT: it is good, it is specific, and removing it on our own judgement
+// would be worse than leaving a mapping gap visible. No volume is claimed for
+// it either way, because there is no connector available to size salon demand
+// and inventing a figure is the thing this process exists to prevent.
+//
+// Not done here, because they are not copy: the URL mismatch (the workbook
+// wants /commercial-cleaning/medical-and-clinic-cleaning, which carries the
+// salon question with it — make that decision once rather than twice), the
+// canonical domain, FAQ schema, the header's competing "Get an instant
+// quote", and hiding the testimonial block until real quotes exist.
+//
 // Medical, clinic and salon cleaning — one of the THIRTEEN "by type of
 // premises" leaf pages under the /commercial-cleaning/ hub (navigation.ts,
 // "By type of premises" group). Built in one pass with its twelve siblings.
 //
 // NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
-// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// not supplied. See src/pages/commercial-cleaning/office-cleaning.astro's header for the launch
 // blockers shared across the whole cluster.
 //
 // ⚠️ THIS PAGE IS THREE AUDIENCES IN ONE URL, and that is the mega-menu's
@@ -42,33 +97,33 @@
 //   - Nothing on this page claims accreditation support, TGA-listed
 //     disinfectant use, or infection control certification. Do not add one
 //     without evidence — those are auditable claims.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import Callout from '../components/sections/Callout.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import ContentGrid from '../components/sections/ContentGrid.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // This page's own frames are in src/assets/commercial_cleaning/premises/;
 // the prompts are in that folder's IMAGE-PROMPTS.md. All three were
 // generated deliberately calm rather than sterile: a treatment room shot
 // like an operating theatre promises a service this page explicitly does not
 // offer (see §3).
-import heroImg from '../assets/commercial_cleaning/premises/clinic-cleaner-disinfecting-a-treatment-room.jpg';
-import waitingRoomImg from '../assets/commercial_cleaning/premises/medical-waiting-room-cleaned-before-opening.jpg';
-import salonImg from '../assets/commercial_cleaning/premises/salon-cleaner-sweeping-a-hair-salon-after-close.jpg';
+import heroImg from '../../assets/commercial_cleaning/premises/clinic-cleaner-disinfecting-a-treatment-room.jpg';
+import waitingRoomImg from '../../assets/commercial_cleaning/premises/medical-waiting-room-cleaned-before-opening.jpg';
+import salonImg from '../../assets/commercial_cleaning/premises/salon-cleaner-sweeping-a-hair-salon-after-close.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -77,23 +132,55 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { nswLocationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { commercialBusiness, relatedPremises } from '../../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. Three settings in the title because three different searches
 // have to land here and the menu label already commits to all three.
 const pageMeta = {
-  title: 'Medical, Clinic and Salon Cleaning | TLB Cleaning',
+  // Brief §2. The approved title, verbatim, at 46 characters. It carries
+  // `medical office cleaning services` 200/mo contiguously and, with it,
+  // `professional medical office cleaning services` 30/mo. The live title
+  // carried none of the cluster.
+  //
+  // ⚠️ CHANGE REQUEST, tied to the salon question in the file header: the
+  // approved title drops both "clinic" and "salon", with fourteen characters
+  // spare. If salons stay in scope this needs revisiting anyway. Pasted as
+  // approved per Rule 3.
+  title: 'Medical Office Cleaning Services | TLB Cleaning',
+  // Brief §3, with ONE substitution. The workbook's approved meta reads
+  // "...by police-checked staff who work the same site each week." That claim
+  // is barred from copy by BFD §2.4 until confirmed, and branded FAQ 5 below
+  // asks the same question about TLB and cannot answer it. The brief supplies
+  // this replacement, at 138 characters, which keeps the CTA and swaps the
+  // unverified claim for a confirmed one: the page already says our cleaners
+  // are employed by TLB rather than subcontracted, and §2.4 explicitly directs
+  // that where a fact is unconfirmed a process promise is used rather than the
+  // sentence being deleted.
+  //
+  // 🔴 Restore the approved wording the moment screening is confirmed. See the
+  // file header.
+  //
+  // What is lost either way: the live meta ended on "finished before you
+  // open", which is this page's real promise and the deadline every reader
+  // shares. The new H1 rescues it.
   description:
-    'Cleaning for medical practices, allied health clinics and hair and beauty salons across the Northern Rivers and the Tweed. Wet areas and high-touch surfaces done properly, finished before you open.',
+    'Medical, dental and clinic cleaning on a set schedule, by employed staff who work the same site each week. Request a site quote today.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/medical-clinic-and-salon-cleaning/',
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/medical-and-clinic-cleaning/',
 };
 
-const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+// §7 The primary CTA, defined once and repeated in four places per BFD §9.5:
+// the hero button, each of the three setting cards and the closing block.
+//
+// NO CONFLICT on this page, unlike construction in the same batch. The
+// approved CTA and the page agree: the closing block already promises "a
+// written scope you can attach to your policy, and a price per visit", and
+// asking for a quote after a site visit is exactly what this page offers.
+const walkthroughCta = { label: 'Request a site quote today', href: quoteCta.href };
 
 // §1 Hero. `split-single-image`, image right — the office page's framing,
 // used here because the copy has to do the work of naming three settings
@@ -101,10 +188,26 @@ const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
 const hero = {
+  // Brief §8. The kicker does not change. With the H1 now carrying the mapped
+  // phrase, this is where all three audiences stay named, and until the salon
+  // scope question is settled it is the only place a salon owner sees
+  // themselves above the fold.
   kicker: 'Medical, clinic and salon cleaning',
-  headingLines: ['Your first patient', 'walks into a clean room.'],
+  // Brief §4. The exact phrase `medical office cleaning services` 200/mo is
+  // worth 15 points scored present or absent, and the extension rescues the
+  // promise the approved meta drops. It is also the one deadline a practice, a
+  // clinic and a salon all share, which is what §11 below says in prose.
+  headingLines: ['Medical office cleaning services, finished before you open'],
+  // Brief §5 and §6, in that order. The demoted H1 opens the lead — it puts
+  // the patient rather than the premises at the centre, which is the right
+  // instinct for this reader — and the hero paragraph follows. Hero has no
+  // separate subheading slot, so the two run as one lead.
+  //
+  // The mapped phrase now sits contiguously inside the opening sentences,
+  // which is the 10-point opening-paragraph component, and all three
+  // audiences stay named. Salons are exactly where they were.
   lead:
-    `Cleaning for medical practices, allied health clinics and hair and beauty salons across the Northern Rivers and the Tweed. Done between close and open, on a scope written against your own procedures. ${theLine.fast}`,
+    `Your first patient walks into a clean room. Medical office cleaning services for practices, allied health clinics and hair and beauty salons across the Northern Rivers and the Tweed. Done between close and open, on a scope written against your own procedures. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -255,7 +358,7 @@ const worthKnowingBody: TextBlockBody[] = [
 // §7 Related pages. Aged care is appended as an extra — it is the nearest
 // neighbour to this page's clinical half, and a reader responsible for a
 // clinic inside a village needs both.
-const relatedTags = relatedPremises('/medical-clinic-and-salon-cleaning/');
+const relatedTags = relatedPremises('/commercial-cleaning/medical-and-clinic-cleaning/');
 
 // §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
 //
@@ -365,7 +468,16 @@ const nonBrandedFaqItems = [
   {
     question: 'Do salons have cleaning regulations in NSW?',
     answer:
-      'Some do. Premises offering skin penetration treatments — tattooing, piercing, and certain beauty procedures that break the skin — are regulated under NSW public health legislation and can be inspected by the local council, with requirements covering cleanliness, sterilisation and waste. A hairdressing-only salon has no equivalent scheme but still has work health and safety duties. Check with your council rather than assuming which category you are in.',
+      // Brief §24. Two house rule breaches in one sentence: BFD §9.2 bans em
+      // dashes outright, and the live version also carried an Oxford comma in
+      // "tattooing, piercing, and certain", which §9.2 bans as well. The
+      // recast fixes both, keeps every item, and adds "meaning" so the clause
+      // still reads as a definition.
+      //
+      // This is the only question in either FAQ block that is about salons
+      // specifically, and it is a good one. If the salon scope question is
+      // resolved as out of scope, this answer is the one thing worth keeping.
+      'Some do. Premises offering skin penetration treatments, meaning tattooing, piercing and certain beauty procedures that break the skin, are regulated under NSW public health legislation and can be inspected by the local council, with requirements covering cleanliness, sterilisation and waste. A hairdressing-only salon has no equivalent scheme but still has work health and safety duties. Check with your council rather than assuming which category you are in.',
   },
   {
     question: 'Should a cleaner have their own insurance to work in a clinic?',
@@ -448,8 +560,8 @@ const business = commercialBusiness(pageMeta.description);
 
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers."
-      groups={nswLocationGroups}
+      subheading={footprintSubheading}
+      groups={footprintLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -470,8 +582,19 @@ const business = commercialBusiness(pageMeta.description);
       body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="Clinic and Salon Cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Brief §21 and §22. The page carries two FAQ headings and the generic
+        one made the split look like a build error. The second heading also
+        lands the mapped phrase contiguously, which is the 10-point H2
+        component the page previously half scored, and drops Title Case,
+        which BFD §9.2 bans.
+
+        ⚠️ Note, tied to the salon question in the file header: this rename
+        drops "salon" from the heading. If salons are confirmed in scope, a
+        second FAQ heading covering them is the natural place to put the
+        mapped salon terms once they exist. Do NOT add it before the mapping
+        does. */}
+    <Faq heading="Working with us on your premises" items={brandedFaqItems} />
+    <Faq heading="Medical office cleaning services, common questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

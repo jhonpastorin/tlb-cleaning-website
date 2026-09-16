@@ -1,10 +1,83 @@
 ---
+// ── SEO COPY REWRITE APPLIED, 16 September 2026 ───────────────────
+//
+// This page has been rewritten against
+// aged-care-and-retirement-facilities-copy-rewrite.md (workbook row 38,
+// primary `aged care cleaning services`). Section numbers in the comments
+// below are that brief's.
+//
+// Implemented: the approved title, the approved meta with ONE substitution
+// explained below, a new H1 carrying the mapped phrase with the old one
+// demoted into the hero lead, the mapped phrase in the opening paragraph and
+// the same one-word substitution there, the approved CTA in all three places,
+// a comparison table rebuilt for this audience (brief §19), the renamed FAQ
+// headings, the em dash recast in branded FAQ 3 and the full-footprint town
+// list.
+//
+// THE MAPPING, recorded because these decisions get read months later. Row 38
+// was matched to this page ON THE USER'S INSTRUCTION, 16 September 2026. The
+// automatic match refused it, because the live page adds "and seniors" to the
+// workbook's "Aged care and retirement facilities" and a separate RESIDENTIAL
+// row 21, "Senior home cleaning", carries its own 460/mo cluster. §3 of this
+// page resolves that better than any rewrite could: it is a routing block
+// that tells a family member looking for help for a parent at home that they
+// are on the wrong page and sends them to the seniors page. So this page is
+// unambiguously the commercial one, row 38 is the right target, and there is
+// no cannibalisation with row 21 because the page actively prevents it.
+//
+// ⚠️ THIS ROW HAS NO MAPPED DEMAND AT ALL. The primary reads 0/mo and there
+// are NO secondary keywords whatsoever — the thinnest row in the workbook —
+// so the secondary keyword score cannot even be computed. Read that as a data
+// gap to re-pull, not as evidence the page has no search value: the Northern
+// Rivers has a substantial retirement and aged care population and aged care
+// cleaning is a real procurement category nationally. No number is invented
+// here, because there is no demand connector available to take one from. The
+// practical consequence is the same as on strata: on a page with no usable
+// demand data the brand and conversion work IS the work, which is why
+// nineteen of the brief's sections are marked No change.
+//
+// 🔴 THE ONE BLOCKING ITEM, AND WHY THE META AND THE HERO ARE NOT VERBATIM.
+// The workbook's approved meta reads "...by police-checked staff who work the
+// same site each week", and the live hero said "A screened local team". §7 of
+// this page tells an operator, in its own words, that "a cleaning company
+// that answers 'our team is all police-checked' without being able to produce
+// the evidence per person, on request, has just made their problem your
+// problem" — and branded FAQ 2 then asks the same question about TLB and
+// answers it with an open bracket. BFD §2.4 settles it independently: police
+// checks are marked TBC and "none of them appears in any copy until
+// confirmed."
+//
+// That is the sharpest self-contradiction in this engagement, and it is on
+// the page where screening matters most, because the reader is an approved
+// provider who is personally accountable for who works around residents. So
+// the claim is not placed and flagged, it is replaced, in all three places,
+// with the brief's own supplied alternative: "employed", which IS confirmed,
+// which §7 argues is what makes screening evidenceable at all, and which is
+// the process promise §2.4 asks for. One word, and it is the difference
+// between a claim TLB can stand behind and one it cannot.
+//
+// TO RESOLVE: confirm the screening PER PERSON, with a renewal interval and
+// evidence that can be produced on request. Then the approved meta goes in as
+// written, FAQ 2 gets a real answer, §7 becomes a promise TLB can keep rather
+// than a trap it walks into, and the screening row comes back into the
+// comparison table below. ⚠️ THE SAME CONFLICT EXISTS ON THE MEDICAL PAGE,
+// workbook row 31. Resolve both together.
+//
+// Not done here, because they are not copy: the URL mismatch (the workbook
+// wants /commercial-cleaning/aged-care-cleaning; the live slug contains no
+// form of the word cleaning and its "and-seniors" element points at the
+// residential audience this page spends §3 sending away — a redirect decision
+// for the build team), the canonical domain, FAQ schema, the two sections
+// that still end without a CTA button, the header's competing "Get an instant
+// quote", and hiding the
+// testimonial block until real quotes exist.
+//
 // Aged care, retirement and seniors — one of the THIRTEEN "by type of
 // premises" leaf pages under the /commercial-cleaning/ hub (navigation.ts,
 // "By type of premises" group). Built in one pass with its twelve siblings.
 //
 // NO CONTENT BRIEF EXISTS for any of the thirteen. All copy below is DRAFTED,
-// not supplied. See src/pages/office-cleaning.astro's header for the launch
+// not supplied. See src/pages/commercial-cleaning/office-cleaning.astro's header for the launch
 // blockers shared across the whole cluster.
 //
 // ⚠️ THE NAMING PROBLEM, and it is the reason §3 exists.
@@ -48,36 +121,36 @@
 //   - Nothing on this page claims accreditation, an Aged Care Quality
 //     Standards audit history, or clinical cleaning capability. Do not add
 //     one without evidence: those are auditable claims.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import Callout from '../components/sections/Callout.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import StoryMosaic from '../components/sections/StoryMosaic.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import ComparisonTable from '../components/sections/ComparisonTable.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import StoryMosaic from '../../components/sections/StoryMosaic.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // This page's own frames are in src/assets/commercial_cleaning/premises/;
 // the prompts are in that folder's IMAGE-PROMPTS.md. Both were generated
 // warm and homely rather than clinical, on purpose: a village corridor that
 // photographs like a hospital corridor sells the wrong service.
-import heroImg from '../assets/commercial_cleaning/premises/aged-care-cleaner-mopping-a-retirement-village-corridor.jpg';
-import loungeImg from '../assets/commercial_cleaning/premises/aged-care-cleaner-wiping-handrails-in-a-communal-lounge.jpg';
+import heroImg from '../../assets/commercial_cleaning/premises/aged-care-cleaner-mopping-a-retirement-village-corridor.jpg';
+import loungeImg from '../../assets/commercial_cleaning/premises/aged-care-cleaner-wiping-handrails-in-a-communal-lounge.jpg';
 // REUSED from the hub's folder per IMAGE-GUIDELINES §5. The subject is the
 // walkthrough conversation where a scope gets agreed, which is exactly what
 // the hub uses this frame to mean, and the label is the hub's verbatim.
-import walkthroughImg from '../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
+import walkthroughImg from '../../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -86,26 +159,67 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { comparisonColumns, comparisonRows } from '../data/comparison';
-import { nswLocationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { comparisonColumns } from '../../data/comparison';
+import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { commercialBusiness, relatedPremises } from '../../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. The title leads with "aged care and retirement village
 // cleaning" rather than the menu's "and seniors", because the menu label is
 // what causes the confusion §3 exists to fix and the meta description is the
 // first chance to prevent the wrong click.
 const pageMeta = {
-  title: 'Aged Care and Retirement Village Cleaning | TLB Cleaning',
+  // Brief §2. The approved title, verbatim, at 41 characters. It carries
+  // `aged care cleaning services` contiguously where the live one split it
+  // with "and Retirement Village".
+  //
+  // ⚠️ CHANGE REQUEST for the workbook owner, brief §2: the approved title
+  // drops "retirement village" entirely and uses only 41 of 60 characters.
+  // Retirement villages and independent living units are a distinct buyer
+  // from residential aged care, they are named throughout the page, and there
+  // are nineteen characters spare. Pasted as approved per Rule 3, and worth a
+  // decision, especially if the cluster is being re-pulled anyway. The kicker
+  // below keeps retirement living named above the fold in the meantime.
+  title: 'Aged Care Cleaning Services | TLB Cleaning',
+  // Brief §3, with ONE substitution: "police-checked" becomes "employed", for
+  // the reason set out at length in the file header. 141 characters. The live
+  // meta was 197 — the longest in the engagement — and would have been cut off.
+  //
+  // 🔴 Restore the approved wording the moment screening is confirmed.
+  //
+  // ⚠️ SECOND CHANGE REQUEST, brief §3: the approved meta does not contain the
+  // mapped phrase `aged care cleaning services` at all — it says "Cleaning for
+  // aged care and retirement facilities" — so even once implemented the meta
+  // component cannot score.
+  //
+  // What is lost either way: the live meta ended on "residents treated like
+  // neighbours", which is the truest line about this page and the thing that
+  // separates TLB from a national contractor. Neither version of the approved
+  // meta keeps it. Worth returning to if the workbook owner revisits this row.
   description:
-    'Cleaning for aged care homes, retirement villages and independent living units across the Northern Rivers and the Tweed. A screened local team, a written scope, and residents treated like neighbours.',
+    'Cleaning for aged care and retirement facilities on a set schedule, by employed staff who work the same site each week. Request a proposal.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/aged-care-retirement-and-seniors/',
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/aged-care-cleaning/',
 };
 
-const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+// §9 The primary CTA, defined once and repeated in three places per BFD
+// §9.5: the hero button, the button after the six scope blocks and the
+// closing block. The brief counts two, because the live render has no scope
+// section button; this build already had one, so §14 ("if a button is added
+// here, it takes the approved wording") is satisfied rather than pending.
+//
+// NO CONFLICT on this page. The approved label fits this buyer better than
+// the live one did, because an operator or a board is procuring rather than
+// booking, and the closing block already promises a written scope, a price
+// per visit and a schedule.
+//
+// ⚠️ Still short on CTAs against the rest of the cluster, which carries four
+// or five. The routing block and the two-questions section both end without
+// one. A conversion gap rather than a copy error, and a template job. Brief
+// §9.
+const walkthroughCta = { label: 'Request a proposal', href: quoteCta.href };
 
 // §1 Hero. `split-single-image` with the image LEFT, mirroring the office
 // page's right. Reading order puts the photo first here on purpose: the
@@ -114,10 +228,31 @@ const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
 const hero = {
+  // Brief §7. The kicker does not change: it keeps retirement living named
+  // above the fold, which the approved title drops.
   kicker: 'Aged care and retirement living',
-  headingLines: ['People live here.', 'We clean like it.'],
+  // Brief §4. The exact phrase `aged care cleaning services` is worth 15
+  // points scored present or absent, and the extension is the page's actual
+  // argument, taken from its own hero paragraph and from §6.
+  //
+  // ON DEMOTING THE OLD LINE. "People live here. We clean like it." is the
+  // best headline on the site: six words, and it states a whole operating
+  // philosophy. It is NOT being cut. It lands one line lower, opening the
+  // lead, and it still does the same work — the new H1 above it says the same
+  // thing in the words a procurement search uses.
+  headingLines: ['Aged care cleaning services that work around residents'],
+  // Brief §5 and §6, in that order, with the demoted H1 opening the lead. Hero
+  // has no separate subheading slot, so the two run as one lead paragraph.
+  //
+  // 🔴 "AN EMPLOYED LOCAL TEAM", NOT "A SCREENED LOCAL TEAM". The brief
+  // supplies both versions and says to use this one unless and until the
+  // screening is confirmed: "a screened local team" is the same unverified
+  // claim as the meta, sixty words into the page, and BFD §2.4 bars it from
+  // copy until confirmed. "Employed" is confirmed, it is what §7 says makes
+  // screening evidenceable in the first place, and it is the process promise
+  // §2.4 asks for. See the file header.
   lead:
-    `Cleaning for aged care homes, retirement villages and independent living units across the Northern Rivers and the Tweed. A screened local team, on a written scope, working around residents rather than through them. ${theLine.fast}`,
+    `People live here. We clean like it. Aged care cleaning services for homes, retirement villages and independent living units across the Northern Rivers and the Tweed. An employed local team, on a written scope, working around residents rather than through them. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -264,7 +399,7 @@ const worthKnowingBody: TextBlockBody[] = [
 ];
 
 // §7 Related pages, with this page filtered out of its own band.
-const relatedTags = relatedPremises('/aged-care-retirement-and-seniors/');
+const relatedTags = relatedPremises('/commercial-cleaning/aged-care-cleaning/');
 
 // §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
 //
@@ -301,19 +436,105 @@ const testimonials = [
   },
 ];
 
-// §9 Comparison table. The shared rows from src/data/comparison.ts.
+// §9 Comparison table — REBUILT FOR THIS AUDIENCE, brief §19.
 //
-// Kept on this page, unlike on the strata page where it was dropped: rows
-// one, three and four are about who the person in the building is and
-// whether they stay, which is the exact thing an aged care operator is
-// buying. The lead is rewritten to say so, since the shared rows' own
-// descriptions are worded for a home.
+// The lead was always right: it is the best framing line of any comparison
+// table on the site and it converts the table from marketing into
+// procurement. The ROWS underneath it did not deliver on it. They were the
+// shared residential set, unchanged, on a page about aged care facilities:
+// the subject label asked "who cleans your home" and one row was about
+// holiday lets. An operator or a board reading an intro about compliance and
+// then finding a row about holiday turnovers concludes the page was assembled
+// rather than written, and this is the page where that impression is most
+// expensive.
+//
+// Every row below is drawn from something this page already says in prose, so
+// no new claim is introduced: the attendance and employment rows from §6 and
+// §7, the personal care and clinical waste rows from the sixth scope block and
+// non-branded FAQ 6, the scope row from the scope section's own intro, and the
+// periodic row from the fifth scope block. Each cell stays factual and neutral
+// per BFD §9.4, describing a delivery model rather than accusing anyone.
+//
+// The COLUMNS stay the shared, approved ones from data/comparison.ts so this
+// table cannot drift from the site's others. The brief's own column names ("a
+// national contractor", "a local sole operator") describe the same two models
+// and its cell values read correctly under either heading.
+//
+// 🔴 ONE ROW IS HELD BACK, and this is the blocking item in the file header.
+// The brief's table includes a "Screening evidence" row reading "Held per
+// person, and produced on request". That is exactly the claim BFD §2.4 bars
+// until confirmed, and the brief is explicit: if it is not confirmed, DELETE
+// the row rather than softening it, because a vague version of this row on
+// this page is worse than none. It is deleted. Add it back — verbatim — the
+// moment screening is confirmed, and it becomes the strongest row in the
+// table.
 const comparisonTable = {
   heading: 'How TLB compares',
   cornerLabel: 'Why TLB Cleaning is different',
   lead: 'On an aged care site, the questions below stop being marketing points and start being compliance ones. Who is the person in the building, are they employed, and will they still be here in a year.',
   columns: comparisonColumns,
-  rows: comparisonRows,
+  rows: [
+    {
+      label: 'Who attends your site',
+      values: [
+        'Whoever is rostered, often a subcontractor',
+        'The same person',
+        'The same small team, briefed on your site rather than handed an address',
+      ],
+    },
+    {
+      label: 'Employment',
+      values: [
+        'Often subcontracted',
+        'Sole trader',
+        'Employed by TLB and paid to the Cleaning Services Award',
+      ],
+    },
+    {
+      label: 'When someone is away',
+      values: [
+        'A different contractor',
+        'The visit does not happen',
+        'Cover from the same team, already briefed on your site',
+      ],
+    },
+    {
+      label: 'How the scope is written',
+      values: [
+        'A standard schedule applied to your site',
+        'Usually verbal',
+        'Grouped by infection risk, the way your own cleaning policy is grouped',
+      ],
+    },
+    {
+      label: 'Personal care',
+      values: [
+        'Policy varies',
+        'Sometimes helps informally',
+        'Never. Our team finds a staff member instead',
+      ],
+    },
+    {
+      label: 'Clinical waste and terminal cleans',
+      values: [
+        'Sometimes offered',
+        'Sometimes offered',
+        'Not undertaken. Those need clinically trained staff',
+      ],
+    },
+    {
+      label: 'Periodic work',
+      values: [
+        'Quoted separately when it looks bad',
+        'Usually not scheduled',
+        'On the schedule with a named month against each item',
+      ],
+    },
+    {
+      label: 'Commitment',
+      values: ['Often a fixed term', 'None', 'No lock-in, no minimum term, no exit fee'],
+    },
+  ],
 };
 
 // §10 Branded FAQs, in the CUSTOMER'S voice — here that is an operator, a
@@ -334,7 +555,12 @@ const brandedFaqItems = [
   {
     question: 'Can you work around care routines and meal times?',
     answer:
-      'Yes, and the schedule is built backwards from them. We take your daily rhythm at the walkthrough — meals, medication rounds, physio, visiting hours, when residents nap — and place each area in the gaps. Dining rooms get done between sittings. Corridors get done in halves. Nothing noisy happens before eight or during a rest period.',
+      // Brief §25. BFD §9.2 bans em dashes outright. Recast with commas, no
+      // item lost. Protected otherwise: listing meals, medication rounds,
+      // physio, visiting hours and rest periods as the things the schedule is
+      // built backwards from is the operational detail that tells a facility
+      // manager TLB has done this before.
+      'Yes, and the schedule is built backwards from them. We take your daily rhythm at the walkthrough, meaning meals, medication rounds, physio, visiting hours and when residents nap, and place each area in the gaps. Dining rooms get done between sittings. Corridors get done in halves. Nothing noisy happens before eight or during a rest period.',
   },
   {
     question: 'What happens during an outbreak?',
@@ -482,8 +708,8 @@ const business = commercialBusiness(pageMeta.description);
 
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers."
-      groups={nswLocationGroups}
+      subheading={footprintSubheading}
+      groups={footprintLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -504,8 +730,13 @@ const business = commercialBusiness(pageMeta.description);
       body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="Aged Care Cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Brief §22 and §23. The page carries two FAQ headings and the generic
+        one made the split look like a build error. The second heading also
+        lands the mapped phrase contiguously, which is the 10-point H2
+        component the page previously half scored, and drops Title Case,
+        which BFD §9.2 bans. */}
+    <Faq heading="Working with us on your site" items={brandedFaqItems} />
+    <Faq heading="Aged care cleaning services, common questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

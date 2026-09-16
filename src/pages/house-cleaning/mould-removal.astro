@@ -685,7 +685,7 @@ const comparisonTable = {
 // WHY IT IS A LIST AND NOT A TEXTBLOCK. The copy was drafted as five
 // paragraphs of prose with four inline links in it, to
 // /house-cleaning/real-estate-cleaning/, /house-cleaning/airbnb-cleaning/, /commercial-cleaning/ and
-// /strata-and-common-area-cleaning/. NO component in this library renders a
+// /commercial-cleaning/strata-cleaning/. NO component in this library renders a
 // link inside a paragraph: TextBlock, Callout and ContentGrid all render
 // each body string as <p>{paragraph}</p>, so Astro escapes any markup in it.
 // deep-cleaning.astro hit the same wall and solved it by running the link
@@ -696,7 +696,7 @@ const comparisonTable = {
 //
 // ⚠️ TWO THINGS THE SHAPE COST, both worth knowing before anyone "tidies"
 // this:
-//   1. /strata-and-common-area-cleaning/ has no row of its own, so strata is
+//   1. /commercial-cleaning/strata-cleaning/ has no row of its own, so strata is
 //      named in row 3's copy but the row links to /commercial-cleaning/.
 //      Splitting row 3 in two would mean writing copy nobody briefed.
 //   2. The drafted closing line ("One provider, one point of contact...")

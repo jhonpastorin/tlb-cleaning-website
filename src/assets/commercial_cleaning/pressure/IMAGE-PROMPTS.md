@@ -14,7 +14,7 @@ Generated with `gemini-3-pro-image-preview` via the media-pipeline CLI.
 | `pressure-cleaning-a-shopfront-footpath-before-opening.jpg` | A, scene | 1200×896 | §3 card 2 |
 | `cleaner-with-a-pressure-washer-on-a-commercial-forecourt.jpg` | A, scene | 1200×896 | §3 card 3 |
 
-Nothing on `/commercial-pressure-cleaning/` is reused from `../`. All four
+Nothing on `/commercial-cleaning/commercial-pressure-cleaning/` is reused from `../`. All four
 frames there are indoor office scenes, and §5's rule cuts both ways: reuse the
 same file for the same subject, but never relabel an existing photo to mean
 something it does not show. An office kitchenette cannot stand in for a car

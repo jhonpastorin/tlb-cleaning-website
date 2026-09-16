@@ -11,7 +11,7 @@ Generated with `gemini-3-pro-image-preview` via the media-pipeline CLI.
 | `commercial-carpet-extraction-in-an-open-plan-office.jpg` | A, scene | 1024×1024 | §1 hero |
 | `commercial-carpet-extraction-along-an-office-corridor.jpg` | A, scene | 1200×896 | §3 card 1 |
 
-`/commercial-carpet-cleaning/` uses two more images that are **not** in this
+`/commercial-cleaning/commercial-carpet-cleaning/` uses two more images that are **not** in this
 folder. Cards 2 and 3 reuse the hub's walkthrough and kitchenette frames from
 `../`, because neither card's subject is carpet: card 2 is the conversation
 where a scope gets agreed and card 3 is who is in the building. Per §5, same

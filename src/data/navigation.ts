@@ -295,24 +295,24 @@ const headerNavAll: MegaMenuNavItem[] = [
       {
         label: 'Commercial services',
         items: [
-          { label: 'Commercial carpet cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/commercial-carpet-cleaning/'
-          { label: 'Commercial pressure cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/commercial-pressure-cleaning/'
+          { label: 'Commercial carpet cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/commercial-cleaning/commercial-carpet-cleaning/'
+          { label: 'Commercial pressure cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/commercial-cleaning/commercial-pressure-cleaning/'
         ],
       },
       {
         label: 'By type of premises',
         items: [
-          { label: 'Office cleaning', href: '/office-cleaning/' },
-          { label: 'Strata and common area cleaning', href: '/strata-and-common-area-cleaning/' },
-          { label: 'Aged care, retirement and seniors', href: '/aged-care-retirement-and-seniors/' },
-          { label: 'Medical, clinic and salon cleaning', href: '/medical-clinic-and-salon-cleaning/' },
-          { label: 'Construction site', href: '/construction-site/' },
-          { label: 'Hospitality, venues and holiday parks' }, // UNLINKED 16 Sep 2026 — was href: '/hospitality-venues-and-holiday-parks/'
-          { label: 'Commercial kitchen cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/commercial-kitchen-cleaning/'
-          { label: 'Schools and childcare centres' }, // UNLINKED 16 Sep 2026 — was href: '/schools-and-childcare-centres/'
-          { label: 'Gyms and fitness studios' }, // UNLINKED 16 Sep 2026 — was href: '/gyms-and-fitness-studios/'
-          { label: 'Retail and shopfronts' }, // UNLINKED 16 Sep 2026 — was href: '/retail-and-shopfronts/'
-          { label: 'Warehouses and industrial sites' }, // UNLINKED 16 Sep 2026 — was href: '/warehouses-and-industrial-sites/'
+          { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
+          { label: 'Strata and common area cleaning', href: '/commercial-cleaning/strata-cleaning/' },
+          { label: 'Aged care, retirement and seniors', href: '/commercial-cleaning/aged-care-cleaning/' },
+          { label: 'Medical, clinic and salon cleaning', href: '/commercial-cleaning/medical-and-clinic-cleaning/' },
+          { label: 'Construction site', href: '/commercial-cleaning/construction-site-cleaning/' },
+          { label: 'Hospitality, venues and holiday parks' }, // UNLINKED 16 Sep 2026 — relink to: '/commercial-cleaning/hospitality-cleaning/'
+          { label: 'Commercial kitchen cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/commercial-cleaning/commercial-kitchen-cleaning/'
+          { label: 'Schools and childcare centres' }, // UNLINKED 16 Sep 2026 — relink to: '/commercial-cleaning/school-and-childcare-cleaning/'
+          { label: 'Gyms and fitness studios' }, // UNLINKED 16 Sep 2026 — relink to: '/commercial-cleaning/gym-and-fitness-cleaning/'
+          { label: 'Retail and shopfronts' }, // UNLINKED 16 Sep 2026 — relink to: '/commercial-cleaning/retail-cleaning/'
+          { label: 'Warehouses and industrial sites' }, // UNLINKED 16 Sep 2026 — relink to: '/commercial-cleaning/warehouse-and-industrial-cleaning/'
           { label: 'Factories' }, // UNLINKED 16 Sep 2026 — was href: '/factories/'
           { label: 'Breweries' }, // UNLINKED 16 Sep 2026 — was href: '/breweries/'
         ],
@@ -465,7 +465,8 @@ if (missingNavLabels.length) {
 // ── UNLINKED ROWS ───────────────────────────────────────────
 //
 // Eighteen rows in the tree above carry no `href` and a
-// `// UNLINKED 16 Sep 2026 — was href: ...` comment in its place. They are
+// `// UNLINKED 16 Sep 2026 — relink to: ...` comment in its place (two of
+// them, factories and breweries, still say `was href:` — see below). They are
 // the red cells on the client's colour-coded menu sheet of that date. Each
 // still appears in the menu, in its group, in the same order; it just is not
 // clickable, because SiteHeader renders a row with no href as a <span>
@@ -476,6 +477,15 @@ if (missingNavLabels.length) {
 // URL is recorded inline on the row rather than in a list here: the thing you
 // need is next to the thing you are editing, and neither can drift from the
 // other.
+//
+// THE URL ON AN UNLINKED ROW IS THE ONE IT WILL GET, not the one it had. On
+// 17 Sep 2026 the eleven Commercial rows on the client's URL sheet moved
+// under the /commercial-cleaning/ parent, unlinked rows included, so eight of
+// these comments now say `relink to:` and carry a URL the row has never been
+// served at. Relinking one still works exactly the same way. `was href:`
+// survives only on factories and breweries, which that sheet does not list at
+// all — their flat URLs are the pre-sheet guess, unconfirmed, and are what
+// they would be relinked to today.
 //
 // This is NOT the same tool as `hiddenNavLabels` below, and the difference is
 // worth keeping straight. Hiding takes a row out of the menu; unlinking
