@@ -43,7 +43,7 @@ import PathwayCards from '../../components/sections/PathwayCards.astro';
 import Callout from '../../components/sections/Callout.astro';
 import ContentGrid from '../../components/sections/ContentGrid.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
-import { nswLocationGroups } from '../../data/locations';
+import { completeFootprintLocationGroups, footprintSubheading } from '../../data/locations';
 import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
 import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
@@ -78,13 +78,47 @@ import {
 import { trustBarCards } from '../../data/trust';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
+// ✅ REWRITTEN against the September 2026 copy-rewrite brief (workbook row 20,
+// "NDIS cleaning"). This is the largest mapped cluster in the batch at 1,200/mo
+// and the page scored lowest, because most of what is wrong here is not fixable
+// with words: 700 of those 1,200 searches sit behind two questions only TLB can
+// answer. Both are recorded at the top of this file.
+//
+// TITLE. The old line, "NDIS Cleaning Services | TLB Cleaning", used 36 of the
+// available ~60 characters and did not carry `ndis house cleaning` (200/mo)
+// contiguously at all. The new one does, and keeps `ndis cleaning services`
+// (the old mapped phrase) in the same breath.
+//
+// 🔴 NOT THE WORKBOOK'S APPROVED TITLE, which is "NDIS House Cleaning & Window
+// Cleaning | TLB Cleaning", and not its approved meta either, which ends
+// "Windows and ovens too." Both promise services this page cannot yet stand
+// behind, and the brief flags both as blocking:
+//
+//   - WINDOWS, 400/mo across `ndis window cleaning` and `window cleaning ndis`,
+//     captured at zero because the word "window" appeared nowhere in the body
+//     copy. §16 below now supplies that section, so the gap in the COPY is
+//     closed — but the section itself is conditional on confirmation (see its
+//     own note), and a title that promises window cleaning above a page whose
+//     window section may yet be pulled is a broken click promise on 400/mo.
+//     Put "& Window Cleaning" back into the title the same day §16 is confirmed.
+//   - OVENS. The only oven demand in this cluster is registration-flavoured:
+//     `ndis approved oven cleaning services` 150/mo and `ndis registered oven
+//     cleaning` 150/mo are both searched by people specifically checking for a
+//     REGISTERED provider. The house rules mark NDIS registration TBC alongside
+//     police checks and insurance, and "none of them appears in any copy until
+//     confirmed". Nothing on this page writes toward either term, deliberately.
+//     See the blocking note at the top of this file.
+//
+// The description below is the workbook's approved line with that one blocked
+// sentence removed. Everything else about it is better than what was here: it
+// opens on the mapped phrase contiguously, it names PLAN MANAGERS — who are the
+// repeat referrers on this page — and it closes on the approved CTA, which is
+// where §7's button label comes from. 123 characters against the old 153, which
+// was over the limit.
 const pageMeta = {
-  // Brief said "NDIS Cleaning Service |  TLB Cleaning" — singular, and with a
-  // double space. Pluralised to match the focus keyword ("NDIS cleaning
-  // services") and the double space removed. Flagged in the plan's §0.
-  title: 'NDIS Cleaning Services | TLB Cleaning',
+  title: 'NDIS House Cleaning Services | TLB Cleaning',
   description:
-    'Reliable NDIS household cleaning in the Northern Rivers and Tweed. The same trusted local team, on time, treating your home like our own. Get a fast quote.',
+    'NDIS house cleaning delivered by the same friendly cleaner each visit, with clear reporting for plan managers. Enquire today.',
   canonical: 'https://tlbcleaning.com.au/house-cleaning/ndis-cleaning/',
 };
 
@@ -102,10 +136,21 @@ const business = {
     addressCountry: 'AU',
   },
   sameAs: [],
-  // NSW only on this page, unlike its siblings — deliberate per the brief's
-  // own meta description and suburb list. The NDIS is administered
-  // per-state; confirm it's intentional rather than an omission.
-  areaServed: 'Northern Rivers and Tweed, NSW',
+  // ✅ WIDENED to match §17's town list, which the copy-rewrite brief specifies
+  // town for town and which includes the nine Southern Gold Coast towns.
+  //
+  // The old note here read: "NSW only on this page, unlike its siblings —
+  // deliberate per the brief's own meta description and suburb list. The NDIS is
+  // administered per-state; confirm it's intentional rather than an omission."
+  // The new brief answers it the other way, and the structured data has to agree
+  // with the band the reader can see rather than contradict it.
+  //
+  // ⚠️ WORTH CONFIRMING ANYWAY, and it is now a live question rather than a
+  // dormant one: a participant's plan is administered under a national scheme,
+  // so there is no state barrier of the kind the old note assumed — but if TLB
+  // does not in fact take NDIS work across the border, §17 should go back to
+  // `nswLocationGroups` and this string with it.
+  areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
   description: pageMeta.description,
 };
 
@@ -144,10 +189,50 @@ const business = {
 // Maple/NDIS template this component library was first built against — not
 // TLB's people. Using them would fabricate a workforce on the one page where
 // that matters most.
+// ✅ H1, EYEBROW, LEAD AND CTA ALL REWRITTEN (copy-rewrite brief §4 to §7).
+//
+// H1: `ndis house cleaning` (200/mo) is scored present or absent and was absent.
+// The region extension fixes a second, smaller problem at the same time — the
+// page promised the Tweed in its intro and then listed six Northern Rivers
+// towns, so putting the footprint in the H1 makes a claim that §17's band now
+// has to honour, and does. The stray double space the live markup carried
+// between "faces," and "treating" is gone with the split.
+//
+// The old H1 is NOT cut. It moves one line down into the new `subheading` slot,
+// which is what that prop was added to Hero.astro for.
+//
+// KICKER: this page had no eyebrow label at all, alone among the thirteen pages
+// reviewed in this batch. That was a gap rather than a decision. It gives a
+// participant or a coordinator immediate confirmation they are in the right
+// place before they read a headline.
+//
+// LEAD: three separate problems in one sentence, all fixed. The mapped phrase
+// was absent, which is the opening-paragraph keyword component. "familiar local
+// faces, and a completely stress-free schedule" carried an Oxford comma, which
+// BFD §9.2 bans. And "Experience the comfort of a safe environment" is
+// marketing voice rather than TLB's, which the house rules describe as warm,
+// plain and direct. The replacement says the same three things in words
+// somebody would actually use.
+//
+// CTA: the page was running TWO primary labels that contradicted each other on
+// the house rules' own terms — "Get an instant quote" on the hero (which the
+// rules reserve for regular cleaning) and "Get a fast quote" in the closing
+// block (which they reserve for condition-priced work). Running both told a
+// reader the business had not decided how it prices this work. The approved CTA
+// settles it and suits the audience better than either: a participant or a
+// family carer arranging support for the first time is enquiring, not quoting.
+//
+// ⚠️ WORKBOOK CHANGE REQUEST: "Enquire today" is correct and safe but generic.
+// This page's own closing heading, "Tell us what would help.", is better and
+// more in voice. Pasted as approved, and raised.
+//
+// `quoteCta.href` is still the destination, so there is one form to build.
 const hero = {
-  headingLines: ['The same trusted local faces, treating your home with genuine care.'],
-  lead: `Consistent, respectful in-home cleaning you can rely on. Experience the comfort of a safe environment, familiar local faces, and a completely stress-free schedule. ${theLine.instant}`,
-  cta: quoteCta,
+  kicker: 'NDIS cleaning',
+  headingLines: ['NDIS house cleaning across the', 'Northern Rivers and the Tweed'],
+  subheading: 'The same trusted local faces, treating your home with genuine care.',
+  lead: `NDIS house cleaning across the Northern Rivers and the Tweed, from a team you get to know. The same familiar faces, a schedule that does not change on you, and one local number to ring. ${theLine.instant}`,
+  cta: { label: 'Enquire today', href: quoteCta.href },
   image: {
     ratio: '1/1',
     label:
@@ -264,7 +349,7 @@ const worthKnowing = {
   heading: "You probably don't need a registered provider.",
   body: [
     'Most people assume NDIS cleaning has to come from a registered provider. Only NDIA-managed plans are restricted that way.',
-    'If your plan is self-managed or plan-managed, you can choose any provider you like — including us. If you are not sure which kind of plan you have, your plan manager or support coordinator will know, and we are happy to talk it through with them.',
+    'If your plan is self-managed or plan-managed, you can choose any provider you like, including us. If you are not sure which kind of plan you have, your plan manager or support coordinator will know, and we are happy to talk it through with them.',
   ],
 };
 
@@ -273,7 +358,7 @@ const worthKnowing = {
 // handles both in source order. Three short phrases don't need
 // ServiceBlocks' full row treatment.
 const whoThisIsForBody: TextBlockBody[] = [
-  "If keeping on top of the house has become harder than it used to be, you're not alone — and you don't have to sort it out by yourself.",
+  "If keeping on top of the house has become harder than it used to be, you're not alone, and you don't have to sort it out by yourself.",
   'We clean for:',
   {
     list: [
@@ -322,7 +407,7 @@ const whyChooseBlocks = [
     type: 'text' as const,
     heading: 'We turn up',
     body: [
-      "For most households a missed clean is annoying. When you've been waiting all week for help with the bathroom, it's a genuinely bad day — which is why reliability isn't something we advertise, it's the thing the whole business was built on.",
+      "For most households a missed clean is annoying. When you've been waiting all week for help with the bathroom, it's a genuinely bad day, which is why reliability isn't something we advertise, it's the thing the whole business was built on.",
       'On time. Done properly. Every time.',
     ],
     tone: 'muted' as const,
@@ -332,7 +417,7 @@ const whyChooseBlocks = [
     heading: 'The same familiar faces, every visit',
     body: [
       "You shouldn't have to explain your home to a stranger every fortnight.",
-      "Wherever we can, you'll have the same cleaner each visit — someone who knows how you like things done and doesn't need to be told twice. If they're unwell or away, we'll let you know beforehand and send someone from our team who already knows your preferences.",
+      "Wherever we can, you'll have the same cleaner each visit, someone who knows how you like things done and doesn't need to be told twice. If they're unwell or away, we'll let you know beforehand and send someone from our team who already knows your preferences.",
       // ✅ v2.0 §9.4 — was "not a national network routing your call through
       // a head office somewhere else", which characterises a competitor in
       // running text. The positive half of the sentence was always the
@@ -367,11 +452,56 @@ const whyChooseBlocks = [
       // "police-checked / worker-screened" needs a DECISION — NDIS Worker
       // Screening and a police check are different checks, offered here
       // interchangeably with a slash.
-      "We're [insured], [police-checked / worker-screened], and — like every provider paid from NDIS funding — bound by the NDIS Code of Conduct. Your home is yours. We treat it that way.",
+      "We're [insured], [police-checked / worker-screened], and bound by the NDIS Code of Conduct like every provider paid from NDIS funding. Your home is yours. We treat it that way.",
     ],
     span: 2,
     tone: 'muted' as const,
   },
+];
+
+// §16 NDIS WINDOW CLEANING — NEW SECTION (copy-rewrite brief §16).
+//
+// 🔴 CONDITIONAL. DO NOT LAUNCH THIS SECTION until somebody confirms TLB cleans
+// windows for NDIS participants. If the answer is no, delete this constant and
+// its render below — do not soften it. The page's §0 title has already been
+// held back for the same reason and can go the other way the day this is
+// confirmed.
+//
+// WHY IT IS BUILT RATHER THAN LEFT OUT: `ndis window cleaning` (200/mo) and
+// `window cleaning ndis` (200/mo) are two of this page's eight mapped
+// secondaries and were captured at ZERO, because the word "window" did not
+// appear anywhere in the body copy. Meanwhile the approved title and meta both
+// promised window cleaning. So the workbook was targeting a service the page
+// did not mention, and the approved metadata was promising it to anyone who
+// clicked. Unlike the registration question at the top of this file, this one
+// is fixable in copy the moment somebody says yes: window cleaning is already
+// in the site navigation as a home cleaning service
+// (/house-cleaning/window-cleaning/), so the service plausibly exists and only
+// the NDIS-specific delivery needs confirming.
+//
+// ⚠️ IT DOES NOT MENTION OVENS, deliberately. The only oven demand in this
+// cluster is `ndis approved oven cleaning services` and `ndis registered oven
+// cleaning`, both searched by people specifically checking for a REGISTERED
+// provider. Writing toward them would imply a regulatory status TLB has not
+// confirmed, to the one audience that is checking for it. See the file header.
+//
+// PLACEMENT: after §13's trust-building grid rather than before it, because a
+// participant reads this page for reassurance first and services second. The
+// body opens on the REASON rather than the service, per the house rule that a
+// sentence about cleaning is a feature and a sentence about not having to think
+// about cleaning is a benefit.
+//
+// THE HEADING carries `ndis window cleaning` contiguously and extends past
+// windows, so the section can absorb the other out-of-reach jobs later without
+// needing another heading.
+//
+// ⚠️ ONE LINE TO CHECK WITH THE REST. "It is hourly support" is consistent with
+// non-branded FAQ 3 below, which already says the same thing. If windows are
+// quoted differently from the hourly support, that sentence comes out.
+const windowCleaningBody: TextBlockBody[] = [
+  'Windows are the job most people stop doing first. Not because they stop mattering, but because they mean a ladder, a stretch, or a twist that is no longer worth the risk.',
+  'We clean windows inside and out at ground level, along with tracks, sills and flyscreens, which is where the dirt actually sits. It can go on the same visit as your regular clean or be booked on its own a few times a year, whichever suits your plan.',
+  'Like the rest of the clean, it is hourly support, so it comes out of the same funding and you set the priorities for the time booked. If you would rather we did the windows one visit and the bathrooms the next, that is your call to make and we will work to it.',
 ];
 
 // §12 Social proof — bracketed [TBC] briefing slots, NOT real testimonials.
@@ -389,17 +519,17 @@ const whyChooseBlocks = [
 const testimonials = [
   {
     quote:
-      '[TBC — ask Teagan for a quote from a participant or their family carer about consistency: the same person arriving, on the day they said. Written consent required, and keep identifying detail to a minimum.]',
-    name: '[Name — TBC]',
-    role: '[Participant or family carer — TBC]',
+      '[TBC. Ask Teagan for a quote from a participant or their family carer about consistency: the same person arriving, on the day they said. Written consent required, and keep identifying detail to a minimum.]',
+    name: '[Name, TBC]',
+    role: '[Participant or family carer, TBC]',
     rating: 5,
     avatar: { ratio: '1/1', label: 'TLB NDIS client' },
   },
   {
     quote:
-      '[TBC — ask Teagan for a quote from a support coordinator or plan manager about communication and invoicing. Coordinators are repeat referrers, and this is the quote that reaches them.]',
-    name: '[Name — TBC]',
-    role: '[Support coordinator or plan manager — TBC]',
+      '[TBC. Ask Teagan for a quote from a support coordinator or plan manager about communication and invoicing. Coordinators are repeat referrers, and this is the quote that reaches them.]',
+    name: '[Name, TBC]',
+    role: '[Support coordinator or plan manager, TBC]',
     rating: 5,
     avatar: { ratio: '1/1', label: 'Support coordinator who refers to TLB' },
   },
@@ -414,12 +544,12 @@ const brandedFaqItems = [
   {
     question: 'Can I use my NDIS funding to pay for cleaning?',
     answer:
-      "Often, yes — cleaning usually sits under Core Supports where it's reasonable and necessary in your plan. We work with [plan-managed and self-managed] participants, and we're glad to talk it through with your coordinator.",
+      "Often, yes. Cleaning usually sits under Core Supports where it's reasonable and necessary in your plan. We work with [plan-managed and self-managed] participants, and we're glad to talk it through with your coordinator.",
   },
   {
     // ⚠️ The page's single most important trust question. Of the four
     // brackets, resolve this one first.
-    question: 'Who actually comes into my home — will it be the same person each time?',
+    question: 'Who actually comes into my home, will it be the same person each time?',
     answer:
       'The same trusted local team wherever we can, familiar faces, not a different stranger each week. TLB is a real local business, insured and accountable [confirm police checks], with Teagan standing behind every job.',
   },
@@ -431,12 +561,12 @@ const brandedFaqItems = [
   {
     question: "What if I'm not happy with the clean, or I want things done differently?",
     answer:
-      "Tell us and we'll make it right — that's the deal. You choose what gets done, how often, and what we leave alone. Change it any time; it's your home, your call.",
+      "Tell us and we'll make it right, and that's the deal. You choose what gets done, how often and what we leave alone. Change it any time. It's your home, your call.",
   },
   {
     question: 'What happens if I get in touch?',
     answer:
-      "A simple chat — what you need, when, and whether we're the right fit. No pressure, no obligation. We're happy to speak with your family, coordinator or plan manager too.",
+      "A simple chat about what you need, when, and whether we're the right fit. No pressure, no obligation. We're happy to speak with your family, coordinator or plan manager too.",
   },
 ];
 
@@ -470,24 +600,24 @@ const nonBrandedFaqItems = [
       'Often yes, but usually only for the spaces you\'re responsible for. The NDIS won\'t fund supports that duplicate what family or other household members already provide, and the NDIA considers whether a support is shared. In a share house, that can mean funding covers your own room and the parts of the home your disability stops you managing, rather than the whole house.',
   },
   {
-    question: "Cleaning isn't in my plan — can I still get it?",
+    question: "Cleaning isn't in my plan. Can I still get it?",
     answer:
       "Not until it's funded, but you can ask for it. Core Supports funding is usually flexible, so if you already have Assistance with Daily Life funding you may be able to use some of it for cleaning. If you don't, raise it at your next plan check-in or ask the NDIA for a plan variation on 1800 800 110. An occupational therapist report describing what you can't safely do strengthens the case.",
   },
   {
     question: 'What will the cleaner actually do?',
     answer:
-      "Everyday household cleaning you can't manage safely yourself: vacuuming, mopping, bathrooms, kitchen, dusting, laundry, changing linen and taking out bins. It's an hourly support, so you set the priorities for the time booked — a two-hour visit won't cover a whole-house deep clean. Yard and garden work is a separate NDIS line item (01_019_0120_1_1), billed separately at its own rate.",
+      "Everyday household cleaning you can't manage safely yourself: vacuuming, mopping, bathrooms, kitchen, dusting, laundry, changing linen and taking out bins. It's an hourly support, so you set the priorities for the time booked, and a two-hour visit won't cover a whole-house deep clean. Yard and garden work is a separate NDIS line item (01_019_0120_1_1), billed separately at its own rate.",
   },
   {
     question: 'Do I need to provide cleaning products and a vacuum?',
     answer:
-      "That's set by your provider and recorded in your service agreement, so ask before the first visit. The NDIS funds the hour of support work, not consumables — cleaning products, mops and vacuums generally can't be claimed from your plan unless they're specialised items linked to your disability. If you'd rather your own products were used for allergy or sensory reasons, say so upfront.",
+      "That's set by your provider and recorded in your service agreement, so ask before the first visit. The NDIS funds the hour of support work, not consumables: cleaning products, mops and vacuums generally can't be claimed from your plan unless they're specialised items linked to your disability. If you'd rather your own products were used for allergy or sensory reasons, say so upfront.",
   },
   {
     question: 'What happens if I have to cancel a clean?',
     answer:
-      "Your service agreement sets the notice period, so check it before you sign. If you cancel inside that window, a provider may be able to claim the session from your plan — but only if the agreement says so and they couldn't give the worker other paid work instead. Give as much notice as you can and you won't be charged.",
+      "Your service agreement sets the notice period, so check it before you sign. If you cancel inside that window, a provider may be able to claim the session from your plan, but only if the agreement says so and they couldn't give the worker other paid work instead. Give as much notice as you can and you won't be charged.",
   },
 ];
 
@@ -503,8 +633,10 @@ const nonBrandedFaqItems = [
 // steps, and this page is the one place both are reading.
 const closingCta = {
   heading: 'Tell us what would help.',
-  lead: "A simple chat — what you need, when, and whether we're the right fit. No pressure, and we're happy to speak with your family, coordinator or plan manager too.",
-  cta: { label: 'Get a fast quote', href: quoteCta.href },
+  lead: "A simple chat about what you need, when, and whether we're the right fit. No pressure, and we're happy to speak with your family, coordinator or plan manager too.",
+  // ✅ Was "Get a fast quote", against the hero's "Get an instant quote". One
+  // primary CTA per page, repeated, per BFD §9.5. See §1.
+  cta: { label: 'Enquire today', href: quoteCta.href },
 };
 ---
 
@@ -521,7 +653,9 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
+      kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -549,18 +683,50 @@ const closingCta = {
     <TextBlock
       theme="light"
       align="left"
-      heading="NDIS cleaning for people across the Northern Rivers and Tweed"
+      heading="NDIS house cleaning for people across the Northern Rivers and the Tweed"
       body={whoThisIsForBody}
     />
 
+    {/* ✅ THE FULL FOOTPRINT, per the copy-rewrite brief §17, which specifies
+        this list town for town. Replaces `nswLocationGroups`, which rendered
+        six coastal Northern Rivers towns and no Tweed at all.
+
+        The intro heading directly above promises the Tweed and this band
+        dropped it, against BFD §2.1. On THIS page the inland towns matter more
+        than on any other: Casino, Kyogle, Coraki and Woodburn are where a
+        participant has the fewest local options and the most reason to be
+        checking whether anyone covers them. Naming six coastal towns quietly
+        tells everyone else they are not the market, which is the exact error
+        §2.1 warns against. The header menu on this page already carried the
+        wider list, so this was a template inconsistency rather than a writing
+        problem.
+
+        ⚠️ This widens the page across the Queensland border, so `areaServed`
+        in the structured data above was widened with it. See the note there —
+        if TLB does not take NDIS work in the Southern Gold Coast, both revert
+        together. */}
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers."
-      groups={nswLocationGroups}
+      subheading={footprintSubheading}
+      groups={completeFootprintLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
     <ContentGrid columns={2} heading="Why participants and coordinators choose us" blocks={whyChooseBlocks} />
+
+    {/* 🔴 CONDITIONAL SECTION — see the `windowCleaningBody` note above before
+        launching. It targets 400/mo that this page captured at zero, and it
+        must not go live until somebody confirms TLB cleans windows for NDIS
+        participants. Delete this block and its constant if the answer is no.
+
+        `light`, not `muted`: the ContentGrid above and the TagCloud below both
+        paint their own fills, so this keeps the page alternating. */}
+    <TextBlock
+      theme="light"
+      align="left"
+      heading="NDIS window cleaning, and the jobs you can't safely reach"
+      body={windowCleaningBody}
+    />
 
     <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
 
@@ -591,8 +757,17 @@ const closingCta = {
       body={[managedForYou.recurring, ...theLineBody.regular]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="NDIS Cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* ✅ BOTH FAQ HEADINGS RENAMED (copy-rewrite brief §19 and §20).
+
+        The page carries two FAQ blocks and the generic "Frequently Asked
+        Questions" on the first made the split look like a build error. The
+        first block is about working with TLB, the second is about the scheme.
+
+        The second heading also lands `ndis house cleaning` contiguously, which
+        is part of the H2 keyword component, and drops the Title Case that BFD
+        §9.2 rules out. */}
+    <Faq heading="Working with us" items={brandedFaqItems} />
+    <Faq heading="NDIS house cleaning, common questions" items={nonBrandedFaqItems} />
 
     <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
   </main>

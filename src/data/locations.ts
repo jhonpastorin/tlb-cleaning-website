@@ -347,3 +347,33 @@ export const footprintLocationGroups: TagGroup[] = [
 /** The subheading every one of those four briefs specifies, word for word. */
 export const footprintSubheading =
   'Across the Northern Rivers, the Tweed and the Southern Gold Coast.';
+
+// ── THE COMPLETE FOOTPRINT, for the September 2026 copy-rewrite briefs ────
+//
+// The three briefs for /house-cleaning/airbnb-cleaning/,
+// /house-cleaning/real-estate-cleaning/ and /house-cleaning/ndis-cleaning/ each
+// specify their "Where we clean" list town for town, and all three specify the
+// SAME list — which is the three source arrays at the top of this file, whole
+// and in their own order. It is a strict superset of `footprintLocationGroups`
+// above: the eleven towns those four earlier briefs left out (Bexhill, Dunoon,
+// Skennars Head, Broadwater, New Brighton, Federal, Bilambil, Bilambil
+// Heights, Fingal Head, Bogangar and Mooball) are all named in these three.
+//
+// A separate export rather than a widening of `footprintLocationGroups`,
+// because that list is four other pages' approved copy and these briefs do not
+// cover them. Same reasoning, and the same shape, as that block's own note
+// about not editing `visibleTowns` out from under the rest of the site.
+//
+// No hardcoded town names here at all: this reads the source arrays directly,
+// so a town added upstream lands on these three pages automatically and the
+// guard that `footprintLocationGroups` needs is unnecessary.
+//
+// Linking is `toFootprintGroup`'s established rule — `isNavigableTown` decides
+// which towns get an href, and the rest render as plain pills. Naming the
+// footprint is the brand and citability claim; linking 56 town pages is the
+// separate doorway-page question recorded in townPages.ts.
+export const completeFootprintLocationGroups: TagGroup[] = [
+  toFootprintGroup('Northern Rivers NSW', northernRiversTowns),
+  toFootprintGroup('The Tweed', tweedTowns),
+  toFootprintGroup('Southern Gold Coast QLD', southernGoldCoastTowns),
+];

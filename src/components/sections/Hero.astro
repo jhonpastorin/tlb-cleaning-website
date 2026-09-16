@@ -46,6 +46,19 @@ interface Props {
    *  Same idea PhotoGallery.astro's `story` steps already have as `step`. */
   kicker?: string;
   headingLines: string[];
+  /** One line rendered directly BENEATH the <h1>, above the lead — a demoted
+   *  headline, not an eyebrow. Added September 2026 for the three copy-rewrite
+   *  briefs (airbnb, real estate, NDIS), each of which replaces the H1 with the
+   *  mapped keyword phrase and keeps the old headline one line lower rather
+   *  than cutting it: "Set and forget hosting starts here.", "Stop chasing
+   *  cleaners between tenancies.", "The same trusted local faces, treating your
+   *  home with genuine care."
+   *
+   *  Distinct from `kicker`, which sits ABOVE the <h1> and is styled as a small
+   *  uppercase label. This is display-sized and sentence-cased, because it is a
+   *  sentence that used to be the heading. Outside the <h1> for the same reason
+   *  `kicker` is: the page gets one heading, and its text is `headingLines`. */
+  subheading?: string;
   lead: string;
   /** The hero's CTA. Rendered as `brand` when the caller doesn't name a
    *  variant — identical to `inverse` at rest (--color-brand and
@@ -99,6 +112,7 @@ const {
   kicker,
   variant = 'split-mosaic',
   headingLines,
+  subheading,
   lead,
   cta,
   logo,
@@ -135,6 +149,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             </>
           ))}
         </h1>
+        {subheading && <p class="hero__subheading">{subheading}</p>}
         <p class="lead">{lead}</p>
         <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
 
@@ -193,6 +208,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             </>
           ))}
         </h1>
+        {subheading && <p class="hero__subheading">{subheading}</p>}
         <p class="lead">{lead}</p>
         <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
       </div>
@@ -225,6 +241,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             </>
           ))}
         </h1>
+        {subheading && <p class="hero__subheading">{subheading}</p>}
         <p class="lead">{lead}</p>
         <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
       </div>
@@ -250,6 +267,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             </>
           ))}
         </h1>
+        {subheading && <p class="hero__subheading">{subheading}</p>}
         <p class="lead">{lead}</p>
         <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
       </div>
@@ -292,6 +310,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             </>
           ))}
         </h1>
+        {subheading && <p class="hero__subheading">{subheading}</p>}
         <p class="lead">{lead}</p>
         <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'brand'} />
 
@@ -343,6 +362,22 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
     text-transform: uppercase;
     margin-bottom: var(--space-xs);
     opacity: 0.75;
+  }
+
+  /* Demoted headline, directly under the H1. `.hero__copy` is a gap-flex
+     column at --space-md, which would space this exactly like the lead and
+     leave the H1 and its own second line reading as two unrelated paragraphs.
+     The negative margin nets that gap down to --space-xs, so the pair reads as
+     one heading block with the lead a clear step below it. Display font at
+     lead size: bigger than the lead, smaller than the H1, which is what tells
+     the reader it is a headline rather than the first line of body copy. */
+  .hero__subheading {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--title-6);
+    line-height: var(--leading-snug);
+    margin-top: calc(var(--space-xs) - var(--space-md));
+    text-wrap: balance;
   }
 
   /* ---- split-mosaic (default) ------------------------------------------ */
