@@ -425,10 +425,13 @@ const headerNavAll: MegaMenuNavItem[] = [
 //     fully orphaned, but nothing lists them as a set any more.
 //
 // ⚠️ UNLINKED IS NOT UNINDEXED. All thirteen pages still build into dist/
-// and stay reachable and crawlable by URL. If the intent is that nobody
-// finds them while they are hidden, they need `noindex` (and to come out of
-// any sitemap) too — a separate decision, NOT made here. It is the same open
-// question locations.ts raises about its towns.
+// and stay reachable and crawlable by URL.
+//
+// On staging this is covered site-wide by site-env.ts, which puts `noindex` on
+// every page unless SITE_ENV=production. But that switch is blanket, not
+// per-page: at launch these thirteen become indexable again with everything
+// else. Whether they should is still open, and it is the same question
+// locations.ts raises about its towns.
 //
 // ⚠️ meetTheTeam.ts mirrors the "Meet the team" menu and cross-links those
 // four pages from each other's BODIES. Those links are untouched, so the

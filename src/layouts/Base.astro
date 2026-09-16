@@ -8,6 +8,10 @@ import '../styles/global.css';
 // earliest text on the page doesn't wait on font discovery via the CSS.
 import poppinsBoldWoff2 from '@fontsource/poppins/files/poppins-latin-700-normal.woff2?url';
 
+// Every page on the site reaches this layout, so this import is the one place
+// the noindex decision has to be made. See site-env.ts for why it fails closed.
+import { isStaging, robotsContent } from '../data/site-env';
+
 export interface LocalBusinessInfo {
   name: string;
   url: string;
@@ -63,6 +67,10 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {/* Staging only. The canonical above deliberately still points at the
+        production domain — with noindex present that is harmless, and it keeps
+        staging and production markup identical apart from this one line. */}
+    {isStaging && <meta name="robots" content={robotsContent} />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

@@ -134,9 +134,14 @@ export const southernGoldCoastTowns = [
 //
 // ⚠️ THESE PAGES ARE NOW ORPHANS, and unlinked is not the same as unindexed.
 // The ~48 hidden pages are still built into dist/ and are still reachable and
-// crawlable by URL. If the intent is that nobody finds them at all while they
-// are hidden, they need `noindex` (and to come out of any sitemap) as well —
-// that is a separate decision and has NOT been made here.
+// crawlable by URL.
+//
+// While the site is on staging this is covered site-wide: site-env.ts puts
+// `noindex` on every page unless SITE_ENV=production. That is a blanket switch,
+// not a per-page one — so the day the site goes production, these hidden pages
+// become indexable again along with everything else. If they should stay out of
+// the index after launch, that still needs a per-page decision here. There is
+// no sitemap in this project, so there is nothing to exclude them from.
 //
 // Town order is the client's own, not the source arrays', so these are listed
 // literally rather than filtered. The guard below checks each name against the

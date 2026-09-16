@@ -5,6 +5,11 @@ dist/
 # dependencies
 node_modules/
 
+# environment — .env.example is the committed template
+.env
+.env.*
+!.env.example
+
 # logs
 npm-debug.log*
 
