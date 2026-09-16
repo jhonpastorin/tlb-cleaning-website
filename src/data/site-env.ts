@@ -21,6 +21,13 @@ const rawEnv = import.meta.env.SITE_ENV;
 export const isProduction = rawEnv === 'production';
 export const isStaging = !isProduction;
 
+// The same flag as a string, for anything that has to branch on the
+// environment rather than just on indexability. Pushed into dataLayer in
+// Base.astro so Google Tag Manager can block GA4 and Ads tags on staging.
+export const siteEnv: 'production' | 'staging' = isProduction
+  ? 'production'
+  : 'staging';
+
 // nofollow as well as noindex: staging pages link to each other, and a crawler
 // that ignores the noindex should at least not walk the rest of the tree.
 export const robotsContent = 'noindex, nofollow';

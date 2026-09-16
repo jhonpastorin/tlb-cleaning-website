@@ -10,7 +10,7 @@ import poppinsBoldWoff2 from '@fontsource/poppins/files/poppins-latin-700-normal
 
 // Every page on the site reaches this layout, so this import is the one place
 // the noindex decision has to be made. See site-env.ts for why it fails closed.
-import { isStaging, robotsContent } from '../data/site-env';
+import { isStaging, robotsContent, siteEnv } from '../data/site-env';
 
 export interface LocalBusinessInfo {
   name: string;
@@ -57,6 +57,22 @@ const jsonLd = {
   },
   sameAs: business.sameAs,
 };
+
+// Google Tag Manager. One container across both environments; the ID is not a
+// secret, so it lives here rather than in an env var.
+const GTM_CONTAINER_ID = 'GTM-KDMCQNN9';
+
+// Pushed BEFORE the container loads, so siteEnv is already on the dataLayer
+// when GTM fires its very first event and every tag can read it.
+const dataLayerInit = `window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({ siteEnv: '${siteEnv}' });`;
+
+// Googles snippet verbatim, with the container ID interpolated.
+const gtmSnippet = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');`;
 ---
 
 <!doctype html>
@@ -64,6 +80,26 @@ const jsonLd = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {/* Google Tag Manager, as high in the head as the document allows: only
+        charset and viewport go above it, and both have to, because they change
+        how the rest of the document is parsed and laid out.
+
+        ⚠️ GTM LOADS ON STAGING TOO, on purpose, so tags can be tested there
+        with Preview mode. What keeps staging traffic out of GA4 and Ads is a
+        blocking exception on siteEnv === "staging", and THAT EXCEPTION LIVES IN
+        THE GTM UI, NOT IN THIS REPO. It is not version controlled and nothing
+        here can verify it. If it is removed or never configured, staging
+        silently starts reporting as real traffic. The noindex in this same head
+        does not help with that: indexing and tag firing are unrelated.
+
+        is:inline on both, for the same reason as the JSON-LD below: without it
+        Astro bundles, hashes and relocates the script, which loses the position
+        the snippet depends on. */}
+    <script is:inline set:html={dataLayerInit} />
+    <!-- Google Tag Manager -->
+    <script is:inline set:html={gtmSnippet} />
+    <!-- End Google Tag Manager -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -105,6 +141,17 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
   </head>
   <body>
+    {/* Google Tag Manager noscript fallback. Google requires it immediately
+        after the opening <body>. It is display:none and zero-sized, so it stays
+        out of the skip links focus order and adds nothing visible. */}
+    <noscript>
+      <iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${GTM_CONTAINER_ID}`}
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+        title="Google Tag Manager"></iframe>
+    </noscript>
     <a class="skip-link" href="#main">Skip to main content</a>
     <slot />
   </body>
