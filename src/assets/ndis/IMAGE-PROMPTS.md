@@ -22,7 +22,7 @@ in both places.
 
 ## ⚠️ This page is not like its siblings, and neither are its photos
 
-`/ndis-cleaning/` addresses people with disability, their family carers, and
+`/house-cleaning/ndis-cleaning/` addresses people with disability, their family carers, and
 coordinators who hold a duty of care to them. Three constraints follow, and
 they are stricter than the rest of the library's:
 

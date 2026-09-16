@@ -26,31 +26,31 @@ export interface OutsideService {
 export const outsideServices: OutsideService[] = [
   {
     label: 'Window cleaning',
-    href: '/window-cleaning/',
+    href: '/house-cleaning/window-cleaning/',
     icon: 'spark',
     description: 'Glass, frames, sills and tracks, inside and out, with the salt film taken off properly.',
   },
   {
     label: 'Gutter cleaning',
-    href: '/gutter-cleaning/',
+    href: '/house-cleaning/gutter-cleaning/',
     icon: 'puzzle',
     description: 'Gutters, valleys and downpipes cleared and flushed, and the debris taken away with us.',
   },
   {
     label: 'Roof cleaning',
-    href: '/roof-cleaning/',
+    href: '/house-cleaning/roof-cleaning/',
     icon: 'house',
     description: 'Soft washing that kills the algae and lichen at the root, on tile or colorbond.',
   },
   {
     label: 'High pressure cleaning',
-    href: '/high-pressure-cleaning/',
+    href: '/house-cleaning/pressure-cleaning/',
     icon: 'spray-bottle',
     description: 'Driveways, paths, patios, pool surrounds and fences, at a pressure the surface can take.',
   },
   {
     label: 'Exterior house washing',
-    href: '/exterior-house-washing/',
+    href: '/house-cleaning/exterior-house-washing/',
     icon: 'bloom',
     description: 'Walls, eaves, soffits and window frames washed down so the whole house looks newer.',
   },

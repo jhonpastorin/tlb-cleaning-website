@@ -1,8 +1,8 @@
 ---
 // Real estate and property management cleaning — one of the three LEAF
 // pages under the "Specialist cleaning" group in the Home Cleaning
-// mega-menu (navigation.ts). Sibling of /airbnb-cleaning/ and
-// /ndis-cleaning/, built in the same pass as the first of those and sharing
+// mega-menu (navigation.ts). Sibling of /house-cleaning/airbnb-cleaning/ and
+// /house-cleaning/ndis-cleaning/, built in the same pass as the first of those and sharing
 // its structure deliberately.
 //
 // THIS PAGE HAS THREE INBOUND LINKS ALREADY WAITING FOR IT, which is
@@ -18,7 +18,7 @@
 // verbatim.
 //
 // NO CONTENT BRIEF EXISTS in content-plans/ for this page. As with
-// /airbnb-cleaning/, it is not drafted from nothing — the Brand Foundation
+// /house-cleaning/airbnb-cleaning/, it is not drafted from nothing — the Brand Foundation
 // Document has a full audience section (§7 "Audience 3: real estate
 // agencies and property managers", plus §3's fourth differentiator and §5's
 // approved headline/CTA sets), and the agency relationship is the single
@@ -56,23 +56,23 @@
 // possible proof on this page — and it must not be built until TLB has
 // written permission to display each mark. BFD §5.3 and §"Client and partner
 // proof" both require it. See the reserved slot in the render below.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import PathwayCards from '../components/sections/PathwayCards.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import Callout from '../components/sections/Callout.astro';
-import BeforeAfter from '../components/sections/BeforeAfter.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import ComparisonTable from '../components/sections/ComparisonTable.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import PathwayCards from '../../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import Callout from '../../components/sections/Callout.astro';
+import BeforeAfter from '../../components/sections/BeforeAfter.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // The hero and cards 1 and 3 are this page's own, generated per
 // IMAGE-GUIDELINES; the prompts are in src/assets/real_estate/IMAGE-PROMPTS.md.
 //
@@ -91,20 +91,20 @@ import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 // has no prompt of its own. The homepage should be repointed at
 // real-estate-cleaning-two-cleaners-arriving-at-a-rental-house.jpg below —
 // see the sheet's opening note.
-import heroImg from '../assets/real_estate/real-estate-cleaning-finishing-an-empty-vacated-rental.jpg';
-import cardVacancyImg from '../assets/real_estate/real-estate-cleaning-two-cleaners-arriving-at-a-rental-house.jpg';
-import cardInspectionImg from '../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-property-manager-at-a-vacant-handover.jpg';
-import cardRoutineImg from '../assets/real_estate/real-estate-cleaning-routine-clean-in-a-tenanted-rental-kitchen.jpg';
+import heroImg from '../../assets/real_estate/real-estate-cleaning-finishing-an-empty-vacated-rental.jpg';
+import cardVacancyImg from '../../assets/real_estate/real-estate-cleaning-two-cleaners-arriving-at-a-rental-house.jpg';
+import cardInspectionImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-property-manager-at-a-vacant-handover.jpg';
+import cardRoutineImg from '../../assets/real_estate/real-estate-cleaning-routine-clean-in-a-tenanted-rental-kitchen.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as every sibling.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 // Before/after SAMPLES, shared with five other pages. See §7.
-import sampleKitchenBeforeImg from '../assets/home_cleaning/before_after/sample-kitchen-before.png';
-import sampleKitchenAfterImg from '../assets/home_cleaning/before_after/sample-kitchen-after.png';
-import sampleOvenBeforeImg from '../assets/home_cleaning/before_after/sample-oven-before.png';
-import sampleOvenAfterImg from '../assets/home_cleaning/before_after/sample-oven-after.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
-import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
+import sampleKitchenBeforeImg from '../../assets/home_cleaning/before_after/sample-kitchen-before.png';
+import sampleKitchenAfterImg from '../../assets/home_cleaning/before_after/sample-kitchen-after.png';
+import sampleOvenBeforeImg from '../../assets/home_cleaning/before_after/sample-oven-before.png';
+import sampleOvenAfterImg from '../../assets/home_cleaning/before_after/sample-oven-after.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
+import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
 import {
   primaryNav,
   headerNav,
@@ -113,11 +113,11 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { comparisonColumns, comparisonRows } from '../data/comparison';
-import { locationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { comparisonColumns, comparisonRows } from '../../data/comparison';
+import { locationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Real estate cleaners" is the menu label and the phrase a
 // property manager searches; "property management cleaning" is what the
@@ -127,7 +127,7 @@ const pageMeta = {
   description:
     'Vacancy turnarounds, bond cleans and routine managed-property cleans for agencies across the Northern Rivers, the Tweed and the Southern Gold Coast. A local team, one point of contact.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/real-estate-cleaning/',
+  canonical: 'https://tlbcleaning.com.au/house-cleaning/real-estate-cleaning/',
 };
 
 const business = {
@@ -144,7 +144,7 @@ const business = {
     addressCountry: 'AU',
   },
   sameAs: [],
-  // BOTH STATES, like /airbnb-cleaning/ and unlike the commercial and NDIS
+  // BOTH STATES, like /house-cleaning/airbnb-cleaning/ and unlike the commercial and NDIS
   // pages. Deliberate: the BFD's audience section for this reader names
   // agencies "across the Northern Rivers and Southern Gold Coast", and its
   // differentiator section says TLB holds contracts in "the Northern Rivers
@@ -438,7 +438,7 @@ const serviceTags = [
   { label: 'Pre-listing and photography cleans', href: quoteCta.href },
   { label: 'Deep cleans between tenancies', href: '/house-cleaning/deep-cleaning/' },
   { label: 'Mould treatment and removal', href: '/house-cleaning/mould-removal/' },
-  { label: 'Holiday let turnovers', href: '/airbnb-cleaning/' },
+  { label: 'Holiday let turnovers', href: '/house-cleaning/airbnb-cleaning/' },
   { label: 'Strata and common areas', href: '/commercial-cleaning/' },
   { label: 'Carpet cleaning', href: '/commercial-carpet-cleaning/' },
   { label: 'Driveways and exterior washing', href: '/commercial-pressure-cleaning/' },

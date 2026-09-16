@@ -26,29 +26,29 @@
 //
 // PHOTOGRAPHY: hero is a family B cut-out keyed with scripts/key-cutout.mjs.
 // Prompts in src/assets/home_cleaning/appliances/IMAGE-PROMPTS.md.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import PathwayCards from '../components/sections/PathwayCards.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import ComparisonTable from '../components/sections/ComparisonTable.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../assets/home_cleaning/appliances/upholstery_and_lounge/cleaner-cleaning-a-linen-armchair.png';
-import cardSofaImg from '../assets/home_cleaning/appliances/upholstery_and_lounge/well-used-family-sofa-in-a-living-room.jpg';
-import cardQuoteImg from '../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
-import cardTeamImg from '../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
-import { whoIsInYourHomeCard } from '../data/whoIsInYourHome';
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import PathwayCards from '../../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import heroImg from '../../assets/home_cleaning/appliances/upholstery_and_lounge/cleaner-cleaning-a-linen-armchair.png';
+import cardSofaImg from '../../assets/home_cleaning/appliances/upholstery_and_lounge/well-used-family-sofa-in-a-living-room.jpg';
+import cardQuoteImg from '../../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
+import cardTeamImg from '../../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
+import { whoIsInYourHomeCard } from '../../data/whoIsInYourHome';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -57,20 +57,20 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { comparisonColumns, comparisonRows } from '../data/comparison';
-import { locationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { otherApplianceServices } from '../data/appliance-services';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { comparisonColumns, comparisonRows } from '../../data/comparison';
+import { locationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { otherApplianceServices } from '../../data/appliance-services';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
-const OWN_HREF = '/upholstery-and-lounge-cleaning/';
+const OWN_HREF = '/house-cleaning/upholstery-cleaning/';
 
 const pageMeta = {
   title: 'Upholstery and Lounge Cleaning | TLB Cleaning',
   description:
     'Lounge, armchair and dining chair cleaning across the Northern Rivers and the Tweed. We read the fabric code before we start, so your sofa is not the experiment.',
-  canonical: 'https://tlbcleaning.com.au/upholstery-and-lounge-cleaning/',
+  canonical: 'https://tlbcleaning.com.au/house-cleaning/upholstery-cleaning/',
 };
 
 const business = {

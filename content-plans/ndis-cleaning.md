@@ -25,7 +25,7 @@ Legend: 🟢 exact match · 🟡 workable with a stretch · 🔴 gap. Content st
 **drafted** (ships as-is), **pending confirmation** (bracketed in the
 source), **blocked** (no usable copy).
 
-Slug: **`/ndis-cleaning/`** — already live in the header mega-menu under
+Slug: **`/house-cleaning/ndis-cleaning/`** — already live in the header mega-menu under
 Home Cleaning → Specialist cleaning
 ([`navigation.ts:137`](../src/data/navigation.ts#L137)). No conflict.
 
@@ -33,7 +33,7 @@ Home Cleaning → Specialist cleaning
 
 ## ✅ Built — [`src/pages/ndis-cleaning.astro`](../src/pages/ndis-cleaning.astro)
 
-Live at `/ndis-cleaning/`, matching the mega-menu's existing slug. Verified
+Live at `/house-cleaning/ndis-cleaning/`, matching the mega-menu's existing slug. Verified
 in a browser at 1440px and 390px: no console errors, no horizontal overflow,
 one `<h1>`, all twelve sections rendering.
 
@@ -235,7 +235,7 @@ what NDIS cleaning is. See §2 below.
 |---|---|---|
 | Title tag | `NDIS Cleaning Service \| TLB Cleaning` | ⚠️ Note the double space before the pipe in the source. Also: **"Service" singular** while the focus keyword is "NDIS cleaning services" — recommend "NDIS Cleaning Services". |
 | Meta description | "Reliable NDIS household cleaning in the Northern Rivers and Tweed. The same trusted local team, on time, treating your home like our own. Get a fast quote." | 156 chars — slightly long, may truncate. Otherwise good, and correctly scoped to NSW only. |
-| URL | `/ndis-cleaning/` | Already in the mega-menu. No conflict. |
+| URL | `/house-cleaning/ndis-cleaning/` | Already in the mega-menu. No conflict. |
 | Focus keyword | `NDIS cleaning services` | |
 | Google Classification Type | — | **Blank.** Tool named, no output pasted. |
 | Related keywords | — | **Blank.** |

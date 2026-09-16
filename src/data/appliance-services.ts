@@ -34,32 +34,32 @@ export interface ApplianceService {
 export const applianceServices: ApplianceService[] = [
   {
     label: 'Carpet and rug cleaning',
-    href: '/carpet-and-rug-cleaning/',
+    href: '/house-cleaning/carpet-cleaning/',
     blurb: 'Hot water extraction for carpet, and the gentler treatment a wool rug needs.',
   },
   {
     label: 'Upholstery and lounge cleaning',
-    href: '/upholstery-and-lounge-cleaning/',
+    href: '/house-cleaning/upholstery-cleaning/',
     blurb: 'Fabric lounges, armchairs and dining chairs, cleaned to the fabric code on the label.',
   },
   {
     label: 'Mattress cleaning',
-    href: '/mattress-cleaning/',
+    href: '/house-cleaning/mattress-cleaning/',
     blurb: 'A dry-ish clean for the one thing in the house nobody ever washes.',
   },
   {
     label: 'Tile and grout cleaning',
-    href: '/tile-and-grout-cleaning/',
+    href: '/house-cleaning/tile-and-grout-cleaning/',
     blurb: 'Bathroom and kitchen grout brought back, and sealed so it stays back longer.',
   },
   {
     label: 'Oven, BBQ and appliance cleaning',
-    href: '/oven-bbq-and-appliance-cleaning/',
+    href: '/house-cleaning/oven-cleaning/',
     blurb: 'Ovens stripped and soaked part by part, barbecues degreased, fridges done out.',
   },
   {
     label: 'Blinds, shutters and ceiling fans',
-    href: '/blinds-shutters-and-ceiling-fans/',
+    href: '/house-cleaning/blind-cleaning/',
     blurb: 'The dusty things above eye level that a regular clean never has time for.',
   },
 ];

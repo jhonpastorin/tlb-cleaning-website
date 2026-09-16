@@ -181,7 +181,7 @@ Card copy verbatim, split into `title` (the opening first-person sentence) +
 **Card 3**
 - title: `It's for Mum or Dad's place`
 - description: `We do regular cleans for older clients, including through Home Care Packages and DVA.`
-- links to `/senior-home-cleaning/`
+- links to `/house-cleaning/senior-home-cleaning/`
 
 **Component:** `PathwayCards.astro`, three numbered cards on the dark ground.
 🟢 — this is precisely "split traffic by audience/persona", which is what the
@@ -202,7 +202,7 @@ the three CTA labels (`Deep cleaning`, `End of lease cleaning`,
 The headings are structural placeholder copy; the CTA labels are plain
 wayfinding, not marketing copy.
 
-🔴 **`/senior-home-cleaning/` has no mega-menu entry.** It is *not* the same
+🔴 **`/house-cleaning/senior-home-cleaning/` has no mega-menu entry.** It is *not* the same
 page as Commercial → "Aged care, retirement and seniors"
 (`/aged-care-retirement-and-seniors/`), which is cleaning aged-care premises.
 Open item, unchanged from the first build.
@@ -698,7 +698,7 @@ and ruled out first.
 2. **Suburb lists disagree across four files** (§13) — `navigation.ts`
    (15 towns), this page (56), `deep-cleaning.astro` (56),
    `commercial-cleaning.astro` (12). The mega-menu should grow to match.
-3. **`/senior-home-cleaning/` has no mega-menu entry** (§4), and must not be
+3. **`/house-cleaning/senior-home-cleaning/` has no mega-menu entry** (§4), and must not be
    confused with `/aged-care-retirement-and-seniors/`.
 4. ✅ **`canonical`** — resolved: **`https://tlbcleaning.com.au/`** (§0). The
    `example.com` placeholder was swapped on every page 2026-09-15, along with

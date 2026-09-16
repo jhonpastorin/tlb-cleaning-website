@@ -181,14 +181,14 @@ blended page serves neither, so the cards split them at the top.
 | Card | Title | → |
 |---|---|---|
 | 1 | I'm moving out and I want my bond back | `/quote/` |
-| 2 | I manage the property | `/real-estate-cleaning/` |
+| 2 | I manage the property | `/house-cleaning/real-estate-cleaning/` |
 | 3 | I'm not sure this is the clean I need | `#compare` (section 8) |
 
 Card 3's `#compare` anchor sits on a wrapper `<div>`, the same pattern
 `deep-cleaning.astro` uses, because `ComparisonTable` takes no `id` prop and
 adding one purely for an anchor is not worth a shared-component change.
 
-⚠️ **Card 2 points at `/real-estate-cleaning/`, which does not exist yet.** It
+⚠️ **Card 2 points at `/house-cleaning/real-estate-cleaning/`, which does not exist yet.** It
 is in `navigation.ts`'s footer services list and the mega-menu, so this page
 is not introducing the dead link, but it is now sending a high-value audience
 into it. Worth knowing when prioritising which page gets built next.
@@ -493,7 +493,7 @@ consistent with the rest of the page.
 **Decisions for TLB:**
 - Does TLB want to formally adopt a bond-back guarantee? If yes, it is one
   decision wired through five places at once, never piecemeal.
-- Section 3 card 2 sends property managers to `/real-estate-cleaning/`, which
+- Section 3 card 2 sends property managers to `/house-cleaning/real-estate-cleaning/`, which
   **does not exist**. Build it, or repoint the card.
 
 **Media needed:**

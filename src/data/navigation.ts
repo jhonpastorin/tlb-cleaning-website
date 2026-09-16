@@ -56,12 +56,12 @@ export const serviceLinks = [
   {
     title: 'Airbnb and holiday let turnovers',
     description: 'Timed to your bookings, restocked and guest-ready before check-in. Full management available.',
-    href: '/airbnb-cleaning/',
+    href: '/house-cleaning/airbnb-cleaning/',
   },
   {
     title: 'Real estate and property management',
     description: 'Vacancy turnarounds and managed-property cleans for agencies with a rent roll to protect.',
-    href: '/real-estate-cleaning/',
+    href: '/house-cleaning/real-estate-cleaning/',
   },
   {
     title: 'Commercial cleaning',
@@ -103,22 +103,38 @@ export const primaryNav: NavItem[] = [
 // a curated subset of locations.ts (see regionColumns below) — Level A = the
 // item itself, Level B = its children, [bracketed] rows = non-clickable
 // group labels (no `label` maps to no `href`, matching MegaMenuGroup).
-// The three Home Cleaning children now follow the keyword workbook's own
-// URL column, which supplied hrefs the earlier IA sheet did not: they nest
-// under the parent as `/house-cleaning/deep-cleaning/`,
-// `/house-cleaning/end-of-lease-cleaning/` and `/house-cleaning/mould-removal/`.
-// That closes the open flat-vs-nested question this comment used to carry,
-// and note the third one is `mould-removal`, not the longer
-// `mould-cleaning-and-removal` the page file was named after. Every OTHER
-// child slug below is still a flat kebab-case guess from its literal label,
-// with no href specified anywhere — confirm those before launch. Overlaps
-// with slugs already used elsewhere in this file are called out inline
-// where the wording differs. Note "Aged care, retirement and seniors" under
-// Commercial → By type of premises is NOT the same page as the
-// /senior-home-cleaning/ that content-plans/home-cleaning.md §3 links to:
+// ✅ EVERY HOME CLEANING CHILD NOW NESTS UNDER `/house-cleaning/`,
+// 16 Sep 2026, from the client's own URL sheet. Three of them already did
+// (deep cleaning, end of lease, mould removal, from the keyword workbook);
+// the other seventeen were flat kebab-case guesses off their labels, and the
+// sheet replaced every one of them. No child slug in this menu is a guess any
+// more. Note `mould-removal`, not the longer `mould-cleaning-and-removal` the
+// page file was originally named after.
+//
+// ⚠️ FIVE OF THOSE SLUGS ARE NOT JUST RE-PARENTED, THEY ARE RENAMED, and
+// the page files were renamed with them, so file name and URL still match:
+//   carpet-and-rug-cleaning          → carpet-cleaning
+//   upholstery-and-lounge-cleaning   → upholstery-cleaning
+//   oven-bbq-and-appliance-cleaning  → oven-cleaning
+//   blinds-shutters-and-ceiling-fans → blind-cleaning
+//   high-pressure-cleaning           → pressure-cleaning
+// The LABELS above each row are untouched — the menu still says "Carpet and
+// rug cleaning" over a `/carpet-cleaning/` URL, which is the sheet's own
+// pairing, not a mismatch to tidy up.
+//
+// ⚠️ THE OLD FLAT URLS ARE GONE, no redirects, at the client's call. Anything
+// off-site pointing at `/airbnb-cleaning/`, `/real-estate-cleaning/` and the
+// twelve others now 404s. Fine pre-launch; it is not fine after, so if this
+// site has shipped by the time you read this, that decision needs revisiting
+// before anything else gets moved.
+//
+// Note "Aged care, retirement and seniors" under Commercial → By type of
+// premises is NOT the same page as the
+// /house-cleaning/senior-home-cleaning/ that content-plans/home-cleaning.md §3 links to:
 // that one is commercial cleaning of aged-care premises, this is regular
 // domestic cleaning for older clients at home (Home Care Packages, DVA).
-// /senior-home-cleaning/ currently has no mega-menu entry of its own.
+// The sheet gives /house-cleaning/senior-home-cleaning/ to the "Seniors
+// cleaning" row below, so it now has a menu entry — it just has no page yet.
 
 // "Areas we clean" mega-menu columns.
 //
@@ -205,30 +221,30 @@ const headerNavAll: MegaMenuNavItem[] = [
       {
         label: 'Appliances',
         items: [
-          { label: 'Carpet and rug cleaning', href: '/carpet-and-rug-cleaning/' },
-          { label: 'Upholstery and lounge cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/upholstery-and-lounge-cleaning/'
-          { label: 'Mattress cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/mattress-cleaning/'
-          { label: 'Tile and grout cleaning', href: '/tile-and-grout-cleaning/' },
-          { label: 'Oven, BBQ and appliance cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/oven-bbq-and-appliance-cleaning/'
-          { label: 'Blinds, shutters and ceiling fans', href: '/blinds-shutters-and-ceiling-fans/' },
+          { label: 'Carpet and rug cleaning', href: '/house-cleaning/carpet-cleaning/' },
+          { label: 'Upholstery and lounge cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/house-cleaning/upholstery-cleaning/'
+          { label: 'Mattress cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/house-cleaning/mattress-cleaning/'
+          { label: 'Tile and grout cleaning', href: '/house-cleaning/tile-and-grout-cleaning/' },
+          { label: 'Oven, BBQ and appliance cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/house-cleaning/oven-cleaning/'
+          { label: 'Blinds, shutters and ceiling fans', href: '/house-cleaning/blind-cleaning/' },
         ],
       },
       {
         label: 'Outside your home',
         items: [
-          { label: 'Window cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/window-cleaning/'
-          { label: 'Gutter cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/gutter-cleaning/'
-          { label: 'Roof cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/roof-cleaning/'
-          { label: 'High pressure cleaning' }, // UNLINKED 16 Sep 2026 — was href: '/high-pressure-cleaning/'
-          { label: 'Exterior house washing' }, // UNLINKED 16 Sep 2026 — was href: '/exterior-house-washing/'
+          { label: 'Window cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/house-cleaning/window-cleaning/'
+          { label: 'Gutter cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/house-cleaning/gutter-cleaning/'
+          { label: 'Roof cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/house-cleaning/roof-cleaning/'
+          { label: 'High pressure cleaning' }, // UNLINKED 16 Sep 2026 — relink to: '/house-cleaning/pressure-cleaning/'
+          { label: 'Exterior house washing' }, // UNLINKED 16 Sep 2026 — relink to: '/house-cleaning/exterior-house-washing/'
         ],
       },
       {
         label: 'Specialist cleaning',
         items: [
-          { label: 'Airbnb', href: '/airbnb-cleaning/' }, // reuses the existing /airbnb-cleaning/ slug from §3/§10
-          { label: 'Real estate cleaners', href: '/real-estate-cleaning/' }, // reuses the existing /real-estate-cleaning/ slug from §3/§10
-          { label: 'NDIS cleaning', href: '/ndis-cleaning/' },
+          { label: 'Airbnb', href: '/house-cleaning/airbnb-cleaning/' }, // same page as §3/§10's Airbnb service, now nested
+          { label: 'Real estate cleaners', href: '/house-cleaning/real-estate-cleaning/' }, // same page as §3/§10's real estate service, now nested
+          { label: 'NDIS cleaning', href: '/house-cleaning/ndis-cleaning/' },
           // ADDED 16 Sep 2026, at the client's request, and deliberately
           // without hrefs: none of these four has a page yet. They are in the
           // menu so the services are advertised, and they render as plain
@@ -238,7 +254,7 @@ const headerNavAll: MegaMenuNavItem[] = [
           // nothing else has to change.
           //
           // ⚠️ "Seniors cleaning" is almost certainly the page this codebase
-          // has been calling /senior-home-cleaning/ — domestic cleaning for
+          // has been calling /house-cleaning/senior-home-cleaning/ — domestic cleaning for
           // older clients at home (Home Care Packages, DVA), NOT the
           // commercial aged-care premises page already in the Commercial
           // menu. content-plans/home-cleaning.md §3 references that slug and
@@ -255,10 +271,19 @@ const headerNavAll: MegaMenuNavItem[] = [
           // to do BEFORE any copy exists — the mould page's header is the
           // model for how carefully that has to be scoped, and it had less at
           // stake than these two do.
-          { label: 'Forensic and trauma cleaning' },
-          { label: 'Hoarder and squalor cleaning' },
-          { label: 'Deceased estate cleaning' },
-          { label: 'Seniors cleaning' },
+          //
+          // The client's URL sheet of 16 Sep 2026 gives a slug for three of
+          // these four, recorded here so nobody has to guess one when the page
+          // is built: put the URL on the row, delete the comment, done. They
+          // stay hrefless until then — a row pointing at a page that does not
+          // exist is a 404, which is the one thing the no-href mechanism is
+          // there to avoid. Deceased estate cleaning is the exception: that
+          // sheet lists no URL for it at all, so it has nothing recorded and
+          // needs one confirmed before it can ship.
+          { label: 'Forensic and trauma cleaning' }, // NO PAGE YET — sheet says '/house-cleaning/forensic-cleaning/'
+          { label: 'Hoarder and squalor cleaning' }, // NO PAGE YET — sheet says '/house-cleaning/hoarder-cleaning/'
+          { label: 'Deceased estate cleaning' }, // NO PAGE YET, and no URL on the sheet either
+          { label: 'Seniors cleaning' }, // NO PAGE YET — sheet says '/house-cleaning/senior-home-cleaning/', which settles the ⚠️ above: it IS the senior-home-cleaning page
         ],
       },
     ],

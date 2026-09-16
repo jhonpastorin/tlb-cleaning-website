@@ -481,7 +481,7 @@ build the component speculatively.
 
 | Title | Description | `href` |
 |---|---|---|
-| Agencies: give us the difficult property | The one with the tight window or the awkward exit condition. That is the job that tells you something. | `/real-estate-cleaning/` |
+| Agencies: give us the difficult property | The one with the tight window or the awkward exit condition. That is the job that tells you something. | `/house-cleaning/real-estate-cleaning/` |
 | Businesses: start with a walkthrough | Nobody can quote a building from a form. We look at it, tell you what it needs, and say if we are not the right people. | `/commercial-cleaning/` — ⚠️ confirm slug |
 
 ⚠️ **Icon-less**, same as every other page: `ServiceIcon.astro`'s set is

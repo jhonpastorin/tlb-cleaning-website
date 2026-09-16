@@ -220,7 +220,7 @@ no vignette, no distorted hands.
 
 ## What was NOT generated, and must not be
 
-**An agency logo wall.** `/real-estate-cleaning/` reserves a slot for one
+**An agency logo wall.** `/house-cleaning/real-estate-cleaning/` reserves a slot for one
 (`LogoBar.astro`) and it would be the strongest proof on the site, because
 the agency relationship is the claim every other page borrows. It stays empty
 until TLB holds written permission per mark, at principal level. A logo

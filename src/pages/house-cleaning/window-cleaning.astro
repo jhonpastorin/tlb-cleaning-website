@@ -38,41 +38,41 @@
 // up. Same deliberate uniform deviation as the commercial pressure page: no
 // apron on outdoor work. Argued in that folder's sheet and TLB's call to
 // reverse.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import PathwayCards from '../components/sections/PathwayCards.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import Callout from '../components/sections/Callout.astro';
-import BeforeAfter from '../components/sections/BeforeAfter.astro';
-import ComparisonTable from '../components/sections/ComparisonTable.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import PathwayCards from '../../components/sections/PathwayCards.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import Callout from '../../components/sections/Callout.astro';
+import BeforeAfter from '../../components/sections/BeforeAfter.astro';
+import ComparisonTable from '../../components/sections/ComparisonTable.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
 // This page's own four frames. Nothing is reused from the indoor folders:
 // IMAGE-GUIDELINES §5 cuts both ways, and an indoor scene cannot stand in for
 // glass seen from the garden.
-import heroImg from '../assets/home_cleaning/outside_your_home/window_cleaning/cleaning-a-large-window-from-outside.jpg';
-import cardHazeImg from '../assets/home_cleaning/outside_your_home/window_cleaning/salt-hazed-sliding-door-glass.jpg';
-import cardPoleImg from '../assets/home_cleaning/outside_your_home/window_cleaning/water-fed-pole-on-an-upstairs-window.jpg';
-import cardTeamImg from '../assets/home_cleaning/outside_your_home/window_cleaning/cleaner-wiping-a-window-frame-and-track.jpg';
+import heroImg from '../../assets/home_cleaning/outside_your_home/window_cleaning/cleaning-a-large-window-from-outside.jpg';
+import cardHazeImg from '../../assets/home_cleaning/outside_your_home/window_cleaning/salt-hazed-sliding-door-glass.jpg';
+import cardPoleImg from '../../assets/home_cleaning/outside_your_home/window_cleaning/water-fed-pole-on-an-upstairs-window.jpg';
+import cardTeamImg from '../../assets/home_cleaning/outside_your_home/window_cleaning/cleaner-wiping-a-window-frame-and-track.jpg';
 // The cluster's shared backdrop, one folder up: a clean coastal home exterior,
 // no people, no equipment, generous open lawn across the lower third where the
 // copy sits. All five "Outside your home" pages use this one file rather than
 // five near-identical exteriors, which is §5's reuse rule applied honestly:
 // same subject, same file.
-import definitionBgImg from '../assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg';
+import definitionBgImg from '../../assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg';
 // SAMPLE illustrations, not photographs. See §6.
-import sampleWindowBefore from '../assets/home_cleaning/before_after/sample-window-before.png';
-import sampleWindowAfter from '../assets/home_cleaning/before_after/sample-window-after.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import sampleWindowBefore from '../../assets/home_cleaning/before_after/sample-window-before.png';
+import sampleWindowAfter from '../../assets/home_cleaning/before_after/sample-window-after.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -81,12 +81,12 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { comparisonColumns, comparisonRows } from '../data/comparison';
-import { locationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { otherOutsideServices } from '../data/outsideYourHome';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { comparisonColumns, comparisonRows } from '../../data/comparison';
+import { locationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { otherOutsideServices } from '../../data/outsideYourHome';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. Focus keyword leads the title, matching every sibling. "Window
 // washing" and "window cleaner" are the common synonyms and are carried in
@@ -96,7 +96,7 @@ const pageMeta = {
   description:
     'Window cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast. Glass, frames, sills and tracks, with the coastal salt film taken off properly.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/window-cleaning/',
+  canonical: 'https://tlbcleaning.com.au/house-cleaning/window-cleaning/',
 };
 
 const business = {
@@ -321,7 +321,7 @@ const askBody: TextBlockBody[] = [
 // §8 The rest of the cluster. Shared data from src/data/outsideYourHome.ts, so
 // the five pages cannot drift into five different lists. This page's own href
 // is filtered out.
-const siblingItems = otherOutsideServices('/window-cleaning/');
+const siblingItems = otherOutsideServices('/house-cleaning/window-cleaning/');
 
 // §9 Comparison table. The shared rows from src/data/comparison.ts.
 //

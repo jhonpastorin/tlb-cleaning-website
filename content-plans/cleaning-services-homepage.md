@@ -152,8 +152,8 @@ precisely this component's stated purpose. **Content: drafted.**
 | Card | Title | Description | Suggested CTA target |
 |---|---|---|---|
 | 1 | "I need a hand at home" | "Weekly, fortnightly or a one-off reset. Same faces every visit." | → `/house-cleaning/` |
-| 2 | "I have a holiday let" | "Turnovers timed to your bookings, essentials restocked, ready before check-in." | → `/airbnb-cleaning/` |
-| 3 | "I manage properties" | "Bond and end of lease cleans that pass, and a team with the capacity for your rent roll." | → `/real-estate-cleaning/` |
+| 2 | "I have a holiday let" | "Turnovers timed to your bookings, essentials restocked, ready before check-in." | → `/house-cleaning/airbnb-cleaning/` |
+| 3 | "I manage properties" | "Bond and end of lease cleans that pass, and a team with the capacity for your rent roll." | → `/house-cleaning/real-estate-cleaning/` |
 
 Each card also needs a `number` (1/2/3, per the component's numbered-card
 design) and an `image` — no photos supplied in the spec, needs sourcing (3
@@ -407,7 +407,7 @@ drafted.**
 
 > Airbnb and holiday let turnovers
 > Timed to your bookings, restocked and guest-ready before check-in.
-> Links to: /airbnb-cleaning/
+> Links to: /house-cleaning/airbnb-cleaning/
 >
 > End of lease and bond cleans
 > Cleaned to the standard your exit inspection is measured against, both sides of the border.
@@ -419,7 +419,7 @@ drafted.**
 >
 > Real estate and property management
 > Vacancy turnarounds and managed-property cleans for agencies with a rent roll to protect.
-> Links to: /real-estate-cleaning/
+> Links to: /house-cleaning/real-estate-cleaning/
 >
 > Deep and one-off cleans
 > A full reset when the place has got away from you, or before someone important arrives.
@@ -427,10 +427,10 @@ drafted.**
 
 | Title | Description | Links to |
 |---|---|---|
-| Airbnb and holiday let turnovers | Timed to your bookings, restocked and guest-ready before check-in. | `/airbnb-cleaning/` |
+| Airbnb and holiday let turnovers | Timed to your bookings, restocked and guest-ready before check-in. | `/house-cleaning/airbnb-cleaning/` |
 | End of lease and bond cleans | Cleaned to the standard your exit inspection is measured against, both sides of the border. | `/end-of-lease-cleaning/` |
 | Regular home cleaning | Weekly or fortnightly, same team, set it up once. | `/house-cleaning/` |
-| Real estate and property management | Vacancy turnarounds and managed-property cleans for agencies with a rent roll to protect. | `/real-estate-cleaning/` |
+| Real estate and property management | Vacancy turnarounds and managed-property cleans for agencies with a rent roll to protect. | `/house-cleaning/real-estate-cleaning/` |
 | Deep and one-off cleans | A full reset when the place has got away from you, or before someone important arrives. | `/deep-cleaning/` |
 
 `list` supports an `href` per row natively — exactly what the spec's

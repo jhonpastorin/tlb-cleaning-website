@@ -24,7 +24,7 @@
 //   - `MetricsBlock variant="strip"` — the one place in the cluster where
 //     numbers belong, because turnaround time is the product here. ⚠️ Every
 //     figure in it is bracketed; see §6.
-//   - `Callout tone="note"` pointing hosts at /airbnb-cleaning/, the same
+//   - `Callout tone="note"` pointing hosts at /house-cleaning/airbnb-cleaning/, the same
 //     redirect pattern the aged care page uses, and for the same reason: a
 //     single-property host who lands here should be somewhere better.
 //   - The commercial kitchen link is load-bearing rather than decorative. A
@@ -168,7 +168,7 @@ const pathwayCards = {
       title: 'A holiday park or cabin accommodation',
       description:
         'Cabin and cottage turnovers between guests, and amenities blocks cleaned more than once a day in peak. This is the closest thing on the site to what we already do at scale for short-stay hosts, and it is the work our team is best at.',
-      cta: { label: 'Airbnb cleaning', href: '/airbnb-cleaning/' },
+      cta: { label: 'Airbnb cleaning', href: '/house-cleaning/airbnb-cleaning/' },
     },
   ],
 };
@@ -179,14 +179,14 @@ const pathwayCards = {
 //
 // `note`, because it corrects an assumption rather than warning against an
 // action. Unlike the aged care page's version, this href is NOT a 404 —
-// /airbnb-cleaning/ exists and is a better page for this reader.
+// /house-cleaning/airbnb-cleaning/ exists and is a better page for this reader.
 const hostCallout = {
   heading: 'One cabin, one cottage, one apartment?',
   body: [
     'Then the short-stay page is a better fit than this one. This page is written for a business with premises and a roster: a park with twenty cabins, a venue with a function room, a café with a trading day.',
     'A single short-stay property is a different service and we have been doing it longer. Scheduling straight off your booking calendar, restocking the essentials, fresh flowers where you want them, and the turnover done between a 10am checkout and a 2pm check-in.',
   ],
-  cta: { label: 'Airbnb and short-stay cleaning', href: '/airbnb-cleaning/' },
+  cta: { label: 'Airbnb and short-stay cleaning', href: '/house-cleaning/airbnb-cleaning/' },
 };
 
 // §5 Scope. `ServiceBlocks variant="icon-grid"`, grouped by WHEN it happens
@@ -272,7 +272,7 @@ const worthKnowingBody: TextBlockBody[] = [
 // because park and venue operators often hold rental property too, and the
 // third because a forecourt and a path are half of what a guest sees first.
 const relatedTags = relatedPremises('/hospitality-venues-and-holiday-parks/', [
-  { label: 'Airbnb cleaning', href: '/airbnb-cleaning/' },
+  { label: 'Airbnb cleaning', href: '/house-cleaning/airbnb-cleaning/' },
 ]);
 
 // §9 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
