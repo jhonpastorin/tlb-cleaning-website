@@ -34,6 +34,40 @@
 // Two component extensions were added for this page: `kicker` on Hero.astro
 // and on CallToAction.astro (§1 and §14 both need an eyebrow label). Both
 // are additive and default to rendering nothing.
+//
+// ── SEO COPY REWRITE, 17 September 2026 (workbook row 53) ────────────────
+// Against the Why TLB copy-rewrite brief dated 16 September 2026. Mapped
+// primary `best house cleaning services near me` 70/mo; secondaries
+// `best window cleaning service near me` 30/mo, `best carpet cleaning
+// services` 20/mo, `best bond cleaning services` 10/mo, `female cleaners`
+// 0/mo (Keyword Mapping & Metadata workbook, 15 Sep 2026). No live pull and
+// no connected Search Console property, so no position or click figure is
+// recorded anywhere.
+//
+// This is by far the LIGHTEST rewrite in the engagement and that is the
+// finding. Twenty of the brief's twenty-five sections are marked no change,
+// including every body section without exception. The URL already matched
+// the workbook, the title already matched it character for character, and
+// the live meta description was already more compliant than the approved
+// one. Four things changed:
+//   §1  H1 now carries the mapped primary; "Local team, run properly." is
+//       demoted one line into `subheading` rather than cut.
+//   §1  hero button is no longer `Get an instant quote` — this page sells no
+//       service — and now carries the approved CTA's imperative core.
+//   §12 both FAQ headings (one generic, one Title Case).
+//   §14 closing lead now opens with the approved CTA sentence.
+//
+// NOT DONE, deliberately. The brief maps three service keywords (window,
+// carpet, bond) to this page and none of those services is mentioned on it.
+// Nothing here chases them: writing window, carpet and bond copy onto the
+// site's best page to capture 60/mo that belongs on the window, carpet and
+// end-of-lease pages would wreck it. Re-primarying row 53 is a workbook
+// change request, not a page edit.
+//
+// The brief's first blocker — "is `noindex, nofollow` deliberate?" — is
+// ANSWERED and it is not a page setting. src/data/site-env.ts puts the tag
+// on every page unless SITE_ENV=production, so the brief was reading a
+// staging build. Nothing on this page needs changing for it.
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
@@ -77,6 +111,13 @@ const pageMeta = {
   // sentence: §2.4 (the full-time headcount is not accurate), §9.3 ("local
   // mums" is out of positioning copy) and §9.4 (competitor framing belongs in
   // the table, not in prose, and a meta description is prose).
+  //
+  // The 16 Sep 2026 copy brief reaches the same wording independently and
+  // asks the workbook to adopt it: the approved row-53 meta still opens with
+  // the banned phrase, still carries the headcount, and is rejected by
+  // scripts/brand-lint.mjs. This line is 131 characters, keeps the approved
+  // CTA verbatim, and is the one to put back into the workbook. TITLE and
+  // URL both already match row 53 exactly, so neither is touched.
   description:
     'A local team on a set day, and the same faces each visit. See how TLB compares, and why changing cleaners is easier than you think.',
   canonical: 'https://tlbcleaning.com.au/why-tlb/',
@@ -147,11 +188,46 @@ const business = {
 // The replacement H1 is §1.1 verbatim. The lead keeps the ONE claim §2.4
 // marks confirmed ("Grown by word of mouth, without advertising") and drops
 // the two it does not.
+//
+// ⚙️ SEO REWRITE (17 Sep 2026) — the H1 now carries the mapped primary
+// `best house cleaning services near me` (70/mo) as a contiguous phrase, and
+// "Local team, run properly." moves one line down into `subheading`. It is
+// demoted, not cut: it is §3.1 in four words and §5 below is built directly
+// on it.
+//
+// And this one was forced rather than landed, which is worth recording. "Near
+// me" is a searcher's phrasing, not a writer's, and it only scans in a
+// headline that is echoing the query — which is why "and how to choose one"
+// is load-bearing rather than decorative. It is also honest about what the
+// page does, which is compare four business models rather than assert an
+// answer. The cost is that it now reads like a listicle headline on a page
+// that is not a listicle, and that mismatch is the clearest evidence for the
+// re-primary request on row 53. IF ROW 53 IS RE-PRIMARIED, revert this: the
+// old headline goes straight back up and the subheading slot goes away.
+//
+// The LEAD IS DELIBERATELY UNCHANGED. Rule 1 also wants the primary in the
+// opening paragraph and it is scored 0 here rather than fudged. Landing it
+// would mean padding the one paragraph on the site that states the single
+// fact §2.4 marks confirmed — grown by word of mouth, without advertising —
+// with a query string. Two sentences, both earning their place.
+//
+// The BUTTON is no longer `quoteCta`. `Get an instant quote` is the regular
+// cleaning CTA and this page sells no service at all; it is a navigation and
+// persuasion page whose job is to send people to the service pages. Per the
+// brief's Rule 4 the approved CTA sentence (72 characters) lands as the
+// closing block's lead-in at §14, and the button takes its imperative core.
+//
+// ⚠️ Raised and not resolved: "See how TLB compares" is a promise about what
+// the reader will find on THIS page, so as an on-page button it can only
+// scroll them to a section they can already see. That is a category problem
+// with the workbook's CTA column, which assumes a service page with an action
+// at the end of it. The anchor target is the honest reading of it.
 const hero = {
   kicker: 'Why TLB',
-  headingLines: ['Local team, run properly.'],
+  headingLines: ['Best house cleaning services near me,', 'and how to choose one'],
+  subheading: 'Local team, run properly.',
   lead: 'We grew across the Northern Rivers one recommendation at a time, without ever running an advertisement. This is what people were recommending.',
-  cta: quoteCta,
+  cta: { label: 'See how TLB compares', href: '#compare' },
   image: {
     ratio: '4/3',
     label: 'The TLB team, the local cleaners this page names',
@@ -454,7 +530,7 @@ const contractorItems = [
 const testimonials = [
   {
     quote:
-      '[TBC — ask Teagan for a quote from a client who switched from a franchise or a booking platform. The entire top half of this page is that comparison, and a real switcher is the only proof of it.]',
+      '[TBC. Ask Teagan for a quote from a client who switched from a franchise or a booking platform. The entire top half of this page is that comparison, and a real switcher is the only proof of it.]',
     name: '[Client name — TBC]',
     role: '[Suburb / property type — TBC]',
     rating: 5,
@@ -462,7 +538,7 @@ const testimonials = [
   },
   {
     quote:
-      '[TBC — ask Teagan for a quote from a client who dreaded the conversation with their old cleaner and did it anyway. The switching guide is this page\'s most distinctive content and currently has no human evidence behind it.]',
+      '[TBC. Ask Teagan for a quote from a client who dreaded the conversation with their old cleaner and did it anyway. The switching guide is this page\'s most distinctive content and currently has no human evidence behind it.]',
     name: '[Client name — TBC]',
     role: '[Suburb / property type — TBC]',
     rating: 5,
@@ -567,10 +643,25 @@ const nonBrandedFaqItems = [
 //
 // ⚠️ Third promise on this page of named faces at /about/. Confirm that page
 // delivers them.
+//
+// ⚙️ SEO REWRITE (17 Sep 2026) — the approved CTA is a 72-character sentence
+// rather than a button label, so per the brief's Rule 4 it lands here as the
+// lead-in and the hero button above carries its imperative core. Both come
+// from the same approved text, so the approved CTA is on the page.
+//
+// ⚠️ And it reads awkwardly, which is the flag rather than an oversight: a
+// reader who has reached the bottom of this page has already seen how TLB
+// compares. Placed as approved, and raised.
+//
+// The BUTTON stays "Meet the team" and this is a considered exception to the
+// one-CTA rule, argued rather than assumed. The approved CTA is
+// self-referential here, so making it the closing button would give a
+// convinced reader nowhere to go; "Meet the team" hands them to the one thing
+// this page has spent 1,400 words saying no competitor can show them.
 const closingCta = {
   kicker: 'Meet the team',
   heading: 'The one thing they cannot show you.',
-  lead: 'Have a look at who would actually be walking into your house.',
+  lead: 'See how TLB compares, and why changing cleaners is easier than you think. Have a look at who would actually be walking into your house.',
   cta: { label: 'Meet the team', href: '/about/' },
 };
 ---
@@ -591,6 +682,7 @@ const closingCta = {
       imageFit="contain-bottom"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -658,8 +750,15 @@ const closingCta = {
 
     <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="Switching Cleaners: FAQs" items={nonBrandedFaqItems} />
+    {/* ⚙️ SEO REWRITE (17 Sep 2026) — two FAQ headings, both replaced.
+        "Frequently Asked Questions" was generic and made the split between the
+        two blocks look like a build error; this block is about working with
+        TLB, the next is about switching in general. "Switching Cleaners:
+        FAQs" was Title Case, which breaks §9.2's sentence-case rule, and the
+        colon read as a label rather than a heading. The questions inside both
+        blocks are untouched. */}
+    <Faq heading="Before you change anything" items={brandedFaqItems} />
+    <Faq heading="Switching cleaners, common questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"
