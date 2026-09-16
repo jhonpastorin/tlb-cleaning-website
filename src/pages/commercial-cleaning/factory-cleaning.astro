@@ -7,11 +7,13 @@
 // not supplied. See src/pages/commercial-cleaning/office-cleaning.astro's header for the launch
 // blockers shared across the whole cluster.
 //
-// ⚠️ SLUG. navigation.ts calls this "Factories" and points at /factories/,
-// which is a literal menu label rather than anything anyone searches. The
-// head term is "factory cleaning". Kept as-is because changing it means
-// changing navigation.ts, this file and src/data/premises.ts together, and
-// that is a launch decision. The TITLE and H1 lead with "factory cleaning".
+// ✅ SLUG RESOLVED 17 Sep 2026. This page used to sit at /factories/ — the
+// literal menu label, and not anything anyone searches. The client's call to
+// nest all of Commercial under the hub settled it as
+// /commercial-cleaning/factory-cleaning/, which carries the head term the
+// TITLE and H1 already lead with. navigation.ts still LABELS the row
+// "Factories", which matches how the sheet pairs labels and slugs everywhere
+// else in this menu and is not a drift to fix.
 //
 // ⚠️ THIS PAGE AND /commercial-cleaning/warehouse-and-industrial-cleaning/ OVERLAP, and the overlap
 // is real rather than an oversight in this build — the mega-menu ships both.
@@ -54,22 +56,22 @@
 //   - Chemical handling: whether TLB's team is trained to use caustic and
 //     acidic industrial cleaners and read a Safety Data Sheet. Bracketed in
 //     branded FAQ 5.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import Callout from '../components/sections/Callout.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import StoryMosaic from '../components/sections/StoryMosaic.astro';
-import ContentGrid from '../components/sections/ContentGrid.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import StoryMosaic from '../../components/sections/StoryMosaic.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // This page's own frames are in src/assets/commercial_cleaning/premises/;
 // the prompts are in that folder's IMAGE-PROMPTS.md.
 //
@@ -80,13 +82,13 @@ import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 // a food production environment requires and a frame without one would be a
 // photo of a breach. The crib room frame keeps the apron and drops the vest,
 // because a crib room is not a traffic zone.
-import heroImg from '../assets/commercial_cleaning/premises/factory-cleaner-scrubbing-a-production-floor-walkway.jpg';
-import washDownImg from '../assets/commercial_cleaning/premises/factory-wash-down-of-stainless-production-equipment.jpg';
-import cribRoomImg from '../assets/commercial_cleaning/premises/factory-crib-room-cleaned-for-shift-change.jpg';
+import heroImg from '../../assets/commercial_cleaning/premises/factory-cleaner-scrubbing-a-production-floor-walkway.jpg';
+import washDownImg from '../../assets/commercial_cleaning/premises/factory-wash-down-of-stainless-production-equipment.jpg';
+import cribRoomImg from '../../assets/commercial_cleaning/premises/factory-crib-room-cleaned-for-shift-change.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -95,11 +97,11 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { nswLocationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { nswLocationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Factory cleaning" leads because it is the head term even
 // though the slug is the menu's literal label. The description names the
@@ -109,7 +111,7 @@ const pageMeta = {
   description:
     'Factory and production cleaning across the Northern Rivers and the Tweed. Floors, plant surrounds, wash-downs and crib rooms, booked to your shutdown window and finished inside it.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/factories/',
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/factory-cleaning/',
 };
 
 const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
@@ -323,7 +325,7 @@ const worthKnowingBody: TextBlockBody[] = [
 // §8 Related pages. Warehouses is the nearest neighbour by a long way, then
 // breweries (a production site with a public front) and commercial kitchens
 // (the food-grade overlap).
-const relatedTags = relatedPremises('/factories/');
+const relatedTags = relatedPremises('/commercial-cleaning/factory-cleaning/');
 
 // §9 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
 //

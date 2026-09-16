@@ -190,16 +190,19 @@ choice depends on whether the child pages exist yet:
   thirteen stacked rows is a very long section and the descriptions don't
   exist.
 
-✅ RESOLVED 17 Sep 2026 — thirteen of the fifteen child slugs are confirmed.
-The client's URL sheet nests every Commercial row it lists under
-`/commercial-cleaning/`, and those are now the slugs in
+✅ RESOLVED 17 Sep 2026 — all fifteen child slugs are confirmed, and every
+one of them nests under `/commercial-cleaning/`. Thirteen come from the
+client's URL sheet and are now the slugs in
 [`navigation.ts`](../src/data/navigation.ts) and
 [`premises.ts`](../src/data/premises.ts). The odd standalone URLs went with
 it: `/construction-site/` became `/commercial-cleaning/construction-site-cleaning/`.
 
-⚠️ `/factories/` and `/breweries/` are the exception. That sheet lists neither,
-so both keep the old flat kebab-case guess and are now the only children of
-this hub whose URL sits outside it. Confirm both before launch.
+Factories and breweries are not on that sheet. The client settled them the
+same day — everything in Commercial sits under the parent — so they follow
+the sheet's own convention, singular and ending in `-cleaning`:
+`/commercial-cleaning/factory-cleaning/` and
+`/commercial-cleaning/brewery-cleaning/`, replacing the old plural
+`/factories/` and `/breweries/`. Nothing in this hub points outside it now.
 
 ### 3. The page argues that scope is what matters, then never states a scope
 

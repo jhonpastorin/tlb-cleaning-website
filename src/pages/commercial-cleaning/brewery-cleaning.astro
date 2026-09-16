@@ -57,22 +57,22 @@
 //     bracket on the page.
 //   - Spent grain and trade waste: whether TLB touches either. Bracketed in
 //     §4. Both have their own arrangements and neither is a cleaning job.
-import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TrustBar from '../components/sections/TrustBar.astro';
-import Backdrop from '../components/ui/Backdrop.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
-import Callout from '../components/sections/Callout.astro';
-import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
-import ContentGrid from '../components/sections/ContentGrid.astro';
-import ImageBand from '../components/sections/ImageBand.astro';
-import TagCloud from '../components/sections/TagCloud.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
-import Faq from '../components/sections/Faq.astro';
-import CallToAction from '../components/sections/CallToAction.astro';
-import SiteFooter from '../components/sections/SiteFooter.astro';
-import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/sections/SiteHeader.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustBar from '../../components/sections/TrustBar.astro';
+import Backdrop from '../../components/ui/Backdrop.astro';
+import TextBlock from '../../components/sections/TextBlock.astro';
+import Callout from '../../components/sections/Callout.astro';
+import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
+import ContentGrid from '../../components/sections/ContentGrid.astro';
+import ImageBand from '../../components/sections/ImageBand.astro';
+import TagCloud from '../../components/sections/TagCloud.astro';
+import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CallToAction from '../../components/sections/CallToAction.astro';
+import SiteFooter from '../../components/sections/SiteFooter.astro';
+import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // This page's own frames are in src/assets/commercial_cleaning/premises/;
 // the prompts are in that folder's IMAGE-PROMPTS.md.
 //
@@ -89,13 +89,13 @@ import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 // tanks are unlabelled. A generated brewery photo with invented brand marks
 // on the taps would be a fabricated brand asset (IMAGE-GUIDELINES §4) AND
 // would read as a real client's premises, which §7 forbids.
-import brewDeckImg from '../assets/commercial_cleaning/premises/brewery-cleaner-hosing-down-the-brew-deck-floor.jpg';
-import kegLineImg from '../assets/commercial_cleaning/premises/brewery-keg-line-and-floor-drains-cleaned.jpg';
-import taproomImg from '../assets/commercial_cleaning/premises/brewery-taproom-reset-before-opening.jpg';
+import brewDeckImg from '../../assets/commercial_cleaning/premises/brewery-cleaner-hosing-down-the-brew-deck-floor.jpg';
+import kegLineImg from '../../assets/commercial_cleaning/premises/brewery-keg-line-and-floor-drains-cleaned.jpg';
+import taproomImg from '../../assets/commercial_cleaning/premises/brewery-taproom-reset-before-opening.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
+import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -104,11 +104,11 @@ import {
   footerContact,
   footerCopyright,
   quoteCta,
-} from '../data/navigation';
-import { nswLocationGroups } from '../data/locations';
-import { trustBarCards } from '../data/trust';
-import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+} from '../../data/navigation';
+import { nswLocationGroups } from '../../data/locations';
+import { trustBarCards } from '../../data/trust';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
+import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Brewery cleaning" is the head term. The description names the
 // CIP boundary, because a brewer searching this phrase is often looking for
@@ -119,7 +119,7 @@ const pageMeta = {
   description:
     'Brewery cleaning across the Northern Rivers and the Tweed. Brew deck floors and drains, the cellar, and the taproom reset before you open. Tanks and lines stay with your brewers.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/breweries/',
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/brewery-cleaning/',
 };
 
 const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
@@ -324,7 +324,7 @@ const worthKnowingBody: TextBlockBody[] = [
 // §7 Related pages. Hospitality and commercial kitchen are the two nearest
 // neighbours — a taproom is a venue and most of them now serve food — and
 // factories is the production-side neighbour.
-const relatedTags = relatedPremises('/breweries/');
+const relatedTags = relatedPremises('/commercial-cleaning/brewery-cleaning/');
 
 // §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
 //

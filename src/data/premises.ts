@@ -13,14 +13,15 @@
 // below is what catches a page pointing at a premises type that no longer
 // exists.
 //
-// ⚠️ ELEVEN OF THE THIRTEEN ARE CONFIRMED, FACTORIES AND BREWERIES ARE NOT.
-// The client's URL sheet of 17 Sep 2026 nests every Commercial row it lists
-// under the /commercial-cleaning/ parent, and those eleven hrefs below are
-// its slugs verbatim. /factories/ and /breweries/ have no row on that sheet,
-// so they are still the flat kebab-case guess navigation.ts made from its
-// literal menu label — and now the only two children of this hub whose URL
-// does not sit under it. Confirm both and they nest with the rest; nothing
-// here changes but the two strings and the union above.
+// ✅ ALL THIRTEEN HREFS ARE CONFIRMED AND ALL THIRTEEN NEST UNDER THE HUB.
+// Eleven come from the client's URL sheet of 17 Sep 2026, verbatim. Factories
+// and breweries have no row on that sheet; the client settled them separately
+// the same day, with the instruction that everything in Commercial sits under
+// /commercial-cleaning/, and their slugs follow the convention every sheet row
+// uses — singular, ending in -cleaning. Hence factory-cleaning and
+// brewery-cleaning rather than the old plural /factories/ and /breweries/.
+//
+// Nothing in this hub points outside it any more.
 import type { LocalBusinessInfo } from '../layouts/Base.astro';
 import type { Tag } from '../components/sections/TagCloud.astro';
 
@@ -39,8 +40,8 @@ export type PremisesHref =
   | '/commercial-cleaning/gym-and-fitness-cleaning/'
   | '/commercial-cleaning/retail-cleaning/'
   | '/commercial-cleaning/warehouse-and-industrial-cleaning/'
-  | '/factories/'
-  | '/breweries/';
+  | '/commercial-cleaning/factory-cleaning/'
+  | '/commercial-cleaning/brewery-cleaning/';
 
 export interface PremisesPage {
   label: string;
@@ -111,12 +112,12 @@ export const premisesPages: PremisesPage[] = [
   },
   {
     label: 'Factories',
-    href: '/factories/',
+    href: '/commercial-cleaning/factory-cleaning/',
     blurb: 'Production floors, plant surrounds and crib rooms, around your shutdowns.',
   },
   {
     label: 'Breweries',
-    href: '/breweries/',
+    href: '/commercial-cleaning/brewery-cleaning/',
     blurb: 'Brew deck floors and drains, plus the taproom reset before you open.',
   },
 ];

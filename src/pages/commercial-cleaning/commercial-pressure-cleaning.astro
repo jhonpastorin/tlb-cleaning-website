@@ -428,11 +428,10 @@ const industrialBody: TextBlockBody[] = [
 // outdoor hard surfaces are the actual problem, plus the routes back up the
 // cluster and across to the carpet sibling.
 //
-// ⚠️ Every href below is confirmed: the client's URL sheet of 17 Sep 2026
-// nests every Commercial row it lists under /commercial-cleaning/, and these
-// are its slugs verbatim. The exceptions are /factories/ and /breweries/,
-// which that sheet does not list — still the flat kebab-case guess, and the
-// only children of this hub whose URL sits outside it. See premises.ts.
+// ✅ Every href below is confirmed and nests under /commercial-cleaning/.
+// The client's URL sheet of 17 Sep 2026 gives the slugs for every Commercial
+// row it lists; factories and breweries were settled separately the same day,
+// to the sheet's own convention. See premises.ts.
 //
 // ⚠️ /house-cleaning/pressure-cleaning/ is the RESIDENTIAL twin (Home Cleaning menu,
 // "Outside your home") and is deliberately linked from here, so a homeowner
@@ -444,8 +443,8 @@ const settingTags = [
   { label: 'Hospitality, venues and holiday parks', href: '/commercial-cleaning/hospitality-cleaning/' },
   { label: 'Commercial kitchen cleaning', href: '/commercial-cleaning/commercial-kitchen-cleaning/' },
   { label: 'Warehouses and industrial sites', href: '/commercial-cleaning/warehouse-and-industrial-cleaning/' },
-  { label: 'Factories', href: '/factories/' },
-  { label: 'Breweries', href: '/breweries/' },
+  { label: 'Factories', href: '/commercial-cleaning/factory-cleaning/' },
+  { label: 'Breweries', href: '/commercial-cleaning/brewery-cleaning/' },
   { label: 'Construction site', href: '/commercial-cleaning/construction-site-cleaning/' },
   { label: 'Gyms and fitness studios', href: '/commercial-cleaning/gym-and-fitness-cleaning/' },
   { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },

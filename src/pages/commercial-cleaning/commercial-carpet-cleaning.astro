@@ -387,11 +387,10 @@ const officeBody: TextBlockBody[] = [
 // where commercial carpet is the actual problem, plus the two routes back up
 // the cluster (the hub and the pressure cleaning sibling).
 //
-// ⚠️ Every href below is confirmed: the client's URL sheet of 17 Sep 2026
-// nests every Commercial row it lists under /commercial-cleaning/, and these
-// are its slugs verbatim. The exceptions are /factories/ and /breweries/,
-// which that sheet does not list — still the flat kebab-case guess, and the
-// only children of this hub whose URL sits outside it. See premises.ts.
+// ✅ Every href below is confirmed and nests under /commercial-cleaning/.
+// The client's URL sheet of 17 Sep 2026 gives the slugs for every Commercial
+// row it lists; factories and breweries were settled separately the same day,
+// to the sheet's own convention. See premises.ts.
 const settingTags = [
   { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
   { label: 'Strata and common area cleaning', href: '/commercial-cleaning/strata-cleaning/' },

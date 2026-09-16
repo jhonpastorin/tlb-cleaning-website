@@ -309,16 +309,15 @@ const worthKnowingBody: TextBlockBody[] = [
 // ServiceBlocks would want don't exist. Fifteen stacked full-width rows
 // would also be a very long section.
 //
-// ⚠️ THIRTEEN OF THESE FIFTEEN ARE CONFIRMED, /factories/ and /breweries/
-// ARE NOT. The client's URL sheet of 17 Sep 2026 nests every Commercial row
-// it lists under this page's own URL, and those thirteen hrefs are its slugs
+// ✅ ALL FIFTEEN HREFS ARE CONFIRMED, and every one of them sits under this
+// page's own URL. Thirteen come from the client's URL sheet of 17 Sep 2026,
 // verbatim — which is also where the old oddities went: "construction site"
 // became construction-site-cleaning, and the label/slug mismatches ("Retail
 // and shopfronts" over /retail-cleaning/) are the sheet's own pairing, same
-// as in the Home Cleaning menu. Factories and breweries have no row on that
-// sheet at all, so they keep the flat kebab-case guess navigation.ts made
-// from their menu labels, and they are now the only two pills here pointing
-// outside the hub. Confirm both before launch.
+// as in the Home Cleaning menu. Factories and breweries are not on that
+// sheet; the client settled them the same day with the instruction that
+// everything in Commercial nests here, and their slugs follow the sheet's own
+// convention — singular, ending in -cleaning.
 //
 // Office cleaning is highlighted as the default premises type — it is the
 // one the meta description names.
@@ -334,8 +333,8 @@ const premisesTags = [
   { label: 'Retail and shopfronts', href: '/commercial-cleaning/retail-cleaning/' },
   { label: 'Warehouses and industrial sites', href: '/commercial-cleaning/warehouse-and-industrial-cleaning/' },
   { label: 'Construction site', href: '/commercial-cleaning/construction-site-cleaning/' },
-  { label: 'Factories', href: '/factories/' },
-  { label: 'Breweries', href: '/breweries/' },
+  { label: 'Factories', href: '/commercial-cleaning/factory-cleaning/' },
+  { label: 'Breweries', href: '/commercial-cleaning/brewery-cleaning/' },
   { label: 'Commercial carpet cleaning', href: '/commercial-cleaning/commercial-carpet-cleaning/' },
   { label: 'Commercial pressure cleaning', href: '/commercial-cleaning/commercial-pressure-cleaning/' },
 ];
