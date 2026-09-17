@@ -140,24 +140,36 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
 
-    {/* Simple Commenter. Supplied by the client as a paste-into-the-head
-        snippet and reproduced verbatim. The `id` is a public site identifier
-        rather than a secret, so it lives here like the GTM container ID above.
+    {/* Simple Commenter, STAGING ONLY. Supplied by the client as a
+        paste-into-the-head snippet and reproduced verbatim. The `id` is a
+        public site identifier rather than a secret, so it lives here like the
+        GTM container ID above.
+
+        It is a review tool: it exists so the client can leave comments on the
+        staging site while the build is being signed off. Production visitors
+        must never see it, so it is gated on `isStaging` from site-env.ts
+        rather than kept as a difference between the staging and main branches.
+        A branch diff would have to be re-resolved on every single merge, and
+        the one time it got resolved the wrong way the snippet would ship to
+        real customers. This way there is one codebase and the environment
+        decides, on the same flag that already decides indexability.
+
+        Because `isStaging` is the inverse of a SITE_ENV === 'production' check,
+        this inherits that flag's fail-closed behaviour in the safe direction:
+        a build with SITE_ENV unset or misspelt gets the commenter, and only a
+        correct production build drops it.
 
         Last in the head and `defer`red, so it cannot block parsing or delay
-        first paint — it has no position dependency the way the GTM snippet
+        first paint. It has no position dependency the way the GTM snippet
         does, and nothing else in the document reads from it.
 
         is:inline for the same reason as the two scripts above: without it
         Astro takes ownership of the tag, and a bundled or relocated loader is
-        no longer the snippet the vendor supports.
-
-        ⚠️ THIS LOADS ON STAGING TOO, on every one of the 110 pages. Same
-        caveat the GTM block records: the noindex in this head does not stop a
-        third-party script from running. If comments should be production-only,
-        the switch is `isStaging` from site-env.ts, already imported above. */}
-    <script src="https://simplecommenter.com/js/comments.min.js?id=sc_605325550fe4c323" defer is:inline
-    ></script>
+        no longer the snippet the vendor supports. */}
+    {isStaging && (
+      <script src="https://simplecommenter.com/js/comments.min.js?id=sc_605325550fe4c323" defer is:inline
+      ></script>
+    )}
   </head>
   <body>
     {/* Google Tag Manager noscript fallback. Google requires it immediately
