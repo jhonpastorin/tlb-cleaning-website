@@ -35,8 +35,14 @@ previews:
 
 services:
   # Production. The only service with SITE_ENV set.
+  #
+  # `name` must stay exactly `tlb-cleaning-website`: Render matches a Blueprint
+  # to existing services BY NAME, so this name is what makes the sync adopt the
+  # service that was created by hand (srv-da711kqd0e5s73f7ln3g) instead of
+  # standing up a second, duplicate one beside it. Renaming this field does not
+  # rename that service, it orphans it.
   - type: web
-    name: tlb-cleaning
+    name: tlb-cleaning-website
     runtime: static
     branch: main
     buildCommand: npm run build
@@ -60,7 +66,7 @@ services:
   # Staging. SITE_ENV is deliberately absent, which is what makes the build
   # noindex. Tracks the `staging` branch, which is cut from `main`.
   - type: web
-    name: tlb-cleaning-staging
+    name: tlb-cleaning-website-staging
     runtime: static
     branch: staging
     buildCommand: npm run build
