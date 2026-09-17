@@ -1,0 +1,79 @@
+# Render blueprint for tlbcleaning.com.au
+#
+# The site is a static Astro build (`output: 'static'` in astro.config.mjs), so
+# both services below are static sites: Render runs the build and serves the
+# resulting files from its CDN. There is no server runtime to configure.
+#
+# READ BEFORE EDITING, part 1: `headers` are per service. Do not move the
+# `X-Robots-Tag: noindex` rule out of the staging block or add a `/*` variant of
+# it to the production block, because a blanket noindex header would
+# de-index the live site regardless of what SITE_ENV says.
+#
+# READ BEFORE EDITING, part 2: NEVER TURN ON PULL REQUEST PREVIEWS FOR THE
+# PRODUCTION SERVICE, here or in the Render dashboard. Render's docs say preview
+# instances "copy all of their settings over from their base service when
+# they're first created. This includes environment variables", and separately
+# that "environment variables with `previewValue` do not apply to static sites".
+# A preview of the production service would therefore inherit
+# SITE_ENV=production, serve `Allow: /`, carry no noindex tag, and canonicalise
+# to https://tlbcleaning.com.au (astro.config.mjs hard-codes `site`), with no
+# way to override it for a static site. That is the indexed-staging-copy failure
+# README.md describes as taking weeks to clear.
+#
+# Previews are off because the `previews` subfield is OMITTED from both service
+# blocks below: "If you omit this subfield, pull request previews are disabled
+# for the service." That omission is deliberate, not an oversight. If previews
+# are ever wanted, enable them on the STAGING service only, where they inherit
+# no SITE_ENV and inherit the noindex header, so they are safe by construction.
+
+# Disables Blueprint preview environments, which would otherwise clone every
+# service in this file for each pull request. `off` is accepted only at this
+# root level; service-level `previews.generation` takes `manual` or `automatic`.
+# Quoted so a YAML 1.1 parser reads the string "off" rather than boolean false.
+previews:
+  generation: "off"
+
+services:
+  # Production. The only service with SITE_ENV set.
+  - type: web
+    name: tlb-cleaning
+    runtime: static
+    branch: main
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+
+    envVars:
+      # Indexing fails closed: src/data/site-env.ts only emits an indexable
+      # build when this is exactly `production`. See README.md. Every build
+      # prints one [SEO] line saying which mode it produced. Check it.
+      - key: SITE_ENV
+        value: production
+
+    headers:
+      # Everything under /_astro/ is content-hashed by Astro (filenames change
+      # when contents change), so it can be cached indefinitely. HTML is left on
+      # Render's defaults so a content change goes live promptly.
+      - path: /_astro/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+
+  # Staging. SITE_ENV is deliberately absent, which is what makes the build
+  # noindex. Tracks the `staging` branch, which is cut from `main`.
+  - type: web
+    name: tlb-cleaning-staging
+    runtime: static
+    branch: staging
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+
+    headers:
+      # Second layer behind the SITE_ENV meta tag. README.md flags host-level
+      # protection as the one thing the repo cannot enforce on its own; this is
+      # that protection.
+      - path: /*
+        name: X-Robots-Tag
+        value: noindex, nofollow
+
+      - path: /_astro/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
