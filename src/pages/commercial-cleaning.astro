@@ -13,22 +13,92 @@
 // responsible for. Not a householder, and emphatically not an NDIS
 // participant — see the §3 note.
 //
+// ── ✅ REWRITTEN AGAINST THE SEO COPY-REWRITE BRIEF, 17 September 2026 ────
+//
+// Brief: workbook row 25, "Commercial cleaning (hub)". Mapped primary
+// `commercial cleaning` 3,600/mo, seven mapped secondaries, 5,940/mo across
+// the cluster — minus `commercial cleaning services australia` (150/mo),
+// which the brief excludes as national intent on the grounds that a regional
+// operator ranking for a national term attracts enquiries it cannot service.
+// No copy targets it and it is out of the addressable denominator.
+//
+// ⚠️ EVERY VOLUME IN THIS FILE COMES FROM THE KEYWORD MAPPING & METADATA
+// WORKBOOK, WHICH CARRIES NO PULL DATE. DataForSEO, Ahrefs and Search Console
+// were all unreachable when the brief was written, so no position,
+// impression, click, CTR, difficulty or SERP-feature figure appears anywhere
+// in it or here. The brief's own "is there a stronger primary keyword"
+// check could not be run and is unanswered rather than settled.
+//
+// WHAT CHANGED: title and meta (§0), H1 and hero lead (§1), one primary CTA
+// repeated in three places, an H2 over the definition block (§2), two pathway
+// card bodies and a card label (§3), the Award argument split and de-fanged
+// (§5), a note line under the premises pills (§7), the comparison table
+// rebuilt for a workplace (§10), the testimonial carousel hidden (§9), the
+// full 56-town footprint restored (§14), four of five branded FAQs (§11) and
+// both FAQ headings (§11, §12).
+//
+// The primary keyword now appears contiguously in the title, the meta, the
+// URL, the H1, the first sentence of the lead and two H2s. Three headings
+// carry the service term, against one before.
+//
+// NOT DONE, and recorded in the brief rather than forgotten: the trust bar
+// and the pathway-card routing module are both excluded from rewrite by
+// standing rule, and `commercial floor cleaning services` (90/mo) gets no
+// passage here because two child pages are better homes for it.
+//
 // BLOCKS LAUNCH:
-//   - Screening. Card 3 claims [police-checked] while the last non-branded
-//     FAQ tells readers that childcare work needs a Working With Children
-//     Check and to "ask any provider to confirm which of their team hold a
-//     current check". Those are DIFFERENT checks, the mega-menu actively
-//     invites school/childcare enquiries, and the page currently tells the
-//     reader to interrogate TLB about something it doesn't answer.
-//     Brackets ship visibly per house convention; these must be filled.
+//   - Screening, and it is still the first item. BFD §2.4 lists [insured] and
+//     [police-checked] as unconfirmed. Card 3 no longer asserts either — it
+//     carries a process promise instead, per §2.4's own rule — and the
+//     approved meta description was NOT shipped because it publishes
+//     "police-checked" as fact in a search result (see §0). Meanwhile the last
+//     non-branded FAQ still tells readers that childcare work needs a Working
+//     With Children Check and to "ask any cleaner to confirm which of their
+//     team hold a current check". Those are DIFFERENT checks, the mega-menu
+//     actively invites school and childcare enquiries, and the page still
+//     asks a question about itself it cannot answer. One confirmation closes
+//     the card, the meta and four sibling pages at once.
 //   - QLD is unaddressed. The non-branded FAQ says "In NSW" (correct), but
-//     footerContact says "Northern Rivers, NSW & Southern Gold Coast, QLD"
-//     and QLD's equivalent is a Blue Card, not a WWCC. Either confirm this
-//     page is NSW-only or the answer needs a QLD clause.
+//     footerContact says "Northern Rivers, NSW & Southern Gold Coast, QLD",
+//     §14 now lists nine Queensland towns and `areaServed` was widened to
+//     match. QLD's equivalent is a Blue Card, not a WWCC. Either confirm
+//     commercial work crosses the border or revert §14, `areaServed` and the
+//     subheading together — and the FAQ needs its QLD clause either way.
 //   - The scope of work is missing entirely. See the §8 comment — the page
 //     tells the reader to demand a task list four times and never shows one.
-//   - Card 2 carries a bracket because nobody has said how TLB invoices
-//     commercial clients.
+//   - How TLB invoices commercial clients. The bracket is out of card 2, but
+//     only because a bracket addressed to TLB cannot sit in customer-facing
+//     copy. The question is unanswered, not resolved.
+//   - Three commercial testimonials with written permission to name the
+//     business (BFD §12.1, §5.3). The carousel is hidden until they exist.
+//   - The four trust-bar claims BFD §2.4 marks "Confirm": the retention
+//     figure, the agency preferred-supplier wording, the client count and the
+//     spread-teams claim. All four are live and none is verified.
+//   - Sign-off on the two competitor columns in the comparison table,
+//     including the new keys-and-alarms row. BFD §9.4 permits the table only
+//     where the rows stay neutral and factual, and no cell in either column
+//     has been checked.
+//
+// WORKBOOK CHANGE REQUESTS, raised against row 25:
+//   - 🔴 The approved meta publishes "police-checked". Blocking; the brief's
+//     replacement ships in its place. See §0.
+//   - The approved title and meta both promise "on contract" while the page
+//     sells no lock-in, no minimum term and no exit fee. The approved title
+//     ships as approved; the meta does not, for the credential reason above.
+//     See §0 for the suggested replacements.
+//
+// STILL NEEDS A DEVELOPER, none of it a copy problem:
+//   - The whole site is `noindex, nofollow` via site-env.ts. Correct for
+//     staging, fatal at launch — and the production URL currently 404s.
+//   - The `LocalBusiness` JSON-LD below has empty telephone, email, logo,
+//     image and all five address fields.
+//   - No `FAQPage` schema on either FAQ section, no `Service` schema, no
+//     `BreadcrumbList`. Two well-formed FAQ sections are already on the page.
+//   - The site header carries two CTAs on every page, and "Get an instant
+//     quote" should not appear on a commercial page at all: BFD §13.2 names
+//     commercial as a service where condition drives the price, and §15 of
+//     this page says the same thing in its own words. Template-level, so not
+//     changed here.
 //
 // NOT BUILT, deliberately: credibility signals, hero video, "the why" — all
 // empty in the brief. Precedent is deep-cleaning.astro, whose credibility
@@ -67,19 +137,66 @@ import {
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
-import { comparisonColumns, comparisonRows } from '../data/comparison';
-import { nswLocationGroups } from '../data/locations';
+import { comparisonColumns, serviceComparisonRows } from '../data/comparison';
+import { completeFootprintLocationGroups, footprintSubheading } from '../data/locations';
 import { trustBarCards } from '../data/trust';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
 
+// §0 Metadata. ✅ REWRITTEN against the September 2026 copy-rewrite brief
+// (workbook row 25, "Commercial cleaning (hub)"), which scores this page
+// against a 5,940/mo mapped cluster led by `commercial cleaning` (3,600/mo).
+// Every volume in that brief comes from the Keyword Mapping & Metadata
+// workbook, which carries no pull date; no live keyword, position or Search
+// Console data was available, so none is quoted here either.
+//
+// TITLE is the workbook's approved line verbatim, at 55 characters. It adds
+// "Contracts", which is the only place on the page that reaches
+// `commercial contract cleaning services` (100/mo) in a heading or the head.
+//
+// ⚠️ WORKBOOK CHANGE REQUEST, raised and deliberately NOT acted on. The brief
+// flags that "Contracts" pulls against this page's own strongest selling
+// point: BFD §8.3 names being locked into a contract as one of four things
+// this audience actively worries about, and the comparison table's
+// "Commitment" row and branded FAQ 5 both answer it with "No lock-in, no
+// minimum term, no exit fee". A searcher who clicks a result promising
+// contracts and lands on a page selling the absence of one has been mis-sold,
+// even favourably. The brief's suggested replacement for row 25 is
+// "Commercial Cleaning Services, No Lock-In | TLB Cleaning" (55 characters).
+// The approved line ships until row 25 is updated — that is the brief's own
+// instruction, and it is the opposite call to the description below because a
+// title that oversells is a marketing problem, not a credentials one.
+//
+// 🔴 DESCRIPTION IS *NOT* THE WORKBOOK'S APPROVED LINE. The approved meta reads:
+//
+//   "Commercial cleaning on contract, after hours, by the same police-checked
+//    team each week. Offices, clinics, schools and more. Book a walk-through."
+//
+// The brief opens a blocking change request against it on two counts and
+// supplies the replacement used below. Both are taken, on the same ruling that
+// took the real estate page's approved meta out of service:
+//
+//   1. "POLICE-CHECKED" is a credential BFD §2.4 lists as unconfirmed, with
+//      the explicit instruction "Police checked and insured appears in
+//      supplied meta descriptions. Confirm both before publishing." This is a
+//      claim about who enters a customer's premises after hours, published in
+//      a search result, which is the least correctable place a wrong claim can
+//      sit — and a meta description is the one surface where this codebase's
+//      visible-bracket convention cannot be used. The same credential is
+//      bracketed in body copy across four sibling pages; one answer fixes all
+//      of them and this line goes back the day §2.4 confirms it.
+//   2. "ON CONTRACT" is the title-tag conflict again, and sharper here,
+//      because the meta is what the searcher reads before deciding to click.
+//
+// The replacement is the brief's own, verbatim, at 135 characters. It keeps
+// the exact primary keyword in first position, keeps the approved CTA as its
+// closing sentence, and states the no-lock-in position the page actually
+// argues. The old live meta led with neither: it ran 174 characters, 24 over
+// the limit, and split the primary across "commercial and office cleaning" so
+// the exact phrase never appeared.
 const pageMeta = {
-  // Brief said "Commercial Cleaning Service |  TLB Cleaning" — singular, and
-  // with a double space. Pluralised to match the focus keyword ("Commercial
-  // Cleaning Services") and the double space removed. Same two defects the
-  // NDIS brief had, same fix. Flagged in the plan's §0.
-  title: 'Commercial Cleaning Services | TLB Cleaning',
+  title: 'Commercial Cleaning Services - Contracts | TLB Cleaning',
   description:
-    'Ongoing commercial and office cleaning across the Northern Rivers and the Tweed. The same local team every visit, the scope agreed in writing, and a straight answer on price.',
+    'Commercial cleaning after hours, by the same local team each week. Offices, clinics, schools and more. No lock-in. Book a walk-through.',
   canonical: 'https://tlbcleaning.com.au/commercial-cleaning/',
 };
 
@@ -97,11 +214,19 @@ const business = {
     addressCountry: 'AU',
   },
   sameAs: [],
-  // ⚠️ NSW only, following the brief's own meta description ("across the
-  // Northern Rivers and Tweed"). This contradicts footerContact.address,
-  // which claims the Southern Gold Coast too, and it interacts with the
-  // Blue Card gap in the last non-branded FAQ. Confirm before launch.
-  areaServed: 'Northern Rivers and Tweed, NSW',
+  // ✅ WIDENED with §14's town list, which the copy-rewrite brief restores to
+  // all three regions per BFD §2.1. Structured data that claims NSW while the
+  // page lists nine Queensland towns is a machine-readable contradiction, so
+  // the two move together — same call, and the same note, as
+  // /house-cleaning/ndis-cleaning/.
+  //
+  // ⚠️ STILL OPEN, and it is the brief's first client question: does TLB take
+  // COMMERCIAL work in the Southern Gold Coast? The H1 and hero deliberately
+  // still name two regions pending that answer (see §1), and the last
+  // non-branded FAQ is still silent on QLD's Blue Card. If the answer is no,
+  // this string, §14's `completeFootprintLocationGroups` and
+  // `footprintSubheading` all revert together.
+  areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
   description: pageMeta.description,
 };
 
@@ -155,11 +280,50 @@ const business = {
 //
 // ⚠️ Do NOT fill it from src/assets/hero/* — those are Maple template
 // leftovers, not TLB's people.
+// ✅ H1, LEAD AND CTA REWRITTEN (copy-rewrite brief §4, §6 and §7).
+//
+// THE H1 NO LONGER CARRIES ANY PART OF THE MAPPED PHRASE — that was the
+// finding. `commercial cleaning` (3,600/mo) appeared nowhere in it, and the
+// kicker below was added in the original build precisely because the heading
+// gave a searcher no confirmation they had landed on the right page. A kicker
+// is a patch on that problem; the H1 is the fix.
+//
+// The new H1 carries the primary contiguously, carries `commercial cleaning
+// services` (1,400/mo, the largest mapped secondary) in the same breath, and
+// the region does the work for `commercial cleaning services near me`
+// (300/mo).
+//
+// THE OLD HEADLINE IS NOT CUT. It moves one line down into `subheading`,
+// which is what that prop was added to Hero.astro for on the Airbnb, real
+// estate and NDIS pages. "Cleaning should not be one of your jobs" is the
+// cleanest statement of the BFD's core promise anywhere on this site and it
+// still lands before anyone has scrolled.
+//
+// The brief's developer note says `split-single-reverse` does not render
+// `.hero__subheading`. That was true when the brief was written and is not
+// true now: Hero.astro wires the slot into all five variants, this one
+// included. No component change was needed.
+//
+// ⚠️ IF THE SOUTHERN GOLD COAST ANSWER COMES BACK YES, the brief supplies the
+// alternative H1 and nothing else changes:
+//   'Commercial cleaning services across the Northern Rivers, the Tweed and the Southern Gold Coast'
+//
+// THE LEAD gains the exact phrase contiguously (it was split as "office and
+// commercial cleaning"), drops the region now that the H1 owns it, and names
+// the premises types the meta promises the searcher. "Easy to book, fast
+// quoting, cost effective" is the correct BFD §13.2 variant for
+// condition-priced work and is untouched.
+//
+// THE CTA is the workbook's approved label. The page had been spelling it two
+// ways at once, "Book a site walkthrough" here and in the closing block
+// against "Book a walkthrough" in the shared line copy, and neither matched
+// the approved text a searcher clicked. One label, repeated, per BFD §9.5.
 const hero = {
   kicker: 'Commercial cleaning',
-  headingLines: ['Cleaning should not be one of your jobs.'],
-  lead: `Ongoing office and commercial cleaning across the Northern Rivers and the Tweed. We agree the scope in writing, then you stop thinking about it. ${theLine.fast}`,
-  cta: { label: 'Book a site walkthrough', href: quoteCta.href },
+  headingLines: ['Commercial cleaning services across the Northern Rivers and the Tweed'],
+  subheading: 'Cleaning should not be one of your jobs.',
+  lead: `Ongoing commercial cleaning for offices, clinics, schools and shopfronts, on a schedule that works around how you trade. We agree the scope in writing, then you stop thinking about it. ${theLine.fast}`,
+  cta: { label: 'Book a walk-through', href: quoteCta.href },
   image: {
     ratio: '1/1',
     label:
@@ -237,16 +401,30 @@ const pathwayCards = {
       },
       title: 'I need to know what it will cost',
       description:
-        // ⚠️ VISIBLE BRACKET, per house convention. The pricing half is drawn
-        // from the brief's own "Worth knowing" block and non-branded FAQ 4,
-        // both of which TLB wrote. The invoicing half is a genuine unknown —
-        // nobody has said how TLB bills commercial clients (monthly in
-        // arrears? PO numbers? per visit?). That is input, not a rewrite.
-        'We quote against a written scope rather than an hourly rate, so you can see which tasks are in, how often they happen, and whether consumables like soap and paper are covered. [Invoicing terms. Confirm how TLB bills commercial clients.]',
+        // ✅ BRACKET REPLACED (copy-rewrite brief §8). The bracket was an
+        // internal note sitting in live customer-facing copy — the house
+        // convention ships brackets visibly so they cannot be forgotten, and
+        // that is right for a bracket the reader can act on, but "[Invoicing
+        // terms. Confirm how TLB bills commercial clients.]" is an
+        // instruction addressed to TLB, mid-sentence, in a card about cost.
+        //
+        // The replacement is not a guess at the invoicing answer. It is a
+        // sentence already true and already published further down this page
+        // (§15, paragraph 3: "Anything outside that scope is quoted before it
+        // happens, not added afterwards"), which answers the same cost
+        // anxiety the bracket was reaching for.
+        //
+        // ⚠️ THE INVOICING QUESTION IS UNANSWERED, not resolved. Monthly in
+        // arrears? PO numbers? Per visit? It is still on the blocked-on-client
+        // list and it belongs in this card when it comes back.
+        'We quote against a written scope rather than an hourly rate, so you can see which tasks are in, how often they happen, and whether consumables like soap and paper are covered. Anything outside that scope gets quoted before it happens, never added to an invoice afterwards.',
       // ⚠️ STOPGAP DESTINATION. What this card wants is a scope-and-pricing
       // block to anchor to, and that content does not exist yet (see §8).
       // /contact/ stops it stranding in the meantime.
-      cta: { label: 'Talk to us', href: '/contact/' },
+      //
+      // ✅ LABEL per BFD §9.5's CTA set, and §9.3, which prefers "our team"
+      // over a bare "us" in a call to action.
+      cta: { label: 'Talk to our team', href: '/contact/' },
     },
     {
       number: 3,
@@ -257,23 +435,73 @@ const pathwayCards = {
       },
       title: 'I want to know who is in the building',
       description:
-        // ⚠️ Two visible brackets, both launch-blocking. See the file header:
-        // this page tells readers to ask providers which checks their team
-        // hold, so leaving TLB's own answer unresolved is worse here than on
-        // a page that never raised the question.
-        'The same small team each visit, in TLB uniform, and you can meet them before the first one. We are a local business, [insured] and [police-checked], and there is one local number to ring if something is not right.',
+        // ✅ CREDENTIALS REPLACED WITH A PROCESS PROMISE (copy-rewrite brief
+        // §8). BFD §2.4 lists both [insured] and [police-checked] as
+        // unconfirmed and gives the rule for exactly this case: where a claim
+        // is not confirmed, a process promise replaces it rather than the
+        // sentence being deleted.
+        //
+        // This page had the worst version of that problem on the site. The
+        // last non-branded FAQ tells the reader to "ask any cleaner to confirm
+        // which of their team hold a current check" — so the page was
+        // instructing readers to interrogate TLB about something TLB's own
+        // card could not answer, in brackets, in front of them.
+        //
+        // The replacement is BFD §2.3 and §8.3, both confirmed, and it picks
+        // up the keys-and-alarms worry §8.3 names for this audience and that
+        // nothing on the page addressed. Same gap the new comparison row and
+        // branded FAQ 2 now close from the other two directions.
+        //
+        // ⚠️ REINSTATE BOTH CREDENTIALS the day §2.4 confirms them. They are
+        // a stronger signal than this sentence for a B2B reader letting a
+        // stranger into their premises after hours, and the screening question
+        // is still the page's first launch blocker.
+        'The same small team each visit, in TLB uniform, and you can meet them before the first one. Everyone who works for TLB lives in the region, keys and alarm codes stay with the same people, and there is one local number to ring if something is not right.',
       cta: { label: 'Why TLB', href: '/why-tlb/' },
     },
   ],
 };
 
-// §5 "Worth knowing" — ships VERBATIM. This is the strongest copy in any of
-// the five briefs and should not be edited down for scannability.
+// §5 "Worth knowing" — ✅ REWRITTEN (copy-rewrite brief §10). This was
+// verbatim client copy and it is still the strongest argument on the page;
+// what changed is where the argument lands.
 //
-// It works because it explains something the reader doesn't know, it is
-// honest about TLB's own pricing ("that costs more because the Award says
-// so, not because we've added a margin"), and it converts by making the
-// reader distrust the cheapest quote rather than by making claims about TLB.
+// It works because it explains something the reader doesn't know, and it
+// converts by making the reader distrust the cheapest quote rather than by
+// making claims about TLB.
+//
+// THREE CHANGES, all of them §9.4 or §9.2:
+//
+//  1. "THE BILL YOU DO NOT SEE IS THE ONE YOU PAY LATER, IN DIRTY GLASS,
+//     MISSED BINS AND A CLEANER WHO QUIETLY STOPS TURNING UP." Cut. BFD §9.4
+//     rules out characterising what another cleaner fails to do in running
+//     text — comparisons belong in the table, where a row can stay neutral
+//     and factual — and a competitor's cleaner abandoning the site is the
+//     sharpest version of exactly that. It is replaced by arithmetic about
+//     the reader's own quote: the gap is hours or tasks, so find out which
+//     before comparing numbers. Same conclusion, no prediction about
+//     somebody else's staff.
+//  2. THE SPLIT. Paragraph one ran seven sentences. BFD §9.2 sets three to
+//     four; both halves now sit inside it.
+//  3. "THAT COSTS MORE BECAUSE THE AWARD SAYS SO, NOT BECAUSE WE HAVE ADDED
+//     A MARGIN" becomes the specific conditions that trigger the penalty.
+//     More useful to the reader, more citable by an AI assistant per BFD
+//     §14, and the defensive clause was answering an accusation nobody made.
+//
+// ✅ THE AWARD IS NOW NAMED IN FULL on first mention, which closes the open
+// decision the old comment recorded: it was "the Cleaning Services Award"
+// here and "Cleaning Services Award 2020" in the non-branded FAQs.
+//
+// ✅ VERIFIED. The Cleaning Services Award 2020 (MA000022) is a real Fair Work
+// modern award and it does cover employers in the contract cleaning services
+// industry throughout Australia. Fair Work Ombudsman,
+// https://awards.fairwork.gov.au/MA000022.html, checked 17 September 2026.
+//
+// ⚠️ RE-CHECK BY 1 JULY 2027. Award rates and penalty conditions are reset
+// each year in the Fair Work Commission's Annual Wage Review, effective from
+// the first full pay period in July. This copy deliberately carries no
+// percentage and no dollar figure so it cannot go stale silently — the
+// CONDITIONS are what to re-check. Never add a rate to this page.
 //
 // COMPONENT CHOICE: TextBlock (dark), not Callout. Callout is built and
 // available, and "read this before you go further" is the right intent — but
@@ -291,8 +519,9 @@ const pathwayCards = {
 // Award" here, on first mention. Left as written rather than editing
 // supplied copy.
 const worthKnowingBody: TextBlockBody[] = [
-  'Contract cleaners in Australia are covered by the Cleaning Services Award, which sets a legal minimum for what a cleaner has to be paid, before you add super, insurance, equipment and travel. So when one quote lands well under the others, it is rarely a sharper deal. It usually means a shorter visit, a thinner list of tasks, or someone being paid less than they should be. The bill you do not see is the one you pay later, in dirty glass, missed bins and a cleaner who quietly stops turning up.',
-  'The number that matters is not the hourly rate. It is what is in the scope. Ask any cleaner exactly which tasks are included, how often they happen, and whether consumables like soap and paper are covered. We put ours in writing before we start, and we tell you straight when a clean has to happen after hours: that costs more because the Award says so, not because we have added a margin. No surprises, either way.',
+  'Contract cleaners in Australia are covered by the Cleaning Services Award 2020, which sets a legal minimum for what a cleaner has to be paid, before you add super, insurance, equipment and travel. That floor is the same for everyone quoting your job.',
+  'So the gap between two quotes is almost never a gap in margin. It is a gap in hours, or in how many tasks are on the list. Work out which before you compare the numbers, because a lower price for fewer hours is a different product, not a better deal.',
+  'The number that matters is not the hourly rate. It is what is in the scope. Ask any cleaner exactly which tasks are included, how often they happen, and whether consumables like soap and paper are covered. We put ours in writing before we start, and we tell you straight when a clean has to happen after hours, because early starts, late finishes, weekends and public holidays all carry a penalty rate under the Award. No surprises, either way.',
 ];
 
 // §7 Premises types — NOT IN THE BRIEF. Added per the plan's blocker 2.
@@ -321,6 +550,20 @@ const worthKnowingBody: TextBlockBody[] = [
 //
 // Office cleaning is highlighted as the default premises type — it is the
 // one the meta description names.
+//
+// ⚠️ TWO OF THE FIFTEEN HAVE NO WORKBOOK ROW, raised by the copy-rewrite
+// brief §11: /commercial-cleaning/factory-cleaning/ and
+// /commercial-cleaning/brewery-cleaning/. The hrefs are correct and the client
+// settled the nesting on 17 Sep 2026 — what they do not have is a mapped
+// primary keyword, an approved title or an approved meta, because they were
+// added after the Keyword Mapping & Metadata workbook was built. Either add
+// rows to the workbook or drop the two tags; a hub linking to a page nobody
+// has decided a target for is the cheaper half of that problem.
+//
+// ⚠️ The comparison table below was the residential one reused whole, and
+// two of its rows were written for a household. Both are fixed for this page
+// (see §10) — CHECK WHETHER THE SAME TABLE IS REUSED ON THESE FIFTEEN CHILD
+// PAGES, because the fix was made here and not upstream.
 const premisesTags = [
   { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
   { label: 'Strata and common area cleaning', href: '/commercial-cleaning/strata-cleaning/' },
@@ -370,6 +613,24 @@ const premisesTags = [
 // unlike the NDIS page there is no sensitivity reason to withhold it, though
 // it still needs the client's consent.
 //
+// 🔴 THE BLOCK IS NOW HIDDEN (copy-rewrite brief §13), which is a DIVERGENCE
+// from how the Airbnb, real estate, NDIS and Why TLB pages shipped — all four
+// still render their [TBC] slots, and all four commit messages record that
+// they should be hidden instead. This brief makes it an instruction rather
+// than a note, so it is taken here and those four are now the odd ones out.
+//
+// The reasoning is BFD §12.2, which rules out fabricated, substitute and
+// composite testimonials. There is therefore no copy answer — nothing can be
+// written into these slots. What ships today is a carousel of visible
+// brackets with five-star ratings attached, on a page that carries no proof
+// of any kind, and that is worse than no testimonials section at all.
+//
+// THE DATA BELOW IS KEPT, NOT DELETED. It is the brief for Teagan and the
+// render is one uncommented line away. The two types BFD §12.1 names as most
+// persuasive are exactly what these three slots ask for — a long-tenure
+// client and a switcher — and on a commercial hub at least one should be a
+// business rather than a household.
+//
 // Never invent a quote or a business name.
 const testimonials = [
   {
@@ -412,6 +673,42 @@ const testimonials = [
 // consumer costs nothing. Heading, cornerLabel and lead are framed for this
 // page, as the component intends.
 //
+// 🔴 ROWS REBUILT FOR THIS PAGE (copy-rewrite brief §12), and the lead-in
+// trimmed. The shared table was the residential one, reused whole, and two of
+// its eight rows were written for somebody else:
+//
+//  1. "WHO CLEANS YOUR HOME" on a page whose subject is a workplace. The
+//     shared `serviceComparisonRows` helper already exists for exactly this —
+//     it takes the replacement label — and this is its third consumer.
+//  2. "HOLIDAY LETS" is a residential and short-stay concern with no business
+//     on a commercial hub. A strata committee reading a row about holiday
+//     lets is being shown a table written for somebody else. The helper drops
+//     it, and the brief replaces it in the same slot rather than leaving
+//     seven rows.
+//
+// THE REPLACEMENT ROW IS KEYS AND ALARMS, which BFD §8.3 names as one of the
+// four things this audience actively worries about and which nothing on the
+// page addressed. It is now answered three times over — this row, pathway
+// card 3 and branded FAQ 2 — which is the right weight for a worry that comes
+// up before price does. The row stays neutral and factual in the §9.4 sense:
+// every cell says what happens, none says anyone does worse work.
+//
+// Defined locally rather than in comparison.ts because it has one consumer
+// and this codebase's stated bar for sharing is two. Inserted at index 4,
+// where "Holiday lets" sat, so the surrounding order is unchanged.
+//
+// THE LEAD-IN loses one sentence: "Every cleaner is good in the first month."
+// That is a characterisation of other cleaners in prose, which BFD §9.4 keeps
+// out of running text and confines to the table directly below it. The rest
+// of the lead-in is about TLB's own failure modes and is the best paragraph
+// of persuasion on the page.
+//
+// ⚠️ THE TWO COMPETITOR COLUMNS ARE UNVERIFIED, in the new row and in every
+// other row. BFD §9.4 permits a comparison table only where the rows stay
+// neutral and factual, and no cell in either column has been checked against
+// what a national app or a local independent actually does. Sign-off needed
+// before launch, and the new row is on that list with the rest.
+//
 // ⚠️ Two shared row labels carry a trailing "*" with no footnote text
 // supplied — a known open item on comparison.ts affecting all three
 // consumers. The component's `footnote` prop is waiting for it; adding the
@@ -420,13 +717,27 @@ const testimonials = [
 // ⚠️ OPEN DECISION, not taken here: adding a "Scope agreed in writing before
 // we start" row. It is this page's own central promise and no existing row
 // states it — but it isn't relevant to the homepage, so it would have to be
-// a page-specific row rather than an addition to the shared set.
+// a second page-specific row.
+const keysAndAlarmsRow = {
+  label: 'Keys and alarms',
+  values: [
+    'Held by whoever is rostered',
+    'Held by one person',
+    'Held by the same named team, and you are told first if that changes',
+  ],
+};
+
+const commercialComparisonRows = (() => {
+  const rows = serviceComparisonRows('Who cleans your premises');
+  return [...rows.slice(0, 4), keysAndAlarmsRow, ...rows.slice(4)];
+})();
+
 const comparisonTable = {
   heading: 'How TLB compares',
   cornerLabel: 'Why TLB Cleaning is different',
-  lead: 'None of this shows up in the first month. Every cleaner is good in the first month. It shows up when someone is away, when the schedule has to change, or when the same thing has been missed twice and you need one person to ring about it.',
+  lead: 'None of this shows up in the first month. It shows up when someone is away, when the schedule has to change, or when the same thing has been missed twice and you need one person to ring about it.',
   columns: comparisonColumns,
-  rows: comparisonRows,
+  rows: commercialComparisonRows,
 };
 
 // §11 Branded FAQs — all five ship, drafted in full, nothing bracketed.
@@ -445,21 +756,52 @@ const comparisonTable = {
 //   - "there's one local number to call" — footerContact.phone still renders
 //     a literal [TBC] (navigation.ts:56). This page is the first to make an
 //     explicit promise of a number the site doesn't yet display.
+//
+// ✅ FOUR OF THE FIVE REWRITTEN (copy-rewrite brief §16). Three of the four
+// are the same §9.4 finding in different clothes — this block argued against
+// competitors in prose four separate times — and the fourth was redundant:
+//
+//  1. Q1's "to a national chain a small local job is a rounding error, to us
+//     it is a neighbour's business" is a characterisation of a competitor in
+//     running text. The replacement answers the same anxiety with what TLB
+//     actually does, which is quote, schedule and staff the job the same way
+//     whatever its size.
+//  2. Q3 BREACHED TWICE IN THREE LINES. The question itself ("We have used a
+//     big cleaning company before. What is different here?") invites the
+//     comparison §9.4 keeps out of prose, and the answer fronts Teagan in
+//     service copy, which §2.2 restricts to the about page, the team section
+//     and social, and §9.3 replaces with "TLB" and "our team". The switcher
+//     INTENT is kept, because §12.1 says a switcher converts — what changes
+//     is that the answer now tells a switcher how switching actually works
+//     instead of telling them their last cleaner was bad.
+//  3. Q5 WAS WORD FOR WORD THE CLOSING CTA twenty lines below it, so it
+//     earned nothing where it sat. It is replaced by the contract question,
+//     which is the fourth and last of the BFD §8.3 worries and until now
+//     appeared only as one cell in the comparison table. It is also the
+//     on-page resolution of the "on contract" conflict in the approved title
+//     and meta — see §0.
+//  4. Q2 GAINS ONE SENTENCE on keys and alarm codes, the §8.3 worry the page
+//     never addressed. Third of three places it is now answered.
+//
+// ✅ THE CUSTOMER'S-VOICE REGISTER IS PRESERVED — "we" still means the
+// reader's business, not TLB, in four of the five questions. Q3's rewrite
+// keeps it ("We are switching from another cleaner"). Preserve it in any
+// addition; an answer later written in TLB's voice will read as bolted on.
 const brandedFaqItems = [
   {
     question: 'Are we too small a business for you?',
     answer:
-      'Not at all. A two person office matters to us as much as a large one does. To a national chain a small local job is a rounding error. To us it is a neighbour’s business.',
+      'Not at all. A two person office matters to us as much as a large one does. We quote the same way, run the same set schedule and send the same team whatever the size, and small premises are a large part of what we already clean.',
   },
   {
     question: 'Who is actually in our building after hours?',
     answer:
-      'The same small team each visit, in TLB uniform, and you can meet them before the first one. You will know their names, and there is one local number to ring if something is not right.',
+      'The same small team each visit, in TLB uniform, and you can meet them before the first one. You will know their names, and keys and alarm codes stay with the same people rather than moving around a roster. There is one local number to ring if something is not right.',
   },
   {
-    question: 'We have used a big cleaning company before. What is different here?',
+    question: 'We are switching from another cleaner. How does that work?',
     answer:
-      'You get the same people every week, and they know your building. Teagan runs TLB herself and her name is on the work, so there is someone who actually owns whether it was done properly.',
+      'We walk through the premises, agree the scope in writing, and set a start date that suits your notice period. You meet the team who will be doing the work before the first clean, so nobody gets shown around twice. Anything the last cleaner was doing that you want kept goes straight into the scope.',
   },
   {
     question: 'What if the standard slips after a few months?',
@@ -467,9 +809,9 @@ const brandedFaqItems = [
       'Tell us and we will put it right. That is the deal. The scope is agreed in writing, so “done properly” means the same thing to both of us, and you can change the schedule whenever you need to.',
   },
   {
-    question: 'What happens if I get in touch?',
+    question: 'Do we have to sign a contract?',
     answer:
-      'We come and walk through the place, then send you a written scope and a price. No obligation. If it suits, we agree a start date and you meet the team who will be doing the work.',
+      'No lock-in, no minimum term and no exit fee. The scope and the price per visit go in writing so both of us know what was agreed, not to tie you in. If the schedule needs to change, tell us and we change it.',
   },
 ];
 
@@ -511,7 +853,7 @@ const nonBrandedFaqItems = [
   {
     question: 'How often should an office be cleaned?',
     answer:
-      'Most small offices settle on two or three cleans a week, and move to daily once headcount, foot traffic or client visits pick up. Bathrooms, kitchens and high touch surfaces need attention most often, whatever the rest of the schedule looks like. The right frequency comes down to how hard the space is actually used, and a quiet three person studio and a busy cafe are nothing alike. A walkthrough settles it in ten minutes.',
+      'Most small offices settle on two or three cleans a week, and move to daily once headcount, foot traffic or client visits pick up. Bathrooms, kitchens and high touch surfaces need attention most often, whatever the rest of the schedule looks like. The right frequency comes down to how hard the space is actually used, and a quiet three person studio and a busy cafe are nothing alike. A walk-through settles it in ten minutes.',
   },
   {
     question: 'What is the difference between a regular clean and a deep clean?',
@@ -535,17 +877,44 @@ const nonBrandedFaqItems = [
   },
 ];
 
+// §15 "Easy to book, fast quoting, cost effective" — the shared body copy
+// with one word respelled, per the copy-rewrite brief §15.
+//
+// `theLineBody.commercial` opens "Book a walkthrough online" and is shared
+// with the thirteen premises pages under this hub. Those pages have no
+// copy-rewrite brief and no approved CTA of their own yet, so the shared file
+// is left alone and the spelling is normalised here instead — the same call
+// comparison.ts' own per-page variants record.
+//
+// A replace rather than a copied literal, so that an edit to the shared
+// paragraphs lands on this page too instead of silently drifting from it.
+// split/join rather than a regex: a word-boundary escape in the frontmatter
+// trips the Astro compiler, and no boundary is needed anyway — "walkthrough"
+// appears once and never as part of a longer word.
+//
+// ⚠️ FOLD THIS BACK into data/brand-lines.ts the moment the premises pages
+// adopt "Book a walk-through" as well, and delete this block.
+const theLineBodyCommercial: TextBlockBody[] = theLineBody.commercial.map((paragraph) =>
+  paragraph.split('walkthrough').join('walk-through'),
+);
+
 // §13 Closing CTA — ⚠️ not in the brief, which has no closing-CTA row (and
 // three mid-page rows reading "CTA -" with nothing after them).
 //
-// Lead and label come from branded FAQ 5, which describes what actually
-// happens. "Book a site walkthrough" is a stronger offer for this buyer than
-// an instant number would be, and unlike "Get an instant quote" it is true.
+// The lead is what actually happens, and it is now the ONLY place this copy
+// appears — branded FAQ 5 used to carry it word for word and has been given
+// the contract question instead (see §11). A walk-through is a stronger offer
+// for this buyer than an instant number would be, and unlike "Get an instant
+// quote" it is true.
+//
+// ✅ HEADING AND BUTTON RESPELLED (copy-rewrite brief §7 and §18) to the
+// workbook's approved CTA, matching the hero button. One primary CTA per
+// page, repeated, per BFD §9.5.
 const closingCta = {
   kicker: 'Commercial cleaning',
-  heading: 'Start with a walkthrough.',
+  heading: 'Start with a walk-through.',
   lead: 'We come and look at the place, then send you a written scope and a price. No obligation. If it suits, we agree a start date and you meet the team who will be doing the work.',
-  cta: { label: 'Book a site walkthrough', href: quoteCta.href },
+  cta: { label: 'Book a walk-through', href: quoteCta.href },
 };
 ---
 
@@ -564,6 +933,7 @@ const closingCta = {
       imagePosition="right"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -573,9 +943,20 @@ const closingCta = {
         so it is laid out across both — see the homepage for why a
         per-section background cannot do this. 75% keeps Dark Teal body
         copy above 4.5:1 over the darkest part of the frame. */}
+    {/* ✅ H2 ADDED (copy-rewrite brief §9). This block had no heading at all:
+        it rendered as two paragraphs of body copy with nothing above them, so
+        the only heading on the page carrying the primary keyword was an FAQ
+        label. This is not a new section — the paragraph below already reads
+        as a definition and is the page's strongest answer-target — it is a
+        heading for a section that already existed. */}
     <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading="What commercial cleaning covers"
+        body={definitionBody}
+      />
     </Backdrop>
 
     <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
@@ -587,11 +968,16 @@ const closingCta = {
       body={worthKnowingBody}
     />
 
+    {/* ✅ NOTE LINE FILLED (copy-rewrite brief §11). `note={[]}` was rendering
+        as blank space under the pills. "Where we clean" below already uses the
+        same slot to the same effect, and this is the smallest version of the
+        BFD §8.3 worry — whether a business like yours is one TLB actually
+        cleans. Fifteen pills cannot answer that for the sixteenth reader. */}
     <TagCloud
       heading="What we clean"
       subheading="Ongoing cleaning for workplaces across the Northern Rivers and the Tweed."
       tags={premisesTags}
-      note={[]}
+      note={["If your premises isn't on the list, ask us anyway. Most of it is the same work in a different building."]}
     />
 
     {/* ⚠️ THE SCOPE OF WORK BELONGS HERE AND DOES NOT EXIST.
@@ -635,12 +1021,39 @@ const closingCta = {
       rows={comparisonTable.rows}
     />
 
+    {/* 🔴 HIDDEN UNTIL THREE REAL COMMERCIAL TESTIMONIALS EXIST — see §9
+        above for why, and for what to ask Teagan for. Restoring it is this
+        one line, uncommented; the `testimonials` brief is still in place.
+
     <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
 
+    */}
+
+    {/* ✅ THE FULL FOOTPRINT, per the copy-rewrite brief §14, which specifies
+        all three regions and all 56 towns by name — the same list, and the
+        same subheading, the Airbnb, real estate and NDIS briefs specify.
+
+        This section had been trimmed to one group and six coastal towns while
+        the hero two sections above promised the Tweed. BFD §2.1 is explicit
+        that naming only the coastal towns tells somebody in Casino,
+        Murwillumbah or Evans Head that they are not the market, and §12.1 and
+        §14 both name specificity as the strongest proof and the strongest
+        AI-citability asset these pages have. It is also the mapped route to
+        `commercial cleaning services near me` (300/mo).
+
+        `completeFootprintLocationGroups` links a town only where its page is
+        reachable and renders the rest as plain pills, which is the rule
+        navigation.ts and RegionPage.astro already follow — so the brief's
+        developer note about linking is already handled by the data module.
+
+        ⚠️ THIS WIDENS THE PAGE ACROSS THE QUEENSLAND BORDER, so `areaServed`
+        in the structured data above was widened with it. See the note there.
+        If commercial work stops at the border, both revert together and the
+        last non-branded FAQ still needs its Blue Card clause either way. */}
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers."
-      groups={nswLocationGroups}
+      subheading={footprintSubheading}
+      groups={completeFootprintLocationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -658,11 +1071,24 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.commercial]}
+      body={[managedForYou.recurring, ...theLineBodyCommercial]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="Commercial Cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* ✅ BOTH FAQ HEADINGS RENAMED (copy-rewrite brief §16 and §17). Title
+        Case breached BFD §9.2, and two sections both headed as generic FAQs
+        told a reader nothing about which one to read and a search engine
+        nothing at all. The first is about TLB, the second is about the
+        service — and the second now keeps the exact primary keyword in a
+        heading, which is where the mapped phrase was doing the least work.
+
+        ⚠️ GAP, RAISED AND DELIBERATELY NOT CLOSED: `commercial floor cleaning
+        services` (90/mo) is the one mapped secondary with no passage anywhere
+        on this page. At 90/mo it does not justify a section on a hub, and
+        /commercial-cleaning/commercial-carpet-cleaning/ and
+        /commercial-cleaning/commercial-pressure-cleaning/ are better homes
+        for it. Revisit only if those two child pages do not cover it. */}
+    <Faq heading="What local businesses ask us" items={brandedFaqItems} />
+    <Faq heading="Commercial cleaning questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"
