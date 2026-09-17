@@ -41,6 +41,7 @@ const Tag = href ? 'a' : 'button';
   class:list={['btn', `btn--${variant}`, `btn--${size}`, { 'btn--full': fullWidth }, className]}
   href={href}
   type={href ? undefined : type}
+  data-cta
 >
   {label}
 </Tag>

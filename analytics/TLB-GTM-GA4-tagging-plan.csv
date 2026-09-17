@@ -1,0 +1,30 @@
+ ,,,Trigger,,Location,,Event,,
+Asset Name,GA4 event,Creator,Action,Condition,An example of where action takes place,Test date,Event Category,Event Action,Event Label
+TLB Cleaning Website,click_cta_quote,Jhon,User clicks any CTA button pointing at the quote page,"{{Click URL}} matches RegEx /quote/?($|[?#]) AND {{Click Element}} matches CSS selector [data-cta], [data-cta] *",https://tlbcleaning.com.au/,,Click - Just Links,Click - CTA Quote,"Get an instant quote
+Talk to us today
+Enquire today
+Book a walk-through
+Request a proposal
+Add us to your panel"
+TLB Cleaning Website,click_cta_book,Jhon,User clicks any CTA button pointing at the online booking page,"{{Click URL}} matches RegEx /book/?($|[?#]) AND {{Click Element}} matches CSS selector [data-cta], [data-cta] *",https://tlbcleaning.com.au/,,Click - Just Links,Click - CTA Book,Book your clean online
+TLB Cleaning Website,click_cta_contact,Jhon,User clicks any CTA button pointing at the contact page,"{{Click URL}} matches RegEx /contact/?($|[?#]) AND {{Click Element}} matches CSS selector [data-cta], [data-cta] *",https://tlbcleaning.com.au/about/,,Click - Just Links,Click - CTA Contact,"Talk to us
+Talk to our team"
+TLB Cleaning Website,click_cta_service,Jhon,User clicks any CTA button pointing at a house or commercial cleaning service page,"{{Click URL}} matches RegEx /(house-cleaning|commercial-cleaning)/ AND {{Click Element}} matches CSS selector [data-cta], [data-cta] *",https://tlbcleaning.com.au/,,Click - Just Links,Click - CTA Service Page,"See what a bond clean covers
+Regular home cleaning
+Deep cleaning
+See holiday let cleaning
+Office cleaning
+Mould cleaning and removal"
+TLB Cleaning Website,click_cta_locations,Jhon,User clicks any CTA button pointing at the locations hub or a region page,"{{Click URL}} matches RegEx /locations/ AND {{Click Element}} matches CSS selector [data-cta], [data-cta] *",https://tlbcleaning.com.au/,,Click - Just Links,Click - CTA Locations,"View all locations
+See your area"
+TLB Cleaning Website,click_phone,Jhon,User clicks the phone number in the footer,{{Click URL}} contains tel:,https://tlbcleaning.com.au/,,Click - Just Links,Click - Phone Link,Footer phone number (value TBC - see notes)
+TLB Cleaning Website,click_email,Jhon,User clicks the email address in the footer,{{Click URL}} contains mailto:,https://tlbcleaning.com.au/,,Click - Just Links,Click - Email Link,Footer email address (value TBC - see notes)
+TLB Cleaning Website,click_nav_menu,Jhon,User clicks a link in the header nav or the services mega menu,"{{Click Element}} matches CSS selector .site-header__nav a, .site-header__nav a *, .site-header__bar--services a, .site-header__bar--services a * AND {{Click Element}} does not match CSS selector [data-cta], [data-cta] *",https://tlbcleaning.com.au/,,Click - Just Links,Click - Nav Menu,"Home
+About
+Locations
+Contact
+Home Cleaning
+Commercial Cleaning
+Meet the Team
+Guides"
+TLB Cleaning Website,click_social_icons,Jhon,"User clicks a social icon in the footer (Facebook, Instagram, LinkedIn, YouTube)","{{Click Element}} matches CSS selector .site-footer__social-link, .site-footer__social-link *",https://tlbcleaning.com.au/,,Click - Just Links,Click - Social Icons,DORMANT - no social links passed to SiteFooter yet (see notes)

@@ -30,7 +30,7 @@ const { logo, primaryNav, serviceNav, secondaryCta, cta } = Astro.props;
 const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<header class="site-header">
+<header class="site-header" data-cta-location="header">
   <div class="site-header__bar site-header__bar--top">
     <div class="container site-header__row">
       <a href="/" class="site-header__logo" aria-label={logo.label}>

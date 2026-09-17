@@ -1,0 +1,261 @@
+TLB CLEANING - GTM / GA4 CTA TAGGING
+Container: GTM-KDMCQNN9 (tlbcleaning.com.au)
+Prepared: 17 September 2026
+Files: TLB-GTM-container-import.json, TLB-GTM-GA4-tagging-plan.csv, this file
+
+
+====================================================================
+1. WHAT SHIPPED
+====================================================================
+
+10 tags, 11 triggers, 4 user-defined variables, 11 built-in variables.
+
+  GA4 event                What it captures
+  -----------------------  ----------------------------------------------
+  click_cta_quote          Any CTA button pointing at /quote/
+  click_cta_book           Any CTA button pointing at /book/
+  click_cta_contact        Any CTA button pointing at /contact/
+  click_cta_service        Any CTA button into /house-cleaning/* or
+                           /commercial-cleaning/*
+  click_cta_locations      Any CTA button into /locations/*
+  click_phone              tel: links
+  click_email              mailto: links
+  click_nav_menu           Header nav + services mega menu (one tag,
+                           split by parameters)
+  click_social_icons       Footer social icons (currently dormant, see 5.1)
+
+Plus "Google Tag - GA4 Config" on Initialization - All Pages.
+
+Every CTA tag carries these four parameters:
+  link_url       {{Click URL}}           which destination was clicked
+  link_text      {{Click Text}}          the actual button copy
+  cta_location   {{CJS - CTA Location}}  header / hero / cta_band / footer / ...
+  page_path      {{Page Path}}           which page the click happened on
+
+click_phone and click_email drop link_text (the link text IS the number or
+address, and it is already in link_url).
+click_social_icons swaps link_text for social_network.
+
+
+====================================================================
+2. HOW THE TRIGGERS IDENTIFY A CTA (matches your brief)
+====================================================================
+
+Triggers key on {{Click URL}}, exactly as you asked. Two buttons with
+different copy that point at the same URL both land in the same event, and
+the label difference is preserved in the link_text parameter.
+
+The URL condition is ANDed with a CSS selector guard:
+
+    {{Click Element}} matches CSS selector   [data-cta], [data-cta] *
+
+This is what separates a real CTA button from an ordinary body link or a nav
+item pointing at the same URL. Without it, click_cta_contact would also fire
+on the header nav's "Contact" link and you would be double counting.
+
+CODE CHANGE MADE FOR THIS (already applied to this repo, 5 files):
+
+  src/components/ui/Button.astro
+      Every element rendered by the Button component now carries a bare
+      data-cta attribute. Button is the only CTA primitive in the library,
+      so this one line marks every CTA on the site.
+
+  src/components/sections/SiteHeader.astro   data-cta-location="header"
+  src/components/sections/SiteFooter.astro   data-cta-location="footer"
+  src/components/sections/Hero.astro         data-cta-location="hero"   (x5 variants)
+  src/components/sections/CallToAction.astro data-cta-location="cta_band" (x3 variants)
+
+These are additive HTML attributes only. No CSS, no behaviour, no layout
+change. Nothing else in the codebase reads them.
+
+THESE CHANGES MUST BE DEPLOYED BEFORE OR WITH THE CONTAINER PUBLISH.
+If you publish the container first, every click_cta_* tag will sit silent
+because no element on the live site carries data-cta yet. click_phone,
+click_email and click_nav_menu do not depend on the code change and will
+work immediately.
+
+
+====================================================================
+3. THE cta_location VARIABLE
+====================================================================
+
+"CJS - CTA Location" is a Custom JavaScript variable. It walks up from the
+clicked element and returns, in order of preference:
+
+  1. The nearest ancestor's data-cta-location value. Gives you the four
+     explicit, stable values: header, hero, cta_band, footer.
+
+  2. Otherwise the nearest <section>/<header>/<footer>/<nav>'s first CSS
+     class, with hyphens converted to underscores. This is a deliberate
+     fallback so the ~15 other section components still report something
+     usable without editing all of them: stat_band, service_blocks, pathway,
+     story, testimonials, comparison_table, card_carousel, callout,
+     photo_gallery, logo_bar, text_block.
+
+  3. "unknown" if neither resolves.
+
+DOUBLE CHECK: the fallback in step 2 depends on BEM block class names
+(.stat-band, .service-blocks, ...). These are stable in this codebase and
+1:1 with component filenames, but they are CSS classes, not a tracking
+contract. If you ever want a section's location locked down, add an explicit
+data-cta-location to its root element and it takes priority automatically.
+
+
+====================================================================
+4. CUSTOM DIMENSIONS YOU MUST CREATE IN GA4  <-- ACTION REQUIRED
+====================================================================
+
+GA4 Admin > Data display > Custom definitions > Create custom dimension.
+Without these the parameters are collected but are NOT reportable. Create
+them BEFORE you publish the container: GA4 does not backfill a dimension, so
+any data collected before the dimension exists is unreportable forever.
+
+  REQUIRED
+  Dimension name    Scope   Event parameter   Why
+  ----------------  ------  ----------------  --------------------------------
+  CTA Location      Event   cta_location      The whole point of the build.
+                                              Header vs hero vs cta_band vs
+                                              footer performance.
+  Social Network    Event   social_network    Only needed once social links
+                                              go live (see 5.1).
+
+  VERIFY FIRST, THEN REGISTER IF NEEDED
+  link_url and link_text are reserved GA4 parameter names that normally feed
+  the built-in "Link URL" and "Link text" dimensions. Run one report after
+  24-48 hours. If either comes back "(not set)", register it as an event
+  scoped custom dimension with the same parameter name.
+
+  PROBABLY SKIP
+  page_path is redundant. GA4 already derives the built-in "Page path and
+  screen class" dimension from page_location on every event. I kept the
+  parameter for parity with your Barefoot setup, but do NOT spend a custom
+  dimension slot on it unless a report actually needs it. You have 50
+  event-scoped slots and they are not reusable once burned.
+
+KEY EVENTS (conversions) to mark in GA4 Admin > Events:
+  click_cta_quote      yes - primary conversion
+  click_cta_book       yes - primary conversion
+  click_cta_contact    yes
+  click_phone          yes - highest intent signal for a local cleaning business
+  click_email          yes
+  click_cta_service    no  - navigation intent, not conversion
+  click_cta_locations  no
+  click_nav_menu       no
+  click_social_icons   no
+
+
+====================================================================
+5. FLAGS AND THINGS TO CONFIRM
+====================================================================
+
+5.1 SOCIAL ICONS ARE DORMANT
+    SiteFooter.astro supports socialLinks, but no page passes the prop, so
+    no social icons render anywhere on the site today. The tag and trigger
+    are included and correct, they just will not fire. Pass socialLinks to
+    SiteFooter and the tag starts working with no GTM change.
+    The RT - Social Network lookup covers facebook, instagram, linkedin and
+    youtube, defaulting to "other".
+
+5.2 PHONE AND EMAIL ARE PLACEHOLDERS
+    src/data/navigation.ts line 75:
+        export const footerContact = { phone: '[TBC]', email: '[TBC]', ... };
+    The footer currently renders href="tel:[TBC]" and href="mailto:[TBC]".
+    The triggers match on "tel:" and "mailto:" so they will fire regardless,
+    but the data is useless until the real number and address are in.
+    CONFIRM THE REAL PHONE AND EMAIL BEFORE LAUNCH.
+
+5.3 /quote/ AND /book/ DO NOT EXIST YET
+    navigation.ts flags both hrefs as guessed. There is no src/pages/quote.astro
+    and no src/pages/book.astro. The header CTA, every hero CTA and 14 closing
+    CTA blocks all point at /quote/, so click_cta_quote is the single most
+    important tag in this build and it currently points at a 404.
+    If those URLs change, update the two regexes in the triggers:
+        Click - CTA Quote   ->  /quote/?($|[?#])
+        Click - CTA Book    ->  /book/?($|[?#])
+
+5.4 NO FORMS ARE WIRED
+    CallToAction has a "form" variant and SiteFooter has a newsletter block,
+    but no page uses either and neither has an action endpoint. I deliberately
+    left form tracking OUT of this container rather than shipping tags that
+    can never fire. When the quote or booking form ships, add:
+      - a dataLayer push on submit success (NOT on the submit click, which
+        counts failed validations as conversions)
+      - a Custom Event trigger on that event name
+      - a GA4 event tag named generate_lead or form_submit
+    Your Barefoot container has the Monday WorkForms and CF7 listener pattern
+    to copy from.
+
+5.5 ANCHOR CTAs NOT TRACKED
+    Several pages use CTA buttons pointing at in-page anchors: #compare (4x),
+    #moisture, #switching. These fire no tag. Tell me if you want a
+    click_cta_anchor event; it is one trigger and one tag.
+
+5.6 STAGING IS BLOCKED VIA dataLayer, NOT HOSTNAME
+    Base.astro already pushes { siteEnv: 'production' | 'staging' } before
+    the container loads. I used that instead of the hostname exclusion your
+    Barefoot container uses, because it survives a domain change.
+      - "DLV - siteEnv" reads it, defaulting to "production" if absent.
+      - Two blocking triggers fire when siteEnv equals staging:
+          Blocking - Staging Traffic (All Pages)    -> blocks the GA4 config tag
+          Blocking - Staging Traffic (Link Click)   -> blocks all 9 event tags
+    In Preview on staging you will see tags listed as BLOCKED. That is the
+    correct result, not a fault.
+    NOTE: the default is "production". A page that somehow loads without the
+    dataLayer push will be counted as production. This is the opposite of how
+    site-env.ts fails (it fails closed to staging). I chose this direction so
+    a missed push never silently loses real conversion data. Say the word if
+    you would rather it fail closed and I will flip the default.
+
+5.7 CONTAINER / ACCOUNT IDS ARE PLACEHOLDERS
+    accountId and containerId in the JSON are "0". GTM remaps these on import
+    to whatever container you import into, so this is harmless. publicId is
+    set to GTM-KDMCQNN9 as a label only.
+    DOUBLE CHECK YOU ARE IMPORTING INTO THE RIGHT CONTAINER.
+
+5.8 NAV TAG COVERS HEADER ONLY
+    click_nav_menu matches .site-header__nav and .site-header__bar--services.
+    It deliberately excludes footer column links, the header logo link, and
+    anything carrying data-cta (which is how the header's two CTA buttons,
+    which sit INSIDE the <nav>, avoid being counted twice).
+    If you want footer nav links tracked, that is a separate trigger on
+    .site-footer__columns a. Say so and I will add it.
+
+
+====================================================================
+6. IMPORT AND TEST PROCEDURE
+====================================================================
+
+  1. Create the custom dimensions from section 4 in GA4 FIRST.
+  2. Get the GA4 Measurement ID (G-XXXXXXXXXX) for tlbcleaning.com.au.
+  3. GTM > Admin > Import Container.
+       File:            TLB-GTM-container-import.json
+       Workspace:       new workspace, e.g. "GA4 CTA tracking"
+       Import option:   MERGE, and "Rename conflicting tags, triggers and
+                        variables". Do NOT pick Overwrite - it wipes the
+                        existing container.
+  4. Open the variable "Const - GA4 Measurement ID" and replace the
+     G-XXXXXXXXXX placeholder with the real ID. Nothing fires correctly
+     until this is done.
+  5. Deploy the site with the 5 changed component files (section 2).
+  6. GTM Preview against the deployed site. Click through, in order:
+       header quote CTA, header book CTA, a hero CTA, a closing CTA band,
+       a nav link, a mega menu link, the footer phone, the footer email.
+     Confirm for each: the right tag fires, and cta_location reads
+     header / hero / cta_band / footer as expected.
+  7. GA4 DebugView: confirm the parameters arrive with values, not (not set).
+  8. Publish, and record the test date in the CSV.
+
+
+====================================================================
+7. OPEN QUESTIONS FOR YOU
+====================================================================
+
+  Q1. What is the GA4 Measurement ID for tlbcleaning.com.au?
+  Q2. Are /quote/ and /book/ the final URLs? (see 5.3)
+  Q3. Real footer phone and email? (see 5.2)
+  Q4. Do you want click_cta_service split per service instead of one tag
+      with link_url as the differentiator? It would be roughly 30 tags.
+      My recommendation is no: keep one tag and build the breakdown as a
+      GA4 exploration on link_url.
+  Q5. Anchor CTAs - track or ignore? (see 5.5)
+  Q6. Footer nav column links - track or ignore? (see 5.8)

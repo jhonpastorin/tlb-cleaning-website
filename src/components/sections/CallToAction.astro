@@ -70,7 +70,7 @@ const {
 ---
 
 {variant === 'primary' && (
-  <section class="cta cta--primary" aria-labelledby="cta-heading">
+  <section data-cta-location="cta_band" class="cta cta--primary" aria-labelledby="cta-heading">
     <div class="container cta__grid">
       <div class="cta__copy">
         {logo && (
@@ -94,7 +94,7 @@ const {
 )}
 
 {variant === 'secondary' && (
-  <section class="cta cta--secondary" aria-labelledby="cta-heading">
+  <section data-cta-location="cta_band" class="cta cta--secondary" aria-labelledby="cta-heading">
     <div class="container">
       <div class="cta__band">
         <div class="cta__copy">
@@ -116,7 +116,7 @@ const {
 )}
 
 {variant === 'form' && (
-  <section class="cta cta--form" aria-labelledby="cta-heading">
+  <section data-cta-location="cta_band" class="cta cta--form" aria-labelledby="cta-heading">
     <div class="container cta__form-inner">
       {kicker && <p class="cta__kicker">{kicker}</p>}
           <h2 id="cta-heading">{heading}</h2>
