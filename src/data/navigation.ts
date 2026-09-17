@@ -24,7 +24,7 @@ export const quoteCta: ButtonData = { label: 'Get an instant quote', href: '/quo
 // Header's second CTA, alongside quoteCta — an outline-style secondary
 // button per the content roadmap. href guessed — no booking-flow URL
 // given, confirm before launch.
-export const headerSecondaryCta: ButtonData = { label: 'Book your clean online', href: '/book-online/' };
+export const headerSecondaryCta: ButtonData = { label: 'Book your clean online', href: '/book/' };
 
 // The real service pages, used for the footer's "Services" column and for
 // the homepage's "Our services" grid. headerNav below mixes real services

@@ -281,7 +281,7 @@ collapsing to a hamburger panel below 900px.
     ]},
     { label: 'Guides', href: '/guides/' }, // no megaMenu — plain link
   ]}
-  secondaryCta={{ label: 'Book your clean online', href: '/book-online/' }}
+  secondaryCta={{ label: 'Book your clean online', href: '/book/' }}
   cta={header.cta}
 />
 ```
