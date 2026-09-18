@@ -6,8 +6,16 @@ import type { ImageMetadata } from 'astro';
 
 export interface NavItem {
   label: string;
-  href: string;
+  /** Omit to render the item as something other than a link. Same convention
+   *  MegaMenuChild already uses for a page that is not live yet; here it also
+   *  covers a `phoneCta` whose number is still a placeholder. */
+  href?: string;
   hasDropdown?: boolean;
+  /** Render this item as a CTA button rather than a plain nav link. Used for
+   *  the header's phone number, which sits in the nav row but reads as a call
+   *  to action. With no `href` the Button primitive renders a <button>, so a
+   *  placeholder never ships as a dead link or a fake dialable number. */
+  phoneCta?: boolean;
 }
 
 /** One row inside a mega-menu column.

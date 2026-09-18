@@ -43,6 +43,12 @@ const Tag = href ? 'a' : 'button';
   type={href ? undefined : type}
   data-cta
 >
+  {/* Optional leading icon, e.g. the header's phone CTA. A named slot rather
+      than an `icon` prop so the caller owns the SVG and this primitive stays
+      ignorant of any icon set. Callers that pass nothing render exactly as
+      before — an empty slot produces no element, so the `gap` below never
+      applies to a label on its own. */}
+  <slot name="icon" />
   {label}
 </Tag>
 
@@ -51,6 +57,9 @@ const Tag = href ? 'a' : 'button';
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    /* Only ever separates a slotted icon from the label — a button with no
+       icon has a single child, and gap has nothing to act on. */
+    gap: var(--space-xs);
     text-align: center;
     font-family: var(--font-button);
     font-weight: var(--weight-button);

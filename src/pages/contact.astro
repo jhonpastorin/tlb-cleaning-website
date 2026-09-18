@@ -1,0 +1,139 @@
+---
+// Contact. Added 18 Sep 2026 because six links across the site already
+// pointed at /contact/ and every one of them 404'd: the "Contact us" item in
+// the service bar (navigation.ts, right of Why TLB), and five body CTAs in
+// commercial-cleaning, mattress-cleaning, ndis-cleaning, upholstery-cleaning
+// and work-with-us, all labelled some variant of "Talk to us". This page is
+// what closes all six at once.
+//
+// ⚠️ THE PHONE AND EMAIL ARE PLACEHOLDERS AND THIS PAGE IS NOT LAUNCHABLE
+// UNTIL THEY ARE REAL. A contact page whose contact details read "[TBC]" is
+// worse than no contact page, because a reader who gets this far has decided
+// to make contact and has nothing to act on. This is the single highest
+// priority item on the page.
+//
+// Both values are read from `footerContact` in navigation.ts rather than typed
+// out here, so the footer on all 111 pages and this page cannot disagree and
+// one edit fills both. That is the same rule locations.ts sets for the town
+// list, for the same reason.
+//
+// ⚠️ DELIBERATELY ABSENT, so nobody adds them back as an improvement:
+//  1. NO CONTACT FORM. There is no form handler, no endpoint and no backend in
+//     this project — it is a static Astro build on Render. A form that posted
+//     nowhere would silently swallow enquiries, which is the worst failure
+//     this page could have. The quote flow at /quote/ is the existing path for
+//     structured enquiries and is what the CTAs point at.
+//  2. NO RESPONSE-TIME PROMISE. "We reply within an hour" is an operational
+//     commitment nobody in this repo has been told is true. Several pages
+//     already carry [CONFIRM] brackets for exactly this class of claim.
+//  3. NO OPENING HOURS AND NO STREET ADDRESS. TLB is a mobile service and
+//     `meetTheTeamBusiness` still ships an empty `address`. Inventing either
+//     would be inventing a fact about the business.
+//  4. NO ABN, no insurance number, no certificate figures. Same rule.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TextBlock from '../components/sections/TextBlock.astro';
+import Callout from '../components/sections/Callout.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { meetTheTeamBusiness } from '../data/meetTheTeam';
+
+const pageMeta = {
+  title: 'Contact Us | Cleaners in the Northern Rivers & Gold Coast | TLB Cleaning',
+  description:
+    'Get in touch with TLB Cleaning. Call or email for homes, holiday lets and businesses across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+  canonical: 'https://tlbcleaning.com.au/contact/',
+};
+
+const business = meetTheTeamBusiness(pageMeta.description);
+
+const hero = {
+  kicker: 'Contact',
+  headingLines: ['Tell us the town', 'and what needs doing.'],
+  lead:
+    "However you get in touch, that is all we need to start with. We will come back with a price and a day rather than a callback to book another call.",
+  cta: quoteCta,
+};
+
+// The two placeholders come straight from `footerContact`, so replacing them
+// there updates the footer and this page together. See the header note.
+const contactBody: TextBlockBody[] = [
+  'The fastest way to a price is the online quote form. It asks the same questions we would ask on the phone, which is what lets us come back with an actual number instead of a time to talk.',
+  { list: [`Phone: ${footerContact.phone}`, `Email: ${footerContact.email}`] },
+  'If you would rather talk it through, call or email instead. A person reads it either way.',
+];
+
+// What to include is genuinely useful and costs nothing to say — it is the
+// difference between one exchange and four. Nothing here is a claim about TLB.
+const helpUsHelp = {
+  heading: 'What to tell us',
+  body: [
+    'Your town, the kind of place it is, and roughly what it needs. For a home, how many bedrooms and bathrooms. For a holiday let, how often it turns over. For a business, what hours we would be working around.',
+    'If it is an end of lease clean, tell us the date the keys are due back. That is the one job on this site where the date decides everything else.',
+  ],
+};
+
+const closingCta = {
+  kicker: 'Contact',
+  heading: 'Start with a price.',
+  lead:
+    'Answer a few questions about your place and we will come back with a quote and the next available day.',
+  cta: quoteCta,
+};
+---
+
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="minimal"
+      align="left"
+      kicker={hero.kicker}
+      headingLines={hero.headingLines}
+      lead={hero.lead}
+      cta={hero.cta}
+    />
+
+    <TextBlock theme="muted" align="left" heading="How to reach us" body={contactBody} />
+
+    <Callout tone="note" heading={helpUsHelp.heading} body={helpUsHelp.body} />
+
+    <CallToAction
+      variant="secondary"
+      kicker={closingCta.kicker}
+      heading={closingCta.heading}
+      lead={closingCta.lead}
+      cta={closingCta.cta}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>

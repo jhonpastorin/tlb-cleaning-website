@@ -17,14 +17,37 @@ import {
 } from './locations';
 import { regionSlugHref } from './regionPages';
 
-// The one quote CTA used by the header, both heroes, and the closing CTA
-// blocks. href guessed — no booking/quote URL given, confirm before launch.
-export const quoteCta: ButtonData = { label: 'Get an instant quote', href: '/quote/' };
+// ⚠️ BOTH CTAs POINT AT /contact/ FOR NOW, 18 Sep 2026, at the client's
+// request. Their real destinations are built here and are the values to
+// restore:
+//
+//     quoteCta           href: '/quote/'
+//     headerSecondaryCta href: '/book/'
+//
+// NEITHER OF THOSE PAGES EXISTS. There is no src/pages/quote.astro and no
+// src/pages/book.astro, and there never has been — the hrefs were guessed when
+// this file was written, flagged "confirm before launch", and never confirmed.
+// So every CTA on the site was a 404 until this change: the heroes, the
+// closing bands, the service cards, the lot. Pointing them at the contact page
+// is the interim fix, and it is a real one rather than a cosmetic one.
+//
+// Changing these two lines moves every CTA on the site, because nothing
+// hardcodes '/quote/' or '/book/' anywhere else — pages that build their own
+// CTA objects all read `quoteCta.href`. Restoring them is the same two lines.
+//
+// ⚠️ THE LABELS NOW OVERSTATE WHAT HAPPENS. "Get an instant quote" and "Book
+// your clean online" both land on a contact page that has neither a quote flow
+// nor a booking flow, and whose phone and email are still [TBC]. The labels
+// were left alone because only the destinations were asked about, but they are
+// a promise the page does not keep. Worth settling before launch: either build
+// the two pages, or reword these to something the contact page delivers.
+export const quoteCta: ButtonData = { label: 'Get an instant quote', href: '/contact/' };
 
 // Header's second CTA, alongside quoteCta — an outline-style secondary
-// button per the content roadmap. href guessed — no booking-flow URL
-// given, confirm before launch.
-export const headerSecondaryCta: ButtonData = { label: 'Book your clean online', href: '/book/' };
+// button per the content roadmap. Still rendered on /how-booking-works/, which
+// reads it as its hero CTA, even though the header pair itself is hidden
+// (see SHOW_HEADER_CTAS in SiteHeader.astro).
+export const headerSecondaryCta: ButtonData = { label: 'Book your clean online', href: '/contact/' };
 
 // The real service pages, used for the footer's "Services" column and for
 // the homepage's "Our services" grid. headerNav below mixes real services
@@ -80,11 +103,37 @@ export const footerContact = {
 
 export const footerCopyright = '© 2026 TLB Cleaning. All rights reserved.';
 
+// ⚠️ "CONTACT" REMOVED, 18 Sep 2026, at the client's request, and it was a
+// broken link anyway: there is no src/pages/contact.astro in this repo and
+// there never has been, so that item 404'd on all 110 pages. Its replacement
+// is the phone CTA below.
+//
+// ⚠️ /contact/ IS STILL LINKED FROM SIX PLACES AND STILL 404s — the "Contact
+// us" item added to the service bar below (headerNavAll, right of Why TLB, at
+// the client's request later the same day), plus five body CTAs in
+// commercial-cleaning, mattress-cleaning, ndis-cleaning, upholstery-cleaning
+// and work-with-us, all labelled some variant of "Talk to us". Removing this
+// primary-nav item did not fix those. One contact page fixes all six.
+//
+// ⚠️ THE PHONE NUMBER IS A PLACEHOLDER. To set the real one, put the number in
+// `label` and its dialable form in `href`:
+//
+//     { label: '02 6685 1234', href: 'tel:+61266851234', phoneCta: true }
+//
+// Until then there is deliberately NO href, so Button renders a <button>
+// rather than an <a>. That is the point: a `tel:` link built around a made-up
+// number is worse than no link, because it silently dials the wrong person,
+// and '#' would ship a dead link. footerContact.phone is the site's other
+// placeholder ('[TBC]') and wants the same number at the same time.
+//
+// It rides in `primaryNav` rather than arriving as its own SiteHeader prop
+// because all 53 call sites already pass this array — a new prop would mean
+// editing 53 files to add it and 53 more to take it away.
 export const primaryNav: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about/' },
   { label: 'Locations', href: '/locations/' },
-  { label: 'Contact', href: '/contact/' },
+  { label: '[PHONE TBC]', phoneCta: true },
 ];
 
 // Shared nav/footer content — not covered by the content spec at all
@@ -393,6 +442,23 @@ const headerNavAll: MegaMenuNavItem[] = [
     ],
   },
   { label: 'Why TLB', href: '/why-tlb/' }, // guessed slug — sheet shows this column empty, no children, still a plain link
+  // ⚠️ THIS LINK 404s TODAY. There is no src/pages/contact.astro in this repo
+  // and there never has been. "Contact" was removed from the primary nav
+  // earlier today partly for that reason; the client then asked for a "Contact
+  // us" item here, to the right of Why TLB, so it is added as asked — but the
+  // page has to be built before launch or this ships a broken link in the main
+  // navigation, which is worse than the primary-nav one was because this bar
+  // is on all 110 pages and is the site's main wayfinding.
+  //
+  // Five body CTAs already point at /contact/ and 404 for the same reason (in
+  // commercial-cleaning, mattress-cleaning, ndis-cleaning, upholstery-cleaning
+  // and work-with-us), so building that one page fixes six links at once.
+  //
+  // Placed immediately after Why TLB rather than at the end of the array
+  // because the two entries that follow — Guides and Meet the team — are both
+  // in `hiddenNavLabels`, so array position and rendered position only agree
+  // here by accident. Keep it adjacent to the item it is meant to sit beside.
+  { label: 'Contact us', href: '/contact/' },
   {
     label: 'Guides',
     href: '/guides/', // guessed slug — no guides/blog section built yet
@@ -552,6 +618,42 @@ if (missingNavLabels.length) {
 // intent is that nobody reaches these at all, this change alone does not do
 // it; say so and the other surfaces can follow.
 
+// ⚠️ LINK-ONLY MENUS, 18 Sep 2026, at the client's request: every mega-menu
+// now drops any child without an href instead of rendering it as plain text.
+// So the menus list only what a reader can actually open.
+//
+// ⚠️ THIS HIDES 18 BUILT, WORKING PAGES AND THAT WAS THE EXPLICIT CALL. Of the
+// 22 children this removes, only four have no page at all — Forensic and
+// trauma cleaning, Hoarder and squalor cleaning, Deceased estate cleaning and
+// Seniors cleaning. The other eighteen are finished pages that ship in every
+// build and are reachable by URL:
+//
+//   Home Cleaning  window-cleaning, gutter-cleaning, roof-cleaning,
+//                  pressure-cleaning, exterior-house-washing,
+//                  upholstery-cleaning, mattress-cleaning, oven-cleaning
+//   Commercial     commercial-carpet-cleaning, commercial-pressure-cleaning,
+//                  hospitality-cleaning, commercial-kitchen-cleaning,
+//                  school-and-childcare-cleaning, gym-and-fitness-cleaning,
+//                  retail-cleaning, warehouse-and-industrial-cleaning,
+//                  factory-cleaning, brewery-cleaning
+//
+// They were unlinked in headerNavAll above, not unbuilt, and the client was
+// shown that before choosing this. It was put to them as "link the eighteen
+// and drop the four" versus "drop all twenty-two" and they chose the latter.
+// TO PUT ANY OF THEM BACK, add its href in headerNavAll — nothing here needs
+// touching, because this filter only ever removes hrefless children.
+//
+// ⚠️ THOSE 18 ARE NOW ORPHANS, and unlinked is not unindexed. They still build
+// into dist/ and stay crawlable by URL. Site-wide `noindex` covers this while
+// SITE_ENV is not production (site-env.ts), but the day the site goes live
+// they become indexable with nothing linking to them — the same open question
+// locations.ts records for the hidden town pages. There is no sitemap in this
+// project, so there is nothing to exclude them from.
+//
+// A group left with no children is dropped rather than rendered as a bare
+// heading, which the filter below already did for hidden labels. "Outside your
+// home" and "By type of premises" empty out completely under this rule, so
+// those two columns disappear from their panels.
 export const headerNav: MegaMenuNavItem[] = headerNavAll
   .filter((item) => !hiddenNavLabelSet.has(item.label))
   .map((item) => {
@@ -559,7 +661,9 @@ export const headerNav: MegaMenuNavItem[] = headerNavAll
     const megaMenu = item.megaMenu
       .map((group) => ({
         ...group,
-        items: group.items.filter((child) => !hiddenNavLabelSet.has(child.label)),
+        items: group.items.filter(
+          (child) => child.href && !hiddenNavLabelSet.has(child.label),
+        ),
       }))
       .filter((group) => group.items.length > 0);
     return megaMenu.length ? { ...item, megaMenu } : { label: item.label, href: item.href };
