@@ -138,22 +138,31 @@ export const primaryNav: NavItem[] = [
 
 // "Areas we clean" mega-menu columns.
 //
-// ⚠️ THIS MENU NOW SHOWS ALL 56 TOWNS AGAIN, 16 Sep 2026, at the client's
-// request — the full `northernRiversTowns`, `tweedTowns` and
-// `southernGoldCoastTowns` arrays, not the eight-town curated subset it had
-// been reading. That brings the Tweed back as a region here: it was hidden in
-// full, so locations.ts has no visible Tweed list and no Tweed group, and this
-// file names that group itself.
+// ⚠️ THIS MENU SHOWS LIVE TOWNS ONLY, 18 Sep 2026, at the client's request
+// ahead of launch. It reads the same three source arrays as everything else
+// and `regionColumns` filters each one through locations.ts' `isNavigableTown`,
+// so there is still no second town list anywhere in this file.
 //
-// ⚠️ READ THIS BEFORE TOUCHING EITHER FILE. The menu and the rest of the
-// site now disagree on purpose, and locations.ts' own header still claims they
-// cannot. ONLY the header menu was widened. The /locations/ hub and every
-// page's "Where we clean" band still read `locationGroups`, which is still the
-// curated eight, so a town like Kingscliff is now reachable from the header on
-// every page and is listed nowhere else on the site. That asymmetry is the
-// instruction, not an oversight — but if what was wanted is all 56 towns
-// everywhere, the change belongs in locations.ts' visible arrays instead and
-// this block goes back to reading them.
+// ⚠️ THE MENU AND THE BANDS DIFFER ON PURPOSE, AND IT IS NOT THE OLD BUG.
+// This is the third arrangement in three days, so it is worth being precise
+// about which one is current:
+//
+//   16 Sep — the menu listed all 56 and linked fourteen; the hub and the bands
+//     listed a curated eight. Nobody had decided that; it was drift.
+//   18 Sep, morning — the client asked for the bands to match the menu's
+//     linked set, so both showed the same fourteen.
+//   18 Sep, afternoon — the client asked for the bands to NAME all 56 and link
+//     only the live pages, and then, separately, for THIS MENU ALONE to drop
+//     to the live towns. Both instructions were explicit.
+//
+// So the current, intended state is: every band and the /locations/ hub name
+// all 56 and link fourteen; this menu lists those fourteen and nothing else.
+// A band is a claim about where TLB works; a menu is a list of pages you can
+// open. Do not reconcile them without asking.
+//
+// The nine NSW-only pages are a further deliberate exception on the band side:
+// they render `nswLocationGroups` — the same towns minus Queensland, because
+// their own meta and copy stop at the border. locations.ts documents that.
 //
 // Region headings are the client's exact wording. "Northern Rivers NSW" and
 // "Southern Gold Coast QLD" match locations.ts' groups verbatim, so the menu
@@ -166,8 +175,9 @@ export const primaryNav: NavItem[] = [
 // region are within one row of each other. Only a region's FIRST column
 // carries the region label — MegaMenuGroup makes `label` optional precisely so
 // a continuation column can render as a bare list under the heading above it.
-// With the curated list every region fits one column, but the split stays so
-// restoring towns doesn't also mean restoring the layout logic.
+// At fourteen live towns every region fits one column and the split never
+// fires, but it stays so that going live with more towns doesn't also mean
+// rebuilding the layout logic.
 const REGION_COL_ROWS = 20;
 
 // ✅ THE "ALL OF <REGION>" ROW IS BACK, 16 Sep 2026. It headed each column
@@ -183,17 +193,33 @@ const REGION_COL_ROWS = 20;
 // bare list under the heading above it, and a second "Northern Rivers NSW"
 // halfway across the panel would read as a second region.
 const regionColumns = (label: string, towns: string[], regionHref: string): MegaMenuGroup[] => {
-  // Only a navigable town gets an href — see locations.ts' `navigableTowns`.
-  // The rest render as plain text, still named and still in their region.
-  const rows: MegaMenuChild[] = towns.map((town) => ({
-    label: town,
-    ...(isNavigableTown(town) ? { href: townSlug(town) } : {}),
-  }));
+  // ⚠️ THE MENU LISTS LIVE TOWNS ONLY, 18 Sep 2026, at the client's request
+  // ahead of launch. Every row here is a link, because a town with no live
+  // page is not listed at all rather than shown as plain text.
+  //
+  // THIS IS THE ONE SURFACE THAT FILTERS. Every "Where we clean" band and the
+  // /locations/ hub still NAME all 56 and link these same fourteen — the
+  // client asked for that explicitly and then asked for the menu alone to
+  // change. So the asymmetry is the instruction: a band is a claim about where
+  // TLB works, and this menu is a list of pages you can open. Do not "fix" one
+  // to match the other.
+  //
+  // Un-hiding is still one edit in one place: add the town to
+  // locations.ts' `navigableTowns` and it appears here, gains its link in
+  // every band, and becomes clickable on its region page.
+  const rows: MegaMenuChild[] = towns
+    .filter(isNavigableTown)
+    .map((town) => ({ label: town, href: townSlug(town) }));
   // Split the TOWNS across columns, then put the region row on top of the
   // first one. Doing it in this order keeps the column balance a function of
   // the town count alone, so adding the row cannot push a town into a second
   // column on its own.
-  const colCount = Math.ceil(rows.length / REGION_COL_ROWS);
+  //
+  // `Math.max(1, …)` so a region with no live towns yet still renders its own
+  // row rather than vanishing from the menu entirely — the region pages are
+  // live whatever the town list does, and a silently missing region would be
+  // the hard kind of bug to notice.
+  const colCount = Math.max(1, Math.ceil(rows.length / REGION_COL_ROWS));
   const perCol = Math.ceil(rows.length / colCount);
   return Array.from({ length: colCount }, (_, col) => ({
     label: col === 0 ? label : undefined,
@@ -322,11 +348,11 @@ const headerNavAll: MegaMenuNavItem[] = [
   {
     label: 'Areas we clean',
     href: '/locations/',
-    // Every town in locations.ts, all three regions. The column split above
-    // does the rest: Northern Rivers' 28 towns break over two columns of 14,
-    // the Tweed's 19 and the Southern Gold Coast's 9 take one each, so the
-    // panel is four columns — the same width as the Home Cleaning panel, and
-    // the shape this menu had before the curated subset was introduced.
+    // All three regions, each filtered to its live towns by `regionColumns`.
+    // That is currently 8 + 4 + 2, so every region fits one column and the
+    // panel is three columns rather than the four it took at 56 towns. The
+    // split logic still runs, so restoring towns restores the wider panel
+    // without a layout change here.
     megaMenu: [
       ...regionColumns('Northern Rivers NSW', northernRiversTowns, regionSlugHref('northern-rivers')),
       ...regionColumns('The Tweed', tweedTowns, regionSlugHref('the-tweed')),

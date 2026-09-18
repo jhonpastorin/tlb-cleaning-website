@@ -1152,21 +1152,21 @@ const closingCta = {
         wrapper and restore the line above the moment two real quotes with
         written consent exist. Blocked on the client. */}
 
-    {/* ⚠️ DIVERGENCE, recorded 15 Sep 2026. The copy review of this page
-        read the town list as all three groups present and complete per BFD
-        §2.1, and reported no regression. It is not: data/locations.ts now
-        shows only the eight towns the client asked for in Sept 2026, with
-        the Tweed group hidden entirely, so two groups render rather than
-        three while the hero, the lead and the definition paragraph all name
-        the Tweed by name.
+    {/* ✅ RESOLVED 18 Sep 2026. The copy review of this page read the town
+        list as all three groups present and complete per BFD §2.1, and
+        reported no regression. For three days that was wrong — locations.ts
+        ran a curated list that rendered two groups while this page's hero,
+        lead and definition paragraph all named the Tweed. The client's call to
+        name every mega-menu town and link only the live pages restored the
+        third group, so the review's reading is accurate again.
 
-        Not fixed here, deliberately. Restoring the full 56-town,
-        three-group list is a site-wide data change against a standing client
-        instruction and it is not one page's call. Raise it before touching
-        locations.ts. Flagged so the next review does not report it as new. */}
+        Kept as a note rather than deleted because the fix was a site-wide data
+        change in locations.ts, not a change here: this page never diverged on
+        its own, and the next review should not read the history as a new
+        finding. */}
     <TagCloud
       heading="Where we clean"
-      subheading="Northern Rivers and the Southern Gold Coast."
+      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
       groups={locationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />

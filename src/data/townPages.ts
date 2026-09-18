@@ -36,8 +36,6 @@ import {
   northernRiversTowns,
   tweedTowns,
   southernGoldCoastTowns,
-  isVisibleTown,
-  visibleTowns,
 } from './locations';
 import hinterlandHomeImg from '../assets/locations/weatherboard-home-with-hinterland-hills.jpg';
 import coastalHomeImg from '../assets/locations/coastal-home-near-the-beach.jpg';
@@ -413,56 +411,24 @@ if (strays.length > 0) {
   );
 }
 
-// ── HIDDEN TOWNS AND THE NEARBY LIST ────────────────────────────────────
-// Every town still gets a page (see the header), but only the eight in
-// locations.ts' visible list are linked from anywhere. A VISIBLE town's
-// "nearby suburbs" band is the one remaining place that would have linked
-// into a hidden one, so it is filtered to visible towns here — otherwise
-// hiding them from the menu and the hub would just move the doorway one
-// click along.
+// ── THE NEARBY LIST AND THE UNLINKED TOWNS ──────────────────────────────
+// This used to filter `nearby` down to locations.ts' curated "visible" list,
+// so that a town page's "nearby suburbs" band could not be the one remaining
+// door into a town the menu and the hub had stopped naming. That whole
+// mechanism is gone with the curated list: as of 18 Sep 2026 every band names
+// every town, so there is no hidden set left to leak into, and each town page
+// now gets its REAL neighbours — the ones a local would name — whether or not
+// those neighbours' pages are live.
 //
-// A HIDDEN town's own page keeps its real neighbours untouched. Its page is
-// not linked from anywhere, filtering it would leave several with an empty
-// band, and its list is what should come back the day the town is un-hidden.
+// Which of them are clickable is [town].astro's call, using the same
+// `isNavigableTown` predicate as every other surface. So a Burleigh Heads
+// reader sees Miami and Burleigh Waters named next door and can click through
+// to the one that is live, rather than seeing a two-item list that pretends
+// the others are not there.
 //
-// Filtering happens BEFORE the six-item cut, not after: nearbyFor picks its
-// six from the full list, and simply removing the hidden ones from that
-// answer left Byron Bay with two neighbours while Brunswick Heads — visible,
-// twenty minutes up the road — sat just outside the cut. So a short list is
-// topped up from the rest of the region's visible towns, in region order,
-// which is the same nearest-first-by-list-position heuristic nearbyFor uses.
-//
-// The result can still be shorter than NEARBY_COUNT and that is correct
-// rather than a bug to pad around: Burleigh Heads genuinely has one other
-// visible Queensland suburb right now. Topping up never crosses a region
-// boundary, for the reason nearbyFor gives — a Queensland suburb on a NSW
-// town's page reads as a mistake.
-const visibleNearby = (town: string, region: Region, nearby: string[]): string[] => {
-  if (!isVisibleTown(town)) return nearby;
-  const kept = nearby.filter(isVisibleTown);
-  const topUp = region.towns.filter(
-    (t) => isVisibleTown(t) && t !== town && !kept.includes(t),
-  );
-  return [...kept, ...topUp].slice(0, NEARBY_COUNT);
-};
-
-// A visible town with no visible neighbours would render a "nearby suburbs"
-// band with nothing in it, which looks broken rather than sparse. Nothing
-// currently trips this; it fails the build if a future edit to the visible
-// list does — a lone visible town in a region is the way in.
-const strandedVisible = visibleTowns.filter((town) => {
-  const region = regions.find((r) => r.towns.includes(town));
-  if (!region) return false;
-  const override = townOverrides[town]?.nearby;
-  return visibleNearby(town, region, override ?? nearbyFor(town, region)).length === 0;
-});
-if (strandedVisible.length > 0) {
-  throw new Error(
-    `townPages.ts: these visible towns have no visible neighbours left, so their ` +
-      `"nearby suburbs" section would render empty: ${strandedVisible.join(', ')}. ` +
-      `Add a neighbouring town to locations.ts' visible list, or hide these too.`,
-  );
-}
+// The result is always NEARBY_COUNT long now, because nearbyFor tops up from
+// the region rather than from a filtered subset — which also retires the
+// "stranded town with an empty band" guard that used to live here.
 
 // Reuses locations.ts' own slug derivation rather than a second copy of the
 // same rule — the whole point being that the mega-menu's hrefs and these
@@ -480,7 +446,7 @@ export const townPages: TownPage[] = regions.flatMap((region) =>
       town,
       slug: slugOf(town),
       region,
-      nearby: visibleNearby(town, region, override.nearby ?? nearbyFor(town, region)),
+      nearby: override.nearby ?? nearbyFor(town, region),
       hero: townHeroes[town] ?? heroImages[heroKey],
       local: override.local ?? [],
     };

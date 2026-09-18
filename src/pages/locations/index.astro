@@ -29,13 +29,16 @@
 // link, which is exactly the "we clean here, there is no page for it" state
 // this page should show. The mechanism is already documented in locations.ts.
 //
-// ⚠️ THIS PAGE NO LONGER LISTS EVERY TOWN TLB WORKS IN. It renders
-// locations.ts' visible list — eight towns — while ~48 more still have built
-// pages that nothing links to. locations.ts' header is where that decision and
-// its open question (unlinked is not unindexed) are recorded. Every count,
-// heading and region block below is derived, so un-hiding towns there restores
-// this page without an edit here; the only things that are hand-written are
-// the region paragraphs in §4 and the FAQ answers.
+// ✅ THIS PAGE LISTS EVERY TOWN TLB WORKS IN AGAIN. For two days in September
+// 2026 it rendered a curated subset — eight towns, then fourteen — while the
+// rest still had built pages that nothing linked to. The client's 18 Sep call
+// ended that: every band names all 56 and links the live ones, so this page is
+// back to being the complete list it started as. locations.ts' `navigableTowns`
+// is the one switch that decides which of them are clickable.
+//
+// Every count, heading and region block below is derived from the town arrays,
+// so a town added there lands here without an edit; the only hand-written
+// things are the region paragraphs in §4 and the FAQ answers.
 //
 // ⚠️ THE CROSS-BORDER SERVICE QUESTION IS OPEN SITEWIDE AND IS NOT SETTLED
 // HERE. commercial-cleaning.astro and ndis-cleaning.astro render
@@ -82,10 +85,10 @@ import {
 import { trustBarCards } from '../../data/trust';
 import {
   locationGroups,
-  visibleNorthernRiversTowns,
-  visibleSouthernGoldCoastTowns,
-  visibleTowns,
-  isVisibleTown,
+  northernRiversTowns,
+  tweedTowns,
+  southernGoldCoastTowns,
+  allTowns,
 } from '../../data/locations';
 import { heroImages, regions } from '../../data/townPages';
 
@@ -96,9 +99,9 @@ import { heroImages, regions } from '../../data/townPages';
 // actually use for where they live, and only one of them ("Northern Rivers")
 // appears in the site's own name for itself.
 const pageMeta = {
-  title: 'Areas We Clean | Northern Rivers NSW & Southern Gold Coast QLD | TLB Cleaning',
+  title: 'Areas We Clean | Northern Rivers, The Tweed & Southern Gold Coast | TLB Cleaning',
   description:
-    'The towns TLB Cleaning services across the Northern Rivers in NSW and the Southern Gold Coast in QLD — Byron Bay, Brunswick Heads, Ballina, Lennox Head, Lismore, Alstonville, Burleigh Heads and Palm Beach.',
+    'Every town TLB Cleaning services across the Northern Rivers, the Tweed and the Southern Gold Coast — from Kyogle and Casino to Byron Bay, Kingscliff and Burleigh Heads.',
   // ⚠️ Placeholder domain, same as every page in this repo. Confirm before launch.
   canonical: 'https://tlbcleaning.com.au/locations/',
 };
@@ -123,24 +126,24 @@ const business = {
     addressCountry: 'AU',
   },
   sameAs: [],
-  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
   description: pageMeta.description,
 };
 
 // Counts, derived rather than written. A hardcoded "56 towns" is wrong the
 // first time somebody edits locations.ts and nobody notices for a year.
 //
-// ⚠️ These now count the VISIBLE towns, not every town with a page. The site
-// currently shows eight of 56 (locations.ts explains what is hidden and why),
-// and a page that listed eight towns while claiming 56 would be the worse
-// half of that pair. Un-hide a town and every number and heading on this page
-// follows on the next build.
-const townCount = visibleTowns.length;
-// Regions with at least one visible town — the Tweed has none, so it is not
-// counted and has no block in §4. Derived rather than hardcoded to 2 for the
-// same reason townCount is.
-const visibleRegions = regions.filter((r) => r.towns.some(isVisibleTown));
-const stateCount = new Set(visibleRegions.map((r) => r.state)).size;
+// These count EVERY town again, which is the same thing this page now lists.
+// They went through a curated phase in September 2026 and the counts followed
+// it down to eight and then fourteen; the client's 18 Sep call put the full
+// list back, so they are simply the array lengths once more.
+const townCount = allTowns.length;
+// The display groups and the geographic regions are the same three again, so
+// either would give 3 here. `locationGroups` is the one this page actually
+// renders, so it is the one that is counted: if a heading is ever added or
+// merged, the number follows the page rather than the map.
+const regionCount = locationGroups.length;
+const stateCount = new Set(regions.map((r) => r.state)).size;
 
 // §1 Hero. `full-width-photo`, matching /locations/<town>/ rather than the
 // service pages' `split-single-image`: a location page opens on a place, and
@@ -153,8 +156,8 @@ const stateCount = new Set(visibleRegions.map((r) => r.state)).size;
 // its children.
 const hero = {
   kicker: 'Areas we clean',
-  headingLines: ['From the Lismore hills', 'to Burleigh Heads.'],
-  lead: `${townCount} towns across two regions and both sides of the border, worked by one local team rather than by whoever is nearest on the day.`,
+  headingLines: ['From the Kyogle hills', 'to Burleigh Heads.'],
+  lead: `${townCount} towns across three regions and both sides of the border, worked by one local team rather than by whoever is nearest on the day.`,
   cta: quoteCta,
   image: { ratio: '16/9', label: heroImages.valley.label, src: heroImages.valley.src },
 };
@@ -168,7 +171,7 @@ const hero = {
 // its edge, and "ask us anyway" is already the note under every "Where we
 // clean" band on the site.
 const introBody: TextBlockBody[] = [
-  `TLB Cleaning services ${townCount} towns across the Northern Rivers in New South Wales and the Southern Gold Coast in Queensland. Homes, holiday lets and businesses, on a schedule rather than on call.`,
+  `TLB Cleaning services ${townCount} towns across the Northern Rivers and the Tweed in New South Wales, and the Southern Gold Coast in Queensland. Homes, holiday lets and businesses, on a schedule rather than on call.`,
   'The service area is a real one rather than a marketing radius: it is the ground a local team can cover properly in a day and still be back for the school run. That is why it stops where it stops, and why the same people keep turning up at the same houses.',
   'If you are just outside it, ask anyway. We would rather tell you straight than have you guess from a map.',
 ];
@@ -184,19 +187,17 @@ const introBody: TextBlockBody[] = [
 // figure here for exactly that reason.
 const coverageMetrics = [
   { value: String(townCount), caption: 'towns and suburbs serviced' },
-  { value: String(visibleRegions.length), caption: 'regions, from the hinterland to the coast' },
+  { value: String(regionCount), caption: 'regions, from the hinterland to the coast' },
   { value: String(stateCount), caption: 'states, either side of the Tweed' },
 ];
 
-// §4 The regions. `ContentGrid` at two columns, image side set purely by
-// array order the way StoryMosaic is — row one image-then-text, row two
-// text-then-image.
+// §4 The three regions. `ContentGrid` at two columns, image side set purely
+// by array order the way StoryMosaic is — row one image-then-text, row two
+// text-then-image, row three image-then-text.
 //
-// The Tweed had a third pair here. It came out with the region, not because
-// the copy was wrong: if the Tweed is ever un-hidden, it is worth writing
-// back (git history has it), and the valley photo it used is still the page
-// hero. The remaining four cells are ordered image/text then text/image so
-// the two rows still mirror rather than repeating the same side.
+// The Tweed pair came out when that region was hidden in September 2026 and is
+// back verbatim, because the copy was never the reason it went: the region is
+// listed again, so the cell that describes it belongs here again too.
 //
 // Each cell says what the region is actually like to clean in, which is the
 // only thing this page can offer that the pill list below cannot. None of it
@@ -217,27 +218,42 @@ const regionBlocks = [
   },
   {
     type: 'text' as const,
-    heading: `Northern Rivers, NSW — ${visibleNorthernRiversTowns.length} towns`,
+    heading: `Northern Rivers, NSW — ${northernRiversTowns.length} towns`,
     body: [
-      'Lismore and Alstonville inland, then Ballina, Lennox Head, Byron Bay and Brunswick Heads along the coast. An hour end to end, and two quite different cleaning jobs inside it.',
-      'Inland it is older housing stock, a lot of timber, and mould and damp that arrive with the wet rather than with neglect. On the coast it is salt haze on glass, sand in every track, and a holiday-let calendar that turns the whole thing over each Saturday.',
+      'The biggest of the three and the most varied. It runs from Kyogle and Casino in the west, through Lismore and the hinterland villages, out to Ballina, Lennox Head and Byron Bay on the coast.',
+      'Two quite different cleaning jobs sit inside one region here. Inland, it is older housing stock, a lot of timber, and mould and damp that arrive with the wet rather than with neglect. On the coast it is salt haze on glass, sand in every track, and a holiday-let calendar that turns the whole thing over each Saturday.',
       'Byron Shire also carries its own short-stay rules, which changed what a letting year looks like for a lot of owners here.',
     ],
   },
   {
     type: 'text' as const,
-    heading: `Southern Gold Coast, QLD — ${visibleSouthernGoldCoastTowns.length} towns`,
+    heading: `The Tweed, NSW — ${tweedTowns.length} towns`,
     body: [
-      'Burleigh Heads and Palm Beach, over the border and close enough together to run properly in a day.',
-      'Density changes the work here more than distance does. A great deal of it is apartments and townhouses rather than free-standing houses, which means lifts, loading docks, building access windows and a body corporate with a view about when anyone can be on site.',
-      'Salt is the constant. Glass, balustrades, window hardware and outdoor furniture all age faster within sight of the water, and a place that is cleaned on a schedule holds up visibly better than one that is not.',
+      'Murwillumbah and the caldera villages on one side, the Kingscliff and Pottsville coastal strip on the other, and Tweed Heads pressed right against the border.',
+      'This is the part of the map that makes the business what it is. A tenancy in Tweed Heads and a tenancy in Coolangatta are four kilometres and one state apart, and most cleaners work only one side of that line. We work both, which matters most at the end of a lease, when the paperwork changes even though the cleaning does not.',
+      'It is also the fastest-growing stretch we cover, so a good deal of it is newer housing with its own quirks: a lot of glass, a lot of tile, and outdoor living that needs as much attention as the inside.',
     ],
+  },
+  {
+    type: 'image' as const,
+    ratio: '4/3',
+    label: heroImages.valley.label,
+    src: heroImages.valley.src,
   },
   {
     type: 'image' as const,
     ratio: '4/3',
     label: heroImages['coastal-home'].label,
     src: heroImages['coastal-home'].src,
+  },
+  {
+    type: 'text' as const,
+    heading: `Southern Gold Coast, QLD — ${southernGoldCoastTowns.length} towns`,
+    body: [
+      'Coolangatta up through Tugun, Currumbin and Palm Beach to Burleigh Heads and Miami. Nine suburbs in one continuous coastal strip, which is why they are close enough together to run properly in a day.',
+      'Density changes the work here more than distance does. A great deal of it is apartments and townhouses rather than free-standing houses, which means lifts, loading docks, building access windows and a body corporate with a view about when anyone can be on site.',
+      'Salt is the constant. Glass, balustrades, window hardware and outdoor furniture all age faster within sight of the water, and a place that is cleaned on a schedule holds up visibly better than one that is not.',
+    ],
   },
 ];
 
@@ -289,16 +305,17 @@ const serviceItems = serviceLinks.map((service) => ({
 //
 // ⚠️ ANSWER 3 (travel charge) IS THE SAME UNCONFIRMED OPERATIONAL PROMISE
 // /locations/<town>/ makes on all 56 pages, and it is flagged there too. It
-// asserts no travel charge anywhere on this page's list. That list is now
-// eight towns inside an hour of each other, which makes the promise a much
-// smaller one than it was — but it is still unconfirmed, and it goes back to
-// covering the far edges (Kyogle, Woodburn, Mooball) the moment they are
-// un-hidden.
+// asserts no travel charge anywhere on this page's list, and that list is now
+// all 56 towns again — Kyogle and Woodburn at one edge, Miami at the other.
+// That is the widest this promise has ever been. It was briefly a much smaller
+// one, while the page listed eight towns inside an hour of each other; the
+// wording never changed to match either way. Worth putting to TLB before
+// launch rather than after the first Kyogle quote.
 //
-// ⚠️ ANSWER 2 carries the weight of the hidden towns. TLB works in ~48 towns
-// this page no longer lists, so "ask us, the list is not a fence" is not a
-// hedge here — it is the accurate description of the gap between the list and
-// the service area, and it should not be cut while the list is short.
+// ⚠️ ANSWER 2 is no longer carrying a hidden-towns gap — the page names every
+// town TLB works in again — but it is still the right answer: the list is a
+// description of where the team works regularly, not a boundary, and people
+// just outside it still ask.
 //
 // ⚠️ ANSWER 4 (the border) is the one genuine differentiator on this page and
 // it restates what end-of-lease-cleaning.astro §7 already claims, so it is
@@ -306,7 +323,7 @@ const serviceItems = serviceLinks.map((service) => ({
 const faqItems = [
   {
     question: 'What areas does TLB Cleaning service?',
-    answer: `${townCount} towns across two regions: the Northern Rivers in New South Wales and the Southern Gold Coast in Queensland. That runs from Lismore and Alstonville inland, out to Ballina, Lennox Head, Byron Bay and Brunswick Heads on the coast, and over the border to Palm Beach and Burleigh Heads. We also work in a number of towns either side of those — ask us about yours.`,
+    answer: `${townCount} towns across three regions: the Northern Rivers and the Tweed in New South Wales, and the Southern Gold Coast in Queensland. That runs from Kyogle and Casino in the west, through Lismore and the hinterland, out to Ballina, Lennox Head and Byron Bay on the coast, north through Murwillumbah, Kingscliff and Tweed Heads, and over the border to Palm Beach and Burleigh Heads. Every one of them is named on this page — ask us if yours is not.`,
   },
   {
     question: 'My town is not on the list. Can you still come?',
@@ -316,7 +333,7 @@ const faqItems = [
   {
     question: 'Is there a travel charge for the outer towns?',
     answer:
-      'No. Everything on this page is inside our regular run, so the price you are quoted is the price, whether you are in Byron Bay or out at Alstonville. If a job were ever far enough out to change that, you would hear it at the quote and not on the invoice.',
+      'No. Everything on this page is inside our regular run, so the price you are quoted is the price, whether you are in Byron Bay, out at Kyogle or up at Burleigh Heads. If a job were ever far enough out to change that, you would hear it at the quote and not on the invoice.',
   },
   {
     question: 'Do you work on both sides of the NSW and Queensland border?',
@@ -388,8 +405,8 @@ const closingCta = {
     {/* Two columns, and the side each block lands on is purely its position
         in the array: image then text, text then image, image then text. */}
     <ContentGrid
-      heading="Two regions, two different jobs"
-      lead="They sit within an hour of each other and they do not clean the same way. What changes is the housing, the weather and what the salt gets to."
+      heading="Three regions, three different jobs"
+      lead="They run end to end down one stretch of coast and hinterland, and they do not clean the same way. What changes is the housing, the weather and what the salt gets to."
       columns={2}
       blocks={regionBlocks}
     />
@@ -404,7 +421,7 @@ const closingCta = {
     <ServiceBlocks
       variant="list"
       heading="What we do, everywhere on that list"
-      lead="Every service is available across both regions. Nothing on this list is coast-only or town-only."
+      lead="Every service is available across all three regions. Nothing on this list is coast-only or town-only."
       items={serviceItems}
     />
 

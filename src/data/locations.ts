@@ -11,20 +11,19 @@
 //
 // Region order and town order are the homepage brief's own, verbatim.
 //
-// ✅ RESOLVED — every town here now has a page. This used to carry a standing
+// ✅ RESOLVED — every town here has a page. This used to carry a standing
 // warning that the 56 links meant ~41 404s, because only 15 town pages were
 // planned and none were built. src/pages/locations/[town].astro now builds
 // one page per town in these arrays, from src/data/townPages.ts, so this list
 // and the pages it links to cannot fall out of step: adding a town here
 // creates its page, and removing one deletes it.
 //
-// ⚠️ What is NOT resolved is whether all 56 SHOULD be published. As built
-// they share one layout and differ by a town name, which is what Google calls
-// a doorway page. townPages.ts' header sets out the two honest options and is
-// the place that decision gets recorded. If the answer turns out to be "ship
-// only the towns with real local copy", the mechanism is unchanged from what
-// this warning always said: drop the `href` and TagCloud renders a plain
-// <span> instead of a link.
+// ✅ RESOLVED — the three REGION overview pages exist and are live:
+// src/pages/locations/northern-rivers.astro, the-tweed.astro and
+// southern-gold-coast.astro, built from src/data/regionPages.ts on
+// RegionPage.astro. The mega-menu's region rows point at them, and a region
+// page links on to its towns using `isNavigableTown` below — the same rule
+// the menu uses.
 //
 // ✅ RESOLVED — /locations/ exists. src/pages/locations/index.astro is the
 // hub every footer's "View all locations" and the primary nav's "Locations"
@@ -32,18 +31,9 @@
 // so the hub cannot disagree with the mega-menu or with any page's "Where we
 // clean" band. Its counts are derived from these arrays too.
 //
-// The three REGION overview pages still do not exist, and nothing links to
-// them any more: the mega-menu lists towns only (its "All of <region>" rows
-// were removed at the client's request) and the new hub groups by region
-// rather than linking to a region page. So this is now a deliberate gap
-// rather than a broken link. If region pages are ever wanted, the hub's §4
-// region cells are the copy they would start from.
-//
-// The header mega-menu (navigation.ts), the /locations/ hub and every page's
-// "Where we clean" band all read this file, so they cannot disagree with each
-// other. They no longer read the raw arrays, though: see "WHAT THE SITE SHOWS"
-// below, which is now the single switch controlling which towns any of them
-// link to — including the open doorway-page question above.
+// ⚠️ The doorway-page question is still open and is recorded in townPages.ts:
+// all 56 town pages share one layout and differ by a town name. What this file
+// controls is which of them anything LINKS to — see `navigableTowns` below.
 import type { TagGroup } from '../components/sections/TagCloud.astro';
 
 // Slugs are derived rather than hand-written — 56 hand-typed hrefs is 56
@@ -117,95 +107,44 @@ export const southernGoldCoastTowns = [
   'Miami',
 ];
 
-// ── WHAT THE SITE SHOWS, vs. what it has pages for ──────────────────────
-//
-// ⚠️ THE ARRAYS ABOVE ARE NO LONGER WHAT THE SITE DISPLAYS. At the client's
-// request (Sept 2026) every browse surface — the header's "Areas we clean"
-// menu, the /locations/ hub, and every page's "Where we clean" band — shows
-// only the eight towns below. The rest are HIDDEN, NOT DELETED: the arrays
-// above are unchanged, townPages.ts still builds a page for all 56, and every
-// one of those pages still renders. They simply are not linked any more.
-//
-// To un-hide a town, add it here. To un-hide everything, point the two group
-// exports at the full arrays again — nothing else has to change.
-//
-// The Tweed is hidden in full, so there is no visible Tweed list and no Tweed
-// group below.
-//
-// ⚠️ THESE PAGES ARE NOW ORPHANS, and unlinked is not the same as unindexed.
-// The ~48 hidden pages are still built into dist/ and are still reachable and
-// crawlable by URL.
-//
-// While the site is on staging this is covered site-wide: site-env.ts puts
-// `noindex` on every page unless SITE_ENV=production. That is a blanket switch,
-// not a per-page one — so the day the site goes production, these hidden pages
-// become indexable again along with everything else. If they should stay out of
-// the index after launch, that still needs a per-page decision here. There is
-// no sitemap in this project, so there is nothing to exclude them from.
-//
-// Town order is the client's own, not the source arrays', so these are listed
-// literally rather than filtered. The guard below checks each name against the
-// arrays above at build time: a town renamed or removed up there fails the
-// build instead of quietly vanishing from the site.
-export const visibleNorthernRiversTowns = [
-  'Byron Bay',
-  'Brunswick Heads',
-  'Ballina',
-  'Lennox Head',
-  'Lismore',
-  'Alstonville',
-];
+/** Every town TLB names anywhere on the site, across all three regions. */
+export const allTowns = [...northernRiversTowns, ...tweedTowns, ...southernGoldCoastTowns];
 
-export const visibleSouthernGoldCoastTowns = [
-  'Burleigh Heads',
-  'Palm Beach',
-];
-
-for (const [shown, source, region] of [
-  [visibleNorthernRiversTowns, northernRiversTowns, 'Northern Rivers'],
-  [visibleSouthernGoldCoastTowns, southernGoldCoastTowns, 'Southern Gold Coast'],
-] as [string[], string[], string][]) {
-  const missing = shown.filter((town) => !source.includes(town));
-  if (missing.length) {
-    throw new Error(
-      `Visible ${region} towns no longer exist in the full list: ${missing.join(', ')}`,
-    );
-  }
-}
-
-/** Every town the site currently links to, across all regions. */
-export const visibleTowns = [...visibleNorthernRiversTowns, ...visibleSouthernGoldCoastTowns];
-
-const visibleTownSet = new Set(visibleTowns);
-
-/** Whether a town is currently linked anywhere on the site. */
-export const isVisibleTown = (town: string) => visibleTownSet.has(town);
-
-// ── WHICH TOWNS ARE CLICKABLE IN THE HEADER MENU ────────────────────
+// ── THE ONE SWITCH: WHICH TOWNS ARE LINKED ──────────────────────────────
 //
-// A SECOND, SEPARATE SWITCH from `visibleTowns` above, and the two now govern
-// different surfaces. Keep them straight:
+// EVERY town above is NAMED on every "Where we clean" band, on the /locations/
+// hub, in the header's "Areas we clean" menu and on its region page. Only the
+// towns below are LINKED. The rest render as plain text pills — TagCloud draws
+// a <span> instead of an <a> for a tag with no href, which is the whole
+// mechanism.
 //
-//   • `visibleTowns` (the eight) governs the /locations/ hub and every page's
-//     "Where we clean" band. A town not in it is not listed there at all.
-//   • `navigableTowns` (the fourteen, below) governs which towns are CLICKABLE
-//     in the header's "Areas we clean" menu and on a region page. That menu
-//     lists all 56 regardless; the other 42 render as plain text.
+// This is deliberately ONE list now. The history is worth knowing before
+// editing it, because it has been three different shapes in a fortnight:
 //
-// So a town has three possible states, and all three are in use right now:
-//   listed and linked — the fourteen below
-//   listed, not linked — the other 42, in the menu and on region pages
-//   not listed at all  — the 48 the hub and the bands leave out
+//   16 Sep 2026 — the menu listed all 56 and linked fourteen, while the hub
+//     and every band listed a curated eight. Two lists, two surfaces.
+//   18 Sep 2026 — the client asked for the bands to show the menu's linked
+//     set, so both became the same fourteen and the bands stopped naming the
+//     other 42 at all.
+//   18 Sep 2026, later — the client asked for every band to name ALL the
+//     mega-menu towns and to link only the live pages. That is the current
+//     state, and it collapses the "which towns are listed" question entirely:
+//     the answer is all of them, everywhere, so `visibleTowns` and
+//     `isVisibleTown` are gone rather than left pointing at the full list.
 //
-// The client asked for each of those separately (16 Sep 2026) and they have
-// not been reconciled into one list, deliberately: the menu is a browse
-// surface where naming a town costs nothing, and the hub and bands are
-// claims about where TLB works. If they should be the same list, the fix is
-// to point one of these exports at the other rather than to edit both.
+// So a town now has two states rather than three:
+//   named and linked — the fourteen below
+//   named, not linked — the other 42
+//
+// TO MAKE A TOWN'S PAGE LIVE, add it here. That is the entire change: the
+// menu, the hub, all 47 bands, the region pages and the town pages' "nearby
+// suburbs" lists all read this one predicate. Nothing else has to move.
 //
 // The order is the client's own and mixes regions — Kingscliff, Pottsville,
-// Murwillumbah and Tweed Heads are Tweed towns. The guard below checks every
-// name against the arrays at the top of this file at build time.
+// Murwillumbah and Tweed Heads are Tweed towns, not Northern Rivers ones. The
+// guard below checks every name against the arrays above at build time, so a
+// town renamed or removed up there fails the build instead of quietly
+// un-linking itself.
 export const navigableTowns = [
   'Byron Bay',
   'Brunswick Heads',
@@ -223,9 +162,7 @@ export const navigableTowns = [
   'Palm Beach',
 ];
 
-const navigableTownSet = new Set(navigableTowns);
-
-const everyTown = new Set([...northernRiversTowns, ...tweedTowns, ...southernGoldCoastTowns]);
+const everyTown = new Set(allTowns);
 const missingNavigable = navigableTowns.filter((town) => !everyTown.has(town));
 if (missingNavigable.length) {
   throw new Error(
@@ -233,103 +170,32 @@ if (missingNavigable.length) {
   );
 }
 
-/** Whether a town's page is reachable from the header menu and region pages. */
+const navigableTownSet = new Set(navigableTowns);
+
+/** Whether a town's page is linked from anywhere on the site. */
 export const isNavigableTown = (town: string) => navigableTownSet.has(town);
 
+// ⚠️ THE 42 UNLINKED PAGES ARE STILL BUILT, and unlinked is not the same as
+// unindexed. townPages.ts builds all 56 and every one of them renders, so the
+// 42 are reachable and crawlable by URL even though nothing points at them.
+//
+// While the site is on staging this is covered site-wide: site-env.ts puts
+// `noindex` on every page unless SITE_ENV=production. That is a blanket switch,
+// not a per-page one — so the day the site goes production, these pages become
+// indexable along with everything else. If they should stay out of the index
+// after launch, that still needs a per-page decision. There is no sitemap in
+// this project, so there is nothing to exclude them from.
+
 // Region labels are the client's exact wording, state suffix included, and
-// they are deliberately the same string in the menu, the hub and every
-// "Where we clean" band. The bare names ("The Tweed", "Southern Gold Coast")
-// still appear in prose and in townPages.ts' `regions`, which names the
+// they are deliberately the same string in the menu, the hub, the region pages
+// and every "Where we clean" band. The bare names ("The Tweed", "Southern Gold
+// Coast") still appear in prose and in townPages.ts' `regions`, which names the
 // region a town page's copy sits in rather than a heading on a list.
+//
+// Only a navigable town gets an href; the rest are plain pills. This is the
+// only place that rule is applied to a band, so the bands cannot disagree with
+// each other about which towns are live.
 const toGroup = (label: string, towns: string[]): TagGroup => ({
-  label,
-  tags: towns.map((town) => ({ label: town, href: townSlug(town) })),
-});
-
-// The visible list: the NSW region plus the Queensland one.
-export const locationGroups: TagGroup[] = [
-  toGroup('Northern Rivers NSW', visibleNorthernRiversTowns),
-  toGroup('Southern Gold Coast QLD', visibleSouthernGoldCoastTowns),
-];
-
-// NSW only, for the pages whose own meta and copy claim NSW and stop at the
-// border: commercial-cleaning (whose FAQ has an open Blue Card / interstate
-// question) and ndis-cleaning. Same towns, same order, minus Queensland.
-//
-// Now that the Tweed is hidden, "NSW only" and "the visible Northern Rivers"
-// are the same six towns, so this is one group rather than two. It stays a
-// separate export because the DISTINCTION is still real — these pages claim
-// NSW and the others claim both states — and because un-hiding the Tweed must
-// widen this list too.
-//
-// ⚠️ Confirm this is deliberate for both. If TLB does commercial or NDIS work
-// across the border, they should use `locationGroups` instead — and
-// commercial-cleaning's last non-branded FAQ needs the Blue Card answer.
-export const nswLocationGroups: TagGroup[] = [
-  toGroup('Northern Rivers NSW', visibleNorthernRiversTowns),
-];
-
-// ── THE FULL-FOOTPRINT LIST, for the SEO copy-rewrite pages ──────────────
-//
-// Added September 2026 for the four pages rewritten against the copy-rewrite
-// briefs in content-plans/ (carpet and rug, tile and grout, commercial carpet,
-// commercial pressure). Each brief's "Where we clean" section specifies this
-// exact list by name, on the same reasoning every time: BFD §2.1 says name the
-// whole footprint and do not cherry-pick the coastal towns, §12.1 calls named
-// towns the proof, and on the live SERP the nearest competitor in each
-// category publishes twenty-three towns against these pages' six.
-//
-// ⚠️ THIS DELIBERATELY DIVERGES FROM `visibleTowns` ABOVE, which is the
-// client's own eight-town call from earlier this month and still governs every
-// OTHER page's band, the /locations/ hub and the header menu. Nothing above is
-// changed. If the client wants the wider list everywhere, the fix is to point
-// `visibleNorthernRiversTowns` and `visibleSouthernGoldCoastTowns` at these
-// arrays and delete this block — not to edit two lists in parallel.
-//
-// The briefs' lists are a SUBSET of the source arrays at the top of this file:
-// they leave out Bexhill, Dunoon, Skennars Head, Broadwater, New Brighton,
-// Federal, Bilambil, Bilambil Heights, Fingal Head, Bogangar and Mooball. That
-// is the briefs' own call, so the towns are listed literally here rather than
-// filtered, in the briefs' order. The guard below fails the build if any name
-// stops existing upstream.
-//
-// Linking follows the established rule, not a new one: `isNavigableTown`
-// decides, exactly as navigation.ts and RegionPage.astro already do, so a
-// town is NAMED here whether or not its page is currently reachable. Naming
-// the footprint is the brand and citability claim; linking 56 town pages is
-// the separate doorway-page question recorded in townPages.ts.
-export const footprintNorthernRiversTowns = [
-  'Lismore', 'Goonellabah', 'Alstonville', 'Wollongbar', 'Casino', 'Kyogle',
-  'Nimbin', 'Clunes', 'Ballina', 'East Ballina', 'Lennox Head', 'Wardell',
-  'Evans Head', 'Woodburn', 'Coraki', 'Bangalow', 'Byron Bay', 'Suffolk Park',
-  'Mullumbimby', 'Brunswick Heads', 'Ocean Shores', 'Billinudgel',
-];
-
-export const footprintTweedTowns = [
-  'Murwillumbah', 'Tweed Heads', 'Tweed Heads South', 'Banora Point',
-  'Terranora', 'Chinderah', 'Kingscliff', 'Casuarina', 'Cudgen',
-  'Cabarita Beach', 'Hastings Point', 'Pottsville', 'Uki', 'Burringbar',
-];
-
-export const footprintSouthernGoldCoastTowns = [...southernGoldCoastTowns];
-
-for (const [shown, source, region] of [
-  [footprintNorthernRiversTowns, northernRiversTowns, 'Northern Rivers'],
-  [footprintTweedTowns, tweedTowns, 'Tweed'],
-  [footprintSouthernGoldCoastTowns, southernGoldCoastTowns, 'Southern Gold Coast'],
-] as [string[], string[], string][]) {
-  const missing = shown.filter((town) => !source.includes(town));
-  if (missing.length) {
-    throw new Error(
-      `Footprint ${region} towns no longer exist in the full list: ${missing.join(', ')}`,
-    );
-  }
-}
-
-// Same construction as `toGroup`, but only the navigable towns get an href —
-// the others render as plain <span> pills, which is what TagCloud does with a
-// tag that has no href.
-const toFootprintGroup = (label: string, towns: string[]): TagGroup => ({
   label,
   tags: towns.map((town) => ({
     label: town,
@@ -337,43 +203,56 @@ const toFootprintGroup = (label: string, towns: string[]): TagGroup => ({
   })),
 });
 
-/** All three regions, for the pages whose brief names the whole footprint. */
-export const footprintLocationGroups: TagGroup[] = [
-  toFootprintGroup('Northern Rivers NSW', footprintNorthernRiversTowns),
-  toFootprintGroup('The Tweed', footprintTweedTowns),
-  toFootprintGroup('Southern Gold Coast QLD', footprintSouthernGoldCoastTowns),
+/**
+ * Every town, in three labelled regions — the list the mega-menu shows, and
+ * the one every "Where we clean" band on the site renders.
+ */
+export const locationGroups: TagGroup[] = [
+  toGroup('Northern Rivers NSW', northernRiversTowns),
+  toGroup('The Tweed', tweedTowns),
+  toGroup('Southern Gold Coast QLD', southernGoldCoastTowns),
 ];
 
-/** The subheading every one of those four briefs specifies, word for word. */
-export const footprintSubheading =
+/**
+ * NSW only — the Northern Rivers and the Tweed, minus Queensland.
+ *
+ * For the nine pages whose own meta and copy claim NSW and stop at the border:
+ * the commercial sub-pages (brewery, factory, gym, kitchen and the rest) and
+ * ndis-cleaning. The client confirmed on 18 Sep 2026 that these stay NSW-only
+ * while every other band widened to all three regions, so that each band keeps
+ * matching the page's own meta description rather than contradicting it.
+ *
+ * ⚠️ Confirm this is still deliberate for both kinds of page. If TLB does
+ * commercial or NDIS work across the border they should use `locationGroups`
+ * instead — and commercial-cleaning's last non-branded FAQ needs the Blue Card
+ * answer that is still open there.
+ */
+export const nswLocationGroups: TagGroup[] = [
+  toGroup('Northern Rivers NSW', northernRiversTowns),
+  toGroup('The Tweed', tweedTowns),
+];
+
+/** The subheading above a full three-region band. */
+export const locationSubheading =
   'Across the Northern Rivers, the Tweed and the Southern Gold Coast.';
 
-// ── THE COMPLETE FOOTPRINT, for the September 2026 copy-rewrite briefs ────
+/** The subheading above an NSW-only band. */
+export const nswLocationSubheading = 'Across the Northern Rivers and the Tweed.';
+
+// ── COMPATIBILITY ALIASES ───────────────────────────────────────────────
 //
-// The three briefs for /house-cleaning/airbnb-cleaning/,
-// /house-cleaning/real-estate-cleaning/ and /house-cleaning/ndis-cleaning/ each
-// specify their "Where we clean" list town for town, and all three specify the
-// SAME list — which is the three source arrays at the top of this file, whole
-// and in their own order. It is a strict superset of `footprintLocationGroups`
-// above: the eleven towns those four earlier briefs left out (Bexhill, Dunoon,
-// Skennars Head, Broadwater, New Brighton, Federal, Bilambil, Bilambil
-// Heights, Fingal Head, Bogangar and Mooball) are all named in these three.
+// These were three genuinely different lists as recently as this morning:
+// `footprintLocationGroups` was the 45 towns the four September copy-rewrite
+// briefs specified by name, and `completeFootprintLocationGroups` was all 56
+// for the three briefs that asked for the lot, both of them deliberately wider
+// than the curated band the rest of the site ran.
 //
-// A separate export rather than a widening of `footprintLocationGroups`,
-// because that list is four other pages' approved copy and these briefs do not
-// cover them. Same reasoning, and the same shape, as that block's own note
-// about not editing `visibleTowns` out from under the rest of the site.
-//
-// No hardcoded town names here at all: this reads the source arrays directly,
-// so a town added upstream lands on these three pages automatically and the
-// guard that `footprintLocationGroups` needs is unnecessary.
-//
-// Linking is `toFootprintGroup`'s established rule — `isNavigableTown` decides
-// which towns get an href, and the rest render as plain pills. Naming the
-// footprint is the brand and citability claim; linking 56 town pages is the
-// separate doorway-page question recorded in townPages.ts.
-export const completeFootprintLocationGroups: TagGroup[] = [
-  toFootprintGroup('Northern Rivers NSW', northernRiversTowns),
-  toFootprintGroup('The Tweed', tweedTowns),
-  toFootprintGroup('Southern Gold Coast QLD', southernGoldCoastTowns),
-];
+// The client's "name every mega-menu town on every band" call collapses all
+// three into the same list, so they are aliases rather than copies — one list
+// cannot drift from itself. They are kept under the old names only so the 13
+// pages that import them did not all need editing; NEW PAGES SHOULD IMPORT
+// `locationGroups`. If you are touching one of those 13 for another reason,
+// switching the import is a free cleanup.
+export const footprintLocationGroups = locationGroups;
+export const completeFootprintLocationGroups = locationGroups;
+export const footprintSubheading = locationSubheading;

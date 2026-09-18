@@ -64,7 +64,7 @@ import {
   serviceLinks,
 } from '../../data/navigation';
 import { trustBarCards } from '../../data/trust';
-import { townSlug } from '../../data/locations';
+import { isNavigableTown, townSlug } from '../../data/locations';
 import { townPages, type TownPage } from '../../data/townPages';
 
 export const getStaticPaths = (() =>
@@ -262,13 +262,25 @@ const testimonials = [
 // section's job on a location page is internal linking to its actual
 // neighbours, and the full list is already in the header mega-menu.
 //
-// Every one of these links now resolves, because this route builds all 56
-// towns — which is the other thing it fixed. Before it existed, locations.ts
-// carried a standing warning that the mega-menu shipped ~41 dead links.
+// Every one of these links resolves, because this route builds all 56 towns —
+// before it existed, locations.ts carried a standing warning that the
+// mega-menu shipped ~41 dead links.
+//
+// Only the live towns are LINKED, though, using locations.ts' `isNavigableTown`
+// — the same predicate the mega-menu, the region pages and every "Where we
+// clean" band apply. A neighbour whose page is not live is still named, as a
+// plain pill, because it is still genuinely next door; naming it and linking it
+// are two different claims. Until 18 Sep 2026 this linked every neighbour
+// unconditionally, which was safe only because `nearby` had already been
+// filtered to the curated list upstream. That filter is gone, so the rule is
+// applied here instead.
 const nearbyGroups: TagGroup[] = [
   {
     label: `Near ${town}`,
-    tags: nearby.map((suburb) => ({ label: suburb, href: townSlug(suburb) })),
+    tags: nearby.map((suburb) => ({
+      label: suburb,
+      ...(isNavigableTown(suburb) ? { href: townSlug(suburb) } : {}),
+    })),
   },
 ];
 
