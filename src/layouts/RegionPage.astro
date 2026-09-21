@@ -1,13 +1,16 @@
 ---
-// THE REGION PAGE, once, for all three regions at /locations/<region>/.
+// THE REGION PAGE, once, for every region that has one at
+// /locations/<region>/. That is two of the three: the Tweed's page was
+// deleted on 21 Sep 2026 at the client's request — see regionPages.ts, which
+// carries the full note and what restoring it would take.
 //
-// WHY A LAYOUT AND THREE THIN PAGE FILES, rather than one dynamic route.
+// WHY A LAYOUT AND A THIN PAGE FILE EACH, rather than one dynamic route.
 // /locations/<town>/ is already a dynamic route, and a second dynamic route
 // in the same directory claims the same URL pattern — Astro cannot tell
 // /locations/byron-bay/ from /locations/northern-rivers/ by shape alone. A
-// static file wins over a dynamic sibling without ambiguity, so the three
-// regions ship as three ~6-line files that each hand this layout a slug.
-// The layout lives here once, exactly as [town].astro does for 56 towns.
+// static file wins over a dynamic sibling without ambiguity, so each region
+// ships as a ~6-line file that hands this layout a slug. The layout lives
+// here once, exactly as [town].astro does for 56 towns.
 //
 // TO ADD A REGION, DON'T TOUCH THIS FILE. Regions come from
 // src/data/regionPages.ts; add an entry there and a matching thin page file.
@@ -16,7 +19,7 @@
 //
 // ⚠️ COPY IS REUSED, NOT DRAFTED. The body paragraphs are the /locations/
 // hub's own §4 region cells, verbatim. regionPages.ts explains why, and
-// records the cost: the hub and these three pages now carry identical
+// records the cost: the hub and these pages now carry identical
 // paragraphs, and one of the two should eventually be rewritten so they
 // differ. Do not let that note get lost if this page is edited.
 //
@@ -27,7 +30,7 @@
 // region level would multiply an existing problem rather than add anything.
 // Add them when there is region-specific material, not before.
 //
-// PHOTOGRAPHY. The three region photos from townPages.ts' own `heroImages`,
+// PHOTOGRAPHY. The region photos from townPages.ts' own `heroImages`,
 // reused rather than re-imported by path so the alt text and the "no hero
 // may name a town or a landmark" rule stay in one place. These are generated
 // scenes, not photographs of these places — IMAGE-GUIDELINES.md §5 and

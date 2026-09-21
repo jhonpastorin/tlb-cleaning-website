@@ -232,16 +232,22 @@ const REGION_COL_ROWS = 20;
 // ✅ THE "ALL OF <REGION>" ROW IS BACK, 16 Sep 2026. It headed each column
 // once, was removed at the client's request, and could not simply be put
 // back afterwards because the region overview pages it pointed at had never
-// been built. They exist now — /locations/northern-rivers/, /the-tweed/ and
-// /southern-gold-coast/, see src/data/regionPages.ts — so each region's FIRST
-// column now leads with a link to its own page, above its towns.
+// been built. Two of them exist now — /locations/northern-rivers/ and
+// /locations/southern-gold-coast/, see src/data/regionPages.ts — so those two
+// regions' FIRST column leads with a link to its own page, above its towns.
+// The Tweed has no such page (see below), so its column is towns only.
 //
 // The row carries the region's full heading label, which is what the client's
 // sheet showed and which also stops it reading as a stray town. Only the
 // first column of a multi-column region gets one: a continuation column is a
 // bare list under the heading above it, and a second "Northern Rivers NSW"
 // halfway across the panel would read as a second region.
-const regionColumns = (label: string, towns: string[], regionHref: string): MegaMenuGroup[] => {
+//
+// ⚠️ TWO OF THE THREE REGIONS CARRY IT, NOT ALL THREE — the Tweed's went on
+// 21 Sep 2026 at the client's request, along with the page it pointed at. The
+// call site below omits `regionHref`, which is why the parameter is optional
+// and why a region with no overview page still renders its towns.
+const regionColumns = (label: string, towns: string[], regionHref?: string): MegaMenuGroup[] => {
   // ⚠️ THE MENU LISTS LIVE TOWNS ONLY, 18 Sep 2026, at the client's request
   // ahead of launch. Every row here is a link, because a town with no live
   // page is not listed at all rather than shown as plain text.
@@ -273,7 +279,7 @@ const regionColumns = (label: string, towns: string[], regionHref: string): Mega
   return Array.from({ length: colCount }, (_, col) => ({
     label: col === 0 ? label : undefined,
     items: [
-      ...(col === 0 ? [{ label, href: regionHref }] : []),
+      ...(col === 0 && regionHref ? [{ label, href: regionHref }] : []),
       ...rows.slice(col * perCol, (col + 1) * perCol),
     ],
   }));
@@ -404,7 +410,15 @@ const headerNavAll: MegaMenuNavItem[] = [
     // without a layout change here.
     megaMenu: [
       ...regionColumns('Northern Rivers NSW', northernRiversTowns, regionSlugHref('northern-rivers')),
-      ...regionColumns('The Tweed', tweedTowns, regionSlugHref('the-tweed')),
+      // ⚠️ NO OVERVIEW ROW FOR THE TWEED, 21 Sep 2026, at the client's request.
+      // Omitting `regionHref` is what drops it: this column heads straight
+      // into its towns while the other two still lead with their own page.
+      //
+      // There is nothing left to link. /locations/the-tweed/ was deleted in
+      // the same change — regionPages.ts has the full note. The heading and
+      // the town links here are deliberate and unaffected: the region is
+      // still named and its live town pages are still reachable.
+      ...regionColumns('The Tweed', tweedTowns),
       ...regionColumns('Southern Gold Coast QLD', southernGoldCoastTowns, regionSlugHref('southern-gold-coast')),
     ],
   },

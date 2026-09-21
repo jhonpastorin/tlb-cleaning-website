@@ -18,12 +18,16 @@
 // and the pages it links to cannot fall out of step: adding a town here
 // creates its page, and removing one deletes it.
 //
-// ✅ RESOLVED — the three REGION overview pages exist and are live:
-// src/pages/locations/northern-rivers.astro, the-tweed.astro and
-// southern-gold-coast.astro, built from src/data/regionPages.ts on
-// RegionPage.astro. The mega-menu's region rows point at them, and a region
-// page links on to its towns using `isNavigableTown` below — the same rule
-// the menu uses.
+// ✅ RESOLVED — the REGION overview pages exist and are live:
+// src/pages/locations/northern-rivers.astro and southern-gold-coast.astro,
+// built from src/data/regionPages.ts on RegionPage.astro. The mega-menu's
+// region rows point at them, and a region page links on to its towns using
+// `isNavigableTown` below — the same rule the menu uses.
+//
+// ⚠️ THE TWEED HAS NO OVERVIEW PAGE — it was deleted on 21 Sep 2026 at the
+// client's request, with its mega-menu row. That is a page-level removal
+// only: `tweedTowns` below is untouched, its live town pages still build, and
+// every band and the hub still name the region. See regionPages.ts.
 //
 // ✅ RESOLVED — /locations/ exists. src/pages/locations/index.astro is the
 // hub every footer's "View all locations" and the primary nav's "Locations"
