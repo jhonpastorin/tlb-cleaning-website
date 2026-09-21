@@ -31,6 +31,12 @@ import TextBlock from '../../components/sections/TextBlock.astro';
 import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 import ComparisonTable from '../../components/sections/ComparisonTable.astro';
 import BeforeAfter from '../../components/sections/BeforeAfter.astro';
+import cooktopBeforeImg from '../../assets/home_cleaning/before_after/cooktop-before.jpg';
+import cooktopAfterImg from '../../assets/home_cleaning/before_after/cooktop-after.jpg';
+// Before/after pairs — real TLB job photos. The `sample-` files are flat
+// illustrations and stay only where no real pair exists for that subject yet.
+import kitchenBenchtopBeforeImg from '../../assets/home_cleaning/before_after/kitchen-benchtop-before.jpg';
+import kitchenBenchtopAfterImg from '../../assets/home_cleaning/before_after/kitchen-benchtop-after.jpg';
 import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import Faq from '../../components/sections/Faq.astro';
@@ -38,17 +44,16 @@ import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-// Before/after: the SAME four sample illustrations house-cleaning.astro runs,
-// deliberately reused rather than regenerated. They carry a visible SAMPLE
-// badge and `sample-` filenames precisely so nothing here can be mistaken for
-// a real job in a named town — which on a location page would be the most
-// misleading version of that claim. Swap for real paired photography when it
-// exists and drop the `note`; see house-cleaning.astro §9 for the shooting
+// Before/after: the SAME pairs house-cleaning.astro runs, deliberately reused
+// rather than regenerated. The kitchen pair is now REAL TLB job photography;
+// so is slot 2. No sample illustration is left on this page.
+//
+// ⚠️ WATCH THE TOWN CLAIM. This is a location page, so a real job photo is
+// the one place a reader could infer the job was done in THIS town. Nothing
+// states that — the heading, lead and `note` all say "a real TLB clean" with
+// no place attached — and it has to stay that way. Never caption these with
+// the town name unless the job really was there; see house-cleaning.astro §9
 // and consent brief.
-import sampleKitchenBeforeImg from '../../assets/home_cleaning/before_after/sample-kitchen-before.png';
-import sampleKitchenAfterImg from '../../assets/home_cleaning/before_after/sample-kitchen-after.png';
-import sampleShowerBeforeImg from '../../assets/home_cleaning/before_after/sample-shower-before.png';
-import sampleShowerAfterImg from '../../assets/home_cleaning/before_after/sample-shower-after.png';
 import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
 import type { TagGroup } from '../../components/sections/TagCloud.astro';
@@ -211,25 +216,25 @@ const chooseTable = {
 const beforeAfterPairs: BeforeAfterPair[] = [
   {
     before: {
-      src: sampleKitchenBeforeImg,
-      alt: 'Sample illustration: kitchen benchtop and tiled splashback before the clean, with stained grout and spills',
+      src: kitchenBenchtopBeforeImg,
+      alt: 'A kitchen benchtop before a TLB clean, with dishes stacked in and beside the sink and pots left on the stove',
     },
     after: {
-      src: sampleKitchenAfterImg,
-      alt: 'Sample illustration: the same kitchen benchtop and splashback after the clean, grout clean and surfaces gleaming',
+      src: kitchenBenchtopAfterImg,
+      alt: 'The same kitchen benchtop after the clean, sink empty and the bench clear and wiped down',
     },
-    caption: 'Kitchen benchtop and splashback',
+    caption: 'Kitchen benchtop and sink',
   },
   {
     before: {
-      src: sampleShowerBeforeImg,
-      alt: 'Sample illustration: shower screen and tiles before the clean, with soap scum on the glass and mould in the grout',
+      src: cooktopBeforeImg,
+      alt: 'A gas cooktop before a TLB clean, with spilled coffee grounds, crumbs and food scraps across the black enamel',
     },
     after: {
-      src: sampleShowerAfterImg,
-      alt: 'Sample illustration: the same shower screen and tiles after the clean, glass clear and grout white',
+      src: cooktopAfterImg,
+      alt: 'The same gas cooktop after the clean, the enamel wiped back to an even black finish',
     },
-    caption: 'Shower screen and tiles',
+    caption: 'Gas cooktop and burners',
   },
 ];
 
@@ -383,7 +388,7 @@ const closingCta = {
       heading="The difference, on real jobs."
       lead="Drag the handle across each photo to see the same spot before and after a clean."
       pairs={beforeAfterPairs}
-      note="Illustrative samples, shown while we collect before and after photos from real TLB cleans."
+      note="Photographed on real TLB cleans, published with the client's permission."
     />
 
     <TestimonialCarousel heading={`What ${town} clients say`} testimonials={testimonials} uniform />

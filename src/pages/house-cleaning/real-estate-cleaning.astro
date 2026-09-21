@@ -66,6 +66,12 @@ import PathwayCards from '../../components/sections/PathwayCards.astro';
 import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 import Callout from '../../components/sections/Callout.astro';
 import BeforeAfter from '../../components/sections/BeforeAfter.astro';
+// Before/after pairs — real TLB job photos. The `sample-` files are flat
+// illustrations and stay only where no real pair exists for that subject yet.
+import kitchenBenchtopBeforeImg from '../../assets/home_cleaning/before_after/kitchen-benchtop-before.jpg';
+import kitchenBenchtopAfterImg from '../../assets/home_cleaning/before_after/kitchen-benchtop-after.jpg';
+import cooktopBeforeImg from '../../assets/home_cleaning/before_after/cooktop-before.jpg';
+import cooktopAfterImg from '../../assets/home_cleaning/before_after/cooktop-after.jpg';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import ComparisonTable from '../../components/sections/ComparisonTable.astro';
 import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
@@ -97,11 +103,7 @@ import cardInspectionImg from '../../assets/home_cleaning/inside_your_home/end_o
 import cardRoutineImg from '../../assets/real_estate/real-estate-cleaning-routine-clean-in-a-tenanted-rental-kitchen.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as every sibling.
 import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-// Before/after SAMPLES, shared with five other pages. See §7.
-import sampleKitchenBeforeImg from '../../assets/home_cleaning/before_after/sample-kitchen-before.png';
-import sampleKitchenAfterImg from '../../assets/home_cleaning/before_after/sample-kitchen-after.png';
-import sampleOvenBeforeImg from '../../assets/home_cleaning/before_after/sample-oven-before.png';
-import sampleOvenAfterImg from '../../assets/home_cleaning/before_after/sample-oven-after.png';
+// Before/after. Both pairs are REAL TLB job photography. See §7.
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
 import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
@@ -459,16 +461,20 @@ const whyTeamsBody: TextBlockBody[] = [
   'Three questions sort it out quickly, and they are worth asking us as readily as anyone else. How many people do you actually employ, as opposed to subcontract? What happens to my job when the person who normally does it is away? And who answers the phone at four on a Friday when the keys have come back and the property is worse than the notes said?',
 ];
 
-// §7 Before/after. The shared SAMPLE pairs, now on a seventh page.
+// §7 Before/after. Both pairs here are REAL TLB job photography.
 //
 // The pairs chosen here differ from the airbnb page's on purpose: kitchen
-// and OVEN rather than kitchen and shower. The oven is the single most
-// commonly failed item on an exit inspection, so it is the pair that speaks
-// to this reader.
+// and COOKTOP rather than kitchen and shower. The cooker is among the most
+// commonly failed items on an exit inspection, so it is the pair that speaks
+// to this reader. An oven-INTERIOR pair would speak to it harder still and
+// is the next one worth shooting.
 //
-// ⚠️ THESE ARE ILLUSTRATIVE SAMPLES, not TLB jobs, and the `note` on the
-// render is what tells the reader so. Do not remove the note without
-// removing the images.
+// These frames are REAL TLB JOB PHOTOGRAPHS, published with the client's
+// permission and with nothing identifying in frame — no house numbers, street
+// signs, mail, people, or names on doors. That is why this section no longer
+// carries an "illustrative samples" note. Do NOT wire the `sample-` files back
+// in without restoring a note that says so: a fabricated "before and after
+// from a real job" is a false trust claim, not filler.
 //
 // THE PHOTO BRIEF: one fixed tripod position, nothing moved between frames.
 // An oven and a shower on a real vacancy clean are the two easiest real
@@ -482,25 +488,25 @@ const whyTeamsBody: TextBlockBody[] = [
 const beforeAfterPairs: BeforeAfterPair[] = [
   {
     before: {
-      src: sampleOvenBeforeImg,
-      alt: 'Sample illustration: oven interior and door glass before a vacancy clean, with baked-on grease and carbon',
+      src: cooktopBeforeImg,
+      alt: 'A gas cooktop before a TLB vacancy clean, with spilled coffee grounds, crumbs and food scraps across the black enamel',
     },
     after: {
-      src: sampleOvenAfterImg,
-      alt: 'Sample illustration: the same oven after the clean, racks and door glass back to bare metal and clear glass',
+      src: cooktopAfterImg,
+      alt: 'The same gas cooktop after the clean, the enamel wiped back to an even black finish',
     },
-    caption: 'Oven, racks and door glass',
+    caption: 'Gas cooktop and burners',
   },
   {
     before: {
-      src: sampleKitchenBeforeImg,
-      alt: 'Sample illustration: kitchen benchtop and tiled splashback before a vacancy clean, with stained grout and baked-on spills',
+      src: kitchenBenchtopBeforeImg,
+      alt: 'A kitchen benchtop before a TLB vacancy clean, with dishes stacked in and beside the sink and pots left on the stove',
     },
     after: {
-      src: sampleKitchenAfterImg,
-      alt: 'Sample illustration: the same kitchen benchtop and splashback after the clean, grout clean and surfaces gleaming',
+      src: kitchenBenchtopAfterImg,
+      alt: 'The same kitchen benchtop after the clean, sink empty and the bench clear and wiped down',
     },
-    caption: 'Kitchen benchtop and splashback',
+    caption: 'Kitchen benchtop and sink',
   },
 ];
 
@@ -810,15 +816,14 @@ const closingCta = {
       body={whyTeamsBody}
     />
 
-    {/* Drag the handle to wipe between the two frames of each pair. These
-        four images are SAMPLES — the `note` is what tells the reader that;
-        delete it with the imports. See the §7 comment for the photo brief
-        and the consent conditions. */}
+    {/* Drag the handle to wipe between the two frames of each pair. Both
+        pairs are real TLB job photography — see the §7 comment for the
+        consent conditions any replacement has to meet. */}
     <BeforeAfter
       heading="The standard an inspection is measured against."
       lead="Drag the handle across each photo to see the same spot before and after a clean."
       pairs={beforeAfterPairs}
-      note="Illustrative samples, shown while we collect before and after photos from real TLB cleans."
+      note="Photographed on real TLB cleans, published with the client's permission."
     />
 
     {/* ⚠️ RESERVED SLOT: agency logo wall (LogoBar.astro, variant="list").

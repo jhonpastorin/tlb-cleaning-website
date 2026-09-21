@@ -60,6 +60,12 @@ import PathwayCards from '../../components/sections/PathwayCards.astro';
 import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 import Callout from '../../components/sections/Callout.astro';
 import BeforeAfter from '../../components/sections/BeforeAfter.astro';
+import cooktopBeforeImg from '../../assets/home_cleaning/before_after/cooktop-before.jpg';
+import cooktopAfterImg from '../../assets/home_cleaning/before_after/cooktop-after.jpg';
+// Before/after pairs — real TLB job photos. The `sample-` files are flat
+// illustrations and stay only where no real pair exists for that subject yet.
+import kitchenBenchtopBeforeImg from '../../assets/home_cleaning/before_after/kitchen-benchtop-before.jpg';
+import kitchenBenchtopAfterImg from '../../assets/home_cleaning/before_after/kitchen-benchtop-after.jpg';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import ComparisonTable from '../../components/sections/ComparisonTable.astro';
 import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
@@ -85,11 +91,7 @@ import cardRestockImg from '../../assets/airbnb/airbnb-turnover-restocked-guest-
 import cardKeysImg from '../../assets/airbnb/airbnb-turnover-cleaner-arriving-at-a-holiday-cottage-with-keys.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as every sibling.
 import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
-// Before/after SAMPLES, shared with four other pages. See §7.
-import sampleKitchenBeforeImg from '../../assets/home_cleaning/before_after/sample-kitchen-before.png';
-import sampleKitchenAfterImg from '../../assets/home_cleaning/before_after/sample-kitchen-after.png';
-import sampleShowerBeforeImg from '../../assets/home_cleaning/before_after/sample-shower-before.png';
-import sampleShowerAfterImg from '../../assets/home_cleaning/before_after/sample-shower-after.png';
+// Before/after. Both pairs are REAL TLB job photography. See §7.
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
 import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
@@ -407,12 +409,20 @@ const whySameTeamBody: TextBlockBody[] = [
   'The person in your property is on our team, we know which property is yours, and there is one local number to ring, which is a low bar until the weekend you need it.',
 ];
 
-// §7 Before/after. The shared SAMPLE pairs, now on a sixth page, per the
+// §7 Before/after. Shared with five other pages, per the
 // same-structure-everywhere call.
 //
-// ⚠️ THESE ARE ILLUSTRATIVE SAMPLES, not TLB jobs, and the `note` on the
-// render is what tells the reader so. Do not remove the note without
-// removing the images.
+// These frames are REAL TLB JOB PHOTOGRAPHS, published with the client's
+// permission and with nothing identifying in frame — no house numbers, street
+// signs, mail, people, or names on doors. That is why this section carries no
+// "illustrative samples" note. Do NOT wire the `sample-` files back in without
+// restoring a note that says so: a fabricated "before and after from a real
+// job" is a false trust claim, not filler.
+//
+// ⚠️ BOTH PAIRS ARE KITCHEN SURFACES. The shower/bathroom pair this section
+// used to carry was dropped rather than shown as an illustration next to a
+// photograph, so nothing on this page evidences bathroom work. A real shower
+// pair is the outstanding shoot; when it lands it takes slot 2 back.
 //
 // THE PHOTO BRIEF this stands in for, and it is a better brief on this page
 // than on any other: a turnover is the one clean where before and after are
@@ -426,25 +436,25 @@ const whySameTeamBody: TextBlockBody[] = [
 const beforeAfterPairs: BeforeAfterPair[] = [
   {
     before: {
-      src: sampleKitchenBeforeImg,
-      alt: 'Sample illustration: kitchen benchtop and tiled splashback before a turnover clean, with stained grout and baked-on spills',
+      src: kitchenBenchtopBeforeImg,
+      alt: 'A kitchen benchtop before a TLB turnover clean, with dishes stacked in and beside the sink and pots left on the stove',
     },
     after: {
-      src: sampleKitchenAfterImg,
-      alt: 'Sample illustration: the same kitchen benchtop and splashback after the turnover, grout clean and surfaces gleaming',
+      src: kitchenBenchtopAfterImg,
+      alt: 'The same kitchen benchtop after the turnover, sink empty and the bench clear and wiped down',
     },
-    caption: 'Kitchen benchtop and splashback',
+    caption: 'Kitchen benchtop and sink',
   },
   {
     before: {
-      src: sampleShowerBeforeImg,
-      alt: 'Sample illustration: shower screen and wall tiles before a turnover clean, with soap scum on the glass and mould in the grout',
+      src: cooktopBeforeImg,
+      alt: 'A gas cooktop before a TLB turnover clean, with spilled coffee grounds, crumbs and food scraps across the black enamel',
     },
     after: {
-      src: sampleShowerAfterImg,
-      alt: 'Sample illustration: the same shower screen and tiles after the turnover, glass clear and grout back to colour',
+      src: cooktopAfterImg,
+      alt: 'The same gas cooktop after the turnover, the enamel wiped back to an even black finish',
     },
-    caption: 'Shower screen and tiles',
+    caption: 'Gas cooktop and burners',
   },
 ];
 
@@ -656,15 +666,15 @@ const closingCta = {
       body={whySameTeamBody}
     />
 
-    {/* Drag the handle to wipe between the two frames of each pair. These
-        four images are SAMPLES — the `note` is what tells the reader that;
-        delete it with the imports. See the §7 comment for the photo brief,
-        which is easier to fill on this page than on any other. */}
+    {/* Drag the handle to wipe between the two frames of each pair. The
+        pairs are both real TLB job photography. See the §7 comment for the
+        shower pair that is still outstanding — nothing on this page
+        evidences bathroom work until it is shot. */}
     <BeforeAfter
       heading="The difference, on real jobs."
       lead="Drag the handle across each photo to see the same spot before and after a clean."
       pairs={beforeAfterPairs}
-      note="Illustrative samples, shown while we collect before and after photos from real TLB cleans."
+      note="Photographed on real TLB cleans, published with the client's permission."
     />
 
     <TagCloud
