@@ -1500,7 +1500,7 @@ not:**
 
 1. **The POST body is `application/x-www-form-urlencoded`, not JSON.** That
    makes it a CORS "simple request", so the browser sends it with no preflight
-   `OPTIONS` call — the most common way a static-site form to Make/Zapier
+   `OPTIONS` call — the most common way a static-site form to Zapier
    passes every local test and fails in production. Make and Zapier both parse
    urlencoded natively; nothing is lost.
 2. **`action` and `method` are set on the `<form>` itself**, and `novalidate`
@@ -1526,7 +1526,7 @@ state never rests on the red border alone; the submit outcome lands in a
 inline SVG so the two dropdowns are not visibly a different control from the
 four inputs beside them.
 
-Setup for the Monday.com side — board columns, the Make/Zapier scenario, the
+Setup for the Monday.com side — board columns, the Zap, the
 field mapping — is in `MONDAY-FORM-SETUP.md`.
 
 Use this when: a page needs to collect a structured enquiry. If it needs a

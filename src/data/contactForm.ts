@@ -9,7 +9,7 @@
 // this project — a form that posted nowhere would silently swallow enquiries,
 // which is the worst failure this page could have." That reasoning has not
 // been repealed, it has been ANSWERED: the form now posts to an off-site
-// webhook (Make.com or Zapier), which creates the item in the Monday.com
+// webhook (a Zapier catch hook), which creates the item in the Monday.com
 // board. See MONDAY-FORM-SETUP.md for the board columns, the scenario and the
 // field-by-field mapping.
 //
@@ -25,9 +25,9 @@ import { locationGroups } from './locations';
  *
  * PUBLIC_ prefixed, and named so nobody is misled: the URL is inlined into the
  * page's HTML and is therefore visible to anyone who views source. That is
- * fine for a Make/Zapier catch hook — the URL is unguessable and receives
+ * fine for a Zapier catch hook — the URL is unguessable and receives
  * data, it does not hand any out — but it is emphatically NOT a place for a
- * Monday.com API token. The token lives in the Make/Zapier connection, on
+ * Monday.com API token. The token lives in the Zapier connection, on
  * their side of the wire, and never reaches this repo or the browser. That is
  * the whole reason the integration goes through a webhook rather than calling
  * Monday's GraphQL API from the page.
@@ -109,7 +109,7 @@ export const areaOptions: SelectOption[] = [
 /**
  * Every field the form submits, in one place, because three things have to
  * agree about them and only one of those three lives in this repo: the markup
- * here, the Make/Zapier mapping, and the Monday.com column.
+ * here, the Zapier mapping, and the Monday.com column.
  * MONDAY-FORM-SETUP.md is written against this list — add a field here and it
  * has to be added there too, or the enquiry arrives with a blank column.
  *

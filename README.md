@@ -60,12 +60,16 @@ domain — so staging pages canonicalise to production. That is harmless while
 
 ## The contact form — read before any production deploy
 
-`/contact/` carries an enquiry form that POSTs to a Make.com (or Zapier)
-webhook, which creates the item in TLB's Monday.com board. **No backend was
+`/contact/` carries an enquiry form that POSTs to a **Zapier** catch hook,
+which creates the item in TLB's Monday.com board. **No backend was
 added to this project** — it is still a static build. That is the whole reason
 the integration goes through a webhook: a Monday API token in a static page
 would be readable in view-source and would grant access to every board in the
-account. The token lives in the Make/Zapier connection instead.
+account. The token lives in the Zapier connection instead.
+
+Nothing in the site is Zapier-specific — it posts standard form-encoded data
+to whatever URL this variable holds, so Make.com or any other receiver is a
+change of that one value.
 
 It is controlled by one environment variable, `PUBLIC_ENQUIRY_WEBHOOK_URL`,
 read in `src/data/contactForm.ts`, and **it fails closed in the same spirit as
@@ -93,8 +97,8 @@ staging test cannot drop a fake lead into the live pipeline. `render.yaml`
 declares the variable on both services with `sync: false`, so the value is set
 per service in the Render dashboard and is never committed.
 
-Full setup — the Monday board's columns, the Make/Zapier scenario, the
-field-by-field mapping and a test checklist — is in `MONDAY-FORM-SETUP.md`.
+Full setup — the Monday board's columns, the Zap, the field-by-field mapping
+and a test checklist — is in `MONDAY-FORM-SETUP.md`.
 
 ## Adding a new section variant
 

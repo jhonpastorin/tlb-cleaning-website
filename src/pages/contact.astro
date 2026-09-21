@@ -22,12 +22,12 @@
 // no backend in this project — a form that posted nowhere would silently
 // swallow enquiries". That objection was about SILENCE, not about forms, and
 // it is now answered rather than ignored: the form posts to an off-site
-// Make/Zapier webhook which creates the item in TLB's Monday.com board, and
+// Zapier catch hook which creates the item in TLB's Monday.com board, and
 // when no webhook is configured it refuses to submit and says so instead of
 // showing a thank-you it has not earned. The static build is untouched — no
 // backend was added to this project. See MONDAY-FORM-SETUP.md for the board,
-// the scenario and the field mapping, and src/data/contactForm.ts for the
-// rule the component must never break.
+// the Zap and the field mapping, and src/data/contactForm.ts for the rule the
+// component must never break.
 //
 // Note the same paragraph also referenced "the quote flow at /quote/" as the
 // existing path for structured enquiries. THERE IS NO /quote/ PAGE and there

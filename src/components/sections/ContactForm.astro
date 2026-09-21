@@ -26,7 +26,7 @@
 // ⚠️ THE REQUEST IS DELIBERATELY `application/x-www-form-urlencoded`, NOT
 // JSON. That makes it a CORS "simple request", so the browser sends it without
 // a preflight OPTIONS call — which is the single most common way a static-site
-// form to Make/Zapier fails in production while working in every local test.
+// form to Zapier fails in production while working in every local test.
 // Both platforms parse urlencoded bodies into named fields natively, so
 // nothing is lost by it. Do not "tidy" this into a JSON body.
 //
