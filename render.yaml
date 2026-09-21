@@ -55,6 +55,21 @@ services:
       - key: SITE_ENV
         value: production
 
+      # The contact form's destination — the Make.com/Zapier catch hook that
+      # creates the item in TLB's Monday.com board. See MONDAY-FORM-SETUP.md.
+      #
+      # `sync: false` means the VALUE is not in this file: Render prompts for
+      # it on the first sync and thereafter it is edited in the dashboard. That
+      # is deliberate on both counts — the URL should not be committed, and
+      # production and staging must be free to point at different scenarios so
+      # a staging test never lands a fake lead in the real board.
+      #
+      # Leaving it unset does not break the build. The form renders and tells
+      # the reader it is not connected; the build log says the same thing in
+      # its [FORM] line. Check that line on a production deploy.
+      - key: PUBLIC_ENQUIRY_WEBHOOK_URL
+        sync: false
+
     headers:
       # Everything under /_astro/ is content-hashed by Astro (filenames change
       # when contents change), so it can be cached indefinitely. HTML is left on
@@ -71,6 +86,17 @@ services:
     branch: staging
     buildCommand: npm run build
     staticPublishPath: ./dist
+
+    envVars:
+      # SITE_ENV stays absent here — that absence is what makes this build
+      # noindex, and adding it would break that. This block exists only for the
+      # form's webhook.
+      #
+      # Point this at a SEPARATE Make/Zapier scenario (or leave it empty), so
+      # that testing the form on staging cannot create items in the live board.
+      # See MONDAY-FORM-SETUP.md.
+      - key: PUBLIC_ENQUIRY_WEBHOOK_URL
+        sync: false
 
     headers:
       # Second layer behind the SITE_ENV meta tag. README.md flags host-level

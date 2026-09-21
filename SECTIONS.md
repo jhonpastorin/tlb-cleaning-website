@@ -254,6 +254,25 @@ JSON-LD.** An `Article`/`FAQPage` prop would be additive and would not touch
 the other pages, but it is a shared-layout change and was deliberately not
 made — raise it before launch.
 
+`contactForm.ts` holds the contact form's options, copy and endpoint — the
+content half of `ContactForm.astro`. Two things in it matter beyond the form
+itself:
+
+- **`areaOptions` is derived from `locations.ts`' `locationGroups`**, not
+  retyped, so the form cannot start naming regions the mega-menu and the 47
+  "Where we clean" bands do not. Same rule, same reason, as everything else
+  that reads that file.
+- **`enquiryEndpoint` fails closed**, in the same spirit as `site-env.ts`.
+  It is empty until `PUBLIC_ENQUIRY_WEBHOOK_URL` is set in the host's build
+  environment, the build prints one `[FORM]` line saying which state it
+  produced, and the form refuses to submit rather than showing a thank-you it
+  has not earned. See `MONDAY-FORM-SETUP.md`.
+
+⚠️ `serviceOptions` and `areaOptions` labels are submitted **verbatim** and
+must match the Monday.com dropdown labels exactly. Monday drops an unknown
+label silently — no error, just an empty cell — so renaming one here without
+renaming it on the board loses that field on every enquiry from then on.
+
 ---
 
 ## Sections — `src/components/sections/`
@@ -1405,6 +1424,113 @@ already do, instead of whatever the browser's bare default happens to be.
 Use this when: a page needs a mid-page call-to-action — `primary` for a
 prominent banner with an image, `secondary` for a lighter internal-linking
 nudge, `form` for an email/signup capture.
+
+### `ContactForm.astro`
+
+Purpose: the site's enquiry form — a two-column grid of labelled fields (name
+pair, contact pair, two dropdowns) over a full-width message box and a submit
+button. Currently on `/contact/` only.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `heading` | `string` | Defaults to `enquiryCopy.heading`. |
+| `headingLevel` | `'h1' \| 'h2'` | Default `'h2'`. **Pass `'h1'` whenever this section opens the page** — there is no `Hero` above it to supply one, and a page with no `<h1>` has no machine-readable title. `/contact/` does exactly this. |
+| `kicker` | `string` | Optional eyebrow label above the heading, e.g. "CONTACT". Same prop and treatment as `Hero.astro`'s and `CallToAction.astro`'s. |
+| `lead` | `string \| null` | Defaults to `enquiryCopy.lead`. Pass `null` for no lead. |
+| `theme` | `'muted' \| 'surface'` | Default `'muted'` — the cream panel. `'surface'` sits flat on the page. |
+| `fallbackPhone` | `string` | Shown inside the failure messages, so a submit that does not send still leaves the reader somewhere to go. |
+| `fallbackEmail` | `string` | Same. Pass `footerContact`'s values — not hand-typed ones. |
+
+Field options, copy and the endpoint all come from `src/data/contactForm.ts`;
+this component holds no content of its own.
+
+**Four of the seven fields are required** — first name, email, contact number
+and type of service (the client's call, 21 Sep 2026). Last name, service area
+and message are optional. ⚠️ Service area is the field that *routes* an
+enquiry and an untouched select submits an empty string, so some enquiries
+reach the board with no region on them; the Message placeholder and the
+"What to tell us" Callout above the form both still ask for the town, so it
+is usually in the free text. Making it required again is one word in
+`selects`.
+
+```astro
+<!-- mid-page -->
+<ContactForm fallbackPhone={footerContact.phone} fallbackEmail={footerContact.email} />
+
+<!-- opening the page, in place of a Hero — /contact/'s own usage -->
+<ContactForm
+  headingLevel="h1"
+  kicker="Contact"
+  fallbackPhone={footerContact.phone}
+  fallbackEmail={footerContact.email}
+/>
+```
+
+**This is the one section in the library that can stand in for `Hero.astro`.**
+`/contact/` has no hero: the form replaced it on 21 Sep 2026, on the reasoning
+that a reader who reaches a contact page has already decided to make contact,
+so the form is what they came for. That is why `headingLevel` exists —
+`SiteHeader` → `ContactForm` → … is a valid page shape, and it only works if
+this component can carry the `<h1>`. Everywhere else, `Hero` still owns it.
+
+**Why this isn't a `CallToAction` variant.** That component's `form` variant
+is one input and a button, styled as a banner — no labels, no validation, no
+submit state, no endpoint. Everything this component exists for (eight fields,
+per-field errors, a success state that replaces the form, a submit that can
+fail and has to say so) would have to be bolted onto a banner that still has
+to render as a banner for its three existing callers. This file's own header
+spells the same reasoning out: the shapes are not the same shape.
+
+**The rule this component must never break:** it cannot report success it did
+not get. Three paths, all of which tell the truth — no endpoint configured
+(refuses, says it is not connected); endpoint but the request failed (says it
+did not send, offers phone and email, and deliberately does **not** invite a
+retry, because a failed fetch can mean the webhook got it and only the reply
+was lost); request succeeded (replaces the form with the thank-you). This is
+the condition on which `contact.astro`'s long-standing "NO CONTACT FORM" ban
+was lifted rather than ignored.
+
+**`id="enquiry"` is fixed, not a prop** — it is the anchor `/contact/`'s hero
+and closing CTAs jump to, and an anchor a caller can rename is an anchor that
+breaks the links pointing at it. One form per page is the assumption that
+makes that safe.
+
+**Three implementation details that look like tidying opportunities and are
+not:**
+
+1. **The POST body is `application/x-www-form-urlencoded`, not JSON.** That
+   makes it a CORS "simple request", so the browser sends it with no preflight
+   `OPTIONS` call — the most common way a static-site form to Make/Zapier
+   passes every local test and fails in production. Make and Zapier both parse
+   urlencoded natively; nothing is lost.
+2. **`action` and `method` are set on the `<form>` itself**, and `novalidate`
+   is applied by the script rather than in the markup. With JavaScript off the
+   form still delivers by native post, with native validation intact. The
+   reader lands on the webhook's plain-text response instead of a thank-you,
+   which is ugly — but an ugly confirmation beats a dead form.
+3. **`.enquiry__grid[hidden]` and `.field[hidden]` are declared explicitly.**
+   `[hidden] { display: none }` is a *UA* rule and any author `display`
+   declaration outranks it, so without those two lines the grid's
+   `display: grid` would keep the form visible underneath the thank-you.
+
+**Anti-spam:** an off-screen `website` honeypot (filled → show the ordinary
+thank-you, send nothing), and an `elapsedMs` field the page reports but
+deliberately does not block on — filtering on it is the scenario's decision,
+not the page's. Kept off `display: none`, which some bots specifically skip.
+
+**Accessibility:** every required field carries the `required` attribute, a
+visible asterisk *and* a visually-hidden "(required)"; errors set
+`aria-invalid` and render as text in an `aria-describedby` target, so the
+state never rests on the red border alone; the submit outcome lands in a
+`role="status"` live region; the native select arrow is replaced with an
+inline SVG so the two dropdowns are not visibly a different control from the
+four inputs beside them.
+
+Setup for the Monday.com side — board columns, the Make/Zapier scenario, the
+field mapping — is in `MONDAY-FORM-SETUP.md`.
+
+Use this when: a page needs to collect a structured enquiry. If it needs a
+one-field signup banner instead, that is `CallToAction`'s `form` variant.
 
 ### `ServiceBlocks.astro` — variants `icon-grid` (default) | `image-cards` | `list` | `highlight` | `slider`
 

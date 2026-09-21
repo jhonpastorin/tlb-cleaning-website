@@ -17,29 +17,55 @@
 // one edit fills both. That is the same rule locations.ts sets for the town
 // list, for the same reason.
 //
+// ✅ RESOLVED — THIS PAGE NOW HAS A CONTACT FORM. It used to carry a standing
+// ban on one, on the grounds that "there is no form handler, no endpoint and
+// no backend in this project — a form that posted nowhere would silently
+// swallow enquiries". That objection was about SILENCE, not about forms, and
+// it is now answered rather than ignored: the form posts to an off-site
+// Make/Zapier webhook which creates the item in TLB's Monday.com board, and
+// when no webhook is configured it refuses to submit and says so instead of
+// showing a thank-you it has not earned. The static build is untouched — no
+// backend was added to this project. See MONDAY-FORM-SETUP.md for the board,
+// the scenario and the field mapping, and src/data/contactForm.ts for the
+// rule the component must never break.
+//
+// Note the same paragraph also referenced "the quote flow at /quote/" as the
+// existing path for structured enquiries. THERE IS NO /quote/ PAGE and there
+// never has been — navigation.ts says so at length, and quoteCta points here,
+// at /contact/. This form is now that path.
+//
+// 21 Sep 2026 — THE HERO AND THE "HOW TO REACH US" TEXTBLOCK WERE DELETED at
+// the client's request, and the form moved up into the hero's place. A reader
+// who reaches /contact/ has already decided to make contact, so the form is
+// what they came for. Two consequences were handled rather than inherited:
+//
+//  a. The <h1> went with the hero. `ContactForm` gained a `headingLevel` prop
+//     and is passed "h1" below, so the page still has exactly one. Do not
+//     remove that prop while this section opens the page.
+//  b. ⚠️ THE PHONE AND EMAIL NO LONGER APPEAR IN THE PAGE BODY. That
+//     TextBlock's bullet list was the only place they were rendered in
+//     <main>. They remain in the SITE FOOTER on this and every other page,
+//     and inside the form's own "that did not send" message, which is the
+//     moment a reader most needs them — but a reader who wants to phone
+//     rather than fill anything in now has to scroll to the footer to find
+//     the number. Worth revisiting if calls drop off; it is not an accident.
+//
 // ⚠️ DELIBERATELY ABSENT, so nobody adds them back as an improvement:
-//  1. NO CONTACT FORM. There is no form handler, no endpoint and no backend in
-//     this project — it is a static Astro build on Render. A form that posted
-//     nowhere would silently swallow enquiries, which is the worst failure
-//     this page could have. The quote flow at /quote/ is the existing path for
-//     structured enquiries and is what the CTAs point at.
-//  2. NO RESPONSE-TIME PROMISE. "We reply within an hour" is an operational
+//  1. NO RESPONSE-TIME PROMISE. "We reply within an hour" is an operational
 //     commitment nobody in this repo has been told is true. Several pages
 //     already carry [CONFIRM] brackets for exactly this class of claim.
-//  3. NO OPENING HOURS AND NO STREET ADDRESS. TLB is a mobile service and
+//  2. NO OPENING HOURS AND NO STREET ADDRESS. TLB is a mobile service and
 //     `meetTheTeamBusiness` still ships an empty `address`. Inventing either
 //     would be inventing a fact about the business.
-//  4. NO ABN, no insurance number, no certificate figures. Same rule.
+//  3. NO ABN, no insurance number, no certificate figures. Same rule.
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/sections/SiteHeader.astro';
-import Hero from '../components/sections/Hero.astro';
-import TextBlock from '../components/sections/TextBlock.astro';
 import Callout from '../components/sections/Callout.astro';
+import ContactForm from '../components/sections/ContactForm.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -60,21 +86,14 @@ const pageMeta = {
 
 const business = meetTheTeamBusiness(pageMeta.description);
 
-const hero = {
-  kicker: 'Contact',
-  headingLines: ['Tell us the town', 'and what needs doing.'],
-  lead:
-    "However you get in touch, that is all we need to start with. We will come back with a price and a day rather than a callback to book another call.",
-  cta: quoteCta,
-};
-
-// The two placeholders come straight from `footerContact`, so replacing them
-// there updates the footer and this page together. See the header note.
-const contactBody: TextBlockBody[] = [
-  'The fastest way to a price is the online quote form. It asks the same questions we would ask on the phone, which is what lets us come back with an actual number instead of a time to talk.',
-  { list: [`Phone: ${footerContact.phone}`, `Email: ${footerContact.email}`] },
-  'If you would rather talk it through, call or email instead. A person reads it either way.',
-];
+// The closing CTA points back UP at the form (#enquiry), not at `quoteCta`.
+// `quoteCta.href` is '/contact/' — this page — so using it here gave the band
+// a button that reloaded the page the reader was already on. Every OTHER page
+// still uses `quoteCta` and still lands here, which is what navigation.ts
+// intends. The anchor now scrolls upward rather than down, since the form
+// opens the page; that is correct behaviour for a closing CTA whose whole job
+// is "go back and do the thing".
+const formAnchor = '#enquiry';
 
 // What to include is genuinely useful and costs nothing to say — it is the
 // difference between one exchange and four. Nothing here is a claim about TLB.
@@ -91,7 +110,7 @@ const closingCta = {
   heading: 'Start with a price.',
   lead:
     'Answer a few questions about your place and we will come back with a quote and the next available day.',
-  cta: quoteCta,
+  cta: { label: 'Fill in the form', href: formAnchor },
 };
 ---
 
@@ -105,17 +124,32 @@ const closingCta = {
   />
 
   <main id="main">
-    <Hero
-      variant="minimal"
-      align="left"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
+    {/* THE FORM OPENS THE PAGE. It replaced the Hero on 21 Sep 2026, at the
+        client's request, along with the "How to reach us" TextBlock that used
+        to sit under it — a reader who reaches /contact/ has already decided to
+        make contact, so the form is what they came for and everything above it
+        was a step in the way.
+
+        `headingLevel="h1"` is NOT optional here. This is the first thing in
+        <main>, and Hero was what supplied this page's <h1>; without the prop
+        the page ships with no <h1> at all. The heading text is the form's own
+        ("Send us the details") rather than the hero's old "Tell us the town
+        and what needs doing", which was written as a headline over a CTA, not
+        as a page title.
+
+        The phone and email are passed so a failed submit still leaves the
+        reader somewhere to go. They come from `footerContact`, so this page
+        and all 111 footers cannot disagree. */}
+    <ContactForm
+      headingLevel="h1"
+      kicker="Contact"
+      fallbackPhone={footerContact.phone}
+      fallbackEmail={footerContact.email}
     />
 
-    <TextBlock theme="muted" align="left" heading="How to reach us" body={contactBody} />
-
+    {/* Now BELOW the form rather than above it. It is the instructions for
+        the Message box, and a reader who wants them will look after they hit
+        that box, not before they have seen the form at all. */}
     <Callout tone="note" heading={helpUsHelp.heading} body={helpUsHelp.body} />
 
     <CallToAction

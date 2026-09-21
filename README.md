@@ -58,6 +58,44 @@ protection such as an `X-Robots-Tag` header or HTTP auth on staging, and the
 domain — so staging pages canonicalise to production. That is harmless while
 `noindex` is present, but it is the reason the noindex matters.
 
+## The contact form — read before any production deploy
+
+`/contact/` carries an enquiry form that POSTs to a Make.com (or Zapier)
+webhook, which creates the item in TLB's Monday.com board. **No backend was
+added to this project** — it is still a static build. That is the whole reason
+the integration goes through a webhook: a Monday API token in a static page
+would be readable in view-source and would grant access to every board in the
+account. The token lives in the Make/Zapier connection instead.
+
+It is controlled by one environment variable, `PUBLIC_ENQUIRY_WEBHOOK_URL`,
+read in `src/data/contactForm.ts`, and **it fails closed in the same spirit as
+`SITE_ENV`:**
+
+| `PUBLIC_ENQUIRY_WEBHOOK_URL` | What the form does |
+| --- | --- |
+| set | submits, and shows the thank-you only on a `2xx` |
+| unset | renders, but refuses to submit and says it is not connected |
+
+The rule it exists to enforce is that **the form must never report success it
+did not get**. A form that shows a thank-you and drops the enquiry is worse
+than no form, which is why `contact.astro` shipped without one for three days.
+
+As with indexing, **every build prints one line saying which mode it
+produced** — check it next to the `[SEO]` line:
+
+```
+[FORM] contact form endpoint: NOT SET (PUBLIC_ENQUIRY_WEBHOOK_URL) — …
+[FORM] contact form endpoint: CONFIGURED
+```
+
+Point staging at a **different** webhook from production, or at none, so a
+staging test cannot drop a fake lead into the live pipeline. `render.yaml`
+declares the variable on both services with `sync: false`, so the value is set
+per service in the Render dashboard and is never committed.
+
+Full setup — the Monday board's columns, the Make/Zapier scenario, the
+field-by-field mapping and a test checklist — is in `MONDAY-FORM-SETUP.md`.
+
 ## Adding a new section variant
 
 1. A wireframe gets dropped in `design-refs/wireframes/<section>/<variant>.png`

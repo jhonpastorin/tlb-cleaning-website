@@ -1,0 +1,648 @@
+---
+// The enquiry form. Two-column grid of labelled fields — name pair, contact
+// pair, two dropdowns — over a full-width message box and a submit button.
+//
+// WHY THIS IS NOT A `CallToAction` VARIANT. That component's `form` variant is
+// a single input and a button, sized and styled as a banner: one field, no
+// labels, no validation, no submit state, no endpoint. Everything this
+// component exists for (eight fields, per-field errors, a success state that
+// replaces the form, a submit that can fail and has to say so) would have to
+// be bolted onto a banner that also still has to render as a banner for its
+// existing callers. SECTIONS.md's rule is "extend with a prop/variant instead
+// of forking" — this is the case that rule's exception is for: the shapes are
+// not the same shape.
+//
+// ⚠️ READ src/data/contactForm.ts BEFORE CHANGING SUBMIT BEHAVIOUR. The one
+// rule this component must never break is that it cannot report success it did
+// not get. Three paths are handled and all three tell the truth:
+//   1. No endpoint configured  -> refuses to submit, says it is not connected.
+//   2. Endpoint, request fails -> says it did not send, points at phone/email,
+//                                 and deliberately does NOT invite a retry
+//                                 (a failed fetch can mean the webhook got it
+//                                 and only the reply was lost; a retry then
+//                                 duplicates the lead in the board).
+//   3. Endpoint, request ok    -> replaces the form with the thank-you.
+//
+// ⚠️ THE REQUEST IS DELIBERATELY `application/x-www-form-urlencoded`, NOT
+// JSON. That makes it a CORS "simple request", so the browser sends it without
+// a preflight OPTIONS call — which is the single most common way a static-site
+// form to Make/Zapier fails in production while working in every local test.
+// Both platforms parse urlencoded bodies into named fields natively, so
+// nothing is lost by it. Do not "tidy" this into a JSON body.
+//
+// NO-JS BEHAVIOUR: `action` and `method` are set on the <form> itself, so a
+// reader with JavaScript off still delivers the enquiry by native form post.
+// They land on the webhook's own plain-text response rather than a thank-you,
+// which is ugly — but an ugly confirmation beats a dead form, and the enquiry
+// is in the board either way.
+import Button from '../ui/Button.astro';
+import {
+  areaOptions,
+  enquiryCopy,
+  enquiryEndpoint,
+  serviceOptions,
+  type SelectOption,
+} from '../../data/contactForm';
+
+interface Props {
+  /** Overrides `enquiryCopy.heading`. */
+  heading?: string;
+  /**
+   * `h2` (default) for a mid-page form. `h1` when this section OPENS the page
+   * and there is no Hero above it to hold the page title — which is exactly
+   * what /contact/ does since the hero was removed on 21 Sep 2026.
+   *
+   * This is not cosmetic and it is not an `<h2>` restyled. Every other page
+   * on the site gets its `<h1>` from `Hero.astro`; a page with none has no
+   * machine-readable title, which costs it in search and leaves anyone
+   * navigating by headings with nothing to land on. If this component is the
+   * first thing in `<main>`, this prop has to be `h1`.
+   */
+  headingLevel?: 'h1' | 'h2';
+  /** Short eyebrow label above the heading, outside it — e.g. "CONTACT". Same prop and treatment as `Hero.astro`'s and `CallToAction.astro`'s. */
+  kicker?: string;
+  /** Overrides `enquiryCopy.lead`. Pass `null` for no lead at all. */
+  lead?: string | null;
+  /** Band background. `muted` (default) is the cream panel; `surface` sits flat on the page. */
+  theme?: 'muted' | 'surface';
+  /** Shown inside the error and not-connected messages so a failed submit always leaves somewhere to go. */
+  fallbackPhone?: string;
+  fallbackEmail?: string;
+}
+
+const {
+  heading = enquiryCopy.heading,
+  headingLevel = 'h2',
+  kicker,
+  lead = enquiryCopy.lead,
+  theme = 'muted',
+  fallbackPhone,
+  fallbackEmail,
+} = Astro.props;
+
+// Astro renders a capitalised variable as a component/tag name, which is how
+// one markup block serves both heading levels without duplicating it.
+const Heading = headingLevel;
+
+// The four free-text fields, mapped rather than written out four times. The
+// autocomplete tokens are the real point of the table: they are what lets a
+// phone fill this form in one tap, and they are easy to forget when each
+// field is hand-written.
+const textFields: {
+  name: string;
+  id: string;
+  label: string;
+  type: 'text' | 'email' | 'tel';
+  autocomplete: string;
+  required: boolean;
+  /** Narrower than `string` on purpose — Astro types the attribute as a fixed union and a plain string fails `astro check`. */
+  inputmode?: 'email' | 'tel' | 'text';
+}[] = [
+  { name: 'firstName', id: 'enquiry-first-name', label: 'First Name', type: 'text', autocomplete: 'given-name', required: true },
+  { name: 'lastName', id: 'enquiry-last-name', label: 'Last Name', type: 'text', autocomplete: 'family-name', required: false },
+  { name: 'email', id: 'enquiry-email', label: 'Email', type: 'email', autocomplete: 'email', required: true, inputmode: 'email' },
+  { name: 'phone', id: 'enquiry-phone', label: 'Contact Number', type: 'tel', autocomplete: 'tel', required: true, inputmode: 'tel' },
+];
+
+// Only FOUR fields are required: first name, email, contact number and type
+// of service — the client's call, 21 Sep 2026. Last name, service area and
+// message are all optional.
+//
+// ⚠️ SERVICE AREA BEING OPTIONAL HAS A CONSEQUENCE WORTH KNOWING. It is the
+// field that routes an enquiry, and an untouched select submits an empty
+// string, so those enquiries reach the board with a blank Service Area cell.
+// The Message placeholder and the "What to tell us" Callout above the form
+// both still ask for the town, so the information is usually somewhere in the
+// message — it just is not in a column anyone can filter or group by. If the
+// board starts filling with blanks, making this one required again is a
+// one-word change here.
+const selects: { name: string; id: string; label: string; placeholder: string; required: boolean; options: SelectOption[] }[] = [
+  {
+    name: 'service',
+    id: 'enquiry-service',
+    label: 'Type of Service',
+    placeholder: 'Select a service',
+    required: true,
+    options: serviceOptions,
+  },
+  {
+    name: 'area',
+    id: 'enquiry-area',
+    label: 'Service Area',
+    placeholder: 'Select an area',
+    required: false,
+    options: areaOptions,
+  },
+];
+
+// Handed to the client script as one object rather than eight data attributes.
+const config = {
+  endpoint: enquiryEndpoint,
+  copy: {
+    submit: enquiryCopy.submitLabel,
+    submitting: enquiryCopy.submittingLabel,
+    successHeading: enquiryCopy.successHeading,
+    successBody: enquiryCopy.successBody,
+    errorHeading: enquiryCopy.errorHeading,
+    errorBody: enquiryCopy.errorBody,
+    unconfiguredHeading: enquiryCopy.unconfiguredHeading,
+    unconfiguredBody: enquiryCopy.unconfiguredBody,
+  },
+};
+---
+
+{/* `id` is fixed, not a prop: it is the anchor this page's CTAs jump to
+    (href="#enquiry"), and an anchor that a caller can rename is an anchor
+    that breaks the links pointing at it. One form per page is the assumption
+    that makes that safe — see SECTIONS.md. */}
+<section id="enquiry" class:list={['enquiry', `enquiry--${theme}`]} aria-labelledby="enquiry-heading">
+  <div class="container enquiry__inner">
+    <div class="enquiry__intro">
+      {kicker && <p class="enquiry__kicker">{kicker}</p>}
+      <Heading id="enquiry-heading">{heading}</Heading>
+      {lead && <p class="lead">{lead}</p>}
+    </div>
+
+    <form
+      class="enquiry__form"
+      data-enquiry-form
+      action={enquiryEndpoint || undefined}
+      method="post"
+      enctype="application/x-www-form-urlencoded"
+    >
+      <div class="enquiry__grid">
+        {textFields.map((field) => (
+          <div class="field">
+            <label class="field__label" for={field.id}>
+              {field.label}
+              {field.required && <span class="field__req" aria-hidden="true">*</span>}
+              {field.required && <span class="sr-only"> (required)</span>}
+              {!field.required && <span class="field__optional">(optional)</span>}
+            </label>
+            <input
+              class="field__control"
+              id={field.id}
+              name={field.name}
+              type={field.type}
+              inputmode={field.inputmode}
+              autocomplete={field.autocomplete}
+              placeholder={field.label}
+              required={field.required}
+              aria-describedby={`${field.id}-error`}
+            />
+            <p class="field__error" id={`${field.id}-error`} data-field-error hidden></p>
+          </div>
+        ))}
+
+        {selects.map((select) => (
+          <div class="field">
+            <label class="field__label" for={select.id}>
+              {select.label}
+              {select.required && <span class="field__req" aria-hidden="true">*</span>}
+              {select.required && <span class="sr-only"> (required)</span>}
+              {!select.required && <span class="field__optional">(optional)</span>}
+            </label>
+            <div class="field__select-wrap">
+              <select
+                class="field__control field__control--select"
+                id={select.id}
+                name={select.name}
+                required={select.required}
+                aria-describedby={`${select.id}-error`}
+              >
+                {/* Empty-value first option. On a required select it is what
+                    makes an untouched one FAIL validation instead of quietly
+                    submitting whatever happened to be first; on an optional
+                    one it is the "no answer" choice, and submits an empty
+                    string. Both selects need it, for those two reasons. */}
+                <option value="">{select.placeholder}</option>
+                {select.options.map((option) => (
+                  <option value={option.value}>{option.label ?? option.value}</option>
+                ))}
+              </select>
+              <svg class="field__chevron" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M5 7.5 10 12.5 15 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <p class="field__error" id={`${select.id}-error`} data-field-error hidden></p>
+          </div>
+        ))}
+
+        <div class="field field--full">
+          <label class="field__label" for="enquiry-message">
+            Message
+            <span class="field__optional">(optional, but it speeds things up)</span>
+          </label>
+          <textarea
+            class="field__control field__control--textarea"
+            id="enquiry-message"
+            name="message"
+            rows="6"
+            placeholder="How many bedrooms and bathrooms, how often you need us, and — for an end of lease clean — the date the keys are due back."
+            aria-describedby="enquiry-message-error"
+          ></textarea>
+          <p class="field__error" id="enquiry-message-error" data-field-error hidden></p>
+        </div>
+      </div>
+
+      {/* Honeypot. A real reader never sees this and never fills it; most bots
+          fill every field they find. Hidden from assistive tech and taken out
+          of the tab order so it is invisible to people using either. Kept OFF
+          `display: none`, which some bots specifically skip. */}
+      <div class="enquiry__trap" aria-hidden="true">
+        <label for="enquiry-website">Website</label>
+        <input id="enquiry-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      {/* Context the reader does not type, filled by the script on submit. */}
+      <input type="hidden" name="sourcePage" value="" data-source-page />
+      <input type="hidden" name="submittedAt" value="" data-submitted-at />
+      <input type="hidden" name="elapsedMs" value="" data-elapsed-ms />
+
+      <div class="enquiry__status" role="status" aria-live="polite" data-enquiry-status hidden>
+        <p class="enquiry__status-heading" data-status-heading></p>
+        <p class="enquiry__status-body" data-status-body></p>
+        {(fallbackPhone || fallbackEmail) && (
+          <ul class="enquiry__fallback" data-status-fallback hidden>
+            {fallbackPhone && <li>Phone: {fallbackPhone}</li>}
+            {fallbackEmail && <li>Email: {fallbackEmail}</li>}
+          </ul>
+        )}
+      </div>
+
+      <div class="enquiry__actions" data-enquiry-actions>
+        <Button label={enquiryCopy.submitLabel} type="submit" variant="brand" class="enquiry__submit" />
+      </div>
+    </form>
+  </div>
+</section>
+
+{/* `is:inline` is stated rather than left implicit: `define:vars` forces it
+    anyway (Astro cannot inject build-time values into a bundled module), and
+    without it every build prints a hint saying so. The consequence is that
+    this script is plain JS, not TypeScript, and cannot import anything —
+    which is why `config` above exists at all. */}
+<script is:inline define:vars={{ config }}>
+  // One handler per form on the page, so the component stays reusable.
+  document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
+    const status = form.querySelector('[data-enquiry-status]');
+    const statusHeading = form.querySelector('[data-status-heading]');
+    const statusBody = form.querySelector('[data-status-body]');
+    const statusFallback = form.querySelector('[data-status-fallback]');
+    const grid = form.querySelector('.enquiry__grid');
+    const actions = form.querySelector('[data-enquiry-actions]');
+    const submit = form.querySelector('button[type="submit"]');
+    const loadedAt = Date.now();
+
+    // Taking over validation from the browser is the whole reason this is set
+    // here and not in the markup: with JS off, `novalidate` is never applied
+    // and native validation still guards the native post.
+    form.setAttribute('novalidate', '');
+
+    const messageFor = (field) => {
+      if (field.validity.valueMissing) {
+        return field.tagName === 'SELECT' ? 'Please choose an option.' : 'Please fill this in.';
+      }
+      if (field.validity.typeMismatch && field.type === 'email') {
+        return 'That does not look like an email address.';
+      }
+      return field.validationMessage || 'Please check this field.';
+    };
+
+    const showFieldError = (field, text) => {
+      const error = document.getElementById(`${field.id}-error`);
+      field.classList.add('is-invalid');
+      field.setAttribute('aria-invalid', 'true');
+      if (error) {
+        error.textContent = text;
+        error.hidden = false;
+      }
+    };
+
+    const clearFieldError = (field) => {
+      const error = document.getElementById(`${field.id}-error`);
+      field.classList.remove('is-invalid');
+      field.removeAttribute('aria-invalid');
+      if (error) {
+        error.textContent = '';
+        error.hidden = true;
+      }
+    };
+
+    // Re-validate a field once it has been marked bad, so the error clears as
+    // soon as it is fixed rather than only on the next submit attempt.
+    form.querySelectorAll('.field__control').forEach((field) => {
+      field.addEventListener('input', () => {
+        if (field.classList.contains('is-invalid') && field.checkValidity()) clearFieldError(field);
+      });
+      field.addEventListener('blur', () => {
+        if (field.classList.contains('is-invalid') && field.checkValidity()) clearFieldError(field);
+      });
+    });
+
+    const setStatus = (heading, body, tone, withFallback) => {
+      if (!status) return;
+      status.dataset.tone = tone;
+      if (statusHeading) statusHeading.textContent = heading;
+      if (statusBody) statusBody.textContent = body;
+      if (statusFallback) statusFallback.hidden = !withFallback;
+      status.hidden = false;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      // Validate everything before touching the network, and land the reader
+      // on the first problem rather than making them hunt for it.
+      let firstInvalid = null;
+      form.querySelectorAll('.field__control').forEach((field) => {
+        if (field.checkValidity()) {
+          clearFieldError(field);
+        } else {
+          showFieldError(field, messageFor(field));
+          if (!firstInvalid) firstInvalid = field;
+        }
+      });
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      // Honeypot: a filled trap is a bot. Show the ordinary thank-you and send
+      // nothing — telling a bot it was caught only teaches it to try again.
+      const trap = form.querySelector('[name="website"]');
+      if (trap && trap.value.trim() !== '') {
+        if (grid) grid.hidden = true;
+        if (actions) actions.hidden = true;
+        setStatus(config.copy.successHeading, config.copy.successBody, 'success', false);
+        return;
+      }
+
+      if (!config.endpoint) {
+        setStatus(config.copy.unconfiguredHeading, config.copy.unconfiguredBody, 'error', true);
+        return;
+      }
+
+      const sourcePage = form.querySelector('[data-source-page]');
+      const submittedAt = form.querySelector('[data-submitted-at]');
+      const elapsed = form.querySelector('[data-elapsed-ms]');
+      if (sourcePage) sourcePage.value = window.location.pathname;
+      if (submittedAt) submittedAt.value = new Date().toISOString();
+      // Not a blocker — sent so the scenario can flag implausibly fast
+      // submissions without this page deciding a real person was a bot.
+      if (elapsed) elapsed.value = String(Date.now() - loadedAt);
+
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = config.copy.submitting;
+      }
+      if (status) status.hidden = true;
+
+      try {
+        const body = new URLSearchParams();
+        new FormData(form).forEach((value, key) => {
+          if (key !== 'website') body.append(key, String(value));
+        });
+
+        const response = await fetch(config.endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: body.toString(),
+        });
+        if (!response.ok) throw new Error(`Webhook responded ${response.status}`);
+
+        if (grid) grid.hidden = true;
+        if (actions) actions.hidden = true;
+        setStatus(config.copy.successHeading, config.copy.successBody, 'success', false);
+        status?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (error) {
+        console.error('[FORM] enquiry submit failed', error);
+        setStatus(config.copy.errorHeading, config.copy.errorBody, 'error', true);
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = config.copy.submit;
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .enquiry {
+    padding-block: var(--space-2xl);
+  }
+
+  .enquiry--muted {
+    background: var(--color-surface-muted);
+  }
+
+  .enquiry__inner {
+    max-width: var(--container-narrow);
+  }
+
+  .enquiry__intro {
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Both levels, because `headingLevel` swaps the tag — an `h2`-only
+     selector would silently drop the spacing on the page-opener variant. */
+  .enquiry__intro :is(h1, h2) {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* Same treatment as Hero's and CallToAction's kickers — same idea, same
+     visual language, deliberately not shared code for one declaration
+     block (CallToAction.astro makes the same call, in the same words). */
+  .enquiry__kicker {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-small);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    opacity: 0.75;
+  }
+
+  /* Two columns, the wireframe's pairing: name / name, email / phone,
+     service / area, then the message across both. */
+  .enquiry__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .field--full {
+    grid-column: 1 / -1;
+  }
+
+  /* The browser's own `[hidden] { display: none }` is a UA rule, and ANY
+     author `display` declaration outranks it. `.enquiry__grid` sets
+     `display: grid` and `.field` sets `display: flex`, so without these two
+     lines `grid.hidden = true` on a successful submit would hide nothing and
+     the thank-you would appear below a form that is still sitting there. */
+  .enquiry__grid[hidden],
+  .field[hidden] {
+    display: none;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    min-width: 0;
+  }
+
+  .field__label {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-base);
+    color: var(--color-on-surface);
+  }
+
+  .field__req {
+    /* Mint is decorative here and never the only signal — every required field
+       also carries a visually-hidden "(required)" and the `required`
+       attribute, so the asterisk's contrast is not load-bearing. */
+    color: var(--color-accent);
+    margin-inline-start: 0.15em;
+  }
+
+  /* Inline, NOT a block on its own line. Two fields share a grid row, and a
+     label that wraps to two lines on one side pushes that field's input down
+     out of line with its neighbour's — "Last Name (optional)" beside "First
+     Name" is exactly that case. Inline keeps every label one line, so the
+     inputs stay on a shared baseline. */
+  .field__optional {
+    font-family: var(--font-body);
+    font-weight: var(--weight-body);
+    font-size: var(--text-small);
+    opacity: 0.75;
+    margin-inline-start: 0.35em;
+  }
+
+  .field__control {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--color-on-surface);
+    background: var(--color-surface);
+    /* NOT --color-border-muted (#D8D8D8). On the default cream band the
+       fields are Off White on Cream — two neighbouring light neutrals, about
+       1.1:1 apart — so the border is the ONLY thing that makes a field look
+       like a field, and a light grey one disappears against both. A tinted
+       Dark Teal edge is what the mockup's crisp box outline does on its own
+       much whiter background. Checked in the browser at both themes, not
+       just reasoned about. */
+    border: 1px solid color-mix(in srgb, var(--color-on-surface) 28%, transparent);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard);
+  }
+
+  .field__control::placeholder {
+    color: var(--color-body);
+    opacity: 0.6;
+  }
+
+  .field__control:hover {
+    border-color: color-mix(in srgb, var(--color-on-surface) 60%, transparent);
+  }
+
+  .field__control.is-invalid {
+    /* Not colour alone: the field also gets aria-invalid and a text message
+       below it, so the state survives a reader who cannot see the border. */
+    border-color: #A3341F;
+    box-shadow: 0 0 0 1px #A3341F;
+  }
+
+  .field__control--textarea {
+    resize: vertical;
+    min-height: 9rem;
+  }
+
+  /* The native select arrow differs per platform and cannot be styled, so it
+     is removed and redrawn — otherwise the two dropdowns are visibly a
+     different control from the four inputs beside them. */
+  .field__select-wrap {
+    position: relative;
+    display: flex;
+  }
+
+  .field__control--select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-inline-end: var(--space-xl);
+    cursor: pointer;
+  }
+
+  .field__chevron {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: var(--space-md);
+    margin-block: auto;
+    width: 20px;
+    height: 20px;
+    color: var(--color-on-surface);
+    pointer-events: none;
+  }
+
+  .field__error {
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    color: #A3341F;
+  }
+
+  /* Off-screen rather than display:none — see the markup note. */
+  .enquiry__trap {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .enquiry__status {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-muted);
+    background: var(--color-surface);
+  }
+
+  .enquiry__status[data-tone='success'] {
+    border-color: var(--color-accent);
+  }
+
+  .enquiry__status[data-tone='error'] {
+    border-color: #A3341F;
+  }
+
+  .enquiry__status-heading {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--title-7);
+    color: var(--color-on-surface);
+    margin-bottom: var(--space-3xs);
+  }
+
+  .enquiry__fallback {
+    margin-top: var(--space-xs);
+    padding-inline-start: var(--space-md);
+  }
+
+  .enquiry__actions {
+    margin-top: var(--space-md);
+  }
+
+  /* mirrors --bp-md */
+  @media (max-width: 768px) {
+    .enquiry__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
