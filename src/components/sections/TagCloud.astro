@@ -147,9 +147,18 @@ const headingId = `tag-cloud-heading-${Math.random().toString(36).slice(2, 9)}`;
     margin-block: var(--space-sm) var(--space-md);
   }
 
+  /* `grid-auto-rows: 1fr` so every pill in the grid is the same height, not
+     just every pill in its own row. Without it a row holding a label that
+     wraps to two lines ("Strata and common area cleaning") is taller than a
+     row of one-liners below it, and the section reads as four differently
+     sized bands. With it, all rows take the tallest row's height and the
+     tags' own `height: 100%` fills each cell. Rows are auto-placed, so this
+     is the track sizing that applies; it holds at every breakpoint,
+     including the one-column phone layout. */
   .tag-cloud__list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 1fr;
     gap: var(--space-sm);
     width: 100%;
     margin-block: var(--space-md);
