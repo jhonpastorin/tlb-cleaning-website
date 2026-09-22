@@ -88,23 +88,68 @@ import {
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
-import { nswLocationGroups } from '../../data/locations';
+// Brief §18. Southern Gold Coast was dropped from this page's town band and
+// the subheading trimmed to match. Confirmed with the client as a BUILD
+// REGRESSION rather than a deliberate footprint decision, so the three-region
+// band is restored: BFD 2.1 requires the whole footprint named and the
+// do-not-touch rules treat a trimmed list as a regression rather than a
+// choice. Same band the commercial carpet and commercial pressure pages
+// already render.
+//
+// This matters commercially HERE more than anywhere: the industrial estates at
+// Tweed Heads South, Chinderah and across the border are exactly the sites
+// this page is written for, and dropping the Gold Coast group removed the half
+// of that corridor sitting in Queensland.
+import { locationGroups, locationSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
-// §0 Metadata. "Warehouse cleaning" is the head term and leads; "industrial"
-// is in the title because a light-industrial tenancy owner does not call
-// their unit a warehouse.
+// §0 Metadata. Title and description are the SIGNED-OFF workbook text
+// (Keyword Mapping & Metadata, sheet 1 row 37), reproduced verbatim. The old
+// title carried neither "commercial" nor "services", so the mapped primary
+// `commercial warehouse cleaning services` (60/mo) was absent; the old
+// description ran 24 characters over, so the crib room and amenities clause —
+// the page's whole argument — was the part being truncated.
+//
+// The approved meta is better than the old one on substance as well as
+// length: leading with amenities rather than aisles matches the section this
+// page spends most of its effort on, and it carries `commercial and
+// industrial cleaning services` (50/mo) in substance through "industrial".
+//
+// ⚠️ CHANGE REQUEST FOR THE WORKBOOK OWNER, not blocking. The approved title
+// drops "industrial" entirely, which is half of what this page sells, and the
+// mapped secondary at 50/mo is 45% of this row's demand. The old title got the
+// scope right and the keyword wrong; the approved one does the reverse.
+// Suggested replacement, 56 characters:
+//   'Commercial Warehouse & Industrial Cleaning | TLB Cleaning'
+// Until that is decided, the eyebrow label in §1 is the only thing above the
+// fold still naming half the service, which is why it is left alone.
 const pageMeta = {
-  title: 'Warehouse and Industrial Cleaning | TLB Cleaning',
+  title: 'Commercial Warehouse Cleaning Services | TLB Cleaning',
   description:
-    'Warehouse and industrial cleaning across the Northern Rivers and the Tweed. Aisles machine scrubbed, docks and racking cleared, and the crib room and amenities done properly.',
+    'Warehouse and industrial cleaning for amenities, offices, floors and racking, scheduled around your shifts. Talk to us about your site today.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
   canonical: 'https://tlbcleaning.com.au/commercial-cleaning/warehouse-and-industrial-cleaning/',
 };
 
-const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+// Brief §7. The approved workbook CTA is the full sentence `Talk to us about
+// your site today`, which at 32 characters is long for a button: per Rule 4
+// the sentence goes in the closing block's lead-in and the button takes its
+// imperative core at 26. Both come from the same approved text. One primary
+// CTA, repeated, per BFD 9.5.
+//
+// ⚠️ WORTH THE SAME REVIEW as the kitchen and hospitality CTAs, not blocking.
+// The label this replaces, `Book a site walkthrough` (walkthroughCtaLabel in
+// data/premises.ts, still used by the sibling premises pages), is the more
+// specific ask, and this page makes the walkthrough case explicitly by listing
+// the four things it looks at. `Talk to us about your site` is softer. It is
+// placeable and it is placed.
+//
+// No BFD 13.2 conflict on this page: there is no `Get an instant quote` on it
+// and the pricing block promises a walkthrough and a written scope.
+const walkthroughCta = { label: 'Talk to us about your site', href: quoteCta.href };
+const primaryCtaSentence = 'Talk to us about your site today.';
 
 // §1 Hero. `full-width-photo` — a warehouse aisle is an establishing shot and
 // the scale of the space is the thing a manager is checking for. Same
@@ -113,9 +158,29 @@ const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
 // ⚠️ GENERATED, NOT PHOTOGRAPHED, and note the hi-vis exception above.
 const hero = {
   kicker: 'Warehouse and industrial cleaning',
-  headingLines: ['A concrete floor', 'is not a mopping job.'],
+  // Brief §4. The mapped primary `commercial warehouse cleaning services`
+  // (60/mo) appeared nowhere in the old H1, and the H1 is scored present or
+  // absent. Region is the extension, because this is the only heading slot on
+  // the page that can carry it and the page otherwise never says where it
+  // works above the fold.
+  //
+  // The old line — the best single sentence on the page — is not cut. It opens
+  // the lead, because it works as a flat contradiction of an assumption and
+  // adding six words to it kills the timing.
+  headingLines: ['Commercial warehouse cleaning services', 'across the Northern Rivers and the Tweed'],
+  // Brief §5. Rule 5's second slot, which this page did not have. Its
+  // extension is the PRICING STRUCTURE rather than the H1's region, and it
+  // puts the page's central commercial argument above the fold: the floor and
+  // the amenities are two different jobs and a good quote prices them
+  // separately. The body says that three times and never before the scroll.
+  subheading: 'Commercial warehouse cleaning services priced by zone, floor and amenities separately',
+  // Brief §6. The region comes out because the new H1 carries it. "Amenities
+  // done properly" becomes "the crib room and bathrooms done daily", which is
+  // more specific and matches the section the page argues hardest, and "a
+  // scope that says which is which" gains "written", which is the word the
+  // pricing block relies on.
   lead:
-    `Warehouse and industrial cleaning across the Northern Rivers and the Tweed. Aisles machine scrubbed, docks and racking cleared, amenities done properly, and a scope that says which is which. ${theLine.fast}`,
+    `A concrete floor is not a mopping job. Aisles machine scrubbed, racking and docks cleared, the crib room and bathrooms done daily, and a written scope that says which is which. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -128,7 +193,10 @@ const hero = {
 // §2 Definition. Answer-target block. Paragraph two names the split that the
 // rest of the page is built on and that most quotes silently get wrong.
 const definitionBody: TextBlockBody[] = [
-  'Warehouse and industrial cleaning is the scheduled cleaning of a storage, distribution or light-industrial site: the floor and aisles, racking and shelving, the loading dock and hardstand, mezzanine offices, and the crib room, bathrooms and locker areas your team uses every shift. TLB Cleaning does this work across the Northern Rivers and the Tweed.',
+  // Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
+  // points and needs the mapped phrase inside the first two sentences. Four
+  // words changed does it; the scope list is untouched.
+  'Commercial warehouse cleaning services cover the scheduled cleaning of a storage, distribution or light-industrial site: the floor and aisles, racking and shelving, the loading dock and hardstand, mezzanine offices, and the crib room, bathrooms and locker areas your team uses every shift. TLB Cleaning does this work across the Northern Rivers and the Tweed.',
   'It is two jobs in one contract and they have almost nothing in common. The floor is a machine job on a large area with a forklift moving through it, priced on square metres and access. The amenities are a small, detailed, daily job priced on fixtures. Quotes get compared badly because one contractor has assumed the amenities are included and another has not, so the useful thing to settle first is which of the two you are actually buying.',
 ];
 
@@ -157,7 +225,7 @@ const definitionBody: TextBlockBody[] = [
 const boundaryCallout = {
   heading: 'Four things we will say no to, and you should want us to.',
   body: [
-    'Working at height. Dusting the top of racking, cleaning high-bay light fittings or getting to the underside of a roof needs an elevating work platform and the training and licensing that goes with operating one, plus a fall-prevention plan for the site. [Whether TLB will do any work at height. Confirm — the likely honest answer is no.] Driving your forklift or a reach truck to get us up there is not a workaround; that needs a high risk work licence.',
+    'Working at height. Dusting the top of racking, cleaning high-bay light fittings or getting to the underside of a roof needs an elevating work platform and the training and licensing that goes with operating one, plus a fall-prevention plan for the site. [Whether TLB will do any work at height. Confirm, the likely honest answer is no.] Driving your forklift or a reach truck to get us up there is not a workaround; that needs a high risk work licence.',
     'Racking inspection, and spills of anything we cannot identify. A cleaner who notices a bent upright should tell you, and ours will, but a racking inspection is an engineering assessment and no cleaning contract substitutes for one. And if something has leaked and nobody can tell us what it is, we stop and we come and find you. Your emergency procedure and the Safety Data Sheet decide what happens next, not a mop and a guess. A contractor who cleans it up anyway is doing you harm with good intentions.',
   ],
 };
@@ -396,7 +464,7 @@ const nonBrandedFaqItems = [
 const closingCta = {
   kicker: 'Warehouse and industrial cleaning',
   heading: 'We will look at the crib room too.',
-  lead: 'A walk of the site at the floor, the racking, the dock and the amenities. Then a written scope split by zone, with the floor and the amenities priced separately so you can see both.',
+  lead: `A walk of the site at the floor, the racking, the dock and the amenities. Then a written scope split by zone, with the floor and the amenities priced separately so you can see both. ${primaryCtaSentence}`,
   cta: walkthroughCta,
 };
 
@@ -417,6 +485,7 @@ const business = commercialBusiness(pageMeta.description);
       variant="full-width-photo"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -433,7 +502,7 @@ const business = commercialBusiness(pageMeta.description);
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What goes on the scope"
+      heading="What our commercial warehouse cleaning services cover, zone by zone"
       lead="Grouped by zone, in the order you would walk the site. The floor and the amenities are two different jobs and a good quote prices them separately."
       items={zoneItems}
       cta={walkthroughCta}
@@ -478,8 +547,8 @@ const business = commercialBusiness(pageMeta.description);
 
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers and the Tweed."
-      groups={nswLocationGroups}
+      subheading={locationSubheading}
+      groups={locationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -500,7 +569,14 @@ const business = commercialBusiness(pageMeta.description);
       body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    {/* Brief §20. The six questions here are about site induction, shift
+        timing, machine use, forklifts, pallet wrap and what happens on
+        contact — all pre-booking questions. The carpet, kitchen and pressure
+        pages already use this pattern, so this brings the page into line with
+        its siblings and keeps the exact primary out of a fourth heading slot.
+        The second heading stays: it carries "warehouse cleaning" but has
+        neither "commercial" nor "services", so it is not a fourth instance. */}
+    <Faq heading="Booking a warehouse clean" items={brandedFaqItems} />
     <Faq heading="Warehouse Cleaning FAQs" items={nonBrandedFaqItems} />
 
     <CallToAction

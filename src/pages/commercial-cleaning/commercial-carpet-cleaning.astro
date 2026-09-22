@@ -200,16 +200,25 @@ const hero = {
   // 15 points scored present or absent, and the old line is good writing that
   // still lands one line lower.
   headingLines: ['Commercial carpet cleaning services, done after you close'],
-  // Brief §5 and §6, in that order. The demoted H1 opens the lead, so it is
-  // still the first thing under the headline, and the hero paragraph follows.
-  // Hero has no separate subheading slot — `headingLines` all render inside
-  // the one <h1>, which is where a second line would be wrong — so the two
-  // run as one lead paragraph rather than as a new component prop.
+  // Brief §5. Rule 5's second slot, which this page did not have. An earlier
+  // note here said Hero had no subheading prop; it does — Hero.astro renders
+  // `subheading` directly beneath the <h1> and above the lead, outside the
+  // heading, which is exactly where this belongs.
   //
-  // The mapped phrase now sits contiguously inside the first two sentences,
-  // which is the 10-point opening-paragraph component.
+  // Its extension is the PREMISES TYPE, distinct from the H1's timing, and it
+  // puts the four buyer types above the fold. That supports
+  // `office carpet cleaning services` (200/mo) — the largest term on this row,
+  // larger than the mapped primary itself — and carries
+  // `carpet cleaning services for offices` (20/mo).
+  subheading: 'Commercial carpet cleaning services for offices, clinics, venues and strata',
+  // Brief §6. The old paragraph repeated the H1's exact phrase and then the
+  // new subheading's premises list, so it said the same thing a third time
+  // directly beneath two lines that had already said it. What replaces it is
+  // the method choice, which the headings do not carry and which the process
+  // section spends a whole sub-section on. "Your carpet is the first thing
+  // anyone walks on" stays — it is the best opening line on the page.
   lead:
-    `Your carpet is the first thing anyone walks on. Commercial carpet cleaning services for offices, clinics, venues and strata across the Northern Rivers and the Tweed. Done after you close, dry before you open. ${theLine.fast}`,
+    `Your carpet is the first thing anyone walks on. Extraction where the floor has the night to dry, and a low moisture method where it does not, across the Northern Rivers and the Tweed. ${theLine.fast}`,
   cta: { label: primaryCta.label, href: quoteCta.href },
   image: {
     ratio: '1/1',
@@ -224,7 +233,11 @@ const hero = {
 // ("carpet steam cleaning", "hot water extraction") so this one page can
 // answer all three queries instead of three thin pages competing.
 const definitionBody: TextBlockBody[] = [
-  'Commercial carpet cleaning is the deep cleaning of carpet in a workplace, usually by hot water extraction, done outside trading hours so the floor is dry before your team or your customers arrive. It lifts the grit, oils and traffic marks that vacuuming alone leaves behind. TLB Cleaning cleans commercial carpet across the Northern Rivers and the Tweed.',
+  // Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
+  // points and needs the mapped phrase inside the first two sentences. The
+  // phrase was here without the word "services", so two words fix it, and the
+  // third sentence keeps `commercial carpet` as a variant.
+  'Commercial carpet cleaning services cover the deep cleaning of carpet in a workplace, usually by hot water extraction, done outside trading hours so the floor is dry before your team or your customers arrive. It lifts the grit, oils and traffic marks that vacuuming alone leaves behind. TLB Cleaning cleans commercial carpet across the Northern Rivers and the Tweed.',
   'Carpet steam cleaning and hot water extraction are the same job under two names. The machine heats water, injects it into the pile under pressure and vacuums it straight back out with the soil in it. Nothing is steamed in the literal sense, so a cleaner who leans hard on the word is selling the word rather than the method.',
 ];
 
@@ -559,6 +572,7 @@ const closingCta = {
       imagePosition="right"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -576,7 +590,7 @@ const closingCta = {
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What a carpet clean actually involves"
+      heading="What our commercial carpet cleaning services involve, stage by stage"
       lead="Six stages, in this order. Skip the first two and the rest is just wet carpet."
       items={scopeItems}
       cta={{ label: primaryCta.label, href: quoteCta.href }}
@@ -617,7 +631,7 @@ const closingCta = {
         between "Worth knowing" and the related pages. */}
 
     <TagCloud
-      heading="Where we provide commercial carpet cleaning services"
+      heading="Where we work, and the premises we cover"
       subheading="Commercial carpet cleaning for workplaces across the Northern Rivers and the Tweed."
       tags={settingTags}
       note={[]}

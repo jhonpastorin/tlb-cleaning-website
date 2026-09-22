@@ -78,23 +78,69 @@ import {
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
-import { nswLocationGroups } from '../../data/locations';
+// Brief §17. Southern Gold Coast was dropped from this page's town band and
+// the subheading trimmed to match. Confirmed with the client as a BUILD
+// REGRESSION rather than a deliberate commercial footprint decision, so the
+// three-region band is restored here: BFD 2.1 requires towns named across the
+// whole footprint, and the do-not-touch rules treat a trimmed list as a
+// regression rather than a choice. This is the same band the commercial carpet
+// and commercial pressure pages already render, so it restores consistency
+// rather than inventing anything.
+//
+// ⚠️ THE OTHER COMMERCIAL PAGES HAVE THE SAME REGRESSION and are out of scope
+// for this brief. Only commercial carpet and commercial pressure kept the
+// three-region band; every other page importing `nswLocationGroups` needs the
+// same audit. See the flags in commercial-kitchen-cleaning-copy-rewrite.md.
+import { locationGroups, locationSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
-// §0 Metadata. The description names the boundary rather than hiding it,
-// because a chef searching for a canopy certificate should be able to tell
-// from the search result that this is not that page.
+// §0 Metadata. Title and description are the SIGNED-OFF workbook text
+// (Keyword Mapping & Metadata, sheet 1 row 32), reproduced verbatim. The old
+// title stopped one word short of the mapped primary
+// `commercial kitchen cleaning services` (200/mo); the old description ran to
+// 235 characters, 85 over the limit and the longest of the eighteen pages
+// reviewed in this project.
+//
+// ⚠️ NOTE WHAT THE APPROVED META GIVES UP: the ductwork boundary. The old
+// description tried to set that expectation in the search result and could not
+// fit it — it was being truncated by roughly its last third, which is the
+// worst possible sentence to lose, because it is the one managing the
+// expectation the hood secondary creates. The right home for it is the page,
+// which handles it in a dedicated section (§3) plus FAQ 2. Neither needed
+// changing, but the boundary now lives only on the page.
 const pageMeta = {
-  title: 'Commercial Kitchen Cleaning | TLB Cleaning',
+  title: 'Commercial Kitchen Cleaning Services | TLB Cleaning',
   description:
-    'Periodic deep cleaning for commercial kitchens across the Northern Rivers and the Tweed. Floors, drains, walls and behind the equipment, done between services. Canopy ductwork certification is a separate trade and we will tell you who.',
+    'Commercial kitchen cleaning for cafes, pubs and restaurants: floors, walls, cool rooms and equipment. Scheduled around service. Get a quote.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
   canonical: 'https://tlbcleaning.com.au/commercial-cleaning/commercial-kitchen-cleaning/',
 };
 
-const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+// Brief §7. The approved workbook CTA is `Get a quote`, so per Rule 4 it goes
+// on every in-page button. At eleven characters it fits easily. One primary
+// CTA, repeated, per BFD 9.5, which this page was already doing with a
+// different label.
+//
+// ⚠️ CHANGE REQUEST FOR THE WORKBOOK OWNER, not blocking. `Get a quote` is the
+// weakest CTA of the ten commercial pages and names nothing. The label it
+// replaces, `Book a site walkthrough` (walkthroughCtaLabel in data/premises.ts,
+// still used by the sibling premises pages), is materially better HERE: this
+// page argues at length that a kitchen has to be walked when it is cold with a
+// floor grate lifted, and that label is the argument on a button. Suggested
+// replacement: `Book a kitchen walkthrough`, 26 characters, which keeps the
+// stronger ask while being specific to the service.
+//
+// The cost of the approved wording is visible in the closing block below: its
+// lead-in describes a walkthrough and the button now says "Get a quote". If
+// the workbook adopts the replacement, that block reads correctly again with
+// no further edit.
+//
+// No BFD 13.2 conflict either way: there is no `Get an instant quote` on this
+// page, the pricing block promises a walkthrough and a written scope, and
+// `Get a quote` asks for a quote rather than promising an instant price.
+const walkthroughCta = { label: 'Get a quote', href: quoteCta.href };
 
 // §1 Hero. `split-single-image`, image left — mirroring the aged care page,
 // and for the same reason: the reader's real question is whether this looks
@@ -104,9 +150,31 @@ const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
 // ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
 const hero = {
   kicker: 'Commercial kitchen cleaning',
-  headingLines: ['Your brigade cleans nightly.', 'This is the other clean.'],
+  // Brief §4. The mapped primary `commercial kitchen cleaning services`
+  // (200/mo) appeared nowhere in the old H1, and the H1 is scored present or
+  // absent. The extension is the premises list, taken straight from the
+  // approved meta so the search result and the page agree on who this is for.
+  //
+  // The old line — the sharpest distinction on any of the ten commercial
+  // pages — is not cut. It opens the lead, because it works by setting two
+  // clauses against each other and the mapped phrase belongs to neither.
+  headingLines: ['Commercial kitchen cleaning services', 'for cafes, pubs and restaurants'],
+  // Brief §5. Rule 5's second slot, which this page did not have. Its
+  // extension is the TIMING rather than the H1's premises list, and "between
+  // services, not during them" is lifted from the page's own opening
+  // paragraph, so the subheading and the body say the same thing in the same
+  // words. It also answers the first objection a venue has to any contractor:
+  // lost trading hours.
+  subheading: 'Commercial kitchen cleaning services done between services, not during them',
+  // Brief §6. The timing phrase comes out of the lead because the subheading
+  // now carries it. What replaces it is the thing that actually defines the
+  // service and that the nightly close-down cannot do: a cold kitchen with the
+  // line pulled out. "Periodic deep cleaning" is dropped from the opening
+  // position because `commercial kitchen deep cleaning services` (50/mo) is
+  // better served by the FAQ block, which covers deep cleaning intervals at
+  // length.
   lead:
-    `Periodic deep cleaning for commercial kitchens across the Northern Rivers and the Tweed. Behind the equipment, under the benches, into the drains, done between services rather than during them. ${theLine.fast}`,
+    `Your brigade cleans nightly. This is the other clean. Behind the equipment, under the benches and into the drains, across the Northern Rivers and the Tweed, on the visit that needs the kitchen cold and the line pulled out. ${theLine.fast}`,
   cta: walkthroughCta,
   image: {
     ratio: '16/9',
@@ -375,7 +443,7 @@ const nonBrandedFaqItems = [
 const closingCta = {
   kicker: 'Commercial kitchen cleaning',
   heading: 'We will look behind the line.',
-  lead: 'A walkthrough while the kitchen is cold, a lifted floor grate, and an honest answer about what is actually there. Then a written scope, a price per clean and a recommended interval.',
+  lead: 'A walkthrough while the kitchen is cold, a lifted floor grate, and an honest answer about what is actually there. Then a written scope, a price per clean and a recommended interval. Get a quote.',
   cta: walkthroughCta,
 };
 
@@ -397,6 +465,7 @@ const business = commercialBusiness(pageMeta.description);
       imagePosition="left"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -424,7 +493,7 @@ const business = commercialBusiness(pageMeta.description);
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What goes on the scope"
+      heading="What our commercial kitchen cleaning services cover"
       lead="Grouped by what makes each part hard, which is the grouping a chef recognises and a quote usually hides."
       items={scopeItems}
       cta={walkthroughCta}
@@ -455,8 +524,8 @@ const business = commercialBusiness(pageMeta.description);
 
     <TagCloud
       heading="Where we clean"
-      subheading="Across the Northern Rivers and the Tweed."
-      groups={nswLocationGroups}
+      subheading={locationSubheading}
+      groups={locationGroups}
       note={["If a town isn't listed, ask us anyway."]}
     />
 
@@ -477,7 +546,19 @@ const business = commercialBusiness(pageMeta.description);
       body={[managedForYou.recurring, ...theLineBody.commercial]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
+    {/* Brief §19. The six questions here are about when TLB is in the
+        kitchen, the canopy boundary, frequency, cool room stock, chemicals and
+        what happens on contact — all pre-booking questions. The carpet and
+        pressure pages already use "Booking a commercial carpet clean" and
+        "Booking a commercial pressure clean" for the same block, so this
+        brings the kitchen page into line with its siblings. It carries
+        `commercial kitchen deep cleaning services` (50/mo) in substance
+        through "deep clean", and keeps the exact primary out of a fourth
+        heading slot — the H1, subheading and scope H2 have spent the three the
+        ceiling allows. The second heading stays: it carries
+        `commercial kitchen cleaning` as a phrase but not the mapped primary,
+        because it does not contain "services". */}
+    <Faq heading="Booking a kitchen deep clean" items={brandedFaqItems} />
     <Faq heading="Commercial Kitchen Cleaning FAQs" items={nonBrandedFaqItems} />
 
     <CallToAction

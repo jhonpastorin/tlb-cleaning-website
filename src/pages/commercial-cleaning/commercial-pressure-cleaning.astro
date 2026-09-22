@@ -159,7 +159,16 @@ const pageMeta = {
 // walkthrough produces a written scope and a price, and the approved CTA asks
 // for a quote. Nothing promises a price sight unseen, which is what BFD
 // §13.2 rules out.
-const primaryCta = { label: 'Get a quote for your site' };
+// Brief §7. The button was one word short of the approved workbook CTA,
+// `Get a quote for your site today`, while the closing block's lead-in
+// already ended on the full sentence — so the page was running two slightly
+// different versions of the same CTA in two places. At 31 characters the full
+// version still fits a button. One primary CTA, repeated, per BFD 9.5.
+//
+// No BFD 13.2 conflict on this page: there is no `Get an instant quote`
+// anywhere on it, and the pricing block promises a walkthrough and a written
+// scope, which is correct for condition-priced work.
+const primaryCta = { label: 'Get a quote for your site today' };
 const primaryCtaSentence = 'Get a quote for your site today.';
 
 const business = {
@@ -225,16 +234,24 @@ const hero = {
   // and naming the three surfaces is the specificity BFD §14 asks for rather
   // than decoration.
   headingLines: ['Commercial pressure cleaning services for car parks, footpaths and bin areas'],
-  // Brief §5 and §6, in that order. The demoted H1 — the single best line on
-  // the page — opens the lead, so it is still the first thing under the
-  // headline, and the hero paragraph follows. Hero has no separate
-  // subheading slot; `headingLines` all render inside the one <h1>.
+  // Brief §5. Rule 5's second slot, which this page did not have. An earlier
+  // note here said Hero had no subheading prop; it does — Hero.astro renders
+  // `subheading` directly beneath the <h1> and above the lead, outside the
+  // heading, which is exactly where this belongs.
   //
-  // The same edit lands the mapped phrase contiguously in the opening
-  // paragraph (10 points) and picks up "walkways" and "forecourts" from the
-  // approved meta, which the live copy promised and never delivered.
+  // Its extension is the TIMING, distinct from the H1's scope. The two
+  // extensions share no words, so this is the phrase a second time rather
+  // than the line a second time. Out-of-hours scheduling is what the approved
+  // meta leads on and what booking FAQ 1 answers.
+  subheading: 'Commercial pressure cleaning services scheduled early, late or on a Sunday',
+  // Brief §6. The old paragraph repeated the H1's exact phrase and almost its
+  // exact extension one line below it, which read as the headline printed
+  // twice. The new subheading now carries the second instance with a
+  // different extension, so the paragraph drops the phrase and keeps the
+  // argument. "Your building is judged from the footpath" stays — it is the
+  // best opening line on any of the commercial pages.
   lead:
-    `Your building is judged from the footpath. Commercial pressure cleaning services for car parks, walkways, forecourts, bin areas and building exteriors. Across the Northern Rivers and the Tweed, cleaned early, late or on a Sunday, so you never close for it. ${theLine.fast}`,
+    `Your building is judged from the footpath. Car parks, walkways, forecourts, bin areas and building exteriors across the Northern Rivers and the Tweed, cleaned so you never have to close for it. ${theLine.fast}`,
   cta: { label: primaryCta.label, href: quoteCta.href },
   image: {
     ratio: '1/1',
@@ -250,7 +267,12 @@ const hero = {
 // introduces soft washing, which is the distinction most competitor pages in
 // this category get wrong.
 const definitionBody: TextBlockBody[] = [
-  'Commercial pressure cleaning is the cleaning of outdoor hard surfaces at a workplace with pressurised water. Car parks, driveways, loading docks, footpaths, entries, bin areas, awnings, render and shopfronts. It removes the grime, algae, moss, oil and chewing gum that build up on any site the public walks across. TLB Cleaning provides commercial pressure cleaning across the Northern Rivers and the Tweed.',
+  // Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
+  // points and was the only one of the eight components this page failed,
+  // because the phrase appeared here without the word "services". Two words
+  // fix it, and the fourth sentence keeps `commercial pressure cleaning` as a
+  // variant so nothing is lost.
+  'Commercial pressure cleaning services cover the outdoor hard surfaces at a workplace, cleaned with pressurised water. Car parks, driveways, loading docks, footpaths, entries, bin areas, awnings, render and shopfronts. It removes the grime, algae, moss, oil and chewing gum that build up on any site the public walks across. TLB Cleaning provides commercial pressure cleaning across the Northern Rivers and the Tweed.',
   'Pressure cleaning, pressure washing and high pressure cleaning all describe the same work. Soft washing is the one that is genuinely different: low pressure and a cleaning solution instead of force, used on render, painted surfaces, cladding and roofs where high pressure would strip or gouge. A competent operator uses both and knows which surface takes which.',
 ];
 
@@ -615,6 +637,7 @@ const closingCta = {
       imagePosition="right"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -635,7 +658,7 @@ const closingCta = {
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What a pressure clean actually involves"
+      heading="What our commercial pressure cleaning services involve, stage by stage"
       lead="Six stages, in this order. The last two are what you are really paying for."
       items={scopeItems}
       cta={{ label: primaryCta.label, href: quoteCta.href }}
@@ -676,7 +699,7 @@ const closingCta = {
         pages. */}
 
     <TagCloud
-      heading="Where we provide commercial pressure cleaning services"
+      heading="Where we work, and the premises we cover"
       subheading="Outdoor hard surfaces for workplaces across the Northern Rivers and the Tweed. Office car parks and entries, retail forecourts, industrial hardstand, strata common areas and school grounds."
       tags={settingTags}
       note={[]}
