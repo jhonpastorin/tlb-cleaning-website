@@ -80,16 +80,37 @@ import { comparisonColumns, comparisonRows } from '../../data/comparison';
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherApplianceServices } from '../../data/appliance-services';
+// The five exterior pages, for the cross-sell grid. See the note above
+// crossSellItems.
+import { outsideServices } from '../../data/outsideYourHome';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 const OWN_HREF = '/house-cleaning/mattress-cleaning/';
 
 const pageMeta = {
-  // ⚠️ No health language in the description either. This is the field most
-  // likely to have "healthier sleep" quietly added to it later. Do not.
-  title: 'Mattress Cleaning | TLB Cleaning',
+  // Title is the SIGNED-OFF workbook text (Keyword Mapping & Metadata, sheet 1
+  // row 9), verbatim. The old one stopped a single word short of the mapped
+  // primary `mattress cleaning service` (500/mo).
+  //
+  // 🔴 THE DESCRIPTION IS NOT THE APPROVED TEXT, and that is deliberate. The
+  // signed-off wording is:
+  //   'Professional mattress cleaning that treats stains, sweat, dust mites and
+  //    odour. Dry in hours, not days. Book a mattress clean for your home today.'
+  // It promises a dust-mite treatment. This page refuses to make that claim in
+  // its own first non-branded FAQ ("we will not make claims about mites or what
+  // they do"), the DO NOT ADD list at the top of this file bars it outright,
+  // and BFD 2.4 does not authorise any health or biological claim. Shipping it
+  // would sell a mite treatment in the search result and withdraw it on
+  // arrival. mattress-cleaning-copy-rewrite.md flags this as blocking and rules
+  // that the flag wins over the specification for this one field; the text
+  // below is that file's proposed replacement, at 147 characters, which keeps
+  // `professional mattress cleaning` (500/mo) and the approved CTA and drops
+  // only the claim the page will not make.
+  //
+  // FOR THE WORKBOOK OWNER: resolve the meta. Do not soften the FAQ to match it.
+  title: 'Mattress Cleaning Service | TLB Cleaning',
   description:
-    'Mattress cleaning across the Northern Rivers and the Tweed. A low moisture clean for the one thing in the house that never gets washed, dry by bedtime.',
+    'Professional mattress cleaning that lifts stains, sweat and odour from the one thing nobody ever washes. Book a mattress clean for your home today.',
   canonical: 'https://tlbcleaning.com.au/house-cleaning/mattress-cleaning/',
 };
 
@@ -111,12 +132,39 @@ const business = {
   description: pageMeta.description,
 };
 
+// The page's one primary CTA, per BFD 9.5, repeated on every in-page button.
+// The approved workbook CTA is the full sentence `Book a mattress clean for
+// your home today`, which at 41 characters will not fit a button: per Rule 4
+// the sentence goes in the closing block's lead-in and the button takes its
+// imperative core. Both come from the same approved text, so the words stay on
+// the page either way.
+//
+// It also resolves a BFD 13.2 conflict: the old `Get an instant quote`
+// promised instant pricing on a page whose own pricing block says the honest
+// answer is a fast quote. The approved CTA asks for a booking, not a price.
+//
+// The header keeps the site-wide quoteCta — that is chrome, not this page.
+const pageCta = { label: 'Book a mattress clean', href: quoteCta.href };
+const closingCtaSentence = 'Book a mattress clean for your home today.';
+
+// §1 Hero. The H1 now carries the mapped primary `mattress cleaning service`
+// (500/mo) as an exact contiguous phrase — the plural counts as verbatim and
+// reads better in a headline — extended with the region, because `mattress
+// cleaning near me` (300/mo) sits behind the term. The old heading is the best
+// line on the page and is not cut: it opens the lead, which is the only place
+// it survives, because it works by naming two things and the mapped phrase
+// belongs to neither half of it.
+//
+// The subheading is a NEW line. Its extension is the outcome rather than the
+// H1's region, and it leads on drying time because that is the page's central
+// promise and its main objection — branded FAQ 1 says so in as many words.
 const hero = {
   kicker: 'Mattress cleaning',
-  headingLines: ['You wash the sheets every week. The mattress, never.'],
+  headingLines: ['Mattress cleaning services across', 'the Northern Rivers and the Tweed'],
+  subheading: 'Mattress cleaning services booked for the morning, dry in time for bed',
   lead:
-    `Mattress cleaning in your home across the Northern Rivers and the Tweed. A low moisture clean, done in the morning, dry in time for bed. ${theLine.fast}`,
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+    `You wash the sheets every week. The mattress, never. Ours is a mattress cleaning service done in your home with as little moisture as the job needs, so the bed is ready the same evening. ${theLine.fast}`,
+  cta: pageCta,
   image: {
     ratio: '1/1',
     label:
@@ -126,7 +174,11 @@ const hero = {
 };
 
 const definitionBody: TextBlockBody[] = [
-  'Mattress cleaning is the deep cleaning of the mattress itself, not the bedding. It is done in your home with a hand-held extraction tool that puts a controlled amount of solution into the surface and draws it straight back out, so the top layers are cleaned without the mattress being soaked. TLB Cleaning cleans mattresses across the Northern Rivers and the Tweed.',
+  // Opens with the mapped primary as a contiguous phrase — the opening
+  // paragraph is scored on the first two sentences — and picks up
+  // `professional mattress cleaning` (500/mo), which appeared nowhere on the
+  // page before. One clause changed; the rest is untouched.
+  'A professional mattress cleaning service is the deep cleaning of the mattress itself, not the bedding. It is done in your home with a hand-held extraction tool that puts a controlled amount of solution into the surface and draws it straight back out, so the top layers are cleaned without the mattress being soaked. TLB Cleaning cleans mattresses across the Northern Rivers and the Tweed.',
   'It is worth doing because a mattress is the one soft thing in a house that never gets washed. Sheets go through the machine weekly, a mattress protector occasionally, and the mattress underneath absorbs sweat, body oil and skin for eight hours a night for years. Nothing about that is an emergency. It is just a job that quietly never gets done.',
 ];
 
@@ -144,7 +196,7 @@ const pathwayCards = {
       title: 'It has never been cleaned and I have done the maths',
       description:
         'Most mattresses have never been touched since the day they arrived. If yours is five or ten years old and still has years left in it, this is the job that makes it feel looked after rather than tolerated.',
-      cta: { label: 'Get an instant quote', href: quoteCta.href },
+      cta: pageCta,
     },
     {
       number: 2,
@@ -156,7 +208,7 @@ const pathwayCards = {
       title: 'Something happened and it soaked in',
       description:
         'A wet bed, a sick child, a spilled drink. Fresh is far better than dry, so ring us sooner rather than after it has set. We will be straight with you about how deep it has gone.',
-      cta: { label: 'Talk to us', href: '/contact/' },
+      cta: pageCta,
     },
     whoIsInYourHomeCard(cardTeamImg),
   ],
@@ -214,7 +266,35 @@ const worthKnowingBody: TextBlockBody[] = [
   'The other half is timing. We book mattresses in the morning so there is a whole day of airflow before anyone needs the bed, and we would genuinely rather move the booking than hand back something that is still cool to the touch. If a cleaner cannot tell you how long yours will take to dry, they have not thought about the part of the job that matters most.',
 ];
 
+// The cross-sell grid. The five interior siblings, then the five "Outside your
+// home" pages.
+//
+// WHY THE EXTERIOR FIVE WERE ADDED. Window, gutter, roof, high pressure and
+// exterior house washing link each other correctly but have NO working inbound
+// link from anywhere outside their own cluster — the mega-menu's flat URLs for
+// them all 404. This module is where they belong, and it is the cheapest fix
+// available. See scorecard-before.md for the full finding.
+//
+// The blurbs and icons come straight from outsideYourHome.ts, which is the
+// same data the five exterior pages render in their own "The rest of the
+// outside" row, so the wording is consistent site-wide rather than reinvented
+// here. Every href is the nested one, never the flat menu guess.
 const clusterServices = otherApplianceServices(OWN_HREF);
+
+const crossSellItems = [
+  ...clusterServices.map((service) => ({
+    icon: 'spray-bottle' as const,
+    title: service.label,
+    description: service.blurb,
+    href: service.href,
+  })),
+  ...outsideServices.map(({ icon, label, description, href }) => ({
+    icon,
+    title: label,
+    description,
+    href,
+  })),
+];
 
 const testimonials = [
   {
@@ -320,8 +400,8 @@ const nonBrandedFaqItems = [
 const closingCta = {
   kicker: 'Mattress cleaning',
   heading: 'Book it for a morning.',
-  lead: 'We strip it, clean it with as little moisture as the job needs and get air across it, so the bed is ready by the evening. Do the whole house at once if it is easier.',
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+  lead: `We strip it, clean it with as little moisture as the job needs and get air across it, so the bed is ready by the evening. Do the whole house at once if it is easier. ${closingCtaSentence}`,
+  cta: pageCta,
 };
 ---
 
@@ -341,6 +421,7 @@ const closingCta = {
       imageFit="contain-bottom"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -353,12 +434,17 @@ const closingCta = {
 
     <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
 
+    {/* 🔑 The keyword H2. Third exact instance of `mattress cleaning service`,
+        after the H1 and the hero subheading, and the ceiling — the phrase is
+        deliberately kept out of the pricing and FAQ headings, which have their
+        own jobs. Its extension is method, and "stage by stage" describes the
+        five items beneath it accurately. */}
     <ServiceBlocks
       variant="icon-grid"
-      heading="How we clean a mattress"
+      heading="How our mattress cleaning service works, stage by stage"
       lead="Five stages. Putting less water in is the skill, not more."
       items={methodItems}
-      cta={{ label: 'Get an instant quote', href: quoteCta.href }}
+      cta={pageCta}
     />
 
     <Callout tone="note" heading={scopeCallout.heading} body={scopeCallout.body} />
@@ -374,12 +460,7 @@ const closingCta = {
       variant="list"
       heading="Other things we clean around the house"
       lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
-      items={clusterServices.map((service) => ({
-        icon: 'spray-bottle' as const,
-        title: service.label,
-        description: service.blurb,
-        href: service.href,
-      }))}
+      items={crossSellItems}
     />
 
     <ComparisonTable
@@ -416,7 +497,13 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    {/* Renamed: these five are about stripping the bed, drying, old stains,
+        frequency and what happens next, so a generic label undersold them. It
+        also brings this page into line with the carpet page's "Booking a
+        carpet clean". The second heading stays — it carries `mattress
+        cleaning` (1,000/mo), the largest term on the row, and is not a fourth
+        instance of the mapped primary because it lacks "service". */}
+    <Faq heading="Booking a mattress clean" items={brandedFaqItems} />
     <Faq heading="Mattress cleaning FAQs" items={nonBrandedFaqItems} />
 
     <CallToAction

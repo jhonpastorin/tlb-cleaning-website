@@ -89,10 +89,34 @@ import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/
 // §0 Metadata. "Roof cleaning" leads. "Soft washing" is the method and is
 // carried in body copy, because almost nobody searches for it and everybody
 // searches for the problem.
+//
+// Title and description are the SIGNED-OFF workbook text (Keyword Mapping &
+// Metadata, sheet 1 row 15), reproduced verbatim. The old title was the
+// shortest of the eight and left 22 characters unused, dropping
+// `roof cleaning services` (300/mo) and `cleaning roof tiles` (150/mo); the
+// old description ran 33 characters over, so "without high pressure" — the
+// page's entire differentiator — was being truncated out of the result.
+//
+// 🔴 BLOCKS LAUNCH. The approved description states "Fully insured" as a plain
+// fact. BFD 2.4 has insurance unconfirmed and says directly: "Police checked
+// and insured appears in supplied meta descriptions. Confirm both before
+// publishing." §3's third explainer block still renders the literal [insured]
+// placeholder. On a job that means walking on somebody's roof, this is the
+// claim they rely on most. Same finding as the gutter page; one decision
+// resolves both.
+//
+// ⚠️ ALSO WORTH A SECOND LOOK: "without damage". The page argues that case
+// properly across §3, §4 and §5, so it is defensible as a description of what
+// soft washing does rather than a promise about outcome — but BFD 12.2 rules
+// out guarantees of any kind and this is one adjective away from reading as
+// one. Suggested replacement once insurance is confirmed, from
+// roof-cleaning-copy-rewrite.md, at 131 characters:
+//   'Roof cleaning that clears moss, lichen and years of grime from roof tiles
+//    and metal roofs, by soft washing. Get a free quote today.'
 const pageMeta = {
-  title: 'Roof Cleaning | TLB Cleaning',
+  title: 'Roof Cleaning Services - Roof Tiles | TLB Cleaning',
   description:
-    'Roof cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast. Soft washing that kills the algae and lichen at the root, on tile or colorbond, without high pressure.',
+    'Roof cleaning that clears moss, lichen and years of grime from roof tiles and metal roofs, without damage. Fully insured. Get a free quote today.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
   canonical: 'https://tlbcleaning.com.au/house-cleaning/roof-cleaning/',
 };
@@ -115,17 +139,43 @@ const business = {
   description: pageMeta.description,
 };
 
-// §1 Hero. The heading is the sentence people actually say to each other when
-// they pull into the driveway, which is the whole reason this page converts.
+// The page's one primary CTA, per BFD 9.5, repeated on every in-page button.
+// `Get a free quote today` is the approved workbook CTA and it fits a button
+// at 22 characters, so it goes on unchanged.
+//
+// It also resolves a BFD 13.2 conflict: the old `Get an instant quote`
+// promised instant pricing on a page whose own pricing block says the honest
+// answer is a fast quote, and whose last FAQ says the rate moves with pitch,
+// access, roof type and how heavy the growth is. A free quote is a different
+// promise from an instant price and it is one this page can keep. "Free" is
+// not on the BFD banned pricing list, which covers cheap, budget, affordable,
+// competitive rates and premium, so the approved wording is compliant.
+//
+// The header keeps the site-wide quoteCta — that is chrome, not this page.
+const pageCta = { ...quoteCta, label: 'Get a free quote today' };
+
+// §1 Hero. The H1 now carries the mapped primary `roof cleaning` (1,600/mo) as
+// an exact contiguous phrase, extended with the region because
+// `roof cleaning near me` (500/mo) and `roof pressure cleaning near me`
+// (150/mo) sit behind the term. The old heading — the sentence people actually
+// say to each other when they pull into the driveway — is not cut: it opens
+// the lead, which is the only place it survives, because its whole effect
+// comes from withholding the subject until the second clause.
+//
+// The subheading is a NEW line. Its extension is method and material rather
+// than the H1's region, and it puts soft washing and low pressure above the
+// fold, which is the decision this page exists to influence. Branded FAQ 3
+// confirms colorbond belongs in the promise.
 //
 // Scene photo, family A, square source so the 1/1 box crops nothing. The
 // harness is deliberately visible.
 const hero = {
   kicker: 'Roof cleaning',
-  headingLines: ['That black is not dirt.', "It's alive, and it spreads."],
+  headingLines: ['Roof cleaning across the', 'Northern Rivers and the Tweed'],
+  subheading: 'Soft wash roof cleaning for tile and colorbond, at low pressure',
   lead:
-    `Soft washing for tile and colorbond roofs across the Northern Rivers, the Tweed and the Southern Gold Coast. Low pressure, treated at the root, no blasting. ${theLine.fast}`,
-  cta: quoteCta,
+    `That black is not dirt. It's alive, and it spreads. We treat it at the root with low pressure and a solution rather than blasting it off, so the roof stays clear for years instead of a season. ${theLine.fast}`,
+  cta: pageCta,
   image: {
     ratio: '1/1',
     label:
@@ -421,8 +471,8 @@ const nonBrandedFaqItems = [
 const closingCta = {
   kicker: 'Roof cleaning',
   heading: 'Start with a look at it.',
-  lead: 'Send us the address and a photo from the street if you have one. We will tell you what is growing up there, what will come off and what it will cost.',
-  cta: quoteCta,
+  lead: 'Send us the address and a photo from the street if you have one. We will tell you what is growing up there, what will come off and what it will cost. Get a free quote today.',
+  cta: pageCta,
 };
 ---
 
@@ -441,6 +491,7 @@ const closingCta = {
       imagePosition="right"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -463,12 +514,16 @@ const closingCta = {
 
     <Callout tone="warning" heading={pressureCallout.heading} body={pressureCallout.body} />
 
+    {/* 🔑 The keyword H2. Third exact instance of `roof cleaning`, after the
+        H1 and the hero subheading, and the ceiling — the second FAQ heading
+        below gives the phrase up rather than becoming a fourth. Its extension
+        is process, and "stage by stage" describes the six items beneath it. */}
     <ServiceBlocks
       variant="icon-grid"
-      heading="What a roof clean involves"
+      heading="What our roof cleaning involves, stage by stage"
       lead="Six stages, in this order. The last three are the ones people ring about afterwards."
       items={scopeItems}
-      cta={quoteCta}
+      cta={pageCta}
     />
 
     <BeforeAfter
@@ -521,8 +576,16 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
-    <Faq heading="Roof cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Both FAQ headings renamed. The first five questions are about whether
+        it comes back, walking on tiles, colorbond, gardens and pets, and
+        whether TLB also paints — all pre-booking questions, and this matches
+        the carpet page's "Booking a carpet clean". "Roof clean" rather than
+        "roof cleaning" is deliberate: three exact instances is the ceiling and
+        they are spent. The second heading carried the phrase as a fourth, so
+        it gives it up; its replacement describes the block accurately and
+        picks up `cleaning roof tiles` (150/mo), which the old one did not. */}
+    <Faq heading="Booking a roof clean" items={brandedFaqItems} />
+    <Faq heading="Soft washing, roof tiles and what it costs" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

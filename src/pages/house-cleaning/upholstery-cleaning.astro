@@ -62,14 +62,25 @@ import { comparisonColumns, comparisonRows } from '../../data/comparison';
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherApplianceServices } from '../../data/appliance-services';
+// The five exterior pages, for the cross-sell grid. See the note above
+// crossSellItems.
+import { outsideServices } from '../../data/outsideYourHome';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 const OWN_HREF = '/house-cleaning/upholstery-cleaning/';
 
+// §0 Metadata. Title and description are the SIGNED-OFF workbook text
+// (Keyword Mapping & Metadata, sheet 1 row 8), reproduced verbatim. The old
+// title split the mapped primary with "and Lounge", so `upholstery cleaning`
+// (900/mo) was not present as a contiguous phrase; the old description ran 11
+// characters over the limit and omitted the mapped primary entirely.
+//
+// "Your sofa is not the experiment" is the better line and it is not lost — it
+// already lives in the hero paragraph below.
 const pageMeta = {
-  title: 'Upholstery and Lounge Cleaning | TLB Cleaning',
+  title: 'Upholstery Cleaning Services | TLB Cleaning',
   description:
-    'Lounge, armchair and dining chair cleaning across the Northern Rivers and the Tweed. We read the fabric code before we start, so your sofa is not the experiment.',
+    'Upholstery cleaning for lounges, dining chairs and fabric bed heads. Lifts stains, odours and everyday grime. Book alongside your carpet clean.',
   canonical: 'https://tlbcleaning.com.au/house-cleaning/upholstery-cleaning/',
 };
 
@@ -91,12 +102,53 @@ const business = {
   description: pageMeta.description,
 };
 
+// The page's one primary CTA, per BFD 9.5, repeated on every in-page button.
+// `Book alongside your carpet clean` is the approved workbook CTA and it fits
+// a button at 32 characters, so it goes on unchanged rather than being split.
+//
+// It also resolves a BFD 13.2 conflict: the old `Get an instant quote`
+// promised instant pricing on a page whose own pricing block says the honest
+// answer is a fast quote rather than an instant one. The approved CTA asks for
+// a booking rather than a price.
+//
+// ⚠️ NOT BLOCKING, raised for the workbook owner: it asks for a different
+// service than the page sells. Somebody who searched `upholstery cleaning`
+// (900/mo) and wants one lounge done is being told to book a carpet clean,
+// which is a condition they may not meet. It is placeable because the page
+// genuinely supports the combination — the closing block says the job can go
+// on the same visit, and the carpet card already sits first in the cross-sell
+// grid — so it is placed. Suggested replacement if the client would rather ask
+// for the job itself, at 136 characters:
+//   'Upholstery cleaning for lounges, dining chairs and fabric bed heads. Lifts
+//    stains, odours and everyday grime. Book your lounge in today.'
+//
+// The header keeps the site-wide quoteCta — that is chrome, not this page.
+// Routing card 3 keeps `Why TLB`, which is navigation, not this page's CTA.
+const pageCta = { label: 'Book alongside your carpet clean', href: quoteCta.href };
+
+// §1 Hero. The H1 now carries the mapped primary `upholstery cleaning`
+// (900/mo) as an exact contiguous phrase, extended with the region because
+// `upholstery cleaning near me` (400/mo) is the second-largest term on the
+// row. The old heading is good observational writing and is not cut: it opens
+// the lead, because it is two short sentences that work by their rhythm and
+// the mapped phrase does not belong in either.
+//
+// The subheading is a NEW line. Its extension is the method and the objection
+// rather than the H1's region, and it leads on the fabric code because that is
+// the page's entire argument. The phrasing is lifted from §4's own stage 5,
+// "Cleaned to the code, not to a formula", so the subheading and the body say
+// the same thing in the same words.
+//
+// The mapped phrase is NOT repeated a third time in the lead: prose reads
+// better with a variant than with a third exact instance directly under two
+// headings that already carry it.
 const hero = {
   kicker: 'Upholstery and lounge cleaning',
-  headingLines: ['Everyone sits in the same spot. You can see exactly where.'],
+  headingLines: ['Upholstery cleaning across the', 'Northern Rivers and the Tweed'],
+  subheading: 'Upholstery cleaning that follows the fabric code, not a formula',
   lead:
-    `Lounges, armchairs and dining chairs cleaned in your home across the Northern Rivers and the Tweed. We read the fabric code first, so your sofa is not the experiment. ${theLine.fast}`,
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+    `Everyone sits in the same spot. You can see exactly where. Lounges, armchairs, ottomans and dining chairs cleaned in your home, to the code on the label rather than to a formula, so your sofa is not the experiment. ${theLine.fast}`,
+  cta: pageCta,
   image: {
     ratio: '1/1',
     label:
@@ -124,7 +176,7 @@ const pathwayCards = {
       title: 'The lounge has had a hard life',
       description:
         'Head marks along the back, dark patches on the arms, biscuit crumbs in the seams and the faint smell of a dog who is not sorry. That is a normal family lounge and it is exactly what this service is for.',
-      cta: { label: 'Get an instant quote', href: quoteCta.href },
+      cta: pageCta,
     },
     {
       number: 2,
@@ -136,7 +188,7 @@ const pathwayCards = {
       title: 'Something got spilled and I need it gone',
       description:
         'Wine, coffee, milk, a toddler. The sooner we get to it the better the odds, and the worst thing you can do in the meantime is scrub it. Blot it and ring us.',
-      cta: { label: 'Talk to us', href: '/contact/' },
+      cta: pageCta,
     },
     whoIsInYourHomeCard(cardTeamImg),
   ],
@@ -189,7 +241,37 @@ const worthKnowingBody: TextBlockBody[] = [
   'If something goes on your lounge, blot it. Press a clean dry cloth straight down, lift, move to a dry part of the cloth, repeat. Do not rub, do not soak it, do not reach for whatever is under the sink. Then ring someone. Almost everything is recoverable when it is fresh and untouched, and a good proportion of what we cannot fix is damage from the rescue attempt rather than from the spill.',
 ];
 
+// The cross-sell grid. The five interior siblings, then the five "Outside your
+// home" pages.
+//
+// WHY THE EXTERIOR FIVE WERE ADDED. Window, gutter, roof, high pressure and
+// exterior house washing link each other correctly but have NO working inbound
+// link from anywhere outside their own cluster — the mega-menu's flat URLs for
+// them all 404. This module is where they belong. See scorecard-before.md.
+//
+// The blurbs and icons come straight from outsideYourHome.ts, the same data
+// the five exterior pages render in their own "The rest of the outside" row,
+// so the wording is consistent site-wide rather than reinvented here. Every
+// href is the nested one, never the flat menu guess.
+//
+// The carpet card stays first in the grid, which supports the approved CTA
+// rather than working against it.
 const clusterServices = otherApplianceServices(OWN_HREF);
+
+const crossSellItems = [
+  ...clusterServices.map((service) => ({
+    icon: 'spray-bottle' as const,
+    title: service.label,
+    description: service.blurb,
+    href: service.href,
+  })),
+  ...outsideServices.map(({ icon, label, description, href }) => ({
+    icon,
+    title: label,
+    description,
+    href,
+  })),
+];
 
 const testimonials = [
   {
@@ -299,8 +381,8 @@ const nonBrandedFaqItems = [
 const closingCta = {
   kicker: 'Upholstery and lounge cleaning',
   heading: 'Book your lounge in.',
-  lead: 'We read the label, test a hidden patch and tell you what will lift before we start. It can go on the same visit as your regular clean.',
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+  lead: 'We read the label, test a hidden patch and tell you what will lift before we start. It can go on the same visit as your regular clean, or alongside your carpet clean.',
+  cta: pageCta,
 };
 ---
 
@@ -320,6 +402,7 @@ const closingCta = {
       imageFit="contain-bottom"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -334,10 +417,10 @@ const closingCta = {
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="How we clean a lounge"
+      heading="How our upholstery cleaning works, stage by stage"
       lead="Six stages. The first one is a label, and it decides the other five."
       items={methodItems}
-      cta={{ label: 'Get an instant quote', href: quoteCta.href }}
+      cta={pageCta}
     />
 
     <TextBlock
@@ -351,12 +434,7 @@ const closingCta = {
       variant="list"
       heading="Other things we clean around the house"
       lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
-      items={clusterServices.map((service) => ({
-        icon: 'spray-bottle' as const,
-        title: service.label,
-        description: service.blurb,
-        href: service.href,
-      }))}
+      items={crossSellItems}
     />
 
     <ComparisonTable
@@ -393,8 +471,17 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
-    <Faq heading="Upholstery cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Both FAQ headings renamed. The first five questions are about sitting
+        on it, cushions, wet cleaning, pet smell and what happens next, so a
+        generic label undersold them, and this matches the carpet page's
+        "Booking a carpet clean". The second carried `upholstery cleaning` as a
+        fourth exact instance once the H1, subheading and process H2 took the
+        three the ceiling allows, so it gives the phrase up; its replacement
+        describes the five questions actually in the block, and the volume it
+        gives up is recovered by the approved title's `upholstery cleaning
+        services` (200/mo). */}
+    <Faq heading="Booking an upholstery clean" items={brandedFaqItems} />
+    <Faq heading="Fabric codes, leather and how often to clean" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

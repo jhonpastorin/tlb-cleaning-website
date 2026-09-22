@@ -87,12 +87,21 @@ import { trustBarCards } from '../../data/trust';
 import { otherOutsideServices } from '../../data/outsideYourHome';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
-// §0 Metadata. "Gutter cleaning" leads; "gutter clearing" and "roof gutters"
-// are synonyms carried in body copy rather than the title.
+// §0 Metadata. Title and description are the SIGNED-OFF workbook text
+// (Keyword Mapping & Metadata, sheet 1 row 14), reproduced verbatim.
+//
+// 🔴 BLOCKS LAUNCH. The approved description states "Fully insured" as a plain
+// fact while BFD 2.4 has insurance unconfirmed, and §6 of this page still
+// renders the literal [insured] placeholder. It also claims "photographed on
+// completion", which the page does not support: it promises photographs of
+// damage found, not of the finished job. Confirm both, or swap in the
+// suggested replacement from gutter-cleaning-copy-rewrite.md:
+//   'Gutter cleaning before the storm season, with downpipes flushed and debris
+//    taken away. Photographed on completion. Book a gutter clean today.'
 const pageMeta = {
-  title: 'Gutter Cleaning | TLB Cleaning',
+  title: 'Gutter Cleaning Services - Roof & House | TLB Cleaning',
   description:
-    'Gutter cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast. Gutters, valleys and downpipes cleared by hand and flushed, debris taken away.',
+    'Gutter cleaning before the storm season, with downpipes flushed and debris taken away. Fully insured, photographed on completion. Book today.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
   canonical: 'https://tlbcleaning.com.au/house-cleaning/gutter-cleaning/',
 };
@@ -115,17 +124,41 @@ const business = {
   description: pageMeta.description,
 };
 
-// §1 Hero. The heading names the actual consequence rather than the task,
-// because nobody wants clean gutters. They want the water to go where it was
-// meant to go, and they want to not be on the ladder.
+// The page's one primary CTA, per BFD 9.5, repeated on every in-page button.
+// `Book today` is the approved workbook CTA and it fits a button at ten
+// characters. It also resolves a BFD 13.2 conflict: the old `Get an instant
+// quote` promised instant pricing on a page whose own pricing block says the
+// honest answer is a fast quote, and whose last FAQ prices on length, height,
+// pitch and how packed the gutters are.
+//
+// ⚠️ NOT BLOCKING, raised for the workbook owner: ten characters with no
+// mention of what is being booked is the weakest CTA in this batch and would
+// read identically on any page on the site. Suggested replacement:
+// `Book a gutter clean today`.
+//
+// The header keeps the site-wide quoteCta — that is chrome, not this page.
+const pageCta = { ...quoteCta, label: 'Book today' };
+
+// §1 Hero. The H1 now carries the mapped primary `gutter cleaning` (4,500/mo)
+// as an exact contiguous phrase, extended with the region because
+// `gutter cleaning near me` (1,700/mo) sits behind the term. The old heading,
+// "Nobody should be up that ladder. We will go.", is not lost: it opens the
+// lead below, which is the only place it survives intact, because it works by
+// being about the reader rather than about the service.
+//
+// The subheading is a NEW line — the page had no slot between the H1 and the
+// lead — and its extension is scope and method rather than the H1's region,
+// so it carries `roof gutter cleaning` (600/mo) and `house gutter cleaning`
+// (200/mo) without repeating the H1.
 //
 // Scene photo, family A, square source so the 1/1 box crops nothing.
 const hero = {
   kicker: 'Gutter cleaning',
-  headingLines: ['Nobody should be up', 'that ladder. We will go.'],
+  headingLines: ['Gutter cleaning across the', 'Northern Rivers and the Tweed'],
+  subheading: 'House and roof gutter cleaning, cleared by hand and taken away',
   lead:
-    `Gutters, valleys and downpipes cleared by hand, flushed and checked, across the Northern Rivers, the Tweed and the Southern Gold Coast. The debris leaves with us. ${theLine.fast}`,
-  cta: quoteCta,
+    `Nobody should be up that ladder. We will go. Gutters, valleys and downpipes cleared by hand, flushed and checked, and the debris leaves with us rather than sitting beside your bins. ${theLine.fast}`,
+  cta: pageCta,
   image: {
     ratio: '1/1',
     label:
@@ -414,11 +447,15 @@ const nonBrandedFaqItems = [
 ];
 
 // §13 Closing CTA.
+// The approved CTA is repeated as the closing line of the lead-in as well as
+// on the button, because that is where the page actually asks for the action.
+// The heading stays: "Book it before the wet season." is the page's whole
+// argument for acting now.
 const closingCta = {
   kicker: 'Gutter cleaning',
   heading: 'Book it before the wet season.',
-  lead: 'Tell us roughly how big the house is and what is growing over it. We will come back with a price, a date and an honest word on how often it will need doing.',
-  cta: quoteCta,
+  lead: 'Tell us roughly how big the house is and what is growing over it. We will come back with a price, a date and an honest word on how often it will need doing. Book today.',
+  cta: pageCta,
 };
 ---
 
@@ -440,6 +477,7 @@ const closingCta = {
       imagePosition="left"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -452,14 +490,18 @@ const closingCta = {
       <TextBlock theme="muted" align="left" body={definitionBody} />
     </Backdrop>
 
+    {/* 🔑 The keyword H2. Third exact instance of `gutter cleaning`, after the
+        H1 and the hero subheading, and the ceiling: the second FAQ heading
+        below gives the phrase up rather than becoming a fourth. Its extension
+        is scope, and it keeps the "on the day" framing the standfirst needs. */}
     <PhotoGallery
       variant="story"
-      heading="What happens on the day"
+      heading="What our gutter cleaning covers on the day"
       lead="You will probably be at work, so here is the whole job."
       steps={storySteps}
     />
 
-    <Callout tone="warning" heading={ladderCallout.heading} body={ladderCallout.body} cta={quoteCta} />
+    <Callout tone="warning" heading={ladderCallout.heading} body={ladderCallout.body} cta={pageCta} />
 
     <ContentGrid
       heading="What a blocked gutter actually costs"
@@ -475,7 +517,7 @@ const closingCta = {
       note="Illustrative sample, shown while we collect before and after photos from real TLB jobs."
     />
 
-    <TextBlock theme="dark" align="left" heading="Who turns up" body={whoBody} cta={quoteCta} />
+    <TextBlock theme="dark" align="left" heading="Who turns up" body={whoBody} cta={pageCta} />
 
     <ServiceBlocks
       variant="list"
@@ -518,8 +560,15 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
-    <Faq heading="Gutter cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Both FAQ headings renamed. The first describes what its five questions
+        actually are — timing, debris, two-storey access, the day itself and
+        damage found — all booking questions, matching the carpet page's
+        "Booking a carpet clean". "Gutter clean" rather than "gutter cleaning"
+        is deliberate: three exact instances is the ceiling and they are spent.
+        The second gave up `gutter cleaning` for the same reason, and its
+        replacement describes the block honestly, frequency through to price. */}
+    <Faq heading="Booking a gutter clean" items={brandedFaqItems} />
+    <Faq heading="How often gutters need doing, and what it costs" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

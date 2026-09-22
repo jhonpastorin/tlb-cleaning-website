@@ -91,14 +91,35 @@ import { comparisonColumns, comparisonRows } from '../../data/comparison';
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherApplianceServices } from '../../data/appliance-services';
+// The five exterior pages, for the cross-sell grid. See the note above
+// crossSellItems.
+import { outsideServices } from '../../data/outsideYourHome';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
 const OWN_HREF = '/house-cleaning/oven-cleaning/';
 
+// §0 Metadata. Title and description are the SIGNED-OFF workbook text
+// (Keyword Mapping & Metadata, sheet 1 row 11), reproduced verbatim. The old
+// title split the mapped primary across "Oven," and "Cleaning", so
+// `oven cleaning service` (400/mo) was absent from it; the old description ran
+// 16 characters over the limit.
+//
+// 🔴 BLOCKS LAUNCH. The approved description claims "Non-toxic products."
+// BFD 2.4 lists every claim TLB is cleared to make and no product or chemical
+// claim appears on it, and this page's own copy pulls against it in two
+// places: §14 explains that the enamel inside a self-cleaning oven "can be
+// damaged by the caustic products used on ordinary ovens", and branded FAQ 1
+// answers the chemical question with "It should not" rather than a guarantee.
+// A flat claim in the result and a hedge on the page is the wrong way round.
+// Confirm the products, or swap in the suggested replacement from
+// oven-and-bbq-cleaning-copy-rewrite.md:
+//   'Oven cleaning that removes baked-on grease from racks, trays, doors and
+//    glass, plus BBQ cleaning. Ventilated as we work. Book your oven clean today.'
+// Resolve the meta, not §14 and not FAQ 1.
 const pageMeta = {
-  title: 'Oven, BBQ and Appliance Cleaning | TLB Cleaning',
+  title: 'Oven Cleaning Service - BBQ Cleaning | TLB Cleaning',
   description:
-    'Oven, barbecue and appliance cleaning across the Northern Rivers and the Tweed. Taken apart, soaked and put back together, without your kitchen smelling of chemicals.',
+    'Oven cleaning that removes baked-on grease from racks, trays, doors and glass, plus BBQ cleaning. Non-toxic products. Book your oven clean today.',
   canonical: 'https://tlbcleaning.com.au/house-cleaning/oven-cleaning/',
 };
 
@@ -120,12 +141,38 @@ const business = {
   description: pageMeta.description,
 };
 
+// The page's one primary CTA, per BFD 9.5, repeated on every in-page button.
+// `Book your oven clean today` is the approved workbook CTA and it fits a
+// button at 26 characters, so it goes on unchanged.
+//
+// It also resolves a BFD 13.2 conflict: the old `Get an instant quote`
+// promised instant pricing on a page whose own pricing block says the honest
+// answer is a fast quote rather than an instant one. The approved CTA is an
+// instruction to book rather than a pricing promise.
+//
+// The header keeps the site-wide quoteCta — that is chrome, not this page.
+// Routing card 2 keeps `End of lease cleaning` and card 3 keeps `Why TLB`:
+// those are navigation to another page, not this page's CTA.
+const pageCta = { label: 'Book your oven clean today', href: quoteCta.href };
+
+// §1 Hero. The H1 now carries the mapped primary `oven cleaning service`
+// (400/mo) as an exact contiguous phrase — the plural counts as verbatim —
+// extended with the region, because this is a local-intent term with
+// `oven cleaning near me` (300/mo) and `oven cleaning services near me`
+// (150/mo) behind it. The old heading is not lost: it opens the lead, because
+// it cannot absorb the mapped phrase without reading like a machine wrote it.
+//
+// The subheading is a NEW line. Its extension is scope rather than the H1's
+// region, it leads with the door glass because that is the page's strongest
+// and most specific hook, and it carries `oven and bbq cleaning` (100/mo) into
+// the heading structure.
 const hero = {
   kicker: 'Oven, BBQ and appliance cleaning',
-  headingLines: ['Nobody has ever enjoyed cleaning an oven.'],
+  headingLines: ['Oven cleaning services across', 'the Northern Rivers and the Tweed'],
+  subheading: 'Oven cleaning services that reach the door glass, plus the barbecue',
   lead:
-    `Ovens, barbecues and appliances cleaned in your home across the Northern Rivers and the Tweed. Taken apart, soaked, and put back together working. ${theLine.fast}`,
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+    `Nobody has ever enjoyed cleaning an oven. Ours is an oven cleaning service that takes the appliance apart, soaks the parts and puts it back together working, in your home. ${theLine.fast}`,
+  cta: pageCta,
   image: {
     ratio: '1/1',
     label:
@@ -135,7 +182,10 @@ const hero = {
 };
 
 const definitionBody: TextBlockBody[] = [
-  'Oven cleaning is a strip down rather than a wipe out. The racks, trays, side rails and usually the inner door glass come out of the appliance and go into a soak, and the cavity is cleaned while they sit. It is the only way to reach the baked-on carbon in the corners and between the door glass, which is exactly where an oven looks worst. TLB Cleaning cleans ovens, barbecues and appliances across the Northern Rivers and the Tweed.',
+  // Opens with the mapped phrase as a contiguous string — the opening
+  // paragraph is scored on the first two sentences — and picks up
+  // `professional oven cleaning` (200/mo). One clause changed.
+  'A professional oven cleaning service is a strip down rather than a wipe out. The racks, trays, side rails and usually the inner door glass come out of the appliance and go into a soak, and the cavity is cleaned while they sit. It is the only way to reach the baked-on carbon in the corners and between the door glass, which is exactly where an oven looks worst. TLB Cleaning cleans ovens, barbecues and appliances across the Northern Rivers and the Tweed.',
   'The same method covers a barbecue and most other appliances. Grill plates, burners and a fat tray come out and soak the same way a set of oven racks does, and a rangehood filter is the same job again in miniature. What changes is the size of the parts and how much grease is on them.',
 ];
 
@@ -153,7 +203,7 @@ const pathwayCards = {
       title: 'People are coming over and I have looked at the barbecue',
       description:
         'Grill plates, burners, the fat tray and the grey layer on the inside of the hood. It is a two hour job with a wire brush and a bad mood, or it is a booking.',
-      cta: { label: 'Get an instant quote', href: quoteCta.href },
+      cta: pageCta,
     },
     {
       number: 2,
@@ -234,7 +284,34 @@ const worthKnowingBody: TextBlockBody[] = [
   'On an oven that is not pyrolytic, the "self clean" setting usually just means a steam assist function, which softens light residue and does nothing at all to baked-on carbon. Either way, none of it touches the film between the door glass, because that is not inside the cavity. If the door of your oven is the part that looks bad, no cycle of any kind will fix it. Somebody has to take the door apart.',
 ];
 
+// The cross-sell grid. The five interior siblings, then the five "Outside your
+// home" pages.
+//
+// WHY THE EXTERIOR FIVE WERE ADDED. Window, gutter, roof, high pressure and
+// exterior house washing link each other correctly but have NO working inbound
+// link from anywhere outside their own cluster — the mega-menu's flat URLs for
+// them all 404. This module is where they belong. See scorecard-before.md.
+//
+// The blurbs and icons come straight from outsideYourHome.ts, the same data
+// the five exterior pages render in their own "The rest of the outside" row,
+// so the wording is consistent site-wide rather than reinvented here. Every
+// href is the nested one, never the flat menu guess.
 const clusterServices = otherApplianceServices(OWN_HREF);
+
+const crossSellItems = [
+  ...clusterServices.map((service) => ({
+    icon: 'spray-bottle' as const,
+    title: service.label,
+    description: service.blurb,
+    href: service.href,
+  })),
+  ...outsideServices.map(({ icon, label, description, href }) => ({
+    icon,
+    title: label,
+    description,
+    href,
+  })),
+];
 
 const testimonials = [
   {
@@ -349,8 +426,8 @@ const nonBrandedFaqItems = [
 const closingCta = {
   kicker: 'Oven, BBQ and appliance cleaning',
   heading: 'Get the worst job in the house off your list.',
-  lead: 'Oven, cooktop, rangehood, barbecue or the lot. Taken apart, soaked, rebuilt and tested, with the kitchen wiped down after us.',
-  cta: { label: 'Get an instant quote', href: quoteCta.href },
+  lead: 'Oven, cooktop, rangehood, barbecue or the lot. Taken apart, soaked, rebuilt and tested, with the kitchen wiped down after us. Book your oven clean today.',
+  cta: pageCta,
 };
 ---
 
@@ -370,6 +447,7 @@ const closingCta = {
       imageFit="contain-bottom"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -384,10 +462,10 @@ const closingCta = {
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="How we clean an oven"
+      heading="How our oven cleaning service works, stage by stage"
       lead="The same method covers a barbecue and most other appliances. Soak time does the work, not scrubbing."
       items={methodItems}
-      cta={{ label: 'Get an instant quote', href: quoteCta.href }}
+      cta={pageCta}
     />
 
     {/* Real TLB job photography — see the file header. The heading and lead
@@ -412,12 +490,7 @@ const closingCta = {
       variant="list"
       heading="Other things we clean around the house"
       lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
-      items={clusterServices.map((service) => ({
-        icon: 'spray-bottle' as const,
-        title: service.label,
-        description: service.blurb,
-        href: service.href,
-      }))}
+      items={crossSellItems}
     />
 
     <ComparisonTable
@@ -454,8 +527,15 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
-    <Faq heading="Oven and appliance cleaning FAQs" items={nonBrandedFaqItems} />
+    {/* Both FAQ headings renamed. The first five questions are all about
+        booking, timing and what happens on the day, and this brings the page
+        into line with the carpet page's "Booking a carpet clean". The second
+        describes its block more accurately, since barbecues come up in it, and
+        picks up `oven and bbq cleaning` (100/mo) as an exact phrase. The
+        mapped primary is deliberately kept out of both: three exact instances
+        is the ceiling and the H1, subheading and process H2 have spent them. */}
+    <Faq heading="Booking an oven or BBQ clean" items={brandedFaqItems} />
+    <Faq heading="Oven, BBQ and appliance cleaning questions" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"

@@ -144,7 +144,7 @@ export type EnquiryField = (typeof enquiryFields)[number];
 export const enquiryCopy = {
   heading: 'Send us the details',
   lead:
-    'Tell us where you are and what needs doing, and we will come back with a price and a day. The fields marked with an asterisk are the ones we cannot do without.',
+    'Tell us where you are and what needs doing, and we will come back with a price and a day.',
   submitLabel: 'Send enquiry',
   submittingLabel: 'Sending…',
   successHeading: 'Thanks — that is with us.',

@@ -91,10 +91,24 @@ import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/
 // §0 Metadata. Focus keyword leads the title, matching every sibling. "Window
 // washing" and "window cleaner" are the common synonyms and are carried in
 // body copy rather than the title, so the two do not read as two services.
+// Title and description are the SIGNED-OFF workbook text (Keyword Mapping &
+// Metadata, sheet 1 row 13), reproduced verbatim. The old title stopped one
+// word short of the mapped primary `window cleaning services` (400/mo) and
+// left 23 characters unused; the old description ran 12 characters over.
+//
+// The approved description trades the region for the two things people
+// actually search on here — `water fed window cleaning` (200/mo) and
+// `streak free window cleaning` (200/mo) — and closes on an instruction to act
+// where the old one closed on a description. The salt film is not lost: it
+// moves into the hero paragraph below.
+//
+// NO BLOCKING FLAGS on this page. The approved title, meta and CTA are all
+// consistent with what the page says it does, which makes it the cleanest of
+// the five exterior pages to action.
 const pageMeta = {
-  title: 'Window Cleaning | TLB Cleaning',
+  title: 'Window Cleaning Services - Streak Free | TLB Cleaning',
   description:
-    'Window cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast. Glass, frames, sills and tracks, with the coastal salt film taken off properly.',
+    'Window cleaning inside and out, with water-fed poles for streak-free glass, plus tracks, sills and screens. Book a window clean for your home.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
   canonical: 'https://tlbcleaning.com.au/house-cleaning/window-cleaning/',
 };
@@ -121,21 +135,47 @@ const business = {
 // result gets confirmation above the H1, which is then free to be a benefit.
 // Same call as every service page here.
 //
-// The heading is the thing this service actually sells, which is not clean
-// glass. It is the view people paid for when they bought a house near the
-// coast and then slowly stopped being able to see.
+// The H1 now carries the mapped primary `window cleaning services` (400/mo) as
+// an exact contiguous phrase, extended with the region: local intent on this
+// row totals 1,450/mo across three terms, more than three times the mapped
+// primary itself. The old heading — the thing this service actually sells,
+// which is not clean glass but the view people paid for — is not cut. It opens
+// the lead, because it is two short sentences that work by their rhythm.
+//
+// The subheading is a NEW line. Its extension is outcome plus scope rather
+// than the H1's region, it carries `streak free window cleaning` (200/mo),
+// which appeared nowhere on the page despite being in the approved title, and
+// naming frames, sills and tracks above the fold answers the page's own "what
+// is included besides the glass" objection before the reader has to ask it.
 //
 // A SCENE PHOTO, family A. A cut-out figure on a plain ground says "a
 // cleaner" without saying windows; the house, the garden and the wet arc on
 // the glass are what carry it, and none of them survives a cut-out.
 // `imageFit` is unset, so Placeholder's `cover` default applies, and `ratio`
 // is 1/1 because the source file is square, so the box crops nothing.
+// The page's one primary CTA, per BFD 9.5, repeated on every in-page button,
+// in place of the six competing labels this page carried — the most of the
+// eight. `Book a window clean for your home` is the approved workbook CTA and
+// it fits a button at 33 characters, so no split is needed.
+//
+// It also resolves a BFD 13.2 conflict: the old `Get an instant quote`
+// promised instant pricing on a page whose own pricing block says the honest
+// answer is a fast quote, and whose last FAQ says the rate moves with height,
+// access and how many are sliding doors.
+//
+// The header keeps the site-wide quoteCta — that is chrome, not this page.
+// Routing card 3 keeps `Set up your regular clean`, because it sends the
+// reader to the regular cleaning page, which genuinely is instant-priced.
+// That is navigation, not this page's CTA.
+const pageCta = { ...quoteCta, label: 'Book a window clean for your home' };
+
 const hero = {
   kicker: 'Window cleaning',
-  headingLines: ['You paid for the view.', 'Have a look at it.'],
+  headingLines: ['Window cleaning services across', 'the Northern Rivers and the Tweed'],
+  subheading: 'Streak-free window cleaning services, glass, frames, sills and tracks',
   lead:
-    `Glass, frames, sills and tracks, inside and out, across the Northern Rivers, the Tweed and the Southern Gold Coast. We bring the ladders, the poles and the water. ${theLine.fast}`,
-  cta: quoteCta,
+    `You paid for the view. Have a look at it. Window cleaning inside and out for homes across the Northern Rivers, the Tweed and the Southern Gold Coast, with the coastal salt film taken off properly. We bring the ladders, the poles and the water. ${theLine.fast}`,
+  cta: pageCta,
   image: {
     ratio: '1/1',
     label:
@@ -173,7 +213,7 @@ const pathwayCards = {
       title: 'The glass has gone cloudy and I cannot fix it',
       description:
         'That haze is salt and hard water, not dirt, and it sits on the glass in a layer that wiping makes worse. One proper clean takes it back to clear, and you get the tracks and the flyscreens done at the same time.',
-      cta: quoteCta,
+      cta: pageCta,
     },
     {
       number: 2,
@@ -186,7 +226,7 @@ const pathwayCards = {
       title: 'The high ones have not been done in years',
       description:
         'Nobody wants to carry a ladder around the side of the house, and on a slope nobody should. First-floor glass gets reached from the ground with a water-fed pole, which is safer for us and costs you less than scaffolding.',
-      cta: { label: 'Get an instant quote', href: quoteCta.href },
+      cta: pageCta,
     },
     {
       number: 3,
@@ -450,8 +490,8 @@ const nonBrandedFaqItems = [
 const closingCta = {
   kicker: 'Window cleaning',
   heading: 'Get your view back.',
-  lead: 'Tell us how many windows and how high, and we will come back with a price and a date. If it is easier, we will look at the whole outside of the house while we are there.',
-  cta: quoteCta,
+  lead: 'Tell us how many windows and how high, and we will come back with a price and a date. If it is easier, we will look at the whole outside of the house while we are there. Book a window clean for your home.',
+  cta: pageCta,
 };
 ---
 
@@ -470,6 +510,7 @@ const closingCta = {
       imagePosition="right"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -488,10 +529,10 @@ const closingCta = {
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What a window clean covers"
+      heading="What our window cleaning services cover, inside and out"
       lead="Six things, and the last four are what separate a window clean from a wipe over the glass."
       items={scopeItems}
-      cta={quoteCta}
+      cta={pageCta}
     />
 
     <Callout tone="note" heading={saltCallout.heading} body={saltCallout.body} />
@@ -551,7 +592,15 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    {/* The first FAQ heading renamed: these five are about inside glass,
+        frequency, upstairs reach, access and rain, all pre-booking questions,
+        and it matches the carpet page's "Booking a carpet clean". "Window
+        clean" rather than "window cleaning" keeps it out of Rule 5's count,
+        which is already full at three — the H1, the hero subheading and the
+        coverage H2. The second heading stays: it carries `window cleaning`
+        (2,600/mo), the largest term on the row, and is not a fourth instance
+        of the mapped primary because it does not contain "services". */}
+    <Faq heading="Booking a window clean" items={brandedFaqItems} />
     <Faq heading="Window cleaning FAQs" items={nonBrandedFaqItems} />
 
     <CallToAction

@@ -88,12 +88,36 @@ import { trustBarCards } from '../../data/trust';
 import { otherOutsideServices } from '../../data/outsideYourHome';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
-// §0 Metadata. The menu label leads the title. "House washing", "exterior
-// cleaning" and "soft wash" are the synonyms and are carried in body copy.
+// §0 Metadata. "House washing", "exterior cleaning" and "soft wash" are the
+// synonyms; the first two are now settled in the opening paragraph and the
+// third is carried in body copy.
+//
+// Title and description are the SIGNED-OFF workbook text (Keyword Mapping &
+// Metadata, sheet 1 row 17), reproduced verbatim. The old title said "Washing"
+// where the mapped primary `exterior house cleaning` (450/mo) says "Cleaning";
+// the old description ran 23 characters over the limit and carried the mapped
+// phrase nowhere.
+//
+// ⚠️ NOT BLOCKING, but it affects this page more than any other in the batch.
+// The workbook maps `exterior house cleaning` as the primary while its own
+// Page column says "Exterior house washing", the URL says
+// `exterior-house-washing`, and every heading on the live page said "washing"
+// too. Washing and cleaning are not variants of each other for the
+// contiguous-phrase test, so one word was costing five of the eight
+// primary-keyword components. The headings below fix that; the URL cannot be
+// fixed, because Rule 2 makes the signed-off workbook URL the target. So this
+// page will always carry a slug that does not contain its own primary keyword.
+//
+// TWO WAYS OUT, both for the workbook owner rather than for copy: change the
+// mapped primary to a washing term, which needs a live volume check, or accept
+// the URL as a permanent partial miss and keep the cleaning primary in the
+// headings. The second is what this file implements, because the approved
+// title also uses "Cleaning" and consistency with the signed-off title matters
+// more than the slug.
 const pageMeta = {
-  title: 'Exterior House Washing | TLB Cleaning',
+  title: 'Exterior House Cleaning & Soft Washing | TLB Cleaning',
   description:
-    'Exterior house washing across the Northern Rivers, the Tweed and the Southern Gold Coast. Walls, eaves, soffits and window frames soft washed so the whole house looks newer.',
+    'Exterior house cleaning and soft washing that lifts salt, mould and grime from render, weatherboard and eaves, safely. Book a house wash today.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
   canonical: 'https://tlbcleaning.com.au/house-cleaning/exterior-house-washing/',
 };
@@ -116,17 +140,48 @@ const business = {
   description: pageMeta.description,
 };
 
-// §1 Hero. The heading is the realisation this service depends on: people
-// stop seeing their own walls, because the change happened a shade at a time
-// over about five years.
+// The page's one primary CTA, per BFD 9.5, repeated on every in-page button.
+// `Book a house wash today` is the approved workbook CTA and it fits a button
+// at 23 characters, so it goes on unchanged. It is also the one approved CTA
+// of the five exterior pages that reads naturally and promises nothing the
+// page cannot keep.
+//
+// It resolves a BFD 13.2 conflict: the old `Get an instant quote` promised
+// instant pricing on a page whose own pricing block says the honest answer is
+// a fast quote, and whose last FAQ says the price moves with storeys, growth,
+// wall material and what else is being done at the same time.
+//
+// The header keeps the site-wide quoteCta — that is chrome, not this page.
+const pageCta = { ...quoteCta, label: 'Book a house wash today' };
+
+// §1 Hero. The H1 now carries the mapped primary `exterior house cleaning`
+// (450/mo) as an exact contiguous phrase. The extension is the PROBLEM rather
+// than the region, because this page's buyer is diagnosing a discolouration
+// rather than searching for a local trade, and the region is already in the
+// lead. The old heading — the realisation this service depends on, that people
+// stop seeing their own walls because the change happened a shade at a time
+// over about five years — is the best hero line of the eight and is not cut:
+// it opens the lead, because its whole effect depends on the second fragment
+// landing alone.
+//
+// The subheading is a NEW line. Its extension is the method promise rather
+// than the H1's problem list, and it puts the surface-first argument above the
+// fold, which is what §3's "Where we stop" and the flaking-paint FAQ both rest
+// on. H1, subheading and the coverage H2 are taken from the worked-example
+// table in references/h1-patterns.md, which covers this exact workbook row.
+//
+// The mapped phrase is NOT repeated a third time in the lead: the H1 and
+// subheading directly above both carry it and a third exact instance in the
+// prose beneath them would read as filler.
 //
 // Scene photo, family A, square source so the 1/1 box crops nothing.
 const hero = {
   kicker: 'Exterior house washing',
-  headingLines: ['Your house is not', 'that colour. Not really.'],
+  headingLines: ['Exterior house cleaning for salt,', 'mould and coastal grime'],
+  subheading: 'Exterior house cleaning that suits the surface, not just the stain',
   lead:
-    `Walls, eaves, soffits, downpipes and window frames, soft washed across the Northern Rivers, the Tweed and the Southern Gold Coast. Low pressure, so nothing gets stripped. ${theLine.fast}`,
-  cta: quoteCta,
+    `Your house is not that colour. Not really. Walls, eaves, soffits, downpipes and window frames soft washed across the Northern Rivers, the Tweed and the Southern Gold Coast, at low pressure so nothing gets stripped. ${theLine.fast}`,
+  cta: pageCta,
   image: {
     ratio: '1/1',
     label:
@@ -139,7 +194,11 @@ const hero = {
 // turns on and the reason people are surprised by the result: what is on the
 // wall is mostly alive, so it is not paint fade and it is not permanent.
 const definitionBody: TextBlockBody[] = [
-  'Exterior house washing is the washing down of the outside of a house: the walls, the eaves and soffits, the gable ends, the window frames and sills, the downpipes and the fascia. TLB Cleaning washes house exteriors across the Northern Rivers, the Tweed and the Southern Gold Coast, using low pressure soft washing rather than a high pressure blast.',
+  // Opens with the mapped primary as a contiguous phrase — the opening
+  // paragraph is scored on the first two sentences — and naming both terms in
+  // the first clause resolves the synonym for the reader, which the window and
+  // high pressure pages both do well and this one did not.
+  'Exterior house cleaning, or house washing, is the washing down of the outside of a house: the walls, the eaves and soffits, the gable ends, the window frames and sills, the downpipes and the fascia. TLB Cleaning washes house exteriors across the Northern Rivers, the Tweed and the Southern Gold Coast, using low pressure soft washing rather than a high pressure blast.',
   'What is on the wall is mostly not dirt. It is a film of mould, algae and lichen living on the surface, held there by humidity and shade, mixed with salt if you are near the water and dust if you are near a road. That is why the shaded side of a house looks like a different colour from the sunny side, and why the answer is a cleaning solution with dwell time rather than force.',
 ];
 
@@ -409,8 +468,8 @@ const nonBrandedFaqItems = [
 const closingCta = {
   kicker: 'Exterior house washing',
   heading: 'Send us a photo of the shady side.',
-  lead: 'That is the side that tells us what the job is. We will come back with a price, a date and an honest word on whether the roof and the driveway are worth doing at the same time.',
-  cta: quoteCta,
+  lead: 'That is the side that tells us what the job is. We will come back with a price, a date and an honest word on whether the roof and the driveway are worth doing at the same time. Book a house wash today.',
+  cta: pageCta,
 };
 ---
 
@@ -429,6 +488,7 @@ const closingCta = {
       imagePosition="right"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -447,10 +507,10 @@ const closingCta = {
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What the wash covers"
+      heading="What exterior house cleaning covers on a coastal home"
       lead="Six things, in the order they happen. The order is not decoration, it is why the lower boards come out clean."
       items={scopeItems}
-      cta={quoteCta}
+      cta={pageCta}
     />
 
     <Callout tone="note" heading={softWashCallout.heading} body={softWashCallout.body} />
@@ -462,7 +522,7 @@ const closingCta = {
       note="Illustrative sample, shown while we collect before and after photos from real TLB jobs."
     />
 
-    <TextBlock theme="dark" align="left" heading="Do it in this order" body={orderBody} cta={quoteCta} />
+    <TextBlock theme="dark" align="left" heading="Do it in this order" body={orderBody} cta={pageCta} />
 
     <ServiceBlocks
       variant="list"
@@ -505,7 +565,16 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    {/* The first FAQ heading renamed: these five are about paint, duration,
+        gardens, reach and interior mould, all pre-booking questions. It also
+        matches the approved CTA, `Book a house wash today`, so the heading and
+        the button reinforce each other, and it keeps the exact primary out of
+        a fourth slot. The second heading stays: it carries the "washing" form
+        that the URL and the page name both use and that the new headings above
+        no longer do, so it is the one place that phrasing survives in the body
+        structure — and it is not a fourth instance of the mapped primary,
+        because it says "washing" rather than "cleaning". */}
+    <Faq heading="Booking a house wash" items={brandedFaqItems} />
     <Faq heading="Exterior house washing FAQs" items={nonBrandedFaqItems} />
 
     <CallToAction

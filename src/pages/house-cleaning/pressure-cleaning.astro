@@ -88,15 +88,21 @@ import { trustBarCards } from '../../data/trust';
 import { otherOutsideServices } from '../../data/outsideYourHome';
 import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
 
-// §0 Metadata. The menu label is "High pressure cleaning" and it leads the
-// title. "Pressure washing" and "pressure cleaning" are the same thing and
-// are carried in body copy, so the three do not read as three services. The
-// description says "home" in the first line on purpose: it is the one signal
-// that keeps this result apart from the commercial twin's in a search page.
+// §0 Metadata. "Pressure washing" and "pressure cleaning" are the same thing
+// and are carried in body copy, so the three do not read as three services.
+// The description says "for your home" on purpose: with the region gone it is
+// now the one signal keeping this result apart from the commercial twin's.
+//
+// Title and description are the SIGNED-OFF workbook text (Keyword Mapping &
+// Metadata, sheet 1 row 16), reproduced verbatim. The old title stopped one
+// word short of the mapped primary `high pressure cleaning services` (250/mo);
+// the old description ran to 188 characters, so the last fifth including "at a
+// pressure the surface can take" — the page's entire differentiator — was
+// being truncated in the result.
 const pageMeta = {
-  title: 'High Pressure Cleaning | TLB Cleaning',
+  title: 'High Pressure Cleaning Services - Driveways | TLB Cleaning',
   description:
-    'High pressure cleaning for homes across the Northern Rivers, the Tweed and the Southern Gold Coast. Driveways, paths, patios, pool surrounds and fences, at a pressure the surface can take.',
+    'High pressure cleaning for driveways, paths, patios and pool surrounds. Years of grime gone in a morning. Get a fixed quote for your home today.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
   canonical: 'https://tlbcleaning.com.au/house-cleaning/pressure-cleaning/',
 };
@@ -119,17 +125,43 @@ const business = {
   description: pageMeta.description,
 };
 
-// §1 Hero. The heading is what the job feels like rather than what it is: a
-// driveway is the first thing anyone sees and the last thing anyone gets
-// around to.
+// The page's one primary CTA, per BFD 9.5, repeated on every in-page button.
+// The approved workbook CTA is the full sentence `Get a fixed quote for your
+// home today`, which at 37 characters is a sentence rather than a button
+// label: per Rule 4 the sentence goes in the closing block's lead-in and the
+// button takes its imperative core. Both come from the same approved text.
+//
+// ⚠️ NOT BLOCKING, raised for the workbook owner: "fixed" promises a firm
+// number and "today" promises same day, on work this page prices from
+// photographs — §11's own pricing block says "we'll come back with a number
+// quickly" and the FAQs say an old oil stain may not lift at all. Suggested
+// replacement: `Get a fast quote for your home today`, one word changed, which
+// matches the page's own pricing line and the rest of the site.
+//
+// The header keeps the site-wide quoteCta — that is chrome, not this page.
+const pageCta = { ...quoteCta, label: 'Get a fixed quote' };
+const closingCtaSentence = 'Get a fixed quote for your home today.';
+
+// §1 Hero. The H1 now carries the mapped primary `high pressure cleaning
+// services` (250/mo) as an exact contiguous phrase, extended with the region:
+// local intent on this row totals 1,120/mo across four terms, more than four
+// times the mapped primary itself. The old heading is not lost — it opens the
+// lead, which is the only place it works, because it is a sentence about the
+// driveway rather than about the service.
+//
+// The subheading is a NEW line. Its extension is scope rather than the H1's
+// region, it matches the approved meta word for word on the surface list, and
+// it carries `driveway pressure cleaning` (350/mo) and `patio cleaning
+// services` (100/mo) into the heading structure.
 //
 // Scene photo, family A, square source so the 1/1 box crops nothing.
 const hero = {
   kicker: 'High pressure cleaning',
-  headingLines: ['Your driveway is the', 'first thing anyone sees.'],
+  headingLines: ['High pressure cleaning services', 'across the Northern Rivers and the Tweed'],
+  subheading: 'High pressure cleaning services for driveways, paths, patios and pool surrounds',
   lead:
-    `Driveways, paths, patios, pool surrounds and fences across the Northern Rivers, the Tweed and the Southern Gold Coast. Cleaned at a pressure the surface can actually take. ${theLine.fast}`,
-  cta: quoteCta,
+    `Your driveway is the first thing anyone sees. Concrete, exposed aggregate, pavers, pool surrounds and fences, cleaned at a pressure the surface can actually take rather than the pressure that gets it done fastest. ${theLine.fast}`,
+  cta: pageCta,
   image: {
     ratio: '1/1',
     label:
@@ -143,7 +175,10 @@ const hero = {
 // competitor pages in this category get wrong, and it is what keeps this page
 // honest when it later says not to blast your render.
 const definitionBody: TextBlockBody[] = [
-  'High pressure cleaning is the cleaning of outdoor hard surfaces at a home with pressurised water. Driveways, paths, patios, pool surrounds, courtyards, steps, fences and retaining walls. It lifts off the grime, algae, moss and oil that build up on anything left out in the weather. TLB Cleaning does high pressure cleaning for homes across the Northern Rivers, the Tweed and the Southern Gold Coast.',
+  // Opens with the mapped primary as a contiguous phrase — the opening
+  // paragraph is scored on the first two sentences. The fourth sentence keeps
+  // `high pressure cleaning` as a variant, so nothing is given up for it.
+  'A high pressure cleaning service is the cleaning of outdoor hard surfaces at a home with pressurised water. Driveways, paths, patios, pool surrounds, courtyards, steps, fences and retaining walls. It lifts off the grime, algae, moss and oil that build up on anything left out in the weather. TLB Cleaning does high pressure cleaning for homes across the Northern Rivers, the Tweed and the Southern Gold Coast.',
   'Pressure cleaning, pressure washing and high pressure cleaning all describe the same work. Soft washing is genuinely different: low pressure and a cleaning solution instead of force, for render, paint, cladding, roofs and anything else that force would strip. Most homes need both, and the skill is knowing which surface takes which. If you want the walls and the roof done, that is exterior house washing and roof cleaning, and they are linked further down.',
 ];
 
@@ -168,7 +203,7 @@ const pathwayCards = {
       title: 'It has gone green and slippery',
       description:
         'Algae on a shaded path is the one that matters, because it is genuinely slippery when it rains and it is usually on the way to the front door. One clean fixes it, and we will tell you which marks are staining and which are in the concrete for good.',
-      cta: quoteCta,
+      cta: pageCta,
     },
     {
       number: 2,
@@ -181,7 +216,7 @@ const pathwayCards = {
       title: 'We have people coming',
       description:
         'Christmas, a party, a birthday, or the photos going up before the house is listed. Paths, patio and pool surround done in a day so the outside matches the inside. Tell us the date and we will work back from it.',
-      cta: { label: 'Get an instant quote', href: quoteCta.href },
+      cta: pageCta,
     },
     {
       number: 3,
@@ -438,8 +473,8 @@ const nonBrandedFaqItems = [
 const closingCta = {
   kicker: 'High pressure cleaning',
   heading: 'Send us a photo of the worst bit.',
-  lead: 'That is usually enough to price it. We will tell you what will come off, what will not and which surfaces need a soft wash instead. Cleaning a workplace rather than a home? Our commercial pressure cleaning page is the one you want.',
-  cta: quoteCta,
+  lead: `That is usually enough to price it. We will tell you what will come off, what will not and which surfaces need a soft wash instead. Cleaning a workplace rather than a home? Our commercial pressure cleaning page is the one you want. ${closingCtaSentence}`,
+  cta: pageCta,
 };
 ---
 
@@ -458,6 +493,7 @@ const closingCta = {
       imagePosition="left"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
+      subheading={hero.subheading}
       lead={hero.lead}
       cta={hero.cta}
       image={hero.image}
@@ -474,12 +510,17 @@ const closingCta = {
         reverse of its siblings. See the §4 comment. */}
     <Callout tone="warning" heading={surfaceCallout.heading} body={surfaceCallout.body} />
 
+    {/* 🔑 The keyword H2. Third exact instance of `high pressure cleaning
+        services`, after the H1 and the hero subheading, and the ceiling — the
+        second FAQ heading below keeps `high pressure cleaning` without the
+        word that would make it a fourth. Its extension is process, and "stage
+        by stage" describes the six items beneath it accurately. */}
     <ServiceBlocks
       variant="icon-grid"
-      heading="What the job actually involves"
+      heading="What our high pressure cleaning services involve, stage by stage"
       lead="Six stages, in this order. The second and the last are the ones a rushed job skips."
       items={scopeItems}
-      cta={quoteCta}
+      cta={pageCta}
     />
 
     <BeforeAfter
@@ -532,7 +573,14 @@ const closingCta = {
       body={[managedForYou.oneOff, ...theLineBody.residential]}
     />
 
-    <Faq heading="Frequently asked questions" items={brandedFaqItems} />
+    {/* The first FAQ heading names what its five questions actually are —
+        damage, oil stains, duration, the day itself and working while you are
+        out — all pre-booking questions, and it picks up `driveway pressure
+        cleaning` (350/mo) and `patio cleaning services` (100/mo) on the way.
+        The second stays: it carries `high pressure cleaning` as a phrase and
+        is not a fourth instance of the mapped primary, because it does not
+        contain "services". */}
+    <Faq heading="Booking a driveway or patio clean" items={brandedFaqItems} />
     <Faq heading="High pressure cleaning FAQs" items={nonBrandedFaqItems} />
 
     <CallToAction
