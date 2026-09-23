@@ -36,9 +36,12 @@ interface Props {
   canonical: string;
   ogImage?: string;
   business: LocalBusinessInfo;
+  /** Keep this page out of search on production too. For pages a reader only
+   *  reaches by doing something, like /thank-you/ after a form submit. */
+  noindex?: boolean;
 }
 
-const { title, description, canonical, ogImage, business } = Astro.props;
+const { title, description, canonical, ogImage, business, noindex = false } = Astro.props;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -106,7 +109,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {/* Staging only. The canonical above deliberately still points at the
         production domain — with noindex present that is harmless, and it keeps
         staging and production markup identical apart from this one line. */}
-    {isStaging && <meta name="robots" content={robotsContent} />}
+    {isStaging ? (
+      <meta name="robots" content={robotsContent} />
+    ) : (
+      noindex && <meta name="robots" content="noindex, follow" />
+    )}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

@@ -21,7 +21,8 @@
 //                                 (a failed fetch can mean the webhook got it
 //                                 and only the reply was lost; a retry then
 //                                 duplicates the lead in the board).
-//   3. Endpoint, request ok    -> replaces the form with the thank-you.
+//   3. Endpoint, request ok    -> redirects to the thank-you page
+//                                 (`thankYouPath` in contactForm.ts).
 //
 // ⚠️ THE REQUEST IS DELIBERATELY `application/x-www-form-urlencoded`, NOT
 // JSON. That makes it a CORS "simple request", so the browser sends it without
@@ -41,6 +42,7 @@ import {
   enquiryCopy,
   enquiryEndpoint,
   serviceOptions,
+  thankYouPath,
   type SelectOption,
 } from '../../data/contactForm';
 
@@ -138,11 +140,10 @@ const selects: { name: string; id: string; label: string; placeholder: string; r
 // Handed to the client script as one object rather than eight data attributes.
 const config = {
   endpoint: enquiryEndpoint,
+  thankYouPath,
   copy: {
     submit: enquiryCopy.submitLabel,
     submitting: enquiryCopy.submittingLabel,
-    successHeading: enquiryCopy.successHeading,
-    successBody: enquiryCopy.successBody,
     errorHeading: enquiryCopy.errorHeading,
     errorBody: enquiryCopy.errorBody,
     unconfiguredHeading: enquiryCopy.unconfiguredHeading,
@@ -289,10 +290,17 @@ const config = {
     const statusHeading = form.querySelector('[data-status-heading]');
     const statusBody = form.querySelector('[data-status-body]');
     const statusFallback = form.querySelector('[data-status-fallback]');
-    const grid = form.querySelector('.enquiry__grid');
-    const actions = form.querySelector('[data-enquiry-actions]');
     const submit = form.querySelector('button[type="submit"]');
     const loadedAt = Date.now();
+
+    // Back from /thank-you/ can restore this page from the browser's cache
+    // exactly as it was left: button disabled, reading "Sending…". Reset it.
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted && submit) {
+        submit.disabled = false;
+        submit.textContent = config.copy.submit;
+      }
+    });
 
     // Taking over validation from the browser is the whole reason this is set
     // here and not in the markup: with JS off, `novalidate` is never applied
@@ -368,13 +376,11 @@ const config = {
         return;
       }
 
-      // Honeypot: a filled trap is a bot. Show the ordinary thank-you and send
-      // nothing — telling a bot it was caught only teaches it to try again.
+      // Honeypot: a filled trap is a bot. Send it to the ordinary thank-you and
+      // send nothing — telling a bot it was caught only teaches it to try again.
       const trap = form.querySelector('[name="website"]');
       if (trap && trap.value.trim() !== '') {
-        if (grid) grid.hidden = true;
-        if (actions) actions.hidden = true;
-        setStatus(config.copy.successHeading, config.copy.successBody, 'success', false);
+        window.location.assign(config.thankYouPath);
         return;
       }
 
@@ -411,10 +417,10 @@ const config = {
         });
         if (!response.ok) throw new Error(`Webhook responded ${response.status}`);
 
-        if (grid) grid.hidden = true;
-        if (actions) actions.hidden = true;
-        setStatus(config.copy.successHeading, config.copy.successBody, 'success', false);
-        status?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // `assign`, not `replace`: Back from the thank-you returns to the form.
+        // The button stays disabled until the browser leaves, so a second
+        // click cannot send the same enquiry twice.
+        window.location.assign(config.thankYouPath);
       } catch (error) {
         console.error('[FORM] enquiry submit failed', error);
         setStatus(config.copy.errorHeading, config.copy.errorBody, 'error', true);
@@ -478,8 +484,7 @@ const config = {
   /* The browser's own `[hidden] { display: none }` is a UA rule, and ANY
      author `display` declaration outranks it. `.enquiry__grid` sets
      `display: grid` and `.field` sets `display: flex`, so without these two
-     lines `grid.hidden = true` on a successful submit would hide nothing and
-     the thank-you would appear below a form that is still sitting there. */
+     lines setting `hidden` on either would hide nothing. */
   .enquiry__grid[hidden],
   .field[hidden] {
     display: none;

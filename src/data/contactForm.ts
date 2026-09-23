@@ -140,6 +140,14 @@ export const enquiryFields = [
 
 export type EnquiryField = (typeof enquiryFields)[number];
 
+/**
+ * Where the reader is sent after a successful submit. The form no longer shows
+ * its thank-you in place; it redirects here, which gives GTM a clean page view
+ * to count as a conversion. `successHeading` and `successBody` below are what
+ * that page says.
+ */
+export const thankYouPath = '/thank-you/';
+
 /** Copy for the form itself. Out of the component so a rewrite is a content edit. */
 export const enquiryCopy = {
   heading: 'Send us the details',

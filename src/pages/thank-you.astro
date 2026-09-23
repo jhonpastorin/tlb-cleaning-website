@@ -1,0 +1,73 @@
+---
+// Thank you. Where ContactForm.astro sends the reader after a successful
+// submit (`thankYouPath` in contactForm.ts). Added 24 Sep 2026 at the client's
+// request, replacing the in-place thank-you the form used to show.
+//
+// `noindex`: nobody should land here from search. A reader who arrives without
+// having submitted would be thanked for an enquiry they never sent, and GTM
+// would count the visit as a conversion.
+//
+// The copy is the form's own success copy, read from `enquiryCopy`, so what the
+// form promised and what this page says cannot drift apart.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { meetTheTeamBusiness } from '../data/meetTheTeam';
+import { enquiryCopy } from '../data/contactForm';
+
+const pageMeta = {
+  title: 'Thank You | TLB Cleaning',
+  description: 'Thanks for getting in touch with TLB Cleaning. Your enquiry has been received.',
+  canonical: 'https://tlbcleaning.com.au/thank-you/',
+};
+
+const business = meetTheTeamBusiness(pageMeta.description);
+---
+
+<Base
+  title={pageMeta.title}
+  description={pageMeta.description}
+  canonical={pageMeta.canonical}
+  business={business}
+  noindex
+>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="minimal"
+      kicker="Enquiry sent"
+      headingLines={[enquiryCopy.successHeading]}
+      lead={enquiryCopy.successBody}
+      cta={{ label: 'Back to the home page', href: '/' }}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>
