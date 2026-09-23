@@ -178,9 +178,12 @@ export const otherGuides = (self: GuideHref | null, only?: GuideHref[]) =>
 /**
  * The LocalBusiness JSON-LD every guide hands `Base.astro`.
  *
- * ⚠️ Almost every field is empty, inherited verbatim from every page built
- * before these. Logo, telephone, email and address are all real facts TLB
- * holds and none of them are in the repo. One fix here fills all ten.
+ * Telephone and email are TLB's real details (client, 23 Sep 2026), matching
+ * `footerContact` in navigation.ts.
+ *
+ * ⚠️ Logo and address are still empty, inherited verbatim from every page
+ * built before these. Both are real facts TLB holds and neither is in the
+ * repo. One fix here fills all ten.
  *
  * ⚠️ `areaServed` names both states, unlike premises.ts' NSW-only string.
  * These guides address tenants and hosts on both sides of the border and two
@@ -191,8 +194,8 @@ export const guidesBusiness = (description: string): LocalBusinessInfo => ({
   name: 'TLB Cleaning',
   url: 'https://tlbcleaning.com.au/',
   logo: '',
-  telephone: '',
-  email: '',
+  telephone: '+61 404 742 065',
+  email: 'hello@tlbcleaning.com.au',
   address: {
     streetAddress: '',
     addressLocality: '',

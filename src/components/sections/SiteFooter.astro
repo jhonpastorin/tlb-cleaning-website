@@ -40,7 +40,11 @@ interface Props {
   brandBody?: string;
   socialLinks?: SocialLink[];
   columns: { title: string; links: NavItem[] }[];
-  contact: { phone: string; email: string; address: string };
+  /** `phoneHref` is optional: supply the E.164 `tel:` form (the site passes
+   *  `footerContact.phoneHref`) and the link dials that. Omit it and the link
+   *  falls back to the display number with its spaces stripped, which is what
+   *  this component did before and still works for a local dial. */
+  contact: { phone: string; phoneHref?: string; email: string; address: string };
   /** Default 'Contact' — override to e.g. 'Phone' if that fits the brand's content better. */
   contactHeading?: string;
   /** Omit entirely for a footer with no newsletter signup. */
@@ -166,7 +170,7 @@ const {
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">
               <path d="M6.5 3h3l1.5 5-2 2c.8 2 2.7 3.9 4.7 4.7l2-2 5 1.5v3c0 1.1-.9 2-2 2C11.6 19.2 4.8 12.4 4.5 5c0-1.1.9-2 2-2Z" />
             </svg>
-            <a href={`tel:${contact.phone.replace(/\s+/g, '')}`}>{contact.phone}</a>
+            <a href={contact.phoneHref ?? `tel:${contact.phone.replace(/\s+/g, '')}`}>{contact.phone}</a>
           </li>
         </ul>
       </div>

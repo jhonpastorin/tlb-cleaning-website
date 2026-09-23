@@ -16,6 +16,11 @@ export interface NavItem {
    *  to action. With no `href` the Button primitive renders a <button>, so a
    *  placeholder never ships as a dead link or a fake dialable number. */
   phoneCta?: boolean;
+  /** The email's twin of `phoneCta`, rendered as the second pill in the same
+   *  header contact block. A separate flag rather than one shared "isCta"
+   *  because SiteHeader draws a different icon for each and needs to tell
+   *  them apart; `find` on a shared flag would also only ever return one. */
+  emailCta?: boolean;
 }
 
 /** One row inside a mega-menu column.

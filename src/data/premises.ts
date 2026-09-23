@@ -152,11 +152,12 @@ export const relatedPremises = (self: PremisesHref, extras: Tag[] = []): Tag[] =
 /**
  * The LocalBusiness JSON-LD every commercial page hands `Base.astro`.
  *
- * ⚠️ Almost every field is empty, inherited verbatim from the sibling pages
- * built before this one. Logo, telephone, email and address are all real
- * facts TLB holds and none of them are in the repo, so the structured data
- * on every page is thinner than it should be. One fix here now fills all
- * thirteen.
+ * Telephone and email are TLB's real details (client, 23 Sep 2026), matching
+ * `footerContact` in navigation.ts.
+ *
+ * ⚠️ Logo and address are still empty, inherited verbatim from the sibling
+ * pages built before this one. Both are real facts TLB holds and neither is
+ * in the repo. One fix here now fills all thirteen.
  *
  * ⚠️ `areaServed` is NSW only, following the call commercial-cleaning.astro
  * made. footerContact still claims the Southern Gold Coast. Same open item as
@@ -167,8 +168,8 @@ export const commercialBusiness = (description: string): LocalBusinessInfo => ({
   name: 'TLB Cleaning',
   url: 'https://tlbcleaning.com.au/',
   logo: '',
-  telephone: '',
-  email: '',
+  telephone: '+61 404 742 065',
+  email: 'hello@tlbcleaning.com.au',
   address: {
     streetAddress: '',
     addressLocality: '',

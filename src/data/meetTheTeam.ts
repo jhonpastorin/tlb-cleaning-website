@@ -83,12 +83,13 @@ export const otherMeetTheTeamPages = (self: MeetTheTeamHref) =>
 /**
  * The LocalBusiness JSON-LD all four pages hand `Base.astro`.
  *
- * ⚠️ Logo, telephone, email, address and sameAs are all empty, inherited
- * verbatim from every page built before these four. They are real facts TLB
- * holds and none of them are in the repo, so the structured data on every
- * page of this site is thinner than it should be — `footerContact` carries
- * the same two `[TBC]`s in the reader's own view. One fix here fills all
- * four.
+ * Telephone and email are TLB's real details (client, 23 Sep 2026), matching
+ * `footerContact` in navigation.ts, so the structured data and the footer the
+ * reader actually sees now agree.
+ *
+ * ⚠️ Logo, address and sameAs are still empty, inherited verbatim from every
+ * page built before these four. They are real facts TLB holds and none of
+ * them are in the repo. One fix here fills all four.
  *
  * ⚠️ `sameAs` matters more on these pages than anywhere else on the site:
  * /reviews/ is a page about third-party proof with no link to a Google
@@ -101,8 +102,8 @@ export const meetTheTeamBusiness = (description: string): LocalBusinessInfo => (
   name: 'TLB Cleaning',
   url: 'https://tlbcleaning.com.au/',
   logo: '',
-  telephone: '',
-  email: '',
+  telephone: '+61 404 742 065',
+  email: 'hello@tlbcleaning.com.au',
   address: {
     streetAddress: '',
     addressLocality: '',

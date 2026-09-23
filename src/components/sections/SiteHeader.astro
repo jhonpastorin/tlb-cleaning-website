@@ -52,13 +52,14 @@ const SHOW_HEADER_CTAS = false;
 // groupName uses for its <details> exclusivity groups.
 const instanceId = `site-header-${Math.random().toString(36).slice(2, 9)}`;
 
-// The phone CTA travels inside `primaryNav` (navigation.ts explains why) but
-// does NOT render inside the nav list: on desktop it sits in the header row's
-// third grid column, hard right, while the links stay centred in the second.
-// Two different cells, so it is split out here rather than mapped with the
-// others. A build with no `phoneCta` item simply renders no phone block.
-const navLinks = primaryNav.filter((item) => !item.phoneCta);
+// The phone and email CTAs travel inside `primaryNav` (navigation.ts explains
+// why) but do NOT render inside the nav list: on desktop they share the header
+// row's third grid column, hard right, while the links stay centred in the
+// second. Two different cells, so they are split out here rather than mapped
+// with the others. A build with neither flag simply renders no contact block.
+const navLinks = primaryNav.filter((item) => !item.phoneCta && !item.emailCta);
 const phoneCta = primaryNav.find((item) => item.phoneCta);
+const emailCta = primaryNav.find((item) => item.emailCta);
 ---
 
 <header class="site-header" data-cta-location="header">
@@ -145,16 +146,18 @@ const phoneCta = primaryNav.find((item) => item.phoneCta);
         )}
       </nav>
 
-      {/* Outside <nav> on purpose: this is a call to action, not navigation,
-          and on desktop it occupies the header row's third grid column so the
-          links can stay centred in the second. It reads as a CTA rather than a
-          nav link, in the same `surface` treatment the old header CTAs used —
+      {/* Outside <nav> on purpose: these are calls to action, not navigation,
+          and on desktop they occupy the header row's third grid column so the
+          links can stay centred in the second. They read as CTAs rather than
+          nav links, in the same `surface` treatment the old header CTAs used —
           the one variant built to lift off this Dark Teal band.
 
-          With no href, Button renders a <button>, which is what keeps the
-          placeholder number from shipping as a dead or wrongly-dialing link. */}
-      {phoneCta && (
-        <div class="site-header__phone">
+          With no href, Button renders a <button>, which is what would keep a
+          placeholder from shipping as a dead or wrongly-dialing link. Both
+          carry real details now, so both render as anchors. */}
+      {(phoneCta || emailCta) && (
+        <div class="site-header__contact">
+          {phoneCta && (
           <Button label={phoneCta.label} href={phoneCta.href} variant="surface" size="sm">
             {/* Handset icon, drawn in the same language as the nav chevron:
                 currentColor stroke, no fill, so it picks up the button's own
@@ -171,6 +174,36 @@ const phoneCta = primaryNav.find((item) => item.phoneCta);
               />
             </svg>
           </Button>
+          )}
+
+          {/* Envelope, drawn to match the handset: same 16-unit box, same
+              currentColor stroke and weight, so the pair reads as one set
+              rather than two icons that happened to land side by side. It is
+              the same mark SiteFooter uses in its contact list. */}
+          {emailCta && (
+          <Button label={emailCta.label} href={emailCta.href} variant="surface" size="sm">
+            <svg slot="icon" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+              <rect
+                x="1.8"
+                y="3.4"
+                width="12.4"
+                height="9.2"
+                rx="1.4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+              />
+              <path
+                d="M2.4 4.6 8 8.8l5.6-4.2"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </Button>
+          )}
         </div>
       )}
     </div>
@@ -261,14 +294,14 @@ const phoneCta = primaryNav.find((item) => item.phoneCta);
      absolutely positioned dropdown that must not be a grid item at all. */
   .site-header__row {
     display: grid;
-    /* Third column is `auto` because it now holds the phone CTA rather than an
-       empty spacer — it sizes to the button plus its right spacing. The links
-       in column 2 therefore centre on the bar only as exactly as columns 1 and
-       3 match in width; they are within a few pixels here, which reads as
-       centred. Making it exact would mean sizing both sides to the wider of
-       the two, which CSS grid cannot express without a fixed number that would
-       then need maintaining against both the logo and the phone number's
-       length. */
+    /* Third column is `auto` because it now holds the contact CTAs rather than
+       an empty spacer — it sizes to the buttons plus their right spacing. The
+       links in column 2 therefore centre on the bar only as exactly as columns
+       1 and 3 match in width. With the email pill beside the phone that column
+       is now the wider of the two by some margin, so the links sit left of the
+       bar's true midpoint. Making it exact would mean sizing both sides to the
+       wider, which CSS grid cannot express without a fixed number that would
+       then need maintaining against both the logo and the two labels. */
     grid-template-columns: var(--header-side-col) 1fr auto;
     align-items: center;
     gap: var(--space-md);
@@ -280,11 +313,18 @@ const phoneCta = primaryNav.find((item) => item.phoneCta);
     justify-content: center;
   }
 
-  .site-header__phone {
+  /* Holds the phone pill and the email pill. `wrap` is the safety net for the
+     awkward middle widths just above the nav breakpoint, where the two labels
+     plus the centred links can out-measure the bar — they stack there rather
+     than squeezing column 2. */
+  .site-header__contact {
     grid-column: 3;
     justify-self: end;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--space-sm);
   }
 
   /* The logo width doubles as the width of the empty balancing column in
@@ -525,15 +565,32 @@ const phoneCta = primaryNav.find((item) => item.phoneCta);
     .site-header__row {
       display: flex;
       justify-content: space-between;
+      /* Lets the contact block drop to its own line — see below. */
+      flex-wrap: wrap;
+      row-gap: var(--space-sm);
     }
 
-    /* Source order is logo, toggle, nav, phone. With the nav out of flow that
-       would render logo | toggle | phone, putting the hamburger in the middle,
-       so the toggle is ordered last instead. `order` rather than moving the
-       markup, because the DOM order is what the desktop grid and the tab order
-       both want. */
+    /* Source order is logo, toggle, nav, contact. With the nav out of flow
+       that would render logo | toggle | contact, putting the hamburger in the
+       middle, so the toggle is ordered last instead. `order` rather than
+       moving the markup, because the DOM order is what the desktop grid and
+       the tab order both want. */
     .site-header__toggle {
       order: 1;
+    }
+
+    /* A 360px bar cannot hold the logo, a phone number, a 24-character email
+       and a hamburger on one line. Rather than shrink or hide either detail,
+       the contact block takes the full width below them: `order: 2` puts it
+       after the toggle, and the 100% basis forces the wrap. The pills then
+       centre on their own line, and wrap against each other on the narrowest
+       phones. The header is one row taller here, which is the trade — two
+       tap-to-contact CTAs above the fold is worth it on the device most
+       likely to use them. */
+    .site-header__contact {
+      order: 2;
+      flex-basis: 100%;
+      justify-content: center;
     }
 
 

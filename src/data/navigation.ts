@@ -37,7 +37,7 @@ import { regionSlugHref } from './regionPages';
 //
 // ⚠️ THE LABELS NOW OVERSTATE WHAT HAPPENS. "Get an instant quote" and "Book
 // your clean online" both land on a contact page that has neither a quote flow
-// nor a booking flow, and whose phone and email are still [TBC]. The labels
+// nor a booking flow — though it now carries a real phone and email. The labels
 // were left alone because only the destinations were asked about, but they are
 // a promise the page does not keep. Worth settling before launch: either build
 // the two pages, or reword these to something the contact page delivers.
@@ -95,9 +95,20 @@ export const serviceLinks = [
 
 export const footerServiceLinks: NavItem[] = serviceLinks.map(({ title, href }) => ({ label: title, href }));
 
+// The site's real contact details, supplied by the client 23 Sep 2026. This
+// is the single source: the footer on all 111 pages, the header's phone CTA
+// (via `primaryNav` below) and the contact page's failed-submit fallback all
+// read from here, so they cannot disagree.
+//
+// `phoneHref` is kept alongside `phone` rather than derived from it. SiteFooter
+// used to build the link by stripping the spaces out of the display number,
+// which gives `tel:0404742065` — dialable in Australia, but not from a phone
+// roaming on an overseas SIM. The E.164 form works everywhere, and it is the
+// same value the header CTA dials.
 export const footerContact = {
-  phone: '[TBC]',
-  email: '[TBC]',
+  phone: '0404 742 065',
+  phoneHref: 'tel:+61404742065',
+  email: 'hello@tlbcleaning.com.au',
   address: 'Northern Rivers, NSW & Southern Gold Coast, QLD',
 };
 
@@ -115,16 +126,14 @@ export const footerCopyright = '© 2026 TLB Cleaning. All rights reserved.';
 // and work-with-us, all labelled some variant of "Talk to us". Removing this
 // primary-nav item did not fix those. One contact page fixes all six.
 //
-// ⚠️ THE PHONE NUMBER IS A PLACEHOLDER. To set the real one, put the number in
-// `label` and its dialable form in `href`:
+// The phone CTA now carries TLB's real number (client, 23 Sep 2026), so it
+// renders as a dialable <a> rather than the inert <button> a placeholder got.
+// It reads `footerContact` rather than repeating the digits, so the header and
+// the footer cannot drift apart.
 //
-//     { label: '02 6685 1234', href: 'tel:+61266851234', phoneCta: true }
-//
-// Until then there is deliberately NO href, so Button renders a <button>
-// rather than an <a>. That is the point: a `tel:` link built around a made-up
-// number is worse than no link, because it silently dials the wrong person,
-// and '#' would ship a dead link. footerContact.phone is the site's other
-// placeholder ('[TBC]') and wants the same number at the same time.
+// The email sits beside it as a second pill, same block, same treatment (the
+// client's request, 23 Sep 2026). Both read `footerContact`, so the header,
+// the footer and the contact page's fallback are one set of details.
 //
 // It rides in `primaryNav` rather than arriving as its own SiteHeader prop
 // because all 53 call sites already pass this array — a new prop would mean
@@ -133,7 +142,8 @@ export const primaryNav: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about/' },
   { label: 'Locations', href: '/locations/' },
-  { label: '[PHONE TBC]', phoneCta: true },
+  { label: footerContact.phone, href: footerContact.phoneHref, phoneCta: true },
+  { label: footerContact.email, href: `mailto:${footerContact.email}`, emailCta: true },
 ];
 
 // Shared nav/footer content — not covered by the content spec at all
