@@ -31,9 +31,9 @@
 //     homepage. why-tlb.astro leads its H1 with "Nine local mums" and flags
 //     the contradiction as its own blocker 1. An about page is where a
 //     reader most expects a number, so the omission is conspicuous: settle
-//     it, then add it here. What this page does carry is why-tlb §8's
-//     careful version of the family-first claim ("most of us are doing it"),
-//     which agrees with the homepage rather than contradicting it.
+//     it, then add it here. The "Family first" value below no longer makes
+//     any claim about who the team is or how many of them there are, so it
+//     cannot contradict whatever number gets settled on.
 //  4. The FAQ's insurance and background-check answers are HELD BACK, not
 //     drafted. See the note above faqItems.
 import Base from '../layouts/Base.astro';
@@ -141,8 +141,11 @@ const storyBlocks = [
 
 // The values: the brand foundation's core values reworded into things a
 // client can check rather than adjectives. Two columns, so each pair reads
-// across, and the section leads with how the team is treated because
-// everything a client notices is downstream of it.
+// across, and the section opens with "Family first" because it is a local
+// credential, written from the customer's side (what a reliable clean gives
+// them) rather than the staff's. Client direction, Sept 2026: keep it about
+// being local families ourselves, nothing about rosters, flexibility or
+// accommodating employees.
 //
 // ⚠️ Cell 3 states that TLB's cleaners are employees, not contractors. That
 // is asserted across this whole site (index.astro's comparison table,
@@ -154,7 +157,7 @@ const valueBlocks = [
     type: 'text' as const,
     heading: 'Family first',
     body: [
-      'The roster is built around school pick-up, because most of us are doing it. Flexible hours are not a perk here, they are the reason people stay, and staying is what gets you the same cleaner next fortnight.',
+      'We are local families ourselves. We know what it is like juggling work, school drop-offs, sport, appointments and everything else that fills a week. That is why we understand what a reliable cleaner actually gives you: one less thing to organise, and a bit more time back for everything else.',
     ],
     tone: 'muted' as const,
   },

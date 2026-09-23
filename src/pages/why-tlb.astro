@@ -330,9 +330,30 @@ const pathwayCards = {
 //
 // Copy is §3.1 and §3.3 almost verbatim, including the closing line, which is
 // the brand document's own sanctioned way to make this point.
-const tradeOffSetup: TextBlockBody[] = [
-  'Two halves, and both matter.',
-];
+//
+// The setup used to be a standalone left-aligned TextBlock band above the
+// grid. It is now ContentGrid's own `heading` and `lead`, so the section
+// reads as one headed card grid, matching about.astro's values block.
+//
+// Cards 3 and 4 were added by client request (Sept 2026) and are two of
+// about.astro's four values, copied word for word — including the client's
+// rewrite of "Family first" into a local credential written from the
+// customer's side. Edit them on both pages or they will drift. The other two
+// about-page values are deliberately NOT here: "Local, and locally owned"
+// restates card 1, and "The last five minutes" is about the clean itself
+// rather than the two halves this section is built on.
+//
+// "Family first" is only safe on this page in its rewritten form. Brand
+// Foundation v2.0 §2.2, quoted at §8 below, moved the school-pick-up and
+// flexible-hours framing OFF this page because this page is positioning. The
+// card as written makes no claim about rosters, flexibility or the workforce,
+// so it does not reopen that. Do not restore the older wording here.
+//
+// ⚠️ Card 4 states TLB's cleaners are employees, not contractors. Same claim
+// as definitionBody, the comparison table and about.astro, and it carries
+// legal weight in Australia. Confirm it holds for every current employee. It
+// also restates definitionBody's second line and a comparison table row, so
+// a reader meets the point three times on one scroll.
 
 const tradeOffBlocks = [
   {
@@ -348,6 +369,22 @@ const tradeOffBlocks = [
     heading: 'Run properly',
     body: [
       'Every client has a set day and a set team. You know who is coming and when, you get a message when we are on the way, and if something has to change you hear it from us first. There is cover when somebody is away, and there is someone accountable when something is not right.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'Family first',
+    body: [
+      'We are local families ourselves. We know what it is like juggling work, school drop-offs, sport, appointments and everything else that fills a week. That is why we understand what a reliable cleaner actually gives you: one less thing to organise, and a bit more time back for everything else.',
+    ],
+    tone: 'muted' as const,
+  },
+  {
+    type: 'text' as const,
+    heading: 'Employed, not subcontracted',
+    body: [
+      'Our cleaners are on the books rather than sent out under an ABN with their own gear. It is the more expensive way to run a cleaning business and it is the only way to promise you the same faces.',
     ],
     tone: 'muted' as const,
   },
@@ -699,9 +736,12 @@ const closingCta = {
 
     <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
 
-    <TextBlock theme="light" align="left" heading="Local and embedded, professionally run." body={tradeOffSetup} />
-
-    <ContentGrid columns={2} blocks={tradeOffBlocks} />
+    <ContentGrid
+      heading="Local and embedded, professionally run."
+      lead="Two halves, and both matter."
+      columns={2}
+      blocks={tradeOffBlocks}
+    />
 
     {/* Photo behind the Dark Teal ground rather than a flat band: this is the
         line the page turns on, and it is the only dark section between two
