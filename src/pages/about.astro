@@ -351,6 +351,17 @@ const closingCta = {
       <TextBlock theme="muted" align="left" body={definitionBody} />
     </Backdrop>
 
+    {/* One-line statement at TLB's direction, leading into "How TLB
+        started". `dark` because the Cream backdrop above and the Off White
+        story below would both swallow a light or muted band. Same `large`
+        treatment as the commercial hub's one-liner. */}
+    <TextBlock
+      theme="dark"
+      align="left"
+      size="large"
+      body={['TLB takes care of properties. Cleaning is where we started.']}
+    />
+
     <StoryMosaic theme="light" heading="How TLB started" blocks={storyBlocks} />
 
     <ContentGrid

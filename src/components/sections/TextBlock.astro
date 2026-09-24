@@ -49,6 +49,10 @@ interface Props {
    *  carries for Hero's minimal panel and ServiceBlocks' list rows. */
   theme?: 'light' | 'muted' | 'dark';
   align?: 'left' | 'center';
+  /** `large` sets the body at --title-5, for a block that is a single
+   *  statement with no heading (the commercial hub's one-line summary under
+   *  its pathway cards). Default body size everywhere else. */
+  size?: 'default' | 'large';
   heading?: string;
   body: TextBlockBody[];
   cta?: ButtonData;
@@ -73,6 +77,7 @@ const {
   id,
   theme = 'light',
   align = 'center',
+  size = 'default',
   heading,
   body,
   cta,
@@ -101,7 +106,7 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
   <div class="container container--narrow">
     <div class:list={['text-block__inner', { 'text-block__inner--center': align === 'center' }]}>
       {heading && <h2 id={headingId}>{heading}</h2>}
-      <div class="text-block__body">
+      <div class:list={['text-block__body', { 'text-block__body--large': size === 'large' }]}>
         {body.map((entry) =>
           typeof entry === 'string' ? (
             <p>{entry}</p>
@@ -218,6 +223,11 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
     gap: var(--space-md);
     font-size: var(--text-big);
     line-height: var(--leading-normal);
+  }
+
+  .text-block__body--large {
+    font-size: var(--title-5);
+    line-height: var(--leading-snug);
   }
 
   .text-block--light .text-block__body,

@@ -961,6 +961,16 @@ const closingCta = {
 
     <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
 
+    {/* The three pathway cards in one line, at TLB's direction. No heading,
+        body at `large` size. `muted` so it reads as its own band between the
+        cards and the dark Award block below. */}
+    <TextBlock
+      theme="muted"
+      align="left"
+      size="large"
+      body={['A written scope, the same team each visit, and one accountable company. If something at the premises needs fixing, one call to us sorts it.']}
+    />
+
     <TextBlock
       theme="dark"
       align="left"
