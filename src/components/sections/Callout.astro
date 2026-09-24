@@ -75,9 +75,10 @@ const headingId = `callout-heading-${Math.random().toString(36).slice(2, 9)}`;
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
-    /* Narrower than the full container — a callout that runs the full page
-       width stops reading as an aside and starts reading as a section. */
-    max-width: 60rem;
+    /* Full container width by request (September 2026), so the panel lines
+       up with the sections around it. It was capped at 60rem, which left it
+       hanging short of the right edge. The accent bar is what keeps it
+       reading as an aside. */
   }
 
   .callout__panel--note {

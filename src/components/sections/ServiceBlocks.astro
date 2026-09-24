@@ -35,6 +35,9 @@ interface ServiceItem {
   /** image-cards, highlight, slider, photo-tiles */
   image?: ImageBlock;
   title: string;
+  /** icon-grid only: a short pill under the title, e.g. which plans an item
+   *  belongs to when not every item comes with every booking. */
+  tag?: string;
   description: string;
   /** image-cards (footer bar), highlight/slider (showcase button) */
   cta?: ButtonData;
@@ -54,6 +57,9 @@ interface Props {
    *  thing (open the service), and five slightly different verbs would read
    *  as five different affordances. */
   tileCtaLabel?: string;
+  /** image-cards only: a numbered circle beside each card's title, in item
+   *  order. Same badge PathwayCards draws. */
+  numbered?: boolean;
 }
 
 const {
@@ -63,6 +69,7 @@ const {
   items,
   cta,
   tileCtaLabel = 'Learn more',
+  numbered = false,
 } = Astro.props;
 
 // Random suffix so multiple <ServiceBlocks> instances on one page never
@@ -87,6 +94,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
           <div class="service-blocks__icon-item">
             {item.icon && <ServiceIcon name={item.icon} class="service-blocks__icon" />}
             <h3>{item.title}</h3>
+            {item.tag && <span class="service-blocks__tag">{item.tag}</span>}
             <p>{item.description}</p>
           </div>
         ))}
@@ -110,7 +118,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
       </div>
 
       <div class="service-blocks__cards">
-        {items.map((item) => (
+        {items.map((item, i) => (
           <div class="service-blocks__card">
             {item.image && (
               <div class="service-blocks__card-media">
@@ -118,7 +126,14 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
               </div>
             )}
             <div class="service-blocks__card-body">
-              <h3>{item.title}</h3>
+              {numbered ? (
+                <div class="service-blocks__title-row">
+                  <span class="service-blocks__number" aria-hidden="true">{i + 1}</span>
+                  <h3>{item.title}</h3>
+                </div>
+              ) : (
+                <h3>{item.title}</h3>
+              )}
               <p>{item.description}</p>
             </div>
             {item.cta && (
@@ -343,6 +358,19 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
     font-size: var(--title-7);
   }
 
+  /* Same pill shape and type as BeforeAfter's tags, on a light ground so it
+     reads as a qualifier under the heading rather than a button. */
+  .service-blocks__tag {
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-accent);
+    background: var(--color-surface-muted);
+    color: var(--color-brand);
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-small);
+  }
+
   .service-blocks__icon-item p {
     color: var(--color-body);
     max-width: 30ch;
@@ -402,6 +430,29 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
 
   .service-blocks__card-body h3 {
     font-size: var(--title-7);
+  }
+
+  /* Copied from PathwayCards' .pathway__number so the two numbered card
+     sets on a page look like one system. */
+  .service-blocks__title-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .service-blocks__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-small);
+    flex-shrink: 0;
   }
 
   .service-blocks__card-body p {

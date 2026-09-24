@@ -23,7 +23,23 @@ import type { ButtonData } from '../../data/types';
 // Same "array order is the layout" call StoryMosaic.astro and
 // ContentGrid.astro already make. `string[]` still satisfies this, so every
 // existing caller is unchanged.
-export type TextBlockBody = string | { list: string[] };
+//
+// `ordered: true` numbers the list (steps rather than points), and
+// `{ subheading }` drops an h3 into the flow, for a block that needs a
+// second titled part without becoming a second section.
+//
+// The two object shapes are named interfaces, not inline, on purpose: Astro's
+// compiler hoists `export type` out of the frontmatter by cutting at the first
+// `;`, and an inline `{ list: string[]; ordered?: boolean }` split the union in
+// half and failed the build ("Unexpected |").
+interface TextBlockList {
+  list: string[];
+  ordered?: boolean;
+}
+interface TextBlockSubheading {
+  subheading: string;
+}
+export type TextBlockBody = string | TextBlockList | TextBlockSubheading;
 
 interface Props {
   /** light = the page's own Off White (no visible band edge), muted = the
@@ -48,9 +64,13 @@ interface Props {
    *  the LIGHTEST area of the photo before you do — the scrim is the only
    *  thing standing between the copy and whatever is underneath. */
   scrimOpacity?: number;
+  /** Optional id on the <section>, for a link or ad that lands on this block
+   *  directly (e.g. `#owners-who-live-away`). */
+  id?: string;
 }
 
 const {
+  id,
   theme = 'light',
   align = 'center',
   heading,
@@ -68,6 +88,7 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
 ---
 
 <section
+  id={id}
   class:list={['text-block', `text-block--${theme}`, { 'text-block--photo': backgroundImage }]}
   aria-labelledby={heading ? headingId : undefined}
 >
@@ -84,6 +105,14 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
         {body.map((entry) =>
           typeof entry === 'string' ? (
             <p>{entry}</p>
+          ) : 'subheading' in entry ? (
+            <h3 class="text-block__subheading">{entry.subheading}</h3>
+          ) : entry.ordered ? (
+            <ol class="text-block__list text-block__list--ordered">
+              {entry.list.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ol>
           ) : (
             <ul class="text-block__list">
               {entry.list.map((item) => (
@@ -227,6 +256,44 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
     border-radius: 50%;
     background: currentColor;
     opacity: 0.55;
+  }
+
+  /* Numbered steps: a CSS counter in place of the dot, for the same reason
+     the dot is drawn by hand (reset.css clears list-style). */
+  .text-block__list--ordered {
+    counter-reset: text-block-step;
+  }
+
+  .text-block__list--ordered li {
+    counter-increment: text-block-step;
+    padding-left: var(--space-lg);
+  }
+
+  .text-block__list--ordered li::before {
+    content: counter(text-block-step) '.';
+    top: 0;
+    transform: none;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: none;
+    opacity: 1;
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+  }
+
+  .text-block__subheading {
+    font-size: var(--title-6);
+    margin-top: var(--space-xs);
+  }
+
+  .text-block--light .text-block__subheading,
+  .text-block--muted .text-block__subheading {
+    color: var(--color-on-surface);
+  }
+
+  .text-block--dark .text-block__subheading {
+    color: var(--color-on-inverse);
   }
 
   /* A centred block still gets a left-aligned list — centred bullet text is
