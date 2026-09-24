@@ -1,0 +1,88 @@
+---
+// Page not found. Astro builds this to /404.html, which static hosts serve for
+// any address that does not exist. Added 25 Sep 2026 at the client's request.
+//
+// `noindex`: a not-found page should never sit in search results. The
+// canonical points at the file itself because Base requires one; with noindex
+// set it carries no weight.
+//
+// Same shell as thank-you.astro: minimal hero, then the main routes into the
+// site so a reader who followed a dead link has somewhere to go.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/sections/SiteHeader.astro';
+import Hero from '../components/sections/Hero.astro';
+import TagCloud from '../components/sections/TagCloud.astro';
+import SiteFooter from '../components/sections/SiteFooter.astro';
+import logoImg from '../assets/logo/tlb-logo-horizontal.png';
+import footerLogoImg from '../assets/logo/tlb-logo-square.png';
+import {
+  primaryNav,
+  headerNav,
+  headerSecondaryCta,
+  footerServiceLinks,
+  footerContact,
+  footerCopyright,
+  quoteCta,
+} from '../data/navigation';
+import { meetTheTeamBusiness } from '../data/meetTheTeam';
+
+const pageMeta = {
+  title: 'Page Not Found | TLB Cleaning',
+  description: "The page you were looking for isn't here. Find TLB Cleaning's services, locations and contact details.",
+  canonical: 'https://tlbcleaning.com.au/404.html',
+};
+
+const business = meetTheTeamBusiness(pageMeta.description);
+
+const routes = [
+  { label: 'House cleaning', href: '/house-cleaning/' },
+  { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
+  { label: 'Airbnb & holiday home cleaning', href: '/airbnb-holiday-home-cleaning/' },
+  { label: 'Locations', href: '/locations/' },
+  { label: 'About TLB', href: '/about/' },
+  { label: 'Contact us', href: '/contact/' },
+];
+---
+
+<Base
+  title={pageMeta.title}
+  description={pageMeta.description}
+  canonical={pageMeta.canonical}
+  business={business}
+  noindex
+>
+  <SiteHeader
+    logo={{ label: 'TLB Cleaning', src: logoImg }}
+    primaryNav={primaryNav}
+    serviceNav={headerNav}
+    secondaryCta={headerSecondaryCta}
+    cta={quoteCta}
+  />
+
+  <main id="main">
+    <Hero
+      variant="minimal"
+      kicker="Page not found"
+      headingLines={["We couldn't find that page."]}
+      lead="It may have moved, or the link may be out of date. Everything we do is still a click away."
+      cta={{ label: 'Back to the home page', href: '/' }}
+    />
+
+    <TagCloud
+      heading="Where to next"
+      subheading="The main parts of the site."
+      tags={routes}
+      note={['Still stuck? Call or email us and we will point you in the right direction.']}
+    />
+  </main>
+
+  <SiteFooter
+    logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
+    columns={[
+      { title: 'Services', links: footerServiceLinks },
+      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+    ]}
+    contact={footerContact}
+    copyright={footerCopyright}
+  />
+</Base>
