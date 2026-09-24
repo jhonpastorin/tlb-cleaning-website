@@ -90,7 +90,7 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, managedForYou } from '../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou } from '../data/brand-lines';
 
 // §0 Page metadata — title tag and description both drafted in full.
 //
@@ -733,7 +733,7 @@ const closingCta = {
       theme="dark"
       align="left"
       heading={theLineHeading.instant}
-      body={[managedForYou.recurring, ...bookingBody]}
+      body={[managedForYou.recurring, ...bookingBody, ...howItWorks.general]}
       cta={quoteCta}
     />
 

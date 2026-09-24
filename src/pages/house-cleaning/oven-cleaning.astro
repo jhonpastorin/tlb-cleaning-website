@@ -94,7 +94,7 @@ import { otherApplianceServices } from '../../data/appliance-services';
 // The five exterior pages, for the cross-sell grid. See the note above
 // crossSellItems.
 import { outsideServices } from '../../data/outsideYourHome';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 const OWN_HREF = '/house-cleaning/oven-cleaning/';
 
@@ -524,7 +524,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...theLineBody.residential]}
+      body={[managedForYou.oneOff, ...theLineBody.residential, ...howItWorks.general]}
     />
 
     {/* Both FAQ headings renamed. The first five questions are all about

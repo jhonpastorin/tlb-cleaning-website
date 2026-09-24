@@ -80,7 +80,7 @@ import {
 import { nswLocationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Shop cleaning" and "retail cleaning" are both head terms and
 // "shopfront" is the local word, so all three concepts sit in the title and
@@ -423,7 +423,7 @@ const business = commercialBusiness(pageMeta.description);
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.commercial]}
+      body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

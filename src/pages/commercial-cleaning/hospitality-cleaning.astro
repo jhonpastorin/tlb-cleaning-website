@@ -24,7 +24,7 @@
 //   - `MetricsBlock variant="strip"` — the one place in the cluster where
 //     numbers belong, because turnaround time is the product here. ⚠️ Every
 //     figure in it is bracketed; see §6.
-//   - `Callout tone="note"` pointing hosts at /house-cleaning/airbnb-cleaning/, the same
+//   - `Callout tone="note"` pointing hosts at /airbnb-holiday-home-cleaning/, the same
 //     redirect pattern the aged care page uses, and for the same reason: a
 //     single-property host who lands here should be somewhere better.
 //   - The commercial kitchen link is load-bearing rather than decorative. A
@@ -89,7 +89,7 @@ import { comparisonColumns, serviceComparisonRows } from '../../data/comparison'
 import { locationGroups, locationSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises } from '../../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // 🔴 THIS PAGE WAS REFOCUSED, NOT JUST REWRITTEN. Per the client's decision of
 // 22 September 2026, workbook row 33 wins: this page is about restaurants,
@@ -331,7 +331,7 @@ const worthKnowingBody: TextBlockBody[] = [
 // because park and venue operators often hold rental property too, and the
 // third because a forecourt and a path are half of what a guest sees first.
 const relatedTags = relatedPremises('/commercial-cleaning/hospitality-cleaning/', [
-  { label: 'Airbnb cleaning', href: '/house-cleaning/airbnb-cleaning/' },
+  { label: 'Airbnb cleaning', href: '/airbnb-holiday-home-cleaning/' },
 ]);
 
 // §9 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
@@ -574,7 +574,7 @@ const business = commercialBusiness(pageMeta.description);
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.commercial]}
+      body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
     {/* Brief §21 and §22. The first block is pre-booking questions and the

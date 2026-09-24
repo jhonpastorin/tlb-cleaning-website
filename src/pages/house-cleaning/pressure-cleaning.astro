@@ -86,7 +86,7 @@ import { comparisonColumns, comparisonRows } from '../../data/comparison';
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherOutsideServices } from '../../data/outsideYourHome';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Pressure washing" and "pressure cleaning" are the same thing
 // and are carried in body copy, so the three do not read as three services.
@@ -570,7 +570,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...theLineBody.residential]}
+      body={[managedForYou.oneOff, ...theLineBody.residential, ...howItWorks.general]}
     />
 
     {/* The first FAQ heading names what its five questions actually are —

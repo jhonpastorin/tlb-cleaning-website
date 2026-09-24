@@ -155,7 +155,7 @@ import {
   quoteCta,
 } from '../../data/navigation';
 import { trustBarCards } from '../../data/trust';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // Section 0. Page metadata.
 //
@@ -684,7 +684,7 @@ const comparisonTable = {
 //
 // WHY IT IS A LIST AND NOT A TEXTBLOCK. The copy was drafted as five
 // paragraphs of prose with four inline links in it, to
-// /house-cleaning/real-estate-cleaning/, /house-cleaning/airbnb-cleaning/, /commercial-cleaning/ and
+// /house-cleaning/real-estate-cleaning/, /airbnb-holiday-home-cleaning/, /commercial-cleaning/ and
 // /commercial-cleaning/strata-cleaning/. NO component in this library renders a
 // link inside a paragraph: TextBlock, Callout and ContentGrid all render
 // each body string as <p>{paragraph}</p>, so Astro escapes any markup in it.
@@ -730,7 +730,7 @@ const commercialRows = [
     title: 'Holiday let owners',
     description:
       'Usually a wardrobe or a window reveal in a house that has been shut up between guests, which is when it happens here. We work off the booking calendar on turnovers, so if there is spotting that keeps returning in the same room we will flag it rather than wiping it and moving on.',
-    href: '/house-cleaning/airbnb-cleaning/',
+    href: '/airbnb-holiday-home-cleaning/',
   },
   {
     icon: 'office' as const,
@@ -1185,7 +1185,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...theLineBody.condition]}
+      body={[managedForYou.oneOff, ...theLineBody.condition, ...howItWorks.general]}
     />
 
     <Faq heading="Frequently asked questions" items={faqItems} />

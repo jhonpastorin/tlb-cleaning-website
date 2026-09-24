@@ -76,7 +76,7 @@ import {
   quoteCta,
 } from '../../data/navigation';
 import { trustBarCards } from '../../data/trust';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // ✅ REWRITTEN against the September 2026 copy-rewrite brief (workbook row 20,
 // "NDIS cleaning"). This is the largest mapped cluster in the batch at 1,200/mo
@@ -754,7 +754,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.instant}
-      body={[managedForYou.recurring, ...theLineBody.regular]}
+      body={[managedForYou.recurring, ...theLineBody.regular, ...howItWorks.general]}
     />
 
     {/* ✅ BOTH FAQ HEADINGS RENAMED (copy-rewrite brief §19 and §20).

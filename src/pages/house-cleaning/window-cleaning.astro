@@ -86,7 +86,7 @@ import { comparisonColumns, comparisonRows } from '../../data/comparison';
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherOutsideServices } from '../../data/outsideYourHome';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. Focus keyword leads the title, matching every sibling. "Window
 // washing" and "window cleaner" are the common synonyms and are carried in
@@ -589,7 +589,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...theLineBody.residential]}
+      body={[managedForYou.oneOff, ...theLineBody.residential, ...howItWorks.general]}
     />
 
     {/* The first FAQ heading renamed: these five are about inside glass,

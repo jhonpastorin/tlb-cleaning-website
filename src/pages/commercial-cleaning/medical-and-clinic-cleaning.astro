@@ -136,7 +136,7 @@ import {
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises } from '../../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. Three settings in the title because three different searches
 // have to land here and the menu label already commits to all three.
@@ -579,7 +579,7 @@ const business = commercialBusiness(pageMeta.description);
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.commercial]}
+      body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
     {/* Brief §21 and §22. The page carries two FAQ headings and the generic

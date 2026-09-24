@@ -113,7 +113,7 @@ import { comparisonColumns, serviceComparisonRows } from '../../data/comparison'
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherApplianceServices } from '../../data/appliance-services';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 const OWN_HREF = '/house-cleaning/carpet-cleaning/';
 
@@ -578,7 +578,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...theLineBody.residential]}
+      body={[managedForYou.oneOff, ...theLineBody.residential, ...howItWorks.general]}
     />
 
     {/* Brief sections 24 and 25. The page carried two FAQ headings and the

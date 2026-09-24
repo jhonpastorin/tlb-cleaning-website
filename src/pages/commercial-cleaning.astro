@@ -140,7 +140,7 @@ import {
 import { comparisonColumns, serviceComparisonRows } from '../data/comparison';
 import { completeFootprintLocationGroups, footprintSubheading } from '../data/locations';
 import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. ✅ REWRITTEN against the September 2026 copy-rewrite brief
 // (workbook row 25, "Commercial cleaning (hub)"), which scores this page
@@ -1081,7 +1081,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBodyCommercial]}
+      body={[managedForYou.recurring, ...theLineBodyCommercial, ...howItWorks.general]}
     />
 
     {/* ✅ BOTH FAQ HEADINGS RENAMED (copy-rewrite brief §16 and §17). Title

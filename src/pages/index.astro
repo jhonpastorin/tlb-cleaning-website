@@ -71,7 +71,7 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, managedForYou } from '../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou } from '../data/brand-lines';
 
 // META SET FROM THE KEYWORD WORKBOOK 16 Sep 2026, on TLB's instruction to
 // ship the workbook copy verbatim. It replaces "A local cleaning team across
@@ -144,9 +144,23 @@ const definitionBody = [
 const pathwayCards = {
   heading: 'Tell us what you need',
   headingAccent: "we'll take it from there.",
+  // Holiday let moved to first and retitled by request (September 2026), to
+  // lead with the Full Property Care proposition. Numbers follow the order.
   cards: [
     {
       number: 1,
+      image: {
+        ratio: '4/3',
+        label: 'Guest-ready holiday let living room with a lit wood fire and made-up sofa',
+        src: pathwayHolidayLetImg,
+      },
+      title: 'I have a holiday let. We take care of it.',
+      description:
+        "We work to your booking calendar, not the other way around. Turnovers, restocking and guest-ready presentation, or full management if you'd rather hand the lot over.",
+      cta: { label: 'Get a quote', href: '/airbnb-holiday-home-cleaning/' },
+    },
+    {
+      number: 2,
       image: {
         ratio: '4/3',
         label: 'TLB cleaners vacuuming and dusting an open-plan living room and kitchen',
@@ -156,18 +170,6 @@ const pathwayCards = {
       description:
         "Weekly, fortnightly or a one-off reset. The same faces every visit, and nothing to organise once it's set.",
       cta: { label: 'Get a quote', href: '/house-cleaning/' },
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        label: 'Guest-ready holiday let living room with a lit wood fire and made-up sofa',
-        src: pathwayHolidayLetImg,
-      },
-      title: 'I have a holiday let',
-      description:
-        "We work to your booking calendar, not the other way around. Turnovers, restocking and guest-ready presentation, or full management if you'd rather hand the lot over.",
-      cta: { label: 'Get a quote', href: '/house-cleaning/airbnb-cleaning/' },
     },
     {
       number: 3,
@@ -201,7 +203,7 @@ const whatWeDoItems = [
     title: 'Holiday lets',
     description:
       'Airbnb and short-stay turnovers, restocking, guest-ready presentation, and full management of the property if you want it.',
-    href: '/house-cleaning/airbnb-cleaning/',
+    href: '/airbnb-holiday-home-cleaning/',
   },
   {
     icon: 'key' as const,
@@ -337,7 +339,7 @@ const serviceImages: Record<string, ImageMetadata> = {
   '/house-cleaning/': serviceRegularImg,
   '/house-cleaning/deep-cleaning/': serviceDeepCleanImg,
   '/house-cleaning/end-of-lease-cleaning/': serviceEndOfLeaseImg,
-  '/house-cleaning/airbnb-cleaning/': serviceAirbnbImg,
+  '/airbnb-holiday-home-cleaning/': serviceAirbnbImg,
   '/house-cleaning/real-estate-cleaning/': serviceRealEstateImg,
   '/commercial-cleaning/': serviceCommercialImg,
 };
@@ -545,7 +547,12 @@ const closingCta = {
 
     <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
 
-    <ServiceBlocks variant="list" heading="What we do" items={whatWeDoItems} />
+    <ServiceBlocks
+      variant="list"
+      heading="What we do"
+      items={whatWeDoItems}
+      note="More than a clean: restocking, property checks and trades arranged for holiday lets and businesses."
+    />
 
     <StoryMosaic theme="light" heading="Local team, run properly" blocks={teamBlocks} cta={teamCta} />
 
@@ -563,7 +570,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.instant}
-      body={[managedForYou.recurring, "You'll know the price before we start, not after.", ...pricingBody]}
+      body={[managedForYou.recurring, "You'll know the price before we start, not after.", ...pricingBody, ...howItWorks.general]}
       cta={hero.cta}
     />
 

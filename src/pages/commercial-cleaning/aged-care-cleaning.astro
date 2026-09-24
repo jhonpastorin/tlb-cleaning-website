@@ -164,7 +164,7 @@ import { comparisonColumns } from '../../data/comparison';
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises } from '../../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. The title leads with "aged care and retirement village
 // cleaning" rather than the menu's "and seniors", because the menu label is
@@ -727,7 +727,7 @@ const business = commercialBusiness(pageMeta.description);
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.commercial]}
+      body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
     {/* Brief §22 and §23. The page carries two FAQ headings and the generic

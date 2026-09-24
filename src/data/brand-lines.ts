@@ -101,3 +101,42 @@ export const theLineBody = {
     "It's cost effective because a written scope is something you can hold us to. You're buying a defined amount of work, on a set day, from the same team each visit. No lock-in term.",
   ],
 } as const;
+
+// "How it works", appended after the body on every page that carries the line
+// as a section heading. Two variants, 25 Sep 2026:
+//
+// `turnover` is the client's supplied copy, verbatim, and is the Airbnb page's
+// only. Booking calendars and per-turnover photos are specific to holiday lets.
+//
+// `general` is everywhere else. It keeps the client's first and last steps
+// and replaces the two turnover-only ones with claims the site already makes:
+// a price before the work starts (theLineBody) and a message on the way
+// (managedForYou). Nothing in it promises something those two do not.
+const howItWorksHeading = { subheading: 'How it works' };
+
+export const howItWorks = {
+  general: [
+    howItWorksHeading,
+    {
+      ordered: true,
+      list: [
+        'Tell us about the job.',
+        'We confirm the price and agree a time and access.',
+        "We do the clean, and you get a message when we're on the way.",
+        'If something needs fixing, you hear it from us first.',
+      ],
+    },
+  ],
+  turnover: [
+    howItWorksHeading,
+    {
+      ordered: true,
+      list: [
+        'Tell us about your property.',
+        'We link to your booking calendar and agree access.',
+        'We take care of every turnover, and you get photos each time.',
+        'If something needs fixing, you hear it from us first.',
+      ],
+    },
+  ],
+};

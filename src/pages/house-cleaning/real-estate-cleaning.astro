@@ -1,7 +1,7 @@
 ---
 // Real estate and property management cleaning — one of the three LEAF
 // pages under the "Specialist cleaning" group in the Home Cleaning
-// mega-menu (navigation.ts). Sibling of /house-cleaning/airbnb-cleaning/ and
+// mega-menu (navigation.ts). Sibling of /airbnb-holiday-home-cleaning/ and
 // /house-cleaning/ndis-cleaning/, built in the same pass as the first of those and sharing
 // its structure deliberately.
 //
@@ -18,7 +18,7 @@
 // verbatim.
 //
 // NO CONTENT BRIEF EXISTS in content-plans/ for this page. As with
-// /house-cleaning/airbnb-cleaning/, it is not drafted from nothing — the Brand Foundation
+// /airbnb-holiday-home-cleaning/, it is not drafted from nothing — the Brand Foundation
 // Document has a full audience section (§7 "Audience 3: real estate
 // agencies and property managers", plus §3's fourth differentiator and §5's
 // approved headline/CTA sets), and the agency relationship is the single
@@ -119,7 +119,7 @@ import {
 import { comparisonColumns } from '../../data/comparison';
 import { completeFootprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. ✅ REWRITTEN against the September 2026 copy-rewrite brief
 // (workbook row 19, "For agencies and property managers").
@@ -198,7 +198,7 @@ const business = {
     addressCountry: 'AU',
   },
   sameAs: [],
-  // BOTH STATES, like /house-cleaning/airbnb-cleaning/ and unlike the commercial and NDIS
+  // BOTH STATES, like /airbnb-holiday-home-cleaning/ and unlike the commercial and NDIS
   // pages. Deliberate: the BFD's audience section for this reader names
   // agencies "across the Northern Rivers and Southern Gold Coast", and its
   // differentiator section says TLB holds contracts in "the Northern Rivers
@@ -524,7 +524,7 @@ const serviceTags = [
   { label: 'Pre-listing and photography cleans', href: quoteCta.href },
   { label: 'Deep cleans between tenancies', href: '/house-cleaning/deep-cleaning/' },
   { label: 'Mould treatment and removal', href: '/house-cleaning/mould-removal/' },
-  { label: 'Holiday let turnovers', href: '/house-cleaning/airbnb-cleaning/' },
+  { label: 'Holiday let turnovers', href: '/airbnb-holiday-home-cleaning/' },
   { label: 'Strata and common areas', href: '/commercial-cleaning/' },
   { label: 'Carpet cleaning', href: '/commercial-cleaning/commercial-carpet-cleaning/' },
   { label: 'Driveways and exterior washing', href: '/commercial-cleaning/commercial-pressure-cleaning/' },
@@ -890,7 +890,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.condition]}
+      body={[managedForYou.recurring, ...theLineBody.condition, ...howItWorks.general]}
     />
 
     {/* ✅ BOTH FAQ HEADINGS RENAMED (copy-rewrite brief §22 and §23).

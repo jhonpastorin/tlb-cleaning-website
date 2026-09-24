@@ -119,7 +119,7 @@ import {
 import { comparisonColumns, serviceComparisonRows } from '../../data/comparison';
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. Focus keyword leads the title, matching the hub's pattern.
 // "Commercial pressure cleaning" is the menu label and the primary term;
@@ -736,7 +736,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.commercial]}
+      body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
     {/* Brief §23 and §24. The page carried two FAQ headings and the generic

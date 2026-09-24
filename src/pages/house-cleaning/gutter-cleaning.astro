@@ -85,7 +85,7 @@ import { comparisonColumns, comparisonRows } from '../../data/comparison';
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherOutsideServices } from '../../data/outsideYourHome';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. Title and description are the SIGNED-OFF workbook text
 // (Keyword Mapping & Metadata, sheet 1 row 14), reproduced verbatim.
@@ -557,7 +557,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...theLineBody.residential]}
+      body={[managedForYou.oneOff, ...theLineBody.residential, ...howItWorks.general]}
     />
 
     {/* Both FAQ headings renamed. The first describes what its five questions

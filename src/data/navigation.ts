@@ -79,7 +79,7 @@ export const serviceLinks = [
   {
     title: 'Airbnb and holiday let turnovers',
     description: 'Timed to your bookings, restocked and guest-ready before check-in. Full management available.',
-    href: '/house-cleaning/airbnb-cleaning/',
+    href: '/airbnb-holiday-home-cleaning/',
   },
   {
     title: 'Real estate and property management',
@@ -333,7 +333,6 @@ const headerNavAll: MegaMenuNavItem[] = [
       {
         label: 'Specialist cleaning',
         items: [
-          { label: 'Airbnb', href: '/house-cleaning/airbnb-cleaning/' }, // same page as §3/§10's Airbnb service, now nested
           { label: 'Real estate cleaners', href: '/house-cleaning/real-estate-cleaning/' }, // same page as §3/§10's real estate service, now nested
           { label: 'NDIS cleaning', href: '/house-cleaning/ndis-cleaning/' },
           // ADDED 16 Sep 2026, at the client's request, and deliberately
@@ -379,6 +378,9 @@ const headerNavAll: MegaMenuNavItem[] = [
       },
     ],
   },
+  // Promoted out of Home Cleaning's "Specialist cleaning" group to its own
+  // Level-A item, 25 Sep 2026, at the client's request. Plain link, no menu.
+  { label: 'Airbnb & Holiday Home Cleaning', href: '/airbnb-holiday-home-cleaning/' },
   {
     label: 'Commercial',
     href: '/commercial-cleaning/',
@@ -621,7 +623,7 @@ if (missingNavLabels.length) {
 // WHAT STAYS CLICKABLE, for the record: the whole of "Inside your home" —
 // deep cleaning, end of lease and bond cleaning, mould cleaning and removal
 // — plus carpet and rug cleaning, tile and grout cleaning, blinds, shutters
-// and ceiling fans, Airbnb, real estate cleaners, NDIS cleaning, and five of
+// and ceiling fans, real estate cleaners, NDIS cleaning, and five of
 // the thirteen premises: office, strata, aged care, medical and construction
 // site. Every Level-A item and all 56 towns are untouched.
 //

@@ -86,7 +86,7 @@ import { comparisonColumns, comparisonRows } from '../../data/comparison';
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherOutsideServices } from '../../data/outsideYourHome';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "House washing", "exterior cleaning" and "soft wash" are the
 // synonyms; the first two are now settled in the opening paragraph and the
@@ -562,7 +562,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...theLineBody.residential]}
+      body={[managedForYou.oneOff, ...theLineBody.residential, ...howItWorks.general]}
     />
 
     {/* The first FAQ heading renamed: these five are about paint, duration,

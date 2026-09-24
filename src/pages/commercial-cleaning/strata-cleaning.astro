@@ -115,7 +115,7 @@ import { comparisonColumns } from '../../data/comparison';
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises } from '../../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Strata cleaning" is the head term people actually search;
 // "common area cleaning" is the phrase committees and managers use in their
@@ -336,7 +336,7 @@ const scopeFailureBlocks = [
 // of short-stay lots is a real and growing case, and it is the one link a
 // committee member reading this page might genuinely need next.
 const relatedTags = relatedPremises('/commercial-cleaning/strata-cleaning/', [
-  { label: 'Airbnb cleaning', href: '/house-cleaning/airbnb-cleaning/' },
+  { label: 'Airbnb cleaning', href: '/airbnb-holiday-home-cleaning/' },
 ]);
 
 // §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
@@ -702,7 +702,7 @@ const business = commercialBusiness(pageMeta.description);
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.commercial]}
+      body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
     {/* Brief §22 and §23. The page carries two FAQ headings and the generic

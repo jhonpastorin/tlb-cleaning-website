@@ -108,7 +108,7 @@ import {
 import { nswLocationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. "Brewery cleaning" is the head term. The description names the
 // CIP boundary, because a brewer searching this phrase is often looking for
@@ -564,7 +564,7 @@ const business = commercialBusiness(pageMeta.description);
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.commercial]}
+      body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
     <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />

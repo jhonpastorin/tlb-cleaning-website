@@ -60,6 +60,8 @@ interface Props {
   /** image-cards only: a numbered circle beside each card's title, in item
    *  order. Same badge PathwayCards draws. */
   numbered?: boolean;
+  /** list only: one closing line under the rows. */
+  note?: string;
 }
 
 const {
@@ -70,6 +72,7 @@ const {
   cta,
   tileCtaLabel = 'Learn more',
   numbered = false,
+  note,
 } = Astro.props;
 
 // Random suffix so multiple <ServiceBlocks> instances on one page never
@@ -179,6 +182,8 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
           </li>
         ))}
       </ul>
+
+      {note && <p class="service-blocks__note">{note}</p>}
     </div>
   </section>
 )}
@@ -504,6 +509,13 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
+  }
+
+  .service-blocks__note {
+    margin-top: var(--space-lg);
+    text-align: center;
+    color: var(--color-body);
+    font-size: var(--text-big);
   }
 
   .service-blocks__row {

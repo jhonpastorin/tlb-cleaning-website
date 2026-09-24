@@ -86,7 +86,7 @@ import {
   quoteCta,
 } from '../../data/navigation';
 import { trustBarCards } from '../../data/trust';
-import { theLine, theLineHeading } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks } from '../../data/brand-lines';
 
 // §0 Page metadata. Title and description both drafted in the brief and
 // shipping verbatim — the description that used to be a placeholder here is
@@ -859,7 +859,7 @@ const closingCta = {
       theme="dark"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYouDeepClean, ...bookingBody]}
+      body={[managedForYouDeepClean, ...bookingBody, ...howItWorks.general]}
       cta={pageQuoteCta}
     />
 

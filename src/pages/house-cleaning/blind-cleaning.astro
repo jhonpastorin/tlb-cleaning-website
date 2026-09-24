@@ -76,7 +76,7 @@ import { comparisonColumns, comparisonRows } from '../../data/comparison';
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherApplianceServices } from '../../data/appliance-services';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 const OWN_HREF = '/house-cleaning/blind-cleaning/';
 
@@ -417,7 +417,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...theLineBody.residential]}
+      body={[managedForYou.oneOff, ...theLineBody.residential, ...howItWorks.general]}
     />
 
     <Faq heading="Frequently asked questions" items={brandedFaqItems} />

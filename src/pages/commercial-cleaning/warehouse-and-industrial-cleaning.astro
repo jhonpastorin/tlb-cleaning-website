@@ -103,7 +103,7 @@ import {
 import { locationGroups, locationSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // §0 Metadata. Title and description are the SIGNED-OFF workbook text
 // (Keyword Mapping & Metadata, sheet 1 row 37), reproduced verbatim. The old
@@ -566,7 +566,7 @@ const business = commercialBusiness(pageMeta.description);
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.recurring, ...theLineBody.commercial]}
+      body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
     {/* Brief §20. The six questions here are about site induction, shift

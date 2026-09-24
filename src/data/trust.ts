@@ -25,7 +25,7 @@
 // uses the default one-column-per-cell row, so this is a data change with no
 // component change behind it. That wrap-5 path now has no caller — leave it,
 // it is the component's documented rule for five, not dead page code. The
-// holiday-let proposition still has its own page (/house-cleaning/airbnb-cleaning/) and its
+// holiday-let proposition still has its own page (/airbnb-holiday-home-cleaning/) and its
 // own row in the homepage's "What we do", so nothing about it is now unsaid.
 //
 // ⚠️ Two proof points were LOST bringing the older pages across, because the

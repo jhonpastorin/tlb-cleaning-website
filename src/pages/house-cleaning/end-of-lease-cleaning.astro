@@ -115,7 +115,7 @@ import {
   quoteCta,
 } from '../../data/navigation';
 import { trustBarCards } from '../../data/trust';
-import { theLine, theLineHeading, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // Section 0. Page metadata.
 //
@@ -1108,7 +1108,7 @@ const closingCta = {
       theme="muted"
       align="left"
       heading={theLineHeading.fast}
-      body={[managedForYou.oneOff, ...theLineBody.condition]}
+      body={[managedForYou.oneOff, ...theLineBody.condition, ...howItWorks.general]}
     />
 
     <Faq heading="Frequently asked questions" items={faqItems} />
