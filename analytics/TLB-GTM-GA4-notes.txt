@@ -8,7 +8,8 @@ Files: TLB-GTM-container-import.json, TLB-GTM-GA4-tagging-plan.csv, this file
 1. WHAT SHIPPED
 ====================================================================
 
-10 tags, 11 triggers, 4 user-defined variables, 11 built-in variables.
+11 tags, 12 triggers, 5 user-defined variables, 11 built-in variables.
+(26 Sep 2026: contact form lead tracking added, see 5.4.)
 
   GA4 event                What it captures
   -----------------------  ----------------------------------------------
@@ -23,6 +24,7 @@ Files: TLB-GTM-container-import.json, TLB-GTM-GA4-tagging-plan.csv, this file
   click_nav_menu           Header nav + services mega menu (one tag,
                            split by parameters)
   click_social_icons       Footer social icons (currently dormant, see 5.1)
+  generate_lead            Contact form submitted (page view of /thank-you/)
 
 Plus "Google Tag - GA4 Config" on Initialization - All Pages.
 
@@ -118,6 +120,11 @@ any data collected before the dimension exists is unreportable forever.
                                               footer performance.
   Social Network    Event   social_network    Only needed once social links
                                               go live (see 5.1).
+  Form Page         Event   form_page         Which page the lead came from.
+                                              Only /contact/ today, but the
+                                              form is built to be reused.
+  Form Name         Event   form_name         Tells forms apart once a second
+                                              one (quote, booking) ships.
 
   VERIFY FIRST, THEN REGISTER IF NEEDED
   link_url and link_text are reserved GA4 parameter names that normally feed
@@ -142,6 +149,8 @@ KEY EVENTS (conversions) to mark in GA4 Admin > Events:
   click_cta_locations  no
   click_nav_menu       no
   click_social_icons   no
+  generate_lead        yes - the only event that means an enquiry actually
+                       reached the Monday board
 
 
 ====================================================================
@@ -173,17 +182,39 @@ KEY EVENTS (conversions) to mark in GA4 Admin > Events:
         Click - CTA Quote   ->  /quote/?($|[?#])
         Click - CTA Book    ->  /book/?($|[?#])
 
-5.4 NO FORMS ARE WIRED
-    CallToAction has a "form" variant and SiteFooter has a newsletter block,
-    but no page uses either and neither has an action endpoint. I deliberately
-    left form tracking OUT of this container rather than shipping tags that
-    can never fire. When the quote or booking form ships, add:
-      - a dataLayer push on submit success (NOT on the submit click, which
-        counts failed validations as conversions)
-      - a Custom Event trigger on that event name
-      - a GA4 event tag named generate_lead or form_submit
-    Your Barefoot container has the Monday WorkForms and CF7 listener pattern
-    to copy from.
+5.4 CONTACT FORM LEAD TRACKING (added 26 Sep 2026)
+    ContactForm.astro only sends the reader to /thank-you/ after the webhook
+    answers OK, so a page view of /thank-you/ is the conversion. No site code
+    change was needed.
+
+      Trigger   Page View - Thank You (Page View)
+                  {{Page Path}} matches RegEx  ^/thank-you/?$
+                  AND {{Referrer}} contains    {{Page Hostname}}
+      Tag       GA4 Event - Form Submit - Contact
+                  event name  generate_lead (GA4's recommended lead event,
+                              so Google Ads can import it directly)
+                  form_name   contact
+                  form_page   {{URL - Referrer Path}}  e.g. /contact/
+                  page_path   {{Page Path}}
+                  blocked by  Blocking - Staging Traffic (All Pages)
+      Variable  URL - Referrer Path (URL variable, Path component of
+                {{Referrer}})
+
+    The Referrer condition drops visits that did not come from this site:
+    bookmarks, a pasted link, a search result. It keeps working on staging
+    because it compares against the current hostname, not a fixed domain.
+
+    WHAT CAN STILL OVERCOUNT
+      - Refreshing /thank-you/ fires the tag again. The referrer survives a
+        refresh, so the trigger cannot tell the two apart.
+      - A bot that fills the honeypot is sent to /thank-you/ on purpose
+        (nothing is posted to the webhook). A bot that runs JavaScript and
+        GTM would be counted. Compare the GA4 count with the Monday board
+        for the first few weeks; if they drift, the fix is a dataLayer push
+        on submit success instead of the page view trigger.
+
+    Still NOT wired: the CallToAction "form" variant and the SiteFooter
+    newsletter block. No page uses either.
 
 5.5 ANCHOR CTAs NOT TRACKED
     Several pages use CTA buttons pointing at in-page anchors: #compare (4x),
@@ -197,7 +228,8 @@ KEY EVENTS (conversions) to mark in GA4 Admin > Events:
       - "DLV - siteEnv" reads it, defaulting to "production" if absent.
       - Two blocking triggers fire when siteEnv equals staging:
           Blocking - Staging Traffic (All Pages)    -> blocks the GA4 config tag
-          Blocking - Staging Traffic (Link Click)   -> blocks all 9 event tags
+          Blocking - Staging Traffic (Link Click)   -> blocks all 9 click tags
+          Blocking - Staging Traffic (All Pages) also blocks generate_lead.
     In Preview on staging you will see tags listed as BLOCKED. That is the
     correct result, not a fault.
     NOTE: the default is "production". A page that somehow loads without the

@@ -28,3 +28,4 @@ Commercial Cleaning
 Meet the Team
 Guides"
 TLB Cleaning Website,click_social_icons,Jhon,"User clicks a social icon in the footer (Facebook, Instagram, LinkedIn, YouTube)","{{Click Element}} matches CSS selector .site-footer__social-link, .site-footer__social-link *",https://tlbcleaning.com.au/,,Click - Just Links,Click - Social Icons,DORMANT - no social links passed to SiteFooter yet (see notes)
+TLB Cleaning Website,generate_lead,Jhon,User submits the contact form and lands on the thank-you page,"{{Page Path}} matches RegEx ^/thank-you/?$ AND {{Referrer}} contains {{Page Hostname}}",https://tlbcleaning.com.au/thank-you/,,Page View,Form Submit - Contact,"form_name = contact, form_page = page the form was sent from (e.g. /contact/)"

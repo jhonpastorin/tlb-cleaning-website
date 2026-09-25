@@ -1,20 +1,22 @@
 {
     "exportFormatVersion": 2,
-    "exportTime": "2026-09-17 00:00:00",
+    "exportTime": "2026-09-25 19:19:28",
     "containerVersion": {
-        "path": "accounts/0/containers/0/versions/0",
-        "accountId": "0",
-        "containerId": "0",
+        "path": "accounts/6377295645/containers/264360037/versions/0",
+        "accountId": "6377295645",
+        "containerId": "264360037",
         "containerVersionId": "0",
         "container": {
-            "path": "accounts/0/containers/0",
-            "accountId": "0",
-            "containerId": "0",
+            "path": "accounts/6377295645/containers/264360037",
+            "accountId": "6377295645",
+            "containerId": "264360037",
             "name": "tlbcleaning.com.au",
             "publicId": "GTM-KDMCQNN9",
             "usageContext": [
                 "WEB"
             ],
+            "fingerprint": "1789591342072",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6377295645/containers/264360037/workspaces?apiLink=container",
             "features": {
                 "supportUserPermissions": true,
                 "supportEnvironments": true,
@@ -37,448 +39,9 @@
         },
         "tag": [
             {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "100",
-                "name": "Google Tag - GA4 Config",
-                "type": "googtag",
-                "parameter": [
-                    {
-                        "type": "TEMPLATE",
-                        "key": "tagId",
-                        "value": "{{Const - GA4 Measurement ID}}"
-                    }
-                ],
-                "firingTriggerId": [
-                    "2147479573"
-                ],
-                "blockingTriggerId": [
-                    "10"
-                ],
-                "tagFiringOption": "ONCE_PER_EVENT",
-                "monitoringMetadata": {
-                    "type": "MAP"
-                },
-                "consentSettings": {
-                    "consentStatus": "NOT_SET"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "101",
-                "name": "GA4 Event - CTA Click - Quote",
-                "type": "gaawe",
-                "parameter": [
-                    {
-                        "type": "BOOLEAN",
-                        "key": "sendEcommerceData",
-                        "value": "false"
-                    },
-                    {
-                        "type": "LIST",
-                        "key": "eventSettingsTable",
-                        "list": [
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_url"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click URL}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_text"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click Text}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "cta_location"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{CJS - CTA Location}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "page_path"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Page Path}}"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "eventName",
-                        "value": "click_cta_quote"
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "measurementIdOverride",
-                        "value": "{{Const - GA4 Measurement ID}}"
-                    }
-                ],
-                "firingTriggerId": [
-                    "20"
-                ],
-                "blockingTriggerId": [
-                    "11"
-                ],
-                "tagFiringOption": "ONCE_PER_EVENT",
-                "monitoringMetadata": {
-                    "type": "MAP"
-                },
-                "consentSettings": {
-                    "consentStatus": "NOT_SET"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "102",
-                "name": "GA4 Event - CTA Click - Book",
-                "type": "gaawe",
-                "parameter": [
-                    {
-                        "type": "BOOLEAN",
-                        "key": "sendEcommerceData",
-                        "value": "false"
-                    },
-                    {
-                        "type": "LIST",
-                        "key": "eventSettingsTable",
-                        "list": [
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_url"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click URL}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_text"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click Text}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "cta_location"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{CJS - CTA Location}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "page_path"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Page Path}}"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "eventName",
-                        "value": "click_cta_book"
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "measurementIdOverride",
-                        "value": "{{Const - GA4 Measurement ID}}"
-                    }
-                ],
-                "firingTriggerId": [
-                    "21"
-                ],
-                "blockingTriggerId": [
-                    "11"
-                ],
-                "tagFiringOption": "ONCE_PER_EVENT",
-                "monitoringMetadata": {
-                    "type": "MAP"
-                },
-                "consentSettings": {
-                    "consentStatus": "NOT_SET"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "103",
-                "name": "GA4 Event - CTA Click - Contact",
-                "type": "gaawe",
-                "parameter": [
-                    {
-                        "type": "BOOLEAN",
-                        "key": "sendEcommerceData",
-                        "value": "false"
-                    },
-                    {
-                        "type": "LIST",
-                        "key": "eventSettingsTable",
-                        "list": [
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_url"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click URL}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_text"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click Text}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "cta_location"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{CJS - CTA Location}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "page_path"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Page Path}}"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "eventName",
-                        "value": "click_cta_contact"
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "measurementIdOverride",
-                        "value": "{{Const - GA4 Measurement ID}}"
-                    }
-                ],
-                "firingTriggerId": [
-                    "22"
-                ],
-                "blockingTriggerId": [
-                    "11"
-                ],
-                "tagFiringOption": "ONCE_PER_EVENT",
-                "monitoringMetadata": {
-                    "type": "MAP"
-                },
-                "consentSettings": {
-                    "consentStatus": "NOT_SET"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "104",
-                "name": "GA4 Event - CTA Click - Service Page",
-                "type": "gaawe",
-                "parameter": [
-                    {
-                        "type": "BOOLEAN",
-                        "key": "sendEcommerceData",
-                        "value": "false"
-                    },
-                    {
-                        "type": "LIST",
-                        "key": "eventSettingsTable",
-                        "list": [
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_url"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click URL}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_text"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click Text}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "cta_location"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{CJS - CTA Location}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "page_path"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Page Path}}"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "eventName",
-                        "value": "click_cta_service"
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "measurementIdOverride",
-                        "value": "{{Const - GA4 Measurement ID}}"
-                    }
-                ],
-                "firingTriggerId": [
-                    "23"
-                ],
-                "blockingTriggerId": [
-                    "11"
-                ],
-                "tagFiringOption": "ONCE_PER_EVENT",
-                "monitoringMetadata": {
-                    "type": "MAP"
-                },
-                "consentSettings": {
-                    "consentStatus": "NOT_SET"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "105",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "11",
                 "name": "GA4 Event - CTA Click - Locations",
                 "type": "gaawe",
                 "parameter": [
@@ -564,11 +127,12 @@
                         "value": "{{Const - GA4 Measurement ID}}"
                     }
                 ],
+                "fingerprint": "1789931047917",
                 "firingTriggerId": [
-                    "24"
+                    "6"
                 ],
                 "blockingTriggerId": [
-                    "11"
+                    "10"
                 ],
                 "tagFiringOption": "ONCE_PER_EVENT",
                 "monitoringMetadata": {
@@ -579,186 +143,10 @@
                 }
             },
             {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "106",
-                "name": "GA4 Event - Phone Click",
-                "type": "gaawe",
-                "parameter": [
-                    {
-                        "type": "BOOLEAN",
-                        "key": "sendEcommerceData",
-                        "value": "false"
-                    },
-                    {
-                        "type": "LIST",
-                        "key": "eventSettingsTable",
-                        "list": [
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_url"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click URL}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "cta_location"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{CJS - CTA Location}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "page_path"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Page Path}}"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "eventName",
-                        "value": "click_phone"
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "measurementIdOverride",
-                        "value": "{{Const - GA4 Measurement ID}}"
-                    }
-                ],
-                "firingTriggerId": [
-                    "25"
-                ],
-                "blockingTriggerId": [
-                    "11"
-                ],
-                "tagFiringOption": "ONCE_PER_EVENT",
-                "monitoringMetadata": {
-                    "type": "MAP"
-                },
-                "consentSettings": {
-                    "consentStatus": "NOT_SET"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "107",
-                "name": "GA4 Event - Email Click",
-                "type": "gaawe",
-                "parameter": [
-                    {
-                        "type": "BOOLEAN",
-                        "key": "sendEcommerceData",
-                        "value": "false"
-                    },
-                    {
-                        "type": "LIST",
-                        "key": "eventSettingsTable",
-                        "list": [
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "link_url"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Click URL}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "cta_location"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{CJS - CTA Location}}"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "MAP",
-                                "map": [
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameter",
-                                        "value": "page_path"
-                                    },
-                                    {
-                                        "type": "TEMPLATE",
-                                        "key": "parameterValue",
-                                        "value": "{{Page Path}}"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "eventName",
-                        "value": "click_email"
-                    },
-                    {
-                        "type": "TEMPLATE",
-                        "key": "measurementIdOverride",
-                        "value": "{{Const - GA4 Measurement ID}}"
-                    }
-                ],
-                "firingTriggerId": [
-                    "26"
-                ],
-                "blockingTriggerId": [
-                    "11"
-                ],
-                "tagFiringOption": "ONCE_PER_EVENT",
-                "monitoringMetadata": {
-                    "type": "MAP"
-                },
-                "consentSettings": {
-                    "consentStatus": "NOT_SET"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "108",
-                "name": "GA4 Event - Nav Menu Click",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "15",
+                "name": "GA4 Event - CTA Click - Service Page",
                 "type": "gaawe",
                 "parameter": [
                     {
@@ -835,7 +223,7 @@
                     {
                         "type": "TEMPLATE",
                         "key": "eventName",
-                        "value": "click_nav_menu"
+                        "value": "click_cta_service"
                     },
                     {
                         "type": "TEMPLATE",
@@ -843,11 +231,12 @@
                         "value": "{{Const - GA4 Measurement ID}}"
                     }
                 ],
+                "fingerprint": "1789931047918",
                 "firingTriggerId": [
-                    "27"
+                    "14"
                 ],
                 "blockingTriggerId": [
-                    "11"
+                    "10"
                 ],
                 "tagFiringOption": "ONCE_PER_EVENT",
                 "monitoringMetadata": {
@@ -858,9 +247,9 @@
                 }
             },
             {
-                "accountId": "0",
-                "containerId": "0",
-                "tagId": "109",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "17",
                 "name": "GA4 Event - Social Click",
                 "type": "gaawe",
                 "parameter": [
@@ -946,11 +335,723 @@
                         "value": "{{Const - GA4 Measurement ID}}"
                     }
                 ],
+                "fingerprint": "1789931047918",
                 "firingTriggerId": [
-                    "28"
+                    "16"
                 ],
                 "blockingTriggerId": [
-                    "11"
+                    "10"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "19",
+                "name": "GA4 Event - CTA Click - Book",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_url"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click URL}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_text"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click Text}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "cta_location"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{CJS - CTA Location}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_path"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Page Path}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_cta_book"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Const - GA4 Measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1789931047918",
+                "firingTriggerId": [
+                    "18"
+                ],
+                "blockingTriggerId": [
+                    "10"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "23",
+                "name": "GA4 Event - Email Click",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_url"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click URL}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "cta_location"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{CJS - CTA Location}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_path"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Page Path}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_email"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Const - GA4 Measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1789931047918",
+                "firingTriggerId": [
+                    "22"
+                ],
+                "blockingTriggerId": [
+                    "10"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "24",
+                "name": "GA4 Event - Nav Menu Click",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_url"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click URL}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_text"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click Text}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "cta_location"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{CJS - CTA Location}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_path"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Page Path}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_nav_menu"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Const - GA4 Measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1789931047918",
+                "firingTriggerId": [
+                    "12"
+                ],
+                "blockingTriggerId": [
+                    "10"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "25",
+                "name": "GA4 Event - CTA Click - Contact",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_url"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click URL}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_text"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click Text}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "cta_location"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{CJS - CTA Location}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_path"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Page Path}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_cta_contact"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Const - GA4 Measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1789931047918",
+                "firingTriggerId": [
+                    "5"
+                ],
+                "blockingTriggerId": [
+                    "10"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "27",
+                "name": "GA4 Event - CTA Click - Quote",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_url"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click URL}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_text"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click Text}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "cta_location"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{CJS - CTA Location}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_path"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Page Path}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_cta_quote"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Const - GA4 Measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1789931047919",
+                "firingTriggerId": [
+                    "26"
+                ],
+                "blockingTriggerId": [
+                    "10"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "28",
+                "name": "Google Tag - GA4 Config",
+                "type": "googtag",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "{{Const - GA4 Measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1789931047919",
+                "firingTriggerId": [
+                    "2147479573"
+                ],
+                "blockingTriggerId": [
+                    "20"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "29",
+                "name": "GA4 Event - Phone Click",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "link_url"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Click URL}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "cta_location"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{CJS - CTA Location}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_path"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Page Path}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_phone"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Const - GA4 Measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1789931047919",
+                "firingTriggerId": [
+                    "21"
+                ],
+                "blockingTriggerId": [
+                    "10"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "tagId": "33",
+                "name": "GA4 Event - Form Submit - Contact",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "form_name"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "contact"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "form_page"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{URL - Referrer Path}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_path"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Page Path}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "contact_form_submission"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Const - GA4 Measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1790363518230",
+                "firingTriggerId": [
+                    "32"
+                ],
+                "blockingTriggerId": [
+                    "20"
                 ],
                 "tagFiringOption": "ONCE_PER_EVENT",
                 "monitoringMetadata": {
@@ -963,180 +1064,9 @@
         ],
         "trigger": [
             {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "10",
-                "name": "Blocking - Staging Traffic (All Pages)",
-                "type": "PAGEVIEW",
-                "filter": [
-                    {
-                        "type": "EQUALS",
-                        "parameter": [
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg0",
-                                "value": "{{DLV - siteEnv}}"
-                            },
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg1",
-                                "value": "staging"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "11",
-                "name": "Blocking - Staging Traffic (Link Click)",
-                "type": "LINK_CLICK",
-                "filter": [
-                    {
-                        "type": "EQUALS",
-                        "parameter": [
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg0",
-                                "value": "{{DLV - siteEnv}}"
-                            },
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg1",
-                                "value": "staging"
-                            }
-                        ]
-                    }
-                ],
-                "waitForTags": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "checkValidation": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "waitForTagsTimeout": {
-                    "type": "TEMPLATE",
-                    "value": "2000"
-                },
-                "uniqueTriggerId": {
-                    "type": "TEMPLATE"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "20",
-                "name": "Click - CTA Quote",
-                "type": "LINK_CLICK",
-                "filter": [
-                    {
-                        "type": "MATCH_REGEX",
-                        "parameter": [
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg0",
-                                "value": "{{Click URL}}"
-                            },
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg1",
-                                "value": "/quote/?($|[?#])"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "CSS_SELECTOR",
-                        "parameter": [
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg0",
-                                "value": "{{Click Element}}"
-                            },
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg1",
-                                "value": "[data-cta], [data-cta] *"
-                            }
-                        ]
-                    }
-                ],
-                "waitForTags": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "checkValidation": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "waitForTagsTimeout": {
-                    "type": "TEMPLATE",
-                    "value": "2000"
-                },
-                "uniqueTriggerId": {
-                    "type": "TEMPLATE"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "21",
-                "name": "Click - CTA Book",
-                "type": "LINK_CLICK",
-                "filter": [
-                    {
-                        "type": "MATCH_REGEX",
-                        "parameter": [
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg0",
-                                "value": "{{Click URL}}"
-                            },
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg1",
-                                "value": "/book/?($|[?#])"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "CSS_SELECTOR",
-                        "parameter": [
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg0",
-                                "value": "{{Click Element}}"
-                            },
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg1",
-                                "value": "[data-cta], [data-cta] *"
-                            }
-                        ]
-                    }
-                ],
-                "waitForTags": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "checkValidation": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "waitForTagsTimeout": {
-                    "type": "TEMPLATE",
-                    "value": "2000"
-                },
-                "uniqueTriggerId": {
-                    "type": "TEMPLATE"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "22",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "5",
                 "name": "Click - CTA Contact",
                 "type": "LINK_CLICK",
                 "filter": [
@@ -1185,66 +1115,13 @@
                 },
                 "uniqueTriggerId": {
                     "type": "TEMPLATE"
-                }
+                },
+                "fingerprint": "1789931047917"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "23",
-                "name": "Click - CTA Service Page",
-                "type": "LINK_CLICK",
-                "filter": [
-                    {
-                        "type": "MATCH_REGEX",
-                        "parameter": [
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg0",
-                                "value": "{{Click URL}}"
-                            },
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg1",
-                                "value": "/(house-cleaning|commercial-cleaning)/"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "CSS_SELECTOR",
-                        "parameter": [
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg0",
-                                "value": "{{Click Element}}"
-                            },
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg1",
-                                "value": "[data-cta], [data-cta] *"
-                            }
-                        ]
-                    }
-                ],
-                "waitForTags": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "checkValidation": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "waitForTagsTimeout": {
-                    "type": "TEMPLATE",
-                    "value": "2000"
-                },
-                "uniqueTriggerId": {
-                    "type": "TEMPLATE"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "24",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "6",
                 "name": "Click - CTA Locations",
                 "type": "LINK_CLICK",
                 "filter": [
@@ -1293,27 +1170,28 @@
                 },
                 "uniqueTriggerId": {
                     "type": "TEMPLATE"
-                }
+                },
+                "fingerprint": "1789931047917"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "25",
-                "name": "Click - Phone Link",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "10",
+                "name": "Blocking - Staging Traffic (Link Click)",
                 "type": "LINK_CLICK",
                 "filter": [
                     {
-                        "type": "CONTAINS",
+                        "type": "EQUALS",
                         "parameter": [
                             {
                                 "type": "TEMPLATE",
                                 "key": "arg0",
-                                "value": "{{Click URL}}"
+                                "value": "{{DLV - siteEnv}}"
                             },
                             {
                                 "type": "TEMPLATE",
                                 "key": "arg1",
-                                "value": "tel:"
+                                "value": "staging-disabled"
                             }
                         ]
                     }
@@ -1332,51 +1210,13 @@
                 },
                 "uniqueTriggerId": {
                     "type": "TEMPLATE"
-                }
+                },
+                "fingerprint": "1789931815853"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "26",
-                "name": "Click - Email Link",
-                "type": "LINK_CLICK",
-                "filter": [
-                    {
-                        "type": "CONTAINS",
-                        "parameter": [
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg0",
-                                "value": "{{Click URL}}"
-                            },
-                            {
-                                "type": "TEMPLATE",
-                                "key": "arg1",
-                                "value": "mailto:"
-                            }
-                        ]
-                    }
-                ],
-                "waitForTags": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "checkValidation": {
-                    "type": "BOOLEAN",
-                    "value": "false"
-                },
-                "waitForTagsTimeout": {
-                    "type": "TEMPLATE",
-                    "value": "2000"
-                },
-                "uniqueTriggerId": {
-                    "type": "TEMPLATE"
-                }
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "27",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "12",
                 "name": "Click - Nav Menu",
                 "type": "LINK_CLICK",
                 "filter": [
@@ -1430,12 +1270,68 @@
                 },
                 "uniqueTriggerId": {
                     "type": "TEMPLATE"
-                }
+                },
+                "fingerprint": "1789931047918"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
-                "triggerId": "28",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "14",
+                "name": "Click - CTA Service Page",
+                "type": "LINK_CLICK",
+                "filter": [
+                    {
+                        "type": "MATCH_REGEX",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click URL}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "/(house-cleaning|commercial-cleaning)/"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "CSS_SELECTOR",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click Element}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "[data-cta], [data-cta] *"
+                            }
+                        ]
+                    }
+                ],
+                "waitForTags": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "checkValidation": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "waitForTagsTimeout": {
+                    "type": "TEMPLATE",
+                    "value": "2000"
+                },
+                "uniqueTriggerId": {
+                    "type": "TEMPLATE"
+                },
+                "fingerprint": "1789931047918"
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "16",
                 "name": "Click - Social Icons",
                 "type": "LINK_CLICK",
                 "filter": [
@@ -1469,29 +1365,287 @@
                 },
                 "uniqueTriggerId": {
                     "type": "TEMPLATE"
-                }
+                },
+                "fingerprint": "1789931047918"
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "18",
+                "name": "Click - CTA Book",
+                "type": "LINK_CLICK",
+                "filter": [
+                    {
+                        "type": "MATCH_REGEX",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click URL}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "/book/?($|[?#])"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "CSS_SELECTOR",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click Element}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "[data-cta], [data-cta] *"
+                            }
+                        ]
+                    }
+                ],
+                "waitForTags": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "checkValidation": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "waitForTagsTimeout": {
+                    "type": "TEMPLATE",
+                    "value": "2000"
+                },
+                "uniqueTriggerId": {
+                    "type": "TEMPLATE"
+                },
+                "fingerprint": "1789931047918"
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "20",
+                "name": "Blocking - Staging Traffic (All Pages)",
+                "type": "PAGEVIEW",
+                "filter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{DLV - siteEnv}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "staging-disabled"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1789931759831"
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "21",
+                "name": "Click - Phone Link",
+                "type": "LINK_CLICK",
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click URL}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "tel:"
+                            }
+                        ]
+                    }
+                ],
+                "waitForTags": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "checkValidation": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "waitForTagsTimeout": {
+                    "type": "TEMPLATE",
+                    "value": "2000"
+                },
+                "uniqueTriggerId": {
+                    "type": "TEMPLATE"
+                },
+                "fingerprint": "1789931047918"
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "22",
+                "name": "Click - Email Link",
+                "type": "LINK_CLICK",
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click URL}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "mailto:"
+                            }
+                        ]
+                    }
+                ],
+                "waitForTags": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "checkValidation": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "waitForTagsTimeout": {
+                    "type": "TEMPLATE",
+                    "value": "2000"
+                },
+                "uniqueTriggerId": {
+                    "type": "TEMPLATE"
+                },
+                "fingerprint": "1789931047918"
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "26",
+                "name": "Click - CTA Quote",
+                "type": "LINK_CLICK",
+                "filter": [
+                    {
+                        "type": "MATCH_REGEX",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click URL}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "/quote/?($|[?#])"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "CSS_SELECTOR",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click Element}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "[data-cta], [data-cta] *"
+                            }
+                        ]
+                    }
+                ],
+                "waitForTags": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "checkValidation": {
+                    "type": "BOOLEAN",
+                    "value": "false"
+                },
+                "waitForTagsTimeout": {
+                    "type": "TEMPLATE",
+                    "value": "2000"
+                },
+                "uniqueTriggerId": {
+                    "type": "TEMPLATE"
+                },
+                "fingerprint": "1789931047919"
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "triggerId": "32",
+                "name": "Page View - Thank You",
+                "type": "PAGEVIEW",
+                "filter": [
+                    {
+                        "type": "MATCH_REGEX",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Page Path}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "^/thank-you/?$"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1790363774433"
             }
         ],
         "variable": [
             {
-                "accountId": "0",
-                "containerId": "0",
-                "variableId": "1",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "variableId": "7",
                 "name": "Const - GA4 Measurement ID",
                 "type": "c",
                 "parameter": [
                     {
                         "type": "TEMPLATE",
                         "key": "value",
-                        "value": "G-XXXXXXXXXX"
+                        "value": "G-NX57DKV7CN"
                     }
                 ],
+                "fingerprint": "1789931144135",
                 "formatValue": {}
             },
             {
-                "accountId": "0",
-                "containerId": "0",
-                "variableId": "2",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "variableId": "8",
+                "name": "CJS - CTA Location",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() {\n  var el = {{Click Element}};\n  if (!el || !el.closest) { return 'unknown'; }\n\n  // Explicit marker wins: SiteHeader, SiteFooter, Hero and CallToAction each\n  // carry data-cta-location on their root element.\n  var marked = el.closest('[data-cta-location]');\n  if (marked) { return marked.getAttribute('data-cta-location') || 'unknown'; }\n\n  // Fallback for every other section component: the nearest landmark's first\n  // class is its BEM block, which is 1:1 with the component name\n  // (stat-band, service-blocks, pathway, story, testimonials, ...).\n  var sec = el.closest('section, header, footer, aside, nav');\n  if (sec && typeof sec.className === 'string') {\n    var first = sec.className.trim().split(/\\s+/)[0];\n    if (first) { return first.replace(/-/g, '_'); }\n  }\n  return 'unknown';\n}"
+                    }
+                ],
+                "fingerprint": "1789931047917",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "variableId": "9",
                 "name": "DLV - siteEnv",
                 "type": "v",
                 "parameter": [
@@ -1516,27 +1670,13 @@
                         "value": "siteEnv"
                     }
                 ],
+                "fingerprint": "1789931047917",
                 "formatValue": {}
             },
             {
-                "accountId": "0",
-                "containerId": "0",
-                "variableId": "3",
-                "name": "CJS - CTA Location",
-                "type": "jsm",
-                "parameter": [
-                    {
-                        "type": "TEMPLATE",
-                        "key": "javascript",
-                        "value": "function() {\n  var el = {{Click Element}};\n  if (!el || !el.closest) { return 'unknown'; }\n\n  // Explicit marker wins: SiteHeader, SiteFooter, Hero and CallToAction each\n  // carry data-cta-location on their root element.\n  var marked = el.closest('[data-cta-location]');\n  if (marked) { return marked.getAttribute('data-cta-location') || 'unknown'; }\n\n  // Fallback for every other section component: the nearest landmark's first\n  // class is its BEM block, which is 1:1 with the component name\n  // (stat-band, service-blocks, pathway, story, testimonials, ...).\n  var sec = el.closest('section, header, footer, aside, nav');\n  if (sec && typeof sec.className === 'string') {\n    var first = sec.className.trim().split(/\\s+/)[0];\n    if (first) { return first.replace(/-/g, '_'); }\n  }\n  return 'unknown';\n}"
-                    }
-                ],
-                "formatValue": {}
-            },
-            {
-                "accountId": "0",
-                "containerId": "0",
-                "variableId": "4",
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "variableId": "13",
                 "name": "RT - Social Network",
                 "type": "remm",
                 "parameter": [
@@ -1637,76 +1777,100 @@
                         ]
                     }
                 ],
+                "fingerprint": "1789931047918",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6377295645",
+                "containerId": "264360037",
+                "variableId": "31",
+                "name": "URL - Referrer Path",
+                "type": "u",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "component",
+                        "value": "PATH"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "customUrlSource",
+                        "value": "{{Referrer}}"
+                    }
+                ],
+                "fingerprint": "1790363117923",
                 "formatValue": {}
             }
         ],
         "builtInVariable": [
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "PAGE_URL",
                 "name": "Page URL"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "PAGE_HOSTNAME",
                 "name": "Page Hostname"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "PAGE_PATH",
                 "name": "Page Path"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "REFERRER",
                 "name": "Referrer"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "EVENT",
                 "name": "Event"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "CLICK_ELEMENT",
                 "name": "Click Element"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "CLICK_CLASSES",
                 "name": "Click Classes"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "CLICK_ID",
                 "name": "Click ID"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "CLICK_TARGET",
                 "name": "Click Target"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "CLICK_URL",
                 "name": "Click URL"
             },
             {
-                "accountId": "0",
-                "containerId": "0",
+                "accountId": "6377295645",
+                "containerId": "264360037",
                 "type": "CLICK_TEXT",
                 "name": "Click Text"
             }
-        ]
+        ],
+        "fingerprint": "1790363968252",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6377295645/containers/264360037/versions/0?apiLink=version"
     }
 }
