@@ -151,9 +151,10 @@ const pageMeta = {
 const walkthroughCta = { label: 'Talk to us about your site', href: quoteCta.href };
 const primaryCtaSentence = 'Talk to us about your site today.';
 
-// §1 Hero. `full-width-photo` — a warehouse aisle is an establishing shot and
-// the scale of the space is the thing a manager is checking for. Same
-// reasoning as the strata lobby and the construction new build.
+// §1 Hero. `split-single-image`, image right, matching the rest of the
+// commercial cluster. `imageFocus="86%"` because the cleaner stands about 70%
+// across the frame: a centred crop cuts her off and a right-edge crop pushes
+// her to the left of the panel. 86% puts her in the middle of it.
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED, and note the hi-vis exception above.
 const hero = {
@@ -482,7 +483,9 @@ const business = commercialBusiness(pageMeta.description);
 
   <main id="main">
     <Hero
-      variant="full-width-photo"
+      variant="split-single-image"
+      imagePosition="right"
+      imageFocus="86%"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
       subheading={hero.subheading}

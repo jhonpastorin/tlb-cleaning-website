@@ -88,6 +88,10 @@ interface Props {
    *  subject is flush with the bottom of its own frame, so it stands on the
    *  section edge rather than floating above it. */
   imageFit?: 'cover' | 'contain' | 'contain-bottom';
+  /** split-single-image only: which side of a 'cover' image survives the
+   *  crop. Default 'center'. The half-width panel is much narrower than a
+   *  16/9 file, so a subject near one edge needs this to stay in frame. */
+  imageFocus?: 'left' | 'center' | 'right' | `${number}%`;
   /** full-width-photo only: how wide the floating copy card runs at desktop
    *  widths. Default 'default' (480px), which is the width every caller had
    *  before this prop existed — the 56 /locations/<town>/ pages included, so
@@ -121,6 +125,7 @@ const {
   image,
   imagePosition = 'left',
   imageFit = 'cover',
+  imageFocus = 'center',
   cardWidth = 'default',
   collageImages = [],
   align = 'left',
@@ -224,7 +229,7 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   >
     <div class="hero__grid">
       <div class="hero__media">
-        <Placeholder ratio={image.ratio ?? '4/3'} label={image.label} src={image.src} fit={imageFit} eager />
+        <Placeholder ratio={image.ratio ?? '4/3'} label={image.label} src={image.src} fit={imageFit} focus={imageFocus} eager />
       </div>
 
       <div class="hero__copy">

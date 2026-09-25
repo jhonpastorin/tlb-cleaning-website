@@ -31,18 +31,24 @@ interface Props {
    *  centred, that cut edge floats mid-panel and reads as a mistake; anchored,
    *  the figure stands on the section's own edge. */
   fit?: 'cover' | 'contain' | 'contain-bottom';
+  /** 'cover' only: which side of the frame survives the crop. Default
+   *  'center'. Use when the subject sits near one edge of a landscape file
+   *  and a narrower box would cut them off. A percentage ('85%') is the
+   *  CSS object-position value, for a subject that is off-centre but not on
+   *  the edge. */
+  focus?: 'left' | 'center' | 'right' | `${number}%`;
   /** Optional caption bar over the bottom edge, on a dark gradient scrim so it reads over any photo. */
   caption?: string;
   class?: string;
 }
 
-const { ratio = '4/3', label, src, eager = false, fit = 'cover', caption, class: className } = Astro.props;
+const { ratio = '4/3', label, src, eager = false, fit = 'cover', focus = 'center', caption, class: className } = Astro.props;
 
 // One prop, two CSS declarations — kept as a closed set of values rather than
 // exposing object-fit and object-position separately, since only these
 // combinations are meaningful here.
 const objectFit = fit === 'cover' ? 'cover' : 'contain';
-const objectPosition = fit === 'contain-bottom' ? 'center bottom' : 'center';
+const objectPosition = fit === 'contain-bottom' ? 'center bottom' : fit === 'cover' ? `${focus} center` : 'center';
 ---
 
 {src ? (

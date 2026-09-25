@@ -155,10 +155,8 @@ const pageMeta = {
 // conversion gap rather than a copy error, and a template job. Brief §7.
 const walkthroughCta = { label: 'Request a schedule and quote', href: quoteCta.href };
 
-// §1 Hero. `full-width-photo` rather than the cluster's usual
-// `split-single-image`, because a lobby is an establishing shot: the whole
-// point of the photo is the space, and a half-width panel crops the thing
-// the reader is trying to recognise as their own building.
+// §1 Hero. `split-single-image`, image right, matching the rest of the
+// commercial cluster.
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page
 // — see office-cleaning.astro's §1 comment.
@@ -597,7 +595,8 @@ const business = commercialBusiness(pageMeta.description);
 
   <main id="main">
     <Hero
-      variant="full-width-photo"
+      variant="split-single-image"
+      imagePosition="right"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
       lead={hero.lead}
