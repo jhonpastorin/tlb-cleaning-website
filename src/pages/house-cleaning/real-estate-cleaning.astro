@@ -789,10 +789,12 @@ const closingCta = {
       image={hero.image}
     />
 
-    {/* Trust bar and definition share ONE photo behind a Cream scrim, laid
-        across both sections. 75% keeps Dark Teal body copy above 4.5:1 over
-        the darkest part of the frame. Same treatment as every sibling. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+    {/* Trust bar and definition share ONE photo behind a Cream scrim, laid across
+        both sections. 90%, raised from 75% on 29 Sep 2026. Measured over this
+        frame's own darkest region under the copy column, 75% gave 4.22:1 — an
+        AA FAIL. 90% gives 5.96:1. Backdrop.astro's `opacity` doc carries the
+        method. Same treatment as every sibling. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
       <TextBlock theme="muted" align="left" body={definitionBody} />
     </Backdrop>

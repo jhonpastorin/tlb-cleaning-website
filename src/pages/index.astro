@@ -535,12 +535,30 @@ const closingCta = {
         the section above it — it has to sit directly under the hero, or the
         overlap lands on a paragraph and reads as a layout fault.
 
-        75, not the default 80: enough Cream off the scrim for the photo to
-        show, and still 5.0:1 for Dark Teal body copy measured over the
-        DARKEST thing in the frame (the cleaner's green tee). At 70 that
-        worst case drops to 4.57:1, which clears AA by too little to be
-        worth it — anything lower fails. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+        ⚠️ 90, raised from 75 on 29 Sep 2026. THIS COMMENT IS WHERE THE OLD
+        NUMBER CAME FROM, and it was wrong, so the correction belongs here
+        rather than only on the page that happened to expose it.
+
+        It used to read: "still 5.0:1 for Dark Teal body copy measured over
+        the DARKEST thing in the frame (the cleaner's green tee)". The
+        arithmetic was fine; the pixel was not. The green tee is not the
+        darkest thing in that frame — the same photo carries a black cap,
+        dark denim and a timber stepladder, all well below it. Sampled
+        properly across the 800px copy column, 75% put body copy at 4.22:1,
+        which FAILS AA. The tee alone measures 5.53:1, which is how a real
+        measurement over the wrong pixel produced a confident wrong answer.
+
+        That conclusion was then paraphrased onto ~36 sibling pages without
+        the reasoning, so one bad sample became a site-wide convention. All
+        48 Backdrop call sites now sit at 90, which holds every one of the
+        17 backdrop photos at 5.90:1 or better. Backdrop.astro's `opacity`
+        doc carries the method and the floor.
+
+        The honest cost: at 90 the photo survives as texture rather than as
+        a picture. If that reads as too flat, the fix is a backdrop image
+        that can take a scrim — high key, evenly lit, no clipped blacks
+        under the copy column — not a lower number here. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
       <TextBlock theme="muted" align="left" body={definitionBody} />
     </Backdrop>

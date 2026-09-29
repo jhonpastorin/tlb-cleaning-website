@@ -816,9 +816,40 @@ const closingCta = {
     />
 
     {/* Trust bar and definition share ONE photo behind a Cream scrim, laid
-        across both sections. 75% keeps Dark Teal body copy above 4.5:1 over
-        the darkest part of the frame. Same treatment as every sibling. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={75}>
+        across both sections.
+
+        ⚠️ 90%, NOT the 75% every sibling page uses. This page is deliberately
+        the odd one out, changed 29 Sep 2026 on the client's report that this
+        block was unreadable.
+
+        The comment that stood here claimed 75% "keeps Dark Teal body copy
+        above 4.5:1 over the darkest part of the frame". THAT WAS WRONG, and
+        it is worth recording rather than quietly deleting. Measured properly
+        — Dark Teal #234B51 over the sRGB composite of Cream #EBE1C7 at 75%
+        on the photo beneath — the ratios are:
+
+          near-black shadow   4.07:1   AA FAIL (4.5:1 needed)
+          dark clothing       4.44:1   AA FAIL
+          the green shirt     5.53:1   passes
+          mid window light    6.11:1   passes
+
+        (The same arithmetic reproduces the 7.34:1 that tokens.css states for
+        Dark Teal on flat Cream, so the model is not the thing in doubt.)
+
+        At 90% the worst case is 5.89:1 — AA at every size, with headroom.
+
+        Luminance is only half of why this page was the one that got noticed.
+        The subject wears a GREEN shirt, and it sits directly behind the copy.
+        At 5.53:1 that area passes on paper, but teal ink on a green field is
+        a hue clash as well as a contrast one, and the eye reads it as mush
+        long before a checker complains. The heavier scrim answers both.
+
+        This page was fixed first, on its own. The rest of the site followed
+        the same day: all 48 Backdrop call sites now sit at 90, and the
+        per-image measurements live in Backdrop.astro's `opacity` doc. The
+        origin of the old 75 — and of the wrong reasoning behind it — is
+        recorded at index.astro's §2 comment. */}
+    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={pageTrustBarCards} />
       <TextBlock theme="muted" align="left" body={definitionBody} />
     </Backdrop>
