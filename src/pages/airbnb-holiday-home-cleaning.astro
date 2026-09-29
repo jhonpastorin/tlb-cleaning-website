@@ -97,6 +97,11 @@ import heroImg from '../assets/airbnb/airbnb-cleaning-cleaner-finishing-a-guest-
 import cardLinenImg from '../assets/airbnb/airbnb-turnover-making-up-a-bed-with-fresh-white-linen.jpg';
 import cardRestockImg from '../assets/airbnb/airbnb-turnover-restocked-guest-essentials-on-a-kitchen-bench.jpg';
 import cardKeysImg from '../assets/airbnb/airbnb-turnover-cleaner-arriving-at-a-holiday-cottage-with-keys.jpg';
+// §7a "What you get after every stay". Generated stand-ins, see the block
+// above afterEveryStayItems. Prompts in src/assets/airbnb/AFTER-EVERY-STAY-PROMPTS.md.
+import reportPhotoImg from '../assets/airbnb/airbnb-report-cleaner-photographing-a-reset-living-room.jpg';
+import reportRestockImg from '../assets/airbnb/airbnb-report-ticking-a-restock-checklist-by-the-pantry.jpg';
+import reportFlaggedImg from '../assets/airbnb/airbnb-report-photographing-a-split-deck-chair-slat.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as every sibling.
 import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 // Before/after. Both pairs are REAL TLB job photography. See §7.
@@ -479,33 +484,36 @@ const levelsTable = {
 // §7a What you get after every stay. Supplied copy (September 2026), verbatim.
 // Runs on ServiceBlocks' image-cards with no card links.
 //
-// ⚠️ NO `src` YET, so each panel renders Placeholder's dashed box. The brief
-// asks for REAL assets, not generated ones: a photo report from the social
-// video library with identifying details removed, a real restock list and a
-// real flagged item. Import them from src/assets/airbnb/ and set `src` when
-// they arrive. The labels describe what each asset should show and become the
-// alt text.
+// ⚠️ THESE ARE AI-GENERATED STAND-INS, not TLB assets. The brief asked for
+// real ones: a photo report from the social video library with identifying
+// details removed, a real restock list and a real flagged item. The generated
+// images illustrate each step instead, and none is captioned as a real job.
+// Swap in the real assets when they exist. The labels are the alt text and
+// describe what each generated image shows.
 const afterEveryStayItems = [
   {
     image: {
+      src: reportPhotoImg,
       ratio: '4/3',
-      label: 'A real TLB photo report after a turnover, one photo per reset room, with identifying details removed',
+      label: 'A cleaner in gloves photographing a freshly reset holiday apartment living room on a phone',
     },
     title: 'The photo report',
     description: "Every room, photographed once it's reset, sent the same day.",
   },
   {
     image: {
+      src: reportRestockImg,
       ratio: '4/3',
-      label: 'A real TLB restock list from a turnover, showing the items topped up that stay',
+      label: 'A gloved hand ticking off a restock checklist beside a pantry of toilet rolls, coffee, tea and dishwasher tablets',
     },
     title: 'The restock list',
     description: "What we topped up this stay, so you know what's been used.",
   },
   {
     image: {
+      src: reportFlaggedImg,
       ratio: '4/3',
-      label: 'A real item flagged to a host after a turnover, photographed with a note on what was found',
+      label: 'A gloved hand photographing a split slat on a timber outdoor chair on a holiday home deck',
     },
     title: 'Flagged for you',
     description: 'Anything broken, missing or worn, with a photo and what we suggest.',
