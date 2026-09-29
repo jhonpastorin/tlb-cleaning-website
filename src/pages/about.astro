@@ -204,6 +204,10 @@ const wordOfMouthBody: TextBlockBody[] = [
 // photographs and consent exist, at which point this should probably become
 // a proper profile grid (ContentGrid with image cells, or a new component)
 // rather than a bare photo grid.
+//
+// HIDDEN until the photographs exist: flip showTeamGallery back to true once
+// real photos and consent are in hand.
+const showTeamGallery = false;
 const teamGallery = {
   heading: 'The team',
   lead:
@@ -382,7 +386,9 @@ const closingCta = {
       scrimOpacity={82}
     />
 
-    <PhotoGallery heading={teamGallery.heading} lead={teamGallery.lead} images={teamGallery.images} />
+    {showTeamGallery && (
+      <PhotoGallery heading={teamGallery.heading} lead={teamGallery.lead} images={teamGallery.images} />
+    )}
 
     <Callout tone="note" heading={introductionCallout.heading} body={introductionCallout.body} />
 
