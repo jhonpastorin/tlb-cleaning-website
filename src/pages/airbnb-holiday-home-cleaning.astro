@@ -120,10 +120,24 @@ import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from 
 // §0 Metadata. ✅ REWRITTEN against the September 2026 copy-rewrite brief
 // (workbook row 18, "Airbnb and short-stay turnovers").
 //
-// TITLE is the workbook's approved line verbatim. The old one split the mapped
-// phrase `airbnb cleaning services` (200/mo) with "and Holiday Let", so the
-// page carried the head term nowhere at all; this one carries it contiguously
-// and picks up `short stay cleaning` in the modifier. 51 characters.
+// TITLE is the mega-menu's own label (navigation.ts line 383), set on the
+// client's instruction, 29 Sep 2026. It is NOT the workbook's approved line.
+//
+// ⚠️ THIS GIVES THE MAPPED HEAD TERM UP IN THE TITLE TAG. The workbook's line
+// existed because `airbnb cleaning services` (200/mo) has to appear
+// contiguously, and the title before it split the phrase with "and Holiday
+// Let" so the page carried the head term nowhere at all. "Airbnb & Holiday
+// Home Cleaning" splits it in exactly the same place, and also drops
+// `short stay cleaning`, which the approved line picked up in its modifier.
+//
+// The phrase is still carried contiguously by the description below, by the
+// H1 (§hero `headingLines`) and by the non-branded FAQ heading, so the page is
+// not silent on it — but the title tag, which is the strongest of those
+// signals, no longer is. If that term's rankings slip, this is the change to
+// look at first.
+//
+// 45 characters. It does gain one thing the approved line did not have:
+// the title now matches the menu label a reader clicked to get here.
 //
 // ⚠️ DESCRIPTION IS *NOT* THE WORKBOOK'S APPROVED LINE, and the divergence is
 // deliberate and recorded. The approved meta reads:
@@ -154,7 +168,7 @@ import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from 
 // 140 characters, and it keeps the approved CTA as its final sentence, which is
 // what §7's button label is taken from.
 const pageMeta = {
-  title: 'Airbnb Cleaning Services - Short Stay | TLB Cleaning',
+  title: 'Airbnb & Holiday Home Cleaning | TLB Cleaning',
   description:
     'Airbnb cleaning services and same-day turnovers, with linen and restocking. Northern Rivers, Tweed and Southern Gold Coast. Talk to us today.',
   // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
