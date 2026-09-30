@@ -76,14 +76,21 @@ import { comparisonColumns, comparisonRows } from '../../data/comparison';
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherApplianceServices } from '../../data/appliance-services';
+import { outsideServices } from '../../data/outsideYourHome';
 import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 const OWN_HREF = '/house-cleaning/blind-cleaning/';
 
+// §0 Metadata. Title and description are the client-supplied text, verbatim.
+//
+// 🔴 BLOCKS LAUNCH. Both now name CURTAINS, which this page never offered
+// before. The only curtain copy is the non-branded FAQ added alongside this
+// change, and its TLB-specific sentence is bracketed. Confirm TLB cleans
+// curtains, and whether in place or off site, before this ships.
 const pageMeta = {
-  title: 'Blinds, Shutters and Ceiling Fan Cleaning | TLB Cleaning',
+  title: 'Blind Cleaning - Venetians & Curtains | TLB Cleaning',
   description:
-    'Blind, shutter and ceiling fan cleaning across the Northern Rivers and the Tweed. The dusty things above eye level that a regular clean never gets time for.',
+    'Blind, venetian and curtain cleaning for the window furnishings a regular clean never reaches. Add it to your next booking or book on its own.',
   canonical: 'https://tlbcleaning.com.au/house-cleaning/blind-cleaning/',
 };
 
@@ -105,11 +112,14 @@ const business = {
   description: pageMeta.description,
 };
 
+// §1 Hero. The H1 carries the primary `blind cleaning` as an exact
+// contiguous phrase, extended with the region, the same shape as the sibling
+// pages. No subheading: the lead is the hero's one paragraph, repeating the
+// primary and carrying the old heading's hook.
 const hero = {
   kicker: 'Blinds, shutters and ceiling fans',
-  headingLines: ['You only notice when the afternoon sun hits them.'],
-  lead:
-    `Blinds, shutters, verticals and ceiling fans cleaned across the Northern Rivers and the Tweed. The jobs above eye level that a regular clean never reaches. ${theLine.fast}`,
+  headingLines: ['Blind cleaning across', 'the Northern Rivers and the Tweed'],
+  lead: `Blind cleaning for the venetians, shutters and fans you only notice when the afternoon sun hits them. ${theLine.fast}`,
   cta: { label: 'Get an instant quote', href: quoteCta.href },
   image: {
     ratio: '1/1',
@@ -213,6 +223,7 @@ const worthKnowingBody: TextBlockBody[] = [
 ];
 
 const clusterServices = otherApplianceServices(OWN_HREF);
+const windowCleaning = outsideServices.find((service) => service.href === '/house-cleaning/window-cleaning/')!;
 
 const testimonials = [
   {
@@ -319,11 +330,19 @@ const nonBrandedFaqItems = [
       // ⚠️ BRACKETED ON PURPOSE, same as every sibling.
       'Usually priced per blind and per fan, with a lower rate when a whole house is done at once or when it is added to an existing clean. Size and type move it: a wide vertical blind or a plantation shutter takes longer than a small venetian. [TLB’s pricing basis and minimum charge. Confirm.]',
   },
+  {
+    // Added so the `curtain cleaning` FAQ heading is backed by content. The
+    // general advice is standard; the last sentence is TLB's and bracketed.
+    // See the metadata launch blocker.
+    question: 'Can curtains be cleaned without taking them down?',
+    answer:
+      'Light dust can be vacuumed off in place with a brush head. Anything more depends on the care label: lined, blockout and sheer curtains can shrink or mark if they are washed or steamed wrong, so they usually come down for a proper clean. [Confirm whether TLB cleans curtains, and how.]',
+  },
 ];
 
 const closingCta = {
   kicker: 'Blinds, shutters and ceiling fans',
-  heading: 'Add it to your next clean.',
+  heading: 'Add blind cleaning services to your next clean.',
   lead: 'Blinds, shutters, tracks and fans, done once or twice a year on a visit that is already happening. Tell us which rooms and we will price it.',
   cta: { label: 'Get an instant quote', href: quoteCta.href },
 };
@@ -359,8 +378,8 @@ const closingCta = {
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="How we clean blinds, shutters and fans"
-      lead="Six stages. Dry before damp, and support before pressure."
+      heading="How our venetian blind cleaning works"
+      lead="Six stages, and the same ones for shutters and fans. Dry before damp, and support before pressure."
       items={methodItems}
       cta={{ label: 'Get an instant quote', href: quoteCta.href }}
     />
@@ -376,14 +395,25 @@ const closingCta = {
 
     <ServiceBlocks
       variant="list"
-      heading="Other things we clean around the house"
-      lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
-      items={clusterServices.map((service) => ({
-        icon: 'spray-bottle' as const,
-        title: service.label,
-        description: service.blurb,
-        href: service.href,
-      }))}
+      heading="A blind and window cleaning service on the same visit"
+      lead="Windows are the natural partner: same rooms, same tracks, same ladder. Any of these can go on the same visit."
+      items={[
+        // Window cleaning leads the list to back the heading. It is not in
+        // the appliance cluster, so it is added here rather than in
+        // appliance-services.ts. Label, href and blurb from outsideYourHome.ts.
+        {
+          icon: 'spray-bottle' as const,
+          title: windowCleaning.label,
+          description: windowCleaning.description,
+          href: windowCleaning.href,
+        },
+        ...clusterServices.map((service) => ({
+          icon: 'spray-bottle' as const,
+          title: service.label,
+          description: service.blurb,
+          href: service.href,
+        })),
+      ]}
     />
 
     <ComparisonTable
@@ -421,7 +451,7 @@ const closingCta = {
     />
 
     <Faq heading="Frequently asked questions" items={brandedFaqItems} />
-    <Faq heading="Blind and ceiling fan cleaning FAQs" items={nonBrandedFaqItems} />
+    <Faq heading="Blind, fan and curtain cleaning FAQs" items={nonBrandedFaqItems} />
 
     <CallToAction
       variant="secondary"
