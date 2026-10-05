@@ -66,8 +66,8 @@
 // now has section 9b; and three missing entities (spores, dehumidifier,
 // bleach) are picked up where a person would have said them anyway. Two
 // changes are wired but gated on Teagan: the NSW Health sentence in section
-// 10, and the price band FAQ 12 still cannot answer. The testimonials are
-// hidden rather than published. Every block is annotated in place.
+// 10, and the price band FAQ 12 still cannot answer. The social proof is
+// the site's real Google reviews (src/data/googleReviews.ts). Every block is annotated in place.
 //
 // NO VIDEO SLOT, deliberately. Every sibling page carries a reserved
 // VideoFeature. This page does not, because a reserved video frame below the
@@ -111,7 +111,8 @@ import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 // the shooting and consent brief is in the block above `beforeAfterPairs`.
 import BeforeAfter from '../../components/sections/BeforeAfter.astro';
 import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
-import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../../data/googleReviews';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import { locationGroups } from '../../data/locations';
 import Faq from '../../components/sections/Faq.astro';
@@ -250,7 +251,7 @@ const business = {
     postalCode: '',
     addressCountry: 'AU',
   },
-  sameAs: [],
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
   areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
   description: pageMeta.description,
 };
@@ -861,33 +862,6 @@ const bookingBody: TextBlockBody[] = [
   'If it turns out to be bigger than a clean, you will hear that from us early and at no cost. We would rather give you an honest answer and no invoice than take a booking we already know will not hold.',
 ];
 
-// Section 13. Social proof. Bracketed [TBC] briefing slots, NOT real
-// testimonials. BFD 5.2 and 3.6.3 prohibit fabricated or paraphrased
-// testimonials outright, and IMAGE-GUIDELINES.md section 7 prohibits
-// generating a face to sit beside one. Never fill these in.
-//
-// Note the second slot's brief. A testimonial praising TLB for turning work
-// away is the most on-brand proof this page could carry, and it is the one
-// that would make the honesty above read as real rather than as positioning.
-const testimonials = [
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a client whose bathroom mould was cleaned and stayed manageable afterwards. Ideally one where a ventilation change was part of it, because that is what this page actually argues.]',
-    name: '[Client name, TBC]',
-    role: '[Suburb / property type, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Mould cleaning client' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan whether any client has ever thanked TLB for telling them a job needed a builder or a plumber rather than a cleaner. That quote is worth more on this page than any before-and-after, because it is the only thing that proves the promise the rest of the page is making.]',
-    name: '[Client name, TBC]',
-    role: '[Suburb / property type, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Client referred on to a specialist' },
-  },
-];
-
 // Section 14. Where we clean. The shared 56-town, three-region list from
 // src/data/locations.ts. Open questions are flagged there, where one fix
 // serves every page.
@@ -1136,22 +1110,7 @@ const closingCta = {
       cta={pageQuoteCta}
     />
 
-    {/* ⚠️ TESTIMONIALS HIDDEN 15 Sep 2026, not deleted.
-        <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
-
-        Both cards are bracketed [TBC] briefing notes addressed to Teagan by
-        name, and they were rendering on a live page where anyone could read
-        them. That is a credibility failure at the exact point the page asks
-        to be believed, and BFD §12.2 rules out writing substitutes, so
-        hiding is the only move left. An absent testimonial block is neutral;
-        a visible instruction to the founder is not.
-
-        The `testimonials` array above is kept deliberately: the two quotes
-        it describes are the right two to chase, and the second one — a
-        client thanking TLB for turning work away — would prove the promise
-        the whole page is making better than anything else could. Delete this
-        wrapper and restore the line above the moment two real quotes with
-        written consent exist. Blocked on the client. */}
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     {/* ✅ RESOLVED 18 Sep 2026. The copy review of this page read the town
         list as all three groups present and complete per BFD §2.1, and

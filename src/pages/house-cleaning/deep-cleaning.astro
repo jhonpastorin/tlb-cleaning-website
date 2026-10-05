@@ -59,7 +59,8 @@ import kitchenBenchtopBeforeImg from '../../assets/home_cleaning/before_after/ki
 import kitchenBenchtopAfterImg from '../../assets/home_cleaning/before_after/kitchen-benchtop-after.jpg';
 import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
 import VideoFeature from '../../components/sections/VideoFeature.astro';
-import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../../data/googleReviews';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import { locationGroups } from '../../data/locations';
 import Faq from '../../components/sections/Faq.astro';
@@ -172,7 +173,7 @@ const business = {
     postalCode: '',
     addressCountry: 'AU',
   },
-  sameAs: [],
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
   areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
   description: pageMeta.description,
 };
@@ -627,35 +628,6 @@ const pricingSection = {
   ],
 };
 
-// §11 Social proof — bracketed [TBC] briefing slots, NOT real testimonials.
-// Same convention index.astro and house-cleaning.astro both use: the visible
-// text reads as obviously unfinished so it can't be mistaken for a real
-// client quote. Never fill with invented names or words.
-//
-// The brief now specifies the two angles, where the old one said only "ask
-// Teagan for Deep Cleaning testimonials" — "ideally one where the house had
-// been let go, and one booked ahead of guests or a sale". Those are the two
-// angles the first build proposed on its own, so the slots below are the
-// brief's ask now rather than a proposal awaiting confirmation.
-const testimonials = [
-  {
-    quote:
-      '[TBC — ask Teagan for a quote from a deep clean client whose house had been let go. This answers the shame barrier the first FAQ addresses, and it is the most common reason people hesitate to book.]',
-    name: '[Client name — TBC]',
-    role: '[Suburb / property type — TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Deep clean client' },
-  },
-  {
-    quote:
-      '[TBC — ask Teagan for a quote from a deep clean client who booked ahead of guests or a sale. Deadline pressure is what turns a deep clean from someday into this week.]',
-    name: '[Client name — TBC]',
-    role: '[Suburb / property type — TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Deep clean client who booked against a deadline' },
-  },
-];
-
 // §12 Where we clean — the shared 56-town, three-region list from
 // src/data/locations.ts, which every "Where we clean" section now reads
 // from. This page specified it first; house-cleaning.astro and the homepage
@@ -872,14 +844,7 @@ const closingCta = {
       <TextBlock theme="muted" align="left" heading={pricingSection.heading} body={pricingSection.body} />
     )}
 
-    {/* ⚠️ The two cards below are still bracketed [TBC] briefing slots, not
-        testimonials. They are fine in a staging build (the convention is
-        shared with index.astro and house-cleaning.astro) but they must NOT
-        go live: visible instructions to the founder are a credibility
-        failure, and BFD §12.2 forbids writing substitutes. If the two real
-        quotes are not collected before launch, hide this section rather
-        than publishing it — an absent testimonial block is neutral. */}
-    <TestimonialCarousel heading="What our deep clean clients say" testimonials={testimonials} uniform />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     {/* The Tweed was being folded into its neighbours. BFD §2.1 lists it
         separately on purpose: Kingscliff, Pottsville and Tweed Heads are

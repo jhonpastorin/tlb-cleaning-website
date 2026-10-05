@@ -1,0 +1,354 @@
+---
+// Google-style review cards in an auto-advancing horizontal slider: avatar,
+// name and month on the left, the Google "G" on the right, gold stars, then
+// the review text verbatim. 3 cards across on desktop, 2 on tablet, 1 (with
+// the next one peeking) on mobile.
+//
+// The slider is native horizontal scroll with scroll-snap, so touch swipe and
+// keyboard scrolling work with no JS at all; the script only adds the
+// auto-advance and the prev / pause / next buttons. Auto-advance stops while
+// the pointer is over the section, while anything in it has keyboard focus,
+// while it is off screen or the tab is hidden, and never starts for visitors
+// who prefer reduced motion (WCAG 2.2.2: moving content needs a pause control,
+// and the button is that control).
+//
+// Avatars are the reviewer's initial, never their Google profile photo (see
+// the rules in src/data/googleReviews.ts).
+import StarRating from '../ui/StarRating.astro';
+
+export interface ReviewCard {
+  author: string;
+  rating: number;
+  text: string;
+  /** Month posted, 'YYYY-MM'. Omitted for placeholder briefs. */
+  date?: string;
+  /** The review on Google. When set, the "G" links to it. */
+  reviewUrl?: string;
+}
+
+interface Props {
+  heading: string;
+  reviews: ReviewCard[];
+  /** Public Google Business Profile URL. Adds a "Read all our reviews on Google" link when set. */
+  profileUrl?: string | null;
+  /** Milliseconds between auto-advances. Default 5000. */
+  interval?: number;
+}
+
+const { heading, reviews, profileUrl, interval = 5000 } = Astro.props;
+
+const monthFormat = new Intl.DateTimeFormat('en-AU', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const formatMonth = (date: string) => monthFormat.format(new Date(`${date}-01T00:00:00Z`));
+// First letter, skipping brackets and punctuation, so "[Client name — TBC]"
+// still gets a "C" rather than a "[".
+const initialOf = (name: string) => (name.match(/\p{L}/u)?.[0] ?? '?').toUpperCase();
+
+// Google's four-colour "G", shared by the linked and unlinked card variants.
+const googleMark = `<svg viewBox="0 0 48 48" width="22" height="22" aria-hidden="true">
+  <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+  <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+  <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+  <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+</svg>`;
+---
+
+<section class="review-slider" aria-labelledby="review-slider-heading" data-review-slider data-interval={interval}>
+  <div class="container review-slider__inner">
+    <h2 id="review-slider-heading" class="review-slider__heading">{heading}</h2>
+
+    <div class="review-slider__viewport" tabindex="0" aria-label="Reviews, scroll sideways for more" data-viewport>
+      <ul class="review-slider__track">
+        {reviews.map((review) => (
+          <li class="review-card">
+            <div class="review-card__head">
+              <span class="review-card__avatar" aria-hidden="true">{initialOf(review.author)}</span>
+              <div class="review-card__who">
+                <p class="review-card__name">{review.author}</p>
+                {review.date && <p class="review-card__date">{formatMonth(review.date)}</p>}
+              </div>
+              {review.reviewUrl ? (
+                <a
+                  class="review-card__google"
+                  href={review.reviewUrl}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Read ${review.author}'s review on Google`}
+                >
+                  <Fragment set:html={googleMark} />
+                </a>
+              ) : (
+                <span class="review-card__google" role="img" aria-label="Google review">
+                  <Fragment set:html={googleMark} />
+                </span>
+              )}
+            </div>
+            <span class="review-card__stars">
+              <StarRating rating={review.rating} />
+            </span>
+            <p class="review-card__text">{review.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Hidden until the script confirms there is something to scroll to;
+        without JS these buttons would do nothing. */}
+    <div class="review-slider__controls" hidden data-controls>
+      <button type="button" class="review-slider__btn" aria-label="Previous review" data-prev>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <button type="button" class="review-slider__btn" aria-label="Pause automatic scrolling" data-toggle>
+        <svg class="review-slider__icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <rect x="6" y="5" width="4" height="14" rx="1" />
+          <rect x="14" y="5" width="4" height="14" rx="1" />
+        </svg>
+        <svg class="review-slider__icon-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10-6.5a1 1 0 0 0 0-1.72l-10-6.5A1 1 0 0 0 8 5.5z" />
+        </svg>
+      </button>
+      <button type="button" class="review-slider__btn" aria-label="Next review" data-next>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+
+    {profileUrl && (
+      <a class="review-slider__source" href={profileUrl} target="_blank" rel="noopener">
+        Read all our reviews on Google
+      </a>
+    )}
+  </div>
+</section>
+
+<style>
+  .review-slider {
+    background: var(--color-surface);
+  }
+
+  .review-slider__inner {
+    padding-block: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .review-slider__heading {
+    text-align: center;
+  }
+
+  .review-slider__viewport {
+    --gap: var(--space-md);
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .review-slider__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .review-slider__track {
+    display: flex;
+    gap: var(--gap);
+  }
+
+  .review-card {
+    flex: 0 0 calc((100% - 2 * var(--gap)) / 3);
+    scroll-snap-align: start;
+    background: var(--color-surface-muted);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .review-card__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .review-card__avatar {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-brand);
+    color: var(--color-on-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: 1.125rem;
+  }
+
+  .review-card__who {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .review-card__name {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    line-height: 1.2;
+  }
+
+  .review-card__date {
+    font-size: var(--text-small);
+    opacity: 0.8;
+  }
+
+  .review-card__google {
+    flex-shrink: 0;
+    align-self: flex-start;
+    display: flex;
+  }
+
+  /* Bigger tap target than the 22px mark itself, without moving it. */
+  a.review-card__google {
+    padding: 11px;
+    margin: -11px;
+  }
+
+  .review-card__stars {
+    color: var(--color-rating);
+  }
+
+  /* StarRating's own 14px is sized for the old carousel; these cards read
+     closer to Google's larger star row. */
+  .review-card__stars :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* pre-line keeps a reviewer's own paragraph breaks (\n\n in the data). */
+  .review-card__text {
+    font-size: var(--text-small);
+    white-space: pre-line;
+  }
+
+  .review-slider__controls {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .review-slider__controls[hidden] {
+    display: none;
+  }
+
+  .review-slider__btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-inverse);
+    color: var(--color-on-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .review-slider__btn[data-paused='true'] .review-slider__icon-pause,
+  .review-slider__btn:not([data-paused='true']) .review-slider__icon-play {
+    display: none;
+  }
+
+  .review-slider__source {
+    font-weight: var(--weight-bold);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* mirrors --bp-lg */
+  @media (max-width: 1025px) {
+    .review-card {
+      flex-basis: calc((100% - var(--gap)) / 2);
+    }
+  }
+
+  /* mirrors --bp-md: one card, with the next peeking in as a swipe cue */
+  @media (max-width: 768px) {
+    .review-card {
+      flex-basis: 85%;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-review-slider]').forEach((slider) => {
+    const viewport = slider.querySelector<HTMLElement>('[data-viewport]');
+    const cards = Array.from(slider.querySelectorAll<HTMLElement>('.review-card'));
+    const controls = slider.querySelector<HTMLElement>('[data-controls]');
+    const toggle = slider.querySelector<HTMLButtonElement>('[data-toggle]');
+    if (!viewport || cards.length === 0) return;
+
+    const interval = Number(slider.dataset.interval) || 5000;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let userPaused = reduceMotion.matches;
+    let hovered = false;
+    let focused = false;
+    let onScreen = true;
+    let timer: number | undefined;
+
+    const behavior = (): ScrollBehavior => (reduceMotion.matches ? 'auto' : 'smooth');
+    const step = () => (cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : viewport.clientWidth);
+    const canScroll = () => viewport.scrollWidth > viewport.clientWidth + 2;
+
+    // Wraps at both ends rather than stopping dead, so the auto-advance loops.
+    function go(direction: 1 | -1) {
+      const atEnd = viewport!.scrollLeft + viewport!.clientWidth >= viewport!.scrollWidth - 2;
+      const atStart = viewport!.scrollLeft <= 2;
+      if (direction === 1 && atEnd) viewport!.scrollTo({ left: 0, behavior: behavior() });
+      else if (direction === -1 && atStart) viewport!.scrollTo({ left: viewport!.scrollWidth, behavior: behavior() });
+      else viewport!.scrollBy({ left: direction * step(), behavior: behavior() });
+    }
+
+    // One place decides whether the timer runs; every event below just
+    // updates a flag and calls this, which also restarts the countdown so a
+    // manual move never gets followed by an immediate automatic one.
+    function sync() {
+      window.clearInterval(timer);
+      timer = undefined;
+      const scrollable = canScroll();
+      if (controls) controls.hidden = !scrollable;
+      if (toggle) {
+        toggle.dataset.paused = String(userPaused);
+        toggle.setAttribute('aria-label', userPaused ? 'Play automatic scrolling' : 'Pause automatic scrolling');
+      }
+      if (scrollable && !userPaused && !hovered && !focused && onScreen && !document.hidden) {
+        timer = window.setInterval(() => go(1), interval);
+      }
+    }
+
+    slider.querySelector('[data-prev]')?.addEventListener('click', () => { go(-1); sync(); });
+    slider.querySelector('[data-next]')?.addEventListener('click', () => { go(1); sync(); });
+    toggle?.addEventListener('click', () => { userPaused = !userPaused; sync(); });
+
+    slider.addEventListener('mouseenter', () => { hovered = true; sync(); });
+    slider.addEventListener('mouseleave', () => { hovered = false; sync(); });
+    // Keyboard focus only: a mouse click on Play leaves the button focused,
+    // and counting that would keep the slider paused straight after "play".
+    slider.addEventListener('focusin', (event) => {
+      focused = (event.target as Element).matches(':focus-visible');
+      sync();
+    });
+    slider.addEventListener('focusout', (event) => {
+      focused = slider.contains(event.relatedTarget as Node | null);
+      sync();
+    });
+    // A swipe restarts the countdown instead of being overtaken mid-read.
+    viewport.addEventListener('pointerdown', sync);
+
+    new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; sync(); }).observe(slider);
+    document.addEventListener('visibilitychange', sync);
+    window.addEventListener('resize', sync);
+    sync();
+  });
+</script>

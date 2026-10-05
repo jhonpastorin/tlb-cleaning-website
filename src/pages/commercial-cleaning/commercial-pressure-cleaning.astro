@@ -82,7 +82,8 @@ import PathwayCards from '../../components/sections/PathwayCards.astro';
 import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import ComparisonTable from '../../components/sections/ComparisonTable.astro';
-import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../../data/googleReviews';
 import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
@@ -184,7 +185,7 @@ const business = {
     postalCode: '',
     addressCountry: 'AU',
   },
-  sameAs: [],
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
   // ⚠️ NSW only, following the hub's call and this page's meta description.
   // It matters more here than elsewhere: the wash water rules cited in
   // non-branded FAQ 4 are NSW law, and QLD's equivalents sit under different
@@ -475,36 +476,6 @@ const settingTags = [
   { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
 ];
 
-// §9 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
-// Never invent a quote or a business name. BFD 5.3 requires written
-// permission before naming a client at all.
-const testimonials = [
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a client whose car park or entry was cleaned before an inspection, an open day or a busy season. Ideally one that mentions what it looked like beforehand, because the contrast is the whole story on this page.]',
-    name: '[Business name, TBC]',
-    role: '[Role, for example centre manager, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB commercial pressure cleaning client' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a strata committee or building manager on a scheduled programme. Strata is the buyer most likely to be reading this page, and a committee quote carries more weight with a committee than a business owner quote does.]',
-    name: '[Building or scheme name, TBC]',
-    role: '[Strata committee or building manager, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Strata committee member or building manager' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote about working around trading hours, from a venue, a cafe or a holiday park that never had to close. That answers the objection this page cannot answer for itself.]',
-    name: '[Business name, TBC]',
-    role: '[Role, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Venue or hospitality client' },
-  },
-];
-
 // §10 Comparison table. The shared rows from src/data/comparison.ts, now on a
 // fifth page.
 //
@@ -715,7 +686,7 @@ const closingCta = {
       rows={comparisonTable.rows}
     />
 
-    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
       heading="Where we clean"

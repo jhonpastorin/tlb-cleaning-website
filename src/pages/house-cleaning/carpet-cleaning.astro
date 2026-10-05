@@ -82,7 +82,8 @@ import PathwayCards from '../../components/sections/PathwayCards.astro';
 import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import ComparisonTable from '../../components/sections/ComparisonTable.astro';
-import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../../data/googleReviews';
 import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
@@ -169,7 +170,7 @@ const business = {
     postalCode: '',
     addressCountry: 'AU',
   },
-  sameAs: [],
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
   // Residential pages claim the full service area, including QLD. Only the
   // commercial pages are NSW-only, and that is a live open item over there.
   areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
@@ -332,33 +333,6 @@ const endOfLeaseLink = {
 };
 
 const clusterServices = otherApplianceServices(OWN_HREF);
-
-const testimonials = [
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a client whose carpet was close to being replaced and came back after one clean. That is the most valuable testimonial this page can carry, because it puts a dollar figure against the job. Written permission required. The permission rule is BFD 12.1 and 12.2; section 5.3 is what households worry about.]',
-    name: '[First name, TBC]',
-    role: '[Suburb, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB carpet cleaning client' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a client with pets or small children. That is who searches this page hardest, and it is the one that pays off FAQ 4.]',
-    name: '[First name, TBC]',
-    role: '[Suburb, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB client with pets' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote about a wool or natural fibre rug, ideally one where TLB gave honest advice rather than just doing the job. That proves the page’s central promise better than any claim here does.]',
-    name: '[First name, TBC]',
-    role: '[Suburb, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB rug cleaning client' },
-  },
-];
 
 const comparisonTable = {
   heading: 'How TLB compares',
@@ -555,7 +529,7 @@ const closingCta = {
       rows={comparisonTable.rows}
     />
 
-    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
       heading="Where we clean"

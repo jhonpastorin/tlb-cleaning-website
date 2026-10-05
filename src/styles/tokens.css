@@ -28,6 +28,7 @@
   --tlb-orange:         #F69305;   /* placeholder — not covered by the brand bible yet, unused by any component */
   --tlb-cyan:           #387677;   /* placeholder — not covered by the brand bible yet, unused by any component */
   --tlb-cyan-dark:      #085453;   /* placeholder — not covered by the brand bible yet, unused by any component */
+  --tlb-star-gold:      #FBBC04;   /* Google's review-star gold — not a brand colour; read only by --color-rating */
 
   /* ---- Layer 2: semantic roles ----
      This is the layer that carries roles — Layer 1 above is colour names
@@ -43,6 +44,7 @@
   --color-inverse:          var(--tlb-dark-teal);       /* dark sections — same Dark Teal as --color-brand */
   --color-on-inverse:       var(--tlb-off-white);     /* light text on dark sections */
   --color-accent:           var(--tlb-mint-green);        /* Mint Green — small decorative accents only (e.g. TagCloud's highlighted-tag ring) */
+  --color-rating:           var(--tlb-star-gold);     /* star rows on Google review cards (GoogleReviewSlider) */
 
   /* Body copy colour. Was the previous brand's placeholder grey (#7A7A7A) in
      a --tlb-grey slot; that slot is gone (it isn't a TLB brand colour) and

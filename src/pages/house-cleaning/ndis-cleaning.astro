@@ -44,7 +44,8 @@ import Callout from '../../components/sections/Callout.astro';
 import ContentGrid from '../../components/sections/ContentGrid.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import { completeFootprintLocationGroups, footprintSubheading } from '../../data/locations';
-import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../../data/googleReviews';
 import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
@@ -135,7 +136,7 @@ const business = {
     postalCode: '',
     addressCountry: 'AU',
   },
-  sameAs: [],
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
   // ✅ WIDENED to match §17's town list, which the copy-rewrite brief specifies
   // town for town and which includes the nine Southern Gold Coast towns.
   //
@@ -504,37 +505,6 @@ const windowCleaningBody: TextBlockBody[] = [
   'Like the rest of the clean, it is hourly support, so it comes out of the same funding and you set the priorities for the time booked. If you would rather we did the windows one visit and the bathrooms the next, that is your call to make and we will work to it.',
 ];
 
-// §12 Social proof — bracketed [TBC] briefing slots, NOT real testimonials.
-//
-// ⚠️ The brief supplied NOTHING here — not even the "ask Teagan for
-// testimonials" line every sibling brief had. The two angles below are a
-// proposal; confirm before briefing Teagan.
-//
-// ⚠️ EXTRA CARE REQUIRED WHEN THESE ARE FILLED. A quote from an NDIS
-// participant is health-adjacent personal information: consent must be
-// explicit and informed, and identifying detail (suburb plus disability,
-// say) should be minimised. A carer or coordinator quote may be easier to
-// obtain and carries similar weight for a coordinator reader.
-// Never invent a participant quote.
-const testimonials = [
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a participant or their family carer about consistency: the same person arriving, on the day they said. Written consent required, and keep identifying detail to a minimum.]',
-    name: '[Name, TBC]',
-    role: '[Participant or family carer, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB NDIS client' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a support coordinator or plan manager about communication and invoicing. Coordinators are repeat referrers, and this is the quote that reaches them.]',
-    name: '[Name, TBC]',
-    role: '[Support coordinator or plan manager, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Support coordinator who refers to TLB' },
-  },
-];
-
 // §14 Branded FAQs — all five ship. Two carry visible brackets per TLB's
 // convention; both are launch-blocking (see the file header).
 //
@@ -730,7 +700,7 @@ const closingCta = {
       body={windowCleaningBody}
     />
 
-    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     {/* §13 "How we compare" is NOT built. The brief said only "[Insert
         comparison table here, if applicable]" — and "if applicable" suggests

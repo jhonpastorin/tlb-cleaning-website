@@ -77,6 +77,8 @@ import cooktopAfterImg from '../../assets/home_cleaning/before_after/cooktop-aft
 import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
 import VideoFeature from '../../components/sections/VideoFeature.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
+import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../../data/googleReviews';
 import { locationGroups } from '../../data/locations';
 import { guidePages } from '../../data/guides';
 import type { GuideHref } from '../../data/guides';
@@ -210,7 +212,7 @@ const business = {
     postalCode: '',
     addressCountry: 'AU',
   },
-  sameAs: [],
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
   areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
   description: pageMeta.description,
 };
@@ -797,41 +799,6 @@ const bookingBody: TextBlockBody[] = [
   'Book the clean for after the removalists and before the final inspection, with a day in between if you can manage it. An empty property cleans faster and better, and that gap is what gives everyone room if something needs a second look.',
 ];
 
-// Section 12. Social proof - HOLDING COPY, 15 Sep 2026.
-//
-// WHAT CHANGED. This was a TestimonialCarousel carrying two bracketed [TBC]
-// briefing slots. The convention was sound (visibly unfinished text cannot
-// be mistaken for a real quote) but the execution was not: a reader reaching
-// this block met two paragraphs of internal instructions addressed to
-// Teagan, laid out as quotation marks with five gold stars beside them, in
-// the position on the page where the proof is meant to be. That is worse
-// than an empty section.
-//
-// It is now one short TextBlock that says the reviews are not here yet and
-// says why. NO substitute, composite or paraphrased testimonial is written,
-// per BFD 5.2 and 3.6.3, and no face is generated to sit beside one, per
-// IMAGE-GUIDELINES.md section 7. Those rules have not moved an inch.
-//
-// The alternative was to hide the module entirely until real quotes exist.
-// Either is defensible. Holding copy wins because it keeps the section in
-// the page structure, and because "we would rather show you two real ones
-// than ten borrowed ones" is on-brand rather than apologetic - it turns the
-// absence into the same position FAQ 2 takes about guarantees.
-//
-// STILL NEEDED, and this is the highest-value outstanding item on the page:
-//   1. A tenant whose bond clean passed the exit inspection. The most
-//      persuasive thing that could sit here, and the one thing the page is
-//      not allowed to claim on its own behalf.
-//   2. A property manager at an agency TLB already holds a contract with.
-//      Written permission required to name the agency (BFD 5.3). An agency
-//      voice answers the capacity and turnaround question a tenant quote
-//      cannot.
-// When both land, restore TestimonialCarousel with the real quotes and
-// delete this block and its import.
-const reviewsHoldingBody: TextBlockBody[] = [
-  'We are collecting bond clean reviews with permission, and we would rather show you two real ones than ten borrowed ones. In the meantime, the task list above is the thing to hold us to.',
-];
-
 // Section 13. Where we clean. The shared 56-town, three-region list from
 // src/data/locations.ts. The open questions (the /locations/<slug>/ pattern,
 // the ~41 town pages that do not exist yet, and the header mega-menu's
@@ -1080,14 +1047,7 @@ const closingCta = {
       cta={pageQuoteCta}
     />
 
-    {/* Was a TestimonialCarousel of two bracketed [TBC] briefing slots,
-        which rendered internal instructions to Teagan as if they were client
-        quotes. Holding copy until two real ones land with permission — see
-        the note above `reviewsHoldingBody` for what is needed and for why
-        this is copy rather than a hidden section.
-
-        `light`, between the dark booking band and TagCloud's brand band. */}
-    <TextBlock theme="light" align="left" heading="Reviews are coming" body={reviewsHoldingBody} />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
       heading="Where we clean"

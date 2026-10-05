@@ -78,7 +78,8 @@ import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 import Callout from '../../components/sections/Callout.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import ComparisonTable from '../../components/sections/ComparisonTable.astro';
-import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../../data/googleReviews';
 import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
@@ -352,36 +353,6 @@ const worthKnowingBody: TextBlockBody[] = [
 // thirteen, with this page filtered out of its own band.
 const relatedTags = relatedPremises('/commercial-cleaning/office-cleaning/');
 
-// §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
-// Never invent a quote or a business name. BFD 5.3 requires written
-// permission before naming a client at all.
-const testimonials = [
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from an office client who switched from another cleaner, ideally naming what had been getting missed. The switching story is the most useful one this page can carry, because every reader on it already has a cleaner. A named business and a role, with written permission.]',
-    name: '[Business name, TBC]',
-    role: '[Role, for example office manager, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB office cleaning client' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from an office on an ongoing contract of a year or more. This one has to prove the schedule held and the cleaner stayed the same, not that a single clean went well.]',
-    name: '[Business name, TBC]',
-    role: '[Role, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Long-standing TLB commercial client' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote that mentions the written scope by name, from a client who had been burned by a vague one. That answers the objection this page spends most of its words on.]',
-    name: '[Business name, TBC]',
-    role: '[Role, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Client who moved to a written cleaning scope' },
-  },
-];
-
 // §9 Comparison table. The shared rows from src/data/comparison.ts, now on a
 // fifth page.
 //
@@ -585,7 +556,7 @@ const business = commercialBusiness(pageMeta.description);
       rows={comparisonTable.rows}
     />
 
-    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     {/* Brief §21, the full footprint rather than the six-town NSW list. Three
         reasons: the hero promises the Tweed and this band dropped it, against

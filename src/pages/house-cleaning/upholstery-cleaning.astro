@@ -36,7 +36,8 @@ import PathwayCards from '../../components/sections/PathwayCards.astro';
 import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import ComparisonTable from '../../components/sections/ComparisonTable.astro';
-import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../../data/googleReviews';
 import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
@@ -97,7 +98,7 @@ const business = {
     postalCode: '',
     addressCountry: 'AU',
   },
-  sameAs: [],
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
   areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
   description: pageMeta.description,
 };
@@ -273,33 +274,6 @@ const crossSellItems = [
   })),
 ];
 
-const testimonials = [
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a client who was about to replace a lounge and kept it after a clean. The saving is the story on this page. Written permission required (BFD 5.3).]',
-    name: '[First name, TBC]',
-    role: '[Suburb, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB upholstery cleaning client' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote about a spill rescued quickly. That pays off the "blot it and ring us" block and encourages the phone call this page wants.]',
-    name: '[First name, TBC]',
-    role: '[Suburb, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB client after a spill' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a client with pets, ideally mentioning smell rather than marks. Odour is what people are too embarrassed to ask about and most likely to search.]',
-    name: '[First name, TBC]',
-    role: '[Suburb, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB client with pets' },
-  },
-];
-
 const comparisonTable = {
   heading: 'How TLB compares',
   cornerLabel: 'Why TLB Cleaning is different',
@@ -445,7 +419,7 @@ const closingCta = {
       rows={comparisonTable.rows}
     />
 
-    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
       heading="Where we clean"

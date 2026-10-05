@@ -107,7 +107,8 @@ import Callout from '../../components/sections/Callout.astro';
 import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 import ContentGrid from '../../components/sections/ContentGrid.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
-import TestimonialCarousel from '../../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../../data/googleReviews';
 import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
@@ -360,39 +361,6 @@ const worthKnowingBody: TextBlockBody[] = [
 // clinic inside a village needs both.
 const relatedTags = relatedPremises('/commercial-cleaning/medical-and-clinic-cleaning/');
 
-// §8 Social proof. Bracketed [TBC] briefing slots, NOT real testimonials.
-//
-// ⚠️ NEVER quote a patient or a salon client. A testimonial from someone
-// receiving treatment identifies them as a patient of a named practice,
-// which is a privacy problem a cleaning company should not create. These
-// slots ask for the practice manager, clinician or salon owner only.
-const testimonials = [
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a practice manager about the written scope being usable in their accreditation paperwork. That is the thing this page argues hardest for. Named practice and role, with written permission.]',
-    name: '[Practice name, TBC]',
-    role: '[Role, for example practice manager, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'TLB medical practice cleaning client' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from an allied health or day spa client about treatment surfaces and upholstery specifically, since that is what separates a clinic from an office clean.]',
-    name: '[Clinic name, TBC]',
-    role: '[Role, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Allied health clinic client' },
-  },
-  {
-    quote:
-      '[TBC. Ask Teagan for a quote from a salon owner about hair and colour, ideally from someone who had been through a cleaner who treated a salon like an office. ⚠️ Do NOT source this from a salon client — see the §8 comment in this file.]',
-    name: '[Salon name, TBC]',
-    role: '[Owner, TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Hair and beauty salon owner' },
-  },
-];
-
 // §9 Branded FAQs, in the CUSTOMER'S voice — a practice manager, clinician
 // or salon owner.
 const brandedFaqItems = [
@@ -556,7 +524,7 @@ const business = commercialBusiness(pageMeta.description);
       note={[]}
     />
 
-    <TestimonialCarousel heading="What practices and salons say" testimonials={testimonials} uniform />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
       heading="Where we clean"

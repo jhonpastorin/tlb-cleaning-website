@@ -26,7 +26,8 @@ import ComparisonTable from '../components/sections/ComparisonTable.astro';
 // conditions and the shooting requirement any replacement has to meet.
 import BeforeAfter from '../components/sections/BeforeAfter.astro';
 import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../data/googleReviews';
 import TagCloud from '../components/sections/TagCloud.astro';
 import { locationGroups } from '../data/locations';
 import { comparisonColumns, comparisonRows } from '../data/comparison';
@@ -109,7 +110,7 @@ const business = {
     postalCode: '',
     addressCountry: 'AU',
   },
-  sameAs: [],
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
   // v6 leads with the Northern Rivers and the Tweed; the Southern Gold
   // Coast is where the team crosses to, not part of the primary claim.
   areaServed: 'Northern Rivers NSW, the Tweed, and the Southern Gold Coast QLD',
@@ -295,32 +296,6 @@ const comparisonTable = {
   columns: comparisonColumns,
   rows: comparisonRows,
 };
-
-// Testimonials — every quote, name and role below is a PLACEHOLDER, not a
-// real client testimonial. v6 supplies only the briefing task for Teagan,
-// and asks for two rather than the three the previous build reserved. Do
-// not replace these with invented customer names or quotes; swap each slot
-// for a real one as it is collected. `uniform` because two cards should sit
-// as an equal pair — the centre-emphasis treatment needs an odd count to
-// have a centre.
-const testimonials = [
-  {
-    quote:
-      "[TBC — ask Teagan for a quote from a long-standing client, ideally naming how long they've been with TLB. Tenure is the proof this page needs.]",
-    name: '[Client name — TBC]',
-    role: '[Town / property type — TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Long-standing TLB client' },
-  },
-  {
-    quote:
-      '[TBC — ask Teagan for a quote from a client who has been with a few cleaners over the years. That switcher story is what converts.]',
-    name: '[Client name — TBC]',
-    role: '[Town / property type — TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Client who switched to TLB after other cleaners' },
-  },
-];
 
 // "Our services" — the brief's six services with the deep links it names.
 // Titles, descriptions and hrefs live in src/data/navigation.ts as
@@ -613,7 +588,7 @@ const closingCta = {
       note="Photographed on real TLB cleans, published with the client's permission."
     />
 
-    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <ServiceBlocks variant="photo-tiles" heading="Our services" items={ourServiceItems} tileCtaLabel="See the service" />
 

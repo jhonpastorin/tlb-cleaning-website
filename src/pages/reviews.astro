@@ -42,7 +42,8 @@ import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
 import TextBlock from '../components/sections/TextBlock.astro';
-import TestimonialCarousel from '../components/sections/TestimonialCarousel.astro';
+import GoogleReviewSlider from '../components/sections/GoogleReviewSlider.astro';
+import { googleBusinessProfileUrl, googleReviews } from '../data/googleReviews';
 import LogoBar from '../components/sections/LogoBar.astro';
 import BeforeAfter from '../components/sections/BeforeAfter.astro';
 import cooktopBeforeImg from '../assets/home_cleaning/before_after/cooktop-before.jpg';
@@ -115,55 +116,6 @@ const hero = {
 const reputationBody: TextBlockBody[] = [
   'Word of mouth is a slower way to grow a cleaning business and a harder one to fake. Nobody recommends their cleaner to a neighbour on the strength of an advertisement. They do it because the house was right, again, on the day it was supposed to be.',
   'It also means our reputation has always been held by other people rather than by us. The reviews below are being collected from clients who have had us in their homes for years, in their words rather than ours.',
-];
-
-// FOUR RESERVED QUOTE SLOTS, briefed by audience rather than by sentiment,
-// so the set proves the four things this business actually does instead of
-// saying "great service" four times. `uniform` because four cards should sit
-// as equals: the centre-emphasis treatment needs an odd count to have a
-// centre.
-//
-// ⚠️ DO NOT FILL THESE WITH INVENTED CONTENT. Swap each slot for a real,
-// permissioned quote as it is collected, and delete any slot still empty at
-// launch rather than shipping a bracket to a reader.
-//
-// Consent, per the brand foundation §3.6.3 and IMAGE-GUIDELINES §7: written
-// permission for the words, separate permission for a first name and town,
-// and the avatar stays the TLB monogram unless a client supplies their own
-// photo. A generated headshot beside a client name invents a customer.
-const testimonials = [
-  {
-    quote:
-      '[TBC - a regular home cleaning client, ideally naming how long TLB has been coming. Tenure is the proof this page needs most, because it is the one thing a new competitor cannot claim.]',
-    name: '[Client name - TBC]',
-    role: '[Town / regular home clean - TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Long-standing regular home cleaning client' },
-  },
-  {
-    quote:
-      '[TBC - an Airbnb or holiday let host, ideally on turnovers being handled around their booking calendar without them organising it. Hosting is where TLB does the most work a competitor does not.]',
-    name: '[Host name - TBC]',
-    role: '[Town / holiday let - TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Airbnb and holiday let host' },
-  },
-  {
-    quote:
-      '[TBC - a property manager or agency principal, on bond cleans passing inspection or on vacancy turnarounds. This is the quote that carries the agency claim made across this whole site.]',
-    name: '[Property manager name - TBC]',
-    role: '[Agency / town - TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Property manager at a local agency' },
-  },
-  {
-    quote:
-      '[TBC - a commercial client, on the premises being usable when they open rather than on the cleaning itself. Commercial has a real page and no proof of any kind behind it yet.]',
-    name: '[Business name - TBC]',
-    role: '[Premises type / town - TBC]',
-    rating: 5,
-    avatar: { ratio: '1/1', label: 'Local business TLB cleans for' },
-  },
 ];
 
 // The agency band. RESERVED SLOTS, not logos.
@@ -346,7 +298,7 @@ const closingCta = {
 
     <TextBlock theme="muted" align="left" heading="A reputation held by other people" body={reputationBody} />
 
-    <TestimonialCarousel heading="What our clients say" testimonials={testimonials} uniform />
+    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <LogoBar
       heading="Trusted by local agencies"
