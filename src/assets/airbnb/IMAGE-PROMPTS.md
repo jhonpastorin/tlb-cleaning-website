@@ -33,13 +33,14 @@ one of the five duplicate pairs §5 already flags.
 
 So it was not reused, and the four frames here were generated instead.
 
-**Open item: the homepage should be repointed at these.** `index.astro`'s
-persona card 2 and its "Airbnb and holiday let turnovers" service tile both
-still import the snow cottage. Swapping them to
-`airbnb-cleaning-cleaner-finishing-a-guest-ready-holiday-apartment.jpg` is a
-two-line change and it removes the last winter-in-England frame from the
-site. Not done in the same pass as building this page, because it changes a
-page nobody asked for changes to — raise it rather than assume it.
+**Resolved 6 Oct 2026.** The snow cottage is gone from the site.
+`service-airbnb-and-holiday-let-turnovers.jpg` was replaced with a
+client-supplied photo of a real hinterland holiday let (bedroom glass doors
+onto a deck and green Northern Rivers hills), and every slot that ran the
+cottage now uses it: the homepage service tile, persona card 1, the booking
+band's background, and the Byron Shire 60-day cap guide's backdrop. The
+cottage file itself was deleted. The new photo is real, not generated, so it
+has no prompt.
 
 ## Two things worth knowing before regenerating
 
