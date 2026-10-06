@@ -95,10 +95,13 @@ import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../../assets/home_cleaning/appliances/tile_and_grout/cleaner-scrubbing-a-grout-line.png';
-import cardBathroomImg from '../../assets/home_cleaning/appliances/tile_and_grout/bathroom-floor-tiles-and-grout-lines.jpg';
-import cardQuoteImg from '../../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
-import cardTeamImg from '../../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
+import heroImg from '../../assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-down-the-shower-tiles.jpg';
+// Pathway cards: real TLB photos (6 Oct 2026), 4:3 crops of the team's
+// shower-clean video frames. Card 1 is the hero's frame cropped tighter, so
+// the two read as different shots.
+import cardBathroomImg from '../../assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-the-low-shower-tiles.jpg';
+import cardQuoteImg from '../../assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-down-the-shower-rail.jpg';
+import cardTeamImg from '../../assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-tidying-a-shower-niche.jpg';
 import { whoIsInYourHomeCard } from '../../data/whoIsInYourHome';
 import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
@@ -210,9 +213,15 @@ const hero = {
     `The tiles are fine. It is the lines between them. Tile and grout cleaning for bathrooms, kitchens and floors across the Northern Rivers and the Tweed. We will tell you how far it will come back before we start. ${theLine.fast}`,
   cta: { label: primaryCta.label, href: quoteCta.href },
   image: {
+    // A real TLB photo since 6 Oct 2026, replacing the transparent cut-out
+    // (which ran with `contain-bottom`). Default `cover` fit now. The file is
+    // a near-square crop (1080x1150) from the bottom of a tall video frame:
+    // this page's long heading and lead make the desktop panel roughly square,
+    // and a 4:3 crop there trimmed the sides and read as zoomed in. Near
+    // square, the panel shows the photo's full width with the shower hose
+    // above her. `ratio` is the mobile fallback.
     ratio: '1/1',
-    label:
-      'A TLB cleaner in an aqua polo, dark teal apron and teal gloves kneeling to work a grout line with a detail brush on a pale tiled floor',
+    label: 'A TLB cleaner crouched in a walk-in shower, wiping down the tiles and glass',
     src: heroImg,
   },
 };
@@ -230,7 +239,7 @@ const pathwayCards = {
       number: 1,
       image: {
         ratio: '4/3',
-        label: 'The tiled floor and shower base of a family bathroom with the grout lines clearly visible',
+        label: 'A TLB cleaner crouched in a shower, wiping down the low tiles and glass',
         src: cardBathroomImg,
       },
       title: 'The grout has gone grey and mopping does nothing',
@@ -242,7 +251,7 @@ const pathwayCards = {
       number: 2,
       image: {
         ratio: '4/3',
-        label: 'A TLB cleaner and a homeowner talking through the job in a living room',
+        label: 'A TLB cleaner wiping down the rail and fittings of a walk-in shower',
         src: cardQuoteImg,
       },
       title: 'We are selling or the inspection is coming',
@@ -250,7 +259,7 @@ const pathwayCards = {
         'Grout is one of the first things an agent, a buyer or a property manager looks at, because it reads as how the whole place has been kept. It is also one of the least expensive things to fix before a photo shoot.',
       cta: { label: 'End of lease cleaning', href: '/house-cleaning/end-of-lease-cleaning/' },
     },
-    whoIsInYourHomeCard(cardTeamImg),
+    whoIsInYourHomeCard(cardTeamImg, 'A TLB cleaner straightening the bottles in a tiled shower niche'),
   ],
 };
 
@@ -420,7 +429,6 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      imageFit="contain-bottom"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
       lead={hero.lead}

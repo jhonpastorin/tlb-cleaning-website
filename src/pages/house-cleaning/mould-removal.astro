@@ -128,7 +128,7 @@ import showerAfterImg from '../../assets/home_cleaning/before_after/mould-shower
 // Square rather than the family's usual 16/9 for the reason set out on the
 // slot below. The figure faces left, into the copy, because the image sits on
 // the right.
-import heroImg from '../../assets/home_cleaning/inside_your_home/mould_cleaning_and_removal/mould-cleaning-cleaner-wiping-along-a-bathroom-wall.png';
+import heroImg from '../../assets/home_cleaning/inside_your_home/mould_cleaning_and_removal/mould-cleaning-cleaner-wiping-a-kitchen-window-frame.jpg';
 // Section 3 pathway cards. Card 1 is the only image on this page that shows
 // the problem, and it is deliberately modest: spotting along a cornice line
 // in an otherwise clean bathroom, which is what most real jobs look like.
@@ -328,13 +328,15 @@ const hero = {
   lead: `Our mould cleaning services cover bathrooms, walls, ceilings and wardrobes right across the Northern Rivers, the Tweed and the Southern Gold Coast. Mould removal on the surfaces you can see, and an honest answer about what is feeding it. ${theLine.fast}`,
   cta: heroQuoteCta,
   image: {
-    // 1/1, not the 16/9 the other heroes use, and deliberately. This panel is
-    // a `contain` fit in a near-square column, so any empty canvas around the
-    // cut-out is dead space that scales the figure DOWN: at 16/9 the subject
-    // was 60% of the canvas width and rendered about two thirds height. A
-    // canvas cropped to the subject lets contain scale it to the full panel.
+    // A real TLB photo since 6 Oct 2026, replacing the transparent cut-out
+    // (which ran with `contain-bottom`). Default `cover` fit now. Same photo
+    // as the end of lease page's "I manage the property" card, but a square
+    // crop of the logo-free original rather than that card's 4:3: measured at
+    // 1440px the desktop panel is roughly square (~650x615), and the 4:3 file
+    // lost a fifth of its width there. Square, it shows the full frame, cloth
+    // to bench. `ratio` matches it on mobile.
     ratio: '1/1',
-    label: 'TLB cleaner in uniform reaching up with a cloth to wipe along the top of a wall',
+    label: 'Cleaner reaching up with a cloth to wipe down a kitchen window frame',
     src: heroImg,
   },
 };
@@ -997,7 +999,6 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      imageFit="contain-bottom"
       headingLines={hero.headingLines}
       lead={hero.lead}
       cta={hero.cta}

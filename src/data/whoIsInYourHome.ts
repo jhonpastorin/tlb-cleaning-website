@@ -46,11 +46,17 @@
 // still blocks launch — but now it is ONE line to fix instead of six.
 import type { ImageMetadata } from 'astro';
 
-export const whoIsInYourHomeCard = (image: ImageMetadata) => ({
+// `label` is the image's alt text. Optional so the pages still on the shared
+// caddy photo keep its description; a page passing its own photo must pass
+// a label that describes it.
+export const whoIsInYourHomeCard = (
+  image: ImageMetadata,
+  label = 'A TLB cleaner in uniform with her caddy in the entry hall of a home',
+) => ({
   number: 3,
   image: {
     ratio: '4/3',
-    label: 'A TLB cleaner in uniform with her caddy in the entry hall of a home',
+    label,
     src: image,
   },
   title: 'I want to know who is in my home',

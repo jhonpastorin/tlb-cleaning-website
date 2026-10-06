@@ -239,9 +239,11 @@ const hero = {
   image: {
     // A real TLB photo since 6 Oct 2026, replacing the transparent cut-out
     // (which ran with `contain-bottom`). Default `cover` fit now. The file is
-    // the same near-square head-to-hands crop as the house cleaning hero,
-    // because the desktop panel is landscape and a centred crop of the full
-    // portrait frame lost her hands. `ratio` is the mobile fallback.
+    // a slightly portrait crop (0.9:1) of the full-resolution original, the
+    // same framing as the house cleaning hero: the desktop panel is roughly
+    // square, and the earlier tighter crop had its sides trimmed there and
+    // read as zoomed in. This shows the photo's full width. `ratio` is the
+    // mobile fallback.
     ratio: '1/1',
     label: 'A TLB cleaner scrubbing the kitchen sink beside a garden window',
     src: heroImg,

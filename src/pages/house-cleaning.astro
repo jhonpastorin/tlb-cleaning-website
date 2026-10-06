@@ -148,9 +148,11 @@ const business = {
 // `split-single-image` with image right and the default `cover` fit. Until
 // 6 Oct 2026 this ran the transparent cut-out of two cleaners with
 // `contain-bottom`; it is now a real photo of a TLB cleaner at a kitchen sink,
-// so it fills the panel like any photo. The file is pre-cropped close to
-// square (head to hands) because the desktop panel is landscape (~1.2:1) and a
-// centred crop of the full portrait frame lost her hands. `ratio` is the
+// so it fills the panel like any photo. Measured at 1440px the desktop panel
+// is roughly square (~650x645, with the trust bar overlapping its last ~40px),
+// so the file is the same slightly portrait 0.9:1 crop as the end of lease
+// hero: it shows the photo's full width, oven to window. That is as wide as
+// this photo goes; zooming out further needs a wider original. `ratio` is the
 // mobile fallback, where the panel has no height of its own.
 //
 // The CTA lives here rather than on the opening paragraph below (§3), per the

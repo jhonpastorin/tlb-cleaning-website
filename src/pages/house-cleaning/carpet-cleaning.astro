@@ -91,12 +91,15 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // §1 hero: family B cut-out, 1024x1024 PNG with a real alpha channel, so
 // ratio 1/1 and contain-bottom. The figure faces LEFT, into the copy, because
 // the image panel sits on the right.
-import heroImg from '../../assets/home_cleaning/appliances/carpet_and_rug/cleaner-extracting-a-wool-rug.png';
+import heroImg from '../../assets/home_cleaning/appliances/carpet_and_rug/carpet-cleaning-cleaner-extracting-a-bedroom-rug.jpg';
 import cardRugImg from '../../assets/home_cleaning/appliances/carpet_and_rug/living-room-rug-with-a-worn-traffic-path.jpg';
 // Cards 2 and 3 are shared by all six pages in this group — same subject,
 // same file, per IMAGE-GUIDELINES §5.
-import cardQuoteImg from '../../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
-import cardTeamImg from '../../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
+// Pathway cards 2 and 3: real TLB photos (6 Oct 2026) already used on the
+// homepage ("I need a hand at home") and the Airbnb page (card 1), copied
+// here under carpet-page names and pre-cropped to the cards' 4:3.
+import cardQuoteImg from '../../assets/home_cleaning/appliances/carpet_and_rug/regular-house-cleaning-two-cleaners-making-a-bed-above-a-rug.jpg';
+import cardTeamImg from '../../assets/home_cleaning/appliances/carpet_and_rug/local-tlb-cleaner-wiping-a-kitchen-window-in-a-client-home.jpg';
 import { whoIsInYourHomeCard } from '../../data/whoIsInYourHome';
 import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
@@ -199,9 +202,18 @@ const hero = {
     `The carpet holds everything the house walks in. Carpet cleaning and rug cleaning for homes across the Northern Rivers and the Tweed. Stairs and rugs included. We test the fibre before we start, and tell you what will lift before you pay. ${theLine.fast}`,
   cta: { label: primaryCta.label, href: quoteCta.href },
   image: {
+    // Client-supplied image since 6 Oct 2026, replacing the transparent
+    // cut-out (which ran with `contain-bottom`; that file still serves the
+    // carpet cleaning guide). Default `cover` fit now. The supplied image is
+    // AI-edited (its book covers rendered as garbled text), so it is not
+    // described as an unedited photo anywhere. Retouched 6 Oct 2026 to read
+    // less generated: the bookcase is defocused so the covers are background
+    // blur, the colour is matched to the real photo of this same room, and
+    // phone-style grain is added. The file is a 0.9:1 crop, window to rug: the
+    // desktop panel is roughly square on these long-heading pages, and this
+    // shows the frame's full width there. `ratio` is the mobile fallback.
     ratio: '1/1',
-    label:
-      'A TLB cleaner in an aqua polo, dark teal apron and teal gloves kneeling to draw a carpet extraction wand across a pale wool rug',
+    label: 'A cleaner kneeling beside a bed to run a carpet extraction wand across a rug',
     src: heroImg,
   },
 };
@@ -234,7 +246,7 @@ const pathwayCards = {
       number: 2,
       image: {
         ratio: '4/3',
-        label: 'A TLB cleaner and a homeowner talking through the job in a living room',
+        label: 'Two TLB cleaners making up a bed during a regular house clean',
         src: cardQuoteImg,
       },
       title: 'I want it done with the regular clean',
@@ -242,7 +254,7 @@ const pathwayCards = {
         'Most homes settle on carpet once a year and rugs as they need it. We can fold it into your regular clean so it happens on schedule instead of when someone finally notices.',
       cta: { label: 'Regular home cleaning', href: '/house-cleaning/' },
     },
-    whoIsInYourHomeCard(cardTeamImg),
+    whoIsInYourHomeCard(cardTeamImg, 'A local TLB cleaner wiping down the kitchen window in a client home'),
   ],
 };
 
@@ -461,7 +473,6 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      imageFit="contain-bottom"
       kicker={hero.kicker}
       headingLines={hero.headingLines}
       lead={hero.lead}
