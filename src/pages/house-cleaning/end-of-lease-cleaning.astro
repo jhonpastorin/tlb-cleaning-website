@@ -93,16 +93,16 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // the siblings show a figure standing on the page's own colour. Same uniform
 // as the mould page's cut-out (aqua polo, teal apron, teal gloves), per
 // IMAGE-GUIDELINES.md section 3. The homepage tile keeps the scene photo.
-import heroImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-with-squeegee-and-cloth.png';
-// Section 3 pathway cards. Card 1 reuses the deep-cleaning folder's
-// moving-out-day photo because that is exactly what it shows, and a second
-// moving-out photo would make one idea look like two. Card 2 was the
-// library's agency/rent-roll exterior, which was honest but was an exterior
-// on a card about vacancy turnarounds; it now uses this folder's own
-// handover photo, per IMAGE-PROMPTS.md prompt 3.
-import cardTenantImg from '../../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-empty-room-on-moving-out-day.jpg';
-import cardAgencyImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-property-manager-at-a-vacant-handover.jpg';
-import cardCompareImg from '../../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-comparing-clean-types-with-a-checklist.jpg';
+import heroImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-scrubbing-the-kitchen-sink.jpg';
+// Section 3 pathway cards. Real TLB photos (6 Oct 2026), copied into this
+// folder and pre-cropped to the cards' 4:3. Each is the same photo the site
+// already uses for that situation, so one idea never looks like two: the
+// cleared room is house cleaning's "I'm moving out", the window-frame wipe is
+// the homepage's "I manage properties", and the shower niche is deep
+// cleaning's "I'm not sure which I need".
+import cardTenantImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-empty-room-glass-doors-onto-the-deck.jpg';
+import cardAgencyImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-wiping-a-kitchen-window-frame.jpg';
+import cardCompareImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-tidying-a-shower-niche.jpg';
 // Section 2 backdrop behind the Cream scrim, shared with the trust bar.
 import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
@@ -237,15 +237,13 @@ const hero = {
   lead: `End of lease cleaning for tenants who want their bond back, and for the agencies that manage the property. Both sides of the border, quoted before we start, with the full task list published on this page. ${theLine.fast}`,
   cta: pageQuoteCta,
   image: {
-    // 1/1, like the mould page and for the same reason: the panel is a
-    // `contain` fit, so a canvas cropped to the subject lets the figure scale
-    // to the full panel instead of being shrunk by empty transparent margin.
-    // The canvas keeps ~12% transparent headroom above the raised squeegee
-    // (1080x1080 around a 656x950 subject) so the tool has air over it rather
-    // than butting into the top of the section.
+    // A real TLB photo since 6 Oct 2026, replacing the transparent cut-out
+    // (which ran with `contain-bottom`). Default `cover` fit now. The file is
+    // the same near-square head-to-hands crop as the house cleaning hero,
+    // because the desktop panel is landscape and a centred crop of the full
+    // portrait frame lost her hands. `ratio` is the mobile fallback.
     ratio: '1/1',
-    label:
-      'TLB Cleaning cleaner in an aqua polo, teal apron and teal gloves holding a window squeegee and a microfibre cloth',
+    label: 'A TLB cleaner scrubbing the kitchen sink beside a garden window',
     src: heroImg,
   },
 };
@@ -286,7 +284,7 @@ const pathwayCards = {
   cards: [
     {
       number: 1,
-      image: { ratio: '4/3', label: 'Empty room on moving-out day', src: cardTenantImg },
+      image: { ratio: '4/3', label: 'A cleared room with glass doors open onto the deck and paddock', src: cardTenantImg },
       title: "I'm moving out and I want my bond back",
       description:
         'Then you want the clean measured against the entry condition report, not against how clean the place feels. That is what this page is about.',
@@ -296,7 +294,7 @@ const pathwayCards = {
       number: 2,
       image: {
         ratio: '4/3',
-        label: 'Property manager with a tablet and keys at the bench of an empty rental',
+        label: 'Cleaner wiping down a kitchen window frame',
         src: cardAgencyImg,
       },
       title: 'I manage the property',
@@ -308,7 +306,7 @@ const pathwayCards = {
       number: 3,
       image: {
         ratio: '4/3',
-        label: 'Homeowner comparing cleaning options on a tablet',
+        label: 'A cleaner straightening the bottles in a tiled shower niche',
         src: cardCompareImg,
       },
       title: "I'm not sure this is the clean I need",
@@ -919,7 +917,6 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      imageFit="contain-bottom"
       headingLines={hero.headingLines}
       lead={hero.lead}
       cta={hero.cta}

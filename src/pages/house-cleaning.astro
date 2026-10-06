@@ -61,17 +61,17 @@ import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../assets/home_cleaning/house-cleaning-team-two-cleaners-in-gloves.png';
+import heroImg from '../assets/home_cleaning/house-cleaning-cleaner-scrubbing-the-kitchen-sink.jpg';
 // §2 + §3 backdrop, behind the Cream scrim (this page's own folder).
 import definitionBgImg from '../assets/home_cleaning/house-cleaning-cleaner-mopping-timber-living-room-floor.png';
-// §4 situation cards. Both of the first two are photos this site already uses
-// for exactly these subjects elsewhere (the deep-clean service tile on the
-// homepage; the deep-cleaning page's own moving-out card) — same subject,
-// same photo, so a visitor crossing pages isn't shown two different pictures
-// of one thing.
-import cardDeepCleanImg from '../assets/home/service-deep-and-one-off-cleans.png';
-import cardMovingOutImg from '../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-empty-room-on-moving-out-day.jpg';
-import cardSeniorImg from '../assets/home_cleaning/senior-home-cleaning-established-living-room-armchair-by-window.jpg';
+// §4 situation cards. Real TLB photos (6 Oct 2026), copied into this folder
+// and pre-cropped to the cards' 4:3: a hands-on bathroom clean for "got away
+// from me", a cleared room onto the deck for moving out, and a lived-in
+// kitchen with nobody in it for Mum or Dad's place (see card 3's note). The
+// shower and kitchen are the same shots as the Airbnb and deep cleaning pages.
+import cardDeepCleanImg from '../assets/home_cleaning/house-cleaning-cleaner-wiping-down-a-shower-pump-bottle.jpg';
+import cardMovingOutImg from '../assets/home_cleaning/house-cleaning-empty-room-glass-doors-onto-the-deck.jpg';
+import cardSeniorImg from '../assets/home_cleaning/house-cleaning-tidy-sunlit-kitchen.jpg';
 // §8 backdrop. The asset's own filename is literally the state this section
 // is selling — a living room kept up by regular visits.
 import buyingBgImg from '../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-tidy-living-room-kept-up-by-regular-visits.jpg';
@@ -145,14 +145,13 @@ const business = {
 // explained the benefit ("so you can stop wondering whether anyone is turning
 // up"); this one front-loads the three commercial claims §11 later pays off.
 //
-// `split-single-image` with image right and `imageFit="contain-bottom"`, same
-// treatment as the homepage and the deep cleaning page: the asset is a
-// cut-out figure on a transparent backdrop, the panel stretches to the copy
-// column's height, so the default `cover` would slice the green circle's
-// sides off, and the pair are flush with the bottom of their own frame, so
-// anchoring there stands them on the section's edge. `ratio` states the
-// asset's exact trimmed dimensions (1920x1080 down to 1364x1032 — the rest
-// was empty transparent margin).
+// `split-single-image` with image right and the default `cover` fit. Until
+// 6 Oct 2026 this ran the transparent cut-out of two cleaners with
+// `contain-bottom`; it is now a real photo of a TLB cleaner at a kitchen sink,
+// so it fills the panel like any photo. The file is pre-cropped close to
+// square (head to hands) because the desktop panel is landscape (~1.2:1) and a
+// centred crop of the full portrait frame lost her hands. `ratio` is the
+// mobile fallback, where the panel has no height of its own.
 //
 // The CTA lives here rather than on the opening paragraph below (§3), per the
 // plan's ruling: Hero.astro's `cta` prop is required, so it can't be moved
@@ -163,9 +162,8 @@ const hero = {
   lead: `The same local team, on the same day, every time. ${theLine.instant}`,
   cta: quoteCta,
   image: {
-    ratio: '1364/1032',
-    label:
-      'Two TLB Cleaning house cleaners in cleaning gloves standing back to back',
+    ratio: '1/1',
+    label: 'A TLB cleaner scrubbing the kitchen sink beside a garden window',
     src: heroImg,
   },
 };
@@ -197,7 +195,7 @@ const pathwayCards = {
       // Label follows the photo: the library has no "lived-in kitchen
       // before" shot, so this shows the deep clean itself — which is what
       // the card's CTA sends you to. Doubles as alt text.
-      image: { ratio: '4/3', label: 'TLB cleaner vacuuming a living room during a one-off deep clean', src: cardDeepCleanImg },
+      image: { ratio: '4/3', label: 'A TLB cleaner wiping down the bottles in a walk-in shower', src: cardDeepCleanImg },
       title: "It's got away from me a bit.",
       description:
         'Start with a one-off deep clean, then set up a fortnightly. That way round works out better than doing it the other way.',
@@ -205,7 +203,7 @@ const pathwayCards = {
     },
     {
       number: 2,
-      image: { ratio: '4/3', label: 'Empty room on moving-out day', src: cardMovingOutImg },
+      image: { ratio: '4/3', label: 'A cleared room with glass doors open onto the deck and paddock', src: cardMovingOutImg },
       title: "I'm moving out.",
       description:
         "That's an end of lease clean, measured against an inspection rather than your own standard. Different page.",
@@ -217,12 +215,12 @@ const pathwayCards = {
       // the same page as Commercial → "Aged care, retirement and seniors"
       // (/commercial-cleaning/aged-care-cleaning/), which is cleaning aged-care
       // premises. It currently has no mega-menu entry — open item.
-      // Shot for this slot (see src/assets/home_cleaning/IMAGE-PROMPTS.md):
-      // the home, not the person — an adult child reading this card is
-      // picturing their parent's living room.
+      // The home, not the person — an adult child reading this card is
+      // picturing their parent's place. A real, lived-in kitchen since 6 Oct
+      // 2026; the generated living room it replaced is in IMAGE-PROMPTS.md.
       image: {
         ratio: '4/3',
-        label: "Established living room in an older client's home, armchair by the window",
+        label: 'A tidy, sunlit kitchen with timber cabinets and a garden window',
         src: cardSeniorImg,
       },
       title: "It's for Mum or Dad's place.",
@@ -633,7 +631,6 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      imageFit="contain-bottom"
       headingLines={hero.headingLines}
       lead={hero.lead}
       cta={hero.cta}

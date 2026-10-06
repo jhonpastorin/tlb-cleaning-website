@@ -92,15 +92,19 @@ import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 // Northern Rivers, not Australia, and the opposite season. On 6 Oct 2026 the
 // homepage replaced it everywhere with a real client-supplied hinterland
 // photo; see the sheet's opening note.
-import heroImg from '../assets/airbnb/airbnb-cleaning-cleaner-finishing-a-guest-ready-holiday-apartment.jpg';
-import cardLinenImg from '../assets/airbnb/airbnb-turnover-making-up-a-bed-with-fresh-white-linen.jpg';
-import cardRestockImg from '../assets/airbnb/airbnb-turnover-restocked-guest-essentials-on-a-kitchen-bench.jpg';
-import cardKeysImg from '../assets/airbnb/airbnb-turnover-cleaner-arriving-at-a-holiday-cottage-with-keys.jpg';
-// §7a "What you get after every stay". Generated stand-ins, see the block
-// above afterEveryStayItems. Prompts in src/assets/airbnb/AFTER-EVERY-STAY-PROMPTS.md.
-import reportPhotoImg from '../assets/airbnb/airbnb-report-cleaner-photographing-a-reset-living-room.jpg';
-import reportRestockImg from '../assets/airbnb/airbnb-report-ticking-a-restock-checklist-by-the-pantry.jpg';
-import reportFlaggedImg from '../assets/airbnb/airbnb-report-photographing-a-split-deck-chair-slat.jpg';
+import heroImg from '../assets/airbnb/airbnb-hero-two-cleaners-presenting-a-made-bed.jpg';
+// The three pathway cards are real TLB photos (6 Oct 2026), not generated.
+// The kitchen and bed files are pre-cropped to the cards' 4:3 so the hands
+// stay in frame; the shower one is shared with the deep cleaning page. The
+// generated frames they replaced still run on the turnover checklist guide.
+import cardKitchenImg from '../assets/airbnb/airbnb-turnover-cleaner-wiping-down-the-kitchen-window.jpg';
+import cardShowerImg from '../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-cleaner-tidying-a-shower-niche.jpg';
+import cardBedImg from '../assets/airbnb/airbnb-turnover-cleaner-making-up-a-bed.jpg';
+// §7a "What you get after every stay". Real TLB photos (6 Oct 2026),
+// pre-cropped to the cards' 4:3; see the block above afterEveryStayItems.
+import reportPhotoImg from '../assets/airbnb/airbnb-report-two-cleaners-presenting-the-bed-cushions.jpg';
+import reportRestockImg from '../assets/airbnb/airbnb-report-cleaner-wiping-down-a-shower-pump-bottle.jpg';
+import reportFlaggedImg from '../assets/airbnb/airbnb-report-cleaner-sorting-supplies-filmed-on-a-tripod-phone.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as every sibling.
 import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 // Before/after. Both pairs are REAL TLB job photography. See §7.
@@ -276,8 +280,7 @@ const hero = {
   cta: { label: 'Talk to us today', href: quoteCta.href },
   image: {
     ratio: '1/1',
-    label:
-      'A cleaner in an aqua polo and dark teal apron setting a vase of fresh flowers on the dining table of a finished, guest-ready coastal holiday apartment, with restocked towels and essentials on the kitchen bench behind her',
+    label: 'Two TLB cleaners presenting the cushions on a freshly made bed in a holiday home bedroom',
     src: heroImg,
   },
 };
@@ -365,9 +368,8 @@ const pathwayCards = {
       number: 1,
       image: {
         ratio: '4/3',
-        label:
-          'A cleaner in an aqua polo and dark teal apron making up a queen bed with fresh white linen in a bright coastal holiday house bedroom',
-        src: cardLinenImg,
+        label: 'A cleaner wiping down the kitchen window sill with a sponge and spray',
+        src: cardKitchenImg,
       },
       title: 'I am chasing my cleaner around every booking',
       description:
@@ -378,9 +380,8 @@ const pathwayCards = {
       number: 2,
       image: {
         ratio: '4/3',
-        label:
-          'A cleaner setting out folded white towels beside restocked guest essentials on the kitchen bench of a coastal holiday apartment',
-        src: cardRestockImg,
+        label: 'A cleaner straightening the bottles in a tiled shower niche',
+        src: cardShowerImg,
       },
       title: 'The cleaning is fine, the presentation is not',
       description:
@@ -391,9 +392,8 @@ const pathwayCards = {
       number: 3,
       image: {
         ratio: '4/3',
-        label:
-          'A cleaner arriving at the front door of a coastal holiday cottage with a key in her hand and her cleaning caddy on the verandah beside her',
-        src: cardKeysImg,
+        label: 'A cleaner tucking in the bedspread on a made-up bed',
+        src: cardBedImg,
       },
       title: 'I host from out of town and cannot see the place',
       description:
@@ -483,18 +483,18 @@ const levelsTable = {
 // §7a What you get after every stay. Supplied copy (September 2026), verbatim.
 // Runs on ServiceBlocks' image-cards with no card links.
 //
-// ⚠️ THESE ARE AI-GENERATED STAND-INS, not TLB assets. The brief asked for
-// real ones: a photo report from the social video library with identifying
-// details removed, a real restock list and a real flagged item. The generated
-// images illustrate each step instead, and none is captioned as a real job.
-// Swap in the real assets when they exist. The labels are the alt text and
-// describe what each generated image shows.
+// Real TLB photos from the team's own shoot (6 Oct 2026), replacing the
+// AI-generated stand-ins (prompts still in AFTER-EVERY-STAY-PROMPTS.md). They
+// show the team at work rather than literally being a photo report, a restock
+// list or a flagged item, so none is captioned as one. The brief's ideal is
+// still those real artefacts, with identifying details removed, if they are
+// ever supplied. The labels are the alt text and describe each photo.
 const afterEveryStayItems = [
   {
     image: {
       src: reportPhotoImg,
       ratio: '4/3',
-      label: 'A cleaner in gloves photographing a freshly reset holiday apartment living room on a phone',
+      label: 'Two cleaners presenting the cushions on a freshly made bed',
     },
     title: 'The photo report',
     description: "Every room, photographed once it's reset, sent the same day.",
@@ -503,7 +503,7 @@ const afterEveryStayItems = [
     image: {
       src: reportRestockImg,
       ratio: '4/3',
-      label: 'A gloved hand ticking off a restock checklist beside a pantry of toilet rolls, coffee, tea and dishwasher tablets',
+      label: 'A cleaner wiping down a pump bottle from the shower niche',
     },
     title: 'The restock list',
     description: "What we topped up this stay, so you know what's been used.",
@@ -512,7 +512,7 @@ const afterEveryStayItems = [
     image: {
       src: reportFlaggedImg,
       ratio: '4/3',
-      label: 'A gloved hand photographing a split slat on a timber outdoor chair on a holiday home deck',
+      label: 'A cleaner sorting supplies from her trolley on a deck, recorded on a phone on a tripod',
     },
     title: 'Flagged for you',
     description: 'Anything broken, missing or worn, with a photo and what we suggest.',
