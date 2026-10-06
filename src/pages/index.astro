@@ -35,7 +35,7 @@ import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../assets/home/home-cleaner-with-cleaning-supplies-caddy.png';
+import heroImg from '../assets/home/home-two-tlb-cleaners-presenting-a-made-bed.jpg';
 // "Three cards" photos, one per card, in card order.
 import pathwayHomeImg from '../assets/home/house-cleaning-two-cleaners-making-up-a-bed.jpg';
 import pathwayHolidayLetImg from '../assets/home/service-airbnb-and-holiday-let-turnovers.jpg';
@@ -127,8 +127,15 @@ const hero = {
   lead: `A local team across the Northern Rivers and the Tweed. ${theLine.instant}`,
   cta: quoteCta,
   image: {
-    ratio: '1364/1032',
-    label: 'TLB Cleaning cleaner in apron and gloves holding a caddy of cleaning supplies',
+    // The Airbnb page's real hero photo since 6 Oct 2026, replacing the
+    // transparent cut-out (which ran with `contain-bottom`). Default `cover`
+    // fit now. `ratio` also sets the desktop panel's height: the image box
+    // takes that aspect at the panel's width (~645px at 1440), so '1/1' made
+    // the hero ~645px tall. '4/3' lets the 560px hero floor govern instead,
+    // and the copy is cropped to ~1.15:1 to match: window, both cleaners and
+    // the bed. On mobile it is the image's shape.
+    ratio: '4/3',
+    label: 'Two TLB cleaners presenting the cushions on a freshly made bed',
     src: heroImg,
   },
 };
@@ -494,7 +501,6 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      imageFit="contain-bottom"
       headingLines={hero.headingLines}
       lead={hero.lead}
       cta={hero.cta}

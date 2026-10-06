@@ -67,7 +67,7 @@ import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-spray-bottle-and-sponge.png';
+import heroImg from '../../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-cleaner-wiping-down-a-walk-in-shower.jpg';
 // §3 situation cards — one photo per card, named for the situation it shows.
 import cardRegularImg from '../../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-tidy-kitchen-kept-up-by-regular-visits.jpg';
 import cardMovingOutImg from '../../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-cleaner-wiping-down-the-kitchen-bench.jpg';
@@ -203,9 +203,13 @@ const hero = {
   lead: `A one-off deep clean across the Northern Rivers, the Tweed and the Southern Gold Coast. Before the guests arrive, when you move in, or when it's just got away from you. ${theLine.fast}`,
   cta: pageQuoteCta,
   image: {
-    ratio: '16/9',
-    label:
-      'TLB Cleaning cleaner in an apron and gloves spraying cleaner and holding a sponge during a deep clean',
+    // A real TLB photo since 6 Oct 2026 (the same frame as the tile and grout
+    // hero), cropped ~1.15:1 from the bottom of a tall video frame to match
+    // the 560px desktop panel. `ratio` sets the panel height (the image box
+    // takes that aspect at the panel's width); '4/3' keeps the 560px floor
+    // in charge on desktop and gives mobile a frame that keeps her head in.
+    ratio: '4/3',
+    label: 'A TLB cleaner crouched in a walk-in shower, wiping down the tiles and glass',
     src: heroImg,
   },
 };
