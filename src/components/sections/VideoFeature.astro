@@ -7,8 +7,17 @@ interface Props {
 }
 
 const { headingLines, video } = Astro.props;
+
+// ⚠️ HIDDEN ON EVERY PAGE (6 Oct 2026). This section can only render
+// VideoPlaceholder's dashed frame and no real video exists yet, so it was
+// showing visitors an empty "Walkthrough video of..." box. The callers (house
+// cleaning, deep cleaning, end of lease) keep their <VideoFeature> line and
+// copy, so the section returns from here: give it a real video to play, then
+// set this to true.
+const showSection = false;
 ---
 
+{showSection && (
 <section class="video-feature" aria-labelledby="video-feature-heading">
   <div class="container video-feature__inner">
     <h2 id="video-feature-heading" class="video-feature__heading">
@@ -25,6 +34,7 @@ const { headingLines, video } = Astro.props;
     </div>
   </div>
 </section>
+)}
 
 <style>
   .video-feature__inner {
