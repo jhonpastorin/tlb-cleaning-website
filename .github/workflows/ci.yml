@@ -1,0 +1,42 @@
+# Checks every push, including the commits Pages CMS makes when an editor
+# saves. See PAGES-CMS-PLAN.md. A failure here emails the repo owner; Render
+# builds independently and keeps serving the last good build if its own build
+# fails, so this is the early warning, not the only line of defence.
+name: CI
+
+on:
+  push:
+    branches: [staging, main, 'feature/**']
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # 22+ for the node:fs globSync the scripts use.
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Pages CMS config matches the content files
+        run: npm run check-cms
+
+      - name: Type check and build (validates every content file)
+        run: npm run build
+
+      # Report only. The lint already fails on staging (63 blockers when this
+      # was written, several of them deliberate client decisions), so making
+      # it a gate is a decision for PAGES-CMS-PLAN.md Phase 5, not a default.
+      - name: Brand lint (report only)
+        run: npm run brand-lint
+        continue-on-error: true
