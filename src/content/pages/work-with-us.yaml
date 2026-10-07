@@ -1,0 +1,169 @@
+seo:
+  title: Work With Us | Cleaning Jobs in the Northern Rivers | TLB Cleaning
+  description: TLB Cleaning employs local cleaners across the Northern Rivers and
+    the Tweed on set runs and hours built around family. See what the work
+    involves and how to get in touch.
+applyCta:
+  label: Talk to Teagan and the team
+  href: /contact/
+hero:
+  kicker: Work with us
+  headingLines:
+    - Cleaning work that fits
+    - around school pick-up.
+  lead: We employ local cleaners right across the Northern Rivers and the Tweed,
+    on set days, in the towns they already live in.
+  image:
+    src: /src/assets/work_with_us/work-with-us-two-cleaners-working-together-in-a-kitchen.jpg
+    alt: Two TLB cleaners working through a kitchen together on a morning run
+trustBar:
+  items:
+    - Employed on the books, not sent out under an ABN
+    - Hours built around school pick-up
+    - Work in the town you already live in
+theJob:
+  heading: What the work actually is
+  body:
+    - type: paragraph
+      text: "Most of the work is regular home cleaning on a set run: the same houses,
+        the same days, week after week or fortnight after fortnight. You get to
+        know the places and the people in them, and they get to know you."
+    - type: paragraph
+      text: Alongside that there are holiday let turnovers, which are quicker and tied
+        to a check-in time, bond cleans at the end of a tenancy, which are
+        checked against an inspection standard, and commercial work outside
+        trading hours.
+    - type: paragraph
+      text: It is physical work and the standard is high. The same client sees your
+        work again next fortnight, which is the best and the hardest thing about
+        the job.
+offers:
+  heading: What the arrangement offers
+  lead: Four things that either happen at a cleaning job or do not.
+  items:
+    - heading: A run of your own
+      body:
+        - You get your own clients and your own days rather than a roster that
+          changes every week. When you are away someone from your team covers,
+          and you do the same for them, which is how nobody has to work sick.
+    - heading: Hours that fit the school day
+      body:
+        - Tell us the window you can genuinely work and we build the run around
+          it. Most of the team is doing pick-up, so this is how the business
+          already operates rather than a concession made for one person.
+    - heading: Gear and products supplied
+      body:
+        - You do not need to buy a vacuum, a caddy or chemicals to work here. We
+          turn up with everything, which is also how the standard stays the same
+          whichever member of the team is at the door.
+    - heading: Shown the standard first
+      body:
+        - Bond cleans and holiday let turnovers are measured against a standard
+          rather than a feeling. You get shown that standard, and worked
+          alongside, before you are sent out to meet it on your own.
+asks:
+  heading: What we ask of you
+  body:
+    - type: paragraph
+      text: "Two things matter more here than experience does:"
+    - type: list
+      items:
+        - Turning up when you said you would, because a client has planned their
+          day around it.
+        - Telling us early when you cannot, so the visit gets covered before
+          anyone is left waiting at home.
+    - type: paragraph
+      text: Experience helps and it is not a requirement. A driver licence and your
+        own transport between properties is, because the work is spread across
+        towns rather than sitting in one building.
+abn:
+  heading: You do not need an ABN to clean with us
+  body:
+    - A lot of cleaning work in this region is offered as contracting. You
+      invoice the business, you supply your own gear, you carry your own
+      insurance, and the rights that come with a job do not come with it.
+    - Ours is a job. It is worth asking any cleaning business which of the two
+      they are offering you, and asking before you buy a vacuum rather than
+      after.
+workTypes:
+  heading: The kinds of work in a week
+  lead: Most of the team spends most of its time on the first one. The rest turns
+    up depending on the season and the run.
+  items:
+    - icon: house
+      title: Regular home cleaning
+      description: The core of the work. Set houses, set days, weekly or fortnightly,
+        in your own patch.
+    - icon: suitcase
+      title: Holiday let turnovers
+      description: Quicker visits against a check-in time. Beds made up, essentials
+        restocked, the place left guest-ready.
+    - icon: key
+      title: Bond and end of lease cleans
+      description: A vacant property brought up to inspection standard, usually as a
+        team rather than on your own.
+    - icon: office
+      title: Commercial cleaning
+      description: Offices, shopfronts and premises, cleaned around how the business
+        trades. Often early or after hours.
+howToApply:
+  heading: How to apply
+  lead: Three steps, and no application portal anywhere in them.
+  items:
+    - heading: 1. Send us a message
+      body:
+        - Tell us which town you are in, the hours you could genuinely work, and
+          whether you have cleaned professionally before. A couple of paragraphs
+          is plenty. There is no application form to fill in.
+    - heading: 2. A chat with Teagan
+      body:
+        - A conversation rather than an interview panel, usually over the phone.
+          What the runs near you look like, what hours suit, and anything you
+          want to ask about how the work is organised.
+    - heading: 3. A shift alongside the team
+      body:
+        - You work a run with someone who already does it, so you see the
+          standard and we see how you work. Nobody gets handed a set of keys and
+          a house on their first day.
+whereWeWork:
+  heading: Where we work
+  subheading: Across the Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If your town isn't listed, tell us anyway. Runs tend to start where a new
+      team member lives.
+faq:
+  heading: "Working at TLB: FAQs"
+  items:
+    - question: Do I need cleaning experience?
+      answer: No. Plenty of the team started without it. What we cannot train is
+        turning up reliably and telling us early when something changes, so
+        those matter more at the point of hiring than a work history in cleaning
+        does.
+    - question: Am I an employee or a contractor?
+      answer: An employee, on the books. You do not invoice us, you do not need an
+        ABN, and you do not supply your own equipment or insurance. If another
+        cleaning business offers you work, it is worth asking them the same
+        question.
+    - question: Do you supply the equipment and products?
+      answer: Yes. You arrive to a caddy, a vacuum and the products already sorted,
+        the same as our clients are told. Using the same gear across the team is
+        part of how the standard stays consistent from one visit to the next.
+    - question: Do I need my own car?
+      answer: Yes. A driver licence and reliable transport between properties are
+        conditions of the work, because a run covers several places across a
+        town or two rather than one building you clock into.
+    - question: Can I work school hours only?
+      answer: Yes, and most of the team does. Tell us the window you can actually
+        commit to and we build a run inside it. That is the whole employment
+        model rather than an exception somebody has negotiated.
+    - question: Which towns are you hiring in?
+      answer: We take applications from right across the Northern Rivers and the
+        Tweed. Where the next run opens depends on where the work is, so tell us
+        your town and we will be straight with you about what is near you.
+checkingUs:
+  heading: Checking us out first?
+  lead: Fair enough. This is the rest of what there is to read about how TLB runs.
+closingCta:
+  kicker: Work with us
+  heading: Tell us what hours you can work.
+  lead: Send us your town, your hours and a bit about yourself. Teagan reads them.

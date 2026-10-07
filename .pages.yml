@@ -1247,6 +1247,46 @@ content:
             label: "FAQs"
             description: Do not promise a bond-back or satisfaction guarantee unless Teagan formally adopts one.
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: work-with-us
+        label: Work with us
+        type: file
+        path: src/content/pages/work-with-us.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: applyCta
+            component: link
+            label: "Apply button (hero and closing section)"
+            description: Used in the hero and the closing section unless they have their own button. Not the quote button, because an applicant is not pricing a clean.
+          - { name: hero, component: hero }
+          - name: trustBar
+            label: "Three points under the hero"
+            type: object
+            description: All three are claims about employment. Each must be true of every hire, casuals included.
+            fields:
+              - { name: items, label: Points, type: string, list: true, required: true }
+          - { name: theJob, component: textBlock, label: "What the work actually is" }
+          - name: offers
+            component: textGrid
+            label: "What the arrangement offers"
+            description: "\"Shown the standard first\" promises training against a written standard. Keep it only while that is true."
+          - name: asks
+            component: textBlock
+            label: "What we ask of you (dark band)"
+            description: The driver licence and transport line is a condition of employment. Confirm it before changing it.
+          - { name: abn, component: callout, label: "You do not need an ABN (callout)" }
+          - { name: workTypes, component: iconGrid, label: "The kinds of work in a week" }
+          - name: howToApply
+            component: textGrid
+            label: "How to apply (three steps)"
+            description: These steps are a proposal, not yet confirmed as how TLB hires. If the trial shift is paid, say so.
+          - { name: whereWeWork, component: tagCloud, label: "Where we work" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "\"What does it pay?\" is left out until there is an award and pay band to name. Never fill it with \"competitive rates\"."
+          - { name: checkingUs, component: sectionIntro, label: "Checking us out first? (links to the team pages)" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
 
   - name: site-settings
     label: Site settings
