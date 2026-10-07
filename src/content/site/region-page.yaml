@@ -1,0 +1,36 @@
+hero:
+  kicker: Areas we clean
+definition:
+  heading: Cleaning in {region}.
+services:
+  heading: What we do across {region}
+  lead: Every service below is available in every town on this page.
+towns:
+  heading: Towns we clean in {region}
+  subheading: "{townCount} towns and suburbs, {regionAndState}."
+  note:
+    - If a suburb isn't listed, ask us anyway.
+faq:
+  heading: "Cleaning in {region}: your questions"
+  items:
+    - question: Do you clean every town in {region}?
+      answer: Every town on this page, yes. If your suburb is not named here, ask
+        anyway — the list is where we work regularly, not a fence. We would
+        rather tell you straight than have you guess from a map.
+    - question: Is there a travel charge for the outer towns?
+      answer: No. The price is the same wherever you are on this page. [CONFIRM] —
+        this promise is made on every location page on the site and has not been
+        confirmed operationally.
+    - question: Do you work across the border?
+      answer: Yes. We work both sides of the Tweed, which is unusual — most cleaners
+        pick a state. It matters most at the end of a lease, when the paperwork
+        changes even though the cleaning does not.
+    - question: Can I get the same cleaner each visit?
+      answer: "That is how regular cleaning is set up: a set day and the same team, so
+        nobody has to be talked through your house twice. One-off and
+        end-of-lease jobs are scheduled around the date you need rather than a
+        standing slot."
+closingCta:
+  heading: Get a quote for {region}.
+  lead: Tell us the suburb and what needs doing. We will come back with a price
+    and a day, not a call centre.

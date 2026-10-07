@@ -1000,10 +1000,23 @@ content:
         label: Home
         type: file
         path: src/content/pages/index.yaml
+      - name: airbnb-holiday-home-cleaning
+        label: Airbnb and holiday home cleaning
+        type: file
+        path: src/content/pages/airbnb-holiday-home-cleaning.yaml
         format: yaml
         fields:
           - { name: seo, component: seo }
           - { name: hero, component: hero }
+          - name: trustBar
+            label: Trust bar (this page only)
+            type: object
+            fields:
+              - name: clientsDescription
+                label: Wording on the "Over 100 clients" card
+                type: string
+                required: true
+                description: Replaces the site-wide wording on this page only. It is matched by the card's title, so it stops applying if that title is changed under Site settings > Trust bar.
           - name: definition
             component: textBlock
             label: "Intro (under the trust bar)"
@@ -1018,6 +1031,26 @@ content:
               - { name: note, label: Note under the list, type: text }
               - name: items
                 label: Rows
+          - { name: shortStay, component: textBlock, label: "Short-term rental and holiday home cleaning" }
+          - { name: takeCareOf, component: iconGrid, label: "What we take care of (icons)" }
+          - { name: pathways, component: pathwayCards, label: "Hosts arrive here in one of three situations (cards)" }
+          - name: turnover
+            label: "What a turnover includes (icons)"
+            type: object
+            description: "Every point is a promise a host will hold TLB to. Cut anything TLB does not actually do."
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+                required: true
+              - name: lead
+                label: Intro sentence
+                type: text
+              - name: note
+                label: Note under the grid
+                type: text
+              - name: items
+                label: Points
                 type: object
                 list:
                   collapsible:
@@ -1223,6 +1256,57 @@ content:
               - { name: lead, label: Intro sentence, type: text }
               - name: logos
                 label: Logos
+                  - name: title
+                    label: Title
+                    type: string
+                    required: true
+                  - name: tag
+                    label: Small tag under the title (optional)
+                    type: string
+                    description: Which plans the point comes with, when it is not every plan.
+                  - name: description
+                    label: Sentence under the title
+                    type: text
+                    required: true
+                  - name: cta
+                    component: link
+                    label: Button (optional)
+                  - name: href
+                    label: Makes the whole item a link to (optional)
+                    type: string
+                    pattern: "^(/|https://|tel:|mailto:|#)"
+              - name: cta
+                component: link
+                label: Button under the grid (optional)
+          - { name: levels, component: comparisonTable, label: "Choose your level (table)" }
+          - { name: worthKnowing, component: callout, label: "Priced per clean, judged per review (callout)" }
+          - { name: whySameTeam, component: textBlock, label: "Why short-term rental cleaners disappear (dark band)" }
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: "Real TLB job photos only, with written permission and nothing identifying in frame. If a sample illustration is ever used, the note must say so."
+          - { name: afterEveryStay, component: imageCards, label: "What you get after every stay (cards)" }
+          - name: ownersAway
+            component: textBlock
+            label: "Holiday home cleaning for owners who live away"
+            description: "Interstate ads link straight to this section, so keep it on the page."
+          - { name: propertyTypes, component: tagCloud, label: "What we turn over (tags)" }
+          - name: comparison
+            label: "How TLB compares (table)"
+            type: object
+            description: "The columns and the shared rows are edited once for every page under Site settings > Comparison table. Rows added here appear under them on this page only."
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+              - name: lead
+                label: Intro sentence
+                type: text
+              - name: cornerLabel
+                label: Top-left corner label
+                type: string
+              - name: extraRows
+                label: Extra rows (this page only)
                 type: object
                 list:
                   collapsible:
@@ -1346,6 +1430,49 @@ content:
           - name: whereToNext
             component: tagCloud
             label: "Where to next (links)"
+                    summary: "{label}"
+                fields:
+                  - name: label
+                    label: Row heading
+                    type: string
+                    required: true
+                  - name: description
+                    label: Detail under the row heading
+                    type: text
+                  - name: values
+                    label: One cell per column, left to right
+                    type: string
+                    list: true
+                    description: Type yes for a tick, no for a cross, or write the text to show.
+              - name: footnote
+                label: Note under the table
+                type: text
+              - name: cta
+                component: link
+                label: Button (optional)
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: booking
+            label: "Easy to book (Cream band)"
+            type: object
+            description: "The paragraphs here come from Site settings > Brand lines: the \"Managed for you\" line, The Line's turnover paragraphs and the turnover How it works steps."
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+                description: "{{line.instant.heading}} shows the shared brand-line heading, edited under Site settings > Brand lines."
+              - name: cta
+                component: link
+                label: Button (optional)
+              - name: backgroundImage
+                component: backgroundPhoto
+          - { name: hostFaq, component: faq, label: "FAQs: working with us on your property" }
+          - name: faq
+            component: faq
+            label: "FAQs: Airbnb cleaning services, common questions"
+            description: "The answer on how many nights you can let a place describes planning rules that change. Have it checked before changing it, and do not add dates or day counts without a check."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+
 
   - name: site-settings
     label: Site settings
@@ -1822,6 +1949,227 @@ content:
             component: paragraphList
             label: About the region
             description: "The /locations/ hub shows these same paragraphs. Rewriting one of the two so they differ is still an open item."
+      - name: locations-hub
+        label: Locations hub (/locations/)
+        type: file
+        path: src/content/pages/locations/index.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "Any text on this page can use {townCount}, {regionCount}, {stateCount}, {northernRiversCount}, {tweedCount} and {southernGoldCoastCount}. Each is counted from the town list, so the number never drifts from it. A misspelt one stops the site from publishing."
+          - name: hero
+            label: Hero (top of the page)
+            type: object
+            description: "The photo is the valley region photo, under Locations > Live towns and region photos. {townCount} shows the number of towns."
+            fields:
+              - name: kicker
+                label: Small label above the heading
+                type: string
+              - name: headingLines
+                label: Main heading (H1)
+                type: string
+                list: true
+                required: true
+              - name: subheading
+                label: Line under the heading
+                type: string
+              - name: lead
+                label: Intro sentence
+                type: text
+                required: true
+              - name: cta
+                component: link
+                label: Button (leave empty to use the page's usual button)
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "Any text on this page can use {townCount}, {regionCount}, {stateCount}, {northernRiversCount}, {tweedCount} and {southernGoldCoastCount}. Each is counted from the town list, so the number never drifts from it. A misspelt one stops the site from publishing."
+          - name: numbers
+            label: The service area, in three numbers
+            type: object
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+              - name: lead
+                label: Intro sentence
+                type: text
+              - name: metrics
+                label: Numbers
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{value} {caption}"
+                fields:
+                  - name: value
+                    label: Number
+                    type: string
+                    required: true
+                    description: "Use {townCount}, {regionCount} or {stateCount} so the number is counted from the town list. The intro promises these are counted, not typed in."
+                  - name: caption
+                    label: What it counts
+                    type: string
+                    required: true
+          - name: regions
+            component: textGrid
+            label: Three regions, three different jobs
+            description: "Exactly three cells, in this order: Northern Rivers, the Tweed, Southern Gold Coast. The photos between them are the region photos. {northernRiversCount}, {tweedCount} and {southernGoldCoastCount} show each region's number of towns."
+          - name: towns
+            component: tagCloud
+            label: The towns we clean
+            description: "The towns come from the town list; which ones link to a page is set under Locations > Live towns and region photos. Leave the tags empty."
+          - name: services
+            component: sectionIntro
+            label: What we do (list of services)
+            description: "The six services and their sentences are edited under Site settings > Menus > Our services."
+          - name: faq
+            component: faq
+            label: FAQs
+            description: "The travel charge answer promises no travel charge anywhere on the list, including the outer towns. Check it with TLB before changing it. {townCount} shows the number of towns."
+          - name: closingCta
+            component: callToAction
+            label: Closing call to action
+            description: "Any text on this page can use {townCount}, {regionCount}, {stateCount}, {northernRiversCount}, {tweedCount} and {southernGoldCoastCount}. Each is counted from the town list, so the number never drifts from it. A misspelt one stops the site from publishing."
+
+      - name: town-template
+        label: Town page template (all 56 town pages)
+        type: file
+        path: src/content/pages/locations/town.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "Shared by every town page. Type {town} for the town's name, {region} for its region after \"the\" (Northern Rivers, Tweed, Southern Gold Coast), {regionName} for the region on its own (The Tweed) and {state} for NSW or QLD. These work in any text on this page; a misspelt one stops the site from publishing."
+          - name: hero
+            label: Hero (top of the page)
+            type: object
+            description: "Each town's photo is set in its own file under Locations > Town pages. Placeholders: {town}, {region}, {regionName}, {state}."
+            fields:
+              - name: kicker
+                label: Small label above the heading
+                type: string
+              - name: headingLines
+                label: Main heading (H1)
+                type: string
+                list: true
+                required: true
+              - name: subheading
+                label: Line under the heading
+                type: string
+              - name: lead
+                label: Intro sentence
+                type: text
+                required: true
+              - name: cta
+                component: link
+                label: Button (leave empty to use the page's usual button)
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "True of every town. Each town's own paragraph follows it, from Locations > Town pages > About this town. Placeholders: {town}, {region}, {regionName}, {state}."
+          - name: services
+            component: sectionIntro
+            label: What we do in the town (list of services)
+            description: "The six services and their sentences are edited under Site settings > Menus > Our services, and are deliberately the same on every town page. Placeholders: {town}, {region}, {regionName}, {state}."
+          - name: choose
+            component: comparisonTable
+            label: Which clean do you actually need? (table)
+            description: "Placeholders: {town}, {region}, {regionName}, {state}."
+          - name: beforeAfter
+            component: beforeAfter
+            label: Before and after
+            description: "Never name the town in a caption or description unless the job really was there: a reader takes a real job photo on a town page as a job in that town."
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: nearby
+            label: Suburbs we clean around the town
+            type: object
+            description: "The suburbs are each town's neighbours, set under Locations > Town pages. Placeholders: {town}, {region}, {regionName}, {state}."
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+                required: true
+              - name: subheading
+                label: Subheading
+                type: string
+                required: true
+              - name: groupLabel
+                label: Label over the suburbs
+                type: string
+                required: true
+              - name: note
+                component: paragraphList
+                label: Note under the suburbs
+          - name: faq
+            component: faq
+            label: FAQs
+            description: "These answers appear on all 56 town pages, so a wrong one is wrong 56 times. The travel charge and lead time answers are promises TLB has not yet confirmed. Placeholders: {town}, {region}, {regionName}, {state}."
+          - name: closingCta
+            component: callToAction
+            label: Closing call to action
+            description: "Placeholders: {town}, {region}, {regionName}, {state}."
+
+      - name: region-template
+        label: Region page template (both region pages)
+        type: file
+        path: src/content/site/region-page.yaml
+        format: yaml
+        fields:
+          - name: hero
+            label: Hero (top of the page)
+            type: object
+            description: "Shared by both region pages. Each region's heading, intro sentence and paragraphs are under Locations > Region pages. Type {region} for the region with \"the\" (the Northern Rivers), {regionAndState} for it with its state (Northern Rivers NSW), {state} for NSW or QLD and {townCount} for its number of towns. These work in any text on this page; a misspelt one stops the site from publishing."
+            fields:
+              - name: kicker
+                label: Small label above the heading
+                type: string
+              - name: cta
+                component: link
+                label: Button (leave empty to use the page's usual button)
+          - name: definition
+            label: "Intro heading (under the trust bar)"
+            type: object
+            description: "The paragraphs are each region's own, under Locations > Region pages. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+              - name: cta
+                component: link
+                label: Button (optional)
+              - name: backgroundImage
+                component: backgroundPhoto
+          - name: services
+            component: sectionIntro
+            label: What we do across the region (list of services)
+            description: "The six services and their sentences are edited under Site settings > Menus > Our services. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+          - name: towns
+            label: Towns we clean in the region
+            type: object
+            description: "The towns are the region's own; which ones link to a page is set under Locations > Live towns and region photos. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+                required: true
+              - name: subheading
+                label: Subheading
+                type: string
+                required: true
+              - name: note
+                component: paragraphList
+                label: Note under the towns
+          - name: faq
+            component: faq
+            label: FAQs
+            description: "The travel charge answer is a promise TLB has not yet confirmed, and it still shows its [CONFIRM] note to readers. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+          - name: closingCta
+            component: callToAction
+            label: Closing call to action
+            description: "Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+
 
   - name: house-cleaning-pages
     label: House cleaning
