@@ -2179,3 +2179,83 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+      - name: gym-and-fitness-cleaning
+        label: "Gym and fitness cleaning"
+        type: file
+        path: src/content/pages/commercial-cleaning/gym-and-fitness-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: ctaLabel
+            label: "Main button text"
+            type: string
+            description: "Used by the hero, the 24-hour callout, any zone whose button is left empty and the closing block. It links to the quote page set under Site settings > Site-wide buttons. Leave empty to use the site-wide walkthrough button text."
+          - name: hero
+            component: hero
+            description: "Leave the hero's button empty to use the main button above."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
+          - name: access
+            component: callout
+            label: "No \"after close\" if you are open 24 hours (callout box)"
+            description: "Leave the button empty to use the main button. The second paragraph carries a [Confirm] bracket on unstaffed 24/7 hours."
+          - name: zones
+            component: imageCards
+            label: "Three zones, three different problems (cards)"
+            description: "A card whose button is left empty uses the main button. The studio card carries a [Confirm] bracket on the rubber floor scrubber."
+          - { name: odour, component: contentGrid, label: "Why it smells when it looks clean (grid)" }
+          - name: worthKnowing
+            component: textBlock
+            label: "Two cancellations a month (dark band)"
+            description: "No churn percentage is quoted on purpose: there is no source to cite."
+          - name: related
+            label: "Other premises we clean (links)"
+            type: object
+            description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: subheading, label: Subheading, type: string, required: true }
+              - name: tags
+                label: Extra links (shown after the other premises pages)
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Link text, type: string, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    pattern: "^(/|https://|tel:|mailto:|#)"
+              - { name: note, label: Note under the links, type: text, list: true }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                required: true
+                description: "The towns themselves are edited once for the whole site, not here."
+              - { name: note, label: Note under the towns, type: text, list: true }
+          - name: brandLine
+            component: sectionHeading
+            label: "Easy to book heading (above the brand lines)"
+            description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
+          - name: brandedFaq
+            component: faq
+            label: "Frequently asked questions (about working with us)"
+            description: "The 24/7 and mould answers carry [Confirm] brackets."
+          - name: faq
+            component: faq
+            label: "Gym cleaning FAQs"
+            description: "The cost answer carries a [Confirm] bracket."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the main button."
