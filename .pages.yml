@@ -1611,3 +1611,74 @@ content:
             label: "FAQs: fabric codes, leather and how often"
             description: "Keep the W, S, WS and X code meanings exactly as they are: they are a manufacturer standard. Whether TLB cleans leather is not confirmed yet, and the cost answer ends in a [bracketed] note until TLB confirms its pricing basis."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+
+      - name: house-cleaning-tile-and-grout-cleaning
+        label: Tile and grout cleaning
+        type: file
+        path: src/content/pages/house-cleaning/tile-and-grout-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "Not cleared to go live: the description promises \"the original colour\", which the page itself argues against, and says \"Sealing available\" before TLB has confirmed it offers sealing."
+          - name: buttonLabel
+            label: Main button text
+            type: string
+            required: true
+            description: Used on the hero, the first card, the method grid and the closing section, wherever their own button is left empty. It always links to the quote page.
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "People arrive here with three questions (cards)"
+            description: "The last card is the shared \"Who is in my home\" card, edited under Site settings. A card with no button uses the main button."
+          - name: method
+            component: iconGrid
+            label: "How we clean tile and grout (grid)"
+            description: "Two points end in a [Confirm ...] note for TLB (the equipment, and whether it offers sealing). Replace each with the confirmed answer."
+          - name: mould
+            component: callout
+            label: "If the black spots keep coming back (callout)"
+            description: "A pointer to the mould page, on purpose. Do not add a health claim, a method or a promise that mould stays gone: the mould page owns all of that."
+          - { name: bleach, component: textBlock, label: "Why bleach makes it worse (dark band)" }
+          - name: otherServices
+            component: sectionIntro
+            label: "Other things we clean around the house"
+            description: "The list itself comes from Site settings > Cross-links: appliances."
+          - name: comparison
+            label: "How TLB compares (table)"
+            type: object
+            description: The table's columns and rows are shared by every service page. Edit them under Site settings > Comparison table.
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: Where we clean
+            type: object
+            description: The subheading and the towns are edited once for the whole site, under Locations > Live towns and region photos.
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: tags
+                label: Tags (leave empty where the page lists towns)
+                type: object
+                list: true
+                fields:
+                  - { name: label, label: Tag text, type: string, required: true }
+                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#)" }
+              - { name: note, label: Note under the tags, type: text, list: true }
+          - name: bookingFaq
+            component: faq
+            label: "FAQs: booking a tile and grout clean"
+            description: "The sealing answer ends in a [Confirm ...] note until TLB confirms whether it offers sealing."
+          - name: generalFaq
+            component: faq
+            label: "FAQs: tile and grout questions"
+            description: "Keep the bleach warning (never mix bleach with acid, ammonia or any other product) exactly as a warning: no method, no product names. The cost answer ends in a [bracketed] note until TLB confirms its pricing basis."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }

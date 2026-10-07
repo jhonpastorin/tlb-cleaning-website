@@ -1,0 +1,214 @@
+seo:
+  title: Tile & Grout Cleaning Services | TLB Cleaning
+  description: Tile and grout cleaning that brings back the original colour in
+    bathrooms, kitchens and entryways. Sealing available. Get a fixed quote
+    today.
+buttonLabel: Get a fixed quote today
+hero:
+  kicker: Tile and grout cleaning
+  headingLines:
+    - Tile and grout cleaning for bathrooms, kitchens and tiled floors
+  lead: The tiles are fine. It is the lines between them. Tile and grout cleaning
+    for bathrooms, kitchens and floors across the Northern Rivers and the Tweed.
+    We will tell you how far it will come back before we start. {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-down-the-shower-tiles.jpg
+    alt: A TLB cleaner crouched in a walk-in shower, wiping down the tiles and glass
+definition:
+  body:
+    - type: paragraph
+      text: Tile and grout cleaning is the deep cleaning of hard floors and wet area
+        walls, and in practice it is almost entirely about the grout. Tile is
+        glazed and easy. Grout is cement based and porous, so it absorbs soap,
+        oil, dirt and moisture and holds onto them, which is why a mopped floor
+        can still look grubby along every line. TLB Cleaning cleans tile and
+        grout across the Northern Rivers and the Tweed.
+    - type: paragraph
+      text: Mopping is the reason it gets worse rather than better. A mop lifts the
+        dirt off the tile and pushes most of it into the grout line, which sits
+        slightly lower and is absorbent. Doing that weekly for years is why the
+        grout in a well-kept bathroom can be darker than the grout in a
+        neglected one.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: People arrive here with three questions.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-the-low-shower-tiles.jpg
+        alt: A TLB cleaner crouched in a shower, wiping down the low tiles and glass
+      title: The grout has gone grey and mopping does nothing
+      description: Because mopping is part of how it got there. Grout needs to be
+        worked and rinsed rather than wiped, and that is a different job from
+        the one you have been doing every week.
+    - image:
+        src: /src/assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-down-the-shower-rail.jpg
+        alt: A TLB cleaner wiping down the rail and fittings of a walk-in shower
+      title: We are selling or the inspection is coming
+      description: Grout is one of the first things an agent, a buyer or a property
+        manager looks at, because it reads as how the whole place has been kept.
+        It is also one of the least expensive things to fix before a photo
+        shoot.
+      cta:
+        label: End of lease cleaning
+        href: /house-cleaning/end-of-lease-cleaning/
+method:
+  heading: How we clean tile and grout
+  lead: Six stages. Most of the result comes from dwell time and agitation, not
+    from pressure.
+  items:
+    - icon: target
+      title: We work out what the surface is
+      description: Glazed ceramic and porcelain will take almost anything. Natural
+        stone, terracotta, slate and polished concrete will not, and an acid
+        based product on stone will etch it permanently. We identify the surface
+        before we choose a product.
+    - icon: spray-bottle
+      title: A cleaner that is left to work
+      description: The solution goes on and is given time to break down the soap scum
+        and oil in the grout. Most of the difference between a good result and a
+        poor one is dwell time, not effort. Spraying and immediately wiping is
+        just mopping with extra steps.
+    - icon: spark
+      title: Every line agitated
+      description: Grout has to be physically worked along its length with a brush.
+        There is no product that skips this part. The corners, the edge against
+        the bath and the line where the floor meets the wall are the slowest and
+        the most obvious when they are missed.
+    - icon: chart-bars
+      title: Rinsed and lifted, not wiped
+      description: The loosened soil has to come off the floor rather than be spread
+        around it, so it is rinsed and the dirty water is lifted away. Wiping a
+        cleaned grout line with a cloth puts a good share of it straight back.
+        [Confirm what equipment TLB uses here.]
+    - icon: puzzle
+      title: An honest look at what is left
+      description: When it is clean and dry we look at it with you. Some
+        discolouration is soil and comes out. Some is staining in the cement,
+        some is worn or missing grout, and some is a shower that needs
+        regrouting rather than cleaning. We will tell you which you have.
+    - icon: bloom
+      title: Sealing, if it is worth it
+      description: Clean grout can be sealed so it absorbs less and stays looking
+        better for longer. It is a separate job with its own cost and it needs
+        the grout to be properly dry first, so it usually means a second visit.
+        [Confirm whether TLB offers sealing.]
+mould:
+  heading: If the black spots keep coming back
+  body:
+    - Black or dark spotting along shower grout and silicone is very often mould
+      rather than dirt, and mould comes back wherever the moisture that fed it
+      is still there. Cleaning it is a cleaning job. Working out why it keeps
+      returning is usually a ventilation or a sealing problem in the building.
+      We have a separate page that explains what we do and do not do about
+      mould, and it is the honest version rather than the sales version.
+  cta:
+    label: Mould cleaning and removal
+    href: /house-cleaning/mould-removal/
+bleach:
+  heading: Why bleach makes it worse in the long run
+  body:
+    - type: paragraph
+      text: Grout will not always come back to white, and any cleaner who promises it
+        will is either about to disappoint you or about to do something you did
+        not agree to. Grout is cement. It is porous, it stains through rather
+        than on top, and after ten years of soap and hard water some of that
+        colour is part of the material now. A good clean gets a long way, often
+        further than people expect, but the floor you end up with is a clean old
+        floor rather than a new one.
+    - type: paragraph
+      text: That matters because the shortcut is bleach, and bleach is why so many
+        bathrooms look worse a year after they were cleaned. It lightens the
+        surface without removing what is in the grout, so it looks fixed for a
+        few weeks and then greys back, and repeated use eats away at the grout
+        itself until it starts crumbling out of the joint. If grout is genuinely
+        past it, the answer is regrouting or a colour seal, not another round of
+        bleach. We will tell you which one you are looking at.
+otherServices:
+  heading: Other things we clean around the house
+  lead: The jobs a regular clean never has time for. Any of them can go on the
+    same visit.
+comparison:
+  heading: How TLB compares
+  lead: The value here is not the scrubbing. It is getting a straight answer about
+    whether your bathroom needs cleaning or needs a trade.
+  cornerLabel: Why TLB Cleaning is different
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+bookingFaq:
+  heading: Booking a tile and grout clean
+  items:
+    - question: Will our grout go back to white?
+      answer: Usually a long way, rarely all the way, and we will give you a realistic
+        idea before we start rather than after. Grout stains through the
+        material rather than sitting on top of it, so how far it comes back
+        depends on the original colour, how old it is and what has been used on
+        it before. Bleach in particular limits what is recoverable later.
+    - question: Is it safe on our stone tiles?
+      answer: Only with the right product, which is why we identify the surface first.
+        Natural stone, terracotta, slate and polished concrete are porous and
+        reactive, and the acid based cleaners that work well on ceramic will
+        etch them permanently. If you know what your tiles are, tell us when you
+        book. If you do not, we will work it out on site.
+    - question: How long does a bathroom take?
+      answer: A standard bathroom is usually a few hours, because the time goes into
+        dwell and agitation rather than the passes themselves. A large tiled
+        floor takes longer. We would rather quote it properly after seeing it
+        than give you a number over the phone that we have to revise on the day.
+    - question: Should we seal the grout afterwards?
+      answer: It is worth considering in a shower or a busy kitchen, because sealed
+        grout absorbs less and stays looking better for longer. It has to go on
+        properly dry grout, so it usually means coming back. It is not permanent
+        either, and it will need doing again eventually. [Confirm whether TLB
+        offers sealing and at what interval.]
+    - question: What happens if I get in touch?
+      answer: Tell us which rooms and roughly how old the tiling is. We will look at
+        the surface and the state of the grout, give you an honest view of how
+        far it will come back and a price. It can go on the same visit as your
+        regular clean.
+generalFaq:
+  heading: Tile and grout cleaning questions
+  items:
+    - question: Why does grout go dark even when the floor is mopped?
+      answer: Partly because of the mopping. Grout sits slightly below the tile
+        surface and is porous, so a mop lifts soil off the glazed tile and
+        deposits a share of it into the grout line along with the dirty water.
+        Over years that builds up inside the material rather than on it, which
+        is why the lines keep darkening in a bathroom that is cleaned every
+        week.
+    - question: Does bleach clean grout?
+      answer: "It lightens the surface without removing what is embedded in it, so the
+        improvement is cosmetic and short lived, and the colour greys back over
+        the following weeks. Used repeatedly it also breaks down the grout
+        itself, which eventually crumbles and washes out of the joint. ⚠️ Never
+        mix bleach with an acidic cleaner, with ammonia, or with any other
+        product: the combination produces dangerous gases."
+    - question: What is the difference between cleaning, sealing and regrouting?
+      answer: "Cleaning removes what has soaked into the existing grout. Sealing puts
+        a barrier over clean grout so it absorbs less from then on, and needs
+        redoing periodically. Regrouting is a trade job: the old grout is cut
+        out and replaced, which is the right answer when it is cracked,
+        crumbling or stained beyond recovery. Cleaning cannot fix a grout line
+        that is physically gone."
+    - question: Can you clean the silicone in a shower?
+      answer: Silicone is different from grout and often the part that actually looks
+        bad. Discoloured silicone is usually stained right through rather than
+        dirty on the surface, and once it is, cleaning will not recover it.
+        Replacing a bead of silicone is inexpensive and makes more visible
+        difference to a shower than almost anything else. Persistent black
+        spotting there is very often mould, which we cover separately.
+    - question: How much does tile and grout cleaning cost?
+      answer: Usually priced per area or per room, with bathrooms often quoted as a
+        whole because the wall tiling, the shower and the floor are one job.
+        What moves the price is the area, the condition, the surface type and
+        whether sealing is added. [TLB’s pricing basis and minimum charge.
+        Confirm.]
+closingCta:
+  kicker: Tile and grout cleaning
+  heading: Find out how far it will come back.
+  lead: We look at the surface and the grout, give you a realistic view of the
+    result and a price. If it needs a trade rather than a clean, we will say so.

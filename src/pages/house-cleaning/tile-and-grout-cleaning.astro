@@ -95,17 +95,12 @@ import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../../assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-down-the-shower-tiles.jpg';
 // Pathway cards: real TLB photos (6 Oct 2026), 4:3 crops of the team's
 // shower-clean video frames. Card 1 is the hero's frame cropped tighter, so
 // the two read as different shots.
-import cardBathroomImg from '../../assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-the-low-shower-tiles.jpg';
-import cardQuoteImg from '../../assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-down-the-shower-rail.jpg';
 import cardTeamImg from '../../assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-tidying-a-shower-niche.jpg';
 import { whoIsInYourHomeCard } from '../../data/whoIsInYourHome';
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -119,46 +114,47 @@ import { comparisonColumns, serviceComparisonRows } from '../../data/comparison'
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherApplianceServices } from '../../data/appliance-services';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { localBusiness } from '../../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 const OWN_HREF = '/house-cleaning/tile-and-grout-cleaning/';
 
-const pageMeta = {
-  // Approved title, pasted verbatim from the brief (workbook row 10) per its
-  // Rule 3. "Services" picks up `tile and grout cleaning services` 250/mo and
-  // `professional tile and grout cleaning services` 200/mo (Keyword Mapping &
-  // Metadata, 15 Sep 2026). The ampersand is a deliberate shortener and the
-  // phrase still reads as the mapped term.
-  title: 'Tile & Grout Cleaning Services | TLB Cleaning',
-  // 🔴 TWO BLOCKING CHANGE REQUESTS AGAINST THIS APPROVED META. It is
-  // pasted verbatim per Rule 3, and IT SHOULD NOT GO LIVE until the workbook
-  // owner resolves both. See the file header for the full argument.
-  //
-  //   ONE. It promises "brings back the original colour". The page's bleach
-  //   section says, in the strongest writing on the site: "Grout will not
-  //   always come back to white, and any cleaner who promises it will is
-  //   either about to disappoint you or about to do something you did not
-  //   agree to." That is not a tension. It is the page calling its own meta
-  //   description a warning sign. Suggested replacement for the workbook,
-  //   147 characters, keeping the CTA and the rooms:
-  //     "Tile and grout cleaning that brings the colour back as far as it
-  //      will come, in bathrooms, kitchens and entryways. Sealing available.
-  //      Get a fixed quote today."
-  //
-  //   TWO. It states "Sealing available" as fact. This page carries TWO live
-  //   placeholders asking whether TLB offers sealing at all (method stage
-  //   six, and branded FAQ 4), and the cost FAQ assumes it as a third. The
-  //   meta asserts it, the page asks about it. One of the two has to change
-  //   and the answer is not a copy decision.
-  //
-  // Worth telling the workbook owner: the LIVE meta being replaced already
-  // got this right, with "brought back as far as it will come, with an honest
-  // answer on the rest". The correct wording exists and does not need
-  // inventing. 140 characters; the live one was 164 and over the limit.
-  description:
-    'Tile and grout cleaning that brings back the original colour in bathrooms, kitchens and entryways. Sealing available. Get a fixed quote today.',
-  canonical: 'https://tlbcleaning.com.au/house-cleaning/tile-and-grout-cleaning/',
-};
+// In `pageMeta`, on `title`:
+// Approved title, pasted verbatim from the brief (workbook row 10) per its
+// Rule 3. "Services" picks up `tile and grout cleaning services` 250/mo and
+// `professional tile and grout cleaning services` 200/mo (Keyword Mapping &
+// Metadata, 15 Sep 2026). The ampersand is a deliberate shortener and the
+// phrase still reads as the mapped term.
+// In `pageMeta`, on `description`:
+// 🔴 TWO BLOCKING CHANGE REQUESTS AGAINST THIS APPROVED META. It is
+// pasted verbatim per Rule 3, and IT SHOULD NOT GO LIVE until the workbook
+// owner resolves both. See the file header for the full argument.
+//
+//   ONE. It promises "brings back the original colour". The page's bleach
+//   section says, in the strongest writing on the site: "Grout will not
+//   always come back to white, and any cleaner who promises it will is
+//   either about to disappoint you or about to do something you did not
+//   agree to." That is not a tension. It is the page calling its own meta
+//   description a warning sign. Suggested replacement for the workbook,
+//   147 characters, keeping the CTA and the rooms:
+//     "Tile and grout cleaning that brings the colour back as far as it
+//      will come, in bathrooms, kitchens and entryways. Sealing available.
+//      Get a fixed quote today."
+//
+//   TWO. It states "Sealing available" as fact. This page carries TWO live
+//   placeholders asking whether TLB offers sealing at all (method stage
+//   six, and branded FAQ 4), and the cost FAQ assumes it as a third. The
+//   meta asserts it, the page asks about it. One of the two has to change
+//   and the answer is not a copy decision.
+//
+// Worth telling the workbook owner: the LIVE meta being replaced already
+// got this right, with "brought back as far as it will come, with an honest
+// answer on the rest". The correct wording exists and does not need
+// inventing. 140 characters; the live one was 164 and over the limit.
 
 // The primary CTA, defined once and repeated in four places per BFD 9.5: the
 // hero button, pathway card 1, the button after the six stages and the
@@ -170,200 +166,55 @@ const pageMeta = {
 // on four buttons, which BFD 13.2 rules out on condition-driven work.
 // "Fixed" is also the accurate word here, because the page promises you will
 // know the price before work starts, not after.
-const primaryCta = { label: 'Get a fixed quote today' };
 
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
-  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
-  description: pageMeta.description,
-};
+// In `hero`, on `headingLines`:
+// Brief section 4. This was the only component on the page's primary
+// keyword score that still missed, worth 15 points scored present or
+// absent, on a mapped phrase of 700/mo. Naming the three areas is the
+// specificity BFD 14 asks for rather than decoration.
+// In `hero`, on `lead`:
+// ON DEMOTING A GOOD LINE: "The tiles are fine. It is the lines between
+// them." is the sharpest headline on the site. It is NOT being cut. It
+// lands one line lower, opening the lead, and still does the same work,
+// because the argument it makes is the argument the whole page runs on.
+// Hero has no separate subheading slot; `headingLines` all render inside
+// the one <h1>.
+//
+// The hero paragraph after it is UNCHANGED, per brief section 6: it
+// already carries the mapped phrase contiguously inside its first
+// sentence, which is the full 10-point opening-paragraph component, and
+// its second sentence is the honest version of what the approved meta
+// overpromises. Nothing to improve.
+// In `hero`, on `image`:
+// A real TLB photo since 6 Oct 2026, replacing the transparent cut-out
+// (which ran with `contain-bottom`). Default `cover` fit now. The file is
+// a near-square crop (1080x1150) from the bottom of a tall video frame:
+// this page's long heading and lead make the desktop panel roughly square,
+// and a 4:3 crop there trimmed the sides and read as zoomed in. Near
+// square, the panel shows the photo's full width with the shower hose
+// above her. `ratio` is the mobile fallback.
 
-const hero = {
-  kicker: 'Tile and grout cleaning',
-  // Brief section 4. This was the only component on the page's primary
-  // keyword score that still missed, worth 15 points scored present or
-  // absent, on a mapped phrase of 700/mo. Naming the three areas is the
-  // specificity BFD 14 asks for rather than decoration.
-  headingLines: ['Tile and grout cleaning for bathrooms, kitchens and tiled floors'],
-  // ON DEMOTING A GOOD LINE: "The tiles are fine. It is the lines between
-  // them." is the sharpest headline on the site. It is NOT being cut. It
-  // lands one line lower, opening the lead, and still does the same work,
-  // because the argument it makes is the argument the whole page runs on.
-  // Hero has no separate subheading slot; `headingLines` all render inside
-  // the one <h1>.
-  //
-  // The hero paragraph after it is UNCHANGED, per brief section 6: it
-  // already carries the mapped phrase contiguously inside its first
-  // sentence, which is the full 10-point opening-paragraph component, and
-  // its second sentence is the honest version of what the approved meta
-  // overpromises. Nothing to improve.
-  lead:
-    `The tiles are fine. It is the lines between them. Tile and grout cleaning for bathrooms, kitchens and floors across the Northern Rivers and the Tweed. We will tell you how far it will come back before we start. ${theLine.fast}`,
-  cta: { label: primaryCta.label, href: quoteCta.href },
-  image: {
-    // A real TLB photo since 6 Oct 2026, replacing the transparent cut-out
-    // (which ran with `contain-bottom`). Default `cover` fit now. The file is
-    // a near-square crop (1080x1150) from the bottom of a tall video frame:
-    // this page's long heading and lead make the desktop panel roughly square,
-    // and a 4:3 crop there trimmed the sides and read as zoomed in. Near
-    // square, the panel shows the photo's full width with the shower hose
-    // above her. `ratio` is the mobile fallback.
-    ratio: '1/1',
-    label: 'A TLB cleaner crouched in a walk-in shower, wiping down the tiles and glass',
-    src: heroImg,
-  },
-};
-
-const definitionBody: TextBlockBody[] = [
-  'Tile and grout cleaning is the deep cleaning of hard floors and wet area walls, and in practice it is almost entirely about the grout. Tile is glazed and easy. Grout is cement based and porous, so it absorbs soap, oil, dirt and moisture and holds onto them, which is why a mopped floor can still look grubby along every line. TLB Cleaning cleans tile and grout across the Northern Rivers and the Tweed.',
-  'Mopping is the reason it gets worse rather than better. A mop lifts the dirt off the tile and pushes most of it into the grout line, which sits slightly lower and is absorbent. Doing that weekly for years is why the grout in a well-kept bathroom can be darker than the grout in a neglected one.',
-];
-
-const pathwayCards = {
-  heading: 'People arrive here with three questions.',
-  headingAccent: 'Which one is yours?',
-  cards: [
-    {
-      number: 1,
-      image: {
-        ratio: '4/3',
-        label: 'A TLB cleaner crouched in a shower, wiping down the low tiles and glass',
-        src: cardBathroomImg,
-      },
-      title: 'The grout has gone grey and mopping does nothing',
-      description:
-        'Because mopping is part of how it got there. Grout needs to be worked and rinsed rather than wiped, and that is a different job from the one you have been doing every week.',
-      cta: { label: primaryCta.label, href: quoteCta.href },
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        label: 'A TLB cleaner wiping down the rail and fittings of a walk-in shower',
-        src: cardQuoteImg,
-      },
-      title: 'We are selling or the inspection is coming',
-      description:
-        'Grout is one of the first things an agent, a buyer or a property manager looks at, because it reads as how the whole place has been kept. It is also one of the least expensive things to fix before a photo shoot.',
-      cta: { label: 'End of lease cleaning', href: '/house-cleaning/end-of-lease-cleaning/' },
-    },
-    whoIsInYourHomeCard(cardTeamImg, 'A TLB cleaner straightening the bottles in a tiled shower niche'),
-  ],
-};
-
-const methodItems = [
-  {
-    icon: 'target' as const,
-    title: 'We work out what the surface is',
-    description:
-      'Glazed ceramic and porcelain will take almost anything. Natural stone, terracotta, slate and polished concrete will not, and an acid based product on stone will etch it permanently. We identify the surface before we choose a product.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'A cleaner that is left to work',
-    description:
-      'The solution goes on and is given time to break down the soap scum and oil in the grout. Most of the difference between a good result and a poor one is dwell time, not effort. Spraying and immediately wiping is just mopping with extra steps.',
-  },
-  {
-    icon: 'spark' as const,
-    title: 'Every line agitated',
-    description:
-      'Grout has to be physically worked along its length with a brush. There is no product that skips this part. The corners, the edge against the bath and the line where the floor meets the wall are the slowest and the most obvious when they are missed.',
-  },
-  {
-    icon: 'chart-bars' as const,
-    title: 'Rinsed and lifted, not wiped',
-    description:
-      // ⚠️ LAUNCH BLOCKER. Confirm the equipment. See the file header.
-      'The loosened soil has to come off the floor rather than be spread around it, so it is rinsed and the dirty water is lifted away. Wiping a cleaned grout line with a cloth puts a good share of it straight back. [Confirm what equipment TLB uses here.]',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'An honest look at what is left',
-    description:
-      'When it is clean and dry we look at it with you. Some discolouration is soil and comes out. Some is staining in the cement, some is worn or missing grout, and some is a shower that needs regrouting rather than cleaning. We will tell you which you have.',
-  },
-  {
-    icon: 'bloom' as const,
-    title: 'Sealing, if it is worth it',
-    description:
-      // ⚠️ LAUNCH BLOCKER. Confirm TLB seals. See the file header.
-      'Clean grout can be sealed so it absorbs less and stays looking better for longer. It is a separate job with its own cost and it needs the grout to be properly dry first, so it usually means a second visit. [Confirm whether TLB offers sealing.]',
-  },
-];
+// In `methodItems`, on "Rinsed and lifted, not wiped":
+// ⚠️ LAUNCH BLOCKER. Confirm the equipment. See the file header.
+// In `methodItems`, on "Sealing, if it is worth it":
+// ⚠️ LAUNCH BLOCKER. Confirm TLB seals. See the file header.
 
 // Deferral to the mould page. A Callout, not a TextBlock: it is a short
 // aside, and SECTIONS.md is clear that is what Callout is for.
 //
 // ⚠️ DO NOT EXPAND THIS. See the file header. No health claim, no method, no
 // promise it stays gone. The mould page owns all of that.
-const mouldCallout = {
-  heading: 'If the black spots keep coming back',
-  body: [
-    'Black or dark spotting along shower grout and silicone is very often mould rather than dirt, and mould comes back wherever the moisture that fed it is still there. Cleaning it is a cleaning job. Working out why it keeps returning is usually a ventilation or a sealing problem in the building. We have a separate page that explains what we do and do not do about mould, and it is the honest version rather than the sales version.',
-  ],
-  cta: { label: 'Mould cleaning and removal', href: '/house-cleaning/mould-removal/' },
-};
-
-const worthKnowingBody: TextBlockBody[] = [
-  'Grout will not always come back to white, and any cleaner who promises it will is either about to disappoint you or about to do something you did not agree to. Grout is cement. It is porous, it stains through rather than on top, and after ten years of soap and hard water some of that colour is part of the material now. A good clean gets a long way, often further than people expect, but the floor you end up with is a clean old floor rather than a new one.',
-  'That matters because the shortcut is bleach, and bleach is why so many bathrooms look worse a year after they were cleaned. It lightens the surface without removing what is in the grout, so it looks fixed for a few weeks and then greys back, and repeated use eats away at the grout itself until it starts crumbling out of the joint. If grout is genuinely past it, the answer is regrouting or a colour seal, not another round of bleach. We will tell you which one you are looking at.',
-];
 
 const clusterServices = otherApplianceServices(OWN_HREF);
 
-const comparisonTable = {
-  heading: 'How TLB compares',
-  cornerLabel: 'Why TLB Cleaning is different',
-  lead: 'The value here is not the scrubbing. It is getting a straight answer about whether your bathroom needs cleaning or needs a trade.',
-  columns: comparisonColumns,
-  // Brief section 20, scorecard finding 7. The holiday-lets row comes off:
-  // the other seven bear on a household booking a grout clean, and this one
-  // is about a service the page does not sell. "Who cleans your home" is
-  // correct here and stays. See data/comparison.ts.
-  rows: serviceComparisonRows(),
-};
+// In `comparisonTable`, on `rows`:
+// Brief section 20, scorecard finding 7. The holiday-lets row comes off:
+// the other seven bear on a household booking a grout clean, and this one
+// is about a service the page does not sell. "Who cleans your home" is
+// correct here and stays. See data/comparison.ts.
 
-const brandedFaqItems = [
-  {
-    question: 'Will our grout go back to white?',
-    answer:
-      'Usually a long way, rarely all the way, and we will give you a realistic idea before we start rather than after. Grout stains through the material rather than sitting on top of it, so how far it comes back depends on the original colour, how old it is and what has been used on it before. Bleach in particular limits what is recoverable later.',
-  },
-  {
-    question: 'Is it safe on our stone tiles?',
-    answer:
-      'Only with the right product, which is why we identify the surface first. Natural stone, terracotta, slate and polished concrete are porous and reactive, and the acid based cleaners that work well on ceramic will etch them permanently. If you know what your tiles are, tell us when you book. If you do not, we will work it out on site.',
-  },
-  {
-    question: 'How long does a bathroom take?',
-    answer:
-      'A standard bathroom is usually a few hours, because the time goes into dwell and agitation rather than the passes themselves. A large tiled floor takes longer. We would rather quote it properly after seeing it than give you a number over the phone that we have to revise on the day.',
-  },
-  {
-    question: 'Should we seal the grout afterwards?',
-    answer:
-      // ⚠️ Depends on the sealing launch blocker in the file header.
-      'It is worth considering in a shower or a busy kitchen, because sealed grout absorbs less and stays looking better for longer. It has to go on properly dry grout, so it usually means coming back. It is not permanent either, and it will need doing again eventually. [Confirm whether TLB offers sealing and at what interval.]',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'Tell us which rooms and roughly how old the tiling is. We will look at the surface and the state of the grout, give you an honest view of how far it will come back and a price. It can go on the same visit as your regular clean.',
-  },
-];
+// In `brandedFaqItems`, on "Should we seal the grout afterwards?":
+// ⚠️ Depends on the sealing launch blocker in the file header.
 
 // §12 Non-branded FAQs.
 //
@@ -379,41 +230,71 @@ const brandedFaqItems = [
 //     bars advice that could cause harm if followed incorrectly, so this
 //     tells the reader what NOT to do and nothing else. Do not expand it
 //     into a how-to or name a safe alternative product.
-const nonBrandedFaqItems = [
-  {
-    question: 'Why does grout go dark even when the floor is mopped?',
-    answer:
-      'Partly because of the mopping. Grout sits slightly below the tile surface and is porous, so a mop lifts soil off the glazed tile and deposits a share of it into the grout line along with the dirty water. Over years that builds up inside the material rather than on it, which is why the lines keep darkening in a bathroom that is cleaned every week.',
-  },
-  {
-    question: 'Does bleach clean grout?',
-    answer:
-      'It lightens the surface without removing what is embedded in it, so the improvement is cosmetic and short lived, and the colour greys back over the following weeks. Used repeatedly it also breaks down the grout itself, which eventually crumbles and washes out of the joint. ⚠️ Never mix bleach with an acidic cleaner, with ammonia, or with any other product: the combination produces dangerous gases.',
-  },
-  {
-    question: 'What is the difference between cleaning, sealing and regrouting?',
-    answer:
-      'Cleaning removes what has soaked into the existing grout. Sealing puts a barrier over clean grout so it absorbs less from then on, and needs redoing periodically. Regrouting is a trade job: the old grout is cut out and replaced, which is the right answer when it is cracked, crumbling or stained beyond recovery. Cleaning cannot fix a grout line that is physically gone.',
-  },
-  {
-    question: 'Can you clean the silicone in a shower?',
-    answer:
-      'Silicone is different from grout and often the part that actually looks bad. Discoloured silicone is usually stained right through rather than dirty on the surface, and once it is, cleaning will not recover it. Replacing a bead of silicone is inexpensive and makes more visible difference to a shower than almost anything else. Persistent black spotting there is very often mould, which we cover separately.',
-  },
-  {
-    question: 'How much does tile and grout cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same as every sibling.
-      'Usually priced per area or per room, with bathrooms often quoted as a whole because the wall tiling, the shower and the floor are one job. What moves the price is the area, the condition, the surface type and whether sealing is added. [TLB’s pricing basis and minimum charge. Confirm.]',
-  },
+//
+// In `nonBrandedFaqItems`, on "How much does tile and grout cleaning cost?":
+// ⚠️ BRACKETED ON PURPOSE, same as every sibling.
+
+// CONTENT lives in src/content/pages/house-cleaning/tile-and-grout-cleaning.yaml
+// and is edited in Pages CMS ("Tile and grout cleaning"). This file owns the
+// layout. The notes above explain why each section says what it says; they
+// stay here because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'house-cleaning/tile-and-grout-cleaning',
+  z.object({
+    seo: section.seo,
+    // The text of the page's one primary button. It always links to the
+    // site-wide quote page, so only the words are editable.
+    buttonLabel: section.text,
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    // The third card is the shared "Who is in my home" card, added in code.
+    // A card whose button is left empty gets the page's primary button.
+    pathways: section.pathwayCards.extend({
+      cards: z.array(section.pathwayCards.shape.cards.element.extend({ cta: section.optional(section.link) })).min(1),
+    }),
+    method: section.iconGrid,
+    mould: section.callout,
+    bleach: section.textBlock,
+    // The rows are the shared appliance cross-links.
+    otherServices: section.sectionIntro,
+    // The columns and rows are the shared comparison table (Site settings).
+    comparison: section.comparisonTable.omit({ columns: true, rows: true }),
+    reviews: section.sectionHeading,
+    // The subheading, like the towns, is the shared one for every full band.
+    whereWeClean: section.tagCloud.omit({ subheading: true }),
+    bookingFaq: section.faq,
+    generalFaq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/house-cleaning/tile-and-grout-cleaning/',
+};
+
+const business = localBusiness({
+  description: pageMeta.description,
+  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
+});
+
+const pageCta = { label: page.buttonLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '1/1');
+
+const pathwayCards = [
+  ...page.pathways.cards.map((card, i) => ({
+    number: i + 1,
+    ...card,
+    image: sized(card.image, '4/3'),
+    cta: card.cta ?? pageCta,
+  })),
+  whoIsInYourHomeCard(cardTeamImg, 'A TLB cleaner straightening the bottles in a tiled shower niche'),
 ];
 
-const closingCta = {
-  kicker: 'Tile and grout cleaning',
-  heading: 'Find out how far it will come back.',
-  lead: 'We look at the surface and the grout, give you a realistic view of the result and a price. If it needs a trade rather than a clean, we will say so.',
-  cta: { label: primaryCta.label, href: quoteCta.href },
-};
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -429,41 +310,51 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? pageCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
-    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+    <PathwayCards heading={page.pathways.heading} headingAccent={page.pathways.headingAccent} cards={pathwayCards} />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="How we clean tile and grout"
-      lead="Six stages. Most of the result comes from dwell time and agitation, not from pressure."
-      items={methodItems}
-      cta={{ label: primaryCta.label, href: quoteCta.href }}
+      heading={page.method.heading}
+      lead={page.method.lead}
+      items={page.method.items}
+      note={page.method.note}
+      cta={pageCta}
     />
 
-    <Callout tone="note" heading={mouldCallout.heading} body={mouldCallout.body} cta={mouldCallout.cta} />
+    <Callout tone="note" heading={page.mould.heading} body={page.mould.body} cta={page.mould.cta} />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Why bleach makes it worse in the long run"
-      body={worthKnowingBody}
+      heading={page.bleach.heading}
+      body={page.bleach.body}
+      cta={page.bleach.cta}
+      backgroundImage={page.bleach.backgroundImage}
     />
 
     <ServiceBlocks
       variant="list"
-      heading="Other things we clean around the house"
-      lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
+      heading={page.otherServices.heading}
+      lead={page.otherServices.lead}
       items={clusterServices.map((service) => ({
         icon: 'spray-bottle' as const,
         title: service.label,
@@ -473,20 +364,23 @@ const closingCta = {
     />
 
     <ComparisonTable
-      heading={comparisonTable.heading}
-      cornerLabel={comparisonTable.cornerLabel}
-      lead={comparisonTable.lead}
-      columns={comparisonTable.columns}
-      rows={comparisonTable.rows}
+      heading={page.comparison.heading}
+      cornerLabel={page.comparison.cornerLabel}
+      lead={page.comparison.lead}
+      columns={comparisonColumns}
+      rows={serviceComparisonRows()}
+      footnote={page.comparison.footnote}
+      cta={page.comparison.cta}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
+      heading={page.whereWeClean.heading}
       subheading={footprintSubheading}
+      tags={page.whereWeClean.tags}
       groups={footprintLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -522,15 +416,15 @@ const closingCta = {
         the competitive set, and it ends by saying cleaning cannot fix grout
         that is physically gone. That sentence costs bookings and earns
         trust, which is the trade BFD 2.3 asks for. */}
-    <Faq heading="Booking a tile and grout clean" items={brandedFaqItems} />
-    <Faq heading="Tile and grout cleaning questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.bookingFaq.heading} lead={page.bookingFaq.lead} items={page.bookingFaq.items} />
+    <Faq heading={page.generalFaq.heading} lead={page.generalFaq.lead} items={page.generalFaq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? pageCta}
     />
   </main>
 
