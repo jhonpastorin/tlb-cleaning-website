@@ -1753,3 +1753,71 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+      - name: brewery-cleaning
+        label: "Brewery cleaning"
+        type: file
+        path: src/content/pages/commercial-cleaning/brewery-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: ctaLabel
+            label: "Main button text"
+            type: string
+            description: "Used by the hero, any panel whose button is left empty and the closing block. It links to the quote page set under Site settings > Site-wide buttons. Leave empty to use the site-wide walkthrough button text."
+          - name: hero
+            component: heroCollage
+            description: "Leave the hero's button empty to use the main button above. The three photos sit in two columns: first left, second right, third left."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
+          - name: cip
+            component: callout
+            label: "We do not touch the inside of a tank (warning box)"
+            description: "The safety spine of the page. Never soften it, and never add a CO2 ppm figure. The second paragraph carries a [Confirm] bracket on CO2 briefing."
+          - name: zones
+            component: imageCards
+            label: "Two standards, one building (three panels)"
+            description: "A panel whose button is left empty uses the main button. Panels 1 and 3 carry [Confirm] brackets."
+          - { name: drainPhoto, component: imageBand, label: "Drain photo band" }
+          - { name: drains, component: contentGrid, label: "Four things about drains (grid)" }
+          - name: worthKnowing
+            component: textBlock
+            label: "Your CIP protects the vessel (dark band)"
+            description: "No spoilage statistic or dollar figure: there is no source to cite."
+          - name: related
+            label: "Other premises we clean (links)"
+            type: object
+            description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: subheading, label: Subheading, type: string, required: true }
+              - { name: note, label: Note under the links, type: text, list: true }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                required: true
+                description: "The towns themselves are edited once for the whole site, not here."
+              - { name: note, label: Note under the towns, type: text, list: true }
+          - name: brandLine
+            component: sectionHeading
+            label: "Easy to book heading (above the brand lines)"
+            description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
+          - name: brandedFaq
+            component: faq
+            label: "Frequently asked questions (about working with us)"
+            description: "The CIP answer must not be softened. The brew deck and CO2 answers carry [Confirm] brackets."
+          - name: faq
+            component: faq
+            label: "Brewery cleaning FAQs"
+            description: "The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the main button."
