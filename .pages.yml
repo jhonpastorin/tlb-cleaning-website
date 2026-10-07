@@ -1734,3 +1734,68 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to keep \"Book a mattress clean\"."
+      - name: gutter-cleaning
+        label: Gutter cleaning
+        type: file
+        path: src/content/pages/house-cleaning/gutter-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "Blocks launch: the description says \"Fully insured\" and \"photographed on completion\". Insurance is unconfirmed and the page only promises photos of damage found. Confirm both or change the description."
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Book today\" button."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: onTheDay, component: storySteps, label: "What our gutter cleaning covers on the day (steps)" }
+          - name: ladder
+            component: callout
+            label: "Please do not do this one yourself (warning box)"
+            description: "A statement about risk: keep it free of figures. Leave the button empty to keep \"Book today\"."
+          - name: consequences
+            component: contentGrid
+            label: "What a blocked gutter actually costs (grid)"
+            description: "The third cell is shown tinted, and a last cell on its own row spans the full width. The bushfire point is worded as a reason to book, never as a promise of protection."
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: "These are sample illustrations, not real jobs, and the note says so. If you swap in real TLB photos, change the note too."
+          - name: who
+            component: textBlock
+            label: "Who turns up (dark band)"
+            description: "[insured] is waiting on TLB's confirmation. Leave the button empty to keep \"Book today\"."
+          - name: outside
+            component: sectionIntro
+            label: "The rest of the outside (list)"
+            description: "The rows under this heading come from Site settings > Cross-links: outside your home."
+          - name: comparison
+            label: "How TLB compares (table)"
+            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "Booking a gutter clean (FAQs)"
+            description: "The two-storey answer carries a [bracket] until TLB confirms its height limit."
+          - name: nonBrandedFaq
+            component: faq
+            label: "How often gutters need doing, and what it costs (FAQs)"
+            description: "Answers in [brackets] are waiting on TLB. Keep the price answer free of a \"from $X\" figure until TLB confirms one."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Book today\"."
