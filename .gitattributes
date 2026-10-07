@@ -1,0 +1,3 @@
+# Pages CMS entries are appended by parallel page migrations; a union merge
+# keeps every side's entries. Check the result with `npm run check-cms`.
+.pages.yml merge=union

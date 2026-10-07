@@ -46,12 +46,8 @@ import TextBlock from '../components/sections/TextBlock.astro';
 import PathwayCards from '../components/sections/PathwayCards.astro';
 import ComparisonTable from '../components/sections/ComparisonTable.astro';
 import BeforeAfter from '../components/sections/BeforeAfter.astro';
-import cooktopBeforeImg from '../assets/home_cleaning/before_after/cooktop-before.jpg';
-import cooktopAfterImg from '../assets/home_cleaning/before_after/cooktop-after.jpg';
 // Before/after pairs — real TLB job photos. The `sample-` files are flat
 // illustrations and stay only where no real pair exists for that subject yet.
-import kitchenBenchtopBeforeImg from '../assets/home_cleaning/before_after/kitchen-benchtop-before.jpg';
-import kitchenBenchtopAfterImg from '../assets/home_cleaning/before_after/kitchen-benchtop-after.jpg';
 import VideoFeature from '../components/sections/VideoFeature.astro';
 import GoogleReviewSlider from '../components/sections/GoogleReviewSlider.astro';
 import { googleBusinessProfileUrl, googleReviews } from '../data/googleReviews';
@@ -61,24 +57,16 @@ import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../assets/home_cleaning/house-cleaning-cleaner-scrubbing-the-kitchen-sink.jpg';
 // §2 + §3 backdrop, behind the Cream scrim (this page's own folder).
-import definitionBgImg from '../assets/home_cleaning/house-cleaning-cleaner-mopping-timber-living-room-floor.png';
 // §4 situation cards. Real TLB photos (6 Oct 2026), copied into this folder
 // and pre-cropped to the cards' 4:3: a hands-on bathroom clean for "got away
 // from me", a cleared room onto the deck for moving out, and a lived-in
 // kitchen with nobody in it for Mum or Dad's place (see card 3's note). The
 // shower and kitchen are the same shots as the Airbnb and deep cleaning pages.
-import cardDeepCleanImg from '../assets/airbnb/airbnb-report-cleaner-wiping-down-a-shower-pump-bottle.jpg';
-import cardMovingOutImg from '../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-empty-room-glass-doors-onto-the-deck.jpg';
-import cardSeniorImg from '../assets/home_cleaning/house-cleaning-tidy-sunlit-kitchen.jpg';
 // §8 backdrop. The asset's own filename is literally the state this section
 // is selling — a living room kept up by regular visits.
-import buyingBgImg from '../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-tidy-living-room-kept-up-by-regular-visits.jpg';
 // Before/after. Both pairs are REAL TLB job photography.
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
-import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
 // Site chrome (header nav, mega-menus, footer links/contact) — shared with
 // index.astro, see src/data/navigation.ts.
 import {
@@ -91,7 +79,12 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, howItWorks, managedForYou } from '../data/brand-lines';
+import { howItWorks, managedForYou } from '../data/brand-lines';
+import { localBusiness } from '../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../lib/cms';
+import * as section from '../lib/cms-schemas';
+import { sized, highlightColumn } from '../lib/cms-schemas';
 
 // §0 Page metadata — title tag and description both drafted in full.
 //
@@ -111,33 +104,13 @@ import { theLine, theLineHeading, howItWorks, managedForYou } from '../data/bran
 //     makes. §1 and the process copy say the same TEAM on a set day, not
 //     the same individual. Worth reconciling if a client holds us to it.
 // 142 characters, so no truncation risk.
-const pageMeta = {
-  title: 'House Cleaning Services - Regular Cleans | TLB Cleaning',
-  description:
-    'Regular house cleaning from local mums you actually know. Same cleaner every visit, police checked and insured. Get a quote in under a minute.',
-  // §0: slug ruled as /house-cleaning/. Domain is still a placeholder,
-  // same as every other page in this repo — confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/house-cleaning/',
-};
+//
+// In `pageMeta`:
+// §0: slug ruled as /house-cleaning/. Domain is still a placeholder,
+// same as every other page in this repo — confirm before launch.
 
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
-  // Three regions now, matching §3's opening paragraph and §13's groups.
-  areaServed: 'Northern Rivers NSW, the Tweed, and the Southern Gold Coast QLD',
-  description: pageMeta.description,
-};
+// In `business`:
+// Three regions now, matching §3's opening paragraph and §13's groups.
 
 // §1 Hero — copy drafted in full, both lines new this revision.
 //
@@ -159,16 +132,6 @@ const business = {
 // plan's ruling: Hero.astro's `cta` prop is required, so it can't be moved
 // down instead, and two identical buttons half a screen apart would be worse
 // than one. The brief's other two buttons (§11, §15) ARE built.
-const hero = {
-  headingLines: ['House cleaning you never have to chase.'],
-  lead: `The same local team, on the same day, every time. ${theLine.instant}`,
-  cta: quoteCta,
-  image: {
-    ratio: '1/1',
-    label: 'A TLB cleaner scrubbing the kitchen sink beside a garden window',
-    src: heroImg,
-  },
-};
 
 // §3 Opening paragraph — drafted in full. This is the page's answer-target
 // block for `house cleaning services`, so it stays the first prose after the
@@ -176,10 +139,6 @@ const hero = {
 //
 // The second sentence names THREE regions this revision, where the first
 // brief named two — matching §13's three-region grouping.
-const definitionBody: TextBlockBody[] = [
-  'Regular home cleaning is an ongoing visit on a set schedule, weekly, fortnightly or monthly, that keeps a lived-in house on top of things rather than resetting it.',
-  'TLB Cleaning provides house cleaning services across the Northern Rivers, the Tweed and the Southern Gold Coast.',
-];
 
 // §4 Situation cards — card copy verbatim, split into title (the opening
 // first-person sentence) + description (the rest). Unchanged this revision.
@@ -188,50 +147,19 @@ const definitionBody: TextBlockBody[] = [
 // open items: the section heading/accent lines, the per-card CTA labels, and
 // the card images. The headings are placeholder structural copy so the
 // section renders; the CTA labels are plain wayfinding, not marketing copy.
-const pathwayCards = {
-  heading: 'Not quite what you need?',
-  headingAccent: 'Start here instead.',
-  cards: [
-    {
-      number: 1,
-      // Label follows the photo: the library has no "lived-in kitchen
-      // before" shot, so this shows the deep clean itself — which is what
-      // the card's CTA sends you to. Doubles as alt text.
-      image: { ratio: '4/3', label: 'A TLB cleaner wiping down the bottles in a walk-in shower', src: cardDeepCleanImg },
-      title: "It's got away from me a bit.",
-      description:
-        'Start with a one-off deep clean, then set up a fortnightly. That way round works out better than doing it the other way.',
-      cta: { label: 'Deep cleaning', href: '/house-cleaning/deep-cleaning/' },
-    },
-    {
-      number: 2,
-      image: { ratio: '4/3', label: 'A cleared room with glass doors open onto the deck and paddock', src: cardMovingOutImg },
-      title: "I'm moving out.",
-      description:
-        "That's an end of lease clean, measured against an inspection rather than your own standard. Different page.",
-      cta: { label: 'End of lease cleaning', href: '/house-cleaning/end-of-lease-cleaning/' },
-    },
-    {
-      number: 3,
-      // §0: /house-cleaning/senior-home-cleaning/ is the domestic seniors page. It is NOT
-      // the same page as Commercial → "Aged care, retirement and seniors"
-      // (/commercial-cleaning/aged-care-cleaning/), which is cleaning aged-care
-      // premises. It currently has no mega-menu entry — open item.
-      // The home, not the person — an adult child reading this card is
-      // picturing their parent's place. A real, lived-in kitchen since 6 Oct
-      // 2026; the generated living room it replaced is in IMAGE-PROMPTS.md.
-      image: {
-        ratio: '4/3',
-        label: 'A tidy, sunlit kitchen with timber cabinets and a garden window',
-        src: cardSeniorImg,
-      },
-      title: "It's for Mum or Dad's place.",
-      description:
-        'We do regular cleans for older clients, including through Home Care Packages and DVA.',
-      cta: { label: 'Senior home cleaning', href: '/house-cleaning/senior-home-cleaning/' },
-    },
-  ],
-};
+//
+// In `pathwayCards`, on "A TLB cleaner wiping down the bottles in a walk-in shower":
+// Label follows the photo: the library has no "lived-in kitchen
+// before" shot, so this shows the deep clean itself — which is what
+// the card's CTA sends you to. Doubles as alt text.
+// In `pathwayCards`, on "A tidy, sunlit kitchen with timber cabinets and a garden window":
+// §0: /house-cleaning/senior-home-cleaning/ is the domestic seniors page. It is NOT
+// the same page as Commercial → "Aged care, retirement and seniors"
+// (/commercial-cleaning/aged-care-cleaning/), which is cleaning aged-care
+// premises. It currently has no mega-menu entry — open item.
+// The home, not the person — an adult child reading this card is
+// picturing their parent's place. A real, lived-in kitchen since 6 Oct
+// 2026; the generated living room it replaced is in IMAGE-PROMPTS.md.
 
 // §5 "What's included in every visit" — ONE ComparisonTable covering the room
 // list and both scope lists. Content unchanged this revision, so the shape is
@@ -253,56 +181,13 @@ const pathwayCards = {
 //
 // The five rooms carry their task lists as `description`, so no detail from
 // the brief's room-by-room list is lost in the move to a table.
-const inclusionsTable = {
-  heading: "What's included in every visit.",
-  lead: "What's included in every regular clean, and what sits outside it.",
-  cornerLabel: 'Room by room',
-  columns: [{ label: 'Every regular clean', highlight: true }],
-  rows: [
-    {
-      label: 'Kitchen',
-      description:
-        'Benchtops, splashback, stovetop, sink and taps, cupboard fronts, microwave outside, bin, floors.',
-      values: [true],
-    },
-    {
-      label: 'Bathrooms and toilets',
-      description: 'Shower, screen, bath, basin, taps, mirror, toilet inside and out, floors.',
-      values: [true],
-    },
-    {
-      label: 'Bedrooms and living areas',
-      description: 'Beds made, surfaces dusted, mirrors, skirting boards spot-cleaned, vacuum and mop.',
-      values: [true],
-    },
-    {
-      // ⚠️ This is the laundry ROOM. The brief also lists "laundry" (washing
-      // your clothes) as NOT included further down — two different things
-      // that would read as a flat contradiction if both rows just said
-      // "Laundry". The other row is disambiguated to "Washing, drying and
-      // folding clothes" for exactly this reason; don't shorten it back.
-      label: 'Laundry room',
-      description: 'Sink, benches, appliance fronts, floors.',
-      values: [true],
-    },
-    {
-      label: 'Throughout',
-      description: 'Cobwebs, switches and handles, all floors.',
-      values: [true],
-    },
-    { label: 'Inside the oven', values: ['Quoted separately'] },
-    { label: 'Carpet steam cleaning', values: ['Quoted separately'] },
-    { label: 'Windows', values: ['Quoted separately'] },
-    { label: 'Blinds', values: ['Quoted separately'] },
-    { label: 'Inside the fridge', values: ['Quoted separately'] },
-    { label: 'Dishes', values: [false] },
-    { label: 'Washing, drying and folding clothes', values: [false] },
-    { label: 'Tidying or organising belongings', values: [false] },
-    { label: 'Moving heavy furniture', values: [false] },
-  ],
-  footnote:
-    "A cross means it's not something we take on. Anything marked quoted separately we're happy to do — just ask when you book and we'll price it in.",
-};
+//
+// In `inclusionsTable`, on "Laundry room":
+// ⚠️ This is the laundry ROOM. The brief also lists "laundry" (washing
+// your clothes) as NOT included further down — two different things
+// that would read as a flat contradiction if both rows just said
+// "Laundry". The other row is disambiguated to "Washing, drying and
+// folding clothes" for exactly this reason; don't shorten it back.
 
 // §6 "Weekly, fortnightly or monthly" — NEW SECTION this revision, and a
 // clean fit: the brief supplies a real 3-column × 3-row grid, which is
@@ -328,52 +213,11 @@ const inclusionsTable = {
 // published copy (it's a note to Teagan, not text for a visitor), but the
 // whole section is an operational recommendation a client will act on.
 // Whoever schedules these jobs needs to agree with it.
-const frequencyTable = {
-  heading: 'Weekly, fortnightly or monthly',
-  cornerLabel: 'How often we come',
-  columns: [
-    { label: 'Weekly' },
-    { label: 'Fortnightly', highlight: true },
-    { label: 'Monthly' },
-  ],
-  rows: [
-    {
-      label: 'Suits',
-      values: [
-        'Larger households, homes with pets, heavy kitchen and bathroom use',
-        'Most homes',
-        'Smaller households, or a top-up between deep cleans',
-      ],
-    },
-    {
-      label: 'What it does',
-      values: [
-        'Holds everything at the same level week to week',
-        'Keeps the house steady without over-servicing',
-        'Takes the edge off, though the house moves between visits',
-      ],
-    },
-    {
-      label: 'First visit',
-      values: [
-        'Longer than the ones after it',
-        'Longer than the ones after it',
-        'Longer than the ones after it',
-      ],
-    },
-  ],
-  footnote:
-    "Fortnightly suits most homes. If you're not sure, start there and tell us if it isn't holding. Changing it later takes a message.",
-};
 
 // §7 "The first one takes longer" — drafted in full. Two paragraphs this
 // revision where the first build had one, and the new clause "rather than
 // quoting for the bigger job by default" is a real commercial promise, not a
 // rewording.
-const firstVisitBody: TextBlockBody[] = [
-  'We start from wherever the house is, so the first visit runs longer than the ones after it and is priced differently.',
-  "If it's been a while, a one-off deep clean first works out better value than paying for a long first regular clean. We'll tell you honestly which one you need rather than quoting for the bigger job by default.",
-];
 
 // §8 "What you're actually buying" — NEW SECTION, and it REPLACES the first
 // build's "Nobody leaves a cleaner over the cleaning."
@@ -389,11 +233,6 @@ const firstVisitBody: TextBlockBody[] = [
 // ones. 82% scrim — the same figure why-tlb.astro and index.astro use for
 // their own dark pivot blocks — keeps Off White copy at full contrast over
 // the photo's bright window light.
-const buyingBody: TextBlockBody[] = [
-  "It isn't a spotless house. It's not thinking about it.",
-  "Not wondering whether anyone's coming this week. Not chasing a reply. Not being the one who has to raise it when the bathroom quietly stops being done properly.",
-  "Set your day once, meet your team, and it happens. A reminder in the lead-up so it never sneaks up on you, and a message when we're on our way. Some clients want a quick chat when we arrive, others would rather come home to it done. Both are completely fine.",
-];
 
 // §9 Credibility signals — before/after images from genuine TLB jobs, now on
 // a DRAGGABLE COMPARISON SLIDER (BeforeAfter.astro) rather than a gallery.
@@ -438,30 +277,6 @@ const buyingBody: TextBlockBody[] = [
 //
 // Heading/lead are NOT in the brief ("Credibility signals" is a section
 // label, not copy) — placeholder structural copy, flagged as an open item.
-const beforeAfterPairs: BeforeAfterPair[] = [
-  {
-    before: {
-      src: kitchenBenchtopBeforeImg,
-      alt: 'A kitchen benchtop before a TLB clean, with dishes stacked in and beside the sink and pots left on the stove',
-    },
-    after: {
-      src: kitchenBenchtopAfterImg,
-      alt: 'The same kitchen benchtop after the clean, sink empty and the bench clear and wiped down',
-    },
-    caption: 'Kitchen benchtop and sink',
-  },
-  {
-    before: {
-      src: cooktopBeforeImg,
-      alt: 'A gas cooktop before a TLB clean, with spilled coffee grounds, crumbs and food scraps across the black enamel',
-    },
-    after: {
-      src: cooktopAfterImg,
-      alt: 'The same gas cooktop after the clean, the enamel wiped back to an even black finish',
-    },
-    caption: 'Gas cooktop and burners',
-  },
-];
 
 // §10 Hero video — James testimonial.
 //
@@ -475,13 +290,6 @@ const beforeAfterPairs: BeforeAfterPair[] = [
 //
 // ⚠️ "James" is named with no other context in the brief — confirm who he is
 // (regular client? how long? which town?) before the label ships as alt text.
-const heroVideo = {
-  headingLines: ['A word from James.'],
-  video: {
-    ratio: '16/9',
-    label: 'James, regular TLB client, talking to camera about his cleans',
-  },
-};
 
 // §11 "Easy to book, instant pricing, cost effective" — NEW SECTION, and
 // where the hero subheadline's three claims get paid off. That's why it earns
@@ -492,11 +300,6 @@ const heroVideo = {
 // on the page, so it isn't decided again here. TextBlock's `cta` defaults to
 // the inverse-accent button variant on a dark theme, which is what that page
 // renders.
-const bookingBody: TextBlockBody[] = [
-  "Book online in a couple of minutes, or send a text, ring us or drop us an email, whichever you'd actually do.",
-  "You get a price straight away rather than waiting on a quote, and it's based on your actual place rather than a guess. Tell us the size of it and roughly what condition it's in, and if a deep clean first would serve you better than a long first regular visit, we'll say so.",
-  "Cost effective because it's the same team each visit working to a set routine, so nobody is relearning your house. No lock-in, no minimum term and no exit fee. Skip a visit when you're away, and your spot stays yours.",
-];
 
 // §13 Where we clean — the shared 56-town, three-region list from
 // src/data/locations.ts, which every "Where we clean" section now reads
@@ -534,90 +337,84 @@ const bookingBody: TextBlockBody[] = [
 // it: "Why not just find a cleaner through a local Facebook group?" — its
 // answer rested entirely on the "nine employed local mums" framing this brief
 // drops.
-const faqItems = [
-  {
-    question: "Who's in my house when I'm at work?",
-    answer:
-      "Someone you've met. We'll introduce the cleaner looking after your home before the first visit, so you never open the door to a stranger. How we get in is agreed when you book.",
-  },
-  {
-    // ⚠️ [CONFIRM] — the brief marks this whole answer as a suggestion. A
-    // same-cleaner assurance is a promise a client will hold TLB to on the
-    // day someone different turns up. Needs Teagan's read-through.
-    question: 'Will I get the same cleaner every time?',
-    answer:
-      "Yes, wherever we can. Your home is assigned to a team and that's who you'll see. If someone's away, another member of your team covers and we let you know beforehand.",
-  },
-  {
-    question: "Can I skip a clean when we're away?",
-    answer:
-      "Yes, just let us know ahead of time and we'll move it or skip it. Your spot stays yours. Most families skip a fortnight over Christmas and pick straight back up in January.",
-  },
-  {
-    question: 'What happens at the first visit?',
-    answer:
-      "It takes longer than the ones after it, because we're starting from wherever the house is. We'll walk through with you, agree the priorities, and set the rhythm from there.",
-  },
-  {
-    question: 'Do I need to tidy up before you arrive?',
-    answer:
-      "Tidy, don't clean. Clearing benchtops, floors and vanities makes a real difference, because time spent moving your things is time not spent cleaning. Put away clothes, toys, dishes and anything fragile. If the house is cluttered on the day, we clean around it and some of the detail gets missed.",
-  },
-  {
-    question: 'How much does a regular clean cost?',
-    answer:
-      "It depends on the size of your place, its condition and how often we come, which is why we quote rather than publish a flat rate that would be wrong for most homes. Tell us the basics and you'll have a price back quickly, with no obligation attached.",
-  },
-  {
-    question: 'Am I locked into a contract?',
-    answer:
-      "No. No minimum term, no exit fee, and you can pause or skip a visit whenever you need to. Most people stay because it's working, not because they signed something.",
-  },
-  {
-    // ⚠️ [CONFIRM], and the weakest answer on the page: as drafted it says
-    // what MOST cleaning companies set and why, then defers to a quote — it
-    // never states TLB's OWN minimum, so it doesn't yet answer its own
-    // question. The first build held it back for exactly this reason. It
-    // ships now per the deep-cleaning precedent, but this is the [CONFIRM]
-    // most worth acting on.
-    question: 'Is there a minimum booking?',
-    answer:
-      "Most cleaning companies set a minimum of around two hours, because anything shorter can't be done properly once travel and setup are counted. Tell us the size of your place when you book and we'll tell you honestly what it needs.",
-  },
-  {
-    // ⚠️ [CONFIRM cover arrangements] — a cover guarantee is another promise
-    // a client can hold TLB to. Needs Teagan's read-through.
-    question: 'What if my cleaner is sick or on holiday?',
-    answer:
-      "Another member of your team covers, and we'll let you know in advance rather than leaving you wondering on the day.",
-  },
-  {
-    // ⚠️ [CONFIRM product range] — this answer commits TLB to using a
-    // client's own products or bringing an alternative for a baby, an
-    // allergy or a pet. Whoever stocks the vans needs to agree with it.
-    question: 'Do you bring your own products and equipment?',
-    answer:
-      "Yes. Our team arrives with everything needed, so you don't have to supply anything or set anything out. If you'd rather we used particular products in your home, because of a baby, an allergy or a pet, tell us when you book and we'll use what you've got or bring an alternative.",
-  },
-  {
-    question: 'Can I ask for particular things to be prioritised each visit?',
-    answer:
-      "Yes, and most regular clients do. Tell us what matters most in your house, whether that's the bathrooms, the floors or the kitchen, and we'll work to that order every visit. If your priorities change, message us and we'll update the notes on your booking.",
-  },
-  {
-    question: 'Can I book over the phone instead of online?',
-    answer: 'Yes. Online, text, phone or email, whichever suits you.',
-  },
-];
+//
+// In `faqItems`, on "Will I get the same cleaner every time?":
+// ⚠️ [CONFIRM] — the brief marks this whole answer as a suggestion. A
+// same-cleaner assurance is a promise a client will hold TLB to on the
+// day someone different turns up. Needs Teagan's read-through.
+// In `faqItems`, on "Is there a minimum booking?":
+// ⚠️ [CONFIRM], and the weakest answer on the page: as drafted it says
+// what MOST cleaning companies set and why, then defers to a quote — it
+// never states TLB's OWN minimum, so it doesn't yet answer its own
+// question. The first build held it back for exactly this reason. It
+// ships now per the deep-cleaning precedent, but this is the [CONFIRM]
+// most worth acting on.
+// In `faqItems`, on "What if my cleaner is sick or on holiday?":
+// ⚠️ [CONFIRM cover arrangements] — a cover guarantee is another promise
+// a client can hold TLB to. Needs Teagan's read-through.
+// In `faqItems`, on "Do you bring your own products and equipment?":
+// ⚠️ [CONFIRM product range] — this answer commits TLB to using a
+// client's own products or bringing an alternative for a baby, an
+// allergy or a pet. Whoever stocks the vans needs to agree with it.
 
 // §15 Closing block — REAL COPY at last. The first brief never drafted this
 // paragraph, so the first build echoed the hero's own lines as a placeholder.
 // This revision supplies both sentences, so the placeholder goes.
-const closingCta = {
-  heading: 'Set your day, meet your team, and stop thinking about it.',
-  lead: "Tell us about your place and we'll come back with a price.",
-  cta: quoteCta,
+
+// CONTENT lives in src/content/pages/house-cleaning.yaml and is edited in
+// Pages CMS ("House cleaning (hub)"). This file owns the layout. The notes
+// above explain why each section says what it says; they stay here because
+// Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'house-cleaning',
+  z.object({
+    seo: section.seo,
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    pathways: section.pathwayCards,
+    inclusions: section.comparisonTable,
+    frequency: section.comparisonTable,
+    firstVisit: section.textBlock,
+    buying: section.textBlock,
+    beforeAfter: section.beforeAfter,
+    video: section.videoFeature,
+    // Body is the page's own paragraphs only. The "Managed for you" standfirst
+    // above them and the "How it works" steps below them come from Brand
+    // lines, so they stay the same on every page.
+    booking: section.textBlock,
+    reviews: section.sectionHeading,
+    whereWeClean: section.tagCloud,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/house-cleaning/',
 };
+
+const business = localBusiness({
+  description: pageMeta.description,
+  // Three regions now, matching §3's opening paragraph and §13's groups.
+  areaServed: 'Northern Rivers NSW, the Tweed, and the Southern Gold Coast QLD',
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
+});
+
+const heroImage = page.hero.image && sized(page.hero.image, '1/1');
+
+const pathwayCards = page.pathways.cards.map((card, i) => ({
+  number: i + 1,
+  ...card,
+  image: sized(card.image, '4/3'),
+}));
+
+// The single inclusions column, and Fortnightly (the middle column), are the
+// highlighted ones.
+const inclusionsColumns = highlightColumn(page.inclusions.columns, 0);
+const frequencyColumns = highlightColumn(page.frequency.columns, 1);
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -633,10 +430,12 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? quoteCta}
+      image={heroImage}
     />
 
     {/* §2 + §3. Trust bar and opening paragraph share ONE photo behind a Cream scrim,
@@ -644,21 +443,29 @@ const closingCta = {
         background cannot do this. 90%, raised from 75% on 29 Sep 2026.
         Measured over this frame's own darkest region under the copy column,
         75% gave 4.09:1 — an AA FAIL. 90% gives 5.90:1. Backdrop.astro's
-        `opacity` doc carries the method. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90} focus="top">
+        `opacity` doc carries the method. Re-check it if the photo is swapped
+        in Pages CMS. */}
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90} focus="top">
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
-    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+    <PathwayCards heading={page.pathways.heading} headingAccent={page.pathways.headingAccent} cards={pathwayCards} />
 
     <ComparisonTable
-      heading={inclusionsTable.heading}
-      lead={inclusionsTable.lead}
-      cornerLabel={inclusionsTable.cornerLabel}
-      columns={inclusionsTable.columns}
-      rows={inclusionsTable.rows}
-      footnote={inclusionsTable.footnote}
+      heading={page.inclusions.heading}
+      lead={page.inclusions.lead}
+      cornerLabel={page.inclusions.cornerLabel}
+      columns={inclusionsColumns}
+      rows={page.inclusions.rows}
+      footnote={page.inclusions.footnote}
+      cta={page.inclusions.cta}
     />
 
     {/* §6. Second ComparisonTable, directly after the first — flagged in the
@@ -667,21 +474,31 @@ const closingCta = {
         headings and cornerLabels say so, and this one is 3x3 against the
         other's fourteen rows. */}
     <ComparisonTable
-      heading={frequencyTable.heading}
-      cornerLabel={frequencyTable.cornerLabel}
-      columns={frequencyTable.columns}
-      rows={frequencyTable.rows}
-      footnote={frequencyTable.footnote}
+      heading={page.frequency.heading}
+      lead={page.frequency.lead}
+      cornerLabel={page.frequency.cornerLabel}
+      columns={frequencyColumns}
+      rows={page.frequency.rows}
+      footnote={page.frequency.footnote}
+      cta={page.frequency.cta}
     />
 
-    <TextBlock theme="light" align="left" heading="The first one takes longer." body={firstVisitBody} />
+    <TextBlock
+      theme="light"
+      align="left"
+      heading={page.firstVisit.heading}
+      body={page.firstVisit.body}
+      cta={page.firstVisit.cta}
+      backgroundImage={page.firstVisit.backgroundImage}
+    />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="What you're actually buying."
-      body={buyingBody}
-      backgroundImage={buyingBgImg}
+      heading={page.buying.heading}
+      body={page.buying.body}
+      cta={page.buying.cta}
+      backgroundImage={page.buying.backgroundImage}
       scrimOpacity={82}
     />
 
@@ -690,34 +507,44 @@ const closingCta = {
         Both pairs are real TLB job photography and the `note` says so —
         correct it, do not delete it, if a sample is ever wired back in. */}
     <BeforeAfter
-      heading="The difference, on real jobs."
-      lead="Drag the handle across each photo to see the same spot before and after a clean."
-      pairs={beforeAfterPairs}
-      note="Photographed on real TLB cleans, published with the client's permission."
+      heading={page.beforeAfter.heading}
+      lead={page.beforeAfter.lead}
+      pairs={page.beforeAfter.pairs}
+      note={page.beforeAfter.note}
+      beforeLabel={page.beforeAfter.beforeLabel}
+      afterLabel={page.beforeAfter.afterLabel}
     />
 
-    <VideoFeature headingLines={heroVideo.headingLines} video={heroVideo.video} />
+    <VideoFeature headingLines={page.video.headingLines} video={{ ...page.video.video, ratio: '16/9' }} />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading={theLineHeading.instant}
-      body={[managedForYou.recurring, ...bookingBody, ...howItWorks.general]}
-      cta={quoteCta}
+      heading={page.booking.heading}
+      body={[managedForYou.recurring, ...page.booking.body, ...howItWorks.general]}
+      cta={page.booking.cta ?? quoteCta}
+      backgroundImage={page.booking.backgroundImage}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading}
+      tags={page.whereWeClean.tags}
       groups={locationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
-    <Faq heading="Frequently asked questions" items={faqItems} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
-    <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
+    <CallToAction
+      variant="secondary"
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? quoteCta}
+    />
   </main>
 
   <SiteFooter

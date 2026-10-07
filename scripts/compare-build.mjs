@@ -20,7 +20,9 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { createHash } from 'node:crypto';
 
-const BEFORE = 'dist-before';
+// COMPARE_BASELINE lets a git worktree compare against the main checkout's
+// baseline instead of building its own.
+const BEFORE = process.env.COMPARE_BASELINE || 'dist-before';
 const AFTER = 'dist';
 
 function htmlFiles(root, dir = root) {

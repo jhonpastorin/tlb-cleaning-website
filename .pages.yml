@@ -1472,3 +1472,35 @@ content:
             component: paragraphList
             label: About the region
             description: "The /locations/ hub shows these same paragraphs. Rewriting one of the two so they differ is still an open item."
+
+  - name: house-cleaning-pages
+    label: House cleaning
+    type: group
+    items:
+      - name: house-cleaning
+        label: House cleaning (hub)
+        type: file
+        path: src/content/pages/house-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: pathways, component: pathwayCards, label: "Not quite what you need? (cards)" }
+          - { name: inclusions, component: comparisonTable, label: "What's included in every visit (table)" }
+          - { name: frequency, component: comparisonTable, label: "Weekly, fortnightly or monthly (table)" }
+          - { name: firstVisit, component: textBlock, label: "The first one takes longer" }
+          - { name: buying, component: textBlock, label: "What you're actually buying (dark band)" }
+          - { name: beforeAfter, component: beforeAfter, label: "Before and after" }
+          - { name: video, component: videoFeature, label: "Video (hidden on the site for now)" }
+          - name: booking
+            component: textBlock
+            label: "Easy to book (dark band)"
+            description: "Only this page's own paragraphs. The \"Managed for you\" line above them and the How it works steps below them come from Site settings > Brand lines."
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: faq, component: faq, label: "FAQs" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }

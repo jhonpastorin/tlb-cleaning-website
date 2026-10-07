@@ -74,6 +74,11 @@ export function sized<T extends { label: string; src?: ImageMetadata }>(img: T, 
   return { ...img, ratio };
 }
 
+/** Mark one comparison-table column as highlighted, which is layout. */
+export function highlightColumn<T extends { label: string }>(columns: T[], index: number) {
+  return columns.map((column, i) => (i === index ? { ...column, highlight: true } : column));
+}
+
 // The caps are hard limits that sit above every title and description the
 // site shipped with (longest: 80 and 197 characters). The lengths Google
 // actually shows, about 60 and 155, are guidance in .pages.yml, not errors,
@@ -125,13 +130,15 @@ const SERVICE_ICONS = [
 export const serviceIcon = z.enum(SERVICE_ICONS);
 
 /** A comparison table cell. Editors type "yes" for a tick and "no" for a
- *  cross; anything else is shown as written. Booleans are accepted too. */
+ *  cross; anything else is shown as written. Content files use yes/no too.
+ *  "true"/"false" and real booleans are accepted as well, because a text
+ *  field in Pages CMS may hand a boolean back as the string "true". */
 const comparisonCell = z.union([
   z.boolean(),
   z.string().transform((value): boolean | string => {
     const v = value.trim().toLowerCase();
-    if (v === 'yes') return true;
-    if (v === 'no') return false;
+    if (v === 'yes' || v === 'true') return true;
+    if (v === 'no' || v === 'false') return false;
     return resolveTokens(value);
   }),
 ]);
