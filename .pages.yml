@@ -1691,3 +1691,50 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Never promise bond back, a pass or a refund, here or anywhere on the page."
+      - name: guide-how-much-does-house-cleaning-cost
+        label: "What house cleaning costs"
+        type: file
+        path: src/content/pages/guides/how-much-does-house-cleaning-cost.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: modelTable
+            component: comparisonTable
+            label: "Hourly or fixed price (table)"
+            description: "Neither column is highlighted on purpose: both models are fair. If TLB prices one way only, say so in How we price ours below."
+          - { name: priceDrivers, component: textGrid, label: "What moves the price (six boxes)" }
+          - name: firstClean
+            component: callout
+            label: "The first clean costs more (box)"
+            description: "Describes how the category works. Check it matches how TLB actually charges for a first visit."
+          - name: pricing
+            component: textBlock
+            label: "How we price ours (dark band)"
+            description: "Every [CONFIRM] bracket must be replaced with TLB's real, checked figures before launch. Never publish a made-up price or a single figure (Australian Consumer Law). If the numbers are not coming, ask for this section to be removed rather than softening it."
+          - name: rate
+            component: callout
+            label: "Why one rate is half another (warning box)"
+            description: "The last paragraph rests on TLB employing its cleaners rather than subcontracting. If that ever changes, this box must change. Describe costs only: never comment on anyone else's tax or legal arrangements."
+          - name: compare
+            component: iconGrid
+            label: "Six questions that make two quotes comparable"
+            description: "The button under the grid is the site-wide quote button."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "No answer contains a dollar figure, on purpose. Add one only once TLB's real prices are confirmed."
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
