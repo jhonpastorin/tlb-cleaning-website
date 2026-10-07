@@ -2,7 +2,7 @@
 
 **Goal:** every piece of visible copy and every photo on every page of tlbcleaning.com.au can be edited in a friendly web editor (Pages CMS), by people without GitHub accounts, while the site stays a fully static Astro build on Render.
 
-**Status:** Phases 1 to 4 done on `feature/pages-cms` (8 Oct 2026): every page's copy and photos are editable, and the editor has been tidied. Phases 5 to 7 remain. Phase 0 has three Pages CMS checks still open (photos, emptied fields, `.JPG` uploads); they must pass before Phase 3. See "Spike findings" and "Phase 1 results" in section 9.
+**Status:** All seven phases are built on `feature/pages-cms` (8 Oct 2026). What remains is yours to do: merge to staging and main, invite editors, and test in Pages CMS. See "Going live: what is left" at the end. Phase 0 has three Pages CMS checks still open (photos, emptied fields, `.JPG` uploads); they must pass before Phase 3. See "Spike findings" and "Phase 1 results" in section 9.
 
 ---
 
@@ -603,6 +603,36 @@ All six items Phase 3 listed are done. Every change was to the editor or the sch
 - **Default photo folder per page** (original item 6): an image field's default folder is set on the shared `image` component, so it cannot differ per page. Editors browse `src/assets` by folder.
 - **Pages CMS behaviour still unconfirmed:** saving the Menus file without changes (checkbox handling), choosing and uploading photos, an uppercase `.JPG`, and emptying an optional field.
 
+## Phase 5 results (8 Oct 2026)
+
+- **Publish to live site** button: an `actions:` entry in `.pages.yml` running `.github/workflows/publish-live.yml` from the `staging` branch. It checks out `main`, counts brand lint blockers, merges `staging` (refusing on a conflict), then runs `check-cms`, the type check and a production build (`SITE_ENV=production`), and pushes `main` only if the merge adds no brand lint blockers. Render then deploys `main`. One publish at a time; a publish with nothing new says so and stops.
+- **Who can publish:** Pages CMS only lets GitHub users run actions. Editors invited by email can save to staging but cannot publish (open question 2, settled by the tool). The publisher's name goes into the merge commit, filtered to plain characters because it comes from the request.
+- **The lint gate** (open question from Phase 0): the lint already fails on main, so the gate is "no NEW blockers", not "no blockers".
+- **Dry run** in a worktree from `origin/main`: clean merge, config agrees, production build indexable with the form connected, 63 blockers before and after: would publish. With a banned word added to one content file: 65, would refuse.
+- **Pages CMS had committed an empty `.pages.yml` to `main`** when it was first opened there (bf0b453). Both branches adding the file would have made the first publish fail; `main` was merged into the feature branch, keeping the full file.
+- **Large photo warning** in CI (`scripts/check-image-sizes.mjs`): a GitHub warning for any photo over 3 MB added or changed in a push. Never fails. Tested against the commit that added the one existing 3.5 MB photo.
+- **Commit identity** was set in Phase 1 (`settings.commit.identity: user`).
+- **Not done:** branch protection on `main` (needs the GitHub settings page, and a paid plan if the repo is private).
+
+## Phase 6 results (8 Oct 2026)
+
+- **`EDITING-GUIDE.md`** for the TLB team: logging in, checking the branch is staging, where everything is, editing words, the special words (`{{line.instant}}`, `quote`/`book`, `{town}`, yes/no cells), photos and their rules, saving and checking staging, how publishing works, the writing rules the lint enforces, what needs a developer, and who to ask. Claims about Pages CMS's screens were kept general where its interface has not been seen yet; correct them after the first walkthrough.
+- **Inviting editors and the walkthrough are yours to do** (see below).
+
+## Phase 7 results (8 Oct 2026)
+
+- README "Content and Pages CMS" section (where content lives, how pages read it, the checks, publishing, adding a page) and a note in SECTIONS.md and the README's "Adding a new section variant" on keeping schemas and editor components in step.
+- Four code comments that still said to swap a photo by editing an import now point to Pages CMS; eight notes naming the duplicate photos deleted in Phase 0 now name the identical copies kept.
+- No unused imports remain (`astro check`: 0 errors, 0 warnings, 0 hints). All 112 pages still match the original baseline.
+
+## Going live: what is left (yours)
+
+1. **Test in Pages CMS** on `feature/pages-cms`: change a photo, upload a phone `.JPG`, empty an optional field, save Menus without changes. Check each commit on GitHub. (These are the last Phase 0 checks.)
+2. **Merge `feature/pages-cms` into `staging`** (a pull request). The staging site will look exactly the same; it is now editable.
+3. **Merge `staging` into `main`** once, as a normal pull request. The Publish button only works after its workflow file is on `main`, so this first publish cannot use it. The live site will look exactly the same.
+4. **Invite editors** in Pages CMS (Settings > Collaborators) and send them `EDITING-GUIDE.md`. Do a 30-minute walkthrough on staging, then correct anything in the guide that does not match the screens.
+5. **Optional:** branch protection on `main` requiring the CI check; the staging site's URL for the editor descriptions.
+
 ---
 
 ## 10. Checklist
@@ -617,6 +647,6 @@ All six items Phase 3 listed are done. Every change was to the editor or the sch
 - [x] Phase 3e: Guides
 - [x] Phase 3f: Locations templates
 - [x] Phase 4: Sidebar groups, labels, descriptions, locks, validation, shared components (staging links and per-page photo folders not done, see Phase 4 results)
-- [ ] Phase 5: Publish action, image size check, commit identity, branch protection
-- [ ] Phase 6: Editors invited, EDITING-GUIDE.md, walkthrough done
-- [ ] Phase 7: Dead code removed, README and SECTIONS.md updated
+- [x] Phase 5: Publish action, image size check, commit identity (branch protection not done)
+- [x] Phase 6: EDITING-GUIDE.md written (inviting editors and the walkthrough are yours)
+- [x] Phase 7: Dead code removed, README and SECTIONS.md updated
