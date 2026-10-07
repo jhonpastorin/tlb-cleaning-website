@@ -94,10 +94,6 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // IMAGE-GUIDELINES §5 rules out ("never relabel an existing photo to mean
 // something it doesn't show"). Prompts are in
 // src/assets/commercial_cleaning/pressure/IMAGE-PROMPTS.md.
-import heroImg from '../../assets/commercial_cleaning/pressure/pressure-cleaning-a-commercial-forecourt.jpg';
-import cardCarParkImg from '../../assets/commercial_cleaning/pressure/half-cleaned-concrete-car-park.jpg';
-import cardShopfrontImg from '../../assets/commercial_cleaning/pressure/pressure-cleaning-a-shopfront-footpath-before-opening.jpg';
-import cardTeamImg from '../../assets/commercial_cleaning/pressure/cleaner-with-a-pressure-washer-on-a-commercial-forecourt.jpg';
 // §2 backdrop, behind the Cream scrim. This page does NOT borrow the
 // homepage's indoor frame the way the hub and the carpet sibling do — an
 // interior behind an outdoor page's copy was a compromise, so a wide exterior
@@ -105,9 +101,7 @@ import cardTeamImg from '../../assets/commercial_cleaning/pressure/cleaner-with-
 // it sits behind the trust bar and the definition paragraph, so it is
 // atmosphere, and the generous clean paving across the lower third is what
 // the copy sits over.
-import definitionBgImg from '../../assets/commercial_cleaning/pressure/clean-commercial-forecourt-and-entry.jpg';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -120,31 +114,35 @@ import {
 import { comparisonColumns, serviceComparisonRows } from '../../data/comparison';
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { walkthroughCtaLabel } from '../../data/premises';
+import { localBusiness } from '../../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 // §0 Metadata. Focus keyword leads the title, matching the hub's pattern.
 // "Commercial pressure cleaning" is the menu label and the primary term;
 // "pressure washing" is the common synonym and is carried in body copy
 // rather than in the title, so the two do not read as different services.
-const pageMeta = {
-  // Approved title and meta, pasted verbatim from the brief (workbook row 29)
-  // per its Rule 3. "Services" is what turns the head term into the mapped
-  // primary `commercial pressure cleaning services` (150/mo, Keyword Mapping
-  // & Metadata 15 Sep 2026).
-  title: 'Commercial Pressure Cleaning Services | TLB Cleaning',
-  // 141 characters. The live one was 161 and would have been truncated.
-  //
-  // ⚠️ CHANGE REQUEST, brief §3: this leads on `commercial high pressure
-  // cleaning`, a mapped SECONDARY at 100/mo, rather than the mapped primary
-  // at 150/mo. Defensible — the two share most of their words and the
-  // secondary reads better in a sentence — but it means the meta component
-  // cannot score full marks on the primary. Raised for a decision rather
-  // than silently fixed.
-  description:
-    'Commercial high pressure cleaning for car parks, walkways, forecourts and bin areas. Scheduled out of hours. Get a quote for your site today.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/commercial-pressure-cleaning/',
-};
+//
+// In `pageMeta`, on "Commercial Pressure Cleaning Services | TLB Cleaning":
+// Approved title and meta, pasted verbatim from the brief (workbook row 29)
+// per its Rule 3. "Services" is what turns the head term into the mapped
+// primary `commercial pressure cleaning services` (150/mo, Keyword Mapping
+// & Metadata 15 Sep 2026).
+// In `pageMeta`, on `description`:
+// 141 characters. The live one was 161 and would have been truncated.
+//
+// ⚠️ CHANGE REQUEST, brief §3: this leads on `commercial high pressure
+// cleaning`, a mapped SECONDARY at 100/mo, rather than the mapped primary
+// at 150/mo. Defensible — the two share most of their words and the
+// secondary reads better in a sentence — but it means the meta component
+// cannot score full marks on the primary. Raised for a decision rather
+// than silently fixed.
+// In `pageMeta`, on `canonical`:
+// ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
 
 // §7 The primary CTA, defined once and repeated in four places per BFD §9.5:
 // the hero button, pathway card 1, the button after the six stages and the
@@ -169,31 +167,13 @@ const pageMeta = {
 // No BFD 13.2 conflict on this page: there is no `Get an instant quote`
 // anywhere on it, and the pricing block promises a walkthrough and a written
 // scope, which is correct for condition-priced work.
-const primaryCta = { label: 'Get a quote for your site today' };
-const primaryCtaSentence = 'Get a quote for your site today.';
 
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
-  // ⚠️ NSW only, following the hub's call and this page's meta description.
-  // It matters more here than elsewhere: the wash water rules cited in
-  // non-branded FAQ 4 are NSW law, and QLD's equivalents sit under different
-  // legislation. If this service crosses the border, that answer needs a QLD
-  // clause before it publishes.
-  areaServed: 'Northern Rivers and Tweed, NSW',
-  description: pageMeta.description,
-};
+// In `business`, on `areaServed`:
+// ⚠️ NSW only, following the hub's call and this page's meta description.
+// It matters more here than elsewhere: the wash water rules cited in
+// non-branded FAQ 4 are NSW law, and QLD's equivalents sit under different
+// legislation. If this service crosses the border, that answer needs a QLD
+// clause before it publishes.
 
 // §1 Hero. Kicker carries the focus keyword so a visitor from a search result
 // gets confirmation above the H1, which is free to be a benefit. Same call as
@@ -229,53 +209,41 @@ const business = {
 // ⚠️ GENERATED, NOT PHOTOGRAPHED. An AI image of a person who does not exist.
 // Honest as generic service imagery and NOT presented as a named team member,
 // which IMAGE-GUIDELINES §7 forbids. Treat as a good placeholder.
-const hero = {
-  kicker: 'Commercial pressure cleaning',
-  // Brief §4. The exact phrase is worth 15 points scored present or absent,
-  // and naming the three surfaces is the specificity BFD §14 asks for rather
-  // than decoration.
-  headingLines: ['Commercial pressure cleaning services for car parks, footpaths and bin areas'],
-  // Brief §5. Rule 5's second slot, which this page did not have. An earlier
-  // note here said Hero had no subheading prop; it does — Hero.astro renders
-  // `subheading` directly beneath the <h1> and above the lead, outside the
-  // heading, which is exactly where this belongs.
-  //
-  // Its extension is the TIMING, distinct from the H1's scope. The two
-  // extensions share no words, so this is the phrase a second time rather
-  // than the line a second time. Out-of-hours scheduling is what the approved
-  // meta leads on and what booking FAQ 1 answers.
-  subheading: 'Commercial pressure cleaning services scheduled early, late or on a Sunday',
-  // Brief §6. The old paragraph repeated the H1's exact phrase and almost its
-  // exact extension one line below it, which read as the headline printed
-  // twice. The new subheading now carries the second instance with a
-  // different extension, so the paragraph drops the phrase and keeps the
-  // argument. "Your building is judged from the footpath" stays — it is the
-  // best opening line on any of the commercial pages.
-  lead:
-    `Your building is judged from the footpath. Car parks, walkways, forecourts, bin areas and building exteriors across the Northern Rivers and the Tweed, cleaned so you never have to close for it. ${theLine.fast}`,
-  cta: { label: primaryCta.label, href: quoteCta.href },
-  image: {
-    ratio: '1/1',
-    label:
-      'A cleaner in an aqua polo and teal gloves pressure washing the concrete forecourt outside a modern commercial building, the cleaned slab wet behind the spray',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on `headingLines`:
+// Brief §4. The exact phrase is worth 15 points scored present or absent,
+// and naming the three surfaces is the specificity BFD §14 asks for rather
+// than decoration.
+// In `hero`, on `subheading`:
+// Brief §5. Rule 5's second slot, which this page did not have. An earlier
+// note here said Hero had no subheading prop; it does — Hero.astro renders
+// `subheading` directly beneath the <h1> and above the lead, outside the
+// heading, which is exactly where this belongs.
+//
+// Its extension is the TIMING, distinct from the H1's scope. The two
+// extensions share no words, so this is the phrase a second time rather
+// than the line a second time. Out-of-hours scheduling is what the approved
+// meta leads on and what booking FAQ 1 answers.
+// In `hero`, on `lead`:
+// Brief §6. The old paragraph repeated the H1's exact phrase and almost its
+// exact extension one line below it, which read as the headline printed
+// twice. The new subheading now carries the second instance with a
+// different extension, so the paragraph drops the phrase and keeps the
+// argument. "Your building is judged from the footpath" stays — it is the
+// best opening line on any of the commercial pages.
 
 // §2 Definition. The answer-target block for the focus keyword and the first
 // place the phrase appears in body copy. Paragraph two does the synonym work
 // ("pressure washing", "high pressure cleaning") and, more usefully,
 // introduces soft washing, which is the distinction most competitor pages in
 // this category get wrong.
-const definitionBody: TextBlockBody[] = [
-  // Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
-  // points and was the only one of the eight components this page failed,
-  // because the phrase appeared here without the word "services". Two words
-  // fix it, and the fourth sentence keeps `commercial pressure cleaning` as a
-  // variant so nothing is lost.
-  'Commercial pressure cleaning services cover the outdoor hard surfaces at a workplace, cleaned with pressurised water. Car parks, driveways, loading docks, footpaths, entries, bin areas, awnings, render and shopfronts. It removes the grime, algae, moss, oil and chewing gum that build up on any site the public walks across. TLB Cleaning provides commercial pressure cleaning across the Northern Rivers and the Tweed.',
-  'Pressure cleaning, pressure washing and high pressure cleaning all describe the same work. Soft washing is the one that is genuinely different: low pressure and a cleaning solution instead of force, used on render, painted surfaces, cladding and roofs where high pressure would strip or gouge. A competent operator uses both and knows which surface takes which.',
-];
+//
+// In `definitionBody`, on paragraph 1:
+// Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
+// points and was the only one of the eight components this page failed,
+// because the phrase appeared here without the word "services". Two words
+// fix it, and the fourth sentence keeps `commercial pressure cleaning` as a
+// variant so nothing is lost.
 
 // §3 Pathway cards. The three questions a commercial buyer arrives with, in
 // their words. Same framing as the hub and the carpet sibling, re-pointed at
@@ -284,62 +252,21 @@ const definitionBody: TextBlockBody[] = [
 // All three images are family A scene photos, generated for these slots.
 // Card 1 is the only one with no person in it, on purpose: the subject is the
 // surface, and a figure would compete with the line down the middle of it.
-const pathwayCards = {
-  heading: 'People arrive here with three questions.',
-  headingAccent: 'Which one is yours?',
-  cards: [
-    {
-      number: 1,
-      image: {
-        ratio: '4/3',
-        // ⚠️ ONE FRAME of work in progress, not a before/after pair implying
-        // a specific job, which IMAGE-GUIDELINES §7 rules out. The line is
-        // the width of a rotary surface cleaner, which is the same tool the
-        // scope block below names.
-        label:
-          'A concrete car park halfway through being pressure cleaned, weathered grey and stained on one side of a straight line and pale and clean on the other',
-        src: cardCarParkImg,
-      },
-      title: 'The place looks grubby and I need it fixed',
-      description:
-        'Black concrete, algae down the shaded side, oil in the car park and gum across the entry. One clean resets it, and we tell you at the walkthrough which stains will lift and which are in the concrete for good.',
-      cta: { label: primaryCta.label, href: quoteCta.href },
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        label:
-          'A cleaner pressure washing the footpath outside a shopfront in the early morning before opening, with a blank hazard sign at the edge of the wet area',
-        src: cardShopfrontImg,
-      },
-      title: 'I want it maintained, not rescued',
-      description:
-        'Surfaces that get done twice a year never reach the state that needs a rescue, and cost less each visit because there is less to remove. We can fold it into an ongoing commercial contract so it happens without a reminder.',
-      cta: { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
-    },
-    {
-      number: 3,
-      image: {
-        ratio: '4/3',
-        // A visible, friendly face, for the same reason the hub's card 3
-        // carries one: the copy beside it promises "the same small team you
-        // have met". A figure turned away would argue against its own caption.
-        label:
-          'A cleaner in uniform standing beside her pressure washer on a commercial forecourt, turning to the camera with a friendly expression',
-        src: cardTeamImg,
-      },
-      title: 'I want to know who is on my site',
-      description:
-        // ⚠️ Two brackets inherited from the hub. Same answer fixes both.
-        // "Site" is used here rather than "your place" on purpose: BFD 2.3
-        // reserves the warmer wording for homes, and this reader is
-        // responsible for premises, not living in them.
-        'The same small team each visit, in TLB uniform, and you can meet them before the first one. We are a local business, [insured] and [police-checked], and there is one local number to ring if something is not right.',
-      cta: { label: 'Why TLB', href: '/why-tlb/' },
-    },
-  ],
-};
+//
+// In `pathwayCards`, on "A concrete car park halfway through being pressure cleaned, weathered grey and stained on one side of a straight line and pale and clean on the other":
+// ⚠️ ONE FRAME of work in progress, not a before/after pair implying
+// a specific job, which IMAGE-GUIDELINES §7 rules out. The line is
+// the width of a rotary surface cleaner, which is the same tool the
+// scope block below names.
+// In `pathwayCards`, on "A cleaner in uniform standing beside her pressure washer on a commercial forecourt, turning to the camera with a friendly expression":
+// A visible, friendly face, for the same reason the hub's card 3
+// carries one: the copy beside it promises "the same small team you
+// have met". A figure turned away would argue against its own caption.
+// In `pathwayCards`, on "I want to know who is on my site" (description):
+// ⚠️ Two brackets inherited from the hub. Same answer fixes both.
+// "Site" is used here rather than "your place" on purpose: BFD 2.3
+// reserves the warmer wording for homes, and this reader is
+// responsible for premises, not living in them.
 
 // §4 Scope of work. THE MOST IMPORTANT BLOCK ON THIS PAGE, for the same
 // reason it is on the carpet sibling: commercial-cleaning.astro flags in its
@@ -352,51 +279,16 @@ const pathwayCards = {
 //
 // The order is the order of the job, and the last two exist because they are
 // what separates a contractor from someone with a hired unit from Bunnings.
-const scopeItems = [
-  {
-    icon: 'target' as const,
-    title: 'We match the pressure to the surface',
-    description:
-      'Concrete, pavers, tiles, render, cladding, timber and painted steel all take a different setting. Too much pressure etches concrete, strips paint, furs timber and forces water behind cladding. Getting this wrong is expensive and it cannot be undone.',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'We make the area safe first',
-    description:
-      'Cones, signage and a taped exclusion zone go up before the machine starts, because a wet hard surface with a hose across it is a slip and trip hazard on a site where the public walks. Access stays open where we can keep it open.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'Pre-treat, then clean',
-    description:
-      // ⚠️ BLOCKER. Hot water is named here. Confirm TLB has a hot unit; if
-      // it is cold water only, cut the hot water clause and soften the grease
-      // claims across the page, because a cold machine will not shift a
-      // loading dock.
-      'Oil, grease and organic growth get a treatment with dwell time before any water goes near them, and grease needs hot water or a degreaser to release at all. Blasting a stain cold just moves it around and drives it deeper into the concrete.',
-  },
-  {
-    icon: 'chart-bars' as const,
-    title: 'Surface cleaner on flat ground, wand on the edges',
-    description:
-      'Large flat areas are done with a rotary surface cleaner, which cleans evenly and leaves no stripes. Edges, kerbs, steps and corners are finished by hand with the wand. Stripes across a car park are the signature of a job done entirely with a wand.',
-  },
-  {
-    icon: 'bloom' as const,
-    title: 'Soft wash for render, paint and roofs',
-    description:
-      'Render, painted surfaces, cladding, signage and roofing get low pressure and a cleaning solution instead of force. It kills the algae and mould at the root rather than just knocking the surface off it, which is why a soft washed wall stays clean longer.',
-  },
-  {
-    icon: 'idea' as const,
-    title: 'Wash water managed, not just hosed away',
-    description:
-      // ⚠️ BLOCKER, and the most serious one on the page. See non-branded FAQ
-      // 4 and the file header. This card describes correct practice, NOT a
-      // verified description of what TLB does today.
-      'Water carrying oil, grease, detergent or food waste must not go down a stormwater drain. On sites where that is a risk we block the drains and capture the run-off, and dispose of it to sewer or to a licensed facility. [Confirm TLB’s capture method and disposal arrangement.]',
-  },
-];
+//
+// In `scopeItems`, on "Pre-treat, then clean" (description):
+// ⚠️ BLOCKER. Hot water is named here. Confirm TLB has a hot unit; if
+// it is cold water only, cut the hot water clause and soften the grease
+// claims across the page, because a cold machine will not shift a
+// loading dock.
+// In `scopeItems`, on "Wash water managed, not just hosed away" (description):
+// ⚠️ BLOCKER, and the most serious one on the page. See non-branded FAQ
+// 4 and the file header. This card describes correct practice, NOT a
+// verified description of what TLB does today.
 
 // §5 "Worth knowing". Same job as the hub's Award block and the carpet
 // sibling's warranty block: make the reader distrust the cheapest quote
@@ -412,10 +304,6 @@ const scopeItems = [
 // no section number and no penalty amount on purpose, because those change.
 // Have someone confirm the phrasing, and consider linking NSW EPA or the
 // relevant council directly (BFD 3.3 asks for authoritative sources).
-const worthKnowingBody: TextBlockBody[] = [
-  'Pressure cleaning is the one trade where an inexperienced operator can do permanent damage in about four seconds. Too much pressure held too long etches concrete into a visible stripe, cuts the sand out from between pavers, strips paint off steel, furs up timber decking and drives water in behind cladding, where it goes on causing damage after the machine has gone. None of that shows in a quote. It shows on your building, and it does not wash off.',
-  'The second thing worth knowing is that the water has to go somewhere. Run-off carrying oil, grease, detergent or food waste must not enter a stormwater drain, because stormwater goes straight to the creek and then the ocean without treatment, and the site occupier can be the one held responsible. So ask any cleaner what they do about wash water before you let them start, especially around a car park, a loading dock or a bin bay. It is a fair question and a competent operator will have a straight answer.',
-];
 
 // §18 NEW SECTION. Industrial sites as a distinct case.
 //
@@ -439,12 +327,6 @@ const worthKnowingBody: TextBlockBody[] = [
 // confirmation already outstanding in stage six of §14 — TLB's wash water
 // capture method and disposal arrangement — which is the single most
 // expensive unfilled placeholder on this page.
-const industrialBody: TextBlockBody[] = [
-  'An industrial site is a different job to a shopfront. The soil is oil, grease, rubber and hydraulic fluid rather than algae and coffee, the areas are measured in thousands of square metres, and the surface is usually a concrete hardstand that has been driven on for years.',
-  'Forklift tyre marks, loading dock aprons, bin bays, wash bays and the yard all come up differently. Grease needs heat and dwell time before any water goes near it. Long flat runs go to the rotary surface cleaner so the finish is even, and the edges and bunding are finished by hand. Old hardstand gets tested in a corner first, because a slab that has already lost its surface can be opened up by too much pressure.',
-  'The wash water matters more on an industrial site than anywhere else. Run-off from a loading dock or a wash bay carries oil, grease and detergent, and none of that can go to stormwater. We plan the capture before the machine starts rather than after. [Confirm TLB’s capture method and disposal arrangement.]',
-  'Most sites run to a shift pattern rather than trading hours, so we work to the quiet window rather than assuming a weekend.',
-];
 
 // §6 Related pages. Not the hub's full fifteen-pill premises list, which would
 // compete with the hub for the same links. These are the settings where
@@ -460,21 +342,6 @@ const industrialBody: TextBlockBody[] = [
 // "Outside your home") and is deliberately linked from here, so a homeowner
 // who lands on the commercial page has somewhere to go rather than enquiring
 // for the wrong service. The label says "for homes" for the same reason.
-const settingTags = [
-  { label: 'Retail and shopfronts', href: '/commercial-cleaning/retail-cleaning/' },
-  { label: 'Strata and common area cleaning', href: '/commercial-cleaning/strata-cleaning/' },
-  { label: 'Hospitality, venues and holiday parks', href: '/commercial-cleaning/hospitality-cleaning/' },
-  { label: 'Commercial kitchen cleaning', href: '/commercial-cleaning/commercial-kitchen-cleaning/' },
-  { label: 'Warehouses and industrial sites', href: '/commercial-cleaning/warehouse-and-industrial-cleaning/' },
-  { label: 'Factories', href: '/commercial-cleaning/factory-cleaning/' },
-  { label: 'Breweries', href: '/commercial-cleaning/brewery-cleaning/' },
-  { label: 'Construction site', href: '/commercial-cleaning/construction-site-cleaning/' },
-  { label: 'Gyms and fitness studios', href: '/commercial-cleaning/gym-and-fitness-cleaning/' },
-  { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
-  { label: 'High pressure cleaning for homes', href: '/house-cleaning/pressure-cleaning/' },
-  { label: 'Commercial carpet cleaning', href: '/commercial-cleaning/commercial-carpet-cleaning/' },
-  { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
-];
 
 // §10 Comparison table. The shared rows from src/data/comparison.ts, now on a
 // fifth page.
@@ -484,53 +351,23 @@ const settingTags = [
 // pressure cleaning is subcontracted to an operator with the plant, this
 // table contradicts the page it is sitting on and has to come off this page.
 // A question for TLB, not a rewrite.
-const comparisonTable = {
-  heading: 'How TLB compares',
-  cornerLabel: 'Why TLB Cleaning is different',
-  lead: 'Anyone can hire a machine for a day. What you are actually buying is someone who knows which surface takes what pressure, and who will be reachable the week after.',
-  columns: comparisonColumns,
-  // Brief §19, scorecard finding 7. "Who cleans your home" becomes "your
-  // site" on a commercial page, and the holiday-lets row comes off: a strata
-  // committee or a facilities manager reading it here is being shown a table
-  // written for somebody else. Every other row is unchanged. See
-  // data/comparison.ts.
-  rows: serviceComparisonRows('Who cleans your site'),
-};
+//
+// In `comparisonTable`, on `rows`:
+// Brief §19, scorecard finding 7. "Who cleans your home" becomes "your
+// site" on a commercial page, and the holiday-lets row comes off: a strata
+// committee or a facilities manager reading it here is being shown a table
+// written for somebody else. Every other row is unchanged. See
+// data/comparison.ts.
 
 // §11 Branded FAQs. Written in the CUSTOMER'S voice, where "we" means the
 // reader's business rather than TLB. That register is the hub's and it is
 // held across all three commercial pages.
-const brandedFaqItems = [
-  {
-    question: 'Do we have to close while you do it?',
-    answer:
-      'Almost never. We work early, late or on your quietest day, and we do the site in sections so there is always a dry way in. Cones and signage go up around whatever is wet. For a car park we usually take it a bay run at a time so you never lose the whole thing at once.',
-  },
-  {
-    question: 'Will it damage our concrete, pavers or render?',
-    answer:
-      'Not if the pressure is matched to the surface, which is the first thing we work out at the walkthrough. Render, paint, cladding and roofing get a soft wash rather than high pressure, because force strips them. Old or already crumbling surfaces get flagged before we start rather than after.',
-  },
-  {
-    question: 'Can you get the oil stains out of our car park?',
-    answer:
-      'Usually a good way, sometimes not completely. Fresh oil and grease respond well to a degreaser with dwell time and the right heat. Oil that has been sitting in porous concrete for years has soaked into the slab, and no amount of pressure pulls it back out. We tell you which one you have before we quote.',
-  },
-  {
-    question: 'What do you need from us on the day?',
-    answer:
-      // ⚠️ BRACKET. Access to a tap and a power point is the ordinary
-      // arrangement, but whether TLB carries its own water tank and generator
-      // changes the answer completely, and nobody has said. This is the third
-      // question every site asks on the first call.
-      'Vehicles moved off the area being cleaned, and access to the site at the agreed time. [Confirm whether TLB brings its own water and power, or needs a tap and a power point on site.] Everything else, including the plant, the chemicals and the signage, comes with us.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We come and walk the site, look at the surfaces and tell you what will clean up and what will not. Then you get a written scope and a price, with the after hours option shown separately. No obligation. If it suits, we book a time that works around your trading.',
-  },
-];
+//
+// In `brandedFaqItems`, on "What do you need from us on the day?" (answer):
+// ⚠️ BRACKET. Access to a tap and a power point is the ordinary
+// arrangement, but whether TLB carries its own water tank and generator
+// changes the answer completely, and nobody has said. This is the third
+// question every site asks on the first call.
 
 // §12 Non-branded FAQs. The long-tail block, aimed at what people search
 // rather than what they ask us.
@@ -551,46 +388,83 @@ const brandedFaqItems = [
 //     not a rule, and is hedged accordingly.
 // Recommended before launch: a read by someone who prices exterior work, and
 // a visible "last reviewed" date on this block.
-const nonBrandedFaqItems = [
-  {
-    question: 'How often should a commercial site be pressure cleaned?',
-    answer:
-      'Most sites settle on twice a year, with high traffic entries, bin bays and food areas done quarterly. In the Northern Rivers the shaded southern side of a building grows algae far faster than the sunny side, so it is common for one elevation to need doing twice as often as the rest. Surfaces kept on a schedule cost less each visit, because there is less built up to remove.',
-  },
-  {
-    question: 'What is the difference between pressure cleaning and soft washing?',
-    answer:
-      'Pressure cleaning uses force to remove what is sitting on a hard surface, and suits concrete, pavers, brick and steel. Soft washing uses low pressure and a cleaning solution, and suits render, paint, cladding, signage and roofs, where high pressure would strip the finish or force water behind it. Soft washing also treats the algae and mould at the root, so the surface stays clean longer.',
-  },
-  {
-    question: 'Can pressure cleaning damage concrete?',
-    answer:
-      'Yes. Concrete looks tough but it etches. Holding the wand too close, or too long in one spot, cuts a visible line into the surface that does not fade, and a rotary surface cleaner is used on large flat areas partly to avoid exactly that. Old concrete, decorative finishes, sandstone and aged pavers are the ones to be careful with, and any of them should be tested in a corner first.',
-  },
-  {
-    question: 'Where is the water allowed to go?',
-    answer:
-      'Clean rinse water off a footpath can usually go where rain would. Water carrying oil, grease, detergent, paint or food waste cannot: in NSW, letting polluting matter enter a stormwater drain is an offence under the Protection of the Environment Operations Act 1997, and stormwater runs to the creek untreated. That run-off has to be captured and disposed of to sewer or to a licensed facility, and discharge to sewer needs your water authority or council to agree the conditions. Ask any cleaner how they handle it.',
-  },
-  {
-    question: 'How much does commercial pressure cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same call as the carpet page. This is the
-      // most searched question on the topic and the page cannot answer it
-      // without a number from TLB. A "from $X per square metre" that turns
-      // out to be wrong is worse than no number, and the ACCC treats
-      // from-pricing as a claim.
-      'Commercial pressure cleaning is usually priced per square metre, with a minimum charge for small jobs. The rate moves with the surface, how badly stained it is, access to water and power, whether the work is after hours and whether the wash water has to be captured. Ask for the price against a written scope rather than an hourly rate, so you can see what is actually included. [TLB’s pricing basis and minimum charge. Confirm.]',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "How much does commercial pressure cleaning cost?" (answer):
+// ⚠️ BRACKETED ON PURPOSE, same call as the carpet page. This is the
+// most searched question on the topic and the page cannot answer it
+// without a number from TLB. A "from $X per square metre" that turns
+// out to be wrong is worse than no number, and the ACCC treats
+// from-pricing as a claim.
 
 // §13 Closing CTA. Same offer as the hero, worded as what actually happens.
-const closingCta = {
-  kicker: 'Commercial pressure cleaning',
-  heading: 'Start with a walkthrough.',
-  lead: `We come and walk the site, look at the surfaces and tell you what will clean up and what will not. Then you get a written scope and a price. No obligation. ${primaryCtaSentence}`,
-  cta: { label: primaryCta.label, href: quoteCta.href },
+// The closing lead ends on the full approved CTA sentence, which used to be
+// a separate constant (`primaryCtaSentence`). It is now part of that lead in
+// the content file.
+
+// CONTENT lives in src/content/pages/commercial-cleaning/commercial-pressure-cleaning.yaml
+// and is edited in Pages CMS ("Commercial pressure cleaning"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning/commercial-pressure-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of `primaryCta` (§7 above). It links to the quote page in Site
+    // settings. Empty falls back to the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    // A card with no button of its own gets the page's main button.
+    pathways: section.pathwayCards.extend({
+      cards: z.array(section.pathwayCards.shape.cards.element.extend({ cta: section.optional(section.link) })).min(1),
+    }),
+    scope: section.iconGrid,
+    worthKnowing: section.textBlock,
+    industrial: section.textBlock,
+    // This page's own short list of settings, not the shared premises list.
+    settings: section.tagCloud.extend({ note: section.optional(z.array(section.text)) }),
+    // The columns and rows are the shared table in Site settings. The page
+    // owns its framing and the label of the "who cleans" row.
+    comparison: section.comparisonTable
+      .pick({ heading: true, lead: true, cornerLabel: true })
+      .extend({ whoCleansLabel: section.text }),
+    reviews: section.sectionHeading,
+    // The subheading falls back to the shared footprint line, and the towns
+    // come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }).extend({ subheading: section.optional(section.text) }),
+    // Heading only. The paragraphs are the shared brand lines.
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/commercial-pressure-cleaning/',
 };
+
+const primaryCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const business = localBusiness({
+  description: pageMeta.description,
+  // ⚠️ NSW only. See the note "In `business`" above: the wash water answer
+  // cites NSW law.
+  areaServed: 'Northern Rivers and Tweed, NSW',
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
+});
+
+const heroImage = page.hero.image && sized(page.hero.image, '1/1');
+
+const pathwayCards = page.pathways.cards.map((card, i) => ({
+  number: i + 1,
+  ...card,
+  image: sized(card.image, '4/3'),
+  cta: card.cta ?? primaryCta,
+}));
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -606,12 +480,12 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      subheading={hero.subheading}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? primaryCta}
+      image={heroImage}
     />
 
     {/* Trust bar and definition share ONE photo behind a Cream scrim, laid across
@@ -622,26 +496,35 @@ const closingCta = {
 
         The photo is this page's own wide exterior rather than the homepage
         interior the hub and the carpet sibling borrow. See the import. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
-    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+    <PathwayCards heading={page.pathways.heading} headingAccent={page.pathways.headingAccent} cards={pathwayCards} />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What our commercial pressure cleaning services involve, stage by stage"
-      lead="Six stages, in this order. The last two are what you are really paying for."
-      items={scopeItems}
-      cta={{ label: primaryCta.label, href: quoteCta.href }}
+      heading={page.scope.heading}
+      lead={page.scope.lead}
+      note={page.scope.note}
+      items={page.scope.items}
+      cta={primaryCta}
     />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Two things to ask before you let anyone start"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     {/* §18. New H2, per the brief. `light` between the dark "two things to
@@ -650,8 +533,10 @@ const closingCta = {
     <TextBlock
       theme="light"
       align="left"
-      heading="Industrial high pressure cleaning for warehouses, factories and yards"
-      body={industrialBody}
+      heading={page.industrial.heading}
+      body={page.industrial.body}
+      cta={page.industrial.cta}
+      backgroundImage={page.industrial.backgroundImage}
     />
 
     {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
@@ -672,27 +557,27 @@ const closingCta = {
         pages. */}
 
     <TagCloud
-      heading="Where we work, and the premises we cover"
-      subheading="Outdoor hard surfaces for workplaces across the Northern Rivers and the Tweed. Office car parks and entries, retail forecourts, industrial hardstand, strata common areas and school grounds."
-      tags={settingTags}
-      note={[]}
+      heading={page.settings.heading}
+      subheading={page.settings.subheading}
+      tags={page.settings.tags}
+      note={page.settings.note ?? []}
     />
 
     <ComparisonTable
-      heading={comparisonTable.heading}
-      cornerLabel={comparisonTable.cornerLabel}
-      lead={comparisonTable.lead}
-      columns={comparisonTable.columns}
-      rows={comparisonTable.rows}
+      heading={page.comparison.heading}
+      cornerLabel={page.comparison.cornerLabel}
+      lead={page.comparison.lead}
+      columns={comparisonColumns}
+      rows={serviceComparisonRows(page.comparison.whoCleansLabel)}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading={footprintSubheading}
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading ?? footprintSubheading}
       groups={footprintLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -708,7 +593,7 @@ const closingCta = {
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
@@ -722,15 +607,15 @@ const closingCta = {
         Nothing else on this page cites a primary source and nothing in the
         local competitive set does either. Add to it if you must, never cut
         it. */}
-    <Faq heading="Booking a commercial pressure clean" items={brandedFaqItems} />
-    <Faq heading="Commercial pressure cleaning questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? primaryCta}
     />
   </main>
 
