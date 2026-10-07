@@ -1641,3 +1641,53 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Never promise bond back, a pass or a refund, here or anywhere on the page."
+      - name: guide-how-much-does-end-of-lease-cleaning-cost
+        label: "What a bond clean costs"
+        type: file
+        path: src/content/pages/guides/how-much-does-end-of-lease-cleaning-cost.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The last sentence commits TLB to quoting against the published task list before work starts, as the End of lease cleaning page does. If that stops being true, change both pages together. The background photo also sits behind the trust bar: check the text is still easy to read after changing it."
+          - name: priceDrivers
+            component: textGrid
+            label: "What moves the price, in order (six boxes)"
+            description: "Listed by how much each one moves a quote. Reorder them if TLB's own quoting weighs them differently."
+          - name: quoteTable
+            component: comparisonTable
+            label: "Why one quote is half the other (table)"
+            description: "The first column (highlighted) describes how TLB quotes: every claim in it is a commitment also made on the End of lease cleaning page and in the site-wide comparison table. The second column describes a type of quote. Never name a competitor."
+          - name: pricing
+            component: textBlock
+            label: "How we price ours (dark band)"
+            description: "Every [CONFIRM] bracket must be replaced with TLB's real, checked figures before launch. Never publish a made-up price or a single figure (Australian Consumer Law). If the numbers are not coming, ask for this section to be removed rather than softening it."
+          - { name: falseEconomy, component: callout, label: "The lowest quote is sometimes the most expensive (warning box)" }
+          - name: quoteWell
+            component: iconGrid
+            label: "How to get a quote that holds on the day"
+            description: "The button under the grid is the site-wide quote button."
+          - name: guarantees
+            component: textBlock
+            label: "About bond back guarantees"
+            description: "TLB's own re-clean policy is not confirmed yet, so this section describes guarantees in general. Never promise bond back, a pass or a refund."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "No answer contains a dollar figure, on purpose. Add one only once TLB's real prices are confirmed."
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Never promise bond back, a pass or a refund, here or anywhere on the page."
