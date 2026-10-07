@@ -1,0 +1,233 @@
+seo:
+  title: Retail and Shopfront Cleaning | TLB Cleaning
+  description: Shop and retail cleaning across the Northern Rivers and the Tweed.
+    Floors, glass and the entry finished before you unlock the door, from a
+    local team on a written scope.
+hero:
+  kicker: Retail and shopfront cleaning
+  headingLines:
+    - They decide before
+    - they walk in.
+  lead: Shop and retail cleaning across the Northern Rivers and the Tweed. Floors,
+    glass and the entry finished before you unlock the door, by the same local
+    person every time. {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/premises/retail-cleaner-mopping-a-shop-floor-before-opening.jpg
+    alt: A cleaner mopping the polished concrete floor of a bright coastal homewares
+      shop before opening
+definition:
+  body:
+    - type: paragraph
+      text: "Retail cleaning is the daily cleaning of a shop or shopfront: floors,
+        entry and matting, internal and external glass, the counter and fitting
+        rooms, shelving and display surfaces, staff areas and the bathroom. TLB
+        Cleaning does this work across the Northern Rivers and the Tweed for
+        single shops, cafés and takeaway front of house, salons, galleries and
+        strips of tenancies."
+    - type: paragraph
+      text: In retail the cleaning is part of the merchandising rather than
+        maintenance, and the priority order is not what most people expect.
+        Glass comes first, because a customer decides whether to come in from
+        the footpath and the only thing between them and the stock is a pane of
+        glass with the morning sun on it. Then the floor, then the entry, then
+        the counter. Everything else is real work, but those four are what a
+        browser reacts to before anyone has said hello.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+clock:
+  heading: What happens, and when
+  lead: Ordered by the clock rather than by room, because that is the order a shop
+    actually runs on.
+  items:
+    - icon: spark
+      title: Before you open
+      description: Internal glass and the entry doors done first, floors swept and
+        mopped or vacuumed and dry before trade, entry matting lifted and
+        cleaned underneath, counter and card terminal wiped, bins emptied and
+        relined, fitting room mirrors and floors done. Finished and dry, not
+        finished and wet with a sign out.
+      href: /commercial-cleaning/
+    - icon: target
+      title: External glass and the footpath
+      description: Shopfront glass outside as well as in, the frames and the
+        threshold, and the footpath immediately outside swept. Coastal
+        shopfronts collect salt film that fresh water alone will not shift, so
+        the glass needs washing rather than wiping. [Whether TLB does external
+        glass, and up to what height. Confirm.] Anything above ground level
+        needs its own plan.
+      href: /house-cleaning/window-cleaning/
+    - icon: house
+      title: Back of house, which nobody quotes
+      description: Staff bathroom cleaned and restocked, kitchenette and sink, the
+        stockroom floor swept and kept clear, and the bin area. The stockroom is
+        the room a scope always leaves out and the room a health or fire
+        inspection actually looks at, because a blocked exit path starts as a
+        delivery nobody unpacked.
+      href: /commercial-cleaning/
+    - icon: bloom
+      title: Display surfaces, on your terms
+      description: Shelf and plinth surfaces dusted, mirrors and cabinet glass done,
+        and the tops of fixtures nobody can see from the floor but everybody can
+        see from the mezzanine. We do not move or restyle merchandise. We dust
+        around it, or we dust it and put it back exactly as it was, and which of
+        those it is goes on the scope rather than being assumed.
+      href: /commercial-cleaning/
+    - icon: chart-bars
+      title: Periodically, outside trade
+      description: Carpet extraction where there is carpet, hard floor machine
+        scrubbing or polishing, high dusting and light fittings, air vents, and
+        pressure cleaning the footpath and entry threshold. All of it booked
+        into a closed day or an early morning, because none of it can happen
+        with customers in the shop.
+      href: /commercial-cleaning/commercial-pressure-cleaning/
+glassPhoto:
+  image:
+    src: /src/assets/commercial_cleaning/premises/shopfront-glass-and-entry-cleaned-before-opening.jpg
+    alt: A cleaner squeegeeing the inside of a large shopfront window before
+      opening, the quiet street bright beyond the glass
+  caption: Glass first, every visit. It is the only thing between a browser on the
+    footpath and your stock.
+tenancy:
+  heading: Check your lease before you buy any of this.
+  body:
+    - If your shop is inside a centre or a managed strip, the landlord’s
+      cleaning contract usually covers the mall floor, the shared bathrooms, the
+      loading dock and the common bin area, and you are already paying for it
+      through outgoings. What it almost never covers is anything inside your
+      lease line, which is your floor, your glass, your fitting rooms, your
+      counter and your stockroom.
+    - The two ways that costs a tenant money are opposite. Some pay for a scope
+      that duplicates what outgoings already fund. Others assume the centre’s
+      cleaner does their glass and never notice it has not been done in a year.
+      Read the cleaning clause, or send it to us and we will quote to your lease
+      line rather than over it.
+worthKnowing:
+  heading: The customers you lose never come in
+  body:
+    - type: paragraph
+      text: The thing about a shop is that the people you lose never come in, so you
+        never find out. A browser looks at your window from the footpath, and if
+        the glass is streaked or fingerprinted or has last month’s tape residue
+        on it, they read the whole business through it and keep walking. There
+        is no complaint and no data. It is the only premises type in this
+        cluster where the cost of poor cleaning is entirely invisible to the
+        person paying for it.
+    - type: paragraph
+      text: That is also why glass is worth insisting on rather than treating as an
+        extra. Coastal shopfronts in this region get a salt film that a dry
+        cloth just smears, and the low morning sun on a main street shows every
+        mark on it. Washed properly and squeegeed it disappears; wiped, it looks
+        worse than before it was touched. If you only buy one line on the scope,
+        buy that one, and buy it often enough that it is never a job someone has
+        to notice.
+related:
+  heading: Other premises we clean
+  subheading: Commercial cleaning for every kind of premises across the Northern
+    Rivers and the Tweed.
+  tags:
+    - label: Window cleaning
+      href: /house-cleaning/window-cleaning/
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Across the Northern Rivers and the Tweed.
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Frequently Asked Questions
+  items:
+    - question: Our shop is small. Is that too small for you?
+      answer: "No, and small shops are a lot of what this work is. What a small shop
+        does run into is a minimum charge: a fifteen minute visit costs almost
+        the same to get to as a forty minute one, so there is a floor below
+        which a daily service cannot be priced honestly. [TLB’s minimum charge
+        per visit. Confirm.] Often the better answer for a small shop is three
+        visits a week rather than five, and we will say so."
+    - question: Can you be finished before we open?
+      answer: "Yes, and that is the whole point of an early visit. Floors dry, glass
+        done, entry clear, before you unlock. A cleaner still working at trade
+        is worse than no cleaner: you are paying for a service that is now
+        costing you sales, and a wet floor sign in a doorway turns browsers
+        around. If your opening time changes seasonally, tell us and the visit
+        moves with it."
+    - question: Do you do the windows too?
+      answer: Internal glass is part of every retail scope. External shopfront glass
+        at ground level is [included / a separate line. Confirm], and it needs
+        washing rather than wiping in a coastal town because of salt film.
+        Anything above ground level is a different job with different equipment,
+        and we will tell you which yours is rather than quoting and then
+        discovering it.
+    - question: Will you touch our stock or displays?
+      answer: Not unless you ask us to. The default is that we dust around merchandise
+        and never move, restyle or reposition it, because a display someone
+        spent an hour on is not ours to improve. If you would rather we lifted
+        pieces to dust the plinth and put them back exactly as they were, we
+        will, and that goes on the scope in writing so it is never a surprise
+        either way.
+    - question: What if we get a spill or a mess mid-trade?
+      answer: Ring the local number. For clients on an ongoing scope we will get to a
+        mid-trade problem the same day where we can, and tell you honestly if we
+        cannot rather than leaving you waiting. Most retail messes are a fifteen
+        minute job that becomes a real one if it dries, so it is worth calling
+        early rather than mopping it with paper towel and hoping.
+    - question: Do you take on a whole strip or a centre?
+      answer: That is a different and larger conversation than a single shop, and it
+        is the one case on this page where a site walkthrough genuinely pays for
+        itself. [Whether TLB takes multi-tenancy, managed strip or shopping
+        centre common area work. Confirm.] If you manage a strip rather than
+        trade from one, the strata and common area page is closer to what you
+        need.
+faq:
+  heading: Retail Cleaning FAQs
+  items:
+    - question: How much does shop cleaning cost?
+      answer: Retail is priced per visit against a written scope, and for a small shop
+        the minimum charge matters more than the rate does, because travel and
+        setup are most of a short visit. The number moves with floor area and
+        floor type, how much glass there is, whether external glass is included,
+        and how many visits a week. [TLB’s pricing basis and minimum charge per
+        visit. Confirm.]
+    - question: How often should a shop be cleaned?
+      answer: Daily for anywhere with food, a fitting room or high foot traffic, and
+        three times a week is usually enough for a low-traffic boutique or
+        gallery. Glass is the exception and wants doing every visit regardless,
+        because it is the surface customers judge from the footpath. Floors in a
+        shop with a street entry get dirty faster than floor area suggests,
+        since everything walks in from outside.
+    - question: Who is responsible for cleaning in a retail lease, the tenant or the
+        landlord?
+      answer: "Typically the landlord’s contract covers common areas — mall floors,
+        shared bathrooms, the loading dock, common bin areas — and the cost is
+        recovered from tenants through outgoings. Anything inside the lease line
+        is usually the tenant’s: your floor, your glass, your fitting rooms,
+        your stockroom. Leases vary, so the cleaning clause in your own lease is
+        the answer rather than the general rule. Read it before you buy a
+        scope."
+    - question: Why does shopfront glass in a coastal town streak?
+      answer: Because it is salt rather than dust. Sea air deposits a fine salt film
+        that attracts moisture and cannot be removed by dry wiping — a cloth
+        just moves it around and leaves a haze that shows badly in low morning
+        sun. It needs washing with a detergent solution and squeegeeing off, the
+        same way a professional does a window, which is why wiped shopfront
+        glass often looks worse afterwards than before.
+    - question: Should a shop floor be cleaned during trading hours?
+      answer: "Only for spills. A routine clean during trade creates a slip hazard
+        exactly where your customers are, and slips are among the most common
+        causes of injury in retail workplaces. It also reads badly: a mop and
+        bucket in a doorway turns browsers away more effectively than almost
+        anything else. Routine cleaning belongs before opening or after close,
+        with mid-trade attention reserved for genuine spills."
+    - question: What is usually left out of a retail cleaning quote?
+      answer: "Four things, consistently: external glass, under the entry matting, the
+        stockroom floor, and the tops of fixtures. All four are invisible on the
+        day and all four are noticed within a month. The stockroom is the one
+        worth insisting on, because a stockroom that is never cleaned becomes a
+        stockroom with a blocked exit path, and that is a fire and work health
+        and safety problem rather than a tidiness one."
+closingCta:
+  kicker: Retail and shopfront cleaning
+  heading: Send us your floor plan or your lease clause.
+  lead: For a single shop we can quote from that and a few photos. For a bigger
+    store or a strip of tenancies, a walkthrough is worth the twenty minutes.
