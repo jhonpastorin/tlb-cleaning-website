@@ -965,6 +965,238 @@ components:
     type: text
     label: Paragraphs
     list: true
+  comparisonFraming:
+    type: object
+    label: Comparison table (wording around the shared rows)
+    description: The columns and rows are shared with other pages. Edit them under Site settings > Comparison table.
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: cornerLabel
+        label: Top-left corner label
+        type: string
+      - name: footnote
+        label: Note under the table
+        type: text
+      - name: cta
+        component: link
+        label: Button (optional)
+  comparisonFramingWho:
+    type: object
+    label: Comparison table (wording around the shared rows)
+    description: The columns and rows are shared with other pages. Edit them under Site settings > Comparison table.
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: cornerLabel
+        label: Top-left corner label
+        type: string
+      - name: whoCleansLabel
+        label: Heading of the "Who cleans your home" row on this page
+        type: string
+        required: true
+  comparisonOwnRows:
+    type: object
+    label: Comparison table (this page's own rows)
+    description: The column headings are shared with other pages (Site settings > Comparison table). The rows are this page's own.
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: cornerLabel
+        label: Top-left corner label
+        type: string
+      - name: rows
+        label: Rows
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - name: label
+            label: Row heading
+            type: string
+            required: true
+          - name: description
+            label: Detail under the row heading
+            type: text
+          - name: values
+            label: One cell per column, left to right
+            type: string
+            list: true
+            description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
+      - name: footnote
+        label: Note under the table
+        type: text
+      - name: cta
+        component: link
+        label: Button (optional)
+  townBand:
+    type: object
+    label: Where we clean
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: subheading
+        label: Subheading
+        type: string
+        description: Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here.
+      - name: note
+        label: Note under the towns
+        type: text
+  townBandOwnSubheading:
+    type: object
+    label: Where we clean
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: subheading
+        label: Subheading
+        type: string
+        required: true
+        description: The towns themselves are edited once for the whole site, not here.
+      - name: note
+        label: Note under the towns
+        type: text
+  townBandSharedSubheading:
+    type: object
+    label: Where we clean
+    description: The subheading and the towns are edited once for the whole site, under Locations.
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: note
+        label: Note under the towns
+        type: text
+  relatedLinks:
+    type: object
+    label: Related pages (links)
+    description: The links themselves come from Site settings.
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: subheading
+        label: Subheading
+        type: string
+        required: true
+      - name: note
+        label: Note under the links
+        type: text
+  relatedLinksWithExtras:
+    type: object
+    label: Related pages (links)
+    description: Most links come from Site settings. Extra links added here appear after them, on this page only.
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: subheading
+        label: Subheading
+        type: string
+        required: true
+      - name: tags
+        label: Extra links (shown after the other pages)
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - name: label
+            label: Link text
+            type: string
+            required: true
+          - name: href
+            label: Links to
+            type: string
+            pattern: ^(/|https://|tel:|mailto:|#|quote$|book$)
+            description: A page on this site starting and ending with a slash (/house-cleaning/deep-cleaning/), a full https:// address for another site, or quote to use the site-wide quote button's link.
+      - name: note
+        label: Note under the links
+        type: text
+  iconLinkList:
+    type: object
+    label: List of links with icons
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: note
+        label: Note under the list
+        type: text
+      - name: items
+        label: Rows
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: icon
+            component: serviceIcon
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: description
+            label: Sentence under the title
+            type: text
+            required: true
+          - name: href
+            label: Links to
+            type: string
+            required: true
+            pattern: ^(/|https://|quote$|book$)
+            description: A page on this site starting and ending with a slash (/house-cleaning/deep-cleaning/), a full https:// address for another site, or quote to use the site-wide quote button's link.
+  heroNoPhoto:
+    type: object
+    label: Hero (top of the page, no photo)
+    fields:
+      - name: kicker
+        label: Small label above the heading
+        type: string
+      - name: headingLines
+        label: Main heading (H1)
+        type: string
+        list: true
+        required: true
+        description: Each line here starts a new line on the page. Most pages use one or two.
+      - name: subheading
+        label: Line under the heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+        required: true
+        description: "Tip: {{line.instant}} or {{line.fast}} inserts the brand line."
+      - name: cta
+        component: link
+        label: Button (leave empty to use the page's usual button)
 
 content:
   - name: main-pages
@@ -1003,30 +1235,8 @@ content:
             description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
           - { name: pathways, component: pathwayCards, label: "Tell us what you need (cards)" }
           - name: whatWeDo
-            label: "What we do (list with icons)"
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: note, label: Note under the list, type: text }
-              - name: items
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{title}"
-                fields:
-                  - name: icon
-                    component: serviceIcon
-                  - { name: title, label: Title, type: string, required: true }
-                  - { name: description, label: Sentence under the title, type: text, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    required: true
-                    description: A page on this site, starting and ending with a slash, e.g. /house-cleaning/deep-cleaning/
-                    pattern: "^(/|https://|quote$|book$)"
+            component: iconLinkList
+            label: What we do (list with icons)
           - name: team
             component: storyMosaic
             label: "Local team, run properly"
@@ -1037,15 +1247,9 @@ content:
             label: "Instant pricing (under the dark band)"
             description: "Only this page's own paragraphs. The \"Managed for you\" line above them and the How it works steps below them come from Site settings > Brand lines. The heading {{line.instant.heading}} inserts the brand line's heading."
           - name: comparison
-            label: "How TLB Cleaning compares (table)"
-            type: object
+            component: comparisonFraming
+            label: How TLB Cleaning compares (table)
             description: The rows and columns are shared with other pages. Edit them under Site settings > Comparison table.
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
           - name: beforeAfter
             component: beforeAfter
             label: "Before and after"
@@ -1148,15 +1352,9 @@ content:
             description: "\"Family first\" and \"Employed, not subcontracted\" are copied word for word from the About page: change both pages together. The employed claim has legal weight, so keep it only while it is true of every team member."
           - { name: resolution, component: textBlock, label: "One-line resolution (dark band with photo)" }
           - name: comparison
-            label: "How TLB Cleaning compares (table)"
-            type: object
+            component: comparisonFraming
+            label: How TLB Cleaning compares (table)
             description: The rows and columns are shared with other pages. Edit them under Site settings > Comparison table.
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
           - { name: model, component: textBlock, label: "A brand can be bought" }
           - name: whyPeopleStay
             component: textBlock
@@ -1187,24 +1385,9 @@ content:
         fields:
           - { name: seo, component: seo }
           - name: hero
+            component: heroNoPhoto
             label: Hero (top of the page, no photo)
-            type: object
             description: No photo here on purpose. Never add a star rating or review count unless it is a real, checkable figure.
-            fields:
-              - { name: kicker, label: Small label above the heading, type: string }
-              - name: headingLines
-                label: Main heading (H1)
-                type: string
-                list: true
-                required: true
-                description: Each line here starts a new line on the page. Most pages use one or two.
-              - { name: subheading, label: Line under the heading, type: string }
-              - name: lead
-                label: Intro sentence
-                type: text
-                required: true
-                description: "Tip: {{line.instant}} or {{line.fast}} inserts the brand line."
-              - { name: cta, component: link, label: "Button (leave empty to use the page's usual button)" }
           - { name: reputation, component: textBlock, label: "A reputation held by other people (under the trust bar)" }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: agencies
@@ -1971,28 +2154,9 @@ content:
             component: seo
             description: "Any text on this page can use {townCount}, {regionCount}, {stateCount}, {northernRiversCount}, {tweedCount} and {southernGoldCoastCount}. Each is counted from the town list, so the number never drifts from it. A misspelt one stops the site from publishing."
           - name: hero
+            component: heroNoPhoto
             label: Hero (top of the page)
-            type: object
-            description: "The photo is the valley region photo, under Locations > Live towns and region photos. {townCount} shows the number of towns."
-            fields:
-              - name: kicker
-                label: Small label above the heading
-                type: string
-              - name: headingLines
-                label: Main heading (H1)
-                type: string
-                list: true
-                required: true
-              - name: subheading
-                label: Line under the heading
-                type: string
-              - name: lead
-                label: Intro sentence
-                type: text
-                required: true
-              - name: cta
-                component: link
-                label: Button (leave empty to use the page's usual button)
+            description: The photo is the valley region photo, under Locations > Live towns and region photos. {townCount} shows the number of towns.
           - name: definition
             component: textBlock
             label: "Intro (under the trust bar)"
@@ -2055,28 +2219,9 @@ content:
             component: seo
             description: "Shared by every town page. Type {town} for the town's name, {region} for its region after \"the\" (Northern Rivers, Tweed, Southern Gold Coast), {regionName} for the region on its own (The Tweed) and {state} for NSW or QLD. These work in any text on this page; a misspelt one stops the site from publishing."
           - name: hero
+            component: heroNoPhoto
             label: Hero (top of the page)
-            type: object
             description: "Each town's photo is set in its own file under Locations > Town pages. Placeholders: {town}, {region}, {regionName}, {state}."
-            fields:
-              - name: kicker
-                label: Small label above the heading
-                type: string
-              - name: headingLines
-                label: Main heading (H1)
-                type: string
-                list: true
-                required: true
-              - name: subheading
-                label: Line under the heading
-                type: string
-              - name: lead
-                label: Intro sentence
-                type: text
-                required: true
-              - name: cta
-                component: link
-                label: Button (leave empty to use the page's usual button)
           - name: definition
             component: textBlock
             label: "Intro (under the trust bar)"
@@ -2158,21 +2303,9 @@ content:
             label: What we do across the region (list of services)
             description: "The six services and their sentences are edited under Site settings > Menus > Our services. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
           - name: towns
+            component: townBandOwnSubheading
             label: Towns we clean in the region
-            type: object
             description: "The towns are the region's own; which ones link to a page is set under Locations > Live towns and region photos. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
-            fields:
-              - name: heading
-                label: Heading
-                type: string
-                required: true
-              - name: subheading
-                label: Subheading
-                type: string
-                required: true
-              - name: note
-                component: paragraphList
-                label: Note under the towns
           - name: faq
             component: faq
             label: FAQs
@@ -2242,15 +2375,9 @@ content:
             label: "On the same visit (list of other services)"
             description: "The rows under this heading come from Site settings > Cross-links: outside your home and Cross-links: appliances."
           - name: comparison
-            label: "How TLB compares (table)"
-            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
+            component: comparisonFraming
+            label: How TLB compares (table)
+            description: The table's columns and rows are shared by every page and edited under Site settings > Comparison table.
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: brandLine
@@ -2297,15 +2424,9 @@ content:
             label: "Other things we clean around the house (list)"
             description: "The rows under this heading come from Site settings > Cross-links: appliances."
           - name: comparison
-            label: "How TLB compares (table)"
-            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
+            component: comparisonFraming
+            label: How TLB compares (table)
+            description: The table's columns and rows are shared by every page and edited under Site settings > Comparison table.
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
             label: "Where we clean"
@@ -2485,15 +2606,9 @@ content:
             label: "The rest of the outside (list)"
             description: "The rows under this heading come from Site settings > Cross-links: outside your home."
           - name: comparison
-            label: "How TLB compares (table)"
-            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
+            component: comparisonFraming
+            label: How TLB compares (table)
+            description: The table's columns and rows are shared by every page and edited under Site settings > Comparison table.
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: brandLine
@@ -2550,15 +2665,9 @@ content:
             label: "The rest of the outside (list)"
             description: "The rows under this heading come from Site settings > Cross-links: outside your home."
           - name: comparison
-            label: "How TLB compares (table)"
-            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
+            component: comparisonFraming
+            label: How TLB compares (table)
+            description: The table's columns and rows are shared by every page and edited under Site settings > Comparison table.
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: brandLine
@@ -2614,15 +2723,9 @@ content:
             label: "The rest of the outside"
             description: "The list itself comes from Site settings > Cross-links: outside your home."
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
+            component: comparisonFraming
+            label: How TLB compares (table)
             description: The table's columns and rows are shared by every service page. Edit them under Site settings > Comparison table.
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: bookingFaq
@@ -2668,15 +2771,9 @@ content:
             label: "Other things we clean around the house (list)"
             description: "The rows under this heading come from Site settings > Cross-links: appliances and Cross-links: outside your home."
           - name: comparison
-            label: "How TLB compares (table)"
-            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
+            component: comparisonFraming
+            label: How TLB compares (table)
+            description: The table's columns and rows are shared by every page and edited under Site settings > Comparison table.
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: brandLine
@@ -2763,30 +2860,9 @@ content:
               - { name: footnote, label: Note under the table, type: text }
               - { name: cta, component: link, label: Button (optional) }
           - name: commercial
-            label: "For agencies, holiday lets and commercial premises (list)"
-            description: "Same surface work as the rest of the page. No row may imply remediation, an inspection or a report."
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: note, label: Note under the list, type: text }
-              - name: items
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{title}"
-                fields:
-                  - { name: icon, component: serviceIcon }
-                  - { name: title, label: Title, type: string, required: true }
-                  - { name: description, label: Sentence under the title, type: text, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    required: true
-                    description: A page on this site, starting and ending with a slash, e.g. /commercial-cleaning/
-                    pattern: "^(/|https://|quote$|book$)"
+            component: iconLinkList
+            label: For agencies, holiday lets and commercial premises (list)
+            description: Same surface work as the rest of the page. No row may imply remediation, an inspection or a report.
           - name: health
             component: textBlock
             label: "On the health question"
@@ -2843,19 +2919,9 @@ content:
             description: "Advice a participant may act on. Keep it addressed to the reader, and get any change checked by someone who works with NDIS plans."
           - { name: whoThisIsFor, component: textBlock, label: "Who this is for" }
           - name: whereWeClean
+            component: townBandSharedSubheading
             label: Where we clean
-            type: object
             description: The subheading and the towns are edited once for the whole site, under Locations > Live towns and region photos.
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: tags
-                label: Tags (leave empty where the page lists towns)
-                type: object
-                list: true
-                fields:
-                  - { name: label, label: Tag text, type: string, required: true }
-                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)" }
-              - { name: note, label: Note under the tags, type: text, list: true }
           - name: whyChoose
             component: textGrid
             label: "Why participants and coordinators choose us (grid)"
@@ -2909,15 +2975,9 @@ content:
             label: "Other things we clean around the house"
             description: "The list itself comes from Site settings > Cross-links: appliances and Cross-links: outside your home."
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
+            component: comparisonFraming
+            label: How TLB compares (table)
             description: The table's columns and rows are shared by every service page. Edit them under Site settings > Comparison table.
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: bookingFaq
@@ -2965,45 +3025,14 @@ content:
             label: "What we do for agencies (tags)"
             description: A tag left without a link goes to the site-wide quote page.
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
-            description: "The rows are this page's own; the three column headings are shared by every service page (Site settings > Comparison table). Write each row as a fact about how the work is organised, never as a verdict on a competitor. If TLB does not confirm its re-clean terms, delete the re-clean row rather than softening it."
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - name: rows
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - { name: label, label: Row heading, type: string, required: true }
-                  - { name: description, label: Detail under the row heading, type: text }
-                  - name: values
-                    label: One cell per column, left to right
-                    type: string
-                    list: true
-                    description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
+            component: comparisonOwnRows
+            label: How TLB compares (table)
+            description: The rows are this page's own; the three column headings are shared by every service page (Site settings > Comparison table). Write each row as a fact about how the work is organised, never as a verdict on a competitor. If TLB does not confirm its re-clean terms, delete the re-clean row rather than softening it.
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
+            component: townBandSharedSubheading
             label: Where we clean
-            type: object
             description: The subheading and the towns are edited once for the whole site, under Locations > Live towns and region photos.
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: tags
-                label: Tags (leave empty where the page lists towns)
-                type: object
-                list: true
-                fields:
-                  - { name: label, label: Tag text, type: string, required: true }
-                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)" }
-              - { name: note, label: Note under the tags, type: text, list: true }
           - name: bookingFaq
             component: faq
             label: "FAQs: working with us on your rent roll"
@@ -3052,15 +3081,9 @@ content:
             label: "The rest of the outside"
             description: "The list itself comes from Site settings > Cross-links: outside your home."
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
+            component: comparisonFraming
+            label: How TLB compares (table)
             description: The table's columns and rows are shared by every service page. Edit them under Site settings > Comparison table.
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: bookingFaq
@@ -3110,30 +3133,14 @@ content:
             label: "Other things we clean around the house"
             description: "The list itself comes from Site settings > Cross-links: appliances."
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
+            component: comparisonFraming
+            label: How TLB compares (table)
             description: The table's columns and rows are shared by every service page. Edit them under Site settings > Comparison table.
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
+            component: townBandSharedSubheading
             label: Where we clean
-            type: object
             description: The subheading and the towns are edited once for the whole site, under Locations > Live towns and region photos.
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: tags
-                label: Tags (leave empty where the page lists towns)
-                type: object
-                list: true
-                fields:
-                  - { name: label, label: Tag text, type: string, required: true }
-                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)" }
-              - { name: note, label: Note under the tags, type: text, list: true }
           - name: bookingFaq
             component: faq
             label: "FAQs: booking a tile and grout clean"
@@ -3175,15 +3182,9 @@ content:
             label: "Other things we clean around the house"
             description: "The list itself comes from Site settings > Cross-links: appliances and Cross-links: outside your home."
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
+            component: comparisonFraming
+            label: How TLB compares (table)
             description: The table's columns and rows are shared by every service page. Edit them under Site settings > Comparison table.
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: bookingFaq
@@ -3232,15 +3233,9 @@ content:
             label: "The rest of the outside"
             description: "The list itself comes from Site settings > Cross-links: outside your home."
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
+            component: comparisonFraming
+            label: How TLB compares (table)
             description: The table's columns and rows are shared by every service page. Edit them under Site settings > Comparison table.
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: bookingFaq
@@ -3303,30 +3298,9 @@ content:
             label: "\"Professional cleaning required\" (warning box)"
             description: "The NSW rule in the second paragraph (a carpet cleaning or fumigation term only where the tenant was allowed an animal) depends on current law. Do not change it without re-checking the current Residential Tenancies Regulation and the standard form agreement. Explain, never advise: the page does not tell readers to refuse a clause."
           - name: regulators
-            label: "Where to check (links to the regulators)"
-            description: "Each row links to the regulator's home page on purpose, because deeper links break. Check every link still works after editing. The third row is a placeholder pointing at NSW Fair Trading until the real NSW and QLD tenant advice services are confirmed."
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: note, label: Note under the list, type: text }
-              - name: items
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{title}"
-                fields:
-                  - { name: icon, component: serviceIcon }
-                  - { name: title, label: Title, type: string, required: true }
-                  - { name: description, label: Sentence under the title, type: text, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    required: true
-                    description: "A full https:// address, or a page on this site starting with a slash."
-                    pattern: "^(/|https://|quote$|book$)"
+            component: iconLinkList
+            label: Where to check (links to the regulators)
+            description: Each row links to the regulator's home page on purpose, because deeper links break. Check every link still works after editing. The third row is a placeholder pointing at NSW Fair Trading until the real NSW and QLD tenant advice services are confirmed.
           - name: bond
             component: textBlock
             label: "What actually happens to the bond (dark band)"
@@ -3640,30 +3614,9 @@ content:
             label: "We do not advise on planning controls (box)"
             description: "The page's planning and legal disclaimer. Keep it, and keep it straight after the policy summary."
           - name: authorities
-            label: "Where to get the real answer (links to the authorities)"
-            description: "Each row links to the authority's home page on purpose, because deeper links break. Check every link still works after editing."
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: note, label: Note under the list, type: text }
-              - name: items
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{title}"
-                fields:
-                  - { name: icon, component: serviceIcon }
-                  - { name: title, label: Title, type: string, required: true }
-                  - { name: description, label: Sentence under the title, type: text, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    required: true
-                    description: "A full https:// address, or a page on this site starting with a slash."
-                    pattern: "^(/|https://|quote$|book$)"
+            component: iconLinkList
+            label: Where to get the real answer (links to the authorities)
+            description: Each row links to the authority's home page on purpose, because deeper links break. Check every link still works after editing.
           - name: effects
             component: textGrid
             label: "What a compressed letting year changes (six boxes)"
@@ -3796,16 +3749,9 @@ content:
                     description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
+            component: townBand
             label: Where we clean
-            type: object
-            description: "This page lists towns in Queensland as well as NSW, while the H1 names only the Northern Rivers and the Tweed. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here.
-              - { name: note, label: Note under the towns, type: text, list: true }
+            description: This page lists towns in Queensland as well as NSW, while the H1 names only the Northern Rivers and the Tweed. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -3852,50 +3798,18 @@ content:
             label: "The two questions worth more than the quote"
             description: "Do not state TLB's own screening status here until it is confirmed."
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinks
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - { name: note, label: Note under the links, type: text, list: true }
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
-            description: "The column headings are the shared ones under Site settings > Comparison table. The rows are this page's own. A \"Screening evidence\" row was held back until TLB confirms screening; the competitor columns are not yet signed off."
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - name: rows
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - { name: label, label: Row heading, type: string, required: true }
-                  - { name: description, label: Detail under the row heading, type: text }
-                  - name: values
-                    label: One cell per column, left to right
-                    type: string
-                    list: true
-                    description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
+            component: comparisonOwnRows
+            label: How TLB compares (table)
+            description: The column headings are the shared ones under Site settings > Comparison table. The rows are this page's own. A "Screening evidence" row was held back until TLB confirms screening; the competitor columns are not yet signed off.
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -3945,25 +3859,13 @@ content:
             label: "Your CIP protects the vessel (dark band)"
             description: "No spoilage statistic or dollar figure: there is no source to cite."
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinks
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                required: true
-                description: "The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBandOwnSubheading
+            label: Where we clean
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4013,29 +3915,14 @@ content:
           - { name: offices, component: textBlock, label: "Office carpet cleaning services" }
           - { name: settings, component: tagCloud, label: "Where we work, and the premises we cover (links)" }
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
+            component: comparisonFramingWho
+            label: How TLB compares (table)
             description: "The columns and rows are the shared table under Site settings > Comparison table. Its first row says the cleaners are employed by TLB, not subcontracted: if carpet work is subcontracted, the table has to come off this page."
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - name: whoCleansLabel
-                label: "Heading of the \"Who cleans your home\" row on this page"
-                type: string
-                required: true
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4085,25 +3972,14 @@ content:
             label: "A kitchen never looks dirty (dark band)"
             description: "Never state a single legal cleaning interval: it depends on cooking type and hours."
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinks
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4156,29 +4032,14 @@ content:
             description: "Paragraph 3 carries the same [Confirm] bracket on wash water capture as the stages."
           - { name: settings, component: tagCloud, label: "Where we work, and the premises we cover (links)" }
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
+            component: comparisonFramingWho
+            label: How TLB compares (table)
             description: "The columns and rows are the shared table under Site settings > Comparison table. Its first row says the cleaners are employed by TLB, not subcontracted: if pressure work is subcontracted, the table has to come off this page."
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - name: whoCleansLabel
-                label: "Heading of the \"Who cleans your home\" row on this page"
-                type: string
-                required: true
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only, and the wash water answer cites NSW law only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only, and the wash water answer cites NSW law only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4225,38 +4086,14 @@ content:
           - { name: priceDrivers, component: contentGrid, label: "What actually decides the price (grid)" }
           - { name: worthKnowing, component: textBlock, label: "Cleaning items on a defect list (dark band)" }
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinksWithExtras
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - name: tags
-                label: Extra links (shown after the other premises pages)
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - { name: label, label: Link text, type: string, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4303,25 +4140,13 @@ content:
           - { name: priceDrivers, component: contentGrid, label: "What actually decides the price (grid)" }
           - { name: worthKnowing, component: textBlock, label: "Cleaning sits upstream of production" }
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinks
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                required: true
-                description: "The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBandOwnSubheading
+            label: Where we clean
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4370,38 +4195,13 @@ content:
             label: "Two cancellations a month (dark band)"
             description: "No churn percentage is quoted on purpose: there is no source to cite."
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinksWithExtras
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - name: tags
-                label: Extra links (shown after the other premises pages)
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - { name: label, label: Link text, type: string, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                required: true
-                description: "The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBandOwnSubheading
+            label: Where we clean
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4448,50 +4248,18 @@ content:
             description: "Every item is drafted, not confirmed by TLB. The last item carries a [Confirm] bracket on kitchen work. The button under the list is the main button."
           - { name: worthKnowing, component: textBlock, label: "Count the one-star reviews (dark band)" }
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinksWithExtras
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - name: tags
-                label: Extra links (shown after the other premises pages)
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - { name: label, label: Link text, type: string, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
-              - { name: note, label: Note under the links, type: text, list: true }
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
-            description: "The columns and rows are the shared table under Site settings > Comparison table. The two competitor columns are not yet signed off."
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - name: whoCleansLabel
-                label: "Heading of the \"Who cleans your home\" row on this page"
-                type: string
-                required: true
+            component: comparisonFramingWho
+            label: How TLB compares (table)
+            description: The columns and rows are the shared table under Site settings > Comparison table. The two competitor columns are not yet signed off.
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4539,25 +4307,14 @@ content:
             label: "Somebody other than your clients audits this (dark band)"
             description: "Never quote an RACGP Standards edition or criterion number: they are revised."
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinks
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4606,37 +4363,18 @@ content:
             label: "What sits behind the number (dark band)"
             description: "Names the Cleaning Services Award. Never add a pay rate or dollar figure: Award rates change every 1 July."
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinks
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - { name: note, label: Note under the links, type: text, list: true }
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
-            description: "The columns and rows are the shared table under Site settings > Comparison table. The two competitor columns are not yet signed off."
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - name: whoCleansLabel
-                label: "Heading of the \"Who cleans your home\" row on this page"
-                type: string
-                required: true
+            component: comparisonFramingWho
+            label: How TLB compares (table)
+            description: The columns and rows are the shared table under Site settings > Comparison table. The two competitor columns are not yet signed off.
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4672,30 +4410,9 @@ content:
             label: "Intro (under the trust bar)"
             description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
           - name: clock
-            label: "What happens, and when (list of links)"
-            type: object
-            description: "Every row is drafted, not confirmed by TLB. The external glass row carries a [Confirm] bracket."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: note, label: Note under the list, type: text }
-              - name: items
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{title}"
-                fields:
-                  - { name: icon, component: serviceIcon }
-                  - { name: title, label: Title, type: string, required: true }
-                  - { name: description, label: Sentence under the title, type: text, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    required: true
-                    description: A page on this site, starting and ending with a slash, e.g. /commercial-cleaning/
-                    pattern: "^(/|https://|quote$|book$)"
+            component: iconLinkList
+            label: What happens, and when (list of links)
+            description: Every row is drafted, not confirmed by TLB. The external glass row carries a [Confirm] bracket.
           - { name: glassPhoto, component: imageBand, label: "Shopfront glass photo band" }
           - name: tenancy
             component: callout
@@ -4703,38 +4420,13 @@ content:
             description: "Leave the button empty to use the site-wide quote button."
           - { name: worthKnowing, component: textBlock, label: "The customers you lose never come in (dark band)" }
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinksWithExtras
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - name: tags
-                label: Extra links (shown after the other premises pages)
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - { name: label, label: Link text, type: string, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                required: true
-                description: "The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBandOwnSubheading
+            label: Where we clean
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4793,25 +4485,13 @@ content:
             label: "Thin cleaning is measured in absences (dark band)"
             description: "Never quote an NQS quality area or element number, or an outbreak statistic."
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinks
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                required: true
-                description: "The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBandOwnSubheading
+            label: Where we clean
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4847,92 +4527,26 @@ content:
             label: "Intro (under the trust bar)"
             description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
           - name: areas
-            label: "Every common area (list of links)"
-            type: object
-            description: "Every row is drafted, not confirmed by TLB. The bin room row carries a [Confirm] bracket."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: note, label: Note under the list, type: text }
-              - name: items
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{title}"
-                fields:
-                  - { name: icon, component: serviceIcon }
-                  - { name: title, label: Title, type: string, required: true }
-                  - { name: description, label: Sentence under the title, type: text, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    required: true
-                    description: A page on this site, starting and ending with a slash, e.g. /commercial-cleaning/
-                    pattern: "^(/|https://|quote$|book$)"
+            component: iconLinkList
+            label: Every common area (list of links)
+            description: Every row is drafted, not confirmed by TLB. The bin room row carries a [Confirm] bracket.
           - { name: binRoom, component: callout, label: "Do not cut the bin room (warning box)" }
           - { name: binRoomPhoto, component: imageBand, label: "Bin room photo band" }
           - { name: reporting, component: storyMosaic, label: "Three people read this page (dark mosaic)" }
           - { name: scopeFailures, component: contentGrid, label: "Three ways a strata scope goes wrong (grid)" }
           - name: comparison
-            label: "How TLB compares (table)"
-            type: object
-            description: "The column headings are the shared ones under Site settings > Comparison table. The rows are this page's own. The two competitor columns are not yet signed off."
-            fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: lead, label: Intro sentence, type: text }
-              - { name: cornerLabel, label: Top-left corner label, type: string }
-              - name: rows
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - { name: label, label: Row heading, type: string, required: true }
-                  - { name: description, label: Detail under the row heading, type: text }
-                  - name: values
-                    label: One cell per column, left to right
-                    type: string
-                    list: true
-                    description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
-              - { name: footnote, label: Note under the table, type: text }
-              - { name: cta, component: link, label: Button (optional) }
+            component: comparisonOwnRows
+            label: How TLB compares (table)
+            description: The column headings are the shared ones under Site settings > Comparison table. The rows are this page's own. The two competitor columns are not yet signed off.
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinksWithExtras
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - name: tags
-                label: Extra links (shown after the other premises pages)
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: "{label}"
-                fields:
-                  - { name: label, label: Link text, type: string, required: true }
-                  - name: href
-                    label: Links to
-                    type: string
-                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
@@ -4981,25 +4595,14 @@ content:
             label: "A machine-scrubbed floor (dark band)"
             description: "Never quote a WHS section number or an injury statistic."
           - name: related
-            label: "Other premises we clean (links)"
-            type: object
+            component: relatedLinks
+            label: Other premises we clean (links)
             description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: subheading, label: Subheading, type: string, required: true }
-              - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
-            label: "Where we clean"
-            type: object
-            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - name: subheading
-                label: Subheading
-                type: string
-                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
-              - { name: note, label: Note under the towns, type: text, list: true }
+            component: townBand
+            label: Where we clean
+            description: Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open.
           - name: brandLine
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
