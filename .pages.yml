@@ -1890,3 +1890,74 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+      - name: commercial-kitchen-cleaning
+        label: "Commercial kitchen cleaning"
+        type: file
+        path: src/content/pages/commercial-cleaning/commercial-kitchen-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: ctaLabel
+            label: "Main button text"
+            type: string
+            description: "Used by the hero, the button under the scope list and the closing block. It links to the quote page set under Site settings > Site-wide buttons. Leave empty to use the site-wide walkthrough button text."
+          - name: hero
+            component: hero
+            description: "Leave the hero's button empty to use the main button above."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
+          - name: canopy
+            component: callout
+            label: "A canopy clean is not a canopy certificate (warning box)"
+            description: "Never say or imply TLB does certified AS/NZS 1668.1 duct cleaning."
+          - name: canopyPhoto
+            component: imageBand
+            label: "Canopy photo band"
+            description: "Keep people out of this photo: a person in it reads as TLB claiming to have certified the canopy."
+          - name: scope
+            component: iconGrid
+            label: "What our commercial kitchen cleaning services cover (list with icons)"
+            description: "Every item is drafted, not confirmed by TLB. The cool room and canopy items carry [Confirm] brackets; the canopy one must not ship unresolved. The button under the list is the main button."
+          - { name: trades, component: contentGrid, label: "Three trades, routinely confused (grid)" }
+          - name: worthKnowing
+            component: textBlock
+            label: "A kitchen never looks dirty (dark band)"
+            description: "Never state a single legal cleaning interval: it depends on cooking type and hours."
+          - name: related
+            label: "Other premises we clean (links)"
+            type: object
+            description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: subheading, label: Subheading, type: string, required: true }
+              - { name: note, label: Note under the links, type: text, list: true }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
+              - { name: note, label: Note under the towns, type: text, list: true }
+          - name: brandLine
+            component: sectionHeading
+            label: "Easy to book heading (above the brand lines)"
+            description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
+          - name: brandedFaq
+            component: faq
+            label: "Booking a kitchen deep clean (FAQs)"
+            description: "The canopy and cool room answers carry [Confirm] brackets. Never word the canopy answer so it reads as a certified duct clean."
+          - name: faq
+            component: faq
+            label: "Commercial kitchen cleaning FAQs"
+            description: "The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the main button."

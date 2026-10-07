@@ -64,12 +64,8 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // the prompts are in that folder's IMAGE-PROMPTS.md. The canopy frame has no
 // people in it on purpose: it is the outcome §3 argues about, and a person in
 // the shot would read as us claiming to have certified it.
-import heroImg from '../../assets/commercial_cleaning/premises/commercial-kitchen-cleaner-degreasing-a-stainless-bench.jpg';
-import canopyImg from '../../assets/commercial_cleaning/premises/commercial-kitchen-canopy-and-filters-cleaned.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -95,7 +91,11 @@ import {
 import { locationGroups, locationSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 // §0 Metadata. Title and description are the SIGNED-OFF workbook text
 // (Keyword Mapping & Metadata, sheet 1 row 32), reproduced verbatim. The old
@@ -111,13 +111,9 @@ import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from 
 // expectation the hood secondary creates. The right home for it is the page,
 // which handles it in a dedicated section (§3) plus FAQ 2. Neither needed
 // changing, but the boundary now lives only on the page.
-const pageMeta = {
-  title: 'Commercial Kitchen Cleaning Services | TLB Cleaning',
-  description:
-    'Commercial kitchen cleaning for cafes, pubs and restaurants: floors, walls, cool rooms and equipment. Scheduled around service. Get a quote.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/commercial-kitchen-cleaning/',
-};
+//
+// In `pageMeta`, on `canonical`:
+// ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
 
 // Brief §7. The approved workbook CTA is `Get a quote`, so per Rule 4 it goes
 // on every in-page button. At eleven characters it fits easily. One primary
@@ -141,7 +137,6 @@ const pageMeta = {
 // No BFD 13.2 conflict either way: there is no `Get an instant quote` on this
 // page, the pricing block promises a walkthrough and a written scope, and
 // `Get a quote` asks for a quote rather than promising an instant price.
-const walkthroughCta = { label: 'Get a quote', href: quoteCta.href };
 
 // §1 Hero. `split-single-image`, image left — mirroring the aged care page,
 // and for the same reason: the reader's real question is whether this looks
@@ -149,51 +144,37 @@ const walkthroughCta = { label: 'Get a quote', href: quoteCta.href };
 // stainless bench answers it before the copy can.
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
-const hero = {
-  kicker: 'Commercial kitchen cleaning',
-  // Brief §4. The mapped primary `commercial kitchen cleaning services`
-  // (200/mo) appeared nowhere in the old H1, and the H1 is scored present or
-  // absent. The extension is the premises list, taken straight from the
-  // approved meta so the search result and the page agree on who this is for.
-  //
-  // The old line — the sharpest distinction on any of the ten commercial
-  // pages — is not cut. It opens the lead, because it works by setting two
-  // clauses against each other and the mapped phrase belongs to neither.
-  headingLines: ['Commercial kitchen cleaning services', 'for cafes, pubs and restaurants'],
-  // Brief §5. Rule 5's second slot, which this page did not have. Its
-  // extension is the TIMING rather than the H1's premises list, and "between
-  // services, not during them" is lifted from the page's own opening
-  // paragraph, so the subheading and the body say the same thing in the same
-  // words. It also answers the first objection a venue has to any contractor:
-  // lost trading hours.
-  subheading: 'Commercial kitchen cleaning services done between services, not during them',
-  // Brief §6. The timing phrase comes out of the lead because the subheading
-  // now carries it. What replaces it is the thing that actually defines the
-  // service and that the nightly close-down cannot do: a cold kitchen with the
-  // line pulled out. "Periodic deep cleaning" is dropped from the opening
-  // position because `commercial kitchen deep cleaning services` (50/mo) is
-  // better served by the FAQ block, which covers deep cleaning intervals at
-  // length.
-  lead:
-    `Your brigade cleans nightly. This is the other clean. Behind the equipment, under the benches and into the drains, across the Northern Rivers and the Tweed, on the visit that needs the kitchen cold and the line pulled out. ${theLine.fast}`,
-  cta: walkthroughCta,
-  image: {
-    ratio: '16/9',
-    label:
-      'A cleaner degreasing a long stainless steel preparation bench in a bright commercial kitchen after service',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on `headingLines`:
+// Brief §4. The mapped primary `commercial kitchen cleaning services`
+// (200/mo) appeared nowhere in the old H1, and the H1 is scored present or
+// absent. The extension is the premises list, taken straight from the
+// approved meta so the search result and the page agree on who this is for.
+//
+// The old line — the sharpest distinction on any of the ten commercial
+// pages — is not cut. It opens the lead, because it works by setting two
+// clauses against each other and the mapped phrase belongs to neither.
+// In `hero`, on `subheading`:
+// Brief §5. Rule 5's second slot, which this page did not have. Its
+// extension is the TIMING rather than the H1's premises list, and "between
+// services, not during them" is lifted from the page's own opening
+// paragraph, so the subheading and the body say the same thing in the same
+// words. It also answers the first objection a venue has to any contractor:
+// lost trading hours.
+// In `hero`, on `lead`:
+// Brief §6. The timing phrase comes out of the lead because the subheading
+// now carries it. What replaces it is the thing that actually defines the
+// service and that the nightly close-down cannot do: a cold kitchen with the
+// line pulled out. "Periodic deep cleaning" is dropped from the opening
+// position because `commercial kitchen deep cleaning services` (50/mo) is
+// better served by the FAQ block, which covers deep cleaning intervals at
+// length.
 
 // §2 Definition. Answer-target block. Paragraph two is doing the most
 // important work on the page: it separates the nightly close-down (kitchen
 // staff, always) from the periodic deep clean (this page) before anyone
 // reads a scope, because that confusion is what makes kitchen quotes
 // incomparable.
-const definitionBody: TextBlockBody[] = [
-  'Commercial kitchen cleaning is the periodic deep cleaning of a professional kitchen: floors and drains, walls and splashbacks, the sides and backs of equipment, under and behind the cooking line, cool room interiors and the stainless nobody can reach mid-service. TLB Cleaning does this work across the Northern Rivers and the Tweed, scheduled around your trading.',
-  'It is not the nightly close-down, and confusing the two is how kitchen quotes end up impossible to compare. Your brigade cleans as they go and closes down the line every night, because food contact surfaces and equipment are part of running a kitchen and cannot wait for a contractor. What a contractor is for is the work that needs the kitchen cold, the equipment pulled out and four uninterrupted hours: the parts that get worse every week until someone books them.',
-];
 
 // §3 The canopy boundary. `warning`, and the first substantive block on the
 // page for the same reason the medical page leads with clinical waste: what
@@ -213,13 +194,6 @@ const definitionBody: TextBlockBody[] = [
 //     obligations. Correct.
 //   - Nothing here states that TLB is or is not certified. That is the
 //     §4 bracket and the biggest launch blocker on the page.
-const canopyCallout = {
-  heading: 'A canopy clean and a canopy certificate are not the same purchase.',
-  body: [
-    'Cleaning a kitchen exhaust system properly means the filters, the hood, the plenum and the ductwork all the way to the fan, done to the maintenance requirements in AS/NZS 1668.1, and it finishes with a report and a certificate you keep. That document is the point. Your insurer or your landlord will ask for it after a grease fire, and a kitchen that cannot produce one is in a much worse position than a kitchen that can.',
-    'Plenty of cleaners will degrease the visible underside of your canopy and call it a canopy clean. It is not dishonest work, it is just not the thing that protects you, and it leaves the grease that actually matters sitting in the duct above the ceiling. So ask any quote one question: does this come with a certificate. If the answer is no, you still need the certified clean on top of it, and you should know that before you pay for either.',
-  ],
-};
 
 // §4 Scope. `ServiceBlocks variant="icon-grid"`, grouped by WHAT MAKES EACH
 // PART HARD rather than by area — the grease, the water, the cold, the
@@ -229,48 +203,13 @@ const canopyCallout = {
 // ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
 // Two carry real brackets and both are the difference between this page
 // being honest and not.
-const scopeItems = [
-  {
-    icon: 'target' as const,
-    title: 'The grease you cannot reach in service',
-    description:
-      'Sides and backs of the cooking line, the gaps between units, the wall behind the range, splashbacks up to the canopy line, and the legs and undercarriage of every bench. This is where grease actually accumulates, because it is the only part a nightly close-down cannot get to without pulling equipment out.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'Floors and drains, properly',
-    description:
-      'Quarry tile scrubbed rather than mopped, because a mop on a grease-loaded tile floor just redistributes it. Grout lines agitated, coving cleaned, floor waste grates lifted and the channels cleaned out. A kitchen floor that is still slippery after cleaning was mopped, not scrubbed, and it is a genuine slip risk for your brigade.',
-  },
-  {
-    icon: 'bloom' as const,
-    title: 'Cool rooms and freezers',
-    description:
-      // ⚠️ Real bracket. Stock movement is a food safety decision, not a
-      // cleaning one, and it has to be the operator's call.
-      'Interior walls, ceiling, shelving pulled out and washed, floor and the door seals, which is where mould actually starts. [Whether TLB defrosts freezers, and whether stock is moved by us or by your team. Confirm.] Stock movement should stay with your own staff for food safety reasons, and we would rather book around a delivery than take responsibility for one.',
-  },
-  {
-    icon: 'chart-bars' as const,
-    title: 'Filters and the visible canopy',
-    description:
-      // ⚠️ THE bracket on this page. Wording this wrong is the biggest risk
-      // on it. See the file header and §3.
-      'Baffle filters removed, degreased, dried and refitted, and the canopy interior and underside degreased. [Whether TLB does this at all, and if so, the exact wording that makes clear it is NOT a certified AS/NZS 1668.1 duct clean. Confirm before this page ships.] Ductwork above the canopy is a certified trade and we will give you a name rather than a quote.',
-  },
-  {
-    icon: 'spark' as const,
-    title: 'The stainless nobody has time for',
-    description:
-      'Shelving, racks, trolleys, the tops of everything, the extraction fan grilles inside the room, dry store shelving and the back of the pass. Stainless is polished with the grain rather than scoured across it, because a scoured bench looks worse permanently and holds soil in the scratches.',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'What we will not do',
-    description:
-      'No grease trap pump-outs, which is licensed liquid waste work with its own tracking paperwork. No certified duct cleaning. No dismantling of gas equipment or anything that needs isolating. No pest treatment. Each of those is a licensed trade, and using a general cleaner for one is how a kitchen ends up with an invoice and no compliance.',
-  },
-];
+//
+// In `scopeItems`, on "Cool rooms and freezers" (description):
+// ⚠️ Real bracket. Stock movement is a food safety decision, not a
+// cleaning one, and it has to be the operator's call.
+// In `scopeItems`, on "Filters and the visible canopy" (description):
+// ⚠️ THE bracket on this page. Wording this wrong is the biggest risk
+// on it. See the file header and §3.
 
 // §5 The three trades people confuse. `ContentGrid` with `feature` cells,
 // standing in for the ComparisonTable other pages carry.
@@ -280,32 +219,6 @@ const scopeItems = [
 // mind. Getting that wrong costs them a compliance document, which is worse
 // than paying too much. The shared comparison rows would have answered a
 // question nobody on this page is asking.
-const tradesBlocks = [
-  {
-    type: 'feature' as const,
-    icon: 'spray-bottle' as const,
-    heading: 'Periodic deep cleaning',
-    body: [
-      'Us. Floors, drains, walls, behind and under the line, cool rooms, stainless, filters. Booked monthly or quarterly, done between services. No certificate, because none exists for this work — what you get is a written scope and a kitchen you can see the difference in.',
-    ],
-  },
-  {
-    type: 'feature' as const,
-    icon: 'chart-bars' as const,
-    heading: 'Certified exhaust cleaning',
-    body: [
-      'A specialist. Filters, hood, plenum and the full ductwork to the fan, to the maintenance requirements in AS/NZS 1668.1, with a report and a certificate for your records and your insurer. Frequency depends on how much you fry. Ask us and we will give you a name.',
-    ],
-  },
-  {
-    type: 'feature' as const,
-    icon: 'puzzle' as const,
-    heading: 'Grease trap servicing',
-    body: [
-      'A licensed liquid waste contractor. Pump-out, disposal and the tracking paperwork, usually on a schedule set by your local council or water authority. Not a cleaning job at all, and not something a general cleaner can legally take away for you.',
-    ],
-  },
-];
 
 // §6 "Worth knowing". The lever here is that a kitchen degrades invisibly and
 // on a schedule, so the argument is about frequency rather than about price.
@@ -319,51 +232,18 @@ const tradesBlocks = [
 //   - NO FREQUENCY IS ASSERTED as a legal requirement, because the required
 //     interval for exhaust cleaning depends on cooking type and hours, and
 //     stating a single number would be wrong for most readers.
-const worthKnowingBody: TextBlockBody[] = [
-  'A kitchen never looks dirty to the people in it. It degrades a millimetre at a time, on every surface at once, and the brigade adapts around it without noticing: the gap behind the fryer, the grout that has gone from grey to black, the cool room seal that has started to spot. Then a council inspector arrives, or a new head chef starts, or somebody slips, and all of it is visible in one afternoon.',
-  'Two things make the frequency worth arguing about rather than the price. The first is that grease is a fire load: what accumulates in and above an exhaust system is what turns a flare-up into a building fire, and it is the reason exhaust cleaning intervals are set by how much you fry rather than by the calendar. The second is that under the Food Standards Code your premises, fixtures, fittings and equipment have to be kept clean and sanitary, and a periodic deep clean on a schedule is how a kitchen demonstrates that instead of asserting it. Book it monthly or quarterly and it stays a cleaning line item. Leave it and it becomes a capital one.',
-];
 
 // §7 Related pages. Hospitality is the nearest neighbour and breweries the
 // second — a taproom kitchen is this page's reader too.
 const relatedTags = relatedPremises('/commercial-cleaning/commercial-kitchen-cleaning/');
 
 // §9 Branded FAQs, in the CUSTOMER'S voice — a chef, owner or venue manager.
-const brandedFaqItems = [
-  {
-    question: 'When would you actually be in the kitchen?',
-    answer:
-      'After your last service or before your first prep, and for a full deep clean usually overnight or on your closed day. A kitchen has to be cold and the line has to be pulled out, neither of which is possible between lunch and dinner. Tell us your trading pattern at the walkthrough and we will fit the visit into the only gap that genuinely exists.',
-  },
-  {
-    question: 'Do you do the canopy and the ducts?',
-    answer:
-      // ⚠️ Same bracket as §4. The most important answer on the page to get
-      // right, and it must not be softened.
-      'Filters and the visible canopy, yes. Ductwork, no. [Confirm the exact scope TLB will offer here, and word it so nobody can read it as a certified AS/NZS 1668.1 clean.] Certified exhaust cleaning finishes with a report and a certificate for your insurer, and only a specialist can issue that. Ask us and we will give you a name instead of a quote.',
-  },
-  {
-    question: 'How often should we book a deep clean?',
-    answer:
-      'Monthly for a kitchen with a busy fryer and grill, quarterly for a café or a kitchen doing mostly cold and oven work. What sets it is how much you fry rather than how many covers you do, because oil in the air is what lands on every surface in the room. A walkthrough settles it in ten minutes, and we would rather quote you quarterly and be right than monthly and be greedy.',
-  },
-  {
-    question: 'Do we have to empty the cool room first?',
-    answer:
-      // ⚠️ Same bracket as §4.
-      'Stock movement should stay with your team, for food safety reasons rather than for convenience: your staff know what can leave a cool room and for how long, and we do not. [Whether TLB will move sealed stock, and whether freezers are defrosted. Confirm.] In practice we book cool room work for the morning after a delivery gap, so there is less in there to move.',
-  },
-  {
-    question: 'What chemicals do you use in a food area?',
-    answer:
-      'Food-safe products where surfaces are food contact, and heavy degreasers only on floors, walls and equipment exteriors where they can be rinsed off properly. Everything is rinsed rather than left to dry on a surface food will touch, and nothing gets used near open stock. If your food safety program specifies particular products, yours wins and it goes on the scope.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We walk the kitchen when it is cold, look behind the line and lift a floor grate, and tell you what is actually there. Then you get a written scope, a price per clean and a recommended interval. If what you really need is a certified exhaust clean, we will say so and point you at someone who can issue the certificate.',
-  },
-];
+//
+// In `brandedFaqItems`, on "Do you do the canopy and the ducts?" (answer):
+// ⚠️ Same bracket as §4. The most important answer on the page to get
+// right, and it must not be softened.
+// In `brandedFaqItems`, on "Do we have to empty the cool room first?" (answer):
+// ⚠️ Same bracket as §4.
 
 // §10 Non-branded FAQs, the long-tail block.
 //
@@ -378,47 +258,58 @@ const brandedFaqItems = [
 //   - Grease trap servicing intervals are set by the local water authority or
 //     council. Correct.
 //   - No dollar figure anywhere, same as every sibling page.
-const nonBrandedFaqItems = [
-  {
-    question: 'How much does commercial kitchen cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
-      'A periodic deep clean is priced per job against a written scope, and the number moves with the size of the cooking line, how much of the equipment has to be pulled out, the floor area of quarry tile, whether cool rooms are included and how long it has been since the last one. The first clean on a kitchen that has never had one is always the biggest. [TLB’s pricing basis. Confirm.]',
-  },
-  {
-    question: 'How often does a commercial kitchen need deep cleaning?',
-    answer:
-      'Monthly for a high-volume kitchen with fryers and a chargrill, quarterly for lighter cooking. The driver is airborne oil rather than covers: frying and grilling put grease into the air that settles on every surface in the room, including ones nowhere near the line. Exhaust systems are on their own interval, set by cooking type and hours rather than by a fixed calendar date.',
-  },
-  {
-    question: 'What are the legal cleaning requirements for a commercial kitchen in Australia?',
-    answer:
-      'Food businesses must keep premises, fixtures, fittings and equipment in a clean and sanitary condition under the Food Standards Code, and local councils inspect against it. The Code sets the outcome rather than a task list, so your own food safety program is what documents how you meet it. Exhaust systems have separate maintenance requirements under AS/NZS 1668.1. This is general information, not compliance advice — your council is the right source for your premises.',
-  },
-  {
-    question: 'Who is responsible for cleaning a commercial kitchen, staff or a contractor?',
-    answer:
-      'Both, and the split should be written down. Kitchen staff clean as they go and close the line down nightly, because food contact surfaces and equipment cannot wait for a contractor. A cleaning contractor does the periodic work that needs the kitchen cold and the equipment moved. Where a scope does not say which is which, the gaps are always the same ones: behind the line, the floor grates and the cool room seals.',
-  },
-  {
-    question: 'Why does kitchen exhaust cleaning need a certificate?',
-    answer:
-      'Because the accumulated grease in a hood and its ductwork is a fire load, and the certificate is what shows it was removed to the required standard and when. Insurers and landlords commonly ask for that evidence, and after a grease fire the absence of it is a problem. A visible degrease of the underside of a canopy is useful cleaning but it does not address the duct and it does not produce the document.',
-  },
-  {
-    question: 'Can a cleaner empty a grease trap?',
-    answer:
-      'No. Grease trap waste is regulated liquid waste and it has to be pumped out, transported and disposed of by a licensed contractor with the tracking paperwork that goes with it, usually on a schedule set by your local water authority or council. A general cleaning contractor can keep the surrounds clean and tell you when a trap is close to needing service, and that is the extent of it.',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "How much does commercial kitchen cleaning cost?" (answer):
+// ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
 
 // §11 Closing CTA.
-const closingCta = {
-  kicker: 'Commercial kitchen cleaning',
-  heading: 'We will look behind the line.',
-  lead: 'A walkthrough while the kitchen is cold, a lifted floor grate, and an honest answer about what is actually there. Then a written scope, a price per clean and a recommended interval. Get a quote.',
-  cta: walkthroughCta,
+
+// CONTENT lives in src/content/pages/commercial-cleaning/commercial-kitchen-cleaning.yaml
+// and is edited in Pages CMS ("Commercial kitchen cleaning"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning/commercial-kitchen-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of the page's main button. It links to the quote page in Site
+    // settings. Empty falls back to the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    canopy: section.callout,
+    canopyPhoto: section.imageBand,
+    scope: section.iconGrid,
+    trades: section.contentGrid,
+    worthKnowing: section.textBlock,
+    // The pills are the other premises pages, from Site settings.
+    related: section.tagCloud.omit({ tags: true }).extend({ note: section.optional(z.array(section.text)) }),
+    reviews: section.sectionHeading,
+    // The subheading falls back to the shared service-area line, and the towns
+    // come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }).extend({ subheading: section.optional(section.text) }),
+    // Heading only. The paragraphs are the shared brand lines.
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/commercial-kitchen-cleaning/',
 };
+
+const walkthroughCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '16/9');
+
+const tradesBlocks = page.trades.items.map((item) =>
+  item.type === 'image' ? { type: 'image' as const, ...sized(item.image, '4/3') } : item,
+);
 
 const business = commercialBusiness(pageMeta.description);
 ---
@@ -436,21 +327,27 @@ const business = commercialBusiness(pageMeta.description);
     <Hero
       variant="split-single-image"
       imagePosition="left"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      subheading={hero.subheading}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? walkthroughCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
     {/* §3 — the boundary, before the offer. See the file header. */}
-    <Callout tone="warning" heading={canopyCallout.heading} body={canopyCallout.body} />
+    <Callout tone="warning" heading={page.canopy.heading} body={page.canopy.body} cta={page.canopy.cta} />
 
     {/* The canopy frame, given a band of its own because it is the one image
         that makes §3's distinction visible. No people in it on purpose.
@@ -459,47 +356,45 @@ const business = commercialBusiness(pageMeta.description);
         Checked: the canopy, the seated filters and the cooktop all survive. */}
     <ImageBand
       ratio="16/9"
-      label="A clean stainless steel commercial kitchen extraction canopy with its baffle filters seated back in place"
-      caption="Filters and canopy, degreased and refitted. The ductwork above this is a certified trade, and a different invoice."
-      src={canopyImg}
+      label={page.canopyPhoto.image.label}
+      caption={page.canopyPhoto.caption}
+      src={page.canopyPhoto.image.src}
     />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What our commercial kitchen cleaning services cover"
-      lead="Grouped by what makes each part hard, which is the grouping a chef recognises and a quote usually hides."
-      items={scopeItems}
+      heading={page.scope.heading}
+      lead={page.scope.lead}
+      note={page.scope.note}
+      items={page.scope.items}
       cta={walkthroughCta}
     />
 
-    <ContentGrid
-      heading="Three trades, routinely confused"
-      lead="Booking the wrong one costs you a compliance document, which is worse than paying too much."
-      columns={3}
-      blocks={tradesBlocks}
-    />
+    <ContentGrid heading={page.trades.heading} lead={page.trades.lead} columns={3} blocks={tradesBlocks} />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="A kitchen never looks dirty to the people in it"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     <TagCloud
-      heading="Other premises we clean"
-      subheading="Commercial cleaning for every kind of premises across the Northern Rivers and the Tweed."
+      heading={page.related.heading}
+      subheading={page.related.subheading}
       tags={relatedTags}
-      note={[]}
+      note={page.related.note ?? []}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading={locationSubheading}
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading ?? locationSubheading}
       groups={locationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -515,7 +410,7 @@ const business = commercialBusiness(pageMeta.description);
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
@@ -531,15 +426,15 @@ const business = commercialBusiness(pageMeta.description);
         ceiling allows. The second heading stays: it carries
         `commercial kitchen cleaning` as a phrase but not the mapped primary,
         because it does not contain "services". */}
-    <Faq heading="Booking a kitchen deep clean" items={brandedFaqItems} />
-    <Faq heading="Commercial Kitchen Cleaning FAQs" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? walkthroughCta}
     />
   </main>
 

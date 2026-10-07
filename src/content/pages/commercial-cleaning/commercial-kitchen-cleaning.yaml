@@ -1,0 +1,267 @@
+seo:
+  title: Commercial Kitchen Cleaning Services | TLB Cleaning
+  description: "Commercial kitchen cleaning for cafes, pubs and restaurants:
+    floors, walls, cool rooms and equipment. Scheduled around service. Get a
+    quote."
+ctaLabel: Get a quote
+hero:
+  kicker: Commercial kitchen cleaning
+  headingLines:
+    - Commercial kitchen cleaning services
+    - for cafes, pubs and restaurants
+  subheading: Commercial kitchen cleaning services done between services, not during them
+  lead: Your brigade cleans nightly. This is the other clean. Behind the
+    equipment, under the benches and into the drains, across the Northern Rivers
+    and the Tweed, on the visit that needs the kitchen cold and the line pulled
+    out. {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/premises/commercial-kitchen-cleaner-degreasing-a-stainless-bench.jpg
+    alt: A cleaner degreasing a long stainless steel preparation bench in a bright
+      commercial kitchen after service
+definition:
+  body:
+    - type: paragraph
+      text: "Commercial kitchen cleaning is the periodic deep cleaning of a
+        professional kitchen: floors and drains, walls and splashbacks, the
+        sides and backs of equipment, under and behind the cooking line, cool
+        room interiors and the stainless nobody can reach mid-service. TLB
+        Cleaning does this work across the Northern Rivers and the Tweed,
+        scheduled around your trading."
+    - type: paragraph
+      text: "It is not the nightly close-down, and confusing the two is how kitchen
+        quotes end up impossible to compare. Your brigade cleans as they go and
+        closes down the line every night, because food contact surfaces and
+        equipment are part of running a kitchen and cannot wait for a
+        contractor. What a contractor is for is the work that needs the kitchen
+        cold, the equipment pulled out and four uninterrupted hours: the parts
+        that get worse every week until someone books them."
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+canopy:
+  heading: A canopy clean and a canopy certificate are not the same purchase.
+  body:
+    - Cleaning a kitchen exhaust system properly means the filters, the hood,
+      the plenum and the ductwork all the way to the fan, done to the
+      maintenance requirements in AS/NZS 1668.1, and it finishes with a report
+      and a certificate you keep. That document is the point. Your insurer or
+      your landlord will ask for it after a grease fire, and a kitchen that
+      cannot produce one is in a much worse position than a kitchen that can.
+    - "Plenty of cleaners will degrease the visible underside of your canopy and
+      call it a canopy clean. It is not dishonest work, it is just not the thing
+      that protects you, and it leaves the grease that actually matters sitting
+      in the duct above the ceiling. So ask any quote one question: does this
+      come with a certificate. If the answer is no, you still need the certified
+      clean on top of it, and you should know that before you pay for either."
+canopyPhoto:
+  image:
+    src: /src/assets/commercial_cleaning/premises/commercial-kitchen-canopy-and-filters-cleaned.jpg
+    alt: A clean stainless steel commercial kitchen extraction canopy with its
+      baffle filters seated back in place
+  caption: Filters and canopy, degreased and refitted. The ductwork above this is
+    a certified trade, and a different invoice.
+scope:
+  heading: What our commercial kitchen cleaning services cover
+  lead: Grouped by what makes each part hard, which is the grouping a chef
+    recognises and a quote usually hides.
+  items:
+    - icon: target
+      title: The grease you cannot reach in service
+      description: Sides and backs of the cooking line, the gaps between units, the
+        wall behind the range, splashbacks up to the canopy line, and the legs
+        and undercarriage of every bench. This is where grease actually
+        accumulates, because it is the only part a nightly close-down cannot get
+        to without pulling equipment out.
+    - icon: spray-bottle
+      title: Floors and drains, properly
+      description: Quarry tile scrubbed rather than mopped, because a mop on a
+        grease-loaded tile floor just redistributes it. Grout lines agitated,
+        coving cleaned, floor waste grates lifted and the channels cleaned out.
+        A kitchen floor that is still slippery after cleaning was mopped, not
+        scrubbed, and it is a genuine slip risk for your brigade.
+    - icon: bloom
+      title: Cool rooms and freezers
+      description: Interior walls, ceiling, shelving pulled out and washed, floor and
+        the door seals, which is where mould actually starts. [Whether TLB
+        defrosts freezers, and whether stock is moved by us or by your team.
+        Confirm.] Stock movement should stay with your own staff for food safety
+        reasons, and we would rather book around a delivery than take
+        responsibility for one.
+    - icon: chart-bars
+      title: Filters and the visible canopy
+      description: Baffle filters removed, degreased, dried and refitted, and the
+        canopy interior and underside degreased. [Whether TLB does this at all,
+        and if so, the exact wording that makes clear it is NOT a certified
+        AS/NZS 1668.1 duct clean. Confirm before this page ships.] Ductwork
+        above the canopy is a certified trade and we will give you a name rather
+        than a quote.
+    - icon: spark
+      title: The stainless nobody has time for
+      description: Shelving, racks, trolleys, the tops of everything, the extraction
+        fan grilles inside the room, dry store shelving and the back of the
+        pass. Stainless is polished with the grain rather than scoured across
+        it, because a scoured bench looks worse permanently and holds soil in
+        the scratches.
+    - icon: puzzle
+      title: What we will not do
+      description: No grease trap pump-outs, which is licensed liquid waste work with
+        its own tracking paperwork. No certified duct cleaning. No dismantling
+        of gas equipment or anything that needs isolating. No pest treatment.
+        Each of those is a licensed trade, and using a general cleaner for one
+        is how a kitchen ends up with an invoice and no compliance.
+trades:
+  heading: Three trades, routinely confused
+  lead: Booking the wrong one costs you a compliance document, which is worse than
+    paying too much.
+  items:
+    - type: feature
+      icon: spray-bottle
+      heading: Periodic deep cleaning
+      body:
+        - Us. Floors, drains, walls, behind and under the line, cool rooms,
+          stainless, filters. Booked monthly or quarterly, done between
+          services. No certificate, because none exists for this work — what you
+          get is a written scope and a kitchen you can see the difference in.
+    - type: feature
+      icon: chart-bars
+      heading: Certified exhaust cleaning
+      body:
+        - A specialist. Filters, hood, plenum and the full ductwork to the fan,
+          to the maintenance requirements in AS/NZS 1668.1, with a report and a
+          certificate for your records and your insurer. Frequency depends on
+          how much you fry. Ask us and we will give you a name.
+    - type: feature
+      icon: puzzle
+      heading: Grease trap servicing
+      body:
+        - A licensed liquid waste contractor. Pump-out, disposal and the
+          tracking paperwork, usually on a schedule set by your local council or
+          water authority. Not a cleaning job at all, and not something a
+          general cleaner can legally take away for you.
+worthKnowing:
+  heading: A kitchen never looks dirty to the people in it
+  body:
+    - type: paragraph
+      text: "A kitchen never looks dirty to the people in it. It degrades a millimetre
+        at a time, on every surface at once, and the brigade adapts around it
+        without noticing: the gap behind the fryer, the grout that has gone from
+        grey to black, the cool room seal that has started to spot. Then a
+        council inspector arrives, or a new head chef starts, or somebody slips,
+        and all of it is visible in one afternoon."
+    - type: paragraph
+      text: "Two things make the frequency worth arguing about rather than the price.
+        The first is that grease is a fire load: what accumulates in and above
+        an exhaust system is what turns a flare-up into a building fire, and it
+        is the reason exhaust cleaning intervals are set by how much you fry
+        rather than by the calendar. The second is that under the Food Standards
+        Code your premises, fixtures, fittings and equipment have to be kept
+        clean and sanitary, and a periodic deep clean on a schedule is how a
+        kitchen demonstrates that instead of asserting it. Book it monthly or
+        quarterly and it stays a cleaning line item. Leave it and it becomes a
+        capital one."
+related:
+  heading: Other premises we clean
+  subheading: Commercial cleaning for every kind of premises across the Northern
+    Rivers and the Tweed.
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Booking a kitchen deep clean
+  items:
+    - question: When would you actually be in the kitchen?
+      answer: After your last service or before your first prep, and for a full deep
+        clean usually overnight or on your closed day. A kitchen has to be cold
+        and the line has to be pulled out, neither of which is possible between
+        lunch and dinner. Tell us your trading pattern at the walkthrough and we
+        will fit the visit into the only gap that genuinely exists.
+    - question: Do you do the canopy and the ducts?
+      answer: Filters and the visible canopy, yes. Ductwork, no. [Confirm the exact
+        scope TLB will offer here, and word it so nobody can read it as a
+        certified AS/NZS 1668.1 clean.] Certified exhaust cleaning finishes with
+        a report and a certificate for your insurer, and only a specialist can
+        issue that. Ask us and we will give you a name instead of a quote.
+    - question: How often should we book a deep clean?
+      answer: Monthly for a kitchen with a busy fryer and grill, quarterly for a café
+        or a kitchen doing mostly cold and oven work. What sets it is how much
+        you fry rather than how many covers you do, because oil in the air is
+        what lands on every surface in the room. A walkthrough settles it in ten
+        minutes, and we would rather quote you quarterly and be right than
+        monthly and be greedy.
+    - question: Do we have to empty the cool room first?
+      answer: "Stock movement should stay with your team, for food safety reasons
+        rather than for convenience: your staff know what can leave a cool room
+        and for how long, and we do not. [Whether TLB will move sealed stock,
+        and whether freezers are defrosted. Confirm.] In practice we book cool
+        room work for the morning after a delivery gap, so there is less in
+        there to move."
+    - question: What chemicals do you use in a food area?
+      answer: Food-safe products where surfaces are food contact, and heavy degreasers
+        only on floors, walls and equipment exteriors where they can be rinsed
+        off properly. Everything is rinsed rather than left to dry on a surface
+        food will touch, and nothing gets used near open stock. If your food
+        safety program specifies particular products, yours wins and it goes on
+        the scope.
+    - question: What happens if I get in touch?
+      answer: We walk the kitchen when it is cold, look behind the line and lift a
+        floor grate, and tell you what is actually there. Then you get a written
+        scope, a price per clean and a recommended interval. If what you really
+        need is a certified exhaust clean, we will say so and point you at
+        someone who can issue the certificate.
+faq:
+  heading: Commercial Kitchen Cleaning FAQs
+  items:
+    - question: How much does commercial kitchen cleaning cost?
+      answer: A periodic deep clean is priced per job against a written scope, and the
+        number moves with the size of the cooking line, how much of the
+        equipment has to be pulled out, the floor area of quarry tile, whether
+        cool rooms are included and how long it has been since the last one. The
+        first clean on a kitchen that has never had one is always the biggest.
+        [TLB’s pricing basis. Confirm.]
+    - question: How often does a commercial kitchen need deep cleaning?
+      answer: "Monthly for a high-volume kitchen with fryers and a chargrill,
+        quarterly for lighter cooking. The driver is airborne oil rather than
+        covers: frying and grilling put grease into the air that settles on
+        every surface in the room, including ones nowhere near the line. Exhaust
+        systems are on their own interval, set by cooking type and hours rather
+        than by a fixed calendar date."
+    - question: What are the legal cleaning requirements for a commercial kitchen in
+        Australia?
+      answer: Food businesses must keep premises, fixtures, fittings and equipment in
+        a clean and sanitary condition under the Food Standards Code, and local
+        councils inspect against it. The Code sets the outcome rather than a
+        task list, so your own food safety program is what documents how you
+        meet it. Exhaust systems have separate maintenance requirements under
+        AS/NZS 1668.1. This is general information, not compliance advice — your
+        council is the right source for your premises.
+    - question: Who is responsible for cleaning a commercial kitchen, staff or a
+        contractor?
+      answer: "Both, and the split should be written down. Kitchen staff clean as they
+        go and close the line down nightly, because food contact surfaces and
+        equipment cannot wait for a contractor. A cleaning contractor does the
+        periodic work that needs the kitchen cold and the equipment moved. Where
+        a scope does not say which is which, the gaps are always the same ones:
+        behind the line, the floor grates and the cool room seals."
+    - question: Why does kitchen exhaust cleaning need a certificate?
+      answer: Because the accumulated grease in a hood and its ductwork is a fire
+        load, and the certificate is what shows it was removed to the required
+        standard and when. Insurers and landlords commonly ask for that
+        evidence, and after a grease fire the absence of it is a problem. A
+        visible degrease of the underside of a canopy is useful cleaning but it
+        does not address the duct and it does not produce the document.
+    - question: Can a cleaner empty a grease trap?
+      answer: No. Grease trap waste is regulated liquid waste and it has to be pumped
+        out, transported and disposed of by a licensed contractor with the
+        tracking paperwork that goes with it, usually on a schedule set by your
+        local water authority or council. A general cleaning contractor can keep
+        the surrounds clean and tell you when a trap is close to needing
+        service, and that is the extent of it.
+closingCta:
+  kicker: Commercial kitchen cleaning
+  heading: We will look behind the line.
+  lead: A walkthrough while the kitchen is cold, a lifted floor grate, and an
+    honest answer about what is actually there. Then a written scope, a price
+    per clean and a recommended interval. Get a quote.
