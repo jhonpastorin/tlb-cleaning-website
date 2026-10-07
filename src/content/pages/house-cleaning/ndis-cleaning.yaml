@@ -1,0 +1,208 @@
+seo:
+  title: NDIS House Cleaning Services | TLB Cleaning
+  description: NDIS house cleaning delivered by the same friendly cleaner each
+    visit, with clear reporting for plan managers. Enquire today.
+buttonLabel: Enquire today
+hero:
+  kicker: NDIS cleaning
+  headingLines:
+    - NDIS house cleaning across the
+    - Northern Rivers and the Tweed
+  subheading: The same trusted local faces, treating your home with genuine care.
+  lead: NDIS house cleaning across the Northern Rivers and the Tweed, from a team
+    you get to know. The same familiar faces, a schedule that does not change on
+    you, and one local number to ring. {{line.instant}}
+  image:
+    src: /src/assets/ndis/ndis-cleaning-cleaner-in-a-lived-in-living-room.jpg
+    alt: A TLB cleaner in an aqua polo and dark teal apron standing with her vacuum
+      in a comfortable, lived-in living room, turning toward the camera with a
+      warm, open expression
+definition:
+  body:
+    - type: paragraph
+      text: NDIS cleaning is regular household cleaning paid for from a participant's
+        NDIS plan, usually under Core Supports where it is reasonable and
+        necessary.
+    - type: paragraph
+      text: TLB Cleaning provides NDIS cleaning services across the Northern Rivers
+        and the Tweed.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: However you are arranging support,
+  headingAccent: start here.
+  cards:
+    - image:
+        src: /src/assets/home/house-cleaning-team-vacuuming-open-plan-living-room.jpg
+        alt: Two TLB cleaners vacuuming and tidying an open-plan living room during a
+          regular visit
+      title: Set up regular support
+      description: Most participants prefer the comfort of a consistent, weekly or
+        fortnightly schedule. You get the same familiar face treating your home
+        with genuine care, every time.
+      cta:
+        label: Regular cleaning
+        href: /house-cleaning/
+    - image:
+        src: /src/assets/home/service-deep-and-one-off-cleans.png
+        alt: A TLB cleaner working through a room during a deep reset clean
+      title: I need a deep reset clean
+      description: Sometimes you just need help getting back on top of things. A deep
+        clean resets the home to a safe, comfortable standard before starting
+        regular service.
+      cta:
+        label: Deep cleaning
+        href: /house-cleaning/deep-cleaning/
+    - image:
+        src: /src/assets/ndis/ndis-cleaning-cleaner-and-support-coordinator-talking-in-a-home.jpg
+        alt: A TLB cleaner and a support coordinator talking in the living room of a
+          home, relaxed and unhurried
+      title: I am a Support Coordinator
+      description: We make managing plans easy. We are a reliable, [insured] local
+        business ready to provide consistent, respectful in-home help for your
+        participants.
+      cta:
+        label: Talk to us
+        href: /contact/
+worthKnowing:
+  heading: You probably don't need a registered provider.
+  body:
+    - Most people assume NDIS cleaning has to come from a registered provider.
+      Only NDIA-managed plans are restricted that way.
+    - If your plan is self-managed or plan-managed, you can choose any provider
+      you like, including us. If you are not sure which kind of plan you have,
+      your plan manager or support coordinator will know, and we are happy to
+      talk it through with them.
+whoThisIsFor:
+  heading: NDIS house cleaning for people across the Northern Rivers and the Tweed
+  body:
+    - type: paragraph
+      text: If keeping on top of the house has become harder than it used to be,
+        you're not alone, and you don't have to sort it out by yourself.
+    - type: paragraph
+      text: "We clean for:"
+    - type: list
+      items:
+        - NDIS participants who want a regular, reliable clean at home
+        - Family carers arranging support for someone they love
+        - Support coordinators and plan managers who need a local provider that
+          turns up, communicates and invoices properly
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+whyChoose:
+  heading: Why participants and coordinators choose us
+  items:
+    - heading: We turn up
+      body:
+        - For most households a missed clean is annoying. When you've been
+          waiting all week for help with the bathroom, it's a genuinely bad day,
+          which is why reliability isn't something we advertise, it's the thing
+          the whole business was built on.
+        - On time. Done properly. Every time.
+    - heading: The same familiar faces, every visit
+      body:
+        - You shouldn't have to explain your home to a stranger every fortnight.
+        - Wherever we can, you'll have the same cleaner each visit, someone who
+          knows how you like things done and doesn't need to be told twice. If
+          they're unwell or away, we'll let you know beforehand and send someone
+          from our team who already knows your preferences.
+        - We're a local team, and there is one local number to ring. When you
+          ring us, you're talking to someone who lives here.
+    - heading: A real local business, and a real name behind it
+      body:
+        - TLB was started by Teagan Burke, an Alstonville local who wanted the
+          job done properly. It grew from one person to a team across the region
+          without a dollar spent on advertising, and every client came from
+          someone who had already been looked after.
+        - Most of our team are local women. If you'd feel more comfortable with
+          a woman in your home, tell us and we'll do our best to arrange it.
+        - We're [insured], [police-checked / worker-screened], and bound by the
+          NDIS Code of Conduct like every provider paid from NDIS funding. Your
+          home is yours. We treat it that way.
+windows:
+  heading: NDIS window cleaning, and the jobs you can't safely reach
+  body:
+    - type: paragraph
+      text: Windows are the job most people stop doing first. Not because they stop
+        mattering, but because they mean a ladder, a stretch, or a twist that is
+        no longer worth the risk.
+    - type: paragraph
+      text: We clean windows inside and out at ground level, along with tracks, sills
+        and flyscreens, which is where the dirt actually sits. It can go on the
+        same visit as your regular clean or be booked on its own a few times a
+        year, whichever suits your plan.
+    - type: paragraph
+      text: Like the rest of the clean, it is hourly support, so it comes out of the
+        same funding and you set the priorities for the time booked. If you
+        would rather we did the windows one visit and the bathrooms the next,
+        that is your call to make and we will work to it.
+reviews:
+  heading: What our clients say
+bookingFaq:
+  heading: Working with us
+  items:
+    - question: Can I use my NDIS funding to pay for cleaning?
+      answer: Often, yes. Cleaning usually sits under Core Supports where it's
+        reasonable and necessary in your plan. We work with [plan-managed and
+        self-managed] participants, and we're glad to talk it through with your
+        coordinator.
+    - question: Who actually comes into my home, will it be the same person each time?
+      answer: The same trusted local team wherever we can, familiar faces, not a
+        different stranger each week. TLB is a real local business, insured and
+        accountable [confirm police checks], with Teagan standing behind every
+        job.
+    - question: What makes TLB different from other cleaners doing NDIS work?
+      answer: A local team with backup. Big enough that your clean still happens when
+        someone is unwell, and local enough that the person who comes knows you
+        and knows the area.
+    - question: What if I'm not happy with the clean, or I want things done differently?
+      answer: Tell us and we'll make it right, and that's the deal. You choose what
+        gets done, how often and what we leave alone. Change it any time. It's
+        your home, your call.
+    - question: What happens if I get in touch?
+      answer: A simple chat about what you need, when, and whether we're the right
+        fit. No pressure, no obligation. We're happy to speak with your family,
+        coordinator or plan manager too.
+generalFaq:
+  heading: NDIS house cleaning, common questions
+  items:
+    - question: Can I still get cleaning funded if I live with family or housemates?
+      answer: Often yes, but usually only for the spaces you're responsible for. The
+        NDIS won't fund supports that duplicate what family or other household
+        members already provide, and the NDIA considers whether a support is
+        shared. In a share house, that can mean funding covers your own room and
+        the parts of the home your disability stops you managing, rather than
+        the whole house.
+    - question: Cleaning isn't in my plan. Can I still get it?
+      answer: Not until it's funded, but you can ask for it. Core Supports funding is
+        usually flexible, so if you already have Assistance with Daily Life
+        funding you may be able to use some of it for cleaning. If you don't,
+        raise it at your next plan check-in or ask the NDIA for a plan variation
+        on 1800 800 110. An occupational therapist report describing what you
+        can't safely do strengthens the case.
+    - question: What will the cleaner actually do?
+      answer: "Everyday household cleaning you can't manage safely yourself:
+        vacuuming, mopping, bathrooms, kitchen, dusting, laundry, changing linen
+        and taking out bins. It's an hourly support, so you set the priorities
+        for the time booked, and a two-hour visit won't cover a whole-house deep
+        clean. Yard and garden work is a separate NDIS line item
+        (01_019_0120_1_1), billed separately at its own rate."
+    - question: Do I need to provide cleaning products and a vacuum?
+      answer: "That's set by your provider and recorded in your service agreement, so
+        ask before the first visit. The NDIS funds the hour of support work, not
+        consumables: cleaning products, mops and vacuums generally can't be
+        claimed from your plan unless they're specialised items linked to your
+        disability. If you'd rather your own products were used for allergy or
+        sensory reasons, say so upfront."
+    - question: What happens if I have to cancel a clean?
+      answer: Your service agreement sets the notice period, so check it before you
+        sign. If you cancel inside that window, a provider may be able to claim
+        the session from your plan, but only if the agreement says so and they
+        couldn't give the worker other paid work instead. Give as much notice as
+        you can and you won't be charged.
+closingCta:
+  heading: Tell us what would help.
+  lead: A simple chat about what you need, when, and whether we're the right fit.
+    No pressure, and we're happy to speak with your family, coordinator or plan
+    manager too.
