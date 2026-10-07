@@ -1318,6 +1318,34 @@ content:
               - { name: kicker, label: Small label above the heading, type: string }
               - { name: subheading, label: Line under the heading, type: string }
               - { name: cta, component: link, label: Button, required: true }
+      - name: "404"
+        label: Page not found (404)
+        type: file
+        path: src/content/pages/404.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            label: Hero (top of the page, no photo)
+            type: object
+            fields:
+              - { name: kicker, label: Small label above the heading, type: string }
+              - name: headingLines
+                label: Main heading (H1)
+                type: string
+                list: true
+                required: true
+                description: Each line here starts a new line on the page. Most pages use one or two.
+              - { name: subheading, label: Line under the heading, type: string }
+              - name: lead
+                label: Intro sentence
+                type: text
+                required: true
+                description: "Tip: {{line.instant}} or {{line.fast}} inserts the brand line."
+              - { name: cta, component: link, label: Button, required: true }
+          - name: whereToNext
+            component: tagCloud
+            label: "Where to next (links)"
 
   - name: site-settings
     label: Site settings
