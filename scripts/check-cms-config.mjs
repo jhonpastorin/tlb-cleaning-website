@@ -116,6 +116,19 @@ for (const entry of entries(config.content ?? [])) {
   }
 }
 
+// Entry names identify entries in Pages CMS, so they must be unique across
+// every group (two merged branches once both used `contact` and `reviews`).
+{
+  const seen = new Set();
+  (function walk(items) {
+    for (const item of items) {
+      if (seen.has(item.name)) problems.push(`.pages.yml: the entry name "${item.name}" is used more than once`);
+      seen.add(item.name);
+      if (item.items) walk(item.items);
+    }
+  })(config.content ?? []);
+}
+
 // Every content file must be reachable from the editor: a file with no entry
 // in .pages.yml is content nobody can change.
 const covered = new Set();
