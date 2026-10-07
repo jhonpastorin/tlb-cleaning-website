@@ -2,7 +2,7 @@
 
 **Goal:** every piece of visible copy and every photo on every page of tlbcleaning.com.au can be edited in a friendly web editor (Pages CMS), by people without GitHub accounts, while the site stays a fully static Astro build on Render.
 
-**Status:** Phases 1 to 3 done on `feature/pages-cms` (7 Oct 2026): every page's copy and photos are editable. Phase 0 has three Pages CMS checks still open (photos, emptied fields, `.JPG` uploads); they must pass before Phase 3. See "Spike findings" and "Phase 1 results" in section 9.
+**Status:** Phases 1 to 4 done on `feature/pages-cms` (8 Oct 2026): every page's copy and photos are editable, and the editor has been tidied. Phases 5 to 7 remain. Phase 0 has three Pages CMS checks still open (photos, emptied fields, `.JPG` uploads); they must pass before Phase 3. See "Spike findings" and "Phase 1 results" in section 9.
 
 ---
 
@@ -587,6 +587,22 @@ The test paragraph from commit c7e1539 was removed in code; the second round of 
   6. Site settings > Menus labels the services description "(homepage only)", but it also shows on the locations hub, town and region pages.
 - **Content issues found but deliberately not fixed** (each batch report lists more; most are already flagged in the pages' own notes): visible `[CONFIRM]`, `[TBC]`, `[insured]` and `[police-checked]` brackets on several pages (including a literal "[CONFIRM]" plus a dash in the region FAQ that the lint misses); meta descriptions that promise more than their pages (end of lease, mould, gutter, blind, carpet, oven, tile, roof, school); Title Case FAQ headings on seven commercial pages; five commercial pages still on the NSW-only town list and ten whose business details say NSW only while listing Queensland towns; Why TLB's hero and cards still render placeholder boxes; several stale code comments.
 
+## Phase 4 results (8 Oct 2026)
+
+All six items Phase 3 listed are done. Every change was to the editor or the schemas only: all 112 pages still build identically, and every content file still matches its form.
+
+1. **Shared components.** Ten new components replace 62 blocks that were defined inline page after page: `comparisonFraming`, `comparisonFramingWho`, `comparisonOwnRows`, `townBand` (subheading optional), `townBandOwnSubheading`, `townBandSharedSubheading`, `relatedLinks`, `relatedLinksWithExtras`, `iconLinkList`, `heroNoPhoto`. Each reference keeps its page's own label and description, which is where every page-specific warning sat. `.pages.yml` is about 400 lines shorter. The page-wide button labels (`ctaLabel`, `buttonLabel`) stay inline on purpose: each describes where that page uses its button.
+2. **ServiceBlocks forms match what each variant shows.** Icon grid: icon, tag, title and description per item, plus the button under the grid, which 28 grids had fixed in code and now fall back to (`cta={page.x.cta ?? pageCta}`). It no longer offers a note or per-item buttons and links it never shows. Photo cards no longer offer a note. Only the link list draws one.
+3. **Literal Yes or No in a table.** A cell typed in quotation marks (`"No"`) shows the word instead of a tick or cross. Mould removal keeps its own all-text table, which its editor description explains.
+4. **The contact form's intro can be hidden** ("Hide the intro sentence"). An empty intro still means the site-wide one.
+5. **`quote` and `book` link keywords.** Editors can type `quote` or `book` instead of a URL to use the site-wide quote or booking button's address. The 18 content links that were built from `quoteCta.href` now use `quote`, so they follow that button again (tested by changing it). The five genuine contact-page links stay `/contact/`: the menu's "Contact us", 404's "Contact us", the commercial hub's "Talk to our team", NDIS's "Talk to us" and Work with us's "Talk to Teagan and the team".
+6. **Menus label corrected.** The services description shows on the homepage, the locations hub and the town and region pages.
+
+**Not done, needing you:**
+- **Staging link in each entry's description** (original Phase 4 item 7): needs the staging site's URL.
+- **Default photo folder per page** (original item 6): an image field's default folder is set on the shared `image` component, so it cannot differ per page. Editors browse `src/assets` by folder.
+- **Pages CMS behaviour still unconfirmed:** saving the Menus file without changes (checkbox handling), choosing and uploading photos, an uppercase `.JPG`, and emptying an optional field.
+
 ---
 
 ## 10. Checklist
@@ -600,7 +616,7 @@ The test paragraph from commit c7e1539 was removed in code; the second round of 
 - [x] Phase 3d: 15 commercial service pages
 - [x] Phase 3e: Guides
 - [x] Phase 3f: Locations templates
-- [ ] Phase 4: Sidebar groups, labels, descriptions, locks, validation, media folders
+- [x] Phase 4: Sidebar groups, labels, descriptions, locks, validation, shared components (staging links and per-page photo folders not done, see Phase 4 results)
 - [ ] Phase 5: Publish action, image size check, commit identity, branch protection
 - [ ] Phase 6: Editors invited, EDITING-GUIDE.md, walkthrough done
 - [ ] Phase 7: Dead code removed, README and SECTIONS.md updated
