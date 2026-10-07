@@ -1,0 +1,245 @@
+seo:
+  title: Medical Office Cleaning Services | TLB Cleaning
+  description: Medical, dental and clinic cleaning on a set schedule, by employed
+    staff who work the same site each week. Request a site quote today.
+ctaLabel: Request a site quote today
+hero:
+  kicker: Medical, clinic and salon cleaning
+  headingLines:
+    - Medical office cleaning services, finished before you open
+  lead: Your first patient walks into a clean room. Medical office cleaning
+    services for practices, allied health clinics and hair and beauty salons
+    across the Northern Rivers and the Tweed. Done between close and open, on a
+    scope written against your own procedures. {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/premises/clinic-cleaner-disinfecting-a-treatment-room.jpg
+    alt: A cleaner disinfecting the vinyl upholstery of a treatment bed in a bright
+      allied health treatment room
+definition:
+  body:
+    - type: paragraph
+      text: "Clinical and salon cleaning is the regular cleaning of premises where
+        people are treated: GP and specialist practices, dental and allied
+        health clinics, physiotherapy and podiatry rooms, day spas, and hair and
+        beauty salons. TLB Cleaning does this work across the Northern Rivers
+        and the Tweed, outside your consulting hours."
+    - type: paragraph
+      text: "Three quite different businesses sit under that heading and they share
+        more than they differ. All three have treatment surfaces that people lie
+        or sit on, wet areas that get used all day, a waiting room that decides
+        what a client thinks before anyone speaks to them, and a hard deadline:
+        everything must be finished and dry before the first appointment. What
+        changes between them is the risk, and that is what changes the scope."
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+waste:
+  heading: We do not touch clinical waste. Nobody honest does.
+  body:
+    - "Sharps containers, contaminated dressings, pathology specimens, anything
+      in a yellow bin: none of it is general waste and none of it is a cleaner’s
+      job. It has to be segregated by your clinical staff at the point of use
+      and collected by a licensed waste contractor, and a cleaning company that
+      offers to take care of it is offering you a compliance breach with a
+      discount attached."
+    - What we do instead is clean around it properly, empty general waste and
+      recycling, and tell you when a bin is being used for the wrong thing. If a
+      sharps container is over its fill line, you will hear about it from us
+      that night rather than at your next accreditation visit.
+settings:
+  heading: Three settings, one deadline
+  lead: Pick the one you run. What changes between them is the risk, and that is
+    what changes the scope.
+  items:
+    - image:
+        src: /src/assets/commercial_cleaning/premises/medical-waiting-room-cleaned-before-opening.jpg
+        alt: A cleaner wiping down the arm of a waiting room chair in a bright medical
+          practice waiting room before opening
+      title: Medical and dental practices
+      description: Consulting rooms, treatment rooms, waiting room and reception,
+        staff areas and bathrooms. High-touch surfaces and hard floors every
+        visit, upholstery and vents periodically, and a written scope your
+        practice can attach to its own infection control policy. We clean the
+        environment; your clinical staff clean clinical equipment and segregate
+        clinical waste. That line is drawn in writing before we start.
+    - image:
+        src: /src/assets/commercial_cleaning/premises/clinic-cleaner-disinfecting-a-treatment-room.jpg
+        alt: A cleaner disinfecting the vinyl upholstery of a treatment bed in a bright
+          allied health treatment room
+      title: Allied health and clinics
+      description: "Physio, chiro, podiatry, psychology, massage and day spa rooms.
+        The difference here is upholstery and floor contact: treatment beds,
+        plinths, bolsters and mats take skin contact all day and need
+        disinfecting rather than wiping, and gym and rehab floors get walked on
+        barefoot. We treat those as wet-area surfaces even though the room is
+        dry."
+    - image:
+        src: /src/assets/commercial_cleaning/premises/salon-cleaner-sweeping-a-hair-salon-after-close.jpg
+        alt: A cleaner sweeping the floor beneath a styling chair in a bright hair salon
+          after close
+      title: Hair and beauty salons
+      description: "Salons generate a mess no office scope anticipates: hair
+        everywhere including under and behind everything, colour on floors and
+        basins, wax and product residue, and a basin area that is a wet area
+        whether or not it is tiled. Floors swept and mopped, chairs and dryers
+        wiped down, basins and traps cleaned, mirrors and glass done, and bins
+        that need lining properly rather than tipping."
+sharedScope:
+  heading: What every one of them gets
+  lead: Four things that are true whether you run a practice, a clinic or a salon.
+  items:
+    - type: feature
+      icon: target
+      heading: High-touch, every visit
+      body:
+        - Door handles, light switches, reception counter, EFTPOS terminal,
+          chair arms in the waiting room, tap handles, the sanitiser dispenser
+          itself and the treatment bed or chair adjustment levers. These are the
+          surfaces that carry infection between people, and they take minutes.
+    - type: feature
+      icon: spray-bottle
+      heading: Colour-coded equipment
+      body:
+        - Separate cloths and mop heads for bathrooms, treatment rooms and
+          general areas, so nothing crosses from a toilet to a treatment bed.
+          Ours are [laundered between sites / single-use and disposed of.
+          Confirm], and whichever it is goes on the scope in writing.
+    - type: feature
+      icon: house
+      heading: Floors, and the edges of them
+      body:
+        - Vinyl mopped, coving and the join between floor and wall cleaned
+          rather than skipped, carpet vacuumed including under the waiting room
+          chairs. In a clinic the floor edge is where dust and hair collect, and
+          it is the first thing an accreditation surveyor kneels down to look
+          at.
+    - type: feature
+      icon: chart-bars
+      heading: Dry before you open
+      body:
+        - "Every visit finishes with the floors dry and the room usable. This is
+          not a detail: a damp treatment room floor at 8am is a slip risk for a
+          patient on crutches, and a clinic cannot run its first appointment in
+          a room that is still wet."
+worthKnowing:
+  heading: Somebody other than your clients audits this
+  body:
+    - type: paragraph
+      text: A clinic is the one kind of premises where somebody other than your
+        clients audits your cleaning. An accredited general practice has to show
+        an infection prevention approach that covers the practice environment,
+        not just clinical procedure. A salon offering skin penetration
+        treatments can be inspected by its local council. Neither of those goes
+        well if the only record of what gets cleaned is a verbal arrangement
+        with a contractor.
+    - type: paragraph
+      text: 'That is the practical reason to insist on a written scope here rather
+        than anywhere else: it is the document that turns "we have a cleaner"
+        into evidence. It should name each room, the surfaces in it, what they
+        are cleaned with and how often. We write ours to be attached to your own
+        procedures rather than to sit in a drawer, and if your procedures
+        already specify something different from what we would normally do,
+        yours wins.'
+related:
+  heading: Other premises we clean
+  subheading: Commercial cleaning for every kind of premises across the Northern
+    Rivers and the Tweed.
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Working with us on your premises
+  items:
+    - question: Can you clean between close and open?
+      answer: Yes, and it is the only way this work makes sense. We clean in the
+        evening after your last appointment or early enough in the morning that
+        everything is dry before your first. Both windows attract penalty rates
+        under the Cleaning Services Award and both appear on the quote with
+        their own price, so you can see what the timing costs.
+    - question: Will you follow our infection control policy?
+      answer: Yes. Where your policy specifies a product, a method or a frequency,
+        yours wins over our standard scope and we write it in. [Whether TLB has
+        a documented cleaning procedure a practice can attach to its own policy,
+        and whether it names the products used. Confirm.] If your policy needs a
+        particular disinfectant used a particular way, tell us at the
+        walkthrough and it goes on the scope rather than into someone’s memory.
+    - question: Do you clean treatment beds and clinical equipment?
+      answer: We clean and disinfect treatment bed and chair upholstery, plinths,
+        bolsters and the frames they sit on, because those are environmental
+        surfaces. We do not clean clinical equipment, instruments, autoclaves or
+        anything that touches a patient in a procedure. That is clinical staff
+        work under your own procedures, and it stays there.
+    - question: What about hair, colour and wax in a salon?
+      answer: It is why a salon needs its own scope rather than an office one. Hair
+        travels further than anyone expects and collects behind and under
+        everything, so floors get swept before they are mopped and the edges get
+        done rather than the middle. Colour is treated as a stain on the day,
+        not next week. Basins and traps are cleaned, and wax residue comes off
+        with the right solvent rather than a scourer.
+    - question: Are your cleaners police-checked?
+      answer: "Our cleaners are employed by TLB rather than subcontracted, so there is
+        no third party between you and the person who attends. [TLB’s screening:
+        what checks are held and how often they are renewed. Confirm.] For a
+        practice holding patient records on site, ask for that in writing along
+        with the insurance certificate, and ask any other cleaner for the same."
+    - question: What happens if I get in touch?
+      answer: We walk the premises after hours with you, room by room, and ask what
+        your own procedures require. Then you get a written scope naming each
+        room and its surfaces, a price per visit and an after hours option shown
+        separately. No obligation, and nothing to sign on the night.
+faq:
+  heading: Medical office cleaning services, common questions
+  items:
+    - question: How much does medical or clinic cleaning cost?
+      answer: It is priced per visit against a written scope. The number moves with
+        how many consulting or treatment rooms there are, how many bathrooms,
+        how much of the floor is vinyl versus carpet, and whether the visit has
+        to happen inside a narrow window between close and open. A three-room
+        clinic and a ten-room practice are different jobs. [TLB’s pricing basis.
+        Confirm.]
+    - question: What is the difference between cleaning and disinfecting?
+      answer: "Cleaning physically removes soil, and disinfecting kills what is left.
+        The order matters and it is where most cleaning goes wrong: spraying
+        disinfectant onto a surface that still has organic soil on it largely
+        wastes the disinfectant, because soil inactivates it. Surfaces get
+        cleaned first, then disinfected, and the disinfectant is left wet for
+        its stated contact time rather than wiped straight off."
+    - question: Who is responsible for clinical waste in a practice?
+      answer: The practice is. Clinical and related waste has to be segregated at the
+        point it is generated, by the clinical staff who generate it, into the
+        correct containers, and then collected and disposed of by a licensed
+        waste contractor. A general cleaning contractor handles general waste
+        and recycling only. Anyone offering to take your sharps away as part of
+        a cleaning contract is not licensed to.
+    - question: How often should a clinic be cleaned?
+      answer: Daily at minimum for any premises seeing patients or clients, with
+        high-touch surfaces, bathrooms and floors done every visit. Treatment
+        surfaces are cleaned between patients by clinical staff, which is
+        separate from the daily environmental clean. Carpet extraction,
+        upholstery, vents and high dusting are periodic. A busy salon usually
+        needs daily as well, driven by hair and product rather than by infection
+        risk.
+    - question: Do salons have cleaning regulations in NSW?
+      answer: Some do. Premises offering skin penetration treatments, meaning
+        tattooing, piercing and certain beauty procedures that break the skin,
+        are regulated under NSW public health legislation and can be inspected
+        by the local council, with requirements covering cleanliness,
+        sterilisation and waste. A hairdressing-only salon has no equivalent
+        scheme but still has work health and safety duties. Check with your
+        council rather than assuming which category you are in.
+    - question: Should a cleaner have their own insurance to work in a clinic?
+      answer: Yes, and you should sight the certificate and its expiry date rather
+        than take the word for it. Public liability cover is what protects your
+        practice if a contractor damages equipment or a patient is injured
+        because of their work, and workers compensation covers the cleaner
+        themselves. Ask for both, and ask whether the people attending are
+        employees of the company or subcontractors, because that changes who is
+        actually covered.
+closingCta:
+  kicker: Medical, clinic and salon cleaning
+  heading: Start with an after-hours walkthrough.
+  lead: Room by room, against your own procedures. Then a written scope you can
+    attach to your policy, and a price per visit.

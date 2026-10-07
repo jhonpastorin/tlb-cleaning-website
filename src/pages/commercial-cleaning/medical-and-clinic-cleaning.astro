@@ -118,13 +118,8 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // generated deliberately calm rather than sterile: a treatment room shot
 // like an operating theatre promises a service this page explicitly does not
 // offer (see §3).
-import heroImg from '../../assets/commercial_cleaning/premises/clinic-cleaner-disinfecting-a-treatment-room.jpg';
-import waitingRoomImg from '../../assets/commercial_cleaning/premises/medical-waiting-room-cleaned-before-opening.jpg';
-import salonImg from '../../assets/commercial_cleaning/premises/salon-cleaner-sweeping-a-hair-salon-after-close.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -136,43 +131,45 @@ import {
 } from '../../data/navigation';
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
-import { commercialBusiness, relatedPremises } from '../../data/premises';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 // §0 Metadata. Three settings in the title because three different searches
 // have to land here and the menu label already commits to all three.
-const pageMeta = {
-  // Brief §2. The approved title, verbatim, at 46 characters. It carries
-  // `medical office cleaning services` 200/mo contiguously and, with it,
-  // `professional medical office cleaning services` 30/mo. The live title
-  // carried none of the cluster.
-  //
-  // ⚠️ CHANGE REQUEST, tied to the salon question in the file header: the
-  // approved title drops both "clinic" and "salon", with fourteen characters
-  // spare. If salons stay in scope this needs revisiting anyway. Pasted as
-  // approved per Rule 3.
-  title: 'Medical Office Cleaning Services | TLB Cleaning',
-  // Brief §3, with ONE substitution. The workbook's approved meta reads
-  // "...by police-checked staff who work the same site each week." That claim
-  // is barred from copy by BFD §2.4 until confirmed, and branded FAQ 5 below
-  // asks the same question about TLB and cannot answer it. The brief supplies
-  // this replacement, at 138 characters, which keeps the CTA and swaps the
-  // unverified claim for a confirmed one: the page already says our cleaners
-  // are employed by TLB rather than subcontracted, and §2.4 explicitly directs
-  // that where a fact is unconfirmed a process promise is used rather than the
-  // sentence being deleted.
-  //
-  // 🔴 Restore the approved wording the moment screening is confirmed. See the
-  // file header.
-  //
-  // What is lost either way: the live meta ended on "finished before you
-  // open", which is this page's real promise and the deadline every reader
-  // shares. The new H1 rescues it.
-  description:
-    'Medical, dental and clinic cleaning on a set schedule, by employed staff who work the same site each week. Request a site quote today.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/medical-and-clinic-cleaning/',
-};
+//
+// In `pageMeta`, on "Medical Office Cleaning Services | TLB Cleaning":
+// Brief §2. The approved title, verbatim, at 46 characters. It carries
+// `medical office cleaning services` 200/mo contiguously and, with it,
+// `professional medical office cleaning services` 30/mo. The live title
+// carried none of the cluster.
+//
+// ⚠️ CHANGE REQUEST, tied to the salon question in the file header: the
+// approved title drops both "clinic" and "salon", with fourteen characters
+// spare. If salons stay in scope this needs revisiting anyway. Pasted as
+// approved per Rule 3.
+// In `pageMeta`, on `description`:
+// Brief §3, with ONE substitution. The workbook's approved meta reads
+// "...by police-checked staff who work the same site each week." That claim
+// is barred from copy by BFD §2.4 until confirmed, and branded FAQ 5 below
+// asks the same question about TLB and cannot answer it. The brief supplies
+// this replacement, at 138 characters, which keeps the CTA and swaps the
+// unverified claim for a confirmed one: the page already says our cleaners
+// are employed by TLB rather than subcontracted, and §2.4 explicitly directs
+// that where a fact is unconfirmed a process promise is used rather than the
+// sentence being deleted.
+//
+// 🔴 Restore the approved wording the moment screening is confirmed. See the
+// file header.
+//
+// What is lost either way: the live meta ended on "finished before you
+// open", which is this page's real promise and the deadline every reader
+// shares. The new H1 rescues it.
+// In `pageMeta`, on `canonical`:
+// ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
 
 // §7 The primary CTA, defined once and repeated in four places per BFD §9.5:
 // the hero button, each of the three setting cards and the closing block.
@@ -181,50 +178,36 @@ const pageMeta = {
 // approved CTA and the page agree: the closing block already promises "a
 // written scope you can attach to your policy, and a price per visit", and
 // asking for a quote after a site visit is exactly what this page offers.
-const walkthroughCta = { label: 'Request a site quote today', href: quoteCta.href };
 
 // §1 Hero. `split-single-image`, image right — the office page's framing,
 // used here because the copy has to do the work of naming three settings
 // before the photo can only show one of them.
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
-const hero = {
-  // Brief §8. The kicker does not change. With the H1 now carrying the mapped
-  // phrase, this is where all three audiences stay named, and until the salon
-  // scope question is settled it is the only place a salon owner sees
-  // themselves above the fold.
-  kicker: 'Medical, clinic and salon cleaning',
-  // Brief §4. The exact phrase `medical office cleaning services` 200/mo is
-  // worth 15 points scored present or absent, and the extension rescues the
-  // promise the approved meta drops. It is also the one deadline a practice, a
-  // clinic and a salon all share, which is what §11 below says in prose.
-  headingLines: ['Medical office cleaning services, finished before you open'],
-  // Brief §5 and §6, in that order. The demoted H1 opens the lead — it puts
-  // the patient rather than the premises at the centre, which is the right
-  // instinct for this reader — and the hero paragraph follows. Hero has no
-  // separate subheading slot, so the two run as one lead.
-  //
-  // The mapped phrase now sits contiguously inside the opening sentences,
-  // which is the 10-point opening-paragraph component, and all three
-  // audiences stay named. Salons are exactly where they were.
-  lead:
-    `Your first patient walks into a clean room. Medical office cleaning services for practices, allied health clinics and hair and beauty salons across the Northern Rivers and the Tweed. Done between close and open, on a scope written against your own procedures. ${theLine.fast}`,
-  cta: walkthroughCta,
-  image: {
-    ratio: '16/9',
-    label:
-      'A cleaner disinfecting the vinyl upholstery of a treatment bed in a bright allied health treatment room',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on "Medical, clinic and salon cleaning":
+// Brief §8. The kicker does not change. With the H1 now carrying the mapped
+// phrase, this is where all three audiences stay named, and until the salon
+// scope question is settled it is the only place a salon owner sees
+// themselves above the fold.
+// In `hero`, on `headingLines`:
+// Brief §4. The exact phrase `medical office cleaning services` 200/mo is
+// worth 15 points scored present or absent, and the extension rescues the
+// promise the approved meta drops. It is also the one deadline a practice, a
+// clinic and a salon all share, which is what §11 below says in prose.
+// In `hero`, on `lead`:
+// Brief §5 and §6, in that order. The demoted H1 opens the lead — it puts
+// the patient rather than the premises at the centre, which is the right
+// instinct for this reader — and the hero paragraph follows. Hero has no
+// separate subheading slot, so the two run as one lead.
+//
+// The mapped phrase now sits contiguously inside the opening sentences,
+// which is the 10-point opening-paragraph component, and all three
+// audiences stay named. Salons are exactly where they were.
 
 // §2 Definition. Answer-target block. Paragraph two is the one that earns the
 // three-in-one URL: it names what the three settings share, which is the
 // argument for them being one page rather than an apology for it.
-const definitionBody: TextBlockBody[] = [
-  'Clinical and salon cleaning is the regular cleaning of premises where people are treated: GP and specialist practices, dental and allied health clinics, physiotherapy and podiatry rooms, day spas, and hair and beauty salons. TLB Cleaning does this work across the Northern Rivers and the Tweed, outside your consulting hours.',
-  'Three quite different businesses sit under that heading and they share more than they differ. All three have treatment surfaces that people lie or sit on, wet areas that get used all day, a waiting room that decides what a client thinks before anyone speaks to them, and a hard deadline: everything must be finished and dry before the first appointment. What changes between them is the risk, and that is what changes the scope.',
-];
 
 // §3 Clinical waste. `warning`, not `note` — it warns the reader off an
 // arrangement rather than correcting a belief, which is the line
@@ -234,13 +217,6 @@ const definitionBody: TextBlockBody[] = [
 // not what we clean, it is what we will refuse to touch, and a page that
 // buries the answer past three sections looks like it is hoping not to be
 // asked.
-const wasteCallout = {
-  heading: 'We do not touch clinical waste. Nobody honest does.',
-  body: [
-    'Sharps containers, contaminated dressings, pathology specimens, anything in a yellow bin: none of it is general waste and none of it is a cleaner’s job. It has to be segregated by your clinical staff at the point of use and collected by a licensed waste contractor, and a cleaning company that offers to take care of it is offering you a compliance breach with a discount attached.',
-    'What we do instead is clean around it properly, empty general waste and recycling, and tell you when a bin is being used for the wrong thing. If a sharps container is over its fill line, you will hear about it from us that night rather than at your next accreditation visit.',
-  ],
-};
 
 // §4 The three settings. `ServiceBlocks variant="highlight"` — click a card,
 // its panel opens. THE ONLY USE OF THIS VARIANT IN THE CLUSTER, and it is
@@ -253,44 +229,6 @@ const wasteCallout = {
 //
 // These three items are also the natural split if this URL is ever broken
 // into three pages. Kept in one array for that reason.
-const settingItems = [
-  {
-    image: {
-      ratio: '4/3',
-      label:
-        'A cleaner wiping down the arm of a waiting room chair in a bright medical practice waiting room before opening',
-      src: waitingRoomImg,
-    },
-    title: 'Medical and dental practices',
-    description:
-      'Consulting rooms, treatment rooms, waiting room and reception, staff areas and bathrooms. High-touch surfaces and hard floors every visit, upholstery and vents periodically, and a written scope your practice can attach to its own infection control policy. We clean the environment; your clinical staff clean clinical equipment and segregate clinical waste. That line is drawn in writing before we start.',
-    cta: walkthroughCta,
-  },
-  {
-    image: {
-      ratio: '4/3',
-      label:
-        'A cleaner disinfecting the vinyl upholstery of a treatment bed in a bright allied health treatment room',
-      src: heroImg,
-    },
-    title: 'Allied health and clinics',
-    description:
-      'Physio, chiro, podiatry, psychology, massage and day spa rooms. The difference here is upholstery and floor contact: treatment beds, plinths, bolsters and mats take skin contact all day and need disinfecting rather than wiping, and gym and rehab floors get walked on barefoot. We treat those as wet-area surfaces even though the room is dry.',
-    cta: walkthroughCta,
-  },
-  {
-    image: {
-      ratio: '4/3',
-      label:
-        'A cleaner sweeping the floor beneath a styling chair in a bright hair salon after close',
-      src: salonImg,
-    },
-    title: 'Hair and beauty salons',
-    description:
-      'Salons generate a mess no office scope anticipates: hair everywhere including under and behind everything, colour on floors and basins, wax and product residue, and a basin area that is a wet area whether or not it is tiled. Floors swept and mopped, chairs and dryers wiped down, basins and traps cleaned, mirrors and glass done, and bins that need lining properly rather than tipping.',
-    cta: walkthroughCta,
-  },
-];
 
 // §5 The shared scope. `ContentGrid` with `feature` cells — four things that
 // are true across all three settings, in a shape that reads as a checklist
@@ -298,41 +236,9 @@ const settingItems = [
 //
 // ⚠️ The colour-coding item carries a real bracket. It is the second thing a
 // practice manager asks, right after clinical waste.
-const sharedScopeBlocks = [
-  {
-    type: 'feature' as const,
-    icon: 'target' as const,
-    heading: 'High-touch, every visit',
-    body: [
-      'Door handles, light switches, reception counter, EFTPOS terminal, chair arms in the waiting room, tap handles, the sanitiser dispenser itself and the treatment bed or chair adjustment levers. These are the surfaces that carry infection between people, and they take minutes.',
-    ],
-  },
-  {
-    type: 'feature' as const,
-    icon: 'spray-bottle' as const,
-    heading: 'Colour-coded equipment',
-    body: [
-      // ⚠️ Real bracket. Confirm before launch.
-      'Separate cloths and mop heads for bathrooms, treatment rooms and general areas, so nothing crosses from a toilet to a treatment bed. Ours are [laundered between sites / single-use and disposed of. Confirm], and whichever it is goes on the scope in writing.',
-    ],
-  },
-  {
-    type: 'feature' as const,
-    icon: 'house' as const,
-    heading: 'Floors, and the edges of them',
-    body: [
-      'Vinyl mopped, coving and the join between floor and wall cleaned rather than skipped, carpet vacuumed including under the waiting room chairs. In a clinic the floor edge is where dust and hair collect, and it is the first thing an accreditation surveyor kneels down to look at.',
-    ],
-  },
-  {
-    type: 'feature' as const,
-    icon: 'chart-bars' as const,
-    heading: 'Dry before you open',
-    body: [
-      'Every visit finishes with the floors dry and the room usable. This is not a detail: a damp treatment room floor at 8am is a slip risk for a patient on crutches, and a clinic cannot run its first appointment in a room that is still wet.',
-    ],
-  },
-];
+//
+// In `sharedScopeBlocks`, on "Colour-coded equipment" (body):
+// ⚠️ Real bracket. Confirm before launch.
 
 // §6 "Worth knowing". On this page the lever is that a clinic is judged on
 // cleaning by someone other than its patients — an accreditation surveyor, an
@@ -351,10 +257,6 @@ const sharedScopeBlocks = [
 //     councils. Correct, and hedged to "some beauty treatments" on purpose.
 //   - Nothing here claims TLB's documentation exists yet. See the file
 //     header and branded FAQ 2.
-const worthKnowingBody: TextBlockBody[] = [
-  'A clinic is the one kind of premises where somebody other than your clients audits your cleaning. An accredited general practice has to show an infection prevention approach that covers the practice environment, not just clinical procedure. A salon offering skin penetration treatments can be inspected by its local council. Neither of those goes well if the only record of what gets cleaned is a verbal arrangement with a contractor.',
-  'That is the practical reason to insist on a written scope here rather than anywhere else: it is the document that turns "we have a cleaner" into evidence. It should name each room, the surfaces in it, what they are cleaned with and how often. We write ours to be attached to your own procedures rather than to sit in a drawer, and if your procedures already specify something different from what we would normally do, yours wins.',
-];
 
 // §7 Related pages. Aged care is appended as an extra — it is the nearest
 // neighbour to this page's clinical half, and a reader responsible for a
@@ -363,40 +265,11 @@ const relatedTags = relatedPremises('/commercial-cleaning/medical-and-clinic-cle
 
 // §9 Branded FAQs, in the CUSTOMER'S voice — a practice manager, clinician
 // or salon owner.
-const brandedFaqItems = [
-  {
-    question: 'Can you clean between close and open?',
-    answer:
-      'Yes, and it is the only way this work makes sense. We clean in the evening after your last appointment or early enough in the morning that everything is dry before your first. Both windows attract penalty rates under the Cleaning Services Award and both appear on the quote with their own price, so you can see what the timing costs.',
-  },
-  {
-    question: 'Will you follow our infection control policy?',
-    answer:
-      // ⚠️ Real bracket. An accrediting practice will ask for this document.
-      'Yes. Where your policy specifies a product, a method or a frequency, yours wins over our standard scope and we write it in. [Whether TLB has a documented cleaning procedure a practice can attach to its own policy, and whether it names the products used. Confirm.] If your policy needs a particular disinfectant used a particular way, tell us at the walkthrough and it goes on the scope rather than into someone’s memory.',
-  },
-  {
-    question: 'Do you clean treatment beds and clinical equipment?',
-    answer:
-      'We clean and disinfect treatment bed and chair upholstery, plinths, bolsters and the frames they sit on, because those are environmental surfaces. We do not clean clinical equipment, instruments, autoclaves or anything that touches a patient in a procedure. That is clinical staff work under your own procedures, and it stays there.',
-  },
-  {
-    question: 'What about hair, colour and wax in a salon?',
-    answer:
-      'It is why a salon needs its own scope rather than an office one. Hair travels further than anyone expects and collects behind and under everything, so floors get swept before they are mopped and the edges get done rather than the middle. Colour is treated as a stain on the day, not next week. Basins and traps are cleaned, and wax residue comes off with the right solvent rather than a scourer.',
-  },
-  {
-    question: 'Are your cleaners police-checked?',
-    answer:
-      // ⚠️ Cluster-wide bracket. See office-cleaning.astro's header.
-      'Our cleaners are employed by TLB rather than subcontracted, so there is no third party between you and the person who attends. [TLB’s screening: what checks are held and how often they are renewed. Confirm.] For a practice holding patient records on site, ask for that in writing along with the insurance certificate, and ask any other cleaner for the same.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We walk the premises after hours with you, room by room, and ask what your own procedures require. Then you get a written scope naming each room and its surfaces, a price per visit and an after hours option shown separately. No obligation, and nothing to sign on the night.',
-  },
-];
+//
+// In `brandedFaqItems`, on "Will you follow our infection control policy?" (answer):
+// ⚠️ Real bracket. An accrediting practice will ask for this document.
+// In `brandedFaqItems`, on "Are your cleaners police-checked?" (answer):
+// ⚠️ Cluster-wide bracket. See office-cleaning.astro's header.
 
 // §10 Non-branded FAQs, the long-tail block.
 //
@@ -411,56 +284,74 @@ const brandedFaqItems = [
 //     legislation and inspected by local councils. Correct; no section
 //     quoted.
 //   - No dollar figure anywhere, same as every sibling page.
-const nonBrandedFaqItems = [
-  {
-    question: 'How much does medical or clinic cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
-      'It is priced per visit against a written scope. The number moves with how many consulting or treatment rooms there are, how many bathrooms, how much of the floor is vinyl versus carpet, and whether the visit has to happen inside a narrow window between close and open. A three-room clinic and a ten-room practice are different jobs. [TLB’s pricing basis. Confirm.]',
-  },
-  {
-    question: 'What is the difference between cleaning and disinfecting?',
-    answer:
-      'Cleaning physically removes soil, and disinfecting kills what is left. The order matters and it is where most cleaning goes wrong: spraying disinfectant onto a surface that still has organic soil on it largely wastes the disinfectant, because soil inactivates it. Surfaces get cleaned first, then disinfected, and the disinfectant is left wet for its stated contact time rather than wiped straight off.',
-  },
-  {
-    question: 'Who is responsible for clinical waste in a practice?',
-    answer:
-      'The practice is. Clinical and related waste has to be segregated at the point it is generated, by the clinical staff who generate it, into the correct containers, and then collected and disposed of by a licensed waste contractor. A general cleaning contractor handles general waste and recycling only. Anyone offering to take your sharps away as part of a cleaning contract is not licensed to.',
-  },
-  {
-    question: 'How often should a clinic be cleaned?',
-    answer:
-      'Daily at minimum for any premises seeing patients or clients, with high-touch surfaces, bathrooms and floors done every visit. Treatment surfaces are cleaned between patients by clinical staff, which is separate from the daily environmental clean. Carpet extraction, upholstery, vents and high dusting are periodic. A busy salon usually needs daily as well, driven by hair and product rather than by infection risk.',
-  },
-  {
-    question: 'Do salons have cleaning regulations in NSW?',
-    answer:
-      // Brief §24. Two house rule breaches in one sentence: BFD §9.2 bans em
-      // dashes outright, and the live version also carried an Oxford comma in
-      // "tattooing, piercing, and certain", which §9.2 bans as well. The
-      // recast fixes both, keeps every item, and adds "meaning" so the clause
-      // still reads as a definition.
-      //
-      // This is the only question in either FAQ block that is about salons
-      // specifically, and it is a good one. If the salon scope question is
-      // resolved as out of scope, this answer is the one thing worth keeping.
-      'Some do. Premises offering skin penetration treatments, meaning tattooing, piercing and certain beauty procedures that break the skin, are regulated under NSW public health legislation and can be inspected by the local council, with requirements covering cleanliness, sterilisation and waste. A hairdressing-only salon has no equivalent scheme but still has work health and safety duties. Check with your council rather than assuming which category you are in.',
-  },
-  {
-    question: 'Should a cleaner have their own insurance to work in a clinic?',
-    answer:
-      'Yes, and you should sight the certificate and its expiry date rather than take the word for it. Public liability cover is what protects your practice if a contractor damages equipment or a patient is injured because of their work, and workers compensation covers the cleaner themselves. Ask for both, and ask whether the people attending are employees of the company or subcontractors, because that changes who is actually covered.',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "How much does medical or clinic cleaning cost?" (answer):
+// ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
+// In `nonBrandedFaqItems`, on "Do salons have cleaning regulations in NSW?" (answer):
+// Brief §24. Two house rule breaches in one sentence: BFD §9.2 bans em
+// dashes outright, and the live version also carried an Oxford comma in
+// "tattooing, piercing, and certain", which §9.2 bans as well. The
+// recast fixes both, keeps every item, and adds "meaning" so the clause
+// still reads as a definition.
+//
+// This is the only question in either FAQ block that is about salons
+// specifically, and it is a good one. If the salon scope question is
+// resolved as out of scope, this answer is the one thing worth keeping.
 
 // §11 Closing CTA.
-const closingCta = {
-  kicker: 'Medical, clinic and salon cleaning',
-  heading: 'Start with an after-hours walkthrough.',
-  lead: 'Room by room, against your own procedures. Then a written scope you can attach to your policy, and a price per visit.',
-  cta: walkthroughCta,
+
+// CONTENT lives in src/content/pages/commercial-cleaning/medical-and-clinic-cleaning.yaml
+// and is edited in Pages CMS ("Medical and clinic cleaning"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning/medical-and-clinic-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of the page's main button. It links to the quote page in Site
+    // settings. Empty falls back to the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    waste: section.callout,
+    // A setting with no button of its own gets the page's main button.
+    settings: section.imageCards,
+    sharedScope: section.contentGrid,
+    worthKnowing: section.textBlock,
+    // The pills are the other premises pages, from Site settings.
+    related: section.tagCloud.omit({ tags: true }).extend({ note: section.optional(z.array(section.text)) }),
+    reviews: section.sectionHeading,
+    // The subheading falls back to the shared footprint line, and the towns
+    // come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }).extend({ subheading: section.optional(section.text) }),
+    // Heading only. The paragraphs are the shared brand lines.
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/medical-and-clinic-cleaning/',
 };
+
+const walkthroughCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '16/9');
+
+const settingItems = page.settings.items.map((item) => ({
+  ...item,
+  image: item.image && sized(item.image, '4/3'),
+  cta: item.cta ?? walkthroughCta,
+}));
+
+const sharedScopeBlocks = page.sharedScope.items.map((item) =>
+  item.type === 'image' ? { type: 'image' as const, ...sized(item.image, '4/3') } : item,
+);
 
 const business = commercialBusiness(pageMeta.description);
 ---
@@ -478,59 +369,65 @@ const business = commercialBusiness(pageMeta.description);
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? walkthroughCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
     {/* §3 — before the scope, not after it. See the file header. */}
-    <Callout tone="warning" heading={wasteCallout.heading} body={wasteCallout.body} />
+    <Callout tone="warning" heading={page.waste.heading} body={page.waste.body} cta={page.waste.cta} />
 
     {/* §4 — the only `highlight` in the cluster. Three settings the reader
         picks between, because a reader is one of them and does not need the
         other two. Also the natural split if this ever becomes three URLs. */}
     <ServiceBlocks
       variant="highlight"
-      heading="Three settings, one deadline"
-      lead="Pick the one you run. What changes between them is the risk, and that is what changes the scope."
+      heading={page.settings.heading}
+      lead={page.settings.lead}
+      note={page.settings.note}
+      tileCtaLabel={page.settings.tileCtaLabel}
       items={settingItems}
     />
 
-    <ContentGrid
-      heading="What every one of them gets"
-      lead="Four things that are true whether you run a practice, a clinic or a salon."
-      columns={2}
-      blocks={sharedScopeBlocks}
-    />
+    <ContentGrid heading={page.sharedScope.heading} lead={page.sharedScope.lead} columns={2} blocks={sharedScopeBlocks} />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Somebody other than your clients audits this"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     <TagCloud
-      heading="Other premises we clean"
-      subheading="Commercial cleaning for every kind of premises across the Northern Rivers and the Tweed."
+      heading={page.related.heading}
+      subheading={page.related.subheading}
       tags={relatedTags}
-      note={[]}
+      note={page.related.note ?? []}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading={footprintSubheading}
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading ?? footprintSubheading}
       groups={footprintLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -546,7 +443,7 @@ const business = commercialBusiness(pageMeta.description);
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
@@ -561,15 +458,15 @@ const business = commercialBusiness(pageMeta.description);
         second FAQ heading covering them is the natural place to put the
         mapped salon terms once they exist. Do NOT add it before the mapping
         does. */}
-    <Faq heading="Working with us on your premises" items={brandedFaqItems} />
-    <Faq heading="Medical office cleaning services, common questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? walkthroughCta}
     />
   </main>
 
