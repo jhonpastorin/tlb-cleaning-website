@@ -1303,6 +1303,21 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "The button jumps back up to the form (#enquiry). Do not point it at /contact/, which is this page."
+      - name: thank-you
+        label: Thank you (after the contact form)
+        type: file
+        path: src/content/pages/thank-you.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            label: Top of the page
+            type: object
+            description: "The heading and message are the form's own success wording, edited under Site settings > Contact form, so the form and this page always agree."
+            fields:
+              - { name: kicker, label: Small label above the heading, type: string }
+              - { name: subheading, label: Line under the heading, type: string }
+              - { name: cta, component: link, label: Button, required: true }
 
   - name: site-settings
     label: Site settings

@@ -26,10 +26,24 @@ import {
 } from '../data/navigation';
 import { meetTheTeamBusiness } from '../data/meetTheTeam';
 import { enquiryCopy } from '../data/contactForm';
+import { z } from 'astro/zod';
+import { getPage } from '../lib/cms';
+import * as section from '../lib/cms-schemas';
+
+// CONTENT lives in src/content/pages/thank-you.yaml and is edited in Pages CMS
+// ("Thank you"). Only the label above the heading and the button are this
+// page's own: the heading and message are the form's success copy (above).
+const page = await getPage(
+  'thank-you',
+  z.object({
+    seo: section.seo,
+    // There is no usual button to fall back to here, so the button is required.
+    hero: section.hero.pick({ kicker: true, subheading: true }).extend({ cta: section.link }),
+  }),
+);
 
 const pageMeta = {
-  title: 'Thank You | TLB Cleaning',
-  description: 'Thanks for getting in touch with TLB Cleaning. Your enquiry has been received.',
+  ...page.seo,
   canonical: 'https://tlbcleaning.com.au/thank-you/',
 };
 
@@ -54,10 +68,11 @@ const business = meetTheTeamBusiness(pageMeta.description);
   <main id="main">
     <Hero
       variant="minimal"
-      kicker="Enquiry sent"
+      kicker={page.hero.kicker}
       headingLines={[enquiryCopy.successHeading]}
+      subheading={page.hero.subheading}
       lead={enquiryCopy.successBody}
-      cta={{ label: 'Back to the home page', href: '/' }}
+      cta={page.hero.cta}
     />
   </main>
 
