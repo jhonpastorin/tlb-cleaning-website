@@ -25,23 +25,29 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { meetTheTeamBusiness } from '../data/meetTheTeam';
+import { z } from 'astro/zod';
+import { getPage } from '../lib/cms';
+import * as section from '../lib/cms-schemas';
+
+// CONTENT lives in src/content/pages/404.yaml and is edited in Pages CMS
+// ("Page not found").
+const page = await getPage(
+  '404',
+  z.object({
+    seo: section.seo,
+    // The `minimal` hero has no photo, and there is no usual button to fall
+    // back to here, so the button is required.
+    hero: section.hero.omit({ image: true }).extend({ cta: section.link }),
+    whereToNext: section.tagCloud,
+  }),
+);
 
 const pageMeta = {
-  title: 'Page Not Found | TLB Cleaning',
-  description: "The page you were looking for isn't here. Find TLB Cleaning's services, locations and contact details.",
+  ...page.seo,
   canonical: 'https://tlbcleaning.com.au/404.html',
 };
 
 const business = meetTheTeamBusiness(pageMeta.description);
-
-const routes = [
-  { label: 'House cleaning', href: '/house-cleaning/' },
-  { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
-  { label: 'Airbnb & holiday home cleaning', href: '/airbnb-holiday-home-cleaning/' },
-  { label: 'Locations', href: '/locations/' },
-  { label: 'About TLB', href: '/about/' },
-  { label: 'Contact us', href: '/contact/' },
-];
 ---
 
 <Base
@@ -62,17 +68,18 @@ const routes = [
   <main id="main">
     <Hero
       variant="minimal"
-      kicker="Page not found"
-      headingLines={["We couldn't find that page."]}
-      lead="It may have moved, or the link may be out of date. Everything we do is still a click away."
-      cta={{ label: 'Back to the home page', href: '/' }}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta}
     />
 
     <TagCloud
-      heading="Where to next"
-      subheading="The main parts of the site."
-      tags={routes}
-      note={['Still stuck? Call or email us and we will point you in the right direction.']}
+      heading={page.whereToNext.heading}
+      subheading={page.whereToNext.subheading}
+      tags={page.whereToNext.tags}
+      note={page.whereToNext.note}
     />
   </main>
 

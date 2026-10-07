@@ -1,0 +1,164 @@
+seo:
+  title: About TLB Cleaning | The Local Team Behind Every Clean
+  description: TLB Cleaning is a locally owned cleaning company started in
+    Alstonville by Teagan Burke. Meet the team cleaning homes and holiday lets
+    across the Northern Rivers and the Tweed.
+hero:
+  kicker: About us
+  headingLines:
+    - You'll know who's coming,
+    - before anyone knocks.
+  lead: TLB Cleaning is a locally owned cleaning company, started in Alstonville
+    by Teagan Burke and grown one recommendation at a time.
+  image:
+    src: /src/assets/about/about-tlb-cleaning-team-in-a-home-entry-hall.jpg
+    alt: Three TLB cleaners with their caddies in the entry hall of a bright coastal
+      home
+definition:
+  body:
+    - type: paragraph
+      text: TLB Cleaning is a locally owned cleaning company that cleans homes,
+        holiday lets, rental properties and commercial premises across the
+        Northern Rivers, the Tweed and the Southern Gold Coast.
+    - type: paragraph
+      text: It employs its cleaners rather than subcontracting them. That is the whole
+        reason we can promise a set day and the same faces, with cover from
+        within the same team when somebody is away.
+    - type: paragraph
+      text: There has never been an advertisement. Every client so far came from
+        somebody recommending us to somebody else.
+statement:
+  body:
+    - type: paragraph
+      text: TLB takes care of properties. Cleaning is where we started.
+story:
+  heading: How TLB started
+  blocks:
+    - type: image
+      image:
+        alt: Teagan Burke, who started TLB Cleaning
+    - type: text
+      body:
+        - Teagan started out cleaning houses around Alstonville herself, with a
+          car full of gear and a few clients who told their friends about her.
+          The friends told their friends. That is the entire marketing history
+          of this business.
+        - What she did next is the part that matters. Rather than taking on more
+          work than one person can do properly, she hired local people and put
+          them on the books, then built the roster around the towns they already
+          live in. Nobody drives an hour to get to your place.
+        - The result is a business that behaves like a small one and runs like a
+          larger one. You get a set day, a team you recognise, a message before
+          we come, and one local number to ring.
+values:
+  heading: What we actually mean by local
+  lead: Four things that are either true of a cleaning business or not, rather
+    than four adjectives.
+  items:
+    - heading: Family first
+      body:
+        - "We are local families ourselves. We know what it is like juggling
+          work, school drop-offs, sport, appointments and everything else that
+          fills a week. That is why we understand what a reliable cleaner
+          actually gives you: one less thing to organise, and a bit more time
+          back for everything else."
+    - heading: Local, and locally owned
+      body:
+        - Nobody buys the right to trade under our name. When you book TLB you
+          are booking the people who answer the phone, and they live between
+          Lismore and the Tweed the same as you do.
+    - heading: Employed, not subcontracted
+      body:
+        - Our cleaners are on the books rather than sent out under an ABN with
+          their own gear. It is the more expensive way to run a cleaning
+          business and it is the only way to promise you the same faces.
+    - heading: The last five minutes
+      body:
+        - "The details you actually notice all happen at the end: the tap dried
+          off, the bin liner replaced, the cushions straightened, the door
+          locked the way you asked. That is the part we train."
+wordOfMouth:
+  heading: Grown by word of mouth, not advertising.
+  body:
+    - type: paragraph
+      text: TLB grew to a full team, with work coming from real estate agencies across
+        the region, before it had a website. It got there on recommendations
+        from people who had us in their own homes.
+    - type: paragraph
+      text: That is a slower way to grow and it has one large advantage. Every job
+        here was won by the last one being done properly, so nobody has any
+        reason to rush your clean.
+  backgroundImage: /src/assets/about/about-cleaners-loading-the-car-before-a-morning-run.jpg
+team:
+  heading: The team
+  lead: This is where our cleaners belong, by name, so you can see who would be
+    coming before you book. We are not going to put invented faces here in the
+    meantime, so the frames stay held open until the photographs are taken.
+  images:
+    - image:
+        alt: TLB team member, photographed with permission
+    - image:
+        alt: TLB team member, photographed with permission
+    - image:
+        alt: TLB team member, photographed with permission
+    - image:
+        alt: TLB team member, photographed with permission
+introduction:
+  heading: You can meet your cleaner before the first visit
+  body:
+    - Ask when you book and we will introduce whoever is looking after your
+      place, by phone or at the door, before they clean anything. Plenty of
+      clients skip it and would rather come home to it done. Both are fine, and
+      you can change your mind later.
+moreAbout:
+  heading: More about how we work
+  lead: "The rest of this part of the site: what clients say, what happens after
+    you book, and what it is like working here."
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Across the Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+faq:
+  heading: Frequently asked questions
+  items:
+    - question: Who owns TLB Cleaning?
+      answer: Teagan Burke, who started the business cleaning houses around
+        Alstonville herself and still runs it. TLB is locally owned and locally
+        run. It is not a franchise, a licensee, or a trading name for a larger
+        company somewhere else.
+    - question: Are your cleaners employees or contractors?
+      answer: Employees. They are on the books, on set days, with the same clients
+        each week. That costs more to run than dispatching contractors, and it
+        is what makes a set team possible rather than whoever happens to be
+        available that morning.
+    - question: Will I get the same cleaner every time?
+      answer: Yes, wherever we can. Your place is assigned to a team and that is who
+        you will see. If someone is away, another member of your team covers the
+        visit and we let you know beforehand rather than surprising you at the
+        door.
+    - question: Where is TLB Cleaning based?
+      answer: The business started in Alstonville, and the team lives right across the
+        Northern Rivers and the Tweed, inland and on the coast. We also cross
+        the border into Coolangatta, Palm Beach and Burleigh Heads. Our cleaners
+        work in the towns they already live in.
+    - question: Can I meet my cleaner before the first clean?
+      answer: Yes. Ask when you book and we will introduce whoever is looking after
+        your place before they start. Most clients are happy to skip it and come
+        home to the work done, so it is offered rather than assumed.
+    - question: Am I locked into a contract?
+      answer: No. There is no minimum term, no exit fee, and you can pause or skip a
+        visit when you need to. Most clients stay because the arrangement is
+        working, not because they signed something at the start.
+    - question: Do you bring your own equipment and products?
+      answer: Yes, we arrive with everything we need. If you would rather we used a
+        particular product on a particular surface, leave it out and tell us,
+        and it becomes part of the notes for your place so nobody has to be told
+        twice.
+closingCta:
+  kicker: Meet the team
+  heading: Get to know us the easy way.
+  lead: Tell us which town you're in and what your place needs, and we'll come
+    back with a price.

@@ -25,7 +25,6 @@ import ComparisonTable from '../components/sections/ComparisonTable.astro';
 // still carry — see the block above `beforeAfterPairs` below for the consent
 // conditions and the shooting requirement any replacement has to meet.
 import BeforeAfter from '../components/sections/BeforeAfter.astro';
-import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
 import GoogleReviewSlider from '../components/sections/GoogleReviewSlider.astro';
 import { googleBusinessProfileUrl, googleReviews } from '../data/googleReviews';
 import TagCloud from '../components/sections/TagCloud.astro';
@@ -35,29 +34,13 @@ import Faq from '../components/sections/Faq.astro';
 import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../assets/home/home-two-tlb-cleaners-presenting-a-made-bed.jpg';
 // "Three cards" photos, one per card, in card order.
-import pathwayHomeImg from '../assets/home/house-cleaning-two-cleaners-making-up-a-bed.jpg';
-import pathwayHolidayLetImg from '../assets/home/service-airbnb-and-holiday-let-turnovers.jpg';
-import pathwayRentalImg from '../assets/home/rental-property-cleaning-cleaner-wiping-kitchen-window.jpg';
 // Backdrop behind the trust bar + opening paragraph, under the Cream scrim.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 // "Our services" tiles — one photo per service, named for the service so a
 // real shoot drops straight in over the top.
-import serviceAirbnbImg from '../assets/home/service-airbnb-and-holiday-let-turnovers.jpg';
-import serviceEndOfLeaseImg from '../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-empty-room-glass-doors-onto-the-deck.jpg';
-import serviceRegularImg from '../assets/home/service-regular-home-cleaning-cleaner-scrubbing-a-kitchen-sink.jpg';
-import serviceRealEstateImg from '../assets/home/service-real-estate-and-property-management.jpg';
-import serviceDeepCleanImg from '../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-tidying-a-shower-niche.jpg';
-import serviceCommercialImg from '../assets/home/service-commercial-cleaning.jpg';
-import type { ImageMetadata } from 'astro';
 // Before/after pairs — real TLB job photos, supplied by the client. Kept as
 // their own files rather than replacing the shared `sample-` set, which the
 // service pages still rely on.
-import kitchenBenchtopBeforeImg from '../assets/home_cleaning/before_after/kitchen-benchtop-before.jpg';
-import kitchenBenchtopAfterImg from '../assets/home_cleaning/before_after/kitchen-benchtop-after.jpg';
-import cooktopBeforeImg from '../assets/home_cleaning/before_after/cooktop-before.jpg';
-import cooktopAfterImg from '../assets/home_cleaning/before_after/cooktop-after.jpg';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 // Site chrome (header nav, mega-menus, footer links/contact) — shared with
 // the service pages, see src/data/navigation.ts.
@@ -72,7 +55,12 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, howItWorks, managedForYou } from '../data/brand-lines';
+import { howItWorks, managedForYou } from '../data/brand-lines';
+import { localBusiness } from '../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../lib/cms';
+import * as section from '../lib/cms-schemas';
+import { optional, sized } from '../lib/cms-schemas';
 
 // META SET FROM THE KEYWORD WORKBOOK 16 Sep 2026, on TLB's instruction to
 // ship the workbook copy verbatim. It replaces "A local cleaning team across
@@ -90,169 +78,47 @@ import { theLine, theLineHeading, howItWorks, managedForYou } from '../data/bran
 // LENGTH: 156 characters, the longest of the five workbook metas and the
 // only one over ~155, so expect Google to truncate the tail. What gets cut
 // is "Book online.", the call to action.
-const pageMeta = {
-  title: 'Cleaning Services & Cleaners | TLB Cleaning',
-  description:
-    'Local mums cleaning residential and commercial spaces across the Northern Rivers and southern Gold Coast. Police checked, insured and reliable. Book online.',
-  canonical: 'https://tlbcleaning.com.au/',
-};
-
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
-  // v6 leads with the Northern Rivers and the Tweed; the Southern Gold
-  // Coast is where the team crosses to, not part of the primary claim.
-  areaServed: 'Northern Rivers NSW, the Tweed, and the Southern Gold Coast QLD',
-  description: pageMeta.description,
-};
 
 // Hero — H1 and subheadline verbatim. The brief's [Button] under the
 // opening paragraph is this button: the paragraph ships as its own band
 // below the trust bar (see the Backdrop note), and repeating the same CTA
 // twice inside one screen would read as two different offers rather than
 // one. Every other [Button] in the brief is built where it was asked for.
-const hero = {
-  headingLines: ['TLB Cleaning.', 'Your reliable local cleaners.'],
-  lead: `A local team across the Northern Rivers and the Tweed. ${theLine.instant}`,
-  cta: quoteCta,
-  image: {
-    // The Airbnb page's real hero photo since 6 Oct 2026, replacing the
-    // transparent cut-out (which ran with `contain-bottom`). Default `cover`
-    // fit now. `ratio` also sets the desktop panel's height: the image box
-    // takes that aspect at the panel's width (~645px at 1440), so '1/1' made
-    // the hero ~645px tall. '4/3' lets the 560px hero floor govern instead,
-    // and the copy is cropped to ~1.15:1 to match: window, both cleaners and
-    // the bed. On mobile it is the image's shape.
-    ratio: '4/3',
-    label: 'Two TLB cleaners presenting the cushions on a freshly made bed',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on "Two TLB cleaners presenting the cushions on a freshly made bed":
+// The Airbnb page's real hero photo since 6 Oct 2026, replacing the
+// transparent cut-out (which ran with `contain-bottom`). Default `cover`
+// fit now. `ratio` also sets the desktop panel's height: the image box
+// takes that aspect at the panel's width (~645px at 1440), so '1/1' made
+// the hero ~645px tall. '4/3' lets the 560px hero floor govern instead,
+// and the copy is cropped to ~1.15:1 to match: window, both cleaners and
+// the bed. On mobile it is the image's shape.
 
 // Opening paragraph — verbatim.
-const definitionBody = [
-  'TLB Cleaning is a Northern Rivers cleaning company. From Lismore, Alstonville and Ballina, up through Byron, Mullumbimby and Murwillumbah to Tweed Heads, and everywhere else the beautiful Northern Rivers encompasses. We do regular home cleaning, deep and one-off cleans, end of lease and bond cleans, Airbnb turnovers and commercial cleaning.',
-];
 
 // Three cards — card copy verbatim, including the links the brief names.
 // The section's own heading/accent lines aren't in the brief at all, so
 // these two lines are placeholder structural copy carried over from the
 // previous build, not a brand decision — flag before launch.
-const pathwayCards = {
-  heading: 'Tell us what you need',
-  headingAccent: "we'll take it from there.",
-  // Holiday let moved to first and retitled by request (September 2026), to
-  // lead with the Full Property Care proposition. Numbers follow the order.
-  cards: [
-    {
-      number: 1,
-      image: {
-        ratio: '4/3',
-        label: 'Holiday let bedroom with glass doors open onto a deck and green Northern Rivers hills',
-        src: pathwayHolidayLetImg,
-      },
-      title: 'I have a holiday let. We take care of it.',
-      description:
-        "We work to your booking calendar, not the other way around. Turnovers, restocking and guest-ready presentation, or full management if you'd rather hand the lot over.",
-      cta: { label: 'Get a quote', href: '/airbnb-holiday-home-cleaning/' },
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        label: 'Two TLB cleaners making up a bed with fresh grey linen',
-        src: pathwayHomeImg,
-      },
-      title: 'I need a hand at home',
-      description:
-        "Weekly, fortnightly or a one-off reset. The same faces every visit, and nothing to organise once it's set.",
-      cta: { label: 'Get a quote', href: '/house-cleaning/' },
-    },
-    {
-      number: 3,
-      image: {
-        ratio: '4/3',
-        label: 'Cleaner wiping down a kitchen window frame',
-        src: pathwayRentalImg,
-      },
-      title: 'I manage properties',
-      description:
-        'Bond and end of lease cleans that pass, and the capacity to handle a rent roll rather than one job at a time.',
-      cta: { label: 'Get a quote', href: '/house-cleaning/real-estate-cleaning/' },
-    },
-  ],
-};
+//
+// In `pathwayCards`:
+// Holiday let moved to first and retitled by request (September 2026), to
+// lead with the Full Property Care proposition. Numbers follow the order.
 
 // "What we do" — the brief's five categories, verbatim. Deliberately the
 // icon-led `list` variant rather than photo tiles: "Our services" further
 // down is the photographic, link-per-service grid, and running both as
 // tiles would make the page ask the same question twice. Each row still
 // deep-links to the page that covers it.
-const whatWeDoItems = [
-  {
-    icon: 'house' as const,
-    title: 'Inside your home',
-    description: 'Regular cleaning, deep and one-off cleans, end of lease and bond cleans.',
-    href: '/house-cleaning/',
-  },
-  {
-    icon: 'suitcase' as const,
-    title: 'Holiday lets',
-    description:
-      'Airbnb and short-stay turnovers, restocking, guest-ready presentation, and full management of the property if you want it.',
-    href: '/airbnb-holiday-home-cleaning/',
-  },
-  {
-    icon: 'key' as const,
-    title: 'For agencies',
-    description: 'Bond cleans, vacancy turnarounds, routine managed-property cleans.',
-    href: '/house-cleaning/real-estate-cleaning/',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'Around the house',
-    description: 'Carpets, windows, gutters, pressure cleaning, ovens.',
-    href: '/house-cleaning/deep-cleaning/',
-  },
-  {
-    icon: 'office' as const,
-    title: 'For business',
-    description: 'Offices and commercial premises.',
-    href: '/commercial-cleaning/',
-  },
-];
 
 // "Local team, run properly" — bio verbatim. The brief marks a [Team photo]
 // here; no such asset exists in src/assets yet, so this stays a labelled
 // Placeholder rather than borrowing an unrelated photo. StoryMosaic's image
 // blocks are placeholder-only by type, so the swap is a component change,
 // not a one-line import — brief the shoot from the label below.
-const teamBlocks = [
-  { type: 'image' as const, ratio: '3/4', label: 'The TLB Cleaning team' },
-  {
-    type: 'text' as const,
-    body: [
-      'TLB was started by Teagan Burke, an Alstonville local who built an amazing team around her, one recommendation at a time. No website, no advertising, just people telling other people about her.',
-      "That team is spread right across the Northern Rivers and the Tweed now, inland and on the coast, cleaning in the same towns they live in and shop in. You'll meet whoever is looking after your place before the first visit, and you'll come to know them by name.",
-      "Behind the local part is a business that runs properly. Set days, set teams, and a schedule you don't have to hold in your head.",
-    ],
-  },
-];
 
 // href guessed — the "Meet the team" nav item points at /about/ (see
 // navigation.ts), so this matches it rather than inventing a second slug.
-const teamCta = { label: 'Meet the team', href: '/about/' };
 
 // "Easy to book, local to the core" — new in v6, copy verbatim. Runs over a
 // background photo behind the Dark Teal scrim: the section is about the
@@ -263,21 +129,12 @@ const teamCta = { label: 'Meet the team', href: '/about/' };
 // is the only real photograph in the library that fits the mood — the other
 // TLB assets are cut-out figures on a green circle, useless full bleed. A
 // dedicated photo would be better; the swap is one import line.
-const bookingBody = [
-  "Book online in a couple of minutes. Or send a text, ring us, or drop us an email, whichever you'd actually do.",
-  "You'll get a reminder in the lead-up so the day never sneaks up on you, and a message when we're on our way. If you run a holiday let, we'll work straight off your booking calendar so turnovers happen around your guests without you organising anything.",
-  'Then we turn up and get on with it. Some clients want a quick chat and a walk through. Others would rather we let ourselves in and they come home to it done. Both are completely fine, and you can change your mind whenever you like.',
-];
 
 // "Easy to book, instant pricing, cost effective" — new in v6, copy
 // verbatim. The brief's one-line "You'll know the price before we start,
 // not after." is prepended at the call site as this block's first
 // paragraph: TextBlock has no separate `lead` slot, and the line is doing a
 // standfirst's job, so it reads as one on its own above the detail.
-const pricingBody = [
-  "We quote on your actual place rather than a guess, so tell us the size of it and roughly what condition it's in and we'll come back with a number. If it turns out you need less than you asked for, we'll say so. A one-off deep clean followed by a fortnightly usually works out better than paying for a long first regular clean, and we'd rather tell you that than take the bigger booking.",
-  "No lock-in, no minimum term and no exit fee. If it stops suiting you, tell us and we'll stop.",
-];
 
 // Comparison table — copy supplied directly in the brief, verbatim.
 //
@@ -297,12 +154,6 @@ const pricingBody = [
 //
 // Heading and cornerLabel stay local: §9.4 wants the framing to differ by
 // context even when the claims don't.
-const comparisonTable = {
-  heading: 'How TLB Cleaning compares',
-  cornerLabel: 'Why TLB Cleaning is different',
-  columns: comparisonColumns,
-  rows: comparisonRows,
-};
 
 // "Our services" — the brief's six services with the deep links it names.
 // Titles, descriptions and hrefs live in src/data/navigation.ts as
@@ -318,19 +169,6 @@ const comparisonTable = {
 // cleared room card, and Airbnb is the hinterland holiday let. Real estate
 // and commercial still run their earlier images until those pages get real
 // photos of their own.
-const serviceImages: Record<string, ImageMetadata> = {
-  '/house-cleaning/': serviceRegularImg,
-  '/house-cleaning/deep-cleaning/': serviceDeepCleanImg,
-  '/house-cleaning/end-of-lease-cleaning/': serviceEndOfLeaseImg,
-  '/airbnb-holiday-home-cleaning/': serviceAirbnbImg,
-  '/house-cleaning/real-estate-cleaning/': serviceRealEstateImg,
-  '/commercial-cleaning/': serviceCommercialImg,
-};
-
-const ourServiceItems = serviceLinks.map((service) => ({
-  ...service,
-  image: { ratio: '4/3', label: service.title, src: serviceImages[service.href] },
-}));
 
 // "Where we clean" — the brief's three regions as three labelled runs of
 // pills, town lists verbatim and in the brief's own order.
@@ -353,72 +191,15 @@ const ourServiceItems = serviceLinks.map((service) => ({
 // "Should I book weekly or fortnightly?" and "Do you charge extra for the
 // inland towns?". The brackets are stripped so the page reads as a page;
 // get these four confirmed before launch.
-const faqItems = [
-  {
-    question: 'Are you a franchise?',
-    answer:
-      "No. TLB is locally owned and locally run, started here and still here. When you book, you're booking us.",
-  },
-  {
-    // [CONFIRM with Teagan]
-    question: 'Will I get the same cleaner every time?',
-    answer:
-      "Yes, wherever we can. Your place is assigned to a team and that's who you'll see. If someone's away, another member of your team covers and we let you know beforehand.",
-  },
-  {
-    question: 'Do you cover the inland towns as well as the coast?',
-    answer:
-      "Yes. Lismore, Casino, Alstonville, Kyogle, Murwillumbah and everywhere in between. We're a Northern Rivers business, not a coastal one.",
-  },
-  {
-    question: 'Do you clean in Queensland as well as New South Wales?',
-    answer:
-      'Yes. We work right across the Northern Rivers and the Tweed, and cross the border into Coolangatta, Palm Beach and Burleigh Heads.',
-  },
-  {
-    // [CONFIRM]
-    question: 'How long does a house clean take?',
-    answer:
-      'A rough guide for a maintained home is about an hour for each bedroom and bathroom, so a three-bedroom, two-bathroom house usually takes three to five hours for one cleaner, or roughly half that with two. Your first clean takes longer, because it brings the home to a baseline. After that, visits settle into a predictable window.',
-  },
-  {
-    // [CONFIRM]
-    question: 'Should I book weekly or fortnightly?',
-    answer:
-      "Fortnightly suits most homes. Weekly tends to work better for larger households, homes with pets, or anywhere the kitchen and bathrooms get heavy use. Start fortnightly and tell us if it isn't holding.",
-  },
-  {
-    question: 'How much does a clean cost?',
-    answer:
-      "It depends on the size of your place, its condition and how often we come. That's why we quote rather than publish a flat rate that would be wrong for most homes. Tell us the basics and you'll have a price back quickly, with no obligation attached to it.",
-  },
-  {
-    question: 'Is the first clean more expensive?',
-    answer:
-      "Usually, yes, and we'll tell you that upfront. The first visit starts from wherever the house is rather than holding a standard that's already set, so it takes longer. After that, your regular visits settle into a consistent price.",
-  },
-  {
-    question: 'Am I locked into a contract?',
-    answer:
-      "No. No minimum term, no exit fee, and you can pause or skip a visit whenever you need to. Most people stay because it's working, not because they signed something.",
-  },
-  {
-    // [CONFIRM with Teagan]
-    question: 'Do you charge extra for the inland towns?',
-    answer:
-      "Our teams live across the region, so we're not driving in from somewhere else. Tell us where you are when you book and your quote will reflect it.",
-  },
-  {
-    question: 'Do I need to be home?',
-    answer:
-      "Not at all, and most of our clients aren't. How we get in is agreed when you book, and we'll message you when we're on the way.",
-  },
-  {
-    question: 'Can I book over the phone instead of online?',
-    answer:
-      "Yes. Online, text, phone or email, whichever suits you. Plenty of people would rather talk it through the first time, and we'd rather that than have you guess at a form.",
-  },
-];
+//
+// In `faqItems`, on "Will I get the same cleaner every time?":
+// [CONFIRM with Teagan]
+// In `faqItems`, on "How long does a house clean take?":
+// [CONFIRM]
+// In `faqItems`, on "Should I book weekly or fortnightly?":
+// [CONFIRM]
+// In `faqItems`, on "Do you charge extra for the inland towns?":
+// [CONFIRM with Teagan]
 
 // Closing block — copy verbatim. v6 supplies this outright, where v5 left
 // it undrafted and the previous build echoed the hero's lines instead.
@@ -456,36 +237,90 @@ const faqItems = [
 // bring the two to a shared magnification. The residual offset is parallax,
 // which no crop can remove. If these two ever get reshot, shoot them from one
 // spot and the crop correction can be dropped.
-const beforeAfterPairs: BeforeAfterPair[] = [
-  {
-    before: {
-      src: kitchenBenchtopBeforeImg,
-      alt: 'A kitchen benchtop before a TLB clean, with dishes stacked in and beside the sink and pots left on the stove',
-    },
-    after: {
-      src: kitchenBenchtopAfterImg,
-      alt: 'The same kitchen benchtop after a TLB clean, sink empty and the bench clear and wiped down',
-    },
-    caption: 'Kitchen benchtop and sink',
-  },
-  {
-    before: {
-      src: cooktopBeforeImg,
-      alt: 'A gas cooktop before a TLB clean, with spilled coffee grounds, crumbs and food scraps across the black enamel',
-    },
-    after: {
-      src: cooktopAfterImg,
-      alt: 'The same gas cooktop after a TLB clean, the enamel wiped back to an even black finish',
-    },
-    caption: 'Gas cooktop and burners',
-  },
-];
 
-const closingCta = {
-  heading: 'Set it up once, and stop thinking about it.',
-  lead: "Tell us which town you're in and what your place needs, and we'll come back with a price.",
-  cta: quoteCta,
+// CONTENT lives in src/content/pages/index.yaml and is edited in Pages CMS
+// ("Home"). This file owns the layout. The notes above explain why each
+// section says what it says; they stay here because Pages CMS rewrites the
+// YAML on save and would drop them.
+const page = await getPage(
+  'index',
+  z.object({
+    seo: section.seo,
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    pathways: section.pathwayCards,
+    // The `list` variant with an icon on each row. linkList has no icon, and
+    // iconGrid would offer a per-row button the list variant never draws.
+    whatWeDo: section.linkList.extend({
+      items: z.array(section.linkList.shape.items.element.extend({ icon: optional(section.serviceIcon) })).min(1),
+    }),
+    team: section.storyMosaic,
+    booking: section.textBlock,
+    // Body is the page's own paragraphs only. The "Managed for you" standfirst
+    // above them and the "How it works" steps below them come from Brand
+    // lines, so they stay the same on every page.
+    pricing: section.textBlock,
+    // The rows and columns are the shared table in Site settings, so only the
+    // framing around them is this page's own.
+    comparison: section.comparisonTable.omit({ columns: true, rows: true }),
+    beforeAfter: section.beforeAfter,
+    reviews: section.sectionHeading,
+    // Each service's title, sentence and link come from Site settings > Menus
+    // (shared with the footer). This page only picks a photo for each,
+    // matched by the service's link so a reordered list cannot mispair them.
+    // No `note`: the photo-tiles variant does not draw one.
+    ourServices: section.imageCards.omit({ items: true, note: true }).extend({
+      photos: z.array(
+        z.object({
+          service: z
+            .string()
+            .refine((href) => serviceLinks.some((s) => s.href === href), 'Pick one of the services in Site settings > Menus'),
+          image: section.image,
+        }),
+      ),
+    }),
+    whereWeClean: section.tagCloud,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/',
 };
+
+const business = localBusiness({
+  description: pageMeta.description,
+  // v6 leads with the Northern Rivers and the Tweed; the Southern Gold
+  // Coast is where the team crosses to, not part of the primary claim.
+  areaServed: 'Northern Rivers NSW, the Tweed, and the Southern Gold Coast QLD',
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
+});
+
+const heroImage = page.hero.image && sized(page.hero.image, '4/3');
+
+const pathwayCards = page.pathways.cards.map((card, i) => ({
+  number: i + 1,
+  ...card,
+  image: sized(card.image, '4/3'),
+}));
+
+// The team photo is still a reserved slot (see the "Local team" note above).
+const teamBlocks = page.team.blocks.map((block) =>
+  block.type === 'image' ? { type: 'image' as const, ...sized(block.image, '3/4') } : block,
+);
+
+const ourServiceItems = serviceLinks.map((service) => {
+  const photo = page.ourServices.photos.find((p) => p.service === service.href);
+  return {
+    ...service,
+    image: sized(photo?.image ?? { label: service.title }, '4/3'),
+  };
+});
+
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -494,17 +329,19 @@ const closingCta = {
     primaryNav={primaryNav}
     serviceNav={headerNav}
     secondaryCta={headerSecondaryCta}
-    cta={hero.cta}
+    cta={quoteCta}
   />
 
   <main id="main">
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? quoteCta}
+      image={heroImage}
     />
 
     {/* The trust bar and the opening paragraph share ONE photo, so it has to
@@ -539,46 +376,59 @@ const closingCta = {
         The honest cost: at 90 the photo survives as texture rather than as
         a picture. If that reads as too flat, the fix is a backdrop image
         that can take a scrim — high key, evenly lit, no clipped blacks
-        under the copy column — not a lower number here. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+        under the copy column — not a lower number here.
+
+        Re-check the contrast if the photo is swapped in Pages CMS. */}
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
-    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+    <PathwayCards heading={page.pathways.heading} headingAccent={page.pathways.headingAccent} cards={pathwayCards} />
 
     <ServiceBlocks
       variant="list"
-      heading="What we do"
-      items={whatWeDoItems}
-      note="More than a clean: restocking, property checks and trades arranged for holiday lets and businesses."
+      heading={page.whatWeDo.heading}
+      lead={page.whatWeDo.lead}
+      items={page.whatWeDo.items}
+      note={page.whatWeDo.note}
     />
 
-    <StoryMosaic theme="light" heading="Local team, run properly" blocks={teamBlocks} cta={teamCta} />
+    <StoryMosaic theme="light" heading={page.team.heading} blocks={teamBlocks} cta={page.team.cta} />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Easy to book, local to the core"
-      body={bookingBody}
-      cta={hero.cta}
-      backgroundImage={pathwayHolidayLetImg}
+      heading={page.booking.heading}
+      body={page.booking.body}
+      cta={page.booking.cta ?? quoteCta}
+      backgroundImage={page.booking.backgroundImage}
       scrimOpacity={82}
     />
 
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.instant}
-      body={[managedForYou.recurring, "You'll know the price before we start, not after.", ...pricingBody, ...howItWorks.general]}
-      cta={hero.cta}
+      heading={page.pricing.heading}
+      body={[managedForYou.recurring, ...page.pricing.body, ...howItWorks.general]}
+      cta={page.pricing.cta ?? quoteCta}
+      backgroundImage={page.pricing.backgroundImage}
     />
 
     <ComparisonTable
-      heading={comparisonTable.heading}
-      cornerLabel={comparisonTable.cornerLabel}
-      columns={comparisonTable.columns}
-      rows={comparisonTable.rows}
+      heading={page.comparison.heading}
+      lead={page.comparison.lead}
+      cornerLabel={page.comparison.cornerLabel}
+      columns={comparisonColumns}
+      rows={comparisonRows}
+      footnote={page.comparison.footnote}
+      cta={page.comparison.cta}
     />
 
     {/* Drag the handle to wipe between the two frames of each pair — see
@@ -589,26 +439,41 @@ const closingCta = {
         Placed directly after the comparison table: the table makes the
         claim, this is the nearest thing to evidence for it. */}
     <BeforeAfter
-      heading="The difference, on real jobs."
-      lead="Drag the handle across each photo to see the same spot before and after a clean."
-      pairs={beforeAfterPairs}
-      note="Photographed on real TLB cleans, published with the client's permission."
+      heading={page.beforeAfter.heading}
+      lead={page.beforeAfter.lead}
+      pairs={page.beforeAfter.pairs}
+      note={page.beforeAfter.note}
+      beforeLabel={page.beforeAfter.beforeLabel}
+      afterLabel={page.beforeAfter.afterLabel}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
-    <ServiceBlocks variant="photo-tiles" heading="Our services" items={ourServiceItems} tileCtaLabel="See the service" />
+    <ServiceBlocks
+      variant="photo-tiles"
+      heading={page.ourServices.heading}
+      lead={page.ourServices.lead}
+      items={ourServiceItems}
+      tileCtaLabel={page.ourServices.tileCtaLabel}
+    />
 
     <TagCloud
-      heading="Where we clean"
-      subheading="Across the Northern Rivers, the Tweed and the Southern Gold Coast."
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading}
+      tags={page.whereWeClean.tags}
       groups={locationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
-    <Faq heading="Frequently asked questions" items={faqItems} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
-    <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
+    <CallToAction
+      variant="secondary"
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? quoteCta}
+    />
   </main>
 
   <SiteFooter

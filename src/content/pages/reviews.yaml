@@ -1,0 +1,120 @@
+seo:
+  title: Reviews | What TLB Cleaning Clients Say
+  description: TLB Cleaning grew across the Northern Rivers and the Tweed on
+    recommendations rather than advertising. Read what clients say, and how we
+    handle it when a clean is not right.
+hero:
+  kicker: Reviews
+  headingLines:
+    - Every client we have
+    - came from a recommendation.
+  lead: TLB grew to a full team, and to steady work with real estate agencies
+    across the region, without ever running an advertisement. This is the page
+    where that gets checked.
+reputation:
+  heading: A reputation held by other people
+  body:
+    - type: paragraph
+      text: Word of mouth is a slower way to grow a cleaning business and a harder one
+        to fake. Nobody recommends their cleaner to a neighbour on the strength
+        of an advertisement. They do it because the house was right, again, on
+        the day it was supposed to be.
+    - type: paragraph
+      text: It also means our reputation has always been held by other people rather
+        than by us. The reviews below are being collected from clients who have
+        had us in their homes for years, in their words rather than ours.
+reviews:
+  heading: What our clients say
+agencies:
+  heading: Trusted by local agencies
+  lead: Bond cleans and vacancy turnarounds for real estate agencies across the
+    region. These slots hold their marks and their words, with permission, or
+    they stay empty.
+  logos:
+    - logo:
+        alt: Real estate agency mark, supplied with permission
+      quote: "[TBC - a quote from a property manager about bond cleans passing
+        inspection first time, or about being able to hand TLB a difficult
+        vacate at short notice.]"
+      company: "[Agency name - TBC]"
+      tag: '[Relationship, e.g. "Managed properties since [year]" - TBC]'
+    - logo:
+        alt: Real estate agency mark, supplied with permission
+      quote: "[TBC - a second agency, ideally one on the Queensland side of the
+        border, since this site claims work in both states.]"
+      company: "[Agency name - TBC]"
+      tag: "[Relationship - TBC]"
+beforeAfter:
+  heading: The difference, room by room
+  lead: Drag the handle across each frame to see the same spot before and after a
+    clean.
+  note: Photographed on real TLB cleans, published with the client's permission.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-before.jpg
+        alt: A kitchen benchtop before a TLB clean, with dishes stacked in and beside
+          the sink and pots left on the stove
+      after:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-after.jpg
+        alt: The same kitchen benchtop after the clean, sink empty and the bench clear
+          and wiped down
+      caption: Kitchen benchtop and sink
+    - before:
+        src: /src/assets/home_cleaning/before_after/cooktop-before.jpg
+        alt: A gas cooktop before a TLB clean, with spilled coffee grounds, crumbs and
+          food scraps across the black enamel
+      after:
+        src: /src/assets/home_cleaning/before_after/cooktop-after.jpg
+        alt: The same gas cooktop after the clean, the enamel wiped back to an even
+          black finish
+      caption: Gas cooktop and burners
+honesty:
+  heading: Why there is no rating on this page yet
+  body:
+    - TLB has been booked by word of mouth for years and has only just built a
+      website, so there is no long review history to show you. We would rather
+      say that than put up a number nobody can check.
+    - The quotes on this page are being collected from real clients, with their
+      permission, and they will appear here with their first name and their
+      town. If we have cleaned for you and you are willing to say so, tell us
+      and we will point you at where to leave it.
+otherWays:
+  heading: Other ways to check us out
+  lead: Who we are, what happens after you book, and what it is like working here.
+faq:
+  heading: "Reviews and standards: FAQs"
+  items:
+    - question: Where can I read reviews of TLB Cleaning?
+      answer: Reviews are being collected from clients as the website launches, and
+        they will appear on this page in their own words. [TBC - add the Google
+        Business Profile and Facebook page links here, and to sameAs in
+        src/data/meetTheTeam.ts, as soon as those profiles exist.]
+    - question: Do you guarantee my bond back?
+      answer: No, and be careful with anyone who does, because a bond is released by
+        an agent or a tribunal rather than by a cleaner. What we do is clean to
+        the standard your exit inspection is measured against, and come back and
+        fix anything the inspection picks up on the cleaning.
+    - question: What happens if a clean is not up to standard?
+      answer: Tell us and we come back. Under the Australian Consumer Law a service
+        has to be provided with due care and skill and be fit for the purpose
+        you asked for, and you are entitled to a remedy when it is not.
+        Reporting it within a day or two makes it much easier to put right.
+    - question: Can I speak to an existing client before I book?
+      answer: Ask us. We will not hand out a client list, but plenty of people are
+        happy to be asked, and in a region this size you may well already know
+        somebody we clean for. That is how nearly every client we have found us.
+    - question: Do you work with real estate agencies?
+      answer: Yes. Bond cleans, vacancy turnarounds and routine cleans on managed
+        properties are a steady part of what we do, and agency work is where the
+        standard is least forgiving. [TBC - name the agencies here once each has
+        given written permission.]
+    - question: Are the before and after photos on this site real jobs?
+      answer: Yes. Both comparisons on this page are real TLB jobs, published with the
+        client’s written permission and with nothing identifying in frame — no
+        house numbers, no street signs, no people. Any pair we add later goes up
+        the same way, or it does not go up.
+closingCta:
+  kicker: Reviews
+  heading: Ask the person who recommended us.
+  lead: Then tell us which town you're in and what your place needs, and we'll
+    come back with a price.

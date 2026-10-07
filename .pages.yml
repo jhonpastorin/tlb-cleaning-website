@@ -996,6 +996,356 @@ content:
           - { name: faq, component: faq, label: "FAQs" }
           - { name: beforeYouBook, component: sectionIntro, label: "Before you book (links to the team pages)" }
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: index
+        label: Home
+        type: file
+        path: src/content/pages/index.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: pathways, component: pathwayCards, label: "Tell us what you need (cards)" }
+          - name: whatWeDo
+            label: "What we do (list with icons)"
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: note, label: Note under the list, type: text }
+              - name: items
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - name: icon
+                    component: serviceIcon
+                  - { name: title, label: Title, type: string, required: true }
+                  - { name: description, label: Sentence under the title, type: text, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    required: true
+                    description: A page on this site, starting and ending with a slash, e.g. /house-cleaning/deep-cleaning/
+                    pattern: "^(/|https://)"
+          - name: team
+            component: storyMosaic
+            label: "Local team, run properly"
+            description: The team photo is an empty, labelled slot until a real photo of the TLB team exists. Do not fill it with a stock or unrelated photo.
+          - { name: booking, component: textBlock, label: "Easy to book, local to the core (dark band)" }
+          - name: pricing
+            component: textBlock
+            label: "Instant pricing (under the dark band)"
+            description: "Only this page's own paragraphs. The \"Managed for you\" line above them and the How it works steps below them come from Site settings > Brand lines. The heading {{line.instant.heading}} inserts the brand line's heading."
+          - name: comparison
+            label: "How TLB Cleaning compares (table)"
+            type: object
+            description: The rows and columns are shared with other pages. Edit them under Site settings > Comparison table.
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: Real TLB job photos only, with the client's written permission and nothing identifying in frame (no house numbers, street signs, mail, people or names on doors). Never stock photos. Shoot each pair from one fixed spot.
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: ourServices
+            label: "Our services (photo tiles)"
+            type: object
+            description: Each tile's name, sentence and link come from Site settings > Menus > Our services. Here you choose the photo for each service.
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: tileCtaLabel, label: Link text on each tile, type: string }
+              - name: photos
+                label: Photo for each service
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{service}"
+                fields:
+                  - name: service
+                    label: Service
+                    type: select
+                    required: true
+                    options:
+                      values:
+                        - { name: /house-cleaning/, label: Regular home cleaning }
+                        - { name: /house-cleaning/deep-cleaning/, label: Deep and one-off cleans }
+                        - { name: /house-cleaning/end-of-lease-cleaning/, label: End of lease and bond cleans }
+                        - { name: /airbnb-holiday-home-cleaning/, label: Airbnb and holiday let turnovers }
+                        - { name: /house-cleaning/real-estate-cleaning/, label: Real estate and property management }
+                        - { name: /commercial-cleaning/, label: Commercial cleaning }
+                  - name: image
+                    component: image
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "Four answers are still the brief's suggested wording, waiting for Teagan to confirm: same cleaner every time, how long a house clean takes, weekly or fortnightly, and extra charges for inland towns."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: about
+        label: About
+        type: file
+        path: src/content/pages/about.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: The photo also sits faintly behind the trust bar and the intro below it. Check the text there is still easy to read after changing it.
+          - { name: definition, component: textBlock, label: "Intro (under the trust bar)" }
+          - { name: statement, component: textBlock, label: "One-line statement (dark band)" }
+          - name: story
+            component: storyMosaic
+            label: "How TLB started"
+            description: Teagan's portrait is an empty, labelled slot until a real photo of her arrives, with her permission. Never use a generated or stock portrait.
+          - name: values
+            component: textGrid
+            label: "What we actually mean by local"
+            description: "\"Employed, not subcontracted\" is a claim with legal weight. Keep it only while it is true of every current team member."
+          - { name: wordOfMouth, component: textBlock, label: "Grown by word of mouth (dark band)" }
+          - name: team
+            component: photoGallery
+            label: "The team (hidden on the site for now)"
+            description: Hidden until real photos of the team exist, with each person's written consent. Never use generated or stock faces.
+          - name: introduction
+            component: callout
+            label: "Meet your cleaner first (callout)"
+            description: This promises an introduction on every new booking. Change it if that stops being true.
+          - { name: moreAbout, component: sectionIntro, label: "More about how we work (links to the team pages)" }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: Questions about insurance and police checks are held back on purpose. Add them only once the policy and the check are confirmed, and say exactly what they are.
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: why-tlb
+        label: Why TLB
+        type: file
+        path: src/content/pages/why-tlb.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: "No photo yet: the slot shows a labelled box until a real photo of the TLB team is chosen, and it must not go live like that. The button jumps to the comparison table (#compare)."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "Three ways to read this page (cards)"
+            description: "Links starting with # jump to a section of this page: #compare is the comparison table, #switching is \"Changing cleaners is awkward\"."
+          - name: tradeOff
+            component: textGrid
+            label: "Local and embedded, professionally run"
+            description: "\"Family first\" and \"Employed, not subcontracted\" are copied word for word from the About page: change both pages together. The employed claim has legal weight, so keep it only while it is true of every team member."
+          - { name: resolution, component: textBlock, label: "One-line resolution (dark band with photo)" }
+          - name: comparison
+            label: "How TLB Cleaning compares (table)"
+            type: object
+            description: The rows and columns are shared with other pages. Edit them under Site settings > Comparison table.
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: model, component: textBlock, label: "A brand can be bought" }
+          - name: whyPeopleStay
+            component: textBlock
+            label: "The same faces is not luck (dark band)"
+            description: The industry staff turnover claim has no source yet.
+          - { name: switching, component: textBlock, label: "Changing cleaners is awkward (intro)" }
+          - name: objections
+            component: textGrid
+            label: "Changing cleaners: four worries (cards)"
+            description: The third card holds the page's only sales line ("Book us once as a one-off"). Do not add one to the others.
+          - { name: timing, component: callout, label: "Not before Christmas (warning box)" }
+          - { name: contractors, component: linkList, label: "Changing a contractor rather than a cleaner" }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: faq
+            component: faq
+            label: "FAQs: before you change anything"
+            description: "\"Five Northern Rivers council areas\" appears nowhere else on the site. Confirm it."
+          - name: switchingFaq
+            component: faq
+            label: "FAQs: switching cleaners"
+            description: "The notice periods, cancellation windows, fees and the \"one published case\" in these answers still need sources before launch."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: reviews
+        label: Reviews
+        type: file
+        path: src/content/pages/reviews.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            label: Hero (top of the page, no photo)
+            type: object
+            description: No photo here on purpose. Never add a star rating or review count unless it is a real, checkable figure.
+            fields:
+              - { name: kicker, label: Small label above the heading, type: string }
+              - name: headingLines
+                label: Main heading (H1)
+                type: string
+                list: true
+                required: true
+                description: Each line here starts a new line on the page. Most pages use one or two.
+              - { name: subheading, label: Line under the heading, type: string }
+              - name: lead
+                label: Intro sentence
+                type: text
+                required: true
+                description: "Tip: {{line.instant}} or {{line.fast}} inserts the brand line."
+              - { name: cta, component: link, label: "Button (leave empty to use the page's usual button)" }
+          - { name: reputation, component: textBlock, label: "A reputation held by other people (under the trust bar)" }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: agencies
+            label: "Trusted by local agencies (logos)"
+            type: object
+            description: "Each agency needs to give written permission, supply its own logo and agree to the quote before it goes here. Never a generated logo or a screenshot of their website. The relationship line must be literally true."
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - name: logos
+                label: Logos
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{company}"
+                fields:
+                  - { name: logo, component: image, label: Logo }
+                  - { name: company, label: Company name, type: string }
+                  - { name: quote, label: Quote, type: text }
+                  - { name: tag, label: Relationship (e.g. managed properties since 2023), type: string }
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: Real TLB job photos only, with the client's written permission and nothing identifying in frame. The note under the photos and the last FAQ both say they are real, so keep all three in step.
+          - name: honesty
+            component: callout
+            label: "Why there is no rating yet (callout)"
+            description: Add the Google and Facebook review links here as soon as those profiles exist.
+          - { name: otherWays, component: sectionIntro, label: "Other ways to check us out (links to the team pages)" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: Do not promise a bond-back or satisfaction guarantee unless Teagan formally adopts one.
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: work-with-us
+        label: Work with us
+        type: file
+        path: src/content/pages/work-with-us.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: applyCta
+            component: link
+            label: "Apply button (hero and closing section)"
+            description: Used in the hero and the closing section unless they have their own button. Not the quote button, because an applicant is not pricing a clean.
+          - { name: hero, component: hero }
+          - name: trustBar
+            label: "Three points under the hero"
+            type: object
+            description: All three are claims about employment. Each must be true of every hire, casuals included.
+            fields:
+              - { name: items, label: Points, type: string, list: true, required: true }
+          - { name: theJob, component: textBlock, label: "What the work actually is" }
+          - name: offers
+            component: textGrid
+            label: "What the arrangement offers"
+            description: "\"Shown the standard first\" promises training against a written standard. Keep it only while that is true."
+          - name: asks
+            component: textBlock
+            label: "What we ask of you (dark band)"
+            description: The driver licence and transport line is a condition of employment. Confirm it before changing it.
+          - { name: abn, component: callout, label: "You do not need an ABN (callout)" }
+          - { name: workTypes, component: iconGrid, label: "The kinds of work in a week" }
+          - name: howToApply
+            component: textGrid
+            label: "How to apply (three steps)"
+            description: These steps are a proposal, not yet confirmed as how TLB hires. If the trial shift is paid, say so.
+          - { name: whereWeWork, component: tagCloud, label: "Where we work" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "\"What does it pay?\" is left out until there is an award and pay band to name. Never fill it with \"competitive rates\"."
+          - { name: checkingUs, component: sectionIntro, label: "Checking us out first? (links to the team pages)" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: contact
+        label: Contact
+        type: file
+        path: src/content/pages/contact.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: form
+            component: contactForm
+            label: "Contact form (top of the page)"
+            description: "The form's heading is this page's main heading (H1). Leave the heading or intro empty to use the wording from Site settings > Contact form, which also holds the form's fields and messages."
+          - { name: whatToTellUs, component: callout, label: "What to tell us (under the form)" }
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "The button jumps back up to the form (#enquiry). Do not point it at /contact/, which is this page."
+      - name: thank-you
+        label: Thank you (after the contact form)
+        type: file
+        path: src/content/pages/thank-you.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            label: Top of the page
+            type: object
+            description: "The heading and message are the form's own success wording, edited under Site settings > Contact form, so the form and this page always agree."
+            fields:
+              - { name: kicker, label: Small label above the heading, type: string }
+              - { name: subheading, label: Line under the heading, type: string }
+              - { name: cta, component: link, label: Button, required: true }
+      - name: "404"
+        label: Page not found (404)
+        type: file
+        path: src/content/pages/404.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            label: Hero (top of the page, no photo)
+            type: object
+            fields:
+              - { name: kicker, label: Small label above the heading, type: string }
+              - name: headingLines
+                label: Main heading (H1)
+                type: string
+                list: true
+                required: true
+                description: Each line here starts a new line on the page. Most pages use one or two.
+              - { name: subheading, label: Line under the heading, type: string }
+              - name: lead
+                label: Intro sentence
+                type: text
+                required: true
+                description: "Tip: {{line.instant}} or {{line.fast}} inserts the brand line."
+              - { name: cta, component: link, label: Button, required: true }
+          - name: whereToNext
+            component: tagCloud
+            label: "Where to next (links)"
 
   - name: site-settings
     label: Site settings

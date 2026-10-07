@@ -1,0 +1,250 @@
+seo:
+  title: Cleaning Services & Cleaners | TLB Cleaning
+  description: Local mums cleaning residential and commercial spaces across the
+    Northern Rivers and southern Gold Coast. Police checked, insured and
+    reliable. Book online.
+hero:
+  headingLines:
+    - TLB Cleaning.
+    - Your reliable local cleaners.
+  lead: A local team across the Northern Rivers and the Tweed. {{line.instant}}
+  image:
+    src: /src/assets/home/home-two-tlb-cleaners-presenting-a-made-bed.jpg
+    alt: Two TLB cleaners presenting the cushions on a freshly made bed
+definition:
+  body:
+    - type: paragraph
+      text: TLB Cleaning is a Northern Rivers cleaning company. From Lismore,
+        Alstonville and Ballina, up through Byron, Mullumbimby and Murwillumbah
+        to Tweed Heads, and everywhere else the beautiful Northern Rivers
+        encompasses. We do regular home cleaning, deep and one-off cleans, end
+        of lease and bond cleans, Airbnb turnovers and commercial cleaning.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: Tell us what you need
+  headingAccent: we'll take it from there.
+  cards:
+    - image:
+        src: /src/assets/home/service-airbnb-and-holiday-let-turnovers.jpg
+        alt: Holiday let bedroom with glass doors open onto a deck and green Northern
+          Rivers hills
+      title: I have a holiday let. We take care of it.
+      description: We work to your booking calendar, not the other way around.
+        Turnovers, restocking and guest-ready presentation, or full management
+        if you'd rather hand the lot over.
+      cta:
+        label: Get a quote
+        href: /airbnb-holiday-home-cleaning/
+    - image:
+        src: /src/assets/home/house-cleaning-two-cleaners-making-up-a-bed.jpg
+        alt: Two TLB cleaners making up a bed with fresh grey linen
+      title: I need a hand at home
+      description: Weekly, fortnightly or a one-off reset. The same faces every visit,
+        and nothing to organise once it's set.
+      cta:
+        label: Get a quote
+        href: /house-cleaning/
+    - image:
+        src: /src/assets/home/rental-property-cleaning-cleaner-wiping-kitchen-window.jpg
+        alt: Cleaner wiping down a kitchen window frame
+      title: I manage properties
+      description: Bond and end of lease cleans that pass, and the capacity to handle
+        a rent roll rather than one job at a time.
+      cta:
+        label: Get a quote
+        href: /house-cleaning/real-estate-cleaning/
+whatWeDo:
+  heading: What we do
+  note: "More than a clean: restocking, property checks and trades arranged for
+    holiday lets and businesses."
+  items:
+    - icon: house
+      title: Inside your home
+      description: Regular cleaning, deep and one-off cleans, end of lease and bond cleans.
+      href: /house-cleaning/
+    - icon: suitcase
+      title: Holiday lets
+      description: Airbnb and short-stay turnovers, restocking, guest-ready
+        presentation, and full management of the property if you want it.
+      href: /airbnb-holiday-home-cleaning/
+    - icon: key
+      title: For agencies
+      description: Bond cleans, vacancy turnarounds, routine managed-property cleans.
+      href: /house-cleaning/real-estate-cleaning/
+    - icon: spray-bottle
+      title: Around the house
+      description: Carpets, windows, gutters, pressure cleaning, ovens.
+      href: /house-cleaning/deep-cleaning/
+    - icon: office
+      title: For business
+      description: Offices and commercial premises.
+      href: /commercial-cleaning/
+team:
+  heading: Local team, run properly
+  blocks:
+    - type: image
+      image:
+        alt: The TLB Cleaning team
+    - type: text
+      body:
+        - TLB was started by Teagan Burke, an Alstonville local who built an
+          amazing team around her, one recommendation at a time. No website, no
+          advertising, just people telling other people about her.
+        - That team is spread right across the Northern Rivers and the Tweed
+          now, inland and on the coast, cleaning in the same towns they live in
+          and shop in. You'll meet whoever is looking after your place before
+          the first visit, and you'll come to know them by name.
+        - Behind the local part is a business that runs properly. Set days, set
+          teams, and a schedule you don't have to hold in your head.
+  cta:
+    label: Meet the team
+    href: /about/
+booking:
+  heading: Easy to book, local to the core
+  body:
+    - type: paragraph
+      text: Book online in a couple of minutes. Or send a text, ring us, or drop us an
+        email, whichever you'd actually do.
+    - type: paragraph
+      text: You'll get a reminder in the lead-up so the day never sneaks up on you,
+        and a message when we're on our way. If you run a holiday let, we'll
+        work straight off your booking calendar so turnovers happen around your
+        guests without you organising anything.
+    - type: paragraph
+      text: Then we turn up and get on with it. Some clients want a quick chat and a
+        walk through. Others would rather we let ourselves in and they come home
+        to it done. Both are completely fine, and you can change your mind
+        whenever you like.
+  backgroundImage: /src/assets/home/service-airbnb-and-holiday-let-turnovers.jpg
+pricing:
+  heading: "{{line.instant.heading}}"
+  body:
+    - type: paragraph
+      text: You'll know the price before we start, not after.
+    - type: paragraph
+      text: We quote on your actual place rather than a guess, so tell us the size of
+        it and roughly what condition it's in and we'll come back with a number.
+        If it turns out you need less than you asked for, we'll say so. A
+        one-off deep clean followed by a fortnightly usually works out better
+        than paying for a long first regular clean, and we'd rather tell you
+        that than take the bigger booking.
+    - type: paragraph
+      text: No lock-in, no minimum term and no exit fee. If it stops suiting you, tell
+        us and we'll stop.
+comparison:
+  heading: How TLB Cleaning compares
+  cornerLabel: Why TLB Cleaning is different
+beforeAfter:
+  heading: The difference, on real jobs.
+  lead: Drag the handle across each photo to see the same spot before and after a
+    clean.
+  note: Photographed on real TLB cleans, published with the client's permission.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-before.jpg
+        alt: A kitchen benchtop before a TLB clean, with dishes stacked in and beside
+          the sink and pots left on the stove
+      after:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-after.jpg
+        alt: The same kitchen benchtop after a TLB clean, sink empty and the bench clear
+          and wiped down
+      caption: Kitchen benchtop and sink
+    - before:
+        src: /src/assets/home_cleaning/before_after/cooktop-before.jpg
+        alt: A gas cooktop before a TLB clean, with spilled coffee grounds, crumbs and
+          food scraps across the black enamel
+      after:
+        src: /src/assets/home_cleaning/before_after/cooktop-after.jpg
+        alt: The same gas cooktop after a TLB clean, the enamel wiped back to an even
+          black finish
+      caption: Gas cooktop and burners
+reviews:
+  heading: What our clients say
+ourServices:
+  heading: Our services
+  tileCtaLabel: See the service
+  photos:
+    - service: /house-cleaning/
+      image:
+        src: /src/assets/home/service-regular-home-cleaning-cleaner-scrubbing-a-kitchen-sink.jpg
+        alt: Regular home cleaning
+    - service: /house-cleaning/deep-cleaning/
+      image:
+        src: /src/assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-tidying-a-shower-niche.jpg
+        alt: Deep and one-off cleans
+    - service: /house-cleaning/end-of-lease-cleaning/
+      image:
+        src: /src/assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-empty-room-glass-doors-onto-the-deck.jpg
+        alt: End of lease and bond cleans
+    - service: /airbnb-holiday-home-cleaning/
+      image:
+        src: /src/assets/home/service-airbnb-and-holiday-let-turnovers.jpg
+        alt: Airbnb and holiday let turnovers
+    - service: /house-cleaning/real-estate-cleaning/
+      image:
+        src: /src/assets/home/service-real-estate-and-property-management.jpg
+        alt: Real estate and property management
+    - service: /commercial-cleaning/
+      image:
+        src: /src/assets/home/service-commercial-cleaning.jpg
+        alt: Commercial cleaning
+whereWeClean:
+  heading: Where we clean
+  subheading: Across the Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+faq:
+  heading: Frequently asked questions
+  items:
+    - question: Are you a franchise?
+      answer: No. TLB is locally owned and locally run, started here and still here.
+        When you book, you're booking us.
+    - question: Will I get the same cleaner every time?
+      answer: Yes, wherever we can. Your place is assigned to a team and that's who
+        you'll see. If someone's away, another member of your team covers and we
+        let you know beforehand.
+    - question: Do you cover the inland towns as well as the coast?
+      answer: Yes. Lismore, Casino, Alstonville, Kyogle, Murwillumbah and everywhere
+        in between. We're a Northern Rivers business, not a coastal one.
+    - question: Do you clean in Queensland as well as New South Wales?
+      answer: Yes. We work right across the Northern Rivers and the Tweed, and cross
+        the border into Coolangatta, Palm Beach and Burleigh Heads.
+    - question: How long does a house clean take?
+      answer: A rough guide for a maintained home is about an hour for each bedroom
+        and bathroom, so a three-bedroom, two-bathroom house usually takes three
+        to five hours for one cleaner, or roughly half that with two. Your first
+        clean takes longer, because it brings the home to a baseline. After
+        that, visits settle into a predictable window.
+    - question: Should I book weekly or fortnightly?
+      answer: Fortnightly suits most homes. Weekly tends to work better for larger
+        households, homes with pets, or anywhere the kitchen and bathrooms get
+        heavy use. Start fortnightly and tell us if it isn't holding.
+    - question: How much does a clean cost?
+      answer: It depends on the size of your place, its condition and how often we
+        come. That's why we quote rather than publish a flat rate that would be
+        wrong for most homes. Tell us the basics and you'll have a price back
+        quickly, with no obligation attached to it.
+    - question: Is the first clean more expensive?
+      answer: Usually, yes, and we'll tell you that upfront. The first visit starts
+        from wherever the house is rather than holding a standard that's already
+        set, so it takes longer. After that, your regular visits settle into a
+        consistent price.
+    - question: Am I locked into a contract?
+      answer: No. No minimum term, no exit fee, and you can pause or skip a visit
+        whenever you need to. Most people stay because it's working, not because
+        they signed something.
+    - question: Do you charge extra for the inland towns?
+      answer: Our teams live across the region, so we're not driving in from somewhere
+        else. Tell us where you are when you book and your quote will reflect
+        it.
+    - question: Do I need to be home?
+      answer: Not at all, and most of our clients aren't. How we get in is agreed when
+        you book, and we'll message you when we're on the way.
+    - question: Can I book over the phone instead of online?
+      answer: Yes. Online, text, phone or email, whichever suits you. Plenty of people
+        would rather talk it through the first time, and we'd rather that than
+        have you guess at a form.
+closingCta:
+  heading: Set it up once, and stop thinking about it.
+  lead: Tell us which town you're in and what your place needs, and we'll come
+    back with a price.
