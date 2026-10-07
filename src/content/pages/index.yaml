@@ -6,7 +6,7 @@ seo:
 hero:
   headingLines:
     - TLB Cleaning.
-    - Your reliable local cleaners in Northern Rivers.
+    - Your reliable local cleaners.
   lead: A local team across the Northern Rivers and the Tweed. {{line.instant}}
   image:
     src: /src/assets/home/home-two-tlb-cleaners-presenting-a-made-bed.jpg
