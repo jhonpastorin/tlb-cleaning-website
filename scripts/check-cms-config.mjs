@@ -9,9 +9,12 @@
 //   - a block's type is not one .pages.yml offers,
 //   - .pages.yml points at a component or a file that does not exist.
 //
+// Collections (a folder of files, e.g. src/content/towns) are checked file by
+// file.
+//
 // Run: npm run check-cms
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { parse } from 'yaml';
 
 const config = parse(readFileSync('.pages.yml', 'utf8'));
@@ -83,7 +86,10 @@ function checkOne(field, value, where) {
     checkFields(blockFields ?? [], rest, `${where}.`);
   } else if (field.type === 'select') {
     const allowed = (field.options?.values ?? []).map((v) => (typeof v === 'object' ? v.name : v));
-    if (!allowed.includes(value)) problems.push(`${where}: "${value}" is not one of the options in .pages.yml`);
+    const chosen = field.options?.multiple ? (Array.isArray(value) ? value : [value]) : [value];
+    for (const v of chosen) {
+      if (!allowed.includes(v)) problems.push(`${where}: "${v}" is not one of the options in .pages.yml`);
+    }
   }
 }
 
@@ -94,13 +100,20 @@ function entries(items) {
 
 let files = 0;
 for (const entry of entries(config.content ?? [])) {
-  if (entry.type !== 'file') continue;
   if (!existsSync(entry.path)) {
     problems.push(`${entry.name}: ${entry.path} does not exist`);
     continue;
   }
-  files++;
-  checkFields(entry.fields ?? [], parse(readFileSync(entry.path, 'utf8')), `${entry.path}: `);
+  const paths =
+    entry.type === 'collection'
+      ? readdirSync(entry.path)
+          .filter((name) => /\.ya?ml$/.test(name))
+          .map((name) => `${entry.path}/${name}`)
+      : [entry.path];
+  for (const path of paths) {
+    files++;
+    checkFields(entry.fields ?? [], parse(readFileSync(path, 'utf8')), `${path}: `);
+  }
 }
 
 if (problems.length) {

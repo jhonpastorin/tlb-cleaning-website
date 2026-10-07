@@ -892,6 +892,87 @@ components:
             label: Who said it
             type: string
 
+  # ------------------------------------------------------- site-wide settings
+
+  townPicker:
+    type: select
+    label: Towns
+    options:
+      multiple: true
+      values:
+        - "Lismore"
+        - "Goonellabah"
+        - "Alstonville"
+        - "Wollongbar"
+        - "Casino"
+        - "Kyogle"
+        - "Nimbin"
+        - "Clunes"
+        - "Bexhill"
+        - "Dunoon"
+        - "Ballina"
+        - "East Ballina"
+        - "Lennox Head"
+        - "Skennars Head"
+        - "Wardell"
+        - "Evans Head"
+        - "Broadwater"
+        - "Woodburn"
+        - "Coraki"
+        - "Bangalow"
+        - "Byron Bay"
+        - "Suffolk Park"
+        - "Mullumbimby"
+        - "Brunswick Heads"
+        - "Ocean Shores"
+        - "New Brighton"
+        - "Billinudgel"
+        - "Federal"
+        - "Murwillumbah"
+        - "Tweed Heads"
+        - "Tweed Heads South"
+        - "Banora Point"
+        - "Terranora"
+        - "Bilambil"
+        - "Bilambil Heights"
+        - "Chinderah"
+        - "Fingal Head"
+        - "Kingscliff"
+        - "Casuarina"
+        - "Cudgen"
+        - "Cabarita Beach"
+        - "Bogangar"
+        - "Hastings Point"
+        - "Pottsville"
+        - "Uki"
+        - "Burringbar"
+        - "Mooball"
+        - "Coolangatta"
+        - "Bilinga"
+        - "Tugun"
+        - "Currumbin"
+        - "Palm Beach"
+        - "Elanora"
+        - "Burleigh Heads"
+        - "Burleigh Waters"
+        - "Miami"
+  trustIcon:
+    type: select
+    label: Icon
+    options:
+      values:
+        - { name: map-pin, label: Map pin }
+        - { name: shield-check, label: Shield with tick }
+        - { name: building, label: Building }
+        - { name: team, label: Team }
+        - { name: chat, label: Speech bubble }
+        - { name: sparkle, label: Sparkle }
+
+  paragraphList:
+    type: text
+    label: Paragraphs
+    list: true
+
 content:
   - name: main-pages
     label: Main pages
@@ -915,3 +996,479 @@ content:
           - { name: faq, component: faq, label: "FAQs" }
           - { name: beforeYouBook, component: sectionIntro, label: "Before you book (links to the team pages)" }
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+
+  - name: site-settings
+    label: Site settings
+    type: group
+    items:
+      - name: contact
+        label: Contact details
+        type: file
+        path: src/content/site/contact.yaml
+        format: yaml
+        fields:
+          - name: phone
+            label: Phone number (as shown)
+            type: string
+            required: true
+            description: Shown in the header, the footer and on the contact page, e.g. 0404 742 065
+          - name: phoneHref
+            label: Phone number (for the call link)
+            type: string
+            required: true
+            pattern: "^tel:\\+?[0-9]+$"
+            description: "tel: and then the number in international form with no spaces, e.g. tel:+61404742065. Change it with the number above."
+          - name: schemaTelephone
+            label: Phone number (for Google)
+            type: string
+            required: true
+            description: International form with spaces, e.g. +61 404 742 065. Goes into the business details Google reads.
+          - name: email
+            label: Email address
+            type: string
+            required: true
+          - name: address
+            label: Area line in the footer
+            type: string
+            required: true
+          - name: copyright
+            label: Copyright line
+            type: string
+            required: true
+
+      - name: buttons
+        label: Site-wide buttons
+        type: file
+        path: src/content/site/buttons.yaml
+        format: yaml
+        fields:
+          - name: quote
+            component: link
+            label: Quote button (on most pages)
+            description: Changing this changes the button on every page that uses it.
+          - name: book
+            component: link
+            label: Booking button
+          - name: walkthroughLabel
+            label: Commercial pages' button text
+            type: string
+            required: true
+            description: The button on all commercial pages. It links to the quote button's page.
+
+      - name: navigation
+        label: Menus
+        type: file
+        path: src/content/site/navigation.yaml
+        format: yaml
+        fields:
+          - name: primary
+            label: Top bar links
+            type: object
+            description: The phone number and email are added after these automatically, from Contact details.
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Text, type: string, required: true }
+              - { name: href, label: Links to, type: string, required: true }
+          - name: services
+            label: Our services (footer and homepage)
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: title, label: Service, type: string, required: true }
+              - { name: description, label: One line about it (homepage only), type: text, required: true }
+              - { name: href, label: Links to, type: string, required: true }
+          - name: header
+            label: Main menu
+            type: object
+            description: The full menu, including items kept out of it. Tick "Hidden" to keep an item or a row out of the menu without deleting it.
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Menu item, type: string, required: true }
+              - { name: href, label: Links to, type: string }
+              - { name: hidden, label: Hidden (keep it, and everything under it, out of the menu), type: boolean }
+              - name: townMenu
+                label: Lists the live towns
+                type: boolean
+                readonly: true
+                description: This item's dropdown is built from the live towns under Locations, not from rows here.
+              - { name: note, label: Note, type: text, readonly: true }
+              - name: groups
+                label: Dropdown columns
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Column heading, type: string }
+                  - name: items
+                    label: Rows
+                    type: object
+                    list:
+                      collapsible:
+                        collapsed: true
+                        summary: "{label}"
+                    fields:
+                      - { name: label, label: Text, type: string, required: true }
+                      - { name: href, label: Links to, type: string }
+                      - { name: hidden, label: Hidden (keep this row out of the menu), type: boolean }
+                      - { name: note, label: Note, type: text, readonly: true }
+
+      - name: trust-bar
+        label: Trust bar
+        type: file
+        path: src/content/site/trust-bar.yaml
+        format: yaml
+        fields:
+          - name: cards
+            label: Proof points
+            type: object
+            description: Shown on almost every page. Keep it at four, which fits on one row; five wraps to two rows. Both numbers here must be true and current.
+            list:
+              min: 1
+              max: 5
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: icon, component: trustIcon, required: true }
+              - { name: title, label: Short label, type: string, required: true }
+              - { name: description, label: The claim, type: string, required: true }
+
+      - name: brand-lines
+        label: Brand lines
+        type: file
+        path: src/content/site/brand-lines.yaml
+        format: yaml
+        fields:
+          - name: line
+            label: The line (end of hero intros)
+            type: object
+            description: "Inserted into page copy wherever {{line.instant}} or {{line.fast}} appears. \"Instant\" is only for regular cleans and turnovers, which can genuinely be priced instantly."
+            fields:
+              - { name: instant, label: Instant pricing version, type: string, required: true }
+              - { name: fast, label: Fast quoting version, type: string, required: true }
+          - name: lineHeading
+            label: The line as a heading
+            type: object
+            fields:
+              - { name: instant, label: Instant pricing version, type: string, required: true }
+              - { name: fast, label: Fast quoting version, type: string, required: true }
+          - name: managedForYou
+            label: Managed for you
+            type: object
+            fields:
+              - { name: recurring, label: For regular and commercial work, type: text, required: true }
+              - { name: oneOff, label: For one-off jobs, type: text, required: true }
+          - name: body
+            label: Paragraphs under the line
+            type: object
+            fields:
+              - { name: regular, component: paragraphList, label: Regular home cleaning }
+              - { name: turnover, component: paragraphList, label: Holiday let turnovers }
+              - { name: residential, component: paragraphList, label: One-off home jobs (carpets, windows, gutters) }
+              - { name: condition, component: paragraphList, label: Deep, bond and mould cleans }
+              - { name: commercial, component: paragraphList, label: Commercial }
+          - name: howItWorks
+            label: How it works steps
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: general, label: Steps (most pages), type: string, list: true }
+              - { name: turnover, label: Steps (Airbnb page), type: string, list: true }
+
+      - name: comparison
+        label: Comparison table
+        type: file
+        path: src/content/site/comparison.yaml
+        format: yaml
+        fields:
+          - name: columns
+            label: Columns
+            type: object
+            description: The last column is TLB's and is the highlighted one.
+            list: true
+            fields:
+              - { name: label, label: Column heading, type: string, required: true }
+          - name: rows
+            label: Rows
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - name: id
+                label: Fixed name
+                type: string
+                readonly: true
+                description: Some pages look this row up by this name. Do not delete a row that has one.
+              - { name: label, label: Row heading, type: string, required: true }
+              - name: values
+                label: One cell per column, left to right
+                type: string
+                list: true
+
+      - name: contact-form
+        label: Contact form
+        type: file
+        path: src/content/site/contact-form.yaml
+        format: yaml
+        fields:
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: lead, label: Intro sentence, type: text, required: true }
+          - { name: submitLabel, label: Send button, type: string, required: true }
+          - { name: submittingLabel, label: Send button while sending, type: string, required: true }
+          - { name: successHeading, label: After sending, heading, type: string, required: true }
+          - { name: successBody, label: After sending, message, type: text, required: true }
+          - { name: errorHeading, label: If sending fails, heading, type: string, required: true }
+          - { name: errorBody, label: If sending fails, message, type: text, required: true }
+          - { name: unconfiguredHeading, label: If the form is not connected, heading, type: string, required: true }
+          - { name: unconfiguredBody, label: If the form is not connected, message, type: text, required: true }
+          - name: serviceOptions
+            label: Type of service options
+            type: string
+            list: true
+            description: "These are sent to the Monday.com board word for word. Changing or adding one means updating the board's dropdown column the same day, or those enquiries arrive with the service blank."
+
+      - name: who-is-in-your-home
+        label: '"Who is in my home" card'
+        type: file
+        path: src/content/site/who-is-in-your-home.yaml
+        format: yaml
+        fields:
+          - { name: title, label: Title, type: string, required: true }
+          - name: description
+            label: Sentence under the title
+            type: text
+            required: true
+            description: Appears on six service pages. The two [bracketed] claims still need confirming before launch.
+          - { name: cta, component: link }
+          - { name: defaultImageAlt, label: Photo description, type: string, required: true }
+
+      - name: team-pages
+        label: "Cross-links: meet the team"
+        type: file
+        path: src/content/site/team-pages.yaml
+        format: yaml
+        fields:
+          - name: pages
+            label: Pages
+            type: object
+            list:
+              min: 4
+              max: 4
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Name, type: string, required: true }
+              - { name: href, label: Page, type: string, readonly: true }
+              - name: group
+                label: Menu column
+                type: select
+                options: { values: ["The people", "Proof"] }
+              - { name: blurb, label: One line about it, type: text, required: true }
+
+      - name: premises
+        label: "Cross-links: commercial premises"
+        type: file
+        path: src/content/site/premises.yaml
+        format: yaml
+        fields:
+          - name: pages
+            label: Premises pages
+            type: object
+            list:
+              min: 13
+              max: 13
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Name, type: string, required: true }
+              - { name: href, label: Page, type: string, readonly: true }
+              - { name: blurb, label: One line about it, type: text, required: true }
+          - name: services
+            label: Commercial services
+            type: object
+            list: true
+            fields:
+              - { name: label, label: Name, type: string, required: true }
+              - { name: href, label: Page, type: string, required: true }
+
+      - name: guides
+        label: "Cross-links: guides"
+        type: file
+        path: src/content/site/guides.yaml
+        format: yaml
+        fields:
+          - name: pages
+            label: Guides
+            type: object
+            list:
+              min: 9
+              max: 9
+              collapsible:
+                collapsed: true
+                summary: "{shortLabel}"
+            fields:
+              - { name: label, label: Full title, type: string, required: true }
+              - { name: shortLabel, label: Short title (for cards and links), type: string, required: true }
+              - { name: href, label: Page, type: string, readonly: true }
+              - name: cluster
+                label: Group
+                type: select
+                options: { values: ["End of lease & tenancy", "Homes, hosting & commercial"] }
+              - { name: blurb, label: One line about it, type: text, required: true }
+              - { name: icon, component: serviceIcon }
+          - name: lastReviewed
+            label: Review date line (on the two legal guides)
+            type: string
+            required: true
+            description: Only change this after actually re-checking both guides against the current rules.
+
+      - name: appliances
+        label: "Cross-links: appliances"
+        type: file
+        path: src/content/site/appliances.yaml
+        format: yaml
+        fields:
+          - name: services
+            label: Services
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Name, type: string, required: true }
+              - { name: href, label: Page, type: string, required: true }
+              - { name: blurb, label: One line about it, type: text, required: true }
+
+      - name: outside
+        label: "Cross-links: outside your home"
+        type: file
+        path: src/content/site/outside.yaml
+        format: yaml
+        fields:
+          - name: services
+            label: Services
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Name, type: string, required: true }
+              - { name: href, label: Page, type: string, required: true }
+              - { name: icon, component: serviceIcon }
+              - { name: description, label: One line about it, type: text, required: true }
+
+  - name: reviews
+    label: Google reviews
+    type: file
+    path: src/content/site/reviews.yaml
+    format: yaml
+    fields:
+      - name: profileUrl
+        label: Google Business Profile link
+        type: string
+        description: Leave empty until the profile is public. Adds a "Read all our reviews on Google" link.
+      - name: reviews
+        label: Reviews (newest first)
+        type: object
+        description: "Only reviews that are live on Google, copied word for word, with the name exactly as Google shows it. Never edit, shorten or combine a review. No star averages."
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{author} ({date})"
+        fields:
+          - { name: author, label: Name as Google shows it, type: string, required: true }
+          - { name: rating, label: Stars, type: number, required: true, options: { min: 1, max: 5 } }
+          - { name: text, label: Review, type: text, required: true }
+          - { name: date, label: Month posted (YYYY-MM), type: string, required: true, pattern: "^\\d{4}-\\d{2}$" }
+          - { name: reviewUrl, label: The review's share link, type: string }
+          - name: topics
+            label: Lead with it on
+            type: select
+            options:
+              multiple: true
+              values:
+                - { name: airbnb, label: The Airbnb page }
+
+  - name: locations
+    label: Locations
+    type: group
+    items:
+      - name: locations-settings
+        label: Live towns and region photos
+        type: file
+        path: src/content/site/locations.yaml
+        format: yaml
+        fields:
+          - name: liveTowns
+            component: townPicker
+            label: Live town pages
+            description: "Towns whose page is linked from the menu, the location bands and the region pages. Every town is still named everywhere; only these are clickable."
+          - { name: subheading, label: Subheading over the town lists, type: string, required: true }
+          - { name: nswSubheading, label: Subheading on NSW-only pages, type: string, required: true }
+          - name: regionPhotos
+            label: Region photos
+            type: object
+            description: "None of these is a photo of a specific town, so the descriptions must not name one."
+            fields:
+              - { name: hinterlandHome, component: image, label: Hinterland home }
+              - { name: coastalHome, component: image, label: Coastal home }
+              - { name: valley, component: image, label: Valley }
+
+      - name: towns
+        label: Town pages
+        type: collection
+        path: src/content/towns
+        format: yaml
+        view:
+          primary: town
+        operations: { create: false, delete: false, rename: false }
+        fields:
+          - { name: town, label: Town, type: string, readonly: true }
+          - name: hero
+            component: image
+            label: Photo
+            description: "A scene characteristic of the town, not a photo OF it, unless TLB took it there. The description says what is in the frame and never names the town, a landmark or a street unless the photo is really of it."
+          - name: local
+            component: paragraphList
+            label: About this town
+            description: "Two or three sentences only true of this town, from someone who works there. This is what stops the page being a near-copy of the other 55. Never invent TLB's experiences."
+          - name: nearby
+            component: townPicker
+            label: Nearby towns (optional)
+            description: Leave empty to work them out from the map. Pick six to override.
+
+      - name: regions
+        label: Region pages
+        type: collection
+        path: src/content/regions
+        format: yaml
+        operations: { create: false, delete: false, rename: false }
+        fields:
+          - { name: seo, component: seo }
+          - name: headingLines
+            label: Main heading (H1)
+            type: string
+            list: true
+            required: true
+          - { name: lead, label: Intro sentence, type: text, required: true }
+          - name: intro
+            component: paragraphList
+            label: About the region
+            description: "The /locations/ hub shows these same paragraphs. Rewriting one of the two so they differ is still an open item."
