@@ -1738,3 +1738,47 @@ content:
             description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: guide-steam-dry-or-shampoo
+        label: "Which carpet cleaning method"
+        type: file
+        path: src/content/pages/guides/steam-dry-or-shampoo-which-carpet-cleaning-method.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: methodTable
+            component: comparisonTable
+            label: "The three methods, side by side (table)"
+            description: "The first column (highlighted) is the method TLB uses. Drying times stay ranges with humidity named, never single figures."
+          - name: methods
+            component: contentGrid
+            label: "The three methods in full (text and photos)"
+            description: "Cells sit two to a row in this order, so a photo and its text swap sides by position. A text cell left alone on the last row spans the full width. Only use photos that really show the method beside them."
+          - name: fibre
+            component: callout
+            label: "The method matters less than the fibre (warning box)"
+            description: "Describes what wool needs without saying TLB cleans wool: that is still unconfirmed on the Carpet and rug cleaning page. Keep the viscose warning."
+          - name: ourMethod
+            component: textBlock
+            label: "Which one we use"
+            description: "Must not claim more than the Carpet and rug cleaning page does: TLB cleans by hot water extraction, and does not offer dry or shampoo methods on that page."
+          - name: choose
+            component: iconGrid
+            label: "How to choose, in six lines"
+            description: "The button under the grid is the site-wide quote button."
+          - { name: drying, component: textBlock, label: "Drying, and why February is different (dark band)" }
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - { name: faq, component: faq, label: "FAQs" }
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
