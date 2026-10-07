@@ -52,7 +52,7 @@ one page:
 |---|---|
 | `house-cleaning-team-vacuuming-open-plan-living-room.jpg` | Aqua polo + teal apron, teal gloves |
 | `service-deep-and-one-off-cleans.png` | White tee + dark green apron, **yellow** gloves |
-| `service-regular-home-cleaning.png` | Mint tee, yellow gloves |
+| `house-cleaning-cleaner-mopping-timber-living-room-floor.png` | Mint tee, yellow gloves |
 | `deep-cleaning-spray-bottle-and-sponge.png` | Denim shirt + mint apron, mint gloves |
 
 **Decide the canonical uniform and put it in every future prompt verbatim.**

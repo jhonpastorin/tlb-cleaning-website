@@ -13,10 +13,48 @@ against.
   before adding anything), and `design-refs/` (wireframes each section
   variant was built from).
 - **A brand instance (built *from* this library, lives in its own repo):**
-  a real site's `tokens.css` values, `src/data/*.ts` content, `src/pages/`,
-  and image assets. The current Maple disability-support build living in
+  a real site's `tokens.css` values, its content (`src/content/`, read through
+  `src/data/*.ts` and `src/lib/`), `src/pages/`, and image assets. The current Maple disability-support build living in
   this repo is a worked example, not a template you edit in place — treat
   new brands as separate repos forked from this one, not new folders here.
+
+## Content and Pages CMS
+
+Every page's copy and photos, and the site-wide content (menus, contact
+details, trust bar, reviews, towns), live in YAML files under `src/content/`
+and are edited in Pages CMS (https://app.pagescms.org). `PAGES-CMS-PLAN.md`
+has the full design and history; `EDITING-GUIDE.md` is the guide for editors.
+
+- **`src/content/pages/<path>.yaml`**: one file per page. The page's `.astro`
+  file owns the layout and reads its content with `getPage()` (`src/lib/cms.ts`),
+  validating it against the section schemas in `src/lib/cms-schemas.ts`.
+- **`src/content/site/`, `towns/`, `regions/`**: site-wide content, read
+  synchronously by the modules in `src/data/` through `src/lib/cms-data.ts`.
+  Those modules keep their exports, so pages import them as before.
+- **`.pages.yml`**: the editor. One `components:` entry per section schema,
+  one `content:` entry per file, in sidebar groups.
+- **Images** stay in `src/assets/`. Content files store `/src/assets/...`
+  paths and `cmsImage()` resolves them, so Astro still optimises every photo.
+- **Notes for developers stay in the `.astro` and `.ts` files**, never in
+  YAML: Pages CMS rewrites a YAML file when it saves it and drops comments.
+
+Checks (all run in CI on every push, including Pages CMS saves):
+
+| Command | Fails when |
+| --- | --- |
+| `npm run build` | a content file does not fit its page's schema, or a schema no longer fits its component (`astro check` runs `src/lib/cms-schemas.check.ts`) |
+| `npm run check-cms` | a content file has fields the editor cannot reach, no editor entry at all, or `.pages.yml` names something missing |
+| `npm run brand-lint` | report only in CI; the publish workflow refuses changes that add blockers |
+| `npm run compare-build` | the built HTML differs from a baseline in `dist-before/` (used when moving content without changing output) |
+
+Editors save to `staging`; the **Publish to live site** button in Pages CMS
+(`.github/workflows/publish-live.yml`, GitHub users only) merges staging into
+`main` after the same checks.
+
+**Adding a page:** build it as usual, put its copy in
+`src/content/pages/<path>.yaml`, read it with `getPage()` using the section
+schemas (pass every content field through to its component), and add its
+entry to `.pages.yml`. `PAGES-CMS-PLAN.md` section 5 has the recipe.
 
 ## Why nothing here is "viewable"
 
@@ -109,6 +147,11 @@ and a test checklist — is in `MONDAY-FORM-SETUP.md`.
    (e.g. `Hero.astro`'s `split-mosaic` today, `centered` as a likely next
    variant).
 3. Document the variant in `SECTIONS.md`'s table for that component.
+4. If the variant shows different CONTENT (a new field, or fewer fields),
+   update the section's schema in `src/lib/cms-schemas.ts` and its matching
+   component in `.pages.yml` together, so editors are offered exactly what
+   the variant shows. `npm run build` checks the schema against the
+   component's props (`src/lib/cms-schemas.check.ts`).
 
 ## Starting a new brand site
 

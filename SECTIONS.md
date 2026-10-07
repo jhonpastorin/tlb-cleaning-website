@@ -9,6 +9,13 @@ Every section is brand-agnostic: it reads only from `src/styles/tokens.css`
 different brand means replacing `tokens.css` — nothing in `src/components/`
 should ever need to change.
 
+**Content editing.** On the TLB site, each section's CONTENT props (words,
+photos, alt text, links) have a schema in `src/lib/cms-schemas.ts` and a
+matching editor component in `.pages.yml`; design props (variant, theme,
+ratio, tone) stay in the page. When a section gains or loses a content prop
+here, change those two as well. See the root `README.md`, "Content and Pages
+CMS".
+
 This repo is the library itself, not a deployed brand site — see the root
 `README.md`. Every variant documented below traces back to a wireframe at
 `design-refs/wireframes/<section>/<variant>.png`; that's where a new

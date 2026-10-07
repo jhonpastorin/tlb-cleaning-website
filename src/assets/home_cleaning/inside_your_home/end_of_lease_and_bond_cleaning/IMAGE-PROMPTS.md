@@ -22,9 +22,9 @@ photos from elsewhere in the library.
 
 | Slot | Currently using | Verdict |
 |---|---|---|
-| Hero | `end-of-lease-cleaner-with-squeegee-and-cloth.png` (this folder) | **Replaced.** The hero used to borrow `home/service-end-of-lease-and-bond-cleans.png`, which is a family A scene photo saved as a PNG — so this page's hero was the only one on the site showing a boxed photograph where every sibling shows a family B cut-out. Reuse does not override the family rule (guidelines section 1: heroes are cut-outs). The homepage tile still uses the scene photo, which is the right slot for it. |
+| Hero | `end-of-lease-cleaner-with-squeegee-and-cloth.png` (this folder) | **Replaced.** The hero used to borrow `home/house-cleaning-cleaner-wiping-tall-interior-window.png`, which is a family A scene photo saved as a PNG — so this page's hero was the only one on the site showing a boxed photograph where every sibling shows a family B cut-out. Reuse does not override the family rule (guidelines section 1: heroes are cut-outs). The homepage tile still uses the scene photo, which is the right slot for it. |
 | Card 1, moving out | `deep_cleaning/deep-cleaning-empty-room-on-moving-out-day.jpg` | **Keep.** It genuinely shows moving-out day. A second moving-out photo would make one idea look like two (guidelines section 5). |
-| Card 2, property manager | `home/rental-property-cleaning-two-storey-house-exterior.jpg` | **Keep for now, replace eventually.** It is the library's rent-roll image and it is honest, but it is an exterior on a card whose copy is about vacancy turnarounds. A property manager at a bench with a tablet and keys would serve the card better. Prompt 3 below, low priority. |
+| Card 2, property manager | `home/service-real-estate-and-property-management.jpg` | **Keep for now, replace eventually.** It is the library's rent-roll image and it is honest, but it is an exterior on a card whose copy is about vacancy turnarounds. A property manager at a bench with a tablet and keys would serve the card better. Prompt 3 below, low priority. |
 | Card 3, comparing | `deep_cleaning/deep-cleaning-comparing-clean-types-with-a-checklist.jpg` | **Keep.** Same shot, same job, on both pages that offer the same comparison. |
 
 So the page has **no blocking image gap**. Everything below is either a

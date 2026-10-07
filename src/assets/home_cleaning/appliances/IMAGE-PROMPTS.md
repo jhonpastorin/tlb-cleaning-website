@@ -43,7 +43,7 @@ yellow, red or bright blue, and the generator reaches for a pop colour unless
 told not to part by part. Every prompt below names the equipment's colours
 explicitly. One take was lost to tan brush bristles.
 
-**3. ⚠️ The existing `why-tlb-cleaner-vacuuming-a-living-room-rug.png` is NOT
+**3. ⚠️ The existing `service-deep-and-one-off-cleans.png` is NOT
 reusable, despite being exactly this subject.** It was the obvious §5 reuse
 candidate for the carpet page and it fails IMAGE-GUIDELINES §4 on three
 separate counts: an invented "TLG PROFESSIONAL" logo on the apron (a fabricated

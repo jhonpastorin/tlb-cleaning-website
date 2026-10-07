@@ -113,8 +113,8 @@ export const heroImages: Record<HeroKey, { src: ImageMetadata; label: string }> 
 // captioned "a headland above a curving bay" is a picture of a headland.
 //
 // Keep that distinction if you edit a label. If TLB shoots real town
-// photography later, swap the file here and the label can finally say where
-// it is.
+// photography later, upload it on the town in Pages CMS and the description
+// can finally say where it is.
 //
 // Regenerate the whole set, or re-shoot one town, with:
 //   node scripts/locations/generate.mjs

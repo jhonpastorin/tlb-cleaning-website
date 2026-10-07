@@ -147,7 +147,7 @@ single stretch, which is the first time that has happened in this repo.
 `imageFit="contain-bottom"`, `ratio="16/9"` matching the asset's native
 1920x1080. Same configuration as every other service hero.
 
-Image reuses `home/service-end-of-lease-and-bond-cleans.png`, the library's
+Image reuses `home/house-cleaning-cleaner-wiping-tall-interior-window.png`, the library's
 canonical image for this exact service (already the homepage service tile).
 IMAGE-GUIDELINES.md section 5 asks for reuse before generation and warns
 against a second file meaning the same thing, so this is the instructed

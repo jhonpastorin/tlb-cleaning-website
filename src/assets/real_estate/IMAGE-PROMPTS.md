@@ -25,7 +25,7 @@ generating a second version would make one idea look like two.
 IMAGE-GUIDELINES §5 says reuse before generating, and this folder
 **deliberately broke that rule once**. The library already had two files
 meaning "managed rental property" —
-`src/assets/home/rental-property-cleaning-two-storey-house-exterior.jpg`
+`src/assets/home/service-real-estate-and-property-management.jpg`
 and its duplicate `service-real-estate-and-property-management.jpg`, which the
 homepage runs for its "I manage properties" persona card and its service
 tile.
