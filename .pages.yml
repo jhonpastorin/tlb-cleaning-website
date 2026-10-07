@@ -1703,6 +1703,84 @@ content:
             label: Closing call to action
             description: "Any text on this page can use {townCount}, {regionCount}, {stateCount}, {northernRiversCount}, {tweedCount} and {southernGoldCoastCount}. Each is counted from the town list, so the number never drifts from it. A misspelt one stops the site from publishing."
 
+      - name: town-template
+        label: Town page template (all 56 town pages)
+        type: file
+        path: src/content/pages/locations/town.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "Shared by every town page. Type {town} for the town's name, {region} for its region after \"the\" (Northern Rivers, Tweed, Southern Gold Coast), {regionName} for the region on its own (The Tweed) and {state} for NSW or QLD. These work in any text on this page; a misspelt one stops the site from publishing."
+          - name: hero
+            label: Hero (top of the page)
+            type: object
+            description: "Each town's photo is set in its own file under Locations > Town pages. Placeholders: {town}, {region}, {regionName}, {state}."
+            fields:
+              - name: kicker
+                label: Small label above the heading
+                type: string
+              - name: headingLines
+                label: Main heading (H1)
+                type: string
+                list: true
+                required: true
+              - name: subheading
+                label: Line under the heading
+                type: string
+              - name: lead
+                label: Intro sentence
+                type: text
+                required: true
+              - name: cta
+                component: link
+                label: Button (leave empty to use the page's usual button)
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "True of every town. Each town's own paragraph follows it, from Locations > Town pages > About this town. Placeholders: {town}, {region}, {regionName}, {state}."
+          - name: services
+            component: sectionIntro
+            label: What we do in the town (list of services)
+            description: "The six services and their sentences are edited under Site settings > Menus > Our services, and are deliberately the same on every town page. Placeholders: {town}, {region}, {regionName}, {state}."
+          - name: choose
+            component: comparisonTable
+            label: Which clean do you actually need? (table)
+            description: "Placeholders: {town}, {region}, {regionName}, {state}."
+          - name: beforeAfter
+            component: beforeAfter
+            label: Before and after
+            description: "Never name the town in a caption or description unless the job really was there: a reader takes a real job photo on a town page as a job in that town."
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: nearby
+            label: Suburbs we clean around the town
+            type: object
+            description: "The suburbs are each town's neighbours, set under Locations > Town pages. Placeholders: {town}, {region}, {regionName}, {state}."
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+                required: true
+              - name: subheading
+                label: Subheading
+                type: string
+                required: true
+              - name: groupLabel
+                label: Label over the suburbs
+                type: string
+                required: true
+              - name: note
+                component: paragraphList
+                label: Note under the suburbs
+          - name: faq
+            component: faq
+            label: FAQs
+            description: "These answers appear on all 56 town pages, so a wrong one is wrong 56 times. The travel charge and lead time answers are promises TLB has not yet confirmed. Placeholders: {town}, {region}, {regionName}, {state}."
+          - name: closingCta
+            component: callToAction
+            label: Closing call to action
+            description: "Placeholders: {town}, {region}, {regionName}, {state}."
+
 
   - name: house-cleaning-pages
     label: House cleaning
