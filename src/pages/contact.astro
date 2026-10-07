@@ -76,15 +76,9 @@ import {
   quoteCta,
 } from '../data/navigation';
 import { meetTheTeamBusiness } from '../data/meetTheTeam';
-
-const pageMeta = {
-  title: 'Contact Us | Cleaners in the Northern Rivers & Gold Coast | TLB Cleaning',
-  description:
-    'Get in touch with TLB Cleaning. Call or email for homes, holiday lets and businesses across the Northern Rivers, the Tweed and the Southern Gold Coast.',
-  canonical: 'https://tlbcleaning.com.au/contact/',
-};
-
-const business = meetTheTeamBusiness(pageMeta.description);
+import { z } from 'astro/zod';
+import { getPage } from '../lib/cms';
+import * as section from '../lib/cms-schemas';
 
 // The closing CTA points back UP at the form (#enquiry), not at `quoteCta`.
 // `quoteCta.href` is '/contact/' — this page — so using it here gave the band
@@ -97,21 +91,31 @@ const formAnchor = '#enquiry';
 
 // What to include is genuinely useful and costs nothing to say — it is the
 // difference between one exchange and four. Nothing here is a claim about TLB.
-const helpUsHelp = {
-  heading: 'What to tell us',
-  body: [
-    'Your town, the kind of place it is, and roughly what it needs. For a home, how many bedrooms and bathrooms. For a holiday let, how often it turns over. For a business, what hours we would be working around.',
-    'If it is an end of lease clean, tell us the date the keys are due back. That is the one job on this site where the date decides everything else.',
-  ],
+
+// CONTENT lives in src/content/pages/contact.yaml and is edited in Pages CMS
+// ("Contact"). The form's own fields and messages are site-wide (Site
+// settings > Contact form); only this page's wording around it is here.
+const page = await getPage(
+  'contact',
+  z.object({
+    seo: section.seo,
+    form: section.contactForm,
+    whatToTellUs: section.callout,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/contact/',
 };
 
-const closingCta = {
-  kicker: 'Contact',
-  heading: 'Start with a price.',
-  lead:
-    'Answer a few questions about your place and we will come back with a quote and the next available day.',
-  cta: { label: 'Fill in the form', href: formAnchor },
-};
+const business = meetTheTeamBusiness(pageMeta.description);
+
+// If an editor empties the closing button, it falls back to the site-wide
+// quote button's wording, still pointed at the form rather than at this page.
+const closingButton = page.closingCta.cta ?? { ...quoteCta, href: formAnchor };
+
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -142,7 +146,9 @@ const closingCta = {
         and all 111 footers cannot disagree. */}
     <ContactForm
       headingLevel="h1"
-      kicker="Contact"
+      kicker={page.form.kicker}
+      heading={page.form.heading}
+      lead={page.form.lead}
       fallbackPhone={footerContact.phone}
       fallbackEmail={footerContact.email}
     />
@@ -150,14 +156,19 @@ const closingCta = {
     {/* Now BELOW the form rather than above it. It is the instructions for
         the Message box, and a reader who wants them will look after they hit
         that box, not before they have seen the form at all. */}
-    <Callout tone="note" heading={helpUsHelp.heading} body={helpUsHelp.body} />
+    <Callout
+      tone="note"
+      heading={page.whatToTellUs.heading}
+      body={page.whatToTellUs.body}
+      cta={page.whatToTellUs.cta}
+    />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={closingButton}
     />
   </main>
 

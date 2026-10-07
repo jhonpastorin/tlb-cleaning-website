@@ -1,0 +1,23 @@
+seo:
+  title: Contact Us | Cleaners in the Northern Rivers & Gold Coast | TLB Cleaning
+  description: Get in touch with TLB Cleaning. Call or email for homes, holiday
+    lets and businesses across the Northern Rivers, the Tweed and the Southern
+    Gold Coast.
+form:
+  kicker: Contact
+whatToTellUs:
+  heading: What to tell us
+  body:
+    - Your town, the kind of place it is, and roughly what it needs. For a home,
+      how many bedrooms and bathrooms. For a holiday let, how often it turns
+      over. For a business, what hours we would be working around.
+    - If it is an end of lease clean, tell us the date the keys are due back.
+      That is the one job on this site where the date decides everything else.
+closingCta:
+  kicker: Contact
+  heading: Start with a price.
+  lead: Answer a few questions about your place and we will come back with a quote
+    and the next available day.
+  cta:
+    label: Fill in the form
+    href: "#enquiry"

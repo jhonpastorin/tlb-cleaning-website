@@ -1287,6 +1287,22 @@ content:
             description: "\"What does it pay?\" is left out until there is an award and pay band to name. Never fill it with \"competitive rates\"."
           - { name: checkingUs, component: sectionIntro, label: "Checking us out first? (links to the team pages)" }
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: contact
+        label: Contact
+        type: file
+        path: src/content/pages/contact.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: form
+            component: contactForm
+            label: "Contact form (top of the page)"
+            description: "The form's heading is this page's main heading (H1). Leave the heading or intro empty to use the wording from Site settings > Contact form, which also holds the form's fields and messages."
+          - { name: whatToTellUs, component: callout, label: "What to tell us (under the form)" }
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "The button jumps back up to the form (#enquiry). Do not point it at /contact/, which is this page."
 
   - name: site-settings
     label: Site settings
