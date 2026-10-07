@@ -1682,3 +1682,63 @@ content:
             label: "FAQs: tile and grout questions"
             description: "Keep the bleach warning (never mix bleach with acid, ammonia or any other product) exactly as a warning: no method, no product names. The cost answer ends in a [bracketed] note until TLB confirms its pricing basis."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+
+      - name: house-cleaning-pressure-cleaning
+        label: High pressure cleaning
+        type: file
+        path: src/content/pages/house-cleaning/pressure-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: buttonLabel
+            label: Main button text
+            type: string
+            required: true
+            description: Used on the hero, the cards, the method grid and the closing section, wherever their own button is left empty. It always links to the quote page.
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "People book this for three reasons (cards)"
+            description: "A card with no button uses the main button. The third card's [insured] note is waiting on TLB to confirm."
+          - { name: warning, component: callout, label: "Some of these should never see high pressure (warning)" }
+          - name: method
+            component: iconGrid
+            label: "What our high pressure cleaning services involve (grid)"
+            description: "Every point is drafted, not supplied by TLB. Two end in a [Confirm ...] note (hot or cold water, and run-off). Replace each with the confirmed answer."
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: These are illustrations, not real job photos. Keep the note saying so until real photos replace them.
+          - { name: surfaces, component: textBlock, label: "What we clean around a house (dark band)" }
+          - name: otherServices
+            component: sectionIntro
+            label: "The rest of the outside"
+            description: "The list itself comes from Site settings > Cross-links: outside your home."
+          - name: comparison
+            label: "How TLB compares (table)"
+            type: object
+            description: The table's columns and rows are shared by every service page. Edit them under Site settings > Comparison table.
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: bookingFaq
+            component: faq
+            label: "FAQs: booking a driveway or patio clean"
+            description: "The answer about what we need on the day carries a [Confirm ...] note (water and power) until TLB confirms."
+          - name: generalFaq
+            component: faq
+            label: "FAQs: high pressure cleaning"
+            description: "Not confirmed yet: whether TLB takes deck work, and the cost answer's [bracketed] pricing note. The stormwater answer covers NSW only; it needs a Queensland clause or a narrower service area."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: The intro ends with the approved call to action sentence. Keep it there if you reword the rest.
