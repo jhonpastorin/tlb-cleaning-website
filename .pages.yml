@@ -2114,3 +2114,68 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+      - name: factory-cleaning
+        label: "Factory cleaning"
+        type: file
+        path: src/content/pages/commercial-cleaning/factory-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: ctaLabel
+            label: "Main button text"
+            type: string
+            description: "Used by the hero, any stage whose button is left empty and the closing block. It links to the quote page set under Site settings > Site-wide buttons. Leave empty to use the site-wide walkthrough button text."
+          - name: hero
+            component: hero
+            description: "Leave the hero's button empty to use the main button above."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
+          - name: isolation
+            component: callout
+            label: "Nobody touches plant that has not been isolated (warning box)"
+            description: "Never soften this, and never quote a regulation number. The second paragraph carries a [Confirm] bracket on isolation training."
+          - name: stages
+            component: imageCards
+            label: "One window, three stages (slider)"
+            description: "A stage whose button is left empty uses the main button. Stages 2 and 3 carry [Confirm] brackets (isolation, food production)."
+          - { name: shutdown, component: storyMosaic, label: "A shutdown is not a booking (dark mosaic)" }
+          - { name: priceDrivers, component: contentGrid, label: "What actually decides the price (grid)" }
+          - { name: worthKnowing, component: textBlock, label: "Cleaning sits upstream of production" }
+          - name: related
+            label: "Other premises we clean (links)"
+            type: object
+            description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: subheading, label: Subheading, type: string, required: true }
+              - { name: note, label: Note under the links, type: text, list: true }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                required: true
+                description: "The towns themselves are edited once for the whole site, not here."
+              - { name: note, label: Note under the towns, type: text, list: true }
+          - name: brandLine
+            component: sectionHeading
+            label: "Easy to book heading (above the brand lines)"
+            description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
+          - name: brandedFaq
+            component: faq
+            label: "Frequently asked questions (about working with us)"
+            description: "The isolation, food production and chemicals answers carry [Confirm] brackets. The isolation answer must not be softened."
+          - name: faq
+            component: faq
+            label: "Factory cleaning FAQs"
+            description: "The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the main button."
