@@ -55,51 +55,43 @@
 // header pulled in via `data-label`, so it is column-count agnostic. Desktop
 // is a plain <table> with `overflow-x: auto`. Three columns needed no
 // component change.
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
 
-export const comparisonColumns = [
-  { label: 'A national brand or app' },
-  { label: 'An independent cleaner' },
-  { label: 'TLB Cleaning', highlight: true },
-];
+// THE VALUES LIVE IN PAGES CMS ("Site settings > Comparison table",
+// src/content/site/comparison.yaml). Two rows carry a fixed `id` because
+// serviceComparisonRows below finds them by it: renaming their labels in the
+// CMS is safe, deleting them fails the build.
+//
+// TLB's own column is the LAST one and is always the highlighted one; that is
+// layout, so it is set here rather than in the CMS.
+const comparisonData = loadData(
+  'site/comparison',
+  z.object({
+    columns: z.array(z.object({ label: z.string().min(1) })).min(2),
+    rows: z
+      .array(z.object({ id: z.string().optional(), label: z.string().min(1), values: z.array(z.string().min(1)).min(1) }))
+      .min(1),
+  }),
+);
+for (const row of comparisonData.rows) {
+  if (row.values.length !== comparisonData.columns.length) {
+    throw new Error(
+      `src/content/site/comparison.yaml: row "${row.label}" has ${row.values.length} cells for ${comparisonData.columns.length} columns`,
+    );
+  }
+}
+for (const id of ['who-cleans', 'holiday-lets']) {
+  if (!comparisonData.rows.some((row) => row.id === id)) {
+    throw new Error(`src/content/site/comparison.yaml: the row with id "${id}" is missing (serviceComparisonRows needs it)`);
+  }
+}
 
-export const comparisonRows = [
-  {
-    label: 'Who cleans your home',
-    values: ['Whoever is rostered that day', 'The same person', 'Your own local team, known by name'],
-  },
-  {
-    label: 'When someone is away',
-    values: [
-      'A different contractor',
-      'Rebook for another week',
-      'Someone from your team covers, and we let you know first',
-    ],
-  },
-  {
-    label: 'How you book',
-    values: ['Online only', 'Text or a phone call', 'Online, text, phone or email'],
-  },
-  {
-    label: 'Reminders',
-    values: ['Automated', 'Usually none', "Before the day, and again when we're on our way"],
-  },
-  {
-    label: 'Holiday lets',
-    values: ['A standard turnover', 'Depends on availability', 'Worked straight off your booking calendar'],
-  },
-  {
-    label: 'Your schedule',
-    values: ['Whatever slot is available', 'Whenever they can fit you in', 'A set day and a set team'],
-  },
-  {
-    label: 'Commitment',
-    values: ['Often a subscription', 'None', 'No lock-in, no minimum term, no exit fee'],
-  },
-  {
-    label: 'Where they live',
-    values: ['Wherever the contractor is based', 'Locally', 'In the towns they clean in, across the region'],
-  },
-];
+export const comparisonColumns = comparisonData.columns.map((column, i, all) =>
+  i === all.length - 1 ? { ...column, highlight: true } : column,
+);
+
+export const comparisonRows = comparisonData.rows.map(({ id: _id, ...row }) => row);
 
 // ── PER-PAGE VARIANTS ────────────────────────────────────────────────────
 //
@@ -121,7 +113,7 @@ export const comparisonRows = [
 // approved table in full, and the briefs do not cover those pages. This
 // narrows a shared table for a page that needs it without rewriting it out
 // from under the three pages that don't.
-export const serviceComparisonRows = (subjectLabel = 'Who cleans your home') =>
-  comparisonRows
-    .filter((row) => row.label !== 'Holiday lets')
-    .map((row) => (row.label === 'Who cleans your home' ? { ...row, label: subjectLabel } : row));
+export const serviceComparisonRows = (subjectLabel?: string) =>
+  comparisonData.rows
+    .filter((row) => row.id !== 'holiday-lets')
+    .map(({ id, ...row }) => (id === 'who-cleans' && subjectLabel ? { ...row, label: subjectLabel } : row));

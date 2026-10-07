@@ -24,8 +24,31 @@
 // "Read all our reviews on Google" link under the slider and the profile
 // to the homepage's LocalBusiness `sameAs`.
 
+// THE VALUES LIVE IN PAGES CMS ("Reviews", src/content/site/reviews.yaml), and
+// the rules above bind whoever adds one there. Paste the text exactly; Pages
+// CMS keeps the reviewer's paragraph breaks.
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
+
+const reviewsData = loadData(
+  'site/reviews',
+  z.object({
+    profileUrl: z.string().url().nullish(),
+    reviews: z.array(
+      z.object({
+        author: z.string().min(1),
+        rating: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+        text: z.string().min(1),
+        date: z.string().regex(/^\d{4}-\d{2}$/, 'Month as YYYY-MM, e.g. 2026-10'),
+        reviewUrl: z.string().url().nullish().transform((v) => v ?? undefined),
+        topics: z.array(z.enum(['airbnb'])).nullish().transform((v) => v ?? undefined),
+      }),
+    ),
+  }),
+);
+
 /** Public Google Business Profile (Maps) URL. null until the profile exists. */
-export const googleBusinessProfileUrl: string | null = null;
+export const googleBusinessProfileUrl: string | null = reviewsData.profileUrl ?? null;
 
 export interface GoogleReview {
   /** Display name exactly as Google shows it, e.g. "Sarah M." */
@@ -48,47 +71,10 @@ export type ReviewTopic = 'airbnb';
 // back from Google's "x days ago" on that date. The "Great price" /
 // "Reasonable price" highlight tags some reviewers picked are not part of
 // the review text and are left out.
-export const googleReviews: GoogleReview[] = [
-  {
-    author: 'Serena Sandstrom',
-    rating: 5,
-    text: 'Fantastic personalised service, individual needs accommodated. Excellent team.',
-    date: '2026-10',
-    reviewUrl: 'https://share.google/shxBcHuY0gUUtpYDV',
-  },
-  {
-    author: 'Christine Stephens',
-    rating: 5,
-    text:
-      'I can’t recommend Teagan and her team highly enough! They are absolutely fabulous. From the moment they walk through the door, they are professional, friendly, reliable and incredibly thorough.\n\n' +
-      'They leave my home looking and feeling amazing every single time. It’s such a relief knowing I can trust Teagan and her team to take care of everything, and they always go that extra mile.\n\n' +
-      'If you’re looking for a cleaner who genuinely cares about the quality of their work, look no further. Teagan and her team are fantastic, and I wouldn’t want anyone else.',
-    date: '2026-10',
-    reviewUrl: 'https://share.google/HpuYcWmFuEGToSRIr',
-  },
-  {
-    author: 'Grace Donaldson',
-    rating: 5,
-    text: "Teagan is a bright spark of a human, who is caring, kind and considerate. She brings these qualities to everything she does, and it's a pleasure to experience such authenticity in my interactions with her. She is meticulous when it comes to cleaning, running her business, and respects the people and property she tends to.",
-    date: '2026-10',
-    reviewUrl: 'https://share.google/jPPz8bQQNqUCdltJ0',
-  },
-  {
-    author: 'A A',
-    rating: 5,
-    text: 'Teagan and her team are just fantastic. I have been getting fortnightly cleans done for almost a year. Great service, professional and very kind. Will be utilising their services for a long time.',
-    date: '2026-09',
-    reviewUrl: 'https://share.google/mJx6CjEnI6DAiEKUZ',
-  },
-  {
-    author: 'James Matthews',
-    rating: 5,
-    text: "We've got an Airbnb up in the Northern Rivers hinterland, about an hour from home, and finding cleaners we could actually rely on out there was a nightmare. We went through a few before we found Teagan and the TLB team, and honestly we haven't looked back. Teagan works straight off our bookings, restocks everything and sends us a quick update after each clean. We don't have to chase a thing. When you can't just pop over and check on the place, that's worth a lot. Can't recommend them enough.",
-    date: '2026-09',
-    reviewUrl: 'https://share.google/gcqpDGaF5MxvwmyCK',
-    topics: ['airbnb'],
-  },
-];
+export const googleReviews: GoogleReview[] = reviewsData.reviews.map((review) => {
+  const { reviewUrl, topics, ...rest } = review;
+  return { ...rest, ...(reviewUrl ? { reviewUrl } : {}), ...(topics ? { topics } : {}) };
+});
 
 /** Every review, with the ones tagged `topic` moved to the front. Order is otherwise kept (newest first). */
 export function reviewsFeaturing(topic: ReviewTopic): GoogleReview[] {

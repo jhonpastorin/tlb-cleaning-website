@@ -1,0 +1,47 @@
+columns:
+  - label: A national brand or app
+  - label: An independent cleaner
+  - label: TLB Cleaning
+rows:
+  - id: who-cleans
+    label: Who cleans your home
+    values:
+      - Whoever is rostered that day
+      - The same person
+      - Your own local team, known by name
+  - label: When someone is away
+    values:
+      - A different contractor
+      - Rebook for another week
+      - Someone from your team covers, and we let you know first
+  - label: How you book
+    values:
+      - Online only
+      - Text or a phone call
+      - Online, text, phone or email
+  - label: Reminders
+    values:
+      - Automated
+      - Usually none
+      - Before the day, and again when we're on our way
+  - id: holiday-lets
+    label: Holiday lets
+    values:
+      - A standard turnover
+      - Depends on availability
+      - Worked straight off your booking calendar
+  - label: Your schedule
+    values:
+      - Whatever slot is available
+      - Whenever they can fit you in
+      - A set day and a set team
+  - label: Commitment
+    values:
+      - Often a subscription
+      - None
+      - No lock-in, no minimum term, no exit fee
+  - label: Where they live
+    values:
+      - Wherever the contractor is based
+      - Locally
+      - In the towns they clean in, across the region

@@ -17,7 +17,29 @@
 // REPORT SUCCESS IT DID NOT GET. `enquiryEndpoint` below is empty until a real
 // webhook URL is set, the build says so out loud, and the client-side script
 // refuses to submit rather than showing a thank-you that means nothing.
+// THE COPY AND THE SERVICE OPTIONS LIVE IN PAGES CMS ("Site settings > Contact
+// form", src/content/site/contact-form.yaml). The endpoint, the field list and
+// the thank-you path stay here: they are wiring, not content.
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
 import { locationGroups } from './locations';
+
+const formData = loadData(
+  'site/contact-form',
+  z.object({
+    heading: z.string().min(1),
+    lead: z.string().min(1),
+    submitLabel: z.string().min(1),
+    submittingLabel: z.string().min(1),
+    successHeading: z.string().min(1),
+    successBody: z.string().min(1),
+    errorHeading: z.string().min(1),
+    errorBody: z.string().min(1),
+    unconfiguredHeading: z.string().min(1),
+    unconfiguredBody: z.string().min(1),
+    serviceOptions: z.array(z.string().min(1)).min(1),
+  }),
+);
 
 /**
  * The webhook the browser POSTs to. Set PUBLIC_ENQUIRY_WEBHOOK_URL in the
@@ -76,17 +98,7 @@ export interface SelectOption {
  * verbatim, and Monday.com's dropdown column silently drops a label it does
  * not already have, so the board's column must be updated in the same sitting.
  */
-export const serviceOptions: SelectOption[] = [
-  { value: 'Regular Home Cleaning' },
-  { value: 'Deep Cleaning' },
-  { value: 'End of Lease / Bond Cleaning' },
-  { value: 'Airbnb & Holiday Let Turnovers' },
-  { value: 'Carpet, Upholstery & Floors' },
-  { value: 'Outside Home & Exterior Washing' },
-  { value: 'NDIS & Assisted Living' },
-  { value: 'Commercial Cleaning' },
-  { value: 'Something else' },
-];
+export const serviceOptions: SelectOption[] = formData.serviceOptions.map((value) => ({ value }));
 
 /**
  * Service area — the three regions, DERIVED rather than retyped.
@@ -149,25 +161,4 @@ export type EnquiryField = (typeof enquiryFields)[number];
 export const thankYouPath = '/thank-you/';
 
 /** Copy for the form itself. Out of the component so a rewrite is a content edit. */
-export const enquiryCopy = {
-  heading: 'Send us the details',
-  lead:
-    'Tell us where you are and what needs doing, and we will come back with a price and a day.',
-  submitLabel: 'Send enquiry',
-  submittingLabel: 'Sending…',
-  successHeading: 'Thanks — that is with us.',
-  successBody:
-    'Your enquiry has been received and a person will read it. If it is urgent, calling is still faster than waiting on a reply.',
-  // Shown when the POST fails. Deliberately does NOT say "try again": a failed
-  // fetch can mean the webhook received the enquiry and only the reply got
-  // lost, so inviting a retry invites a duplicate. It points at the two
-  // channels that cannot fail instead.
-  errorHeading: 'That did not send.',
-  errorBody:
-    'Something went wrong between this page and our inbox. Rather than sending it twice, call or email us and we will pick it up from there.',
-  // Shown instead of the above when no endpoint is configured at all. Says the
-  // true thing rather than blaming the network.
-  unconfiguredHeading: 'This form is not connected yet.',
-  unconfiguredBody:
-    'Nothing was sent, so please call or email instead — those reach us today.',
-} as const;
+export const enquiryCopy = (({ serviceOptions: _options, ...copy }) => copy)(formData);

@@ -39,27 +39,20 @@
 // page-specific fifth point appended to this array at the call site, not a
 // second divergent set — but note that a fifth trips the 3-over-2 wrap and
 // gives that page a two-row card, which is the shape just removed here.
+//
+// THE VALUES LIVE IN PAGES CMS ("Site settings > Trust bar",
+// src/content/site/trust-bar.yaml). Keep it at four cards: see above.
+import { z } from 'astro/zod';
 import type { TrustBarIconName } from '../components/sections/TrustBar.astro';
+import { loadData } from '../lib/cms-data';
 
-export const trustBarCards: { icon: TrustBarIconName; title: string; description: string }[] = [
-  {
-    icon: 'map-pin',
-    title: 'Local team',
-    description: 'A local team right across the Northern Rivers and the Tweed',
-  },
-  {
-    icon: 'shield-check',
-    title: 'They stay',
-    description: '98% of our clients stay with us',
-  },
-  {
-    icon: 'building',
-    title: 'Agency trusted',
-    description: 'Preferred supplier for real estate agencies in the region',
-  },
-  {
-    icon: 'team',
-    title: 'Over 100 clients',
-    description: 'Over 100 local homes, hosts and businesses',
-  },
-];
+const TRUST_ICONS = ['team', 'map-pin', 'building', 'chat', 'shield-check', 'sparkle'] as const satisfies readonly TrustBarIconName[];
+
+export const trustBarCards: { icon: TrustBarIconName; title: string; description: string }[] = loadData(
+  'site/trust-bar',
+  z.object({
+    cards: z
+      .array(z.object({ icon: z.enum(TRUST_ICONS), title: z.string().min(1), description: z.string().min(1) }))
+      .min(1),
+  }),
+).cards;

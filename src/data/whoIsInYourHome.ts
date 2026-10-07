@@ -44,14 +44,30 @@
 // that "a vague answer here loses the booking". Inventing either would breach
 // §12.2. They will render to the public as literal square brackets, so this
 // still blocks launch — but now it is ONE line to fix instead of six.
+//
+// THE VALUES LIVE IN PAGES CMS ("Site settings > Who is in your home card",
+// src/content/site/who-is-in-your-home.yaml). The two [bracketed] claims are
+// still open: answer them there and all six pages change.
 import type { ImageMetadata } from 'astro';
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
+
+const card = loadData(
+  'site/who-is-in-your-home',
+  z.object({
+    title: z.string().min(1),
+    description: z.string().min(1),
+    cta: z.object({ label: z.string().min(1), href: z.string().min(1) }),
+    defaultImageAlt: z.string().min(1),
+  }),
+);
 
 // `label` is the image's alt text. Optional so the pages still on the shared
 // caddy photo keep its description; a page passing its own photo must pass
 // a label that describes it.
 export const whoIsInYourHomeCard = (
   image: ImageMetadata,
-  label = 'A TLB cleaner in uniform with her caddy in the entry hall of a home',
+  label = card.defaultImageAlt,
 ) => ({
   number: 3,
   image: {
@@ -59,8 +75,7 @@ export const whoIsInYourHomeCard = (
     label,
     src: image,
   },
-  title: 'I want to know who is in my home',
-  description:
-    'You can meet the team looking after your place before the first visit. They live in your area, [insured] and [police-checked], how we get in is agreed when you book, and you get a message when we are on the way.',
-  cta: { label: 'Why TLB', href: '/why-tlb/' },
+  title: card.title,
+  description: card.description,
+  cta: card.cta,
 });

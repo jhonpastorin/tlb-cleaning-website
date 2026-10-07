@@ -1,0 +1,238 @@
+primary:
+  - label: Home
+    href: /
+  - label: About
+    href: /about/
+  - label: Locations
+    href: /locations/
+services:
+  - title: Regular home cleaning
+    description: Weekly or fortnightly, same team, set it up once.
+    href: /house-cleaning/
+  - title: Deep and one-off cleans
+    description: A room-by-room reset, before guests, after a party, or when it's just time.
+    href: /house-cleaning/deep-cleaning/
+  - title: End of lease and bond cleans
+    description: Cleaned to the standard your exit inspection is measured against,
+      both sides of the border.
+    href: /house-cleaning/end-of-lease-cleaning/
+  - title: Airbnb and holiday let turnovers
+    description: Timed to your bookings, restocked and guest-ready before check-in.
+      Full management available.
+    href: /airbnb-holiday-home-cleaning/
+  - title: Real estate and property management
+    description: Vacancy turnarounds and managed-property cleans for agencies with a
+      rent roll to protect.
+    href: /house-cleaning/real-estate-cleaning/
+  - title: Commercial cleaning
+    description: Offices, shopfronts and premises, on a schedule that suits how you trade.
+    href: /commercial-cleaning/
+header:
+  - label: Home Cleaning
+    href: /house-cleaning/
+    groups:
+      - label: Inside your home
+        items:
+          - label: Deep cleaning
+            href: /house-cleaning/deep-cleaning/
+          - label: End of lease and bond cleaning
+            href: /house-cleaning/end-of-lease-cleaning/
+          - label: Mould cleaning and removal
+            href: /house-cleaning/mould-removal/
+      - label: Appliances
+        items:
+          - label: Carpet and rug cleaning
+            href: /house-cleaning/carpet-cleaning/
+          - label: Upholstery and lounge cleaning
+            href: /house-cleaning/upholstery-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Mattress cleaning
+            href: /house-cleaning/mattress-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Tile and grout cleaning
+            href: /house-cleaning/tile-and-grout-cleaning/
+          - label: Oven, BBQ and appliance cleaning
+            href: /house-cleaning/oven-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Blinds, shutters and ceiling fans
+            href: /house-cleaning/blind-cleaning/
+      - label: Outside your home
+        items:
+          - label: Window cleaning
+            href: /house-cleaning/window-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Gutter cleaning
+            href: /house-cleaning/gutter-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Roof cleaning
+            href: /house-cleaning/roof-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: High pressure cleaning
+            href: /house-cleaning/pressure-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Exterior house washing
+            href: /house-cleaning/exterior-house-washing/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+      - label: Specialist cleaning
+        items:
+          - label: Real estate cleaners
+            href: /house-cleaning/real-estate-cleaning/
+          - label: NDIS cleaning
+            href: /house-cleaning/ndis-cleaning/
+          - label: Forensic and trauma cleaning
+            href: /house-cleaning/forensic-cleaning/
+            hidden: true
+            note: "No page yet. This is the URL from the client's sheet of 16 Sep 2026.
+              Before building or linking it: this is not ordinary cleaning work.
+              It carries licensing, WHS, biohazard waste and staff welfare
+              obligations, so confirm what TLB is licensed and equipped to do
+              before any copy is written."
+          - label: Hoarder and squalor cleaning
+            href: /house-cleaning/hoarder-cleaning/
+            hidden: true
+            note: "No page yet. This is the URL from the client's sheet of 16 Sep 2026.
+              Before building or linking it: this is not ordinary cleaning work.
+              It carries licensing, WHS, biohazard waste and staff welfare
+              obligations, so confirm what TLB is licensed and equipped to do
+              before any copy is written."
+          - label: Deceased estate cleaning
+            hidden: true
+            note: No page yet, and no URL on the client's sheet.
+          - label: Seniors cleaning
+            href: /house-cleaning/senior-home-cleaning/
+            hidden: true
+            note: No page yet. This is the URL from the client's sheet of 16 Sep 2026.
+  - label: Airbnb & Holiday Home Cleaning
+    href: /airbnb-holiday-home-cleaning/
+  - label: Commercial
+    href: /commercial-cleaning/
+    groups:
+      - label: Commercial services
+        items:
+          - label: Commercial carpet cleaning
+            href: /commercial-cleaning/commercial-carpet-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Commercial pressure cleaning
+            href: /commercial-cleaning/commercial-pressure-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+      - label: By type of premises
+        items:
+          - label: Office cleaning
+            href: /commercial-cleaning/office-cleaning/
+          - label: Strata and common area cleaning
+            href: /commercial-cleaning/strata-cleaning/
+          - label: Aged care, retirement and seniors
+            href: /commercial-cleaning/aged-care-cleaning/
+          - label: Medical, clinic and salon cleaning
+            href: /commercial-cleaning/medical-and-clinic-cleaning/
+          - label: Construction site
+            href: /commercial-cleaning/construction-site-cleaning/
+          - label: Hospitality, venues and holiday parks
+            href: /commercial-cleaning/hospitality-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Commercial kitchen cleaning
+            href: /commercial-cleaning/commercial-kitchen-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Schools and childcare centres
+            href: /commercial-cleaning/school-and-childcare-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Gyms and fitness studios
+            href: /commercial-cleaning/gym-and-fitness-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Retail and shopfronts
+            href: /commercial-cleaning/retail-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Warehouses and industrial sites
+            href: /commercial-cleaning/warehouse-and-industrial-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Factories
+            href: /commercial-cleaning/factory-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+          - label: Breweries
+            href: /commercial-cleaning/brewery-cleaning/
+            hidden: true
+            note: Page built but unlinked at the client's request (16 Sep 2026). Untick
+              "Hidden" to put it back in the menu.
+  - label: Areas we clean
+    href: /locations/
+    townMenu: true
+  - label: Meet the team
+    href: /about/
+    hidden: true
+    groups:
+      - label: The people
+        items:
+          - label: About TLB and Teagan
+            href: /about/
+          - label: Work with us
+            href: /work-with-us/
+      - label: Proof
+        items:
+          - label: Reviews
+            href: /reviews/
+          - label: How booking works
+            href: /how-booking-works/
+  - label: Why TLB
+    href: /why-tlb/
+  - label: Contact us
+    href: /contact/
+  - label: Guides
+    href: /guides/
+    hidden: true
+    groups:
+      - label: End of lease & tenancy
+        items:
+          - label: "What the law actually says: end of lease cleaning in NSW and QLD"
+            href: /guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/
+          - label: The end of lease cleaning checklist
+            href: /guides/the-end-of-lease-cleaning-checklist/
+          - label: How much does end of lease cleaning cost?
+            href: /guides/how-much-does-end-of-lease-cleaning-cost/
+      - label: Homes, hosting & commercial
+        items:
+          - label: How much does house cleaning cost?
+            href: /guides/how-much-does-house-cleaning-cost/
+          - label: "Steam, dry or shampoo: which carpet cleaning method?"
+            href: /guides/steam-dry-or-shampoo-which-carpet-cleaning-method/
+          - label: What is included in a deep clean?
+            href: /guides/what-is-included-in-a-deep-clean/
+          - label: The Airbnb turnover checklist
+            href: /guides/the-airbnb-turnover-checklist/
+          - label: "The Byron Shire 60-day short-stay cap: what it means for hosts"
+            href: /guides/the-byron-shire-60-day-short-stay-cap-what-it-means-for-hosts/
+          - label: How to choose a commercial cleaner
+            href: /guides/how-to-choose-a-commercial-cleaner/

@@ -33,6 +33,13 @@
 import type { LocalBusinessInfo } from '../layouts/Base.astro';
 import type { Tag } from '../components/sections/TagCloud.astro';
 import type { ServiceIconName } from '../components/ui/ServiceIcon.astro';
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
+import { schemaTelephone, contactEmail } from './navigation';
+
+// THE LABELS, BLURBS AND ICONS LIVE IN PAGES CMS ("Site settings > Cross-links:
+// guides", src/content/site/guides.yaml). The nine URLs are fixed and checked
+// against GuideHref, so a typo fails the build.
 
 /** Slugs of the nine guides, as a union so a page cross-linking a sibling
  *  that does not exist is a type error rather than a 404 found by a reader. */
@@ -67,81 +74,39 @@ export interface GuidePage {
 
 // Mega-menu order, not alphabetical — a reader has already seen that order
 // once by the time they reach a cross-link band.
-export const guidePages: GuidePage[] = [
-  {
-    label: 'What the law actually says: end of lease cleaning in NSW and QLD',
-    shortLabel: 'What the law actually says',
-    href: '/guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/',
-    cluster: 'End of lease & tenancy',
-    blurb:
-      'The standard tenancy law sets on either side of the border, and the things an agent cannot simply require.',
-    icon: 'idea',
-  },
-  {
-    label: 'The end of lease cleaning checklist',
-    shortLabel: 'The end of lease checklist',
-    href: '/guides/the-end-of-lease-cleaning-checklist/',
-    cluster: 'End of lease & tenancy',
-    blurb: 'Room by room, in the order the job is actually worked, with the lines agents mark first.',
-    icon: 'target',
-  },
-  {
-    label: 'How much does end of lease cleaning cost?',
-    shortLabel: 'What a bond clean costs',
-    href: '/guides/how-much-does-end-of-lease-cleaning-cost/',
-    cluster: 'End of lease & tenancy',
-    blurb: 'What moves the price, what a low quote has left out, and how to compare two of them properly.',
-    icon: 'chart-bars',
-  },
-  {
-    label: 'How much does house cleaning cost?',
-    shortLabel: 'What house cleaning costs',
-    href: '/guides/how-much-does-house-cleaning-cost/',
-    cluster: 'Homes, hosting & commercial',
-    blurb: 'Hourly against fixed, what the first clean costs against the ones after it, and why they differ.',
-    icon: 'chart-pie',
-  },
-  {
-    label: 'Steam, dry or shampoo: which carpet cleaning method?',
-    shortLabel: 'Which carpet cleaning method',
-    href: '/guides/steam-dry-or-shampoo-which-carpet-cleaning-method/',
-    cluster: 'Homes, hosting & commercial',
-    blurb: 'Three methods, what each is genuinely good at, and which one your carpet and your deadline want.',
-    icon: 'puzzle',
-  },
-  {
-    label: 'What is included in a deep clean?',
-    shortLabel: 'What is in a deep clean',
-    href: '/guides/what-is-included-in-a-deep-clean/',
-    cluster: 'Homes, hosting & commercial',
-    blurb: 'The line between a regular clean, a deep clean and a bond clean, drawn task by task.',
-    icon: 'spray-bottle',
-  },
-  {
-    label: 'The Airbnb turnover checklist',
-    shortLabel: 'The Airbnb turnover checklist',
-    href: '/guides/the-airbnb-turnover-checklist/',
-    cluster: 'Homes, hosting & commercial',
-    blurb: 'The changeover run in order, plus the four things that generate most of the bad reviews.',
-    icon: 'key',
-  },
-  {
-    label: 'The Byron Shire 60-day short-stay cap: what it means for hosts',
-    shortLabel: 'The Byron Shire 60-day cap',
-    href: '/guides/the-byron-shire-60-day-short-stay-cap-what-it-means-for-hosts/',
-    cluster: 'Homes, hosting & commercial',
-    blurb: 'What the cap covers, who it exempts, and what a shorter letting year does to how you run the place.',
-    icon: 'house',
-  },
-  {
-    label: 'How to choose a commercial cleaner',
-    shortLabel: 'Choosing a commercial cleaner',
-    href: '/guides/how-to-choose-a-commercial-cleaner/',
-    cluster: 'Homes, hosting & commercial',
-    blurb: 'What to ask before you sign, and which low quote is low because something was left out.',
-    icon: 'office',
-  },
-];
+const GUIDE_HREFS = [
+  '/guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/',
+  '/guides/the-end-of-lease-cleaning-checklist/',
+  '/guides/how-much-does-end-of-lease-cleaning-cost/',
+  '/guides/how-much-does-house-cleaning-cost/',
+  '/guides/steam-dry-or-shampoo-which-carpet-cleaning-method/',
+  '/guides/what-is-included-in-a-deep-clean/',
+  '/guides/the-airbnb-turnover-checklist/',
+  '/guides/the-byron-shire-60-day-short-stay-cap-what-it-means-for-hosts/',
+  '/guides/how-to-choose-a-commercial-cleaner/',
+] as const satisfies readonly GuideHref[];
+const SERVICE_ICONS = ['idea', 'spark', 'bloom', 'puzzle', 'target', 'chart-pie', 'chart-bars', 'house', 'suitcase', 'key', 'spray-bottle', 'office'] as const satisfies readonly ServiceIconName[];
+
+const guidesData = loadData(
+  'site/guides',
+  z.object({
+    pages: z
+      .array(
+        z.object({
+          label: z.string().min(1),
+          shortLabel: z.string().min(1),
+          href: z.enum(GUIDE_HREFS),
+          cluster: z.enum(['End of lease & tenancy', 'Homes, hosting & commercial']),
+          blurb: z.string().min(1),
+          icon: z.enum(SERVICE_ICONS),
+        }),
+      )
+      .length(GUIDE_HREFS.length),
+    lastReviewed: z.string().min(1),
+  }),
+);
+
+export const guidePages: GuidePage[] = guidesData.pages;
 
 export const guidesHubLink: Tag = { label: 'All guides', href: '/guides/' };
 
@@ -194,8 +159,8 @@ export const guidesBusiness = (description: string): LocalBusinessInfo => ({
   name: 'TLB Cleaning',
   url: 'https://tlbcleaning.com.au/',
   logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
+  telephone: schemaTelephone,
+  email: contactEmail,
   address: {
     streetAddress: '',
     addressLocality: '',
@@ -217,4 +182,4 @@ export const guidesBusiness = (description: string): LocalBusinessInfo => ({
  * go stale without warning when a rule changes. Put it in a calendar or take
  * the line off.
  */
-export const lastReviewed = 'Last reviewed September 2026.';
+export const lastReviewed = guidesData.lastReviewed;

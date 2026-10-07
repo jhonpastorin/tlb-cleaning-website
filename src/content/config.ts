@@ -16,4 +16,10 @@ const pages = defineCollection({
     .passthrough(),
 });
 
-export const collections = { pages };
+// Site-wide content, towns and region pages. These are read synchronously by
+// the modules in src/data/ through src/lib/cms-data.ts, which validates each
+// file properly; they are declared here only so Astro knows the folders are
+// collections on purpose.
+const loose = defineCollection({ type: 'data', schema: z.object({}).passthrough() });
+
+export const collections = { pages, site: loose, towns: loose, regions: loose };

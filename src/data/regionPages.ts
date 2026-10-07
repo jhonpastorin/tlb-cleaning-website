@@ -35,8 +35,30 @@
 // written for exactly this purpose. Reusing reviewed copy beat writing two new
 // pages' worth from nothing. It does mean the hub and these pages share
 // paragraphs; see the note on `intro` below, which is the one real cost.
+//
+// WHAT IS EDITABLE IN PAGES CMS ("Locations > Region pages",
+// src/content/regions/<slug>.yaml): the search listing, the heading, the lead
+// and `intro`. Which towns a region holds, its photo and its URL stay here.
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
 import { northernRiversTowns, southernGoldCoastTowns } from './locations';
 import { heroImages, type HeroKey } from './townPages';
+
+const regionCopy = (slug: string) =>
+  loadData(
+    `regions/${slug}`,
+    z.object({
+      seo: z.object({ title: z.string().min(1), description: z.string().min(1) }),
+      headingLines: z.array(z.string().min(1)).min(1),
+      lead: z.string().min(1),
+      intro: z.array(z.string().min(1)).min(1),
+    }),
+  );
+
+const fromCopy = (slug: string) => {
+  const { seo, ...copy } = regionCopy(slug);
+  return { ...copy, meta: seo };
+};
 
 export interface RegionPage {
   /** URL segment: /locations/<slug>/. */
@@ -75,18 +97,7 @@ export const regionPages: RegionPage[] = [
     state: 'NSW',
     towns: northernRiversTowns,
     hero: 'hinterland-home',
-    headingLines: ['Cleaners across', 'the Northern Rivers.'],
-    lead: 'From the Lismore hills out to Byron Bay and Ballina on the coast. One local team on a set day, not whoever is nearest.',
-    intro: [
-      'Lismore and Alstonville inland, then Ballina, Lennox Head, Byron Bay and Brunswick Heads along the coast. An hour end to end, and two quite different cleaning jobs inside it.',
-      'Inland it is older housing stock, a lot of timber, and mould and damp that arrive with the wet rather than with neglect. On the coast it is salt haze on glass, sand in every track, and a holiday-let calendar that turns the whole thing over each Saturday.',
-      'Byron Shire also carries its own short-stay rules, which changed what a letting year looks like for a lot of owners here.',
-    ],
-    meta: {
-      title: 'Cleaners in the Northern Rivers NSW | TLB Cleaning',
-      description:
-        'House, holiday let and commercial cleaning across the Northern Rivers NSW — Lismore, Ballina, Byron Bay, Lennox Head, Brunswick Heads and the towns around them.',
-    },
+    ...fromCopy('northern-rivers'),
   },
   {
     slug: 'southern-gold-coast',
@@ -95,18 +106,7 @@ export const regionPages: RegionPage[] = [
     state: 'QLD',
     towns: southernGoldCoastTowns,
     hero: 'coastal-home',
-    headingLines: ['Cleaners across the', 'Southern Gold Coast.'],
-    lead: 'Coolangatta to Miami, over the border and close enough together to run properly in a day.',
-    intro: [
-      'Burleigh Heads and Palm Beach, over the border and close enough together to run properly in a day.',
-      'Density changes the work here more than distance does. A great deal of it is apartments and townhouses rather than free-standing houses, which means lifts, loading docks, building access windows and a body corporate with a view about when anyone can be on site.',
-      'Salt is the constant. Glass, balustrades, window hardware and outdoor furniture all age faster within sight of the water, and a place that is cleaned on a schedule holds up visibly better than one that is not.',
-    ],
-    meta: {
-      title: 'Cleaners on the Southern Gold Coast QLD | TLB Cleaning',
-      description:
-        'House, holiday let and commercial cleaning across the Southern Gold Coast QLD — Burleigh Heads, Palm Beach, Currumbin, Tugun, Coolangatta and Miami.',
-    },
+    ...fromCopy('southern-gold-coast'),
   },
 ];
 

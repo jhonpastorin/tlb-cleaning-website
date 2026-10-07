@@ -14,7 +14,13 @@
 //
 // ⚠️ All four slugs are still the flat kebab-case guesses navigation.ts made
 // from its literal menu labels. Unconfirmed, same as the rest of the site.
+// THE LABELS AND BLURBS LIVE IN PAGES CMS ("Site settings > Cross-links: meet
+// the team", src/content/site/team-pages.yaml). The four URLs are fixed: they
+// are checked here against MeetTheTeamHref, so a typo fails the build.
+import { z } from 'astro/zod';
 import type { LocalBusinessInfo } from '../layouts/Base.astro';
+import { loadData } from '../lib/cms-data';
+import { schemaTelephone, contactEmail } from './navigation';
 
 /** The four slugs as a union, so a page cross-linking a sibling that does
  *  not exist is an `astro check` error rather than a 404 a reader finds —
@@ -39,32 +45,23 @@ export interface MeetTheTeamPage {
 
 // Menu order, not alphabetical — a reader has already seen this order once
 // in the header by the time they reach a cross-link band.
-export const meetTheTeamPages: MeetTheTeamPage[] = [
-  {
-    label: 'About TLB and Teagan',
-    href: '/about/',
-    group: 'The people',
-    blurb: 'Who started TLB, who works here now, and how the local part actually works.',
-  },
-  {
-    label: 'Work with us',
-    href: '/work-with-us/',
-    group: 'The people',
-    blurb: 'Cleaning work across the Northern Rivers and the Tweed, on hours that fit around family.',
-  },
-  {
-    label: 'Reviews',
-    href: '/reviews/',
-    group: 'Proof',
-    blurb: 'What clients say, and where to read it in their own words rather than ours.',
-  },
-  {
-    label: 'How booking works',
-    href: '/how-booking-works/',
-    group: 'Proof',
-    blurb: 'From the first quote to the day itself, and how to change or skip a visit.',
-  },
-];
+const TEAM_HREFS = ['/about/', '/work-with-us/', '/reviews/', '/how-booking-works/'] as const satisfies readonly MeetTheTeamHref[];
+
+export const meetTheTeamPages: MeetTheTeamPage[] = loadData(
+  'site/team-pages',
+  z.object({
+    pages: z
+      .array(
+        z.object({
+          label: z.string().min(1),
+          href: z.enum(TEAM_HREFS),
+          group: z.enum(['The people', 'Proof']),
+          blurb: z.string().min(1),
+        }),
+      )
+      .length(TEAM_HREFS.length),
+  }),
+).pages;
 
 /**
  * The other three pages in this cluster, shaped for `ServiceBlocks`'
@@ -102,8 +99,8 @@ export const meetTheTeamBusiness = (description: string): LocalBusinessInfo => (
   name: 'TLB Cleaning',
   url: 'https://tlbcleaning.com.au/',
   logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
+  telephone: schemaTelephone,
+  email: contactEmail,
   address: {
     streetAddress: '',
     addressLocality: '',

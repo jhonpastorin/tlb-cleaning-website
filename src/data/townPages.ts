@@ -31,72 +31,54 @@
 //       thin ones.
 // Whoever picks, pick deliberately. Publishing all 56 as they stand is a
 // decision too, just an unexamined one.
+// THE VALUES LIVE IN PAGES CMS (PAGES-CMS-PLAN.md, Phase 2): one file per town
+// in src/content/towns/ ("Locations > Towns"), holding its photo, its `local`
+// paragraph and any hand-picked `nearby` list. The region photos are in
+// src/content/site/locations.yaml. The rules below about what a photo and its
+// description may claim apply to whoever edits those files.
 import type { ImageMetadata } from 'astro';
+import { z } from 'astro/zod';
+import { cmsImage } from '../lib/cms';
+import { loadFolder } from '../lib/cms-data';
 import {
   northernRiversTowns,
   tweedTowns,
   southernGoldCoastTowns,
+  allTowns,
+  regionPhotos,
 } from './locations';
-import hinterlandHomeImg from '../assets/locations/weatherboard-home-with-hinterland-hills.jpg';
-import coastalHomeImg from '../assets/locations/coastal-home-near-the-beach.jpg';
-import valleyImg from '../assets/locations/hinterland-valley-farmland-and-homes.jpg';
 
-// One scene per town, in locations.ts order. See townHeroes below.
-import goonellabahHero from '../assets/locations/hilltop-brick-homes-above-a-green-valley.jpg';
-import alstonvilleHero from '../assets/locations/plateau-village-street-under-mature-shade-trees.jpg';
-import wollongbarHero from '../assets/locations/new-estate-street-beside-macadamia-orchard-rows.jpg';
-import casinoHero from '../assets/locations/broad-country-town-street-with-verandahed-buildings.jpg';
-import kyogleHero from '../assets/locations/small-town-rooftops-ringed-by-steep-forested-ranges.jpg';
-import nimbinHero from '../assets/locations/village-shopfronts-below-craggy-rock-spires.jpg';
-import clunesHero from '../assets/locations/hamlet-crossroads-among-rolling-green-hills.jpg';
-import bexhillHero from '../assets/locations/open-grass-bowl-paddock-with-scattered-farmhouses.jpg';
-import dunoonHero from '../assets/locations/macadamia-orchard-rows-on-steep-contours.jpg';
-import ballinaHero from '../assets/locations/river-mouth-with-moored-fishing-trawlers-and-breakwall.jpg';
-import eastBallinaHero from '../assets/locations/grassy-headland-above-a-rocky-shore.jpg';
-import lennoxHeadHero from '../assets/locations/long-point-break-beach-below-a-grassy-coastal-park.jpg';
-import skennarsHeadHero from '../assets/locations/elevated-coastal-street-with-ocean-to-the-horizon.jpg';
-import wardellHero from '../assets/locations/quiet-river-crossing-with-timber-cottages-under-figs.jpg';
-import evansHeadHero from '../assets/locations/fishing-boats-at-a-river-mouth-beside-a-headland.jpg';
-import broadwaterHero from '../assets/locations/green-sugar-cane-fields-with-a-distant-mill-chimney.jpg';
-import woodburnHero from '../assets/locations/slow-river-with-a-boat-ramp-under-river-gums.jpg';
-import corakiHero from '../assets/locations/confluence-of-two-rivers-among-flat-grazing-country.jpg';
-import bangalowHero from '../assets/locations/steep-heritage-main-street-with-iron-lace-verandahs.jpg';
-import byronBayHero from '../assets/locations/wide-curving-bay-beach-below-a-green-headland.jpg';
-import suffolkParkHero from '../assets/locations/sandy-track-through-tea-tree-dunes-to-an-empty-beach.jpg';
-import mullumbimbyHero from '../assets/locations/town-street-with-palms-below-a-forested-peak.jpg';
-import brunswickHeadsHero from '../assets/locations/tidal-river-with-a-timber-footbridge-and-fishing-boats.jpg';
-import oceanShoresHero from '../assets/locations/curving-ridge-streets-above-green-fairways.jpg';
-import newBrightonHero from '../assets/locations/beachfront-reserve-with-norfolk-pines-and-beach-shacks.jpg';
-import billinudgelHero from '../assets/locations/old-low-buildings-beside-a-rail-line-and-cane-fields.jpg';
-import federalHero from '../assets/locations/rainforest-crossroads-hamlet-among-macadamia-groves.jpg';
-import murwillumbahHero from '../assets/locations/river-town-with-a-steel-truss-bridge-below-a-sharp-peak.jpg';
-import tweedHeadsHero from '../assets/locations/broad-river-mouth-with-a-marina-and-apartment-towers.jpg';
-import tweedHeadsSouthHero from '../assets/locations/residential-canal-frontages-with-small-boats.jpg';
-import banoraPointHero from '../assets/locations/hillside-homes-above-a-river-bend.jpg';
-import terranoraHero from '../assets/locations/acreage-homes-on-a-ridge-above-a-broadwater.jpg';
-import bilambilHero from '../assets/locations/narrow-green-valley-with-cattle-paddocks-and-a-creek.jpg';
-import bilambilHeightsHero from '../assets/locations/hilltop-estate-street-with-a-distant-coastal-skyline.jpg';
-import chinderahHero from '../assets/locations/riverfront-cabins-and-dinghies-among-cane-flats.jpg';
-import fingalHeadHero from '../assets/locations/basalt-rock-shelf-headland-beside-a-sandy-beach.jpg';
-import kingscliffHero from '../assets/locations/beachfront-promenade-with-norfolk-pines.jpg';
-import casuarinaHero from '../assets/locations/leafy-planned-coastal-street-with-a-dune-path.jpg';
-import cudgenHero from '../assets/locations/red-soil-vegetable-fields-above-a-distant-coast.jpg';
-import cabaritaBeachHero from '../assets/locations/crescent-beach-below-a-grassy-headland.jpg';
-import bogangarHero from '../assets/locations/quiet-beach-village-street-behind-the-dunes.jpg';
-import hastingsPointHero from '../assets/locations/clear-creek-crossing-the-sand-beside-a-rocky-headland.jpg';
-import pottsvilleHero from '../assets/locations/creek-and-beach-with-big-shade-trees-behind.jpg';
-import ukiHero from '../assets/locations/village-timber-shopfronts-at-the-foot-of-a-forested-peak.jpg';
-import burringbarHero from '../assets/locations/ridge-road-village-with-banana-and-macadamia-slopes.jpg';
-import mooballHero from '../assets/locations/rural-hamlet-buildings-beside-cattle-paddocks.jpg';
-import coolangattaHero from '../assets/locations/curving-beach-below-a-headland-with-apartment-towers.jpg';
-import bilingaHero from '../assets/locations/wide-quiet-beach-with-a-low-seawall-path.jpg';
-import tugunHero from '../assets/locations/small-beachfront-park-with-pines-above-the-sand.jpg';
-import currumbinHero from '../assets/locations/clear-tidal-creek-beside-a-large-rocky-outcrop.jpg';
-import palmBeachHero from '../assets/locations/long-straight-beach-with-a-foreshore-park-of-palms.jpg';
-import elanoraHero from '../assets/locations/leafy-inland-suburb-streets-around-a-lake.jpg';
-import burleighHeadsHero from '../assets/locations/forested-headland-point-above-a-long-beach.jpg';
-import burleighWatersHero from '../assets/locations/wide-residential-canals-with-pontoons-and-palms.jpg';
-import miamiHero from '../assets/locations/wide-beach-backed-by-a-grassy-foreshore-and-low-apartments.jpg';
+const photo = z.object({
+  src: z.string().startsWith('/src/assets/', 'Image must be inside src/assets'),
+  alt: z.string().min(1),
+});
+const toHero = ({ src, alt }: z.infer<typeof photo>) => ({ src: cmsImage(src), label: alt });
+
+const townFiles = loadFolder(
+  'towns',
+  z.object({
+    town: z.string().min(1),
+    hero: photo,
+    local: z.array(z.string().min(1)).optional(),
+    nearby: z.array(z.string().min(1)).optional(),
+  }),
+);
+const townFile = new Map(townFiles.map((file) => [file.town, file]));
+
+{
+  const known = new Set(allTowns);
+  const strayFiles = townFiles.filter((file) => !known.has(file.town)).map((file) => file.town);
+  const missingFiles = allTowns.filter((town) => !townFile.has(town));
+  const badNearby = townFiles.flatMap((file) =>
+    (file.nearby ?? []).filter((town) => !known.has(town)).map((town) => `${file.town} → ${town}`),
+  );
+  const problems = [
+    strayFiles.length && `files for towns that are not in locations.ts: ${strayFiles.join(', ')}`,
+    missingFiles.length && `towns in locations.ts with no file in src/content/towns/: ${missingFiles.join(', ')}`,
+    badNearby.length && `"nearby" names a town that does not exist (check the spelling): ${badNearby.join(', ')}`,
+  ].filter(Boolean);
+  if (problems.length) throw new Error(`townPages.ts:\n  - ${problems.join('\n  - ')}`);
+}
 
 export type HeroKey = 'hinterland-home' | 'coastal-home' | 'valley';
 
@@ -108,18 +90,9 @@ export type HeroKey = 'hinterland-home' | 'coastal-home' | 'valley';
 //
 // IMPORTANT: none of these is a photograph of a specific town.
 export const heroImages: Record<HeroKey, { src: ImageMetadata; label: string }> = {
-  'hinterland-home': {
-    src: hinterlandHomeImg,
-    label: 'A weatherboard Northern Rivers home with the hinterland hills behind it',
-  },
-  'coastal-home': {
-    src: coastalHomeImg,
-    label: 'A modern coastal home on a quiet beachside street, with the ocean beyond',
-  },
-  valley: {
-    src: valleyImg,
-    label: 'Green hinterland farmland and scattered homes below a forested ridgeline',
-  },
+  'hinterland-home': toHero(regionPhotos.hinterlandHome),
+  'coastal-home': toHero(regionPhotos.coastalHome),
+  valley: toHero(regionPhotos.valley),
 };
 
 // ── ONE SCENE PER TOWN ───────────────────────────────────────────────────
@@ -146,71 +119,16 @@ export const heroImages: Record<HeroKey, { src: ImageMetadata; label: string }> 
 // Regenerate the whole set, or re-shoot one town, with:
 //   node scripts/locations/generate.mjs
 // (prompts live in scripts/locations/town-scenes.json; delete a town's .jpg
-// to re-shoot just that one)
-export const townHeroes: Record<string, { src: ImageMetadata; label: string }> = {
-  // Deliberately the shared region photo, not a Lismore-specific scene: this
-  // is TLB's pick. Written out rather than left to the fallback below so that
-  // a missing entry still reads as an oversight and this one does not.
-  // ⚠️ The /locations/ hub shows this same photo on its Northern Rivers card,
-  // so a reader going hub → Lismore sees it twice. That is the one place the
-  // repetition this file set out to remove still happens.
-  Lismore: heroImages['hinterland-home'],
-  Goonellabah: { src: goonellabahHero, label: 'Brick-and-tile homes along a hilltop street above a broad green valley' },
-  Alstonville: { src: alstonvilleHero, label: 'A wide village main street of low shopfronts under mature shade trees' },
-  Wollongbar: { src: wollongbarHero, label: 'A new estate street of modern houses backing onto rows of a macadamia orchard' },
-  Casino: { src: casinoHero, label: 'A broad country-town main street lined with two-storey verandahed brick buildings' },
-  Kyogle: { src: kyogleHero, label: 'A small town of low cottages on a valley floor ringed by steep forested ranges' },
-  Nimbin: { src: nimbinHero, label: 'Low painted timber village shopfronts with craggy rock spires rising behind' },
-  Clunes: { src: clunesHero, label: 'A handful of old weatherboard cottages at a quiet hamlet crossroads in green hills' },
-  Bexhill: { src: bexhillHero, label: 'A wide grassy paddock bowl between low hills with scattered farmhouses around it' },
-  Dunoon: { src: dunoonHero, label: 'Rows of a macadamia orchard following steep green hillside contours above a farmhouse' },
-  Ballina: { src: ballinaHero, label: 'Fishing trawlers moored on a wide river mouth with a long rock breakwall beyond' },
-  'East Ballina': { src: eastBallinaHero, label: 'A grassy coastal headland above a rocky shore, with low houses set back along the ridge' },
-  'Lennox Head': { src: lennoxHeadHero, label: 'A long sand beach curving from a rocky point below a grassy coastal reserve' },
-  'Skennars Head': { src: skennarsHeadHero, label: 'An elevated street of modern homes above coastal scrub, with open ocean to the horizon' },
-  Wardell: { src: wardellHero, label: 'A small vehicle ferry on a quiet river, with timber cottages under fig trees on the bank' },
-  'Evans Head': { src: evansHeadHero, label: 'Small fishing boats moored at a river mouth beside a low green headland' },
-  Broadwater: { src: broadwaterHero, label: 'Flat green sugar cane fields with a cane rail line and a distant mill chimney' },
-  Woodburn: { src: woodburnHero, label: 'A boat ramp and small dinghies on a slow river lined with tall river gums' },
-  Coraki: { src: corakiHero, label: 'Two slow rivers meeting among tall river gums and flat green grazing paddocks' },
-  Bangalow: { src: bangalowHero, label: 'A steep village street of two-storey heritage shopfronts with iron-lace verandahs' },
-  'Byron Bay': { src: byronBayHero, label: 'A wide curving bay of pale sand and turquoise water below a green forested headland' },
-  'Suffolk Park': { src: suffolkParkHero, label: 'A sandy track through tea-tree dunes opening onto a wide empty beach' },
-  Mullumbimby: { src: mullumbimbyHero, label: 'A wide town street with palms and awnings below a steep forested peak' },
-  'Brunswick Heads': { src: brunswickHeadsHero, label: 'A white timber footbridge over a tidal river with small fishing boats moored alongside' },
-  'Ocean Shores': { src: oceanShoresHero, label: 'Curving ridge streets of brick-and-tile homes above green fairways, ocean beyond' },
-  'New Brighton': { src: newBrightonHero, label: 'A grassy beachfront reserve of Norfolk pines fronting a few low-set beach shacks' },
-  Billinudgel: { src: billinudgelHero, label: 'A few old low buildings beside a disused rail line, with cane fields and ranges behind' },
-  Federal: { src: federalHero, label: 'A tiny hamlet at a road junction among dense subtropical rainforest hills' },
-  Murwillumbah: { src: murwillumbahHero, label: 'A steel truss bridge over a river beside a low-rise town, a sharp volcanic peak behind' },
-  'Tweed Heads': { src: tweedHeadsHero, label: 'A marina on a broad river mouth with mid-rise apartment towers and a headland beyond' },
-  'Tweed Heads South': { src: tweedHeadsSouthHero, label: 'Single-storey homes with lawns and pontoons along a quiet residential canal' },
-  'Banora Point': { src: banoraPointHero, label: 'Brick-and-tile homes stepping down a green hillside above a wide river bend' },
-  Terranora: { src: terranoraHero, label: 'Acreage homes along a green ridge road above a wide still broadwater' },
-  Bilambil: { src: bilambilHero, label: 'A narrow valley of cattle paddocks and a paperbark creek between steep forested slopes' },
-  'Bilambil Heights': { src: bilambilHeightsHero, label: 'A steep hilltop street of two-storey homes with a distant coastline and skyline beyond' },
-  Chinderah: { src: chinderahHero, label: 'Low riverfront cabins and dinghies on a calm tidal river among flat cane country' },
-  'Fingal Head': { src: fingalHeadHero, label: 'A columnar basalt rock shelf headland beside a wide curving sandy beach' },
-  Kingscliff: { src: kingscliffHero, label: 'A beachfront promenade beside a grassy reserve of Norfolk pines above a wide beach' },
-  Casuarina: { src: casuarinaHero, label: 'A leafy coastal village street of modern homes with a sandy dune path to the beach' },
-  Cudgen: { src: cudgenHero, label: 'Rows of vegetable crops in deep-red volcanic soil, with a distant line of coast beyond' },
-  'Cabarita Beach': { src: cabaritaBeachHero, label: 'A crescent beach and clean surf below a green grassy headland' },
-  Bogangar: { src: bogangarHero, label: 'A quiet village street of modest beach houses with a sandy beach access path' },
-  'Hastings Point': { src: hastingsPointHero, label: 'A clear tidal creek running across the sand to the sea beside a low rocky headland' },
-  Pottsville: { src: pottsvilleHero, label: 'A tidal creek meeting a wide beach beside a grassy park of big shade trees' },
-  Uki: { src: ukiHero, label: 'A few old timber village shopfronts below a steep forested volcanic peak' },
-  Burringbar: { src: burringbarHero, label: 'A short strip of old buildings on a ridge road above banana and macadamia slopes' },
-  Mooball: { src: mooballHero, label: 'A couple of old rural buildings beside a quiet highway among green cattle paddocks' },
-  Coolangatta: { src: coolangattaHero, label: 'A curving beach with clean surf below a headland, mid-rise apartment towers behind' },
-  Bilinga: { src: bilingaHero, label: 'A wide quiet beach with a low seawall path and modest low-rise apartments behind' },
-  Tugun: { src: tugunHero, label: 'A small grassy beachfront park under tall pines above a wide beach' },
-  Currumbin: { src: currumbinHero, label: 'A clear turquoise tidal creek meeting the sea beside a large steep rocky outcrop' },
-  'Palm Beach': { src: palmBeachHero, label: 'A long straight beach beside a narrow foreshore park of tall palms' },
-  Elanora: { src: elanoraHero, label: 'Leafy suburban streets of brick-and-tile homes around a calm parkland lake' },
-  'Burleigh Heads': { src: burleighHeadsHero, label: 'A forested headland point above a long sand beach, distant towers hazy on the horizon' },
-  'Burleigh Waters': { src: burleighWatersHero, label: 'Wide residential canals with lawns, timber pontoons and moored boats' },
-  Miami: { src: miamiHero, label: 'A wide beach and grassy foreshore backed by older beach houses and low apartments' },
-};
+// to re-shoot just that one). A new photo can also be uploaded straight onto
+// the town in Pages CMS.
+// ⚠️ Lismore deliberately uses the shared Northern Rivers region photo, not a
+// Lismore-specific scene: this is TLB's pick. The /locations/ hub shows this
+// same photo on its Northern Rivers card, so a reader going hub → Lismore sees
+// it twice. That is the one place the repetition this file set out to remove
+// still happens.
+export const townHeroes: Record<string, { src: ImageMetadata; label: string }> = Object.fromEntries(
+  townFiles.map((file) => [file.town, toHero(file.hero)]),
+);
 
 export interface Region {
   /** Used in prose: "the surrounding Northern Rivers". No leading "the". */
@@ -251,30 +169,30 @@ const coastalTowns = new Set([
   'Kingscliff', 'Casuarina', 'Cabarita Beach', 'Bogangar', 'Hastings Point', 'Pottsville',
 ]);
 
-// Per-town overrides. Everything not listed here runs on region defaults and
-// derived neighbours.
+// Per-town overrides, from each town's content file. A town without `local`
+// or `nearby` runs on region defaults and derived neighbours.
 //
 // ⚠️ ONLY LISMORE HAS A HAND-PICKED `nearby`, and NO town has a `local` yet.
-// This map is where both go as TLB supplies them. Adding a town here is the
-// entire cost of making its page real.
-export const townOverrides: Record<string, TownOverride> = {
-  Lismore: {
-    // Hand-picked rather than derived: the derived window (see nearbyFor
-    // below) walks locations.ts' own order, which puts Alstonville and
-    // Wollongbar next to Lismore but pushes Dunoon and Bexhill further out
-    // than they really are. These six are the ones a Lismore resident would
-    // name. Confirm they match where TLB's Lismore run actually goes.
-    nearby: ['Goonellabah', 'Clunes', 'Bexhill', 'Dunoon', 'Alstonville', 'Wollongbar'],
-    // local: ⚠️ still outstanding. The strongest material for this town is
-    // the 2022 flood — mould, rebuilt and repaired homes, and cleaning work
-    // that has a different context here than anywhere else in the service
-    // area, linking naturally to /house-cleaning/mould-removal/. Deliberately
-    // NOT drafted: inventing TLB's own account of a disaster in a community
-    // they work in is not a placeholder decision to make on their behalf.
-    // Also worth asking: which days the team is in Lismore, typical lead
-    // time, and the split between homes, rentals and CBD premises.
-  },
-};
+// Adding them in Pages CMS is the entire cost of making a town's page real.
+//
+// Lismore's `nearby` is hand-picked rather than derived: the derived window
+// (see nearbyFor below) walks locations.ts' own order, which puts Alstonville
+// and Wollongbar next to Lismore but pushes Dunoon and Bexhill further out than
+// they really are. Confirm they match where TLB's Lismore run actually goes.
+//
+// Lismore's `local` is still outstanding. The strongest material for this town
+// is the 2022 flood — mould, rebuilt and repaired homes, and cleaning work that
+// has a different context here than anywhere else in the service area, linking
+// naturally to /house-cleaning/mould-removal/. Deliberately NOT drafted:
+// inventing TLB's own account of a disaster in a community they work in is not
+// a placeholder decision to make on their behalf. Also worth asking: which
+// days the team is in Lismore, typical lead time, and the split between homes,
+// rentals and CBD premises.
+export const townOverrides: Record<string, TownOverride> = Object.fromEntries(
+  townFiles
+    .filter((file) => file.local || file.nearby)
+    .map((file) => [file.town, { local: file.local, nearby: file.nearby }]),
+);
 
 export interface TownPage {
   town: string;

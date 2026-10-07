@@ -1,0 +1,23 @@
+heading: Send us the details
+lead: Tell us where you are and what needs doing, and we will come back with a
+  price and a day.
+submitLabel: Send enquiry
+submittingLabel: Sending…
+successHeading: Thanks — that is with us.
+successBody: Your enquiry has been received and a person will read it. If it is
+  urgent, calling is still faster than waiting on a reply.
+errorHeading: That did not send.
+errorBody: Something went wrong between this page and our inbox. Rather than
+  sending it twice, call or email us and we will pick it up from there.
+unconfiguredHeading: This form is not connected yet.
+unconfiguredBody: Nothing was sent, so please call or email instead — those reach us today.
+serviceOptions:
+  - Regular Home Cleaning
+  - Deep Cleaning
+  - End of Lease / Bond Cleaning
+  - Airbnb & Holiday Let Turnovers
+  - Carpet, Upholstery & Floors
+  - Outside Home & Exterior Washing
+  - NDIS & Assisted Living
+  - Commercial Cleaning
+  - Something else

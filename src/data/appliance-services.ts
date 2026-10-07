@@ -23,6 +23,8 @@
 // the group "appliances" to a reader for that reason — they refer to each
 // other by name instead. Worth renaming the menu group; flagged, not done,
 // because the label came from the IA sheet.
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
 export interface ApplianceService {
   /** Menu label, used verbatim as pill and link text. */
   label: string;
@@ -31,38 +33,16 @@ export interface ApplianceService {
   blurb: string;
 }
 
-export const applianceServices: ApplianceService[] = [
-  {
-    label: 'Carpet and rug cleaning',
-    href: '/house-cleaning/carpet-cleaning/',
-    blurb: 'Hot water extraction for carpet, and the gentler treatment a wool rug needs.',
-  },
-  {
-    label: 'Upholstery and lounge cleaning',
-    href: '/house-cleaning/upholstery-cleaning/',
-    blurb: 'Fabric lounges, armchairs and dining chairs, cleaned to the fabric code on the label.',
-  },
-  {
-    label: 'Mattress cleaning',
-    href: '/house-cleaning/mattress-cleaning/',
-    blurb: 'A dry-ish clean for the one thing in the house nobody ever washes.',
-  },
-  {
-    label: 'Tile and grout cleaning',
-    href: '/house-cleaning/tile-and-grout-cleaning/',
-    blurb: 'Bathroom and kitchen grout brought back, and sealed so it stays back longer.',
-  },
-  {
-    label: 'Oven, BBQ and appliance cleaning',
-    href: '/house-cleaning/oven-cleaning/',
-    blurb: 'Ovens stripped and soaked part by part, barbecues degreased, fridges done out.',
-  },
-  {
-    label: 'Blinds, shutters and ceiling fans',
-    href: '/house-cleaning/blind-cleaning/',
-    blurb: 'The dusty things above eye level that a regular clean never has time for.',
-  },
-];
+// THE VALUES LIVE IN PAGES CMS ("Site settings > Cross-links: appliances",
+// src/content/site/appliances.yaml).
+export const applianceServices: ApplianceService[] = loadData(
+  'site/appliances',
+  z.object({
+    services: z
+      .array(z.object({ label: z.string().min(1), href: z.string().startsWith('/'), blurb: z.string().min(1) }))
+      .min(1),
+  }),
+).services;
 
 /** Every service except the one whose page is asking. */
 export const otherApplianceServices = (ownHref: string): ApplianceService[] =>

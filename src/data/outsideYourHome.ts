@@ -13,6 +13,10 @@
 // are unconfirmed sitewide, and confirming them fixes the menu and this file
 // together.
 import type { ServiceIconName } from '../components/ui/ServiceIcon.astro';
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
+
+const SERVICE_ICONS = ['idea', 'spark', 'bloom', 'puzzle', 'target', 'chart-pie', 'chart-bars', 'house', 'suitcase', 'key', 'spray-bottle', 'office'] as const satisfies readonly ServiceIconName[];
 
 export interface OutsideService {
   label: string;
@@ -23,38 +27,23 @@ export interface OutsideService {
   description: string;
 }
 
-export const outsideServices: OutsideService[] = [
-  {
-    label: 'Window cleaning',
-    href: '/house-cleaning/window-cleaning/',
-    icon: 'spark',
-    description: 'Glass, frames, sills and tracks, inside and out, with the salt film taken off properly.',
-  },
-  {
-    label: 'Gutter cleaning',
-    href: '/house-cleaning/gutter-cleaning/',
-    icon: 'puzzle',
-    description: 'Gutters, valleys and downpipes cleared and flushed, and the debris taken away with us.',
-  },
-  {
-    label: 'Roof cleaning',
-    href: '/house-cleaning/roof-cleaning/',
-    icon: 'house',
-    description: 'Soft washing that kills the algae and lichen at the root, on tile or colorbond.',
-  },
-  {
-    label: 'High pressure cleaning',
-    href: '/house-cleaning/pressure-cleaning/',
-    icon: 'spray-bottle',
-    description: 'Driveways, paths, patios, pool surrounds and fences, at a pressure the surface can take.',
-  },
-  {
-    label: 'Exterior house washing',
-    href: '/house-cleaning/exterior-house-washing/',
-    icon: 'bloom',
-    description: 'Walls, eaves, soffits and window frames washed down so the whole house looks newer.',
-  },
-];
+// THE VALUES LIVE IN PAGES CMS ("Site settings > Cross-links: outside your
+// home", src/content/site/outside.yaml).
+export const outsideServices: OutsideService[] = loadData(
+  'site/outside',
+  z.object({
+    services: z
+      .array(
+        z.object({
+          label: z.string().min(1),
+          href: z.string().startsWith('/'),
+          icon: z.enum(SERVICE_ICONS),
+          description: z.string().min(1),
+        }),
+      )
+      .min(1),
+  }),
+).services;
 
 /** The cross-link row for one page: the other four services, in cluster
  *  order, shaped for `ServiceBlocks`' `list` variant. Passing the current

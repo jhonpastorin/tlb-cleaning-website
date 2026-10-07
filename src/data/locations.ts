@@ -38,7 +38,33 @@
 // ⚠️ The doorway-page question is still open and is recorded in townPages.ts:
 // all 56 town pages share one layout and differ by a town name. What this file
 // controls is which of them anything LINKS to — see `navigableTowns` below.
+//
+// WHAT IS EDITABLE IN PAGES CMS ("Locations", src/content/site/locations.yaml):
+// which towns are live, and the two band subheadings. The town lists and the
+// region labels below stay in code on purpose. Adding a town also needs its
+// photo, its neighbour cluster in townPages.ts and its content file, and the
+// region labels are submitted verbatim to the Monday.com board by the contact
+// form (contactForm.ts), so renaming one there silently breaks the area field.
+import { z } from 'astro/zod';
 import type { TagGroup } from '../components/sections/TagCloud.astro';
+import { loadData } from '../lib/cms-data';
+
+const locationsData = loadData(
+  'site/locations',
+  z.object({
+    liveTowns: z.array(z.string().min(1)),
+    subheading: z.string().min(1),
+    nswSubheading: z.string().min(1),
+    regionPhotos: z.object({
+      hinterlandHome: z.object({ src: z.string(), alt: z.string().min(1) }),
+      coastalHome: z.object({ src: z.string(), alt: z.string().min(1) }),
+      valley: z.object({ src: z.string(), alt: z.string().min(1) }),
+    }),
+  }),
+);
+
+/** The three region photos, for townPages.ts. */
+export const regionPhotos = locationsData.regionPhotos;
 
 // Slugs are derived rather than hand-written — 56 hand-typed hrefs is 56
 // chances to typo one — and the derivation matches every existing
@@ -140,37 +166,24 @@ export const allTowns = [...northernRiversTowns, ...tweedTowns, ...southernGoldC
 //   named and linked — the fourteen below
 //   named, not linked — the other 42
 //
-// TO MAKE A TOWN'S PAGE LIVE, add it here. That is the entire change: the
-// menu, the hub, all 47 bands, the region pages and the town pages' "nearby
-// suburbs" lists all read this one predicate. Nothing else has to move.
+// TO MAKE A TOWN'S PAGE LIVE, add it to "Live town pages" under Locations in
+// Pages CMS (`liveTowns` in src/content/site/locations.yaml). That is the
+// entire change: the menu, the hub, all 47 bands, the region pages and the town
+// pages' "nearby suburbs" lists all read this one predicate.
 //
 // The order is the client's own and mixes regions — Kingscliff, Pottsville,
 // Murwillumbah and Tweed Heads are Tweed towns, not Northern Rivers ones. The
 // guard below checks every name against the arrays above at build time, so a
 // town renamed or removed up there fails the build instead of quietly
 // un-linking itself.
-export const navigableTowns = [
-  'Byron Bay',
-  'Brunswick Heads',
-  'Ballina',
-  'Lennox Head',
-  'Lismore',
-  'Alstonville',
-  'Kingscliff',
-  'Pottsville',
-  'Murwillumbah',
-  'Evans Head',
-  'Casino',
-  'Tweed Heads',
-  'Burleigh Heads',
-  'Palm Beach',
-];
+export const navigableTowns = locationsData.liveTowns;
 
 const everyTown = new Set(allTowns);
 const missingNavigable = navigableTowns.filter((town) => !everyTown.has(town));
 if (missingNavigable.length) {
   throw new Error(
-    `Navigable towns no longer exist in the full lists: ${missingNavigable.join(', ')}`,
+    `src/content/site/locations.yaml: these live towns are not in the town lists in locations.ts ` +
+      `(check the spelling): ${missingNavigable.join(', ')}`,
   );
 }
 
@@ -237,11 +250,10 @@ export const nswLocationGroups: TagGroup[] = [
 ];
 
 /** The subheading above a full three-region band. */
-export const locationSubheading =
-  'Across the Northern Rivers, the Tweed and the Southern Gold Coast.';
+export const locationSubheading = locationsData.subheading;
 
 /** The subheading above an NSW-only band. */
-export const nswLocationSubheading = 'Across the Northern Rivers and the Tweed.';
+export const nswLocationSubheading = locationsData.nswSubheading;
 
 // ── COMPATIBILITY ALIASES ───────────────────────────────────────────────
 //

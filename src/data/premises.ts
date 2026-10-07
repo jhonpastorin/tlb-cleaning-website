@@ -24,6 +24,13 @@
 // Nothing in this hub points outside it any more.
 import type { LocalBusinessInfo } from '../layouts/Base.astro';
 import type { Tag } from '../components/sections/TagCloud.astro';
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
+import { schemaTelephone, contactEmail, walkthroughLabel } from './navigation';
+
+// THE LABELS AND BLURBS LIVE IN PAGES CMS ("Site settings > Cross-links:
+// premises", src/content/site/premises.yaml). The thirteen URLs are fixed and
+// checked against PremisesHref, so a typo fails the build.
 
 /** Slugs of the thirteen premises pages, as a union so a page cross-linking
  *  a sibling that does not exist is a type error rather than a 404 found by
@@ -54,80 +61,37 @@ export interface PremisesPage {
 
 // Menu order, not alphabetical — the mega-menu's order is the one a reader
 // has already seen once by the time they reach a cross-link band.
-export const premisesPages: PremisesPage[] = [
-  {
-    label: 'Office cleaning',
-    href: '/commercial-cleaning/office-cleaning/',
-    blurb: 'Desks, kitchenettes, bathrooms and glass, after your team goes home.',
-  },
-  {
-    label: 'Strata and common area cleaning',
-    href: '/commercial-cleaning/strata-cleaning/',
-    blurb: 'Lobbies, lifts, stairwells, carparks and bin rooms on a set schedule.',
-  },
-  {
-    label: 'Aged care, retirement and seniors',
-    href: '/commercial-cleaning/aged-care-cleaning/',
-    blurb: 'Independent living units, corridors and communal rooms, cleaned around residents.',
-  },
-  {
-    label: 'Medical, clinic and salon cleaning',
-    href: '/commercial-cleaning/medical-and-clinic-cleaning/',
-    blurb: 'Treatment rooms, waiting rooms and wet areas, with the touch points done properly.',
-  },
-  {
-    label: 'Construction site',
-    href: '/commercial-cleaning/construction-site-cleaning/',
-    blurb: 'Builders cleans and the final detail clean before handover.',
-  },
-  {
-    label: 'Hospitality, venues and holiday parks',
-    href: '/commercial-cleaning/hospitality-cleaning/',
-    blurb: 'Cafés, restaurants, function rooms, cabins and amenities blocks.',
-  },
-  {
-    label: 'Commercial kitchen cleaning',
-    href: '/commercial-cleaning/commercial-kitchen-cleaning/',
-    blurb: 'Benches, floors, cool rooms and the grease you cannot reach mid-service.',
-  },
-  {
-    label: 'Schools and childcare centres',
-    href: '/commercial-cleaning/school-and-childcare-cleaning/',
-    blurb: 'Classrooms, playrooms and bathrooms, cleaned by a checked team after hours.',
-  },
-  {
-    label: 'Gyms and fitness studios',
-    href: '/commercial-cleaning/gym-and-fitness-cleaning/',
-    blurb: 'Equipment, mats, change rooms and showers, every day.',
-  },
-  {
-    label: 'Retail and shopfronts',
-    href: '/commercial-cleaning/retail-cleaning/',
-    blurb: 'Floors, glass and the entry, finished before you open the door.',
-  },
-  {
-    label: 'Warehouses and industrial sites',
-    href: '/commercial-cleaning/warehouse-and-industrial-cleaning/',
-    blurb: 'Aisles, loading docks, mezzanine offices and amenities.',
-  },
-  {
-    label: 'Factories',
-    href: '/commercial-cleaning/factory-cleaning/',
-    blurb: 'Production floors, plant surrounds and crib rooms, around your shutdowns.',
-  },
-  {
-    label: 'Breweries',
-    href: '/commercial-cleaning/brewery-cleaning/',
-    blurb: 'Brew deck floors and drains, plus the taproom reset before you open.',
-  },
-];
+const PREMISES_HREFS = [
+  '/commercial-cleaning/office-cleaning/',
+  '/commercial-cleaning/strata-cleaning/',
+  '/commercial-cleaning/aged-care-cleaning/',
+  '/commercial-cleaning/medical-and-clinic-cleaning/',
+  '/commercial-cleaning/construction-site-cleaning/',
+  '/commercial-cleaning/hospitality-cleaning/',
+  '/commercial-cleaning/commercial-kitchen-cleaning/',
+  '/commercial-cleaning/school-and-childcare-cleaning/',
+  '/commercial-cleaning/gym-and-fitness-cleaning/',
+  '/commercial-cleaning/retail-cleaning/',
+  '/commercial-cleaning/warehouse-and-industrial-cleaning/',
+  '/commercial-cleaning/factory-cleaning/',
+  '/commercial-cleaning/brewery-cleaning/',
+] as const satisfies readonly PremisesHref[];
+
+const premisesData = loadData(
+  'site/premises',
+  z.object({
+    pages: z
+      .array(z.object({ label: z.string().min(1), href: z.enum(PREMISES_HREFS), blurb: z.string().min(1) }))
+      .length(PREMISES_HREFS.length),
+    services: z.array(z.object({ label: z.string().min(1), href: z.string().startsWith('/commercial-cleaning/') })),
+  }),
+);
+
+export const premisesPages: PremisesPage[] = premisesData.pages;
 
 /** The two service-shaped children of the same hub — a premises page's
  *  reader often wants one of these next, and neither is a premises type. */
-export const commercialServiceLinks: Tag[] = [
-  { label: 'Commercial carpet cleaning', href: '/commercial-cleaning/commercial-carpet-cleaning/' },
-  { label: 'Commercial pressure cleaning', href: '/commercial-cleaning/commercial-pressure-cleaning/' },
-];
+export const commercialServiceLinks: Tag[] = premisesData.services;
 
 export const commercialHubLink: Tag = {
   label: 'Commercial cleaning',
@@ -168,8 +132,8 @@ export const commercialBusiness = (description: string): LocalBusinessInfo => ({
   name: 'TLB Cleaning',
   url: 'https://tlbcleaning.com.au/',
   logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
+  telephone: schemaTelephone,
+  email: contactEmail,
   address: {
     streetAddress: '',
     addressLocality: '',
@@ -196,4 +160,4 @@ export const commercialBusiness = (description: string): LocalBusinessInfo => ({
  * ⚠️ The label promises a walkthrough. If TLB would rather quote small sites
  * over the phone, this is the one line that changes for all thirteen.
  */
-export const walkthroughCtaLabel = 'Book a site walkthrough';
+export const walkthroughCtaLabel = walkthroughLabel; // "Site settings > Site-wide buttons" in Pages CMS

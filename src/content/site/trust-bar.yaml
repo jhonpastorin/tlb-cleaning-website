@@ -1,0 +1,13 @@
+cards:
+  - icon: map-pin
+    title: Local team
+    description: A local team right across the Northern Rivers and the Tweed
+  - icon: shield-check
+    title: They stay
+    description: 98% of our clients stay with us
+  - icon: building
+    title: Agency trusted
+    description: Preferred supplier for real estate agencies in the region
+  - icon: team
+    title: Over 100 clients
+    description: Over 100 local homes, hosts and businesses

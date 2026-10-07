@@ -1,0 +1,18 @@
+pages:
+  - label: About TLB and Teagan
+    href: /about/
+    group: The people
+    blurb: Who started TLB, who works here now, and how the local part actually works.
+  - label: Work with us
+    href: /work-with-us/
+    group: The people
+    blurb: Cleaning work across the Northern Rivers and the Tweed, on hours that fit
+      around family.
+  - label: Reviews
+    href: /reviews/
+    group: Proof
+    blurb: What clients say, and where to read it in their own words rather than ours.
+  - label: How booking works
+    href: /how-booking-works/
+    group: Proof
+    blurb: From the first quote to the day itself, and how to change or skip a visit.

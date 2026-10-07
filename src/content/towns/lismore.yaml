@@ -1,0 +1,11 @@
+town: Lismore
+hero:
+  src: /src/assets/locations/weatherboard-home-with-hinterland-hills.jpg
+  alt: A weatherboard Northern Rivers home with the hinterland hills behind it
+nearby:
+  - Goonellabah
+  - Clunes
+  - Bexhill
+  - Dunoon
+  - Alstonville
+  - Wollongbar

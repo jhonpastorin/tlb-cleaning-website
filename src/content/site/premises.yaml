@@ -1,0 +1,47 @@
+pages:
+  - label: Office cleaning
+    href: /commercial-cleaning/office-cleaning/
+    blurb: Desks, kitchenettes, bathrooms and glass, after your team goes home.
+  - label: Strata and common area cleaning
+    href: /commercial-cleaning/strata-cleaning/
+    blurb: Lobbies, lifts, stairwells, carparks and bin rooms on a set schedule.
+  - label: Aged care, retirement and seniors
+    href: /commercial-cleaning/aged-care-cleaning/
+    blurb: Independent living units, corridors and communal rooms, cleaned around
+      residents.
+  - label: Medical, clinic and salon cleaning
+    href: /commercial-cleaning/medical-and-clinic-cleaning/
+    blurb: Treatment rooms, waiting rooms and wet areas, with the touch points done
+      properly.
+  - label: Construction site
+    href: /commercial-cleaning/construction-site-cleaning/
+    blurb: Builders cleans and the final detail clean before handover.
+  - label: Hospitality, venues and holiday parks
+    href: /commercial-cleaning/hospitality-cleaning/
+    blurb: Cafés, restaurants, function rooms, cabins and amenities blocks.
+  - label: Commercial kitchen cleaning
+    href: /commercial-cleaning/commercial-kitchen-cleaning/
+    blurb: Benches, floors, cool rooms and the grease you cannot reach mid-service.
+  - label: Schools and childcare centres
+    href: /commercial-cleaning/school-and-childcare-cleaning/
+    blurb: Classrooms, playrooms and bathrooms, cleaned by a checked team after hours.
+  - label: Gyms and fitness studios
+    href: /commercial-cleaning/gym-and-fitness-cleaning/
+    blurb: Equipment, mats, change rooms and showers, every day.
+  - label: Retail and shopfronts
+    href: /commercial-cleaning/retail-cleaning/
+    blurb: Floors, glass and the entry, finished before you open the door.
+  - label: Warehouses and industrial sites
+    href: /commercial-cleaning/warehouse-and-industrial-cleaning/
+    blurb: Aisles, loading docks, mezzanine offices and amenities.
+  - label: Factories
+    href: /commercial-cleaning/factory-cleaning/
+    blurb: Production floors, plant surrounds and crib rooms, around your shutdowns.
+  - label: Breweries
+    href: /commercial-cleaning/brewery-cleaning/
+    blurb: Brew deck floors and drains, plus the taproom reset before you open.
+services:
+  - label: Commercial carpet cleaning
+    href: /commercial-cleaning/commercial-carpet-cleaning/
+  - label: Commercial pressure cleaning
+    href: /commercial-cleaning/commercial-pressure-cleaning/

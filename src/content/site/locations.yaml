@@ -1,0 +1,27 @@
+liveTowns:
+  - Byron Bay
+  - Brunswick Heads
+  - Ballina
+  - Lennox Head
+  - Lismore
+  - Alstonville
+  - Kingscliff
+  - Pottsville
+  - Murwillumbah
+  - Evans Head
+  - Casino
+  - Tweed Heads
+  - Burleigh Heads
+  - Palm Beach
+subheading: Across the Northern Rivers, the Tweed and the Southern Gold Coast.
+nswSubheading: Across the Northern Rivers and the Tweed.
+regionPhotos:
+  hinterlandHome:
+    src: /src/assets/locations/weatherboard-home-with-hinterland-hills.jpg
+    alt: A weatherboard Northern Rivers home with the hinterland hills behind it
+  coastalHome:
+    src: /src/assets/locations/coastal-home-near-the-beach.jpg
+    alt: A modern coastal home on a quiet beachside street, with the ocean beyond
+  valley:
+    src: /src/assets/locations/hinterland-valley-farmland-and-homes.jpg
+    alt: Green hinterland farmland and scattered homes below a forested ridgeline
