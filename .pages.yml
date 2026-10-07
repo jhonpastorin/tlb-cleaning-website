@@ -1859,3 +1859,70 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to keep \"Book a house wash today\"."
+      - name: end-of-lease-cleaning
+        label: End of lease cleaning
+        type: file
+        path: src/content/pages/house-cleaning/end-of-lease-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "The description's \"passes the first inspection\" and \"fixed quote\" were shipped on TLB's instruction and contradict the page's own FAQ. Do not repeat those claims elsewhere."
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Get a fast quote\" button. Bond cleans are quoted fast, not priced instantly. Never promise a bond back, a pass at inspection or a refund anywhere on this page (Australian Consumer Law)."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: pathways, component: pathwayCards, label: "Two people read this page (cards)" }
+          - name: inclusions
+            component: textGrid
+            label: "What end of lease cleaning includes (grid)"
+            description: "Not yet confirmed by Teagan, and a tenant will hold TLB to every line. The exclusions box and the FAQ \"What isn't included in a bond clean?\" must stay in step with it."
+          - name: exclusions
+            component: callout
+            label: "Quoted separately and not included (box under the grid)"
+            description: "Not yet confirmed. Keep in step with the FAQ \"What isn't included in a bond clean?\"."
+          - name: standard
+            component: textGrid
+            label: "How the standard is actually set (grid)"
+            description: "Describes tenancy law in NSW and QLD in general terms. Do not add an Act, timeframe, dollar figure or entitlement without a legal read."
+          - name: reClean
+            component: textBlock
+            label: "If the agent comes back to you"
+            description: "The re-clean policy is not yet confirmed by Teagan. It is a promise about money and time; change it together with the first FAQ."
+          - name: agentPaperwork
+            component: textBlock
+            label: "What we give you for the agent"
+            description: "Needs confirming that invoices are itemised to task level and carpet cleaning is receipted separately."
+          - { name: border, component: textBlock, label: "Both sides of the border" }
+          - name: readingGuides
+            component: linkList
+            label: "Before you book, three things worth reading (links to guides)"
+            description: "Each link must be one of the guides, e.g. /guides/the-end-of-lease-cleaning-checklist/. The icons come from the guides list."
+          - { name: comparison, component: comparisonTable, label: "Bond clean, deep clean or regular clean (table)" }
+          - name: cost
+            component: textBlock
+            label: "What an end of lease clean costs"
+            description: "No price band until Teagan confirms one. Never publish a figure in [brackets]."
+          - { name: beforeAfter, component: beforeAfter, label: "Before and after" }
+          - { name: video, component: videoFeature, label: "Video (hidden on the site for now)" }
+          - name: booking
+            component: textBlock
+            label: "Book it around the handover date (dark band)"
+            description: "Leave the button empty to keep \"Get a fast quote\"."
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "Every answer is drafted, not briefed. The re-clean, exclusions, carpet and products answers still need Teagan's confirmation. Never promise a bond back."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Get a fast quote\"."

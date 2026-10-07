@@ -68,13 +68,16 @@ import ComparisonTable from '../../components/sections/ComparisonTable.astro';
 import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 // Before/after. Both pairs are REAL TLB job photography.
 import BeforeAfter from '../../components/sections/BeforeAfter.astro';
-import kitchenBenchtopBeforeImg from '../../assets/home_cleaning/before_after/kitchen-benchtop-before.jpg';
-import kitchenBenchtopAfterImg from '../../assets/home_cleaning/before_after/kitchen-benchtop-after.jpg';
 // Before/after pairs — real TLB job photos. The `sample-` files are flat
 // illustrations and stay only where no real pair exists for that subject yet.
-import cooktopBeforeImg from '../../assets/home_cleaning/before_after/cooktop-before.jpg';
-import cooktopAfterImg from '../../assets/home_cleaning/before_after/cooktop-after.jpg';
-import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
+// The Pages CMS imports sit here, where the four before/after photo imports
+// used to be, on purpose: Astro orders a page's CSS partly by import
+// position, and moving them changed the order of this page's stylesheets.
+import { localBusiness } from '../../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized, highlightColumn } from '../../lib/cms-schemas';
 import VideoFeature from '../../components/sections/VideoFeature.astro';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
@@ -93,20 +96,14 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // the siblings show a figure standing on the page's own colour. Same uniform
 // as the mould page's cut-out (aqua polo, teal apron, teal gloves), per
 // IMAGE-GUIDELINES.md section 3. The homepage tile keeps the scene photo.
-import heroImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-scrubbing-the-kitchen-sink.jpg';
 // Section 3 pathway cards. Real TLB photos (6 Oct 2026), copied into this
 // folder and pre-cropped to the cards' 4:3. Each is the same photo the site
 // already uses for that situation, so one idea never looks like two: the
 // cleared room is house cleaning's "I'm moving out", the window-frame wipe is
 // the homepage's "I manage properties", and the shower niche is deep
 // cleaning's "I'm not sure which I need".
-import cardTenantImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-empty-room-glass-doors-onto-the-deck.jpg';
-import cardAgencyImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-wiping-a-kitchen-window-frame.jpg';
-import cardCompareImg from '../../assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-tidying-a-shower-niche.jpg';
 // Section 2 backdrop behind the Cream scrim, shared with the trust bar.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -117,7 +114,7 @@ import {
   quoteCta,
 } from '../../data/navigation';
 import { trustBarCards } from '../../data/trust';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 
 // Section 0. Page metadata.
 //
@@ -168,13 +165,9 @@ import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from 
 //
 // 140 characters, so no truncation risk. If a tenant ever holds TLB to the
 // first-inspection promise, this comment is the audit trail.
-const pageMeta = {
-  title: 'End of Lease Cleaning NSW & QLD | TLB Cleaning',
-  description:
-    'End of lease and bond cleaning that passes the first inspection, across NSW and QLD. We know both sets of rules. Get your fixed quote today.',
-  // Domain still a placeholder, same as every other page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/house-cleaning/end-of-lease-cleaning/',
-};
+//
+// In `pageMeta`, on `canonical`:
+// Domain still a placeholder, same as every other page. Confirm before launch.
 
 // PAGE-LOCAL CTA LABEL, added 15 Sep 2026 - the same override
 // deep-cleaning.astro already carries, for the same reason and with the same
@@ -199,24 +192,6 @@ const pageMeta = {
 // `href` is unchanged, so it routes exactly where it did.
 const pageQuoteCta = { ...quoteCta, label: 'Get a fast quote' };
 
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
-  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
-  description: pageMeta.description,
-};
-
 // Section 1. Hero. Same shape as every other service page:
 // split-single-image, image right, cut-out figure standing on the section
 // edge via contain-bottom.
@@ -232,23 +207,15 @@ const business = {
 // The lead's opening said "end of lease cleanS", a different word form, so
 // the primary did not land in the opening paragraph either. It now does. The
 // two-audience framing and the pricing line are untouched.
-const hero = {
-  headingLines: ['End of lease cleaning, to the standard the inspection measures'],
-  lead: `End of lease cleaning for tenants who want their bond back, and for the agencies that manage the property. Both sides of the border, quoted before we start, with the full task list published on this page. ${theLine.fast}`,
-  cta: pageQuoteCta,
-  image: {
-    // A real TLB photo since 6 Oct 2026, replacing the transparent cut-out
-    // (which ran with `contain-bottom`). Default `cover` fit now. The file is
-    // a slightly portrait crop (0.9:1) of the full-resolution original, the
-    // same framing as the house cleaning hero: the desktop panel is roughly
-    // square, and the earlier tighter crop had its sides trimmed there and
-    // read as zoomed in. This shows the photo's full width. `ratio` is the
-    // mobile fallback.
-    ratio: '1/1',
-    label: 'A TLB cleaner scrubbing the kitchen sink beside a garden window',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on "A TLB cleaner scrubbing the kitchen sink beside a garden window":
+// A real TLB photo since 6 Oct 2026, replacing the transparent cut-out
+// (which ran with `contain-bottom`). Default `cover` fit now. The file is
+// a slightly portrait crop (0.9:1) of the full-resolution original, the
+// same framing as the house cleaning hero: the desktop panel is roughly
+// square, and the earlier tighter crop had its sides trimmed there and
+// read as zoomed in. This shows the photo's full width. `ratio` is the
+// mobile fallback.
 
 // Section 2. Definition paragraph. The answer-target block for
 // `bond cleaning` and `end of lease cleaning`, and the GEO passage most
@@ -258,17 +225,15 @@ const hero = {
 //
 // The second paragraph is where the page settles its terminology once, so
 // the rest of the page can use both names without reading as two services.
-const definitionBody: TextBlockBody[] = [
-  'A bond clean is a comprehensive end of lease clean, done to the standard your exit inspection is measured against rather than to the standard of an everyday tidy. TLB Cleaning provides bond and end of lease cleaning across the Northern Rivers, the Tweed and the Southern Gold Coast.',
-  // Widened 15 Sep 2026. `move out house cleaning` (80/mo), `vacate
-  // cleaning` and `exit clean` (both unmeasured rather than absent, Keyword
-  // Mapping workbook 10 Aug 2026) are mapped secondaries that appeared
-  // nowhere on the page. This is the one sentence on the site whose job is to
-  // settle the vocabulary, so it is the one place they can be named without
-  // the page reading as five services. See the TERMINOLOGY note in the file
-  // header before shortening this back.
-  'Bond clean, end of lease clean, vacate clean, exit clean and move out clean are all names for the same job. Tenants tend to say bond clean because the bond is what is at stake, agencies tend to say end of lease clean because the tenancy is what is ending, and Queensland-side leases often say vacate or exit. We use all of them on this page and mean the same thing by them.',
-];
+//
+// In `definitionBody`, on its second paragraph:
+// Widened 15 Sep 2026. `move out house cleaning` (80/mo), `vacate
+// cleaning` and `exit clean` (both unmeasured rather than absent, Keyword
+// Mapping workbook 10 Aug 2026) are mapped secondaries that appeared
+// nowhere on the page. This is the one sentence on the site whose job is to
+// settle the vocabulary, so it is the one place they can be named without
+// the page reading as five services. See the TERMINOLOGY note in the file
+// header before shortening this back.
 
 // Section 3. Pathway cards. The page has two genuinely different readers
 // (BFD 4.1 audiences 1 and 3) and they want opposite things from it: a
@@ -280,44 +245,6 @@ const definitionBody: TextBlockBody[] = [
 // deep-cleaning.astro uses.
 //
 // Section heading/accent and the three CTA labels are DRAFTED, not briefed.
-const pathwayCards = {
-  heading: 'Two people read this page.',
-  headingAccent: 'Which one are you?',
-  cards: [
-    {
-      number: 1,
-      image: { ratio: '4/3', label: 'A cleared room with glass doors open onto the deck and paddock', src: cardTenantImg },
-      title: "I'm moving out and I want my bond back",
-      description:
-        'Then you want the clean measured against the entry condition report, not against how clean the place feels. That is what this page is about.',
-      cta: pageQuoteCta,
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        label: 'Cleaner wiping down a kitchen window frame',
-        src: cardAgencyImg,
-      },
-      title: 'I manage the property',
-      description:
-        'We already hold ongoing contracts with major agencies across the region. Vacancy windows are tight, so tell us the handover date and we will work back from it.',
-      cta: { label: 'Real estate and property management', href: '/house-cleaning/real-estate-cleaning/' },
-    },
-    {
-      number: 3,
-      image: {
-        ratio: '4/3',
-        label: 'A cleaner straightening the bottles in a tiled shower niche',
-        src: cardCompareImg,
-      },
-      title: "I'm not sure this is the clean I need",
-      description:
-        'Fair enough. A bond clean is not the same job as a deep clean, and it is priced differently. Here is how the three compare.',
-      cta: { label: 'Compare the three', href: '#compare' },
-    },
-  ],
-};
 
 // Section 4. What's included in a bond clean.
 //
@@ -340,50 +267,6 @@ const pathwayCards = {
 //
 // Six cells in two columns is three clean rows, so nothing needs a span here
 // (unlike deep-cleaning's orphaned fifth cell).
-const inclusionBlocks = [
-  {
-    type: 'text' as const,
-    heading: 'Kitchen',
-    body: [
-      'Inside and outside of all cupboards and drawers, benchtops, splashback, sink and taps, rangehood and filter, oven inside and out including racks and trays, cooktop, the fridge cavity, dishwasher filter and seals, floors including edges and corners.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'Bathrooms, ensuites and toilets',
-    body: [
-      'Shower screen, tiles and grout, shower base and drain, bath, vanity inside and out, basin, taps and fittings, mirrors, exhaust fan cover, towel rails, toilet inside and out including the base and the cistern, floors and skirting.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'Bedrooms and living areas',
-    body: [
-      'Inside wardrobes, shelves and drawers, skirting boards, doors and door frames, architraves, light switches and power points, window sills and tracks, inside windows, ceiling fans, cobwebs, air vents, full vacuum including edges and under moveable furniture, mop.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'Laundry',
-    body: [
-      'Tub inside and out, benches, cupboards inside and out, behind and beside appliances where they can be safely moved, dryer lint filter, taps and fittings, floors and skirting.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'Walls, marks and spots',
-    body: [
-      'Spot cleaning of scuffs and marks on walls and doors where the paint surface allows it. Some marks are damage rather than dirt and will not come out with cleaning. We tell you which is which rather than scrubbing through the paint and turning a mark into a repair.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'Throughout',
-    body: [
-      'Light fittings and shades, air vents and returns, switchplates, door handles, blind and curtain dusting, all floors including edges, corners and behind doors.',
-    ],
-  },
-];
 
 // Section 4b. The two exclusion groups. Callout, not two more grid cells:
 // they are the opposite of everything above them, and an inset panel that
@@ -399,12 +282,6 @@ const inclusionBlocks = [
 // specifically require professional carpet cleaning, so a tenant reading
 // "quoted separately" needs to understand it is available and commonly
 // needed, not that TLB will not do it.
-const exclusionsCallout = {
-  body: [
-    'Quoted separately: carpet steam cleaning, exterior windows, pest control, garages, balconies and outdoor areas, walls needing a full wash rather than spot cleaning, and any cleaning at height. Many leases specifically require professional carpet cleaning at the end of a tenancy, so ask for it with your quote rather than after the inspection.',
-    'Not included: repairs, painting, gardening or lawns, rubbish and hard waste removal, or anything that needs a licensed trade. If the property needs one of those, we say so when we quote rather than leaving you to find out at the inspection.',
-  ],
-};
 
 // Section 5. How the standard is set. This is the section that does the work
 // a bond-back guarantee would have done, honestly.
@@ -425,41 +302,20 @@ const exclusionsCallout = {
 // Residential Tenancies Authority should be added (BFD 3.3 asks for
 // authoritative external sources) once there is a guides section to host
 // them.
-const standardBlocks = [
-  {
-    type: 'text' as const,
-    heading: 'It starts with the entry report',
-    // Middle sentence added 15 Sep 2026. "Reasonably clean" is the statutory
-    // phrase every tenancy resource on this SERP uses, and a searcher will
-    // usually have read it somewhere else before landing here. It was absent
-    // from this page entirely.
-    //
-    // Deliberately stated at the level of what the law asks for, with no Act,
-    // section, timeframe or entitlement named. The detail on the two Acts,
-    // the two regulators and the two tribunals stays on
-    // /guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/,
-    // which is where it can be dated and reviewed. Do not "improve" this by
-    // adding a specific without a compliance read - see the LEGAL REVIEW note
-    // above.
-    body: [
-      'Your exit inspection is compared against the condition report from the day you moved in, not against a blank standard. The law in both states asks for the property to be left reasonably clean and in the condition it started in, fair wear and tear aside. So if a mark was there on day one and the report says so, it is not something the clean has to fix.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'Fair wear and tear is not dirt',
-    body: [
-      'Carpet that has aged, paint that has faded and fittings that have worn are not cleaning failures. We clean what cleaning can change, and we tell you plainly when something is damage or age instead.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'The agent still holds the pen',
-    body: [
-      'We clean to the standard the inspection measures. We are not in the room when it happens, and no cleaner can promise you what an agent will write in a report, so we would rather be straight with you about that than sell you a guarantee.',
-    ],
-  },
-];
+//
+// In `standardBlocks`, on the body of "It starts with the entry report":
+// Middle sentence added 15 Sep 2026. "Reasonably clean" is the statutory
+// phrase every tenancy resource on this SERP uses, and a searcher will
+// usually have read it somewhere else before landing here. It was absent
+// from this page entirely.
+//
+// Deliberately stated at the level of what the law asks for, with no Act,
+// section, timeframe or entitlement named. The detail on the two Acts,
+// the two regulators and the two tribunals stays on
+// /guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/,
+// which is where it can be dated and reviewed. Do not "improve" this by
+// adding a specific without a compliance read - see the LEGAL REVIEW note
+// above.
 
 // Section 6. If the agent comes back. THE section a competitor would replace
 // with a bond-back guarantee badge.
@@ -494,11 +350,6 @@ const standardBlocks = [
 // with 72 hours replaced by whatever Teagan actually confirms. The matching
 // FAQ answer ("Let us know quickly, before the keys change hands") moves
 // with it.
-const reCleanBody: TextBlockBody[] = [
-  'If the agent lists something from our task list on the exit report, tell us and we will come back and put it right at no charge. That covers the items we quoted for. It does not cover things that were never in scope, like a carpet steam clean nobody booked, or damage that cleaning was never going to fix.',
-  'Tell us as soon as the report lands, because the window to fix something closes when the keys change hands. Ring us the same day if you can.',
-  'This is a re-clean commitment, not a bond guarantee. What an agent writes in a report is their call and not ours, so we promise the part we actually control, which is the work.',
-];
 
 // Section 6b. What we give you for the agent. NEW, 15 Sep 2026.
 //
@@ -526,11 +377,6 @@ const reCleanBody: TextBlockBody[] = [
 // If either is not true today it is a small change to how invoices are
 // issued, not a reason to soften the copy - but the copy cannot ship ahead of
 // the change.
-const agentPaperworkBody: TextBlockBody[] = [
-  'Agents rarely take your word for it, so we give you the paper. You get an itemised invoice showing the property, the date and the work done, and it lists the same tasks published on this page. If the agent queries a line, you can hold one against the other.',
-  'If carpet steam cleaning was part of the booking, it comes as its own line with its own receipt. A carpet clause in a lease is usually satisfied by a receipt rather than by an inspection.',
-  'And if something on our list is picked up on the exit report, the invoice is what tells us what we quoted for. That is how the free re-clean gets sorted without an argument about scope.',
-];
 
 // Section 7. Both sides of the border. A genuine local differentiator, and
 // the reason this page names two states where other pages quietly drop the
@@ -546,10 +392,6 @@ const agentPaperworkBody: TextBlockBody[] = [
 // is factual and is the kind of authoritative reference BFD 3.3 asks for. It
 // makes no claim about what either body requires. Keep it that way unless
 // the claim is checked.
-const borderBody: TextBlockBody[] = [
-  'Our service area crosses the border, so we clean to both sets of rules as a matter of routine. A tenancy in Ballina, Byron or Lismore sits under NSW Fair Trading. A tenancy in Coolangatta, Palm Beach or Burleigh Heads sits under the Queensland Residential Tenancies Authority.',
-  'The cleaning itself does not change much between the two. What changes is the paperwork around it, and which condition report your inspection is measured against. If you are moving from one side of the border to the other, which plenty of people here do, you can book the clean at both ends with the same team.',
-];
 
 // Section 7b. Before you book, three things worth reading. NEW, 15 Sep 2026.
 //
@@ -583,24 +425,6 @@ const readingGuide = (href: GuideHref, title: string, description: string) => ({
   href,
 });
 
-const readingGuides = [
-  readingGuide(
-    '/guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld/',
-    'What the law actually says',
-    'The condition report standard in NSW and Queensland, what fair wear and tear covers, and when a professional clean can and cannot be insisted on.'
-  ),
-  readingGuide(
-    '/guides/the-end-of-lease-cleaning-checklist/',
-    'The end of lease cleaning checklist',
-    'Room by room, in the order the job is actually worked, with the lines agents mark first.'
-  ),
-  readingGuide(
-    '/guides/how-much-does-end-of-lease-cleaning-cost/',
-    'What an end of lease clean costs',
-    'What moves the price, what a low quote has left out, and how to compare two of them properly.'
-  ),
-];
-
 // Section 8. The comparison table.
 //
 // Rows and framing are the deep-cleaning page's table with the highlight
@@ -613,51 +437,12 @@ const readingGuides = [
 // The copy is NOT extracted into src/data/ yet: two callers is this
 // codebase's stated bar for sharing, and the highlight and column order
 // legitimately differ per page. Worth extracting if a third page needs it.
-const comparisonTable = {
-  heading: 'Bond clean, deep clean or regular clean',
-  cornerLabel: 'Which one you need',
-  columns: [
-    { label: 'End of lease clean', highlight: true },
-    { label: 'Deep clean' },
-    { label: 'Regular clean' },
-  ],
-  rows: [
-    {
-      label: 'What it is',
-      values: [
-        'A clean measured against an exit inspection',
-        'A one-off reset, room by room',
-        'Ongoing upkeep on a set schedule',
-      ],
-    },
-    {
-      label: 'The standard',
-      values: ['Whatever the inspection requires', 'Back to a baseline', 'Held at that baseline'],
-    },
-    {
-      label: 'When',
-      values: [
-        'When the keys go back',
-        'Moving in, before guests, spring, after a long gap',
-        'Weekly, fortnightly or monthly',
-      ],
-    },
-    {
-      label: 'Inside ovens and cupboards',
-      values: ['Included', 'Quoted separately', 'Not included'],
-    },
-    // Replaced the old "How long" row per the updated brief, same as the
-    // deep-cleaning page. It lands harder here than there: this is the page
-    // where "somebody else decides" is the whole point, and the FAQ below
-    // still carries the duration answer the old row was hedging at.
-    {
-      label: 'Who decides it passed',
-      values: ['The agent or landlord', 'The client', 'The client'],
-    },
-  ],
-  footnote:
-    'A bond clean is the most thorough of the three and priced accordingly, because it has to satisfy someone else’s checklist rather than your own. Book it for an empty property wherever you can. It is faster, costs less and comes out better when there is nothing left to clean around.',
-};
+//
+// In `comparisonTable`, on "Who decides it passed":
+// Replaced the old "How long" row per the updated brief, same as the
+// deep-cleaning page. It lands harder here than there: this is the page
+// where "somebody else decides" is the whole point, and the FAQ below
+// still carries the duration answer the old row was hedging at.
 
 // Section 8b. What an end of lease clean costs. NEW, 15 Sep 2026.
 //
@@ -687,16 +472,6 @@ const comparisonTable = {
 //    scope, sits well above it.'
 // followed by the confirmed figures. Same request is open for the
 // deep-cleaning page, raised 14 Sep 2026 - answer both at once.
-const costBody: TextBlockBody[] = [
-  'Condition and size set the price, which is why we quote rather than publish a flat rate. What we can tell you is the shape of it, and what moves it.',
-  'Three things move a bond clean quote more than anything else. Whether the property is empty, because cleaning around furniture costs time twice over. Whether carpets are in scope, since steam cleaning is quoted separately and many leases require it. And the condition of the oven, which is the most time-consuming item on the list and the one agents check first.',
-  'If you want the full breakdown before you talk to anyone, we have written it up.',
-];
-
-const costCta = {
-  label: 'What an end of lease clean costs, in detail',
-  href: '/guides/how-much-does-end-of-lease-cleaning-cost/',
-};
 
 // Section 9. Credibility signals.
 //
@@ -739,42 +514,11 @@ const costCta = {
 // permission as well as the tenant's where the property is managed.
 //
 // Shoot each pair from ONE fixed position or the pair does not read.
-const beforeAfterPairs: BeforeAfterPair[] = [
-  {
-    before: {
-      src: cooktopBeforeImg,
-      alt: 'A gas cooktop before a TLB bond clean, with spilled coffee grounds, crumbs and food scraps across the black enamel',
-    },
-    after: {
-      src: cooktopAfterImg,
-      alt: 'The same gas cooktop after the bond clean, the enamel wiped back to an even black finish',
-    },
-    caption: 'Gas cooktop and burners',
-  },
-  {
-    before: {
-      src: kitchenBenchtopBeforeImg,
-      alt: 'A kitchen benchtop before a TLB bond clean, with dishes stacked in and beside the sink and pots left on the stove',
-    },
-    after: {
-      src: kitchenBenchtopAfterImg,
-      alt: 'The same kitchen benchtop after the bond clean, sink empty and the bench clear and wiped down',
-    },
-    caption: 'Kitchen benchtop and sink',
-  },
-];
 
 // Section 10. Video. Reserved 16/9 slot. `headingLines` is drafted.
 //
 // Closing full stop dropped 15 Sep 2026, same house-style pass as the
 // BeforeAfter heading and the closing block.
-const heroVideo = {
-  headingLines: ['The walkthrough, start to finish'],
-  video: {
-    ratio: '16/9',
-    label: 'Walkthrough video of a TLB bond clean in an empty rental, room by room',
-  },
-};
 
 // Section 11. Booking and pricing. TextBlock `dark` for the same reason as
 // the deep-cleaning page: it sits between two light sections, it carries the
@@ -792,12 +536,6 @@ const heroVideo = {
 // actually feeling at this point in a move (BFD 5.2) and does it without
 // implying their house or their organisation is the problem. The three
 // paragraphs under it are good and are untouched.
-const bookingBody: TextBlockBody[] = [
-  'Most bond cleans get booked in the worst week of the move, when the truck is late, the keys are due and nobody has eaten a proper meal in three days. Book it the day the handover date lands instead, and it becomes one fewer thing between you and the end of it.',
-  'Book online in a couple of minutes, or send a text, ring us or drop us an email, whichever you would actually do. Tell us the handover date when you book, because that is the date everything works back from.',
-  'You get a price up front rather than waiting on a callback. It is based on the property as it actually is, so be honest about the condition when you book. Nothing you tell us will surprise us, and it means we allow the right amount of time instead of running short on the day.',
-  'Book the clean for after the removalists and before the final inspection, with a day in between if you can manage it. An empty property cleans faster and better, and that gap is what gives everyone room if something needs a second look.',
-];
 
 // Section 13. Where we clean. The shared 56-town, three-region list from
 // src/data/locations.ts. The open questions (the /locations/<slug>/ pattern,
@@ -811,99 +549,138 @@ const bookingBody: TextBlockBody[] = [
 //
 // EVERY ANSWER HERE IS DRAFTED, not briefed. The ones carrying operational
 // numbers or commitments are flagged individually.
-const faqItems = [
-  {
-    // [CONFIRM] the re-clean policy. Same fact as section 6, so the two have
-    // to move together. If section 6 is deleted, delete this too.
-    question: 'What happens if the property fails the exit inspection?',
-    answer:
-      'If the agent lists something that was on our task list, tell us and we will come back and put it right at no charge. That covers what we quoted for. It does not cover work nobody booked, or damage that cleaning was never going to fix. Let us know quickly, before the keys change hands.',
-  },
-  {
-    // Deliberately does NOT promise a bond. See the file header.
-    question: 'Do you guarantee I will get my bond back?',
-    answer:
-      'No, and be careful of anyone who does. Your bond depends on the condition report, fair wear and tear and what the agent writes, and a cleaner controls none of those. What we promise is the part we do control: the property cleaned to the standard the inspection is measured against, and a free re-clean if something on our list is picked up.',
-  },
-  {
-    // BRACKETS REMOVED 15 Sep 2026. This answer carried two of them
-    // ("[CONFIRM: half a day for a team]" and "[CONFIRM: a full day or
-    // more]") and both rendered to readers, mid-sentence, in the FAQ.
-    //
-    // The two duration sentences are cut rather than filled, because filling
-    // them would mean inventing a number that sets a client's expectation on
-    // the day and misprices the job. What is left is shorter and entirely
-    // true.
-    //
-    // RESTORE THE DURATIONS THE MOMENT THEY ARE CONFIRMED. The sentences go
-    // back between the first and the last, in this shape:
-    //   'An empty two bedroom unit in reasonable condition is usually half a
-    //    day for a team of two. A larger house, or one that has been lived in
-    //    hard, runs to a full day or more.'
-    // with the real figures in place of those. It needs a yes from Teagan
-    // rather than new thinking - two numbers and this answer is finished.
-    question: 'How long does a bond clean take?',
-    answer:
-      'Longer than any other clean, because every cupboard, track and oven rack is in scope. It depends on the size of the property and the state it is in, and on whether it is empty, which makes more difference than people expect. We give you a realistic window when we quote.',
-  },
-  {
-    // [CONFIRM] the exclusions. Restates section 4b. Keep the two in step or
-    // the page contradicts itself about what a client is paying for.
-    question: "What isn't included in a bond clean?",
-    answer:
-      'Carpet steam cleaning, exterior windows, pest control, garages, balconies and outdoor areas, full wall washing and any cleaning at height are quoted separately rather than assumed. Repairs, painting, gardening and rubbish removal are not cleaning and we do not do them. Ask when you book if you are unsure and we will tell you straight.',
-  },
-  {
-    question: 'Does the property need to be empty?',
-    answer:
-      'It does not have to be, but it should be. An empty property cleans faster, cleans better and costs less, because nothing has to be worked around or moved twice. If furniture has to stay, tell us when you book so we quote for the property as it will actually be on the day.',
-  },
-  {
-    // [CONFIRM] whether TLB books carpet cleaning in or refers it out. The
-    // answer below says TLB quotes it, which implies TLB arranges it. If
-    // that is not true, this becomes "we will point you to someone who does".
-    question: 'Do I need the carpets professionally cleaned as well?',
-    answer:
-      'Check your lease. Many tenancies specifically require professional carpet cleaning at the end of the term, and where that is in writing the receipt is usually what the agent wants to see. We quote carpet cleaning separately rather than folding it in, so ask for it with your quote and it is organised at the same time.',
-  },
-  {
-    question: 'Can you clean a property on the Queensland side of the border?',
-    answer:
-      'Yes. We work across the Northern Rivers, the Tweed and the Southern Gold Coast, so a tenancy in Coolangatta or Palm Beach is the same booking as one in Kingscliff or Byron. If you are moving across the border, you can book the clean at both ends with the same team.',
-  },
-  {
-    // Middle sentence added 15 Sep 2026, so this answer points at section 8b
-    // and at the cost guide rather than giving the same answer the page has
-    // already given once. An FAQ that repeats a section verbatim is a wasted
-    // slot.
-    question: 'How much does a bond clean cost?',
-    answer:
-      'It depends on the size of the property, its condition and whether extras like carpet cleaning are included, which is why we quote instead of publishing a flat rate. The three things that move a quote most are set out above, and we have written a full breakdown of what a bond clean costs if you want it. Tell us the basics and the handover date and you will have a price back quickly, with no obligation attached.',
-  },
-  {
-    // [CONFIRM] the product range, and the no-power scenario, which is an
-    // operational claim about how the team turns up equipped.
-    question: 'Do you bring your own products and equipment?',
-    answer:
-      'Yes, everything. On a bond clean that matters more than usual, because the power and the water are sometimes already disconnected. Tell us when you book if the property will have no power on the day, so we come prepared rather than turning up and finding out.',
-  },
-  {
-    question: 'How far ahead should I book?',
-    answer:
-      'As soon as you have the handover date. End of month and end of quarter are the busiest windows in this region because most leases end there, and those dates fill first. If you are already inside a tight window, ring us rather than booking online and we will tell you honestly what we can do.',
-  },
-];
+//
+// In `faqItems`, on "What happens if the property fails the exit inspection?":
+// [CONFIRM] the re-clean policy. Same fact as section 6, so the two have
+// to move together. If section 6 is deleted, delete this too.
+// In `faqItems`, on "Do you guarantee I will get my bond back?":
+// Deliberately does NOT promise a bond. See the file header.
+// In `faqItems`, on "How long does a bond clean take?":
+// BRACKETS REMOVED 15 Sep 2026. This answer carried two of them
+// ("[CONFIRM: half a day for a team]" and "[CONFIRM: a full day or
+// more]") and both rendered to readers, mid-sentence, in the FAQ.
+//
+// The two duration sentences are cut rather than filled, because filling
+// them would mean inventing a number that sets a client's expectation on
+// the day and misprices the job. What is left is shorter and entirely
+// true.
+//
+// RESTORE THE DURATIONS THE MOMENT THEY ARE CONFIRMED. The sentences go
+// back between the first and the last, in this shape:
+//   'An empty two bedroom unit in reasonable condition is usually half a
+//    day for a team of two. A larger house, or one that has been lived in
+//    hard, runs to a full day or more.'
+// with the real figures in place of those. It needs a yes from Teagan
+// rather than new thinking - two numbers and this answer is finished.
+// In `faqItems`, on "What isn't included in a bond clean?":
+// [CONFIRM] the exclusions. Restates section 4b. Keep the two in step or
+// the page contradicts itself about what a client is paying for.
+// In `faqItems`, on "Do I need the carpets professionally cleaned as well?":
+// [CONFIRM] whether TLB books carpet cleaning in or refers it out. The
+// answer below says TLB quotes it, which implies TLB arranges it. If
+// that is not true, this becomes "we will point you to someone who does".
+// In `faqItems`, on "How much does a bond clean cost?":
+// Middle sentence added 15 Sep 2026, so this answer points at section 8b
+// and at the cost guide rather than giving the same answer the page has
+// already given once. An FAQ that repeats a section verbatim is a wasted
+// slot.
+// In `faqItems`, on "Do you bring your own products and equipment?":
+// [CONFIRM] the product range, and the no-power scenario, which is an
+// operational claim about how the team turns up equipped.
 
 // Section 15. Closing block. Drafted. Names the standard rather than the
 // outcome, consistent with the rest of the page.
 // Closing full stop dropped 15 Sep 2026, for consistency: eleven of this
 // page's H2s carry none. The wording itself stays - it is the best
 // expression of BFD 1.5 on the page.
-const closingCta = {
-  heading: 'Hand back the keys with the cleaning already sorted',
-  lead: 'Tell us the property and the handover date, and we will quote for what is actually there.',
-  cta: pageQuoteCta,
+
+// CONTENT lives in src/content/pages/house-cleaning/end-of-lease-cleaning.yaml
+// and is edited in Pages CMS ("End of lease cleaning", under House cleaning).
+// This file owns the layout. The notes above explain why each section says
+// what it says; they stay here because Pages CMS rewrites the YAML on save and
+// would drop them.
+//
+// The reading-list links now come from the content file, so the GuideHref
+// type check above cannot see them. `guideLink` below does the same job at
+// build time: a link that is not one of the guides in guides.ts fails the
+// build with the field named, rather than shipping a 404.
+const guideLink = z.object({
+  title: section.text,
+  description: section.text,
+  href: z
+    .string()
+    .refine(
+      (href) => guidePages.some((guide) => guide.href === href),
+      'Link to one of the guides, e.g. /guides/the-end-of-lease-cleaning-checklist/',
+    ),
+});
+
+const page = await getPage(
+  'house-cleaning/end-of-lease-cleaning',
+  z.object({
+    seo: section.seo,
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    pathways: section.pathwayCards,
+    inclusions: section.textGrid,
+    exclusions: section.callout,
+    standard: section.textGrid,
+    reClean: section.textBlock,
+    agentPaperwork: section.textBlock,
+    border: section.textBlock,
+    readingGuides: section.linkList.extend({ items: z.array(guideLink).min(1) }),
+    comparison: section.comparisonTable,
+    cost: section.textBlock,
+    beforeAfter: section.beforeAfter,
+    video: section.videoFeature,
+    booking: section.textBlock,
+    reviews: section.sectionHeading,
+    whereWeClean: section.tagCloud,
+    // Heading only: the paragraphs under it all come from Brand lines.
+    brandLine: section.sectionHeading,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  // Domain still a placeholder, same as every other page. Confirm before launch.
+  canonical: 'https://tlbcleaning.com.au/house-cleaning/end-of-lease-cleaning/',
 };
+
+const business = localBusiness({
+  description: pageMeta.description,
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
+});
+
+const heroImage = page.hero.image && sized(page.hero.image, '1/1');
+
+const pathwayCards = page.pathways.cards.map((card, i) => ({
+  number: i + 1,
+  ...card,
+  image: sized(card.image, '4/3'),
+}));
+
+// Six inclusions make three clean rows. If an editor leaves an odd number,
+// the last cell spans both columns rather than sitting alone, as on the deep
+// cleaning page.
+const inclusionBlocks = page.inclusions.items.map((item, i, all) => ({
+  type: 'text' as const,
+  ...item,
+  ...(all.length % 2 === 1 && i === all.length - 1 ? { span: 2 } : {}),
+}));
+const standardBlocks = page.standard.items.map((item) => ({ type: 'text' as const, ...item }));
+
+const readingGuides = page.readingGuides.items.map((item) =>
+  readingGuide(item.href as GuideHref, item.title, item.description),
+);
+
+// The end of lease clean (the first column) is the highlighted one.
+const comparisonColumns = highlightColumn(page.comparison.columns, 0);
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -919,26 +696,34 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? pageQuoteCta}
+      image={heroImage}
     />
 
     {/* Trust bar + definition block share ONE photo behind a Cream scrim, so it is
         laid out across both. 90%, raised from 75% on 29 Sep 2026. Measured
         over this frame's own darkest region under the copy column, 75% gave
         4.22:1 — an AA FAIL. 90% gives 5.96:1. Backdrop.astro's `opacity` doc
-        carries the method. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90} focus="top">
+        carries the method. Re-check it if the photo is swapped in Pages CMS. */}
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90} focus="top">
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
     <PathwayCards
-      heading={pathwayCards.heading}
-      headingAccent={pathwayCards.headingAccent}
-      cards={pathwayCards.cards}
+      heading={page.pathways.heading}
+      headingAccent={page.pathways.headingAccent}
+      cards={pathwayCards}
     />
 
     {/* Heading rewritten 15 Sep 2026. Not one of this page's fourteen H2s
@@ -951,21 +736,28 @@ const closingCta = {
         competitor's in the set, and the specificity is the ranking asset. */}
     <ContentGrid
       columns={2}
-      heading="What end of lease cleaning includes"
-      lead="Also called a bond clean. Every cupboard, track and fitting, because that is what the inspection looks at."
+      heading={page.inclusions.heading}
+      lead={page.inclusions.lead}
       blocks={inclusionBlocks}
     />
 
-    <Callout tone="note" body={exclusionsCallout.body} />
+    <Callout tone="note" heading={page.exclusions.heading} body={page.exclusions.body} cta={page.exclusions.cta} />
 
     <ContentGrid
       columns={3}
-      heading="How the standard is actually set"
-      lead="An exit inspection is not a judgement about how clean the place feels. It is a comparison."
+      heading={page.standard.heading}
+      lead={page.standard.lead}
       blocks={standardBlocks}
     />
 
-    <TextBlock theme="light" align="left" heading="If the agent comes back to you" body={reCleanBody} />
+    <TextBlock
+      theme="light"
+      align="left"
+      heading={page.reClean.heading}
+      body={page.reClean.body}
+      cta={page.reClean.cta}
+      backgroundImage={page.reClean.backgroundImage}
+    />
 
     {/* NEW 15 Sep 2026, and it sits HERE on purpose: the invoice is what
         settles what was in scope, so it belongs immediately after the
@@ -975,14 +767,23 @@ const closingCta = {
     <TextBlock
       theme="muted"
       align="left"
-      heading="What we give you for the agent"
-      body={agentPaperworkBody}
+      heading={page.agentPaperwork.heading}
+      body={page.agentPaperwork.body}
+      cta={page.agentPaperwork.cta}
+      backgroundImage={page.agentPaperwork.backgroundImage}
     />
 
     {/* Theme flipped muted to light 15 Sep 2026. Not a copy change. The new
         block above took the Cream band, and two Cream sections in a row read
         as one section with two headings rather than as two. */}
-    <TextBlock theme="light" align="left" heading="Both sides of the border" body={borderBody} />
+    <TextBlock
+      theme="light"
+      align="left"
+      heading={page.border.heading}
+      body={page.border.body}
+      cta={page.border.cta}
+      backgroundImage={page.border.backgroundImage}
+    />
 
     {/* NEW 15 Sep 2026. The three guides link to this page; until now this
         page linked to none of them. `list` rather than cards: three rows of
@@ -991,8 +792,9 @@ const closingCta = {
         for the same job. Copy and the reasoning are above `readingGuides`. */}
     <ServiceBlocks
       variant="list"
-      heading="Before you book, three things worth reading"
-      lead="We have written the long versions of the three questions people ask most before a bond clean. They are free, they are not sales pages, and one of them tells you when you do not need to hire anybody."
+      heading={page.readingGuides.heading}
+      lead={page.readingGuides.lead}
+      note={page.readingGuides.note}
       items={readingGuides}
     />
 
@@ -1001,11 +803,13 @@ const closingCta = {
         target isn't worth a shared-component change. */}
     <div id="compare">
       <ComparisonTable
-        heading={comparisonTable.heading}
-        cornerLabel={comparisonTable.cornerLabel}
-        columns={comparisonTable.columns}
-        rows={comparisonTable.rows}
-        footnote={comparisonTable.footnote}
+        heading={page.comparison.heading}
+        lead={page.comparison.lead}
+        cornerLabel={page.comparison.cornerLabel}
+        columns={comparisonColumns}
+        rows={page.comparison.rows}
+        footnote={page.comparison.footnote}
+        cta={page.comparison.cta}
       />
     </div>
 
@@ -1020,9 +824,10 @@ const closingCta = {
     <TextBlock
       theme="muted"
       align="left"
-      heading="What an end of lease clean costs"
-      body={costBody}
-      cta={costCta}
+      heading={page.cost.heading}
+      body={page.cost.body}
+      cta={page.cost.cta}
+      backgroundImage={page.cost.backgroundImage}
     />
 
     {/* Drag the handle to wipe between the two frames of each pair — see
@@ -1030,29 +835,33 @@ const closingCta = {
         a gallery. Both pairs are real TLB job photography and the `note`
         says so; correct it, do not delete it, if a sample ever returns. */}
     <BeforeAfter
-      heading="The difference, on real jobs"
-      lead="Drag the handle across each photo to see the same spot before and after a bond clean."
-      pairs={beforeAfterPairs}
-      note="Photographed on real TLB cleans, published with the client's permission."
+      heading={page.beforeAfter.heading}
+      lead={page.beforeAfter.lead}
+      pairs={page.beforeAfter.pairs}
+      note={page.beforeAfter.note}
+      beforeLabel={page.beforeAfter.beforeLabel}
+      afterLabel={page.beforeAfter.afterLabel}
     />
 
-    <VideoFeature headingLines={heroVideo.headingLines} video={heroVideo.video} />
+    <VideoFeature headingLines={page.video.headingLines} video={{ ...page.video.video, ratio: '16/9' }} />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Book it around the handover date"
-      body={bookingBody}
-      cta={pageQuoteCta}
+      heading={page.booking.heading}
+      body={page.booking.body}
+      cta={page.booking.cta ?? pageQuoteCta}
+      backgroundImage={page.booking.backgroundImage}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading}
+      tags={page.whereWeClean.tags}
       groups={locationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -1068,13 +877,19 @@ const closingCta = {
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.oneOff, ...theLineBody.condition, ...howItWorks.general]}
     />
 
-    <Faq heading="Frequently asked questions" items={faqItems} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
-    <CallToAction variant="secondary" heading={closingCta.heading} lead={closingCta.lead} cta={closingCta.cta} />
+    <CallToAction
+      variant="secondary"
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? pageQuoteCta}
+    />
   </main>
 
   <SiteFooter
