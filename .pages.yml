@@ -1942,3 +1942,55 @@ content:
             description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: guide-how-to-choose-a-commercial-cleaner
+        label: "Choosing a commercial cleaner"
+        type: file
+        path: src/content/pages/guides/how-to-choose-a-commercial-cleaner.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: "For the whole page: every piece of advice must apply to any cleaner, including ones TLB would lose to. Never name or describe a competitor, and never state what the law requires of anyone: say what to ask instead. Leave the button empty to use the commercial pages' button (Site settings > Site-wide buttons)."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: scope, component: textBlock, label: "Write the scope first (dark band)" }
+          - name: questions
+            component: iconGrid
+            label: "Six questions, asked of everybody"
+            description: "The button under the grid is the commercial pages' button (Site settings > Site-wide buttons)."
+          - name: cheapQuote
+            component: callout
+            label: "What the low number cannot contain (warning box)"
+            description: "Arithmetic, not accusation: never name anyone or say anything about the legality of other businesses' arrangements."
+          - name: termsTable
+            component: comparisonTable
+            label: "The terms to look at before the price (table)"
+            description: "Two kinds of agreement, not two companies, so neither column is highlighted."
+          - name: sectors
+            component: textGrid
+            label: "If your site has its own requirements (four boxes)"
+            description: "Say what to ask a cleaner about, never what a regulation requires: those obligations belong to the reader."
+          - name: whereWeFit
+            component: textBlock
+            label: "Where we fit, and where we do not"
+            description: "Keep the paragraph about the jobs TLB is the wrong answer for. It is what makes the rest of the page credible."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The two guides listed under it come from Site settings > Cross-links: guides."
+          - { name: faq, component: faq, label: "FAQs" }
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - name: whereWeClean
+            component: tagCloud
+            label: "Where we clean"
+            description: "This page lists the NSW towns only, because commercial work is NSW only."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the commercial pages' button (Site settings > Site-wide buttons)."

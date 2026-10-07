@@ -1,0 +1,284 @@
+seo:
+  title: How to Choose a Commercial Cleaner | TLB Cleaning
+  description: "What to ask before you sign a commercial cleaning contract: scope,
+    staffing, insurance, supervision and exit terms, and how to tell why one
+    quote came in well under the others."
+hero:
+  kicker: Guide · Commercial
+  headingLines:
+    - Most bad cleaning contracts
+    - were bad scopes first.
+  lead: What to specify, what to ask, and what to check before you sign. Written
+    so you can take it into a walkthrough and use it on every tenderer,
+    including us.
+  image:
+    src: /src/assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg
+    alt: A cleaner in uniform and an office manager talking beside the reception
+      desk of a small office
+definition:
+  body:
+    - type: paragraph
+      text: "Choosing a commercial cleaner is a procurement decision rather than a
+        price comparison: the thing being bought is a schedule of tasks,
+        performed to a standard, by staff you will rarely meet, at hours you are
+        not on site. Almost every problem in this category comes from one of
+        those four being left undefined rather than from a cleaner being bad at
+        cleaning."
+    - type: paragraph
+      text: So the useful preparation is not collecting quotes. It is writing down
+        what has to be done, how often, and who is accountable when it is not.
+        Everything below is built around producing that document.
+  backgroundImage: /src/assets/commercial_cleaning/commercial-cleaner-mopping-an-office-foyer.jpg
+scope:
+  heading: Write the scope before you ask anyone
+  body:
+    - type: paragraph
+      text: Before you speak to anybody, write a page. It does not need to be formal,
+        and it will save you more money than any negotiation.
+    - type: list
+      items:
+        - Every area, listed. Not "the office" — reception, open plan, two
+          meeting rooms, kitchenette, two bathrooms, the stairwell, the back
+          store.
+        - What happens in each area and how often. Daily, three times a week,
+          weekly, monthly, quarterly. Bathrooms and kitchens are almost always
+          more frequent than everything else.
+        - The periodic work, separately. Carpets, hard floor stripping and
+          sealing, high dusting, internal glass, external glass, upholstery.
+          These are the items that quietly disappear from a low quote.
+        - Consumables. Who supplies hand towel, toilet paper, soap and bin
+          liners, and whether that is inside the price or invoiced on.
+        - Access and hours. When can they be on site, who holds keys or codes,
+          is there an alarm, is there a lift booking, is there anything they
+          must not touch.
+        - Your own constraints. Trading hours, patient or client privacy, food
+          safety requirements, security clearances, anything that rules out a
+          subcontracted stranger.
+        - What "clean" means for the two or three things you actually care
+          about. Every site has them, and they are never the same two.
+    - type: paragraph
+      text: Send the same page to everyone you ask. Three quotes against one scope
+        tell you something. Three quotes against three different assumptions
+        tell you nothing, and that is the state most tenders in this category
+        are in.
+questions:
+  heading: Six questions, asked of everybody
+  lead: Including us. Two of them are answered better by a larger contractor than
+    by a business our size, and they are on the list anyway.
+  items:
+    - icon: suitcase
+      title: Who actually does the work?
+      description: Employed staff or subcontractors, and how many people will be on
+        your site. Both models exist and both can work. What you want is a
+        straight answer, because it determines who is accountable, who is
+        insured and who turns up in January.
+    - icon: office
+      title: What cover is in place?
+      description: Public liability and workers compensation, current, and in the name
+        of the entity you are contracting with rather than a related one. Ask
+        for the certificates rather than the assurance, and check the dates.
+        Verify anything that matters with your own insurer or adviser.
+    - icon: key
+      title: Who holds the keys, and what happens when someone leaves?
+      description: Key and code control, alarm codes, and the process when a cleaner
+        stops working for them. This is the question most buyers forget and the
+        one a security incident turns on.
+    - icon: puzzle
+      title: Who covers a sick day?
+      description: A sole operator is often excellent and has no depth. A large
+        contractor has depth and may send someone who has never seen your site.
+        Ask what actually happens on a Tuesday when your regular cleaner is
+        unwell, and judge the answer against how much your site can absorb a
+        miss.
+    - icon: target
+      title: Who checks the work, and how often?
+      description: Supervision is what separates a contract that holds its standard
+        for three years from one that drifts after four months. Ask who
+        inspects, on what cycle, and whether you see the result. If the answer
+        is "you tell us if there is a problem", that is your supervision model.
+    - icon: idea
+      title: Who do I ring at seven in the morning?
+      description: A name and a number, not a portal and a ticket. Whoever answers
+        should be able to change something today. This sounds soft and it is the
+        thing every unhappy client complains about first.
+cheapQuote:
+  heading: Work out what the low number cannot contain
+  body:
+    - Take the lowest quote, divide it by the hours the scope actually needs,
+      and look at the hourly figure that falls out. Out of that number come
+      wages and on-costs, superannuation, insurance, workers compensation,
+      leave, equipment, chemicals and consumables, travel between sites,
+      supervision, and the margin that keeps the business alive to service the
+      contract next year.
+    - "If the figure is below what one of those alone should cost, the quote is
+      not efficient, it is incomplete. Usually one of three things has happened:
+      the hours have been cut and the scope will quietly shrink to fit, the
+      periodic work has been left out and will be invoiced later, or the labour
+      is arranged in a way that pushes cost somewhere you cannot see."
+    - None of that makes the lowest quote wrong. It makes it a quote you should
+      ask a specific question about. Ask how many labour hours a week the price
+      is based on. It is one question, it is entirely reasonable, and the answer
+      sorts the field faster than anything else on this page.
+termsTable:
+  heading: The terms to look at before the price
+  cornerLabel: What separates a workable agreement from a stuck one
+  lead: None of these are unusual to ask for, and a contractor who will not put
+    them in writing has told you something useful.
+  columns:
+    - label: A workable agreement
+    - label: The one you regret
+  rows:
+    - label: The scope is attached
+      description: (As a document, listing areas, tasks and frequencies)
+      values:
+        - yes
+        - no
+    - label: Term
+      values:
+        - A defined initial term you chose
+        - Rolling, automatically renewing, with a long notice period
+    - label: Getting out
+      values:
+        - A stated notice period either way
+        - Notice one way, or an exit fee you find later
+    - label: Price rises
+      values:
+        - A stated mechanism and how much notice you get
+        - At the contractor’s discretion
+    - label: Periodic work
+      values:
+        - Scheduled and priced in the agreement
+        - Quoted separately each time, at short notice
+    - label: Consumables
+      values:
+        - Named as included or invoiced, with a basis
+        - Unmentioned until the first invoice
+    - label: What happens when standards slip
+      values:
+        - A process, with a timeframe to rectify
+        - Nothing written, so your only option is to leave
+  footnote: The exit terms matter more than the price, because the price is a
+    number you can renegotiate and the exit terms are the reason you cannot.
+sectors:
+  heading: If your site has its own requirements
+  lead: Four situations where the scope needs more than areas and frequencies. In
+    each case the obligations are yours to establish, and the cleaner has to
+    work inside them.
+  items:
+    - heading: If you handle food
+      body:
+        - Kitchens, cafés, venues and staff canteens all have requirements that
+          sit with you rather than with your cleaner, and your cleaner has to
+          work inside them.
+        - "Ask what they do differently in a food area: colour-coded equipment,
+          separate cloths, what goes on stainless, and whether they will
+          document what was done and when."
+    - heading: If you have patients or clients in rooms
+      body:
+        - Clinics, allied health, salons and consulting suites all have a
+          privacy dimension as well as a hygiene one, and cleaning happens when
+          nobody is watching.
+        - Ask about staff screening, whether the same people attend every time,
+          what training they have had for treatment rooms, and how clinical
+          waste is handled and by whom.
+    - heading: If children are on site
+      body:
+        - Schools, childcare and anywhere running programs for young people
+          carry screening requirements for people working on the premises.
+        - Establish what applies to you, then ask the cleaner to show that their
+          staff meet it and how they keep it current as people join and leave.
+    - heading: If the site is shared or stratified
+      body:
+        - Common property, multiple tenancies and a committee that changes
+          composition every year. The scope has to say which areas belong to
+          whom, or somebody ends up cleaning a space nobody is paying for and
+          stopping.
+        - Ask how they handle instructions from more than one person, because
+          they will get them.
+whereWeFit:
+  heading: Where we fit, and where we do not
+  body:
+    - type: paragraph
+      text: "For completeness, since we wrote the list: we are a local business with
+        our own employed cleaning team, working across the Northern Rivers and
+        the Tweed. We are not a national contractor and there are jobs we are
+        the wrong answer for."
+    - type: paragraph
+      text: If you need a multi-site contract across several states, a 24-hour roster,
+        or a hundred staff cleared for one facility, engage somebody built for
+        that. We would rather say so at the walkthrough than win it and
+        struggle.
+    - type: paragraph
+      text: What we are built for is a single site or a handful of local ones, where
+        the same small team attends often enough to notice when something has
+        changed, where the person you ring knows your building, and where the
+        cleaners are employed by us rather than found on a platform. If that
+        describes the site, the way to find out is a walkthrough rather than a
+        form, because commercial work is priced on floor area, frequency,
+        trading hours and how much of the site is wet area, and none of that
+        survives a quote form.
+readNext:
+  heading: Read next
+  lead: The two other guides a commercial buyer is likely to want.
+faq:
+  heading: "Choosing a commercial cleaner: frequently asked questions"
+  items:
+    - question: How do I compare commercial cleaning quotes?
+      answer: "Send every tenderer the same written scope: areas, tasks, frequencies,
+        periodic work, consumables and access. Without that, three quotes are
+        three different assumptions and the numbers mean nothing. With it, the
+        remaining differences are staffing, supervision and margin, which are
+        the things you actually want to choose between."
+    - question: What should I ask a commercial cleaner before signing?
+      answer: Who does the work and whether they are employed or subcontracted, what
+        insurance is current and in whose name, who controls keys and codes,
+        what happens when someone is sick, who inspects the work and how often,
+        and who answers the phone at seven in the morning. Then read the exit
+        terms before the price.
+    - question: Why is one commercial cleaning quote so much lower?
+      answer: Divide the price by the labour hours the scope actually needs and look
+        at the figure. It has to cover wages and on-costs, insurance, equipment,
+        consumables, travel, supervision and margin. If it cannot, the quote is
+        incomplete rather than efficient. Ask how many labour hours a week the
+        price is based on.
+    - question: Should I sign a long contract?
+      answer: A defined initial term is normal and often gets you a better price,
+        because it lets a contractor invest in your site. What to avoid is a
+        rolling agreement with a long notice period, notice available only one
+        way, an exit fee you find later, or price rises at the contractor’s
+        discretion. Read those clauses before the number.
+    - question: "Employed cleaners or subcontractors: does it matter?"
+      answer: It changes who is accountable, who carries insurance, and how consistent
+        the person attending your site is. Both models exist and both can be run
+        well. What matters is that you know which one you are buying, and that
+        the answer you are given matches the certificates you are shown.
+    - question: How often should a commercial site be cleaned?
+      answer: It varies by area rather than by site. Bathrooms and kitchens are
+        usually the highest frequency, general areas lower, and periodic work
+        such as carpets, hard floors, high dusting and glass sits on its own
+        cycle. Set the frequency per area in your scope rather than buying a
+        single site-wide number.
+moreGuides:
+  heading: More guides
+  subheading: Everything else we have written down.
+  tags:
+    - label: Commercial cleaning
+      href: /commercial-cleaning/
+    - label: Office cleaning
+      href: /commercial-cleaning/office-cleaning/
+    - label: Strata and common area cleaning
+      href: /commercial-cleaning/strata-cleaning/
+    - label: Commercial carpet cleaning
+      href: /commercial-cleaning/commercial-carpet-cleaning/
+  note:
+    - Something we have not covered? Ask us and we will write it.
+whereWeClean:
+  heading: Where we clean
+  subheading: Commercial work across the Northern Rivers and the Tweed.
+  note:
+    - If a town isn't listed, ask us anyway.
+closingCta:
+  kicker: Commercial cleaning
+  heading: Bring the list to the walkthrough.
+  lead: Ours or anybody’s. A site walk with a written scope in hand is the half
+    hour that decides whether the next three years go well.

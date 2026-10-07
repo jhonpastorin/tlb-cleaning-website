@@ -57,9 +57,6 @@ import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import heroImg from '../../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
-import definitionBgImg from '../../assets/commercial_cleaning/commercial-cleaner-mopping-an-office-foyer.jpg';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -73,6 +70,11 @@ import { nswLocationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherGuides, relatedGuides } from '../../data/guides';
 import { walkthroughCtaLabel } from '../../data/premises';
+import { localBusiness } from '../../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 const selfHref = '/guides/how-to-choose-a-commercial-cleaner/' as const;
 
@@ -82,61 +84,23 @@ const selfHref = '/guides/how-to-choose-a-commercial-cleaner/' as const;
 // the same buyer should not send them somewhere different.
 const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
 
-const pageMeta = {
-  title: 'How to Choose a Commercial Cleaner | TLB Cleaning',
-  description:
-    'What to ask before you sign a commercial cleaning contract: scope, staffing, insurance, supervision and exit terms, and how to tell why one quote came in well under the others.',
-  // ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
-  canonical: `https://tlbcleaning.com.au${selfHref}`,
-};
+// In `pageMeta`:
+// ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
 
 // ⚠️ areaServed is NSW-only here, following the call commercial-cleaning.astro
 // and premises.ts both made for the commercial cluster, rather than the
 // two-state string the other eight guides use. Same open sitewide question:
 // if TLB does commercial work across the border, this string, the location
 // band below and premises.ts all change together.
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: [],
-  areaServed: 'Northern Rivers and Tweed, NSW',
-  description: pageMeta.description,
-};
 
 // §1 Hero. The heading names the actual failure mode of this purchase, which
 // is not that the wrong cleaner is chosen but that nobody wrote down what
 // was being bought.
-const hero = {
-  kicker: 'Guide · Commercial',
-  headingLines: ['Most bad cleaning contracts', 'were bad scopes first.'],
-  lead:
-    'What to specify, what to ask, and what to check before you sign. Written so you can take it into a walkthrough and use it on every tenderer, including us.',
-  cta: walkthroughCta,
-  image: {
-    ratio: '4/3',
-    label: 'A cleaner in uniform and an office manager talking beside the reception desk of a small office',
-    src: heroImg,
-  },
-};
 
 // §2 The answer block. Definition-style, then the sentence that reframes the
 // purchase: you are buying a schedule of work performed by people you will
 // not meet, at a time you are not there. That framing is what makes the rest
 // of the page follow.
-const definitionBody: TextBlockBody[] = [
-  'Choosing a commercial cleaner is a procurement decision rather than a price comparison: the thing being bought is a schedule of tasks, performed to a standard, by staff you will rarely meet, at hours you are not on site. Almost every problem in this category comes from one of those four being left undefined rather than from a cleaner being bad at cleaning.',
-  'So the useful preparation is not collecting quotes. It is writing down what has to be done, how often, and who is accountable when it is not. Everything below is built around producing that document.',
-];
 
 // §3 Write the scope first. Dark TextBlock with a list.
 //
@@ -144,21 +108,6 @@ const definitionBody: TextBlockBody[] = [
 // nobody takes. It also has a real commercial benefit for whoever runs the
 // tender: three quotes against one scope are comparable; three quotes
 // against three assumptions are not.
-const scopeBody: TextBlockBody[] = [
-  'Before you speak to anybody, write a page. It does not need to be formal, and it will save you more money than any negotiation.',
-  {
-    list: [
-      'Every area, listed. Not "the office" — reception, open plan, two meeting rooms, kitchenette, two bathrooms, the stairwell, the back store.',
-      'What happens in each area and how often. Daily, three times a week, weekly, monthly, quarterly. Bathrooms and kitchens are almost always more frequent than everything else.',
-      'The periodic work, separately. Carpets, hard floor stripping and sealing, high dusting, internal glass, external glass, upholstery. These are the items that quietly disappear from a low quote.',
-      'Consumables. Who supplies hand towel, toilet paper, soap and bin liners, and whether that is inside the price or invoiced on.',
-      'Access and hours. When can they be on site, who holds keys or codes, is there an alarm, is there a lift booking, is there anything they must not touch.',
-      'Your own constraints. Trading hours, patient or client privacy, food safety requirements, security clearances, anything that rules out a subcontracted stranger.',
-      'What "clean" means for the two or three things you actually care about. Every site has them, and they are never the same two.',
-    ],
-  },
-  'Send the same page to everyone you ask. Three quotes against one scope tell you something. Three quotes against three different assumptions tell you nothing, and that is the state most tenders in this category are in.',
-];
 
 // §4 The questions. ServiceBlocks icon-grid, six.
 //
@@ -166,44 +115,6 @@ const scopeBody: TextBlockBody[] = [
 // questions a larger contractor answers better than a nine-person local
 // business does — see the file header. That is the point. If this list only
 // selected for TLB it would not be a guide.
-const questionItems = [
-  {
-    icon: 'suitcase' as const,
-    title: 'Who actually does the work?',
-    description:
-      'Employed staff or subcontractors, and how many people will be on your site. Both models exist and both can work. What you want is a straight answer, because it determines who is accountable, who is insured and who turns up in January.',
-  },
-  {
-    icon: 'office' as const,
-    title: 'What cover is in place?',
-    description:
-      'Public liability and workers compensation, current, and in the name of the entity you are contracting with rather than a related one. Ask for the certificates rather than the assurance, and check the dates. Verify anything that matters with your own insurer or adviser.',
-  },
-  {
-    icon: 'key' as const,
-    title: 'Who holds the keys, and what happens when someone leaves?',
-    description:
-      'Key and code control, alarm codes, and the process when a cleaner stops working for them. This is the question most buyers forget and the one a security incident turns on.',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'Who covers a sick day?',
-    description:
-      'A sole operator is often excellent and has no depth. A large contractor has depth and may send someone who has never seen your site. Ask what actually happens on a Tuesday when your regular cleaner is unwell, and judge the answer against how much your site can absorb a miss.',
-  },
-  {
-    icon: 'target' as const,
-    title: 'Who checks the work, and how often?',
-    description:
-      'Supervision is what separates a contract that holds its standard for three years from one that drifts after four months. Ask who inspects, on what cycle, and whether you see the result. If the answer is "you tell us if there is a problem", that is your supervision model.',
-  },
-  {
-    icon: 'idea' as const,
-    title: 'Who do I ring at seven in the morning?',
-    description:
-      'A name and a number, not a portal and a ticket. Whoever answers should be able to change something today. This sounds soft and it is the thing every unhappy client complains about first.',
-  },
-];
 
 // §5 Why a cheap quote is cheap. Warning tone, used once.
 //
@@ -212,14 +123,6 @@ const questionItems = [
 // what a rate has to cover and invites the reader to work out which item is
 // missing. Same treatment as the house cleaning cost guide's §7, adapted for
 // a commercial buyer who can actually do the sum.
-const cheapCallout = {
-  heading: 'Work out what the low number cannot contain',
-  body: [
-    'Take the lowest quote, divide it by the hours the scope actually needs, and look at the hourly figure that falls out. Out of that number come wages and on-costs, superannuation, insurance, workers compensation, leave, equipment, chemicals and consumables, travel between sites, supervision, and the margin that keeps the business alive to service the contract next year.',
-    'If the figure is below what one of those alone should cost, the quote is not efficient, it is incomplete. Usually one of three things has happened: the hours have been cut and the scope will quietly shrink to fit, the periodic work has been left out and will be invoiced later, or the labour is arranged in a way that pushes cost somewhere you cannot see.',
-    'None of that makes the lowest quote wrong. It makes it a quote you should ask a specific question about. Ask how many labour hours a week the price is based on. It is one question, it is entirely reasonable, and the answer sorts the field faster than anything else on this page.',
-  ],
-};
 
 // §6 The contract terms that matter. A ComparisonTable — the two columns are
 // two kinds of agreement rather than two vendors, so neither is highlighted.
@@ -227,45 +130,6 @@ const cheapCallout = {
 // This section is the reason a facilities manager would send this page to a
 // colleague, and it is genuinely the part of the purchase that is least
 // discussed in this category.
-const termsTable = {
-  heading: 'The terms to look at before the price',
-  cornerLabel: 'What separates a workable agreement from a stuck one',
-  lead: 'None of these are unusual to ask for, and a contractor who will not put them in writing has told you something useful.',
-  columns: [{ label: 'A workable agreement' }, { label: 'The one you regret' }],
-  rows: [
-    {
-      label: 'The scope is attached',
-      description: '(As a document, listing areas, tasks and frequencies)',
-      values: [true, false],
-    },
-    {
-      label: 'Term',
-      values: ['A defined initial term you chose', 'Rolling, automatically renewing, with a long notice period'],
-    },
-    {
-      label: 'Getting out',
-      values: ['A stated notice period either way', 'Notice one way, or an exit fee you find later'],
-    },
-    {
-      label: 'Price rises',
-      values: ['A stated mechanism and how much notice you get', 'At the contractor’s discretion'],
-    },
-    {
-      label: 'Periodic work',
-      values: ['Scheduled and priced in the agreement', 'Quoted separately each time, at short notice'],
-    },
-    {
-      label: 'Consumables',
-      values: ['Named as included or invoiced, with a basis', 'Unmentioned until the first invoice'],
-    },
-    {
-      label: 'What happens when standards slip',
-      values: ['A process, with a timeframe to rectify', 'Nothing written, so your only option is to leave'],
-    },
-  ],
-  footnote:
-    'The exit terms matter more than the price, because the price is a number you can renegotiate and the exit terms are the reason you cannot.',
-};
 
 // §7 Sector-specific requirements. ContentGrid text cells, four, two rows.
 //
@@ -274,40 +138,6 @@ const termsTable = {
 // cleaner about rather than what any regulation demands. A page that told a
 // medical practice what its infection control obligations are would be
 // giving advice this business is not qualified to give.
-const sectorBlocks = [
-  {
-    type: 'text' as const,
-    heading: 'If you handle food',
-    body: [
-      'Kitchens, cafés, venues and staff canteens all have requirements that sit with you rather than with your cleaner, and your cleaner has to work inside them.',
-      'Ask what they do differently in a food area: colour-coded equipment, separate cloths, what goes on stainless, and whether they will document what was done and when.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'If you have patients or clients in rooms',
-    body: [
-      'Clinics, allied health, salons and consulting suites all have a privacy dimension as well as a hygiene one, and cleaning happens when nobody is watching.',
-      'Ask about staff screening, whether the same people attend every time, what training they have had for treatment rooms, and how clinical waste is handled and by whom.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'If children are on site',
-    body: [
-      'Schools, childcare and anywhere running programs for young people carry screening requirements for people working on the premises.',
-      'Establish what applies to you, then ask the cleaner to show that their staff meet it and how they keep it current as people join and leave.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'If the site is shared or stratified',
-    body: [
-      'Common property, multiple tenancies and a committee that changes composition every year. The scope has to say which areas belong to whom, or somebody ends up cleaning a space nobody is paying for and stopping.',
-      'Ask how they handle instructions from more than one person, because they will get them.',
-    ],
-  },
-];
 
 // §8 Where TLB fits, and where it does not. Deliberately last, after the
 // advice, and it names the limits first.
@@ -317,11 +147,6 @@ const sectorBlocks = [
 // multi-site national contract or a 24-hour industrial roster, and saying so
 // costs nothing (those buyers were never going to sign) while making
 // everything else on the page credible.
-const whereWeFitBody: TextBlockBody[] = [
-  'For completeness, since we wrote the list: we are a local business with our own employed cleaning team, working across the Northern Rivers and the Tweed. We are not a national contractor and there are jobs we are the wrong answer for.',
-  'If you need a multi-site contract across several states, a 24-hour roster, or a hundred staff cleared for one facility, engage somebody built for that. We would rather say so at the walkthrough than win it and struggle.',
-  'What we are built for is a single site or a handful of local ones, where the same small team attends often enough to notice when something has changed, where the person you ring knows your building, and where the cleaners are employed by us rather than found on a platform. If that describes the site, the way to find out is a walkthrough rather than a form, because commercial work is priced on floor area, frequency, trading hours and how much of the site is wet area, and none of that survives a quote form.',
-];
 
 // §9 Next reads. Only two of the eight are genuinely relevant to a
 // commercial buyer, so only two are shown — a padded list would be filler.
@@ -331,54 +156,62 @@ const nextGuides = otherGuides(selfHref, [
 ]);
 
 // §10 The pill band.
-const moreGuideTags = relatedGuides(selfHref, [
-  { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
-  { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
-  { label: 'Strata and common area cleaning', href: '/commercial-cleaning/strata-cleaning/' },
-  { label: 'Commercial carpet cleaning', href: '/commercial-cleaning/commercial-carpet-cleaning/' },
-]);
 
 // §11 FAQs.
-const faqItems = [
-  {
-    question: 'How do I compare commercial cleaning quotes?',
-    answer:
-      'Send every tenderer the same written scope: areas, tasks, frequencies, periodic work, consumables and access. Without that, three quotes are three different assumptions and the numbers mean nothing. With it, the remaining differences are staffing, supervision and margin, which are the things you actually want to choose between.',
-  },
-  {
-    question: 'What should I ask a commercial cleaner before signing?',
-    answer:
-      'Who does the work and whether they are employed or subcontracted, what insurance is current and in whose name, who controls keys and codes, what happens when someone is sick, who inspects the work and how often, and who answers the phone at seven in the morning. Then read the exit terms before the price.',
-  },
-  {
-    question: 'Why is one commercial cleaning quote so much lower?',
-    answer:
-      'Divide the price by the labour hours the scope actually needs and look at the figure. It has to cover wages and on-costs, insurance, equipment, consumables, travel, supervision and margin. If it cannot, the quote is incomplete rather than efficient. Ask how many labour hours a week the price is based on.',
-  },
-  {
-    question: 'Should I sign a long contract?',
-    answer:
-      'A defined initial term is normal and often gets you a better price, because it lets a contractor invest in your site. What to avoid is a rolling agreement with a long notice period, notice available only one way, an exit fee you find later, or price rises at the contractor’s discretion. Read those clauses before the number.',
-  },
-  {
-    question: 'Employed cleaners or subcontractors: does it matter?',
-    answer:
-      'It changes who is accountable, who carries insurance, and how consistent the person attending your site is. Both models exist and both can be run well. What matters is that you know which one you are buying, and that the answer you are given matches the certificates you are shown.',
-  },
-  {
-    question: 'How often should a commercial site be cleaned?',
-    answer:
-      'It varies by area rather than by site. Bathrooms and kitchens are usually the highest frequency, general areas lower, and periodic work such as carpets, hard floors, high dusting and glass sits on its own cycle. Set the frequency per area in your scope rather than buying a single site-wide number.',
-  },
-];
 
 // §12 Closing CTA. The walkthrough, matching the whole commercial cluster.
-const closingCta = {
-  kicker: 'Commercial cleaning',
-  heading: 'Bring the list to the walkthrough.',
-  lead: 'Ours or anybody’s. A site walk with a written scope in hand is the half hour that decides whether the next three years go well.',
-  cta: { label: walkthroughCtaLabel, href: quoteCta.href },
+
+// CONTENT lives in src/content/pages/guides/how-to-choose-a-commercial-cleaner.yaml
+// and is edited in Pages CMS ("Guides > Choosing a commercial cleaner"). This
+// file owns the layout. The notes above explain why each section says what it
+// says; they stay here because Pages CMS rewrites the YAML on save and would
+// drop them. The editor carries the short version of each warning as a field
+// description. Buttons left empty in the CMS fall back to walkthroughCta, not
+// the sitewide quote button, for the reason given where it is defined.
+const page = await getPage(
+  'guides/how-to-choose-a-commercial-cleaner',
+  z.object({
+    seo: section.seo,
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    scope: section.textBlock,
+    // The button under the grid is walkthroughCta, set in code.
+    questions: section.iconGrid,
+    cheapQuote: section.callout,
+    termsTable: section.comparisonTable,
+    // ContentGrid text cells only.
+    sectors: section.textGrid,
+    whereWeFit: section.textBlock,
+    // The two guides listed come from site data (nextGuides above).
+    readNext: section.sectionIntro,
+    faq: section.faq,
+    // `tags` holds only this page's own extra links. relatedGuides() adds the
+    // other guides before them and the hub link after them.
+    moreGuides: section.tagCloud,
+    // The towns are the NSW-only groups (nswLocationGroups), set in code.
+    whereWeClean: section.tagCloud,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: `https://tlbcleaning.com.au${selfHref}`,
 };
+
+const business = localBusiness({
+  description: pageMeta.description,
+  // NSW-only: see the areaServed note above.
+  areaServed: 'Northern Rivers and Tweed, NSW',
+});
+
+const heroImage = page.hero.image && sized(page.hero.image, '4/3');
+
+const sectorBlocks = page.sectors.items.map((item) => ({ type: 'text' as const, ...item }));
+
+const moreGuideTags = relatedGuides(selfHref, page.moreGuides.tags ?? []);
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -394,77 +227,106 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? walkthroughCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90} focus="center">
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90} focus="center">
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
-    <TextBlock theme="dark" align="left" heading="Write the scope before you ask anyone" body={scopeBody} />
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading={page.scope.heading}
+      body={page.scope.body}
+      cta={page.scope.cta}
+      backgroundImage={page.scope.backgroundImage}
+    />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="Six questions, asked of everybody"
-      lead="Including us. Two of them are answered better by a larger contractor than by a business our size, and they are on the list anyway."
-      items={questionItems}
+      heading={page.questions.heading}
+      lead={page.questions.lead}
+      note={page.questions.note}
+      items={page.questions.items}
       cta={walkthroughCta}
     />
 
-    <Callout tone="warning" heading={cheapCallout.heading} body={cheapCallout.body} />
+    <Callout
+      tone="warning"
+      heading={page.cheapQuote.heading}
+      body={page.cheapQuote.body}
+      cta={page.cheapQuote.cta}
+    />
 
     <ComparisonTable
-      heading={termsTable.heading}
-      cornerLabel={termsTable.cornerLabel}
-      lead={termsTable.lead}
-      columns={termsTable.columns}
-      rows={termsTable.rows}
-      footnote={termsTable.footnote}
+      heading={page.termsTable.heading}
+      cornerLabel={page.termsTable.cornerLabel}
+      lead={page.termsTable.lead}
+      columns={page.termsTable.columns}
+      rows={page.termsTable.rows}
+      footnote={page.termsTable.footnote}
+      cta={page.termsTable.cta}
     />
 
     <ContentGrid
-      heading="If your site has its own requirements"
-      lead="Four situations where the scope needs more than areas and frequencies. In each case the obligations are yours to establish, and the cleaner has to work inside them."
+      heading={page.sectors.heading}
+      lead={page.sectors.lead}
       columns={2}
       blocks={sectorBlocks}
     />
 
-    <TextBlock theme="light" align="left" heading="Where we fit, and where we do not" body={whereWeFitBody} />
+    <TextBlock
+      theme="light"
+      align="left"
+      heading={page.whereWeFit.heading}
+      body={page.whereWeFit.body}
+      cta={page.whereWeFit.cta}
+      backgroundImage={page.whereWeFit.backgroundImage}
+    />
 
     <ServiceBlocks
       variant="list"
-      heading="Read next"
-      lead="The two other guides a commercial buyer is likely to want."
+      heading={page.readNext.heading}
+      lead={page.readNext.lead}
       items={nextGuides}
     />
 
-    <Faq heading="Choosing a commercial cleaner: frequently asked questions" items={faqItems} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <TagCloud
-      heading="More guides"
-      subheading="Everything else we have written down."
+      heading={page.moreGuides.heading}
+      subheading={page.moreGuides.subheading}
       tags={moreGuideTags}
-      note={['Something we have not covered? Ask us and we will write it.']}
+      note={page.moreGuides.note}
     />
 
     <TagCloud
-      heading="Where we clean"
-      subheading="Commercial work across the Northern Rivers and the Tweed."
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading}
+      tags={page.whereWeClean.tags}
       groups={nswLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? walkthroughCta}
     />
   </main>
 
