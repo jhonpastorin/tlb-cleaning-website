@@ -3,7 +3,8 @@
 # Editors use the hosted app at https://app.pagescms.org. Each page's content
 # lives in src/content/pages/<id>.yaml. Each component below mirrors the
 # schema of the same name in src/lib/cms-schemas.ts: change both together, or
-# an editor's save will fail the build.
+# an editor's save will fail the build. `npm run check-cms` checks every
+# content file against this config.
 #
 # Editors should work on the `staging` branch (branch picker, top left).
 
@@ -63,6 +64,27 @@ components:
         required: true
         description: One plain sentence for screen readers and Google, e.g. "A TLB cleaner wiping down a kitchen bench". No "image of".
 
+  backgroundPhoto:
+    label: Background photo (optional)
+    type: image
+    options: { media: images }
+    description: Shown faintly behind the text. Decorative only, so it needs no description. Check the text is still easy to read after changing it.
+
+  link:
+    type: object
+    label: Button
+    fields:
+      - name: label
+        label: Button text
+        type: string
+        required: true
+      - name: href
+        label: Links to
+        type: string
+        required: true
+        description: A page on this site starting with a slash (/contact/), a full https:// address, tel:0404742065 or mailto:hello@tlbcleaning.com.au
+        pattern: "^(/|https://|tel:|mailto:|#)"
+
   textBody:
     type: block
     label: Body
@@ -96,7 +118,46 @@ components:
             type: string
             required: true
 
+  serviceIcon:
+    type: select
+    label: Icon
+    options:
+      values:
+        - { name: house, label: House }
+        - { name: office, label: Office building }
+        - { name: key, label: Key }
+        - { name: suitcase, label: Suitcase }
+        - { name: spray-bottle, label: Spray bottle }
+        - { name: spark, label: Sparkle }
+        - { name: bloom, label: Flower }
+        - { name: idea, label: Light bulb }
+        - { name: puzzle, label: Puzzle piece }
+        - { name: target, label: Target }
+        - { name: chart-pie, label: Pie chart }
+        - { name: chart-bars, label: Bar chart }
+
   # ------------------------------------------------------------------ sections
+
+  sectionHeading:
+    type: object
+    label: Section heading
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+
+  sectionIntro:
+    type: object
+    label: Section heading
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: lead
+        label: Intro sentence
+        type: text
 
   hero:
     type: object
@@ -111,6 +172,9 @@ components:
         list: true
         required: true
         description: Each line here starts a new line on the page. Most pages use one or two.
+      - name: subheading
+        label: Line under the heading
+        type: string
       - name: lead
         label: Intro sentence
         type: text
@@ -118,6 +182,38 @@ components:
         description: "Tip: {{line.instant}} or {{line.fast}} inserts the brand line."
       - name: image
         component: image
+      - name: cta
+        component: link
+        label: Button (leave empty to use the page's usual button)
+
+  heroCollage:
+    type: object
+    label: Hero (top of the page, photo collage)
+    fields:
+      - name: kicker
+        label: Small label above the heading
+        type: string
+      - name: headingLines
+        label: Main heading (H1)
+        type: string
+        list: true
+        required: true
+        description: Each line here starts a new line on the page. Most pages use one or two.
+      - name: subheading
+        label: Line under the heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+        required: true
+        description: "Tip: {{line.instant}} or {{line.fast}} inserts the brand line."
+      - name: collageImages
+        component: image
+        label: Collage photos
+        list: true
+      - name: cta
+        component: link
+        label: Button (leave empty to use the page's usual button)
 
   textBlock:
     type: object
@@ -128,6 +224,167 @@ components:
         type: string
       - name: body
         component: textBody
+      - name: cta
+        component: link
+        label: Button (optional)
+      - name: backgroundImage
+        component: backgroundPhoto
+
+  pathwayCards:
+    type: object
+    label: Numbered cards ("Not quite what you need?")
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: headingAccent
+        label: Second line of the heading (in the accent colour)
+        type: string
+        required: true
+      - name: cards
+        label: Cards
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: image
+            component: image
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: description
+            label: Sentence under the title
+            type: text
+            required: true
+          - name: cta
+            component: link
+
+  linkList:
+    type: object
+    label: List of links
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: note
+        label: Note under the list
+        type: text
+      - name: items
+        label: Rows
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: description
+            label: Sentence under the title
+            type: text
+            required: true
+          - name: href
+            label: Links to
+            type: string
+            required: true
+            description: A page on this site, starting and ending with a slash, e.g. /house-cleaning/deep-cleaning/
+            pattern: "^(/|https://)"
+
+  iconGrid:
+    type: object
+    label: Grid of points with icons
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: note
+        label: Note under the grid
+        type: text
+      - name: items
+        label: Points
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: icon
+            component: serviceIcon
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: description
+            label: Sentence under the title
+            type: text
+            required: true
+          - name: cta
+            component: link
+            label: Button (optional)
+          - name: href
+            label: Makes the whole item a link to (optional)
+            type: string
+            pattern: "^(/|https://|tel:|mailto:|#)"
+
+  imageCards:
+    type: object
+    label: Cards with photos
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: note
+        label: Note under the cards
+        type: text
+      - name: tileCtaLabel
+        label: Link text on each card (photo tiles only)
+        type: string
+      - name: items
+        label: Cards
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: image
+            component: image
+          - name: tag
+            label: Small tag on the card
+            type: string
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: description
+            label: Sentence under the title
+            type: text
+            required: true
+          - name: cta
+            component: link
+            label: Button (optional)
+          - name: href
+            label: Makes the whole card a link to (optional)
+            type: string
+            pattern: "^(/|https://|tel:|mailto:|#)"
 
   storySteps:
     type: object
@@ -162,6 +419,30 @@ components:
           - name: image
             component: image
 
+  photoGallery:
+    type: object
+    label: Photo gallery
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: images
+        label: Photos
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.caption}"
+        fields:
+          - name: image
+            component: image
+          - name: caption
+            label: Caption
+            type: string
+
   textGrid:
     type: object
     label: Grid of short answers
@@ -188,67 +469,200 @@ components:
             type: text
             list: true
 
-  callout:
+  contentGrid:
     type: object
-    label: Callout box
+    label: Grid of text, icons and photos
     fields:
       - name: heading
         label: Heading
         type: string
-      - name: body
-        label: Paragraphs
-        type: text
-        list: true
-
-  linkList:
-    type: object
-    label: List of links
-    fields:
-      - name: heading
-        label: Heading
-        type: string
-        required: true
       - name: lead
         label: Intro sentence
         type: text
       - name: items
+        label: Cells
+        type: block
+        list:
+          collapsible:
+            collapsed: true
+        blockKey: type
+        blocks:
+          - name: text
+            label: Text
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+              - name: body
+                label: Paragraphs
+                type: text
+                list: true
+          - name: feature
+            label: Icon with text
+            fields:
+              - name: icon
+                component: serviceIcon
+                required: true
+              - name: heading
+                label: Heading
+                type: string
+                required: true
+              - name: body
+                label: Paragraphs
+                type: text
+                list: true
+          - name: image
+            label: Photo
+            fields:
+              - name: image
+                component: image
+
+  comparisonTable:
+    type: object
+    label: Comparison table
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: cornerLabel
+        label: Top-left corner label
+        type: string
+      - name: columns
+        label: Column headings
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Column heading
+            type: string
+            required: true
+      - name: rows
         label: Rows
         type: object
         list:
           collapsible:
             collapsed: true
-            summary: "{title}"
+            summary: "{label}"
         fields:
-          - name: title
-            label: Title
+          - name: label
+            label: Row heading
             type: string
             required: true
           - name: description
-            label: Sentence under the title
+            label: Detail under the row heading
             type: text
-            required: true
-          - name: href
-            label: Links to
+          - name: values
+            label: One cell per column, left to right
             type: string
-            required: true
-            description: A page on this site, starting and ending with a slash, e.g. /house-cleaning/deep-cleaning/
-            pattern: "^(/|https://)"
+            list: true
+            description: Type yes for a tick, no for a cross, or write the text to show.
+      - name: footnote
+        label: Note under the table
+        type: text
+      - name: cta
+        component: link
+        label: Button (optional)
 
-  sectionIntro:
+  beforeAfter:
     type: object
-    label: Section heading
+    label: Before and after photos
     fields:
       - name: heading
         label: Heading
         type: string
-        required: true
       - name: lead
         label: Intro sentence
         type: text
+      - name: note
+        label: Note under the photos
+        type: text
+      - name: beforeLabel
+        label: Label on the "before" side
+        type: string
+      - name: afterLabel
+        label: Label on the "after" side
+        type: string
+      - name: pairs
+        label: Photo pairs
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.caption}"
+        fields:
+          - name: before
+            component: image
+            label: Before photo
+            required: true
+          - name: after
+            component: image
+            label: After photo
+            required: true
+          - name: caption
+            label: Caption
+            type: string
+          - name: start
+            label: Where the slider starts (0 to 100)
+            type: number
+            options: { min: 0, max: 100 }
+            description: 50 is the middle. Move it so both photos show what matters.
+          - name: ratio
+            label: Photo shape
+            type: select
+            options:
+              values:
+                - { name: "4/3", label: Landscape (4 by 3) }
+                - { name: "3/4", label: Portrait (3 by 4) }
+                - { name: "1/1", label: Square }
+                - { name: "2/1", label: Wide (2 by 1) }
+
+  storyMosaic:
+    type: object
+    label: Story mosaic (text and photos)
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: blocks
+        label: Cells
+        type: block
+        list:
+          collapsible:
+            collapsed: true
+        blockKey: type
+        blocks:
+          - name: text
+            label: Text
+            fields:
+              - name: body
+                label: Paragraphs
+                type: text
+                list: true
+          - name: image
+            label: Photo
+            fields:
+              - name: image
+                component: image
+      - name: cta
+        component: link
+        label: Button (optional)
+
+  imageBand:
+    type: object
+    label: Wide photo with caption
+    fields:
+      - name: image
+        component: image
+      - name: caption
+        label: Caption over the photo
+        type: string
 
   tagCloud:
     type: object
-    label: Where we clean
+    label: Tags
     fields:
       - name: heading
         label: Heading
@@ -258,8 +672,24 @@ components:
         label: Subheading
         type: string
         required: true
+      - name: tags
+        label: Tags (leave empty where the page lists towns)
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - name: label
+            label: Tag text
+            type: string
+            required: true
+          - name: href
+            label: Links to
+            type: string
+            pattern: "^(/|https://|tel:|mailto:|#)"
       - name: note
-        label: Note under the towns
+        label: Note under the tags
         type: text
         list: true
         description: The towns themselves are edited once for the whole site, not here.
@@ -271,6 +701,9 @@ components:
       - name: heading
         label: Heading
         type: string
+      - name: lead
+        label: Intro sentence
+        type: text
       - name: items
         label: Questions
         type: object
@@ -288,6 +721,21 @@ components:
             type: text
             required: true
 
+  callout:
+    type: object
+    label: Callout box
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: body
+        label: Paragraphs
+        type: text
+        list: true
+      - name: cta
+        component: link
+        label: Button (optional)
+
   callToAction:
     type: object
     label: Closing call to action
@@ -302,6 +750,147 @@ components:
       - name: lead
         label: Sentence under the heading
         type: text
+      - name: cta
+        component: link
+        label: Button (leave empty to use the page's usual button)
+
+  videoFeature:
+    type: object
+    label: Video
+    fields:
+      - name: headingLines
+        label: Heading
+        type: string
+        list: true
+        required: true
+      - name: video
+        type: object
+        label: Video
+        fields:
+          - name: label
+            label: What the video shows
+            type: string
+            required: true
+          - name: caption
+            label: Caption
+            type: string
+
+  contactForm:
+    type: object
+    label: Contact form wording
+    fields:
+      - name: kicker
+        label: Small label above the heading
+        type: string
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+
+  cardCarousel:
+    type: object
+    label: Card carousel
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: cards
+        label: Cards
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{heading}"
+        fields:
+          - name: image
+            component: image
+          - name: heading
+            label: Heading
+            type: string
+          - name: body
+            label: Paragraphs
+            type: text
+            list: true
+
+  metricsBlock:
+    type: object
+    label: Numbers
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: metrics
+        label: Numbers
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{value} {caption}"
+        fields:
+          - name: value
+            label: Number
+            type: string
+            required: true
+            description: As it should appear, e.g. "56" or "4.9".
+          - name: caption
+            label: What it counts
+            type: string
+            required: true
+      - name: image
+        component: image
+
+  logoBar:
+    type: object
+    label: Logos
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: logos
+        label: Logos
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{company}"
+        fields:
+          - name: logo
+            component: image
+            label: Logo
+          - name: company
+            label: Company name
+            type: string
+          - name: quote
+            label: Quote
+            type: text
+          - name: tag
+            label: Small tag
+            type: string
+      - name: featuredQuote
+        type: object
+        label: Featured quote (optional)
+        fields:
+          - name: rating
+            label: Stars (1 to 5)
+            type: number
+            options: { min: 1, max: 5 }
+          - name: body
+            label: Quote
+            type: text
+          - name: attribution
+            label: Who said it
+            type: string
 
 content:
   - name: main-pages

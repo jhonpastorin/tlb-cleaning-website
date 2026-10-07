@@ -188,7 +188,7 @@ const clusterItems = otherMeetTheTeamPages('/how-booking-works/');
       kicker={page.hero.kicker}
       headingLines={page.hero.headingLines}
       lead={page.hero.lead}
-      cta={bookCta}
+      cta={page.hero.cta ?? bookCta}
       image={heroImage}
     />
 
@@ -200,32 +200,48 @@ const clusterItems = otherMeetTheTeamPages('/how-booking-works/');
         editor swaps that photo in Pages CMS. */}
     <Backdrop image={heroImage.src} tint="muted" opacity={90} focus="center">
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" heading={page.definition.heading} body={page.definition.body} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+        backgroundImage={page.definition.backgroundImage}
+      />
     </Backdrop>
 
     <PhotoGallery variant="story" heading={page.steps.heading} lead={page.steps.lead} steps={bookingSteps} />
 
-    <TextBlock theme="dark" align="left" heading={page.onTheDay.heading} body={page.onTheDay.body} />
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading={page.onTheDay.heading}
+      body={page.onTheDay.body}
+      cta={page.onTheDay.cta}
+      backgroundImage={page.onTheDay.backgroundImage}
+    />
 
     <ContentGrid heading={page.practical.heading} lead={page.practical.lead} columns={2} blocks={practicalBlocks} />
 
-    <Callout tone="note" heading={page.notOnline.heading} body={page.notOnline.body} />
+    <Callout tone="note" heading={page.notOnline.heading} body={page.notOnline.body} cta={page.notOnline.cta} />
 
     <ServiceBlocks
       variant="list"
       heading={page.otherBookings.heading}
       lead={page.otherBookings.lead}
+      note={page.otherBookings.note}
       items={page.otherBookings.items}
     />
 
     <TagCloud
       heading={page.whereWeClean.heading}
       subheading={page.whereWeClean.subheading}
+      tags={page.whereWeClean.tags}
       groups={locationGroups}
       note={page.whereWeClean.note}
     />
 
-    <Faq heading={page.faq.heading} items={page.faq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <ServiceBlocks
       variant="list"
@@ -239,7 +255,7 @@ const clusterItems = otherMeetTheTeamPages('/how-booking-works/');
       kicker={page.closingCta.kicker}
       heading={page.closingCta.heading}
       lead={page.closingCta.lead}
-      cta={bookCta}
+      cta={page.closingCta.cta ?? bookCta}
     />
   </main>
 

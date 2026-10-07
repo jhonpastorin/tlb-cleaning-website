@@ -1,13 +1,34 @@
 // Content schemas for the section components, used by pages through getPage()
 // (src/lib/cms.ts). One schema per section, mirroring the matching entry under
-// `components:` in .pages.yml. Change both together.
+// `components:` in .pages.yml. Change both together:
+// scripts/check-cms-config.mjs checks every content file against .pages.yml,
+// and cms-schemas.check.ts checks these schemas against the components' props.
 //
 // A schema covers CONTENT only: words, photos, alt text, links. Design props
-// (variant, theme, ratio, tone, columns) stay in the page's .astro file, so an
-// editor can change what a section says but not how it looks.
+// (variant, theme, tone, span, ratio, columns, highlight) stay in the page's
+// .astro file, so an editor can change what a section says but not how it
+// looks. Where a design prop sits on each item of a list (a cell's tone, a
+// photo's ratio), the page adds it when it maps the items, e.g.
+// `page.cards.cards.map((card) => ({ ...card, image: sized(card.image, '4/3') }))`.
+//
+// A page passes EVERY field of a section's content through to the component,
+// even ones it does not currently fill in (`cta={page.faq.cta ?? quoteCta}`,
+// `backgroundImage={page.intro.backgroundImage}`). Otherwise an editor fills
+// in a field the editor offers and nothing happens.
+//
+// Not covered yet, because no page uses them: StatBand, TestimonialCarousel,
+// Hero's `split-mosaic` images, badges, logo and stats. Add a schema here and a
+// component in .pages.yml when a page first needs one.
+//
+// SiteHeader, SiteFooter, TrustBar and the review cards are site-wide content,
+// edited once (PAGES-CMS-PLAN.md, Phase 2), not per page.
+import type { ImageMetadata } from 'astro';
 import { z } from 'astro/zod';
 import type { TextBlockBody } from '../components/sections/TextBlock.astro';
+import type { ServiceIconName } from '../components/ui/ServiceIcon.astro';
 import { cmsImage, resolveTokens } from './cms';
+
+// ---------------------------------------------------------- building blocks
 
 /** Plain text, with {{tokens}} resolved. */
 export const text = z.string().transform(resolveTokens);
@@ -22,12 +43,15 @@ export const optional = <T extends z.ZodTypeAny>(schema: T) =>
 /** A list of paragraphs. */
 export const paragraphs = z.array(text).min(1);
 
-/** A photo plus its alt text. Comes out as { label, src }, so a page spreads
- *  it into an ImageBlock and adds the ratio, which is layout: `{ ...img, ratio: '4/3' }`.
+/** A path Pages CMS wrote for a photo in src/assets, resolved to the image. */
+const photoPath = z.string().startsWith('/src/assets/', 'Image must be inside src/assets').transform(cmsImage);
+
+/** A photo plus its alt text. Comes out as { label, src }, the shape of an
+ *  ImageBlock minus its ratio, which is layout: the page adds it with sized().
  *  `src` may be left empty to show the reserved-slot placeholder box. */
 export const image = z
   .object({
-    src: optional(z.string().startsWith('/src/assets/', 'Image must be inside src/assets').transform(cmsImage)),
+    src: optional(photoPath),
     alt: z.string().min(1, 'Describe the photo (alt text)'),
   })
   .transform(({ src, alt }) => ({ label: alt, src }));
@@ -36,10 +60,19 @@ export const image = z
  *  placeholder box (a Backdrop, for one, needs a real image). */
 export const requiredImage = z
   .object({
-    src: z.string().startsWith('/src/assets/', 'Image must be inside src/assets').transform(cmsImage),
+    src: photoPath,
     alt: z.string().min(1, 'Describe the photo (alt text)'),
   })
   .transform(({ src, alt }) => ({ label: alt, src }));
+
+/** A decorative background photo: no alt text, because the components that
+ *  take one render it with alt="". */
+export const backgroundPhoto = photoPath;
+
+/** Give a CMS image the ratio its slot is laid out at. */
+export function sized<T extends { label: string; src?: ImageMetadata }>(img: T, ratio: string) {
+  return { ...img, ratio };
+}
 
 // The caps are hard limits that sit above every title and description the
 // site shipped with (longest: 80 and 197 characters). The lengths Google
@@ -51,10 +84,10 @@ export const seo = z.object({
   description: z.string().min(1).max(200, 'Keep the meta description under 200 characters (aim for 155)'),
 });
 
-export const link = z.object({
-  label: text,
-  href: z.string().regex(/^(\/|https:\/\/|tel:|mailto:|#)/, 'Links start with /, https://, tel:, mailto: or #'),
-});
+const href = z.string().regex(/^(\/|https:\/\/|tel:|mailto:|#)/, 'Links start with /, https://, tel:, mailto: or #');
+
+/** A button or text link: what it says and where it goes. */
+export const link = z.object({ label: text, href });
 
 /** TextBlock's body: paragraphs, bullet lists and subheadings in any order.
  *  Stored as Pages CMS blocks (blockKey `type`), mapped back to TextBlockBody. */
@@ -75,18 +108,139 @@ export const textBody = z
     }),
   );
 
+const SERVICE_ICONS = [
+  'idea',
+  'spark',
+  'bloom',
+  'puzzle',
+  'target',
+  'chart-pie',
+  'chart-bars',
+  'house',
+  'suitcase',
+  'key',
+  'spray-bottle',
+  'office',
+] as const satisfies readonly ServiceIconName[];
+export const serviceIcon = z.enum(SERVICE_ICONS);
+
+/** A comparison table cell. Editors type "yes" for a tick and "no" for a
+ *  cross; anything else is shown as written. Booleans are accepted too. */
+const comparisonCell = z.union([
+  z.boolean(),
+  z.string().transform((value): boolean | string => {
+    const v = value.trim().toLowerCase();
+    if (v === 'yes') return true;
+    if (v === 'no') return false;
+    return resolveTokens(value);
+  }),
+]);
+
 // ---------------------------------------------------------------- sections
+
+/** A section whose only editable content is its heading (its items come from
+ *  site data, e.g. the review slider). */
+export const sectionHeading = z.object({
+  heading: text,
+});
+
+/** A section heading and lead whose items come from code or site data. */
+export const sectionIntro = z.object({
+  heading: text,
+  lead: optional(text),
+});
 
 export const hero = z.object({
   kicker: optional(text),
   headingLines: z.array(text).min(1),
+  subheading: optional(text),
   lead: text,
-  image,
+  /** Empty on the `minimal` variant, which has no photo. */
+  image: optional(image),
+  /** Leave out to use the page's default button (usually the site-wide quote button). */
+  cta: optional(link),
+});
+
+/** Hero, `split-collage` variant. */
+export const heroCollage = hero.omit({ image: true }).extend({
+  collageImages: z.array(image).min(1),
 });
 
 export const textBlock = z.object({
   heading: optional(text),
   body: textBody,
+  cta: optional(link),
+  backgroundImage: optional(backgroundPhoto),
+});
+
+export const pathwayCards = z.object({
+  heading: text,
+  headingAccent: text,
+  cards: z
+    .array(
+      z.object({
+        image,
+        title: text,
+        description: text,
+        cta: link,
+      }),
+    )
+    .min(1),
+});
+
+/** ServiceBlocks `list` variant: a title, a sentence and a link per row. */
+export const linkList = z.object({
+  heading: text,
+  lead: optional(text),
+  note: optional(text),
+  items: z
+    .array(
+      z.object({
+        title: text,
+        description: text,
+        href: z.string().regex(/^(\/|https:\/\/)/, 'Links start with / or https://'),
+      }),
+    )
+    .min(1),
+});
+
+/** ServiceBlocks `icon-grid` variant. */
+export const iconGrid = z.object({
+  heading: text,
+  lead: optional(text),
+  note: optional(text),
+  items: z
+    .array(
+      z.object({
+        icon: optional(serviceIcon),
+        title: text,
+        description: text,
+        cta: optional(link),
+        href: optional(href),
+      }),
+    )
+    .min(1),
+});
+
+/** ServiceBlocks with a photo per item: `image-cards`, `highlight`, `slider`
+ *  and `photo-tiles`. */
+export const imageCards = z.object({
+  heading: text,
+  lead: optional(text),
+  note: optional(text),
+  tileCtaLabel: optional(text),
+  items: z
+    .array(
+      z.object({
+        image: optional(image),
+        tag: optional(text),
+        title: text,
+        description: text,
+        cta: optional(link),
+        href: optional(href),
+      }),
+    )
+    .min(1),
 });
 
 /** PhotoGallery, `story` variant. */
@@ -105,53 +259,171 @@ export const storySteps = z.object({
     .min(1),
 });
 
-/** ContentGrid made of text cells. */
+/** PhotoGallery, `grid` and `filmstrip` variants. */
+export const photoGallery = z.object({
+  heading: optional(text),
+  lead: optional(text),
+  images: z.array(z.object({ image, caption: optional(text) })).min(1),
+});
+
+/** ContentGrid made of text cells only. */
 export const textGrid = z.object({
   heading: optional(text),
   lead: optional(text),
   items: z.array(z.object({ heading: optional(text), body: paragraphs })).min(1),
 });
 
-export const callout = z.object({
+/** ContentGrid with mixed cells. Stored as Pages CMS blocks (blockKey `type`).
+ *  Each cell's tone and span are layout, added by the page. */
+export const contentGrid = z.object({
   heading: optional(text),
-  body: paragraphs,
-});
-
-/** ServiceBlocks `list` variant: a title, a sentence and a link per row. */
-export const linkList = z.object({
-  heading: text,
   lead: optional(text),
   items: z
     .array(
+      z.discriminatedUnion('type', [
+        z.object({ type: z.literal('text'), heading: optional(text), body: paragraphs }),
+        z.object({ type: z.literal('feature'), icon: serviceIcon, heading: text, body: paragraphs }),
+        z.object({ type: z.literal('image'), image }),
+      ]),
+    )
+    .min(1),
+});
+
+export const comparisonTable = z.object({
+  heading: optional(text),
+  lead: optional(text),
+  cornerLabel: optional(text),
+  /** Which column is highlighted is layout, set by the page. */
+  columns: z.array(z.object({ label: text })).min(1),
+  rows: z
+    .array(
       z.object({
-        title: text,
-        description: text,
-        href: z.string().regex(/^(\/|https:\/\/)/, 'Links start with / or https://'),
+        label: text,
+        description: optional(text),
+        values: z.array(comparisonCell).min(1),
+      }),
+    )
+    .min(1),
+  footnote: optional(text),
+  cta: optional(link),
+});
+
+export const beforeAfter = z.object({
+  heading: optional(text),
+  lead: optional(text),
+  note: optional(text),
+  beforeLabel: optional(text),
+  afterLabel: optional(text),
+  pairs: z
+    .array(
+      z.object({
+        // BeforeAfter takes { src, alt } rather than an ImageBlock's { src, label }.
+        before: z.object({ src: photoPath, alt: z.string().min(1, 'Describe the photo (alt text)') }),
+        after: z.object({ src: photoPath, alt: z.string().min(1, 'Describe the photo (alt text)') }),
+        caption: optional(text),
+        /** Where the slider starts, 0 to 100. Tune it to the photos. */
+        start: optional(z.number().min(0).max(100)),
+        /** The photos' shape, e.g. 4/3 or 3/4 for portrait. */
+        ratio: optional(z.string().regex(/^\d+\/\d+$/, 'A ratio like 4/3')),
       }),
     )
     .min(1),
 });
 
-/** A section heading and lead whose items come from code or site data. */
-export const sectionIntro = z.object({
-  heading: text,
-  lead: optional(text),
+/** StoryMosaic: text and photo cells in a mosaic. Blocks with key `type`. */
+export const storyMosaic = z.object({
+  heading: optional(text),
+  blocks: z
+    .array(
+      z.discriminatedUnion('type', [
+        z.object({ type: z.literal('text'), body: paragraphs }),
+        z.object({ type: z.literal('image'), image }),
+      ]),
+    )
+    .min(1),
+  cta: optional(link),
 });
 
-/** TagCloud. The towns come from site data, not from the page. */
+export const imageBand = z.object({
+  image,
+  caption: optional(text),
+});
+
+/** TagCloud. Town groups come from site data; `tags` is for a page's own
+ *  short list of links (related guides, related services). */
 export const tagCloud = z.object({
   heading: text,
   subheading: text,
+  tags: optional(z.array(z.object({ label: text, href: optional(href) }))),
   note: paragraphs,
 });
 
 export const faq = z.object({
   heading: optional(text),
+  lead: optional(text),
   items: z.array(z.object({ question: text, answer: text })).min(1),
+});
+
+export const callout = z.object({
+  heading: optional(text),
+  body: paragraphs,
+  cta: optional(link),
 });
 
 export const callToAction = z.object({
   kicker: optional(text),
   heading: text,
   lead: optional(text),
+  /** Leave out to use the page's default button. */
+  cta: optional(link),
+});
+
+/** VideoFeature. Hidden sitewide until real video exists. */
+export const videoFeature = z.object({
+  headingLines: z.array(text).min(1),
+  video: z.object({ label: text, caption: optional(text) }),
+});
+
+/** ContactForm's wording. Phone, email and the form's fields are site-wide. */
+export const contactForm = z.object({
+  kicker: optional(text),
+  heading: optional(text),
+  lead: optional(text),
+});
+
+export const cardCarousel = z.object({
+  heading: optional(text),
+  lead: optional(text),
+  cards: z
+    .array(z.object({ image: optional(image), heading: optional(text), body: optional(paragraphs) }))
+    .min(1),
+});
+
+export const metricsBlock = z.object({
+  heading: optional(text),
+  lead: optional(text),
+  metrics: z.array(z.object({ value: text, caption: text })).min(1),
+  image: optional(image),
+});
+
+export const logoBar = z.object({
+  heading: optional(text),
+  lead: optional(text),
+  logos: z
+    .array(
+      z.object({
+        logo: image,
+        quote: optional(text),
+        company: optional(text),
+        tag: optional(text),
+      }),
+    )
+    .min(1),
+  featuredQuote: optional(
+    z.object({
+      rating: z.number().min(1).max(5),
+      body: text,
+      attribution: text,
+    }),
+  ),
 });
