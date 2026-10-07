@@ -148,7 +148,7 @@ const closingButton = page.closingCta.cta ?? { ...quoteCta, href: formAnchor };
       headingLevel="h1"
       kicker={page.form.kicker}
       heading={page.form.heading}
-      lead={page.form.lead}
+      lead={page.form.hideLead ? null : page.form.lead}
       fallbackPhone={footerContact.phone}
       fallbackEmail={footerContact.email}
     />

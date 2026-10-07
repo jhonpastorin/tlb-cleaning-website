@@ -781,6 +781,10 @@ components:
       - name: lead
         label: Intro sentence
         type: text
+      - name: hideLead
+        label: Hide the intro sentence
+        type: boolean
+        description: Tick to show no intro sentence at all. Left unticked, an empty intro uses the site-wide wording.
 
   cardCarousel:
     type: object
@@ -1753,7 +1757,7 @@ content:
                 summary: "{title}"
             fields:
               - { name: title, label: Service, type: string, required: true }
-              - { name: description, label: One line about it (homepage only), type: text, required: true }
+              - { name: description, label: One line about it (homepage, locations hub, town and region pages), type: text, required: true }
               - { name: href, label: Links to, type: string, required: true }
           - name: header
             label: Main menu

@@ -421,6 +421,8 @@ export const contactForm = z.object({
   kicker: optional(text),
   heading: optional(text),
   lead: optional(text),
+  /** Show no intro sentence at all (an empty `lead` means the site-wide one). */
+  hideLead: optional(z.boolean()),
 });
 
 export const cardCarousel = z.object({
