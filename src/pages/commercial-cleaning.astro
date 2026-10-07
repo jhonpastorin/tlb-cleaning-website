@@ -121,12 +121,7 @@ import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 // §1 hero cut-out and the three §3 card scenes. Generated per IMAGE-GUIDELINES.md;
 // the prompts are in src/assets/commercial_cleaning/IMAGE-PROMPTS.md.
-import heroImg from '../assets/commercial_cleaning/commercial-cleaner-mopping-an-office-foyer.jpg';
-import cardContractImg from '../assets/commercial_cleaning/commercial-cleaner-vacuuming-an-open-plan-office.jpg';
-import cardCostImg from '../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
-import cardTeamImg from '../assets/commercial_cleaning/commercial-cleaner-with-a-caddy-in-an-office-kitchenette.jpg';
 // §2 backdrop, behind the Cream scrim (the homepage's — no photo supplied for this page yet).
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 import type { TextBlockBody } from '../components/sections/TextBlock.astro';
 import {
@@ -141,7 +136,13 @@ import {
 import { comparisonColumns, serviceComparisonRows } from '../data/comparison';
 import { completeFootprintLocationGroups, footprintSubheading } from '../data/locations';
 import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../data/brand-lines';
+import { howItWorks, managedForYou, theLineBody } from '../data/brand-lines';
+import { walkthroughCtaLabel } from '../data/premises';
+import { localBusiness } from '../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../lib/cms';
+import * as section from '../lib/cms-schemas';
+import { sized } from '../lib/cms-schemas';
 
 // §0 Metadata. ✅ REWRITTEN against the September 2026 copy-rewrite brief
 // (workbook row 25, "Commercial cleaning (hub)"), which scores this page
@@ -194,42 +195,20 @@ import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from 
 // argues. The old live meta led with neither: it ran 174 characters, 24 over
 // the limit, and split the primary across "commercial and office cleaning" so
 // the exact phrase never appeared.
-const pageMeta = {
-  title: 'Commercial Cleaning Services - Contracts | TLB Cleaning',
-  description:
-    'Commercial cleaning after hours, by the same local team each week. Offices, clinics, schools and more. No lock-in. Book a walk-through.',
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/',
-};
 
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
-  // ✅ WIDENED with §14's town list, which the copy-rewrite brief restores to
-  // all three regions per BFD §2.1. Structured data that claims NSW while the
-  // page lists nine Queensland towns is a machine-readable contradiction, so
-  // the two move together — same call, and the same note, as
-  // /house-cleaning/ndis-cleaning/.
-  //
-  // ⚠️ STILL OPEN, and it is the brief's first client question: does TLB take
-  // COMMERCIAL work in the Southern Gold Coast? The H1 and hero deliberately
-  // still name two regions pending that answer (see §1), and the last
-  // non-branded FAQ is still silent on QLD's Blue Card. If the answer is no,
-  // this string, §14's `completeFootprintLocationGroups` and
-  // `footprintSubheading` all revert together.
-  areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
-  description: pageMeta.description,
-};
+// In `business`:
+// ✅ WIDENED with §14's town list, which the copy-rewrite brief restores to
+// all three regions per BFD §2.1. Structured data that claims NSW while the
+// page lists nine Queensland towns is a machine-readable contradiction, so
+// the two move together — same call, and the same note, as
+// /house-cleaning/ndis-cleaning/.
+//
+// ⚠️ STILL OPEN, and it is the brief's first client question: does TLB take
+// COMMERCIAL work in the Southern Gold Coast? The H1 and hero deliberately
+// still name two regions pending that answer (see §1), and the last
+// non-branded FAQ is still silent on QLD's Blue Card. If the answer is no,
+// this string, §14's `completeFootprintLocationGroups` and
+// `footprintSubheading` all revert together.
 
 // §1 Hero — drafted in full. Lead is 23 words, inside the 15-25 target.
 //
@@ -319,19 +298,6 @@ const business = {
 // ways at once, "Book a site walkthrough" here and in the closing block
 // against "Book a walkthrough" in the shared line copy, and neither matched
 // the approved text a searcher clicked. One label, repeated, per BFD §9.5.
-const hero = {
-  kicker: 'Commercial cleaning',
-  headingLines: ['Commercial cleaning services across the Northern Rivers and the Tweed'],
-  subheading: 'Cleaning should not be one of your jobs.',
-  lead: `Ongoing commercial cleaning for offices, clinics, schools and shopfronts, on a schedule that works around how you trade. We agree the scope in writing, then you stop thinking about it. ${theLine.fast}`,
-  cta: { label: 'Book a walk-through', href: quoteCta.href },
-  image: {
-    ratio: '1/1',
-    label:
-      'TLB Cleaning cleaner mopping the polished floor of a bright office foyer, with a commercial cleaning trolley beside her and a boardroom behind glass',
-    src: heroImg,
-  },
-};
 
 // §2 Definition paragraph — the brief supplied NOTHING here (the row held
 // only "CTA - Get an instant quote"), but this is the answer-target block
@@ -343,10 +309,6 @@ const hero = {
 // copy, not a statement about a funded support. Sentence one describes the
 // service and names the premises types the mega-menu already commits to;
 // sentence two is the standard sibling pattern (what TLB does, where).
-const definitionBody: TextBlockBody[] = [
-  'Commercial cleaning is the ongoing cleaning of a workplace, done to an agreed scope on a set schedule, usually before you open or after you close. Offices, clinics, venues, strata common areas, retail floors and kitchens. TLB Cleaning provides commercial cleaning services across the Northern Rivers and the Tweed.',
-  'Commercial cleaning, contract cleaning and office cleaning are three names for much the same job. What changes between them is the kind of workplace and how often we come, not how the work is agreed or how it gets checked. This page covers all of it.',
-];
 
 // §3 Pathway cards — REWRITTEN. This was the brief's biggest defect.
 //
@@ -371,97 +333,60 @@ const definitionBody: TextBlockBody[] = [
 // The source titles each ended in a literal "→"; stripped, because
 // PathwayCards renders its own CTA affordance and the arrow would duplicate
 // it. (Same call as every sibling page.)
-const pathwayCards = {
-  // Not in the brief — placeholder structural copy.
-  heading: 'People arrive here with three questions.',
-  headingAccent: 'Which one is yours?',
-  cards: [
-    {
-      number: 1,
-      image: {
-        ratio: '4/3',
-        label: 'TLB cleaner vacuuming between the desks of a small open-plan office',
-        src: cardContractImg,
-      },
-      title: 'I want someone reliable, every week',
-      description:
-        'We agree the schedule, daily, weekly or fortnightly, and put the scope in writing before we start. The same team works your building each visit, so nobody gets shown around twice.',
-      cta: { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        // Was briefed as "written cleaning scope and quote on a desk". Changed:
-        // IMAGE-GUIDELINES §4 bans lettering in frame, and a photo whose whole
-        // subject is a document is a photo of garbled fake text. The walkthrough
-        // conversation is where a written scope actually comes from.
-        label:
-          'A TLB cleaner and an office manager talking through the job in an office reception area',
-        src: cardCostImg,
-      },
-      title: 'I need to know what it will cost',
-      description:
-        // ✅ BRACKET REPLACED (copy-rewrite brief §8). The bracket was an
-        // internal note sitting in live customer-facing copy — the house
-        // convention ships brackets visibly so they cannot be forgotten, and
-        // that is right for a bracket the reader can act on, but "[Invoicing
-        // terms. Confirm how TLB bills commercial clients.]" is an
-        // instruction addressed to TLB, mid-sentence, in a card about cost.
-        //
-        // The replacement is not a guess at the invoicing answer. It is a
-        // sentence already true and already published further down this page
-        // (§15, paragraph 3: "Anything outside that scope is quoted before it
-        // happens, not added afterwards"), which answers the same cost
-        // anxiety the bracket was reaching for.
-        //
-        // ⚠️ THE INVOICING QUESTION IS UNANSWERED, not resolved. Monthly in
-        // arrears? PO numbers? Per visit? It is still on the blocked-on-client
-        // list and it belongs in this card when it comes back.
-        'We quote against a written scope rather than an hourly rate, so you can see which tasks are in, how often they happen, and whether consumables like soap and paper are covered. Anything outside that scope gets quoted before it happens, never added to an invoice afterwards.',
-      // ⚠️ STOPGAP DESTINATION. What this card wants is a scope-and-pricing
-      // block to anchor to, and that content does not exist yet (see §8).
-      // /contact/ stops it stranding in the meantime.
-      //
-      // ✅ LABEL per BFD §9.5's CTA set, and §9.3, which prefers "our team"
-      // over a bare "us" in a call to action.
-      cta: { label: 'Talk to our team', href: '/contact/' },
-    },
-    {
-      number: 3,
-      image: {
-        ratio: '4/3',
-        label: 'TLB cleaner in uniform with her cleaning caddy in an office kitchenette',
-        src: cardTeamImg,
-      },
-      title: 'I want to know who is in the building',
-      description:
-        // ✅ CREDENTIALS REPLACED WITH A PROCESS PROMISE (copy-rewrite brief
-        // §8). BFD §2.4 lists both [insured] and [police-checked] as
-        // unconfirmed and gives the rule for exactly this case: where a claim
-        // is not confirmed, a process promise replaces it rather than the
-        // sentence being deleted.
-        //
-        // This page had the worst version of that problem on the site. The
-        // last non-branded FAQ tells the reader to "ask any cleaner to confirm
-        // which of their team hold a current check" — so the page was
-        // instructing readers to interrogate TLB about something TLB's own
-        // card could not answer, in brackets, in front of them.
-        //
-        // The replacement is BFD §2.3 and §8.3, both confirmed, and it picks
-        // up the keys-and-alarms worry §8.3 names for this audience and that
-        // nothing on the page addressed. Same gap the new comparison row and
-        // branded FAQ 2 now close from the other two directions.
-        //
-        // ⚠️ REINSTATE BOTH CREDENTIALS the day §2.4 confirms them. They are
-        // a stronger signal than this sentence for a B2B reader letting a
-        // stranger into their premises after hours, and the screening question
-        // is still the page's first launch blocker.
-        'The same small team each visit, in TLB uniform, and you can meet them before the first one. Everyone who works for TLB lives in the region, keys and alarm codes stay with the same people, and there is one local number to ring if something is not right.',
-      cta: { label: 'Why TLB', href: '/why-tlb/' },
-    },
-  ],
-};
+//
+// In `pathwayCards`, on the heading:
+// Not in the brief — placeholder structural copy.
+// In `pathwayCards`, on card 2's photo:
+// Was briefed as "written cleaning scope and quote on a desk". Changed:
+// IMAGE-GUIDELINES §4 bans lettering in frame, and a photo whose whole
+// subject is a document is a photo of garbled fake text. The walkthrough
+// conversation is where a written scope actually comes from.
+// In `pathwayCards`, on card 2's description:
+// ✅ BRACKET REPLACED (copy-rewrite brief §8). The bracket was an
+// internal note sitting in live customer-facing copy — the house
+// convention ships brackets visibly so they cannot be forgotten, and
+// that is right for a bracket the reader can act on, but "[Invoicing
+// terms. Confirm how TLB bills commercial clients.]" is an
+// instruction addressed to TLB, mid-sentence, in a card about cost.
+//
+// The replacement is not a guess at the invoicing answer. It is a
+// sentence already true and already published further down this page
+// (§15, paragraph 3: "Anything outside that scope is quoted before it
+// happens, not added afterwards"), which answers the same cost
+// anxiety the bracket was reaching for.
+//
+// ⚠️ THE INVOICING QUESTION IS UNANSWERED, not resolved. Monthly in
+// arrears? PO numbers? Per visit? It is still on the blocked-on-client
+// list and it belongs in this card when it comes back.
+// In `pathwayCards`, on card 2's button ("Talk to our team"):
+// ⚠️ STOPGAP DESTINATION. What this card wants is a scope-and-pricing
+// block to anchor to, and that content does not exist yet (see §8).
+// /contact/ stops it stranding in the meantime.
+//
+// ✅ LABEL per BFD §9.5's CTA set, and §9.3, which prefers "our team"
+// over a bare "us" in a call to action.
+// In `pathwayCards`, on card 3's description:
+// ✅ CREDENTIALS REPLACED WITH A PROCESS PROMISE (copy-rewrite brief
+// §8). BFD §2.4 lists both [insured] and [police-checked] as
+// unconfirmed and gives the rule for exactly this case: where a claim
+// is not confirmed, a process promise replaces it rather than the
+// sentence being deleted.
+//
+// This page had the worst version of that problem on the site. The
+// last non-branded FAQ tells the reader to "ask any cleaner to confirm
+// which of their team hold a current check" — so the page was
+// instructing readers to interrogate TLB about something TLB's own
+// card could not answer, in brackets, in front of them.
+//
+// The replacement is BFD §2.3 and §8.3, both confirmed, and it picks
+// up the keys-and-alarms worry §8.3 names for this audience and that
+// nothing on the page addressed. Same gap the new comparison row and
+// branded FAQ 2 now close from the other two directions.
+//
+// ⚠️ REINSTATE BOTH CREDENTIALS the day §2.4 confirms them. They are
+// a stronger signal than this sentence for a B2B reader letting a
+// stranger into their premises after hours, and the screening question
+// is still the page's first launch blocker.
 
 // §5 "Worth knowing" — ✅ REWRITTEN (copy-rewrite brief §10). This was
 // verbatim client copy and it is still the strongest argument on the page;
@@ -519,11 +444,6 @@ const pathwayCards = {
 // Award 2020") in the non-branded FAQs but only as "the Cleaning Services
 // Award" here, on first mention. Left as written rather than editing
 // supplied copy.
-const worthKnowingBody: TextBlockBody[] = [
-  'Contract cleaners in Australia are covered by the Cleaning Services Award 2020, which sets a legal minimum for what a cleaner has to be paid, before you add super, insurance, equipment and travel. That floor is the same for everyone quoting your job.',
-  'So the gap between two quotes is almost never a gap in margin. It is a gap in hours, or in how many tasks are on the list. Work out which before you compare the numbers, because a lower price for fewer hours is a different product, not a better deal.',
-  'The number that matters is not the hourly rate. It is what is in the scope. Ask any cleaner exactly which tasks are included, how often they happen, and whether consumables like soap and paper are covered. We put ours in writing before we start, and we tell you straight when a clean has to happen after hours, because early starts, late finishes, weekends and public holidays all carry a penalty rate under the Award. No surprises, either way.',
-];
 
 // §7 Premises types — NOT IN THE BRIEF. Added per the plan's blocker 2.
 //
@@ -565,23 +485,6 @@ const worthKnowingBody: TextBlockBody[] = [
 // two of its rows were written for a household. Both are fixed for this page
 // (see §10) — CHECK WHETHER THE SAME TABLE IS REUSED ON THESE FIFTEEN CHILD
 // PAGES, because the fix was made here and not upstream.
-const premisesTags = [
-  { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
-  { label: 'Strata and common area cleaning', href: '/commercial-cleaning/strata-cleaning/' },
-  { label: 'Medical, clinic and salon cleaning', href: '/commercial-cleaning/medical-and-clinic-cleaning/' },
-  { label: 'Aged care, retirement and seniors', href: '/commercial-cleaning/aged-care-cleaning/' },
-  { label: 'Hospitality, venues and holiday parks', href: '/commercial-cleaning/hospitality-cleaning/' },
-  { label: 'Commercial kitchen cleaning', href: '/commercial-cleaning/commercial-kitchen-cleaning/' },
-  { label: 'Schools and childcare centres', href: '/commercial-cleaning/school-and-childcare-cleaning/' },
-  { label: 'Gyms and fitness studios', href: '/commercial-cleaning/gym-and-fitness-cleaning/' },
-  { label: 'Retail and shopfronts', href: '/commercial-cleaning/retail-cleaning/' },
-  { label: 'Warehouses and industrial sites', href: '/commercial-cleaning/warehouse-and-industrial-cleaning/' },
-  { label: 'Construction site', href: '/commercial-cleaning/construction-site-cleaning/' },
-  { label: 'Factories', href: '/commercial-cleaning/factory-cleaning/' },
-  { label: 'Breweries', href: '/commercial-cleaning/brewery-cleaning/' },
-  { label: 'Commercial carpet cleaning', href: '/commercial-cleaning/commercial-carpet-cleaning/' },
-  { label: 'Commercial pressure cleaning', href: '/commercial-cleaning/commercial-pressure-cleaning/' },
-];
 
 // §14 Where we clean — NOT IN THE BRIEF, which had no service-area block at
 // all despite every sibling page having one. A commercial page with no
@@ -660,27 +563,6 @@ const premisesTags = [
 // we start" row. It is this page's own central promise and no existing row
 // states it — but it isn't relevant to the homepage, so it would have to be
 // a second page-specific row.
-const keysAndAlarmsRow = {
-  label: 'Keys and alarms',
-  values: [
-    'Held by whoever is rostered',
-    'Held by one person',
-    'Held by the same named team, and you are told first if that changes',
-  ],
-};
-
-const commercialComparisonRows = (() => {
-  const rows = serviceComparisonRows('Who cleans your premises');
-  return [...rows.slice(0, 4), keysAndAlarmsRow, ...rows.slice(4)];
-})();
-
-const comparisonTable = {
-  heading: 'How TLB compares',
-  cornerLabel: 'Why TLB Cleaning is different',
-  lead: 'None of this shows up in the first month. It shows up when someone is away, when the schedule has to change, or when the same thing has been missed twice and you need one person to ring about it.',
-  columns: comparisonColumns,
-  rows: commercialComparisonRows,
-};
 
 // §11 Branded FAQs — all five ship, drafted in full, nothing bracketed.
 // This is the cleanest FAQ block in any of the five briefs.
@@ -729,33 +611,6 @@ const comparisonTable = {
 // reader's business, not TLB, in four of the five questions. Q3's rewrite
 // keeps it ("We are switching from another cleaner"). Preserve it in any
 // addition; an answer later written in TLB's voice will read as bolted on.
-const brandedFaqItems = [
-  {
-    question: 'Are we too small a business for you?',
-    answer:
-      'Not at all. A two person office matters to us as much as a large one does. We quote the same way, run the same set schedule and send the same team whatever the size, and small premises are a large part of what we already clean.',
-  },
-  {
-    question: 'Who is actually in our building after hours?',
-    answer:
-      'The same small team each visit, in TLB uniform, and you can meet them before the first one. You will know their names, and keys and alarm codes stay with the same people rather than moving around a roster. There is one local number to ring if something is not right.',
-  },
-  {
-    question: 'We are switching from another cleaner. How does that work?',
-    answer:
-      'We walk through the premises, agree the scope in writing, and set a start date that suits your notice period. You meet the team who will be doing the work before the first clean, so nobody gets shown around twice. Anything the last cleaner was doing that you want kept goes straight into the scope.',
-  },
-  {
-    question: 'What if the standard slips after a few months?',
-    answer:
-      'Tell us and we will put it right. That is the deal. The scope is agreed in writing, so “done properly” means the same thing to both of us, and you can change the schedule whenever you need to.',
-  },
-  {
-    question: 'Do we have to sign a contract?',
-    answer:
-      'No lock-in, no minimum term and no exit fee. The scope and the price per visit go in writing so both of us know what was agreed, not to tie you in. If the schedule needs to change, tell us and we change it.',
-  },
-];
 
 // §12 Non-branded FAQs — all five drafted, none bracketed. Genuinely strong
 // long-tail content, better than anything a local competitor will have.
@@ -791,33 +646,6 @@ const brandedFaqItems = [
 // Not worth it: /house-cleaning/deep-cleaning/ is already reachable from the header and
 // footer, and /commercial-cleaning/school-and-childcare-cleaning/ is linked from the premises
 // TagCloud above. Revisit if a second page needs rich FAQ answers.
-const nonBrandedFaqItems = [
-  {
-    question: 'How often should an office be cleaned?',
-    answer:
-      'Most small offices settle on two or three cleans a week, and move to daily once headcount, foot traffic or client visits pick up. Bathrooms, kitchens and high touch surfaces need attention most often, whatever the rest of the schedule looks like. The right frequency comes down to how hard the space is actually used, and a quiet three person studio and a busy cafe are nothing alike. A walk-through settles it in ten minutes.',
-  },
-  {
-    question: 'What is the difference between a regular clean and a deep clean?',
-    answer:
-      'Regular cleaning is the recurring work that keeps a workplace usable: bins, bathrooms, kitchens, floors and high touch surfaces on an agreed schedule. A deep clean is periodic and heavier. Carpet extraction, high dusting, detailed fittings, skirtings, vents and the edges a routine visit does not reach. Most workplaces run regular cleaning year round and add a deep clean every few months, or after a fit out or a renovation.',
-  },
-  {
-    question: 'Can commercial cleaning be done outside business hours?',
-    answer:
-      'Yes, and most of it is, either before you open or after you close, so your team is not working around cleaners. After hours work is usually priced differently, because weekday shifts that start early or finish late attract penalty rates under the Cleaning Services Award 2020, and so do weekends and public holidays. Ask for both options on your quote so you can see what each one actually costs.',
-  },
-  {
-    question: 'Who supplies the cleaning products and equipment?',
-    answer:
-      'The cleaner does. A commercial cleaner brings its own vacuums, mops, chemicals and safety data sheets as part of the service. Consumables are the thing to check separately. Toilet paper, hand soap, paper towel and bin liners are sometimes in the rate and sometimes billed on top. Get it written into the scope before you sign anything.',
-  },
-  {
-    question: 'Do cleaners need a Working With Children Check?',
-    answer:
-      'Yes, where the work is child related, so a childcare centre, preschool, school or similar. In NSW, child related work requires a current Working With Children Check, and the business engaging the worker is the one responsible for verifying it. Ask any cleaner to confirm which of their team hold a current check before they work anywhere children are present.',
-  },
-];
 
 // §15 "Easy to book, fast quoting, cost effective" — the shared body copy
 // with one word respelled, per the copy-rewrite brief §15.
@@ -852,12 +680,72 @@ const theLineBodyCommercial: TextBlockBody[] = theLineBody.commercial.map((parag
 // ✅ HEADING AND BUTTON RESPELLED (copy-rewrite brief §7 and §18) to the
 // workbook's approved CTA, matching the hero button. One primary CTA per
 // page, repeated, per BFD §9.5.
-const closingCta = {
-  kicker: 'Commercial cleaning',
-  heading: 'Start with a walk-through.',
-  lead: 'We come and look at the place, then send you a written scope and a price. No obligation. If it suits, we agree a start date and you meet the team who will be doing the work.',
-  cta: { label: 'Book a walk-through', href: quoteCta.href },
+
+// CONTENT lives in src/content/pages/commercial-cleaning.yaml and is edited in
+// Pages CMS ("Commercial cleaning (hub)"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of the walk-through button the hero and the closing block
+    // share. It links to the quote page in Site settings. Empty falls back to
+    // the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    pathways: section.pathwayCards,
+    summary: section.textBlock,
+    worthKnowing: section.textBlock,
+    premises: section.tagCloud,
+    // The columns and rows are the shared table in Site settings. The page
+    // owns its framing, the label of the "who cleans" row, and the keys and
+    // alarms row, which goes in where "Holiday lets" sat (see §10 above).
+    comparison: section.comparisonTable.pick({ heading: true, lead: true, cornerLabel: true }).extend({
+      whoCleansLabel: section.text,
+      addedRow: section.comparisonTable.shape.rows.element,
+    }),
+    reviews: section.sectionHeading,
+    // The subheading falls back to the shared footprint line, and the towns
+    // come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }).extend({ subheading: section.optional(section.text) }),
+    // Heading only. The paragraphs are the shared brand lines (see §15 above).
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/',
 };
+
+const business = localBusiness({
+  description: pageMeta.description,
+  // ✅ WIDENED with §14's town list. See the note "In `business`" above.
+  areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
+});
+
+const walkthroughCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '1/1');
+
+const pathwayCards = page.pathways.cards.map((card, i) => ({
+  number: i + 1,
+  ...card,
+  image: sized(card.image, '4/3'),
+}));
+
+const commercialComparisonRows = (() => {
+  const rows = serviceComparisonRows(page.comparison.whoCleansLabel);
+  return [...rows.slice(0, 4), page.comparison.addedRow, ...rows.slice(4)];
+})();
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -873,12 +761,12 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      subheading={hero.subheading}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? walkthroughCta}
+      image={heroImage}
     />
 
     {/* Trust bar + definition block share ONE photo behind a Cream scrim,
@@ -891,17 +779,18 @@ const closingCta = {
         label. This is not a new section — the paragraph below already reads
         as a definition and is the page's strongest answer-target — it is a
         heading for a section that already existed. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
       <TextBlock
         theme="muted"
         align="left"
-        heading="What commercial cleaning covers"
-        body={definitionBody}
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
       />
     </Backdrop>
 
-    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+    <PathwayCards heading={page.pathways.heading} headingAccent={page.pathways.headingAccent} cards={pathwayCards} />
 
     {/* The three pathway cards in one line, at TLB's direction. No heading,
         body at `large` size. `muted` so it reads as its own band between the
@@ -910,14 +799,19 @@ const closingCta = {
       theme="muted"
       align="left"
       size="large"
-      body={['A written scope, the same team each visit, and one accountable company. If something at the premises needs fixing, one call to us sorts it.']}
+      heading={page.summary.heading}
+      body={page.summary.body}
+      cta={page.summary.cta}
+      backgroundImage={page.summary.backgroundImage}
     />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Why two quotes for the same clean can look nothing alike"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     {/* ✅ NOTE LINE FILLED (copy-rewrite brief §11). `note={[]}` was rendering
@@ -926,10 +820,10 @@ const closingCta = {
         BFD §8.3 worry — whether a business like yours is one TLB actually
         cleans. Fifteen pills cannot answer that for the sixteenth reader. */}
     <TagCloud
-      heading="What we clean"
-      subheading="Ongoing cleaning for workplaces across the Northern Rivers and the Tweed."
-      tags={premisesTags}
-      note={["If your premises isn't on the list, ask us anyway. Most of it is the same work in a different building."]}
+      heading={page.premises.heading}
+      subheading={page.premises.subheading}
+      tags={page.premises.tags}
+      note={page.premises.note}
     />
 
     {/* ⚠️ THE SCOPE OF WORK BELONGS HERE AND DOES NOT EXIST.
@@ -966,14 +860,14 @@ const closingCta = {
         else on the page. */}
 
     <ComparisonTable
-      heading={comparisonTable.heading}
-      cornerLabel={comparisonTable.cornerLabel}
-      lead={comparisonTable.lead}
-      columns={comparisonTable.columns}
-      rows={comparisonTable.rows}
+      heading={page.comparison.heading}
+      cornerLabel={page.comparison.cornerLabel}
+      lead={page.comparison.lead}
+      columns={comparisonColumns}
+      rows={commercialComparisonRows}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     {/* ✅ THE FULL FOOTPRINT, per the copy-rewrite brief §14, which specifies
         all three regions and all 56 towns by name — the same list, and the
@@ -997,10 +891,10 @@ const closingCta = {
         If commercial work stops at the border, both revert together and the
         last non-branded FAQ still needs its Blue Card clause either way. */}
     <TagCloud
-      heading="Where we clean"
-      subheading={footprintSubheading}
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading ?? footprintSubheading}
       groups={completeFootprintLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -1016,7 +910,7 @@ const closingCta = {
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBodyCommercial, ...howItWorks.general]}
     />
 
@@ -1033,15 +927,15 @@ const closingCta = {
         /commercial-cleaning/commercial-carpet-cleaning/ and
         /commercial-cleaning/commercial-pressure-cleaning/ are better homes
         for it. Revisit only if those two child pages do not cover it. */}
-    <Faq heading="What local businesses ask us" items={brandedFaqItems} />
-    <Faq heading="Commercial cleaning questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? walkthroughCta}
     />
   </main>
 
