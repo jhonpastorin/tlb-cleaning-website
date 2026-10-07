@@ -19,7 +19,7 @@ hero:
       home bedroom
   cta:
     label: Talk to us today
-    href: /contact/
+    href: quote
 trustBar:
   clientsDescription: Over 100 local homes, hosts and businesses served
 definition:
@@ -83,7 +83,7 @@ pathways:
         it.
       cta:
         label: Talk to us today
-        href: /contact/
+        href: quote
     - image:
         src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-cleaner-tidying-a-shower-niche.jpg
         alt: A cleaner straightening the bottles in a tiled shower niche
@@ -143,7 +143,7 @@ turnover:
         it from us the same day, in time to do something about it.
   cta:
     label: Talk to us today
-    href: /contact/
+    href: quote
 levels:
   heading: Choose your level
   lead: Start with turnovers and add more when you want less on your plate. Every
@@ -283,26 +283,26 @@ ownersAway:
           ring instead of a cleaner, a handyman and a key box.
   cta:
     label: Talk to us today
-    href: /contact/
+    href: quote
 propertyTypes:
   heading: What we turn over
   subheading: Short-stay and holiday properties of every shape, across both sides
     of the border.
   tags:
     - label: Airbnb and Stayz listings
-      href: /contact/
+      href: quote
     - label: Whole-house holiday lets
-      href: /contact/
+      href: quote
     - label: Beach houses and coastal cottages
-      href: /contact/
+      href: quote
     - label: Granny flats and studios
-      href: /contact/
+      href: quote
     - label: Apartments and units
-      href: /contact/
+      href: quote
     - label: Hinterland retreats and cabins
-      href: /contact/
+      href: quote
     - label: Multi-listing portfolios
-      href: /contact/
+      href: quote
     - label: Deep clean between seasons
       href: /house-cleaning/deep-cleaning/
     - label: Mould cleaning and removal
@@ -432,4 +432,4 @@ closingCta:
     you want, and put a price and a scope in writing. No lock-in, no obligation.
   cta:
     label: Talk to us today
-    href: /contact/
+    href: quote

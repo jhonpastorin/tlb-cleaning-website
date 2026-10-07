@@ -340,9 +340,8 @@ const carouselCards = page.carousel.cards.map((card) => ({
       variant="icon-grid"
       heading={page.scope.heading}
       lead={page.scope.lead}
-      note={page.scope.note}
       items={page.scope.items}
-      cta={pageCta}
+      cta={page.scope.cta ?? pageCta}
     />
 
     <Callout tone="note" heading={page.softWash.heading} body={page.softWash.body} cta={page.softWash.cta} />

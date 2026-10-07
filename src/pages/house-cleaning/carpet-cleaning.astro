@@ -391,9 +391,8 @@ const pathwayCards = [
       variant="icon-grid"
       heading={page.method.heading}
       lead={page.method.lead}
-      note={page.method.note}
       items={page.method.items}
-      cta={primaryButton}
+      cta={page.method.cta ?? primaryButton}
     />
 
     <TextBlock

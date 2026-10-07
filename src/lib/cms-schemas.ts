@@ -27,6 +27,7 @@ import { z } from 'astro/zod';
 import type { TextBlockBody } from '../components/sections/TextBlock.astro';
 import type { ServiceIconName } from '../components/ui/ServiceIcon.astro';
 import { cmsImage, resolveTokens } from './cms';
+import { loadData } from './cms-data';
 
 // ---------------------------------------------------------- building blocks
 
@@ -89,7 +90,27 @@ export const seo = z.object({
   description: z.string().min(1).max(200, 'Keep the meta description under 200 characters (aim for 155)'),
 });
 
-const href = z.string().regex(/^(\/|https:\/\/|tel:|mailto:|#)/, 'Links start with /, https://, tel:, mailto: or #');
+// Editors can type `quote` or `book` as a link to mean "wherever the site-wide
+// quote (or booking) button goes" (Site settings > Site-wide buttons). Content
+// that used to be built from quoteCta.href uses `quote`, so it still follows
+// that button if its address changes. Read straight from the YAML rather than
+// from src/data/navigation.ts, which would make an import cycle through
+// townPages.ts.
+const siteButtons = loadData(
+  'site/buttons',
+  z.object({ quote: z.object({ href: z.string() }), book: z.object({ href: z.string() }) }).passthrough(),
+);
+const SITE_LINKS: Record<string, string> = { quote: siteButtons.quote.href, book: siteButtons.book.href };
+
+/** A link, with the `quote` and `book` keywords resolved. */
+export const linkTarget = z.string().transform((value) => SITE_LINKS[value.trim()] ?? value);
+
+const href = linkTarget.pipe(
+  z.string().regex(/^(\/|https:\/\/|tel:|mailto:|#)/, 'Links start with /, https://, tel:, mailto: or #, or are quote or book'),
+);
+
+/** A link to a page: on this site, or another site. Keywords resolved. */
+export const pageHref = linkTarget.pipe(z.string().regex(/^(\/|https:\/\/)/, 'Links start with / or https://, or are quote or book'));
 
 /** A button or text link: what it says and where it goes. */
 export const link = z.object({ label: text, href });
@@ -130,12 +151,16 @@ const SERVICE_ICONS = [
 export const serviceIcon = z.enum(SERVICE_ICONS);
 
 /** A comparison table cell. Editors type "yes" for a tick and "no" for a
- *  cross; anything else is shown as written. Content files use yes/no too.
+ *  cross; anything else is shown as written, and a cell in quotation marks
+ *  shows its words without the quotes (so "No" can be text). Content files use yes/no too.
  *  "true"/"false" and real booleans are accepted as well, because a text
  *  field in Pages CMS may hand a boolean back as the string "true". */
 const comparisonCell = z.union([
   z.boolean(),
   z.string().transform((value): boolean | string => {
+    // In quotation marks, the word itself: "No" shows the text No, not a cross.
+    const quoted = /^["“](.*)["”]$/.exec(value.trim());
+    if (quoted) return resolveTokens(quoted[1]);
     const v = value.trim().toLowerCase();
     if (v === 'yes' || v === 'true') return true;
     if (v === 'no' || v === 'false') return false;
@@ -205,36 +230,36 @@ export const linkList = z.object({
       z.object({
         title: text,
         description: text,
-        href: z.string().regex(/^(\/|https:\/\/)/, 'Links start with / or https://'),
+        href: pageHref,
       }),
     )
     .min(1),
 });
 
-/** ServiceBlocks `icon-grid` variant. */
+/** ServiceBlocks `icon-grid` variant: what that variant shows, and nothing it
+ *  ignores (it has no note and no per-item button or link). */
 export const iconGrid = z.object({
   heading: text,
   lead: optional(text),
-  note: optional(text),
   items: z
     .array(
       z.object({
         icon: optional(serviceIcon),
+        tag: optional(text),
         title: text,
         description: text,
-        cta: optional(link),
-        href: optional(href),
       }),
     )
     .min(1),
+  /** The button under the grid. Leave out to use the page's default. */
+  cta: optional(link),
 });
 
 /** ServiceBlocks with a photo per item: `image-cards`, `highlight`, `slider`
- *  and `photo-tiles`. */
+ *  and `photo-tiles`. No note: only the `list` variant shows one. */
 export const imageCards = z.object({
   heading: text,
   lead: optional(text),
-  note: optional(text),
   tileCtaLabel: optional(text),
   items: z
     .array(

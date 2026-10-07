@@ -46,7 +46,7 @@ pathways:
         is the job that makes it feel looked after rather than tolerated.
       cta:
         label: Book a mattress clean
-        href: /contact/
+        href: quote
     - image:
         src: /src/assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg
         alt: A TLB cleaner and a homeowner talking through the job in a living room
@@ -56,7 +56,7 @@ pathways:
         with you about how deep it has gone.
       cta:
         label: Book a mattress clean
-        href: /contact/
+        href: quote
 method:
   heading: How our mattress cleaning service works, stage by stage
   lead: Five stages. Putting less water in is the skill, not more.

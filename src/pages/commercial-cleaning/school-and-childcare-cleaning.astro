@@ -309,9 +309,8 @@ const business = commercialBusiness(pageMeta.description);
       variant="icon-grid"
       heading={page.schoolScope.heading}
       lead={page.schoolScope.lead}
-      note={page.schoolScope.note}
       items={page.schoolScope.items}
-      cta={walkthroughCta}
+      cta={page.schoolScope.cta ?? walkthroughCta}
     />
 
     {/* The bathroom frame, given a band of its own because in both settings
@@ -332,9 +331,8 @@ const business = commercialBusiness(pageMeta.description);
       variant="icon-grid"
       heading={page.childcareScope.heading}
       lead={page.childcareScope.lead}
-      note={page.childcareScope.note}
       items={page.childcareScope.items}
-      cta={walkthroughCta}
+      cta={page.childcareScope.cta ?? walkthroughCta}
     />
 
     <TextBlock

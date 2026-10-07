@@ -270,8 +270,8 @@ const page = await getPage(
     // Each service's title, sentence and link come from Site settings > Menus
     // (shared with the footer). This page only picks a photo for each,
     // matched by the service's link so a reordered list cannot mispair them.
-    // No `note`: the photo-tiles variant does not draw one.
-    ourServices: section.imageCards.omit({ items: true, note: true }).extend({
+    // (The shared schema no longer offers a note: no photo variant draws one.)
+    ourServices: section.imageCards.omit({ items: true }).extend({
       photos: z.array(
         z.object({
           service: z

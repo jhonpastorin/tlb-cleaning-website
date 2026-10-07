@@ -250,9 +250,8 @@ const pathwayCards = [
       variant="icon-grid"
       heading={page.method.heading}
       lead={page.method.lead}
-      note={page.method.note}
       items={page.method.items}
-      cta={instantQuoteCta}
+      cta={page.method.cta ?? instantQuoteCta}
     />
 
     <Callout tone="note" heading={page.scope.heading} body={page.scope.body} cta={page.scope.cta} />

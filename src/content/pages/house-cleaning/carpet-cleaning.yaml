@@ -46,7 +46,7 @@ pathways:
         good.
       cta:
         label: Book your clean online
-        href: /contact/
+        href: quote
     - image:
         src: /src/assets/home_cleaning/appliances/carpet_and_rug/regular-house-cleaning-two-cleaners-making-a-bed-above-a-rug.jpg
         alt: Two TLB cleaners making up a bed during a regular house clean

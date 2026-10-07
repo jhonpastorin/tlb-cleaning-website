@@ -372,9 +372,8 @@ const business = commercialBusiness(pageMeta.description);
       variant="icon-grid"
       heading={page.scope.heading}
       lead={page.scope.lead}
-      note={page.scope.note}
       items={page.scope.items}
-      cta={walkthroughCta}
+      cta={page.scope.cta ?? walkthroughCta}
     />
 
     {/* §5 — the only use of ContentGrid's `image` cell type in the cluster.

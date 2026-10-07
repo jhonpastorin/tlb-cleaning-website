@@ -345,8 +345,7 @@ const explainerBlocks = page.explainer.items.map((item) =>
       heading={page.method.heading}
       lead={page.method.lead}
       items={page.method.items}
-      note={page.method.note}
-      cta={pageCta}
+      cta={page.method.cta ?? pageCta}
     />
 
     <BeforeAfter

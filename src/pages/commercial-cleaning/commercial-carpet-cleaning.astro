@@ -446,9 +446,8 @@ const pathwayCards = page.pathways.cards.map((card, i) => ({
       variant="icon-grid"
       heading={page.scope.heading}
       lead={page.scope.lead}
-      note={page.scope.note}
       items={page.scope.items}
-      cta={primaryCta}
+      cta={page.scope.cta ?? primaryCta}
     />
 
     <TextBlock

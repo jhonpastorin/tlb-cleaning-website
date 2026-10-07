@@ -257,9 +257,8 @@ const moreGuideTags = relatedGuides(selfHref, page.moreGuides.tags ?? []);
       variant="icon-grid"
       heading={page.willItFix.heading}
       lead={page.willItFix.lead}
-      note={page.willItFix.note}
       items={page.willItFix.items}
-      cta={quoteCta}
+      cta={page.willItFix.cta ?? quoteCta}
     />
 
     <Callout

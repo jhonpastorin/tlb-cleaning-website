@@ -82,8 +82,8 @@ components:
         label: Links to
         type: string
         required: true
-        description: A page on this site starting with a slash (/contact/), a full https:// address, tel:0404742065 or mailto:hello@tlbcleaning.com.au
-        pattern: "^(/|https://|tel:|mailto:|#)"
+        description: "Type quote or book to use the site-wide quote or booking button's link (Site settings > Site-wide buttons), so it follows that button if its address changes. Otherwise a page on this site starting with a slash (/contact/), a full https:// address, tel:0404742065 or mailto:hello@tlbcleaning.com.au"
+        pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
 
   textBody:
     type: block
@@ -298,7 +298,7 @@ components:
             type: string
             required: true
             description: A page on this site, starting and ending with a slash, e.g. /house-cleaning/deep-cleaning/
-            pattern: "^(/|https://)"
+            pattern: "^(/|https://|quote$|book$)"
 
   iconGrid:
     type: object
@@ -311,9 +311,6 @@ components:
       - name: lead
         label: Intro sentence
         type: text
-      - name: note
-        label: Note under the grid
-        type: text
       - name: items
         label: Points
         type: object
@@ -324,6 +321,9 @@ components:
         fields:
           - name: icon
             component: serviceIcon
+          - name: tag
+            label: Small tag above the title (optional)
+            type: string
           - name: title
             label: Title
             type: string
@@ -332,13 +332,9 @@ components:
             label: Sentence under the title
             type: text
             required: true
-          - name: cta
-            component: link
-            label: Button (optional)
-          - name: href
-            label: Makes the whole item a link to (optional)
-            type: string
-            pattern: "^(/|https://|tel:|mailto:|#)"
+      - name: cta
+        component: link
+        label: Button under the grid (leave empty to use the page's usual button)
 
   imageCards:
     type: object
@@ -350,9 +346,6 @@ components:
         required: true
       - name: lead
         label: Intro sentence
-        type: text
-      - name: note
-        label: Note under the cards
         type: text
       - name: tileCtaLabel
         label: Link text on each card (photo tiles only)
@@ -384,7 +377,7 @@ components:
           - name: href
             label: Makes the whole card a link to (optional)
             type: string
-            pattern: "^(/|https://|tel:|mailto:|#)"
+            pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
 
   storySteps:
     type: object
@@ -558,7 +551,7 @@ components:
             label: One cell per column, left to right
             type: string
             list: true
-            description: Type yes for a tick, no for a cross, or write the text to show.
+            description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
       - name: footnote
         label: Note under the table
         type: text
@@ -687,7 +680,7 @@ components:
           - name: href
             label: Links to
             type: string
-            pattern: "^(/|https://|tel:|mailto:|#)"
+            pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
       - name: note
         label: Note under the tags
         type: text
@@ -1033,7 +1026,7 @@ content:
                     type: string
                     required: true
                     description: A page on this site, starting and ending with a slash, e.g. /house-cleaning/deep-cleaning/
-                    pattern: "^(/|https://)"
+                    pattern: "^(/|https://|quote$|book$)"
           - name: team
             component: storyMosaic
             label: "Local team, run properly"
@@ -1413,7 +1406,7 @@ content:
                   - name: href
                     label: Makes the whole item a link to (optional)
                     type: string
-                    pattern: "^(/|https://|tel:|mailto:|#)"
+                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
               - name: cta
                 component: link
                 label: Button under the grid (optional)
@@ -1463,7 +1456,7 @@ content:
                     label: One cell per column, left to right
                     type: string
                     list: true
-                    description: Type yes for a tick, no for a cross, or write the text to show.
+                    description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
               - name: footnote
                 label: Note under the table
                 type: text
@@ -2332,7 +2325,7 @@ content:
                     summary: "{label}"
                 fields:
                   - { name: label, label: Tag text, type: string, required: true }
-                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#)" }
+                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)" }
               - name: note
                 label: Note under the tags
                 type: text
@@ -2793,7 +2786,7 @@ content:
                     type: string
                     required: true
                     description: A page on this site, starting and ending with a slash, e.g. /commercial-cleaning/
-                    pattern: "^(/|https://)"
+                    pattern: "^(/|https://|quote$|book$)"
           - name: health
             component: textBlock
             label: "On the health question"
@@ -2861,7 +2854,7 @@ content:
                 list: true
                 fields:
                   - { name: label, label: Tag text, type: string, required: true }
-                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#)" }
+                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)" }
               - { name: note, label: Note under the tags, type: text, list: true }
           - name: whyChoose
             component: textGrid
@@ -2993,7 +2986,7 @@ content:
                     label: One cell per column, left to right
                     type: string
                     list: true
-                    description: Type yes for a tick, no for a cross, or write the text to show.
+                    description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
               - { name: footnote, label: Note under the table, type: text }
               - { name: cta, component: link, label: Button (optional) }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
@@ -3009,7 +3002,7 @@ content:
                 list: true
                 fields:
                   - { name: label, label: Tag text, type: string, required: true }
-                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#)" }
+                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)" }
               - { name: note, label: Note under the tags, type: text, list: true }
           - name: bookingFaq
             component: faq
@@ -3139,7 +3132,7 @@ content:
                 list: true
                 fields:
                   - { name: label, label: Tag text, type: string, required: true }
-                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#)" }
+                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)" }
               - { name: note, label: Note under the tags, type: text, list: true }
           - name: bookingFaq
             component: faq
@@ -3333,7 +3326,7 @@ content:
                     type: string
                     required: true
                     description: "A full https:// address, or a page on this site starting with a slash."
-                    pattern: "^(/|https://)"
+                    pattern: "^(/|https://|quote$|book$)"
           - name: bond
             component: textBlock
             label: "What actually happens to the bond (dark band)"
@@ -3670,7 +3663,7 @@ content:
                     type: string
                     required: true
                     description: "A full https:// address, or a page on this site starting with a slash."
-                    pattern: "^(/|https://)"
+                    pattern: "^(/|https://|quote$|book$)"
           - name: effects
             component: textGrid
             label: "What a compressed letting year changes (six boxes)"
@@ -3800,7 +3793,7 @@ content:
                     label: One cell per column, left to right
                     type: string
                     list: true
-                    description: Type yes for a tick, no for a cross, or write the text to show.
+                    description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
             label: Where we clean
@@ -3888,7 +3881,7 @@ content:
                     label: One cell per column, left to right
                     type: string
                     list: true
-                    description: Type yes for a tick, no for a cross, or write the text to show.
+                    description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
               - { name: footnote, label: Note under the table, type: text }
               - { name: cta, component: link, label: Button (optional) }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
@@ -4250,7 +4243,7 @@ content:
                   - name: href
                     label: Links to
                     type: string
-                    pattern: "^(/|https://|tel:|mailto:|#)"
+                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
               - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
@@ -4395,7 +4388,7 @@ content:
                   - name: href
                     label: Links to
                     type: string
-                    pattern: "^(/|https://|tel:|mailto:|#)"
+                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
               - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
@@ -4473,7 +4466,7 @@ content:
                   - name: href
                     label: Links to
                     type: string
-                    pattern: "^(/|https://|tel:|mailto:|#)"
+                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
               - { name: note, label: Note under the links, type: text, list: true }
           - name: comparison
             label: "How TLB compares (table)"
@@ -4702,7 +4695,7 @@ content:
                     type: string
                     required: true
                     description: A page on this site, starting and ending with a slash, e.g. /commercial-cleaning/
-                    pattern: "^(/|https://)"
+                    pattern: "^(/|https://|quote$|book$)"
           - { name: glassPhoto, component: imageBand, label: "Shopfront glass photo band" }
           - name: tenancy
             component: callout
@@ -4728,7 +4721,7 @@ content:
                   - name: href
                     label: Links to
                     type: string
-                    pattern: "^(/|https://|tel:|mailto:|#)"
+                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
               - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean
@@ -4877,7 +4870,7 @@ content:
                     type: string
                     required: true
                     description: A page on this site, starting and ending with a slash, e.g. /commercial-cleaning/
-                    pattern: "^(/|https://)"
+                    pattern: "^(/|https://|quote$|book$)"
           - { name: binRoom, component: callout, label: "Do not cut the bin room (warning box)" }
           - { name: binRoomPhoto, component: imageBand, label: "Bin room photo band" }
           - { name: reporting, component: storyMosaic, label: "Three people read this page (dark mosaic)" }
@@ -4904,7 +4897,7 @@ content:
                     label: One cell per column, left to right
                     type: string
                     list: true
-                    description: Type yes for a tick, no for a cross, or write the text to show.
+                    description: 'Type yes for a tick, no for a cross, or write the text to show. To show the word yes or no itself, put it in quotation marks: "No".'
               - { name: footnote, label: Note under the table, type: text }
               - { name: cta, component: link, label: Button (optional) }
           - name: related
@@ -4926,7 +4919,7 @@ content:
                   - name: href
                     label: Links to
                     type: string
-                    pattern: "^(/|https://|tel:|mailto:|#)"
+                    pattern: "^(/|https://|tel:|mailto:|#|quote$|book$)"
               - { name: note, label: Note under the links, type: text, list: true }
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - name: whereWeClean

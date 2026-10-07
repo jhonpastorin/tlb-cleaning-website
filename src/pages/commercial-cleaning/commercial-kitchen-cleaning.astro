@@ -365,9 +365,8 @@ const business = commercialBusiness(pageMeta.description);
       variant="icon-grid"
       heading={page.scope.heading}
       lead={page.scope.lead}
-      note={page.scope.note}
       items={page.scope.items}
-      cta={walkthroughCta}
+      cta={page.scope.cta ?? walkthroughCta}
     />
 
     <ContentGrid heading={page.trades.heading} lead={page.trades.lead} columns={3} blocks={tradesBlocks} />

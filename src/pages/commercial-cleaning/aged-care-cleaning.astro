@@ -468,9 +468,8 @@ const business = commercialBusiness(pageMeta.description);
       variant="icon-grid"
       heading={page.scope.heading}
       lead={page.scope.lead}
-      note={page.scope.note}
       items={page.scope.items}
-      cta={walkthroughCta}
+      cta={page.scope.cta ?? walkthroughCta}
     />
 
     <StoryMosaic theme="dark" heading={page.residents.heading} blocks={residentsBlocks} cta={page.residents.cta} />

@@ -44,7 +44,7 @@ pathways:
         and it is the definition of a Saturday you would rather have back.
       cta:
         label: Get an instant quote
-        href: /contact/
+        href: quote
     - image:
         src: /src/assets/home_cleaning/appliances/blinds_shutters_and_fans/blind-cleaning-added-to-a-regular-house-clean.jpg
         alt: A cleaner wiping down a venetian blind as part of a regular house clean

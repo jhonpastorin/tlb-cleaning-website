@@ -669,7 +669,7 @@ const commercialRow = z.object({
   icon: section.optional(section.serviceIcon),
   title: section.text,
   description: section.text,
-  href: z.string().regex(/^(\/|https:\/\/)/, 'Links start with / or https://'),
+  href: section.pageHref,
 });
 
 // This table is all text, and one of its cells is literally "No" (the deep

@@ -280,9 +280,8 @@ const moreGuideTags = relatedGuides(selfHref, page.moreGuides.tags ?? []);
       variant="icon-grid"
       heading={page.quoteWell.heading}
       lead={page.quoteWell.lead}
-      note={page.quoteWell.note}
       items={page.quoteWell.items}
-      cta={quoteCta}
+      cta={page.quoteWell.cta ?? quoteCta}
     />
 
     <TextBlock

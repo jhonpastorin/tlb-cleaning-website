@@ -39,7 +39,7 @@ pathways:
         about.
       cta:
         label: Get a fast quote
-        href: /contact/
+        href: quote
     - image:
         src: /src/assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-cleaner-wiping-a-kitchen-window-frame.jpg
         alt: Cleaner wiping down a kitchen window frame

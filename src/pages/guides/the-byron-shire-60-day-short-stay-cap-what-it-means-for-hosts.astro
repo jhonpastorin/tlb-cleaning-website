@@ -307,9 +307,8 @@ const moreGuideTags = relatedGuides(selfHref, page.moreGuides.tags ?? []);
       variant="icon-grid"
       heading={page.calendar.heading}
       lead={page.calendar.lead}
-      note={page.calendar.note}
       items={page.calendar.items}
-      cta={quoteCta}
+      cta={page.calendar.cta ?? quoteCta}
     />
 
     <ServiceBlocks

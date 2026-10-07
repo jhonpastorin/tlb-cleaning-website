@@ -560,8 +560,7 @@ const serviceTags = page.services.tags?.map((tag) => ({ ...tag, href: tag.href ?
       heading={page.workingWithUs.heading}
       lead={page.workingWithUs.lead}
       items={page.workingWithUs.items}
-      note={page.workingWithUs.note}
-      cta={pageCta}
+      cta={page.workingWithUs.cta ?? pageCta}
     />
 
     <Callout tone="note" heading={page.worthKnowing.heading} body={page.worthKnowing.body} cta={page.worthKnowing.cta} />

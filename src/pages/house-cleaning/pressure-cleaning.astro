@@ -350,8 +350,7 @@ const pathwayCards = page.pathways.cards.map((card, i) => ({
       heading={page.method.heading}
       lead={page.method.lead}
       items={page.method.items}
-      note={page.method.note}
-      cta={pageCta}
+      cta={page.method.cta ?? pageCta}
     />
 
     <BeforeAfter
