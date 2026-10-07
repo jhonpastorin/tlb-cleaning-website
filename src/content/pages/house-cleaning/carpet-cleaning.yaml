@@ -1,0 +1,233 @@
+seo:
+  title: Carpet Cleaning Services - Steam | TLB Cleaning
+  description: Carpet cleaning that lifts what a vacuum cannot, using steam or dry
+    methods to suit your carpet. Rugs and stairs included. Book your clean
+    online.
+hero:
+  kicker: Carpet and rug cleaning
+  headingLines:
+    - Carpet cleaning and rug cleaning across the Northern Rivers and the Tweed
+  lead: The carpet holds everything the house walks in. Carpet cleaning and rug
+    cleaning for homes across the Northern Rivers and the Tweed. Stairs and rugs
+    included. We test the fibre before we start, and tell you what will lift
+    before you pay. {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/appliances/carpet_and_rug/carpet-cleaning-cleaner-extracting-a-bedroom-rug.jpg
+    alt: A cleaner kneeling beside a bed to run a carpet extraction wand across a
+      rug
+definition:
+  body:
+    - type: paragraph
+      text: Carpet and rug cleaning is the deep cleaning of soft floor coverings in
+        your home, usually by hot water extraction, which pushes heated water
+        and cleaning solution into the pile under pressure and draws it straight
+        back out with the soil. It lifts the grit, oils, sand and pet hair that
+        vacuuming leaves behind. TLB Cleaning cleans carpet and rugs across the
+        Northern Rivers and the Tweed.
+    - type: paragraph
+      text: "Carpet steam cleaning and hot water extraction are two names for the same
+        method. Rugs are the part people get wrong: a fitted synthetic carpet
+        and a loose wool rug are not the same job, they do not take the same
+        water or the same chemistry, and a rug that is cleaned like carpet is
+        how you end up with shrinkage, bleeding dyes or a browned fringe."
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: People arrive here with three questions.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/home_cleaning/appliances/carpet_and_rug/living-room-rug-with-a-worn-traffic-path.jpg
+        alt: A pale wool rug in a family living room with a faint worn path running
+          across it
+      title: It looks grey and I know it is not clean
+      description: The path from the door to the sofa, the patch under the coffee
+        table, sand that never quite vacuums out. One extraction clean lifts
+        most of it. We will tell you honestly which marks are in the fibre for
+        good.
+      cta:
+        label: Book your clean online
+        href: /contact/
+    - image:
+        src: /src/assets/home_cleaning/appliances/carpet_and_rug/regular-house-cleaning-two-cleaners-making-a-bed-above-a-rug.jpg
+        alt: Two TLB cleaners making up a bed during a regular house clean
+      title: I want it done with the regular clean
+      description: Most homes settle on carpet once a year and rugs as they need it.
+        We can fold it into your regular clean so it happens on schedule instead
+        of when someone finally notices.
+      cta:
+        label: Regular home cleaning
+        href: /house-cleaning/
+method:
+  heading: How we clean a carpet
+  lead: Six stages, in this order. The first two are the ones a rushed job skips.
+  items:
+    - icon: target
+      title: We test the fibre first
+      description: Wool, nylon, polypropylene and viscose all behave differently in
+        water, and a rug label is not always right. We test in a hidden corner
+        before anything wet touches the floor, because getting this wrong is not
+        something you can undo.
+    - icon: spray-bottle
+      title: Dry soil out before water goes in
+      description: A proper vacuum first, slowly and in both directions. Most of what
+        is in a carpet is dry grit, and wetting it turns it to mud that goes
+        deeper. Skipping this step is the single most common shortcut.
+    - icon: spark
+      title: Traffic lanes, stairs and spots by hand
+      description: Doorways, the run past the couch, the stair treads and the spot
+        where the dog sleeps wear faster than the rest. Stair treads wear
+        hardest of anything in a house, because every step lands in the same
+        place. Those get pre-treated and agitated separately, and individual
+        spots are treated by what caused them rather than with one product for
+        everything.
+    - icon: chart-bars
+      title: Hot water extraction
+      description: Heated water and solution into the pile under pressure, straight
+        back out with the soil in it. This is the method carpet makers name in
+        their own care instructions, and the one that removes soil rather than
+        moving it around.
+    - icon: bloom
+      title: Wool and natural fibres, differently
+      description: Wool takes less water, a gentler pH and much more care on the
+        drying, and silk, jute and viscose take less again. Some rugs are better
+        off going to a rug plant, and we will say so rather than take the job.
+        [Confirm TLB cleans wool in home.]
+    - icon: office
+      title: Groomed and dried
+      description: The pile is groomed so it dries evenly and air is moved across it.
+        Typical drying time is [X to Y hours. Confirm]. In a humid Northern
+        Rivers summer we will tell you to leave a fan on, and we would rather
+        say that than pretend humidity does not exist.
+worthKnowing:
+  heading: What a low carpet quote usually leaves out
+  body:
+    - type: paragraph
+      text: "A bad carpet clean and a good one look the same when the van drives away.
+        The difference shows up about three weeks later. Over-wetting leaves
+        moisture down in the backing, and on this coast, in a humid February,
+        that is how you get a smell that will not shift and mould underneath a
+        carpet that looks perfectly fine from above. Too much detergent left
+        behind is a slower problem: it stays tacky, grabs the next lot of dirt,
+        and the traffic lanes come back darker than they were before you paid to
+        have them cleaned."
+    - type: paragraph
+      text: So the question worth asking any carpet cleaner is not the price per room.
+        It is what they do about drying, what they will do differently on a wool
+        rug, and whether they will tell you before they start that a mark is
+        permanent. We would rather lose the job than shrink your rug, and we
+        would rather say a stain is staying than take your money and hope.
+endOfLease:
+  heading: End of lease carpet cleaning
+  body:
+    - type: paragraph
+      text: If the carpet is being cleaned because the keys are going back, the
+        standard is not your standard. It is whatever the outgoing inspection
+        asks for, and some leases name professional carpet cleaning
+        specifically. We give you a receipt that says what was done, because
+        that is usually the thing the agent actually wants to see.
+    - type: paragraph
+      text: "Worth knowing before you book: a bond clean and a carpet clean are two
+        different jobs, and carpet is often the part people forget until the
+        inspection is already booked. If you need both, it is cheaper and faster
+        to have them done on the same visit than to bring two lots of people
+        through an empty house."
+  cta:
+    label: End of lease and bond cleaning
+    href: /house-cleaning/end-of-lease-cleaning/
+otherServices:
+  heading: Other things we clean around the house
+  lead: The jobs a regular clean never has time for. Any of them can go on the
+    same visit.
+comparison:
+  heading: How TLB compares
+  lead: Anyone can run a machine over a floor once. What is harder is being the
+    people you can ring next year, who remember which rug is the good one.
+  cornerLabel: Why TLB Cleaning is different
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+faq:
+  heading: Booking a carpet clean
+  items:
+    - question: How long until we can walk on it?
+      answer: A few hours for normal walking in socks, and back to normal by the end
+        of the day. We groom the pile so it dries evenly and get air moving
+        before we leave. If it is a humid week we will say so and suggest you
+        leave a fan running, because on this coast that matters more than it
+        does anywhere else.
+    - question: Do we have to move all the furniture?
+      answer: No. We move what two people can lift safely, clean underneath and put it
+        back. Beds, wardrobes and anything full of books stay where they are and
+        we clean around them. If you want the room done wall to wall, clear it
+        before we arrive and tell us when you book.
+    - question: Can you clean our wool rug?
+      answer: We test it first. Wool takes less water and gentler chemistry than
+        carpet, and some rugs, especially silk, viscose or anything with an
+        unstable dye, are better off going to a specialist rug plant. If yours
+        is one of those we will tell you at the walkthrough rather than find out
+        the hard way on your living room floor.
+    - question: Will the stains come out?
+      answer: Most will. Food, mud, coffee and general traffic soil usually lift
+        completely. Dye based spills, bleach, rust and anything already scrubbed
+        hard with a supermarket spot cleaner are the difficult ones, and some
+        are permanent. We will tell you which is which before we quote, not
+        after.
+    - question: What happens if I get in touch?
+      answer: We look at the floors, test the fibre and tell you what will lift and
+        what will not. Then you get a price. If it suits, we book a time, and we
+        can put it on a schedule with your regular clean so you never have to
+        think about it again.
+    - question: Is it worth paying someone, or should we just hire a machine?
+      answer: A hire machine will lift surface soil and it is better than nothing.
+        What it will not do is heat the water properly, put it in under real
+        pressure or pull most of it back out, and that last part is what
+        matters. A carpet left too wet is the problem, not the dirt. Most of the
+        damage we get called to fix was done by a hire machine used with the
+        best intentions and too much water, so if you do hire one, use half the
+        solution you think you need and twice the dry passes.
+nonBrandedFaq:
+  heading: Carpet cleaning questions
+  items:
+    - question: How often should carpet be cleaned in a home?
+      answer: Once a year suits most households. Make it every six months with pets,
+        small children, or a house that opens straight onto sand or a paddock,
+        and you can stretch to eighteen months in a quiet home with hard floors
+        through the middle. Vacuuming weekly does more for the life of a carpet
+        than anything else, and it is what decides how long between deep cleans.
+    - question: Is steam cleaning the same as hot water extraction?
+      answer: "Yes. The two names describe one method: heated water and solution
+        injected into the pile under pressure and vacuumed straight back out
+        with the soil in it. No actual steam is involved, and nothing is being
+        sterilised. Dry cleaning and encapsulation are genuinely different
+        methods, lighter and faster to dry, and they suit maintenance between
+        extraction cleans rather than replacing them."
+    - question: Can carpet cleaning shrink a rug?
+      answer: It can, and this is where most rug damage comes from. Wool and other
+        natural fibres absorb far more water than synthetics, and a rug that is
+        soaked like a fitted carpet can shrink, cockle at the edges or bleed dye
+        between colours. Natural fibres need less moisture, gentler chemistry
+        and controlled drying, which is why any competent cleaner tests the
+        fibre before starting.
+    - question: Does carpet cleaning get rid of pet smells?
+      answer: Often, but not always, and be wary of anyone who promises it outright.
+        Surface cleaning lifts what is in the pile. Urine soaks through to the
+        backing and frequently into the underlay and the floor beneath, and once
+        it is there a surface clean will not reach it. That needs sub-surface
+        treatment, and in bad cases replacing the underlay is the only honest
+        answer.
+    - question: How much does carpet cleaning cost?
+      answer: Home carpet cleaning is usually priced per room or per square metre,
+        with a minimum charge for a small job, and rugs are usually quoted
+        separately by size and fibre. What moves the price is the area, the
+        condition, whether furniture has to be moved and whether any spot
+        treatment is needed. [TLB’s pricing basis and minimum charge. Confirm.]
+closingCta:
+  kicker: Carpet and rug cleaning
+  heading: Book your carpet clean.
+  lead: We test the fibre, tell you what will lift and what will not, and give you
+    a price before we start. No obligation, and no surprises on the day.

@@ -1595,3 +1595,84 @@ content:
             label: "Blind, fan and curtain cleaning FAQs"
             description: "No health or allergy claims here (brand rule). Answers in [brackets] are waiting on TLB."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: carpet-cleaning
+        label: Carpet cleaning
+        type: file
+        path: src/content/pages/house-cleaning/carpet-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "The description promises \"steam or dry methods\" and \"rugs and stairs included\". Nothing on the page yet says TLB offers a dry method; confirm before launch."
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Book your clean online\" button."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "People arrive here with three questions (cards)"
+            description: "This page's own cards. The last card, \"Who is in my home\", is shared and edited under Site settings."
+          - name: method
+            component: iconGrid
+            label: "How we clean a carpet (grid)"
+            description: "Two points carry [brackets] waiting on TLB: whether wool is cleaned in home, and the drying time."
+          - { name: worthKnowing, component: textBlock, label: "What a low carpet quote usually leaves out (dark band)" }
+          - { name: endOfLease, component: textBlock, label: "End of lease carpet cleaning" }
+          - name: otherServices
+            component: sectionIntro
+            label: "Other things we clean around the house (list)"
+            description: "The rows under this heading come from Site settings > Cross-links: appliances."
+          - name: comparison
+            label: "How TLB compares (table)"
+            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                description: "Leave empty to use the shared line under Locations > Live towns and region photos."
+              - name: tags
+                label: Tags (leave empty where the page lists towns)
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Tag text, type: string, required: true }
+                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#)" }
+              - name: note
+                label: Note under the tags
+                type: text
+                list: true
+                description: The towns themselves are edited once for the whole site, not here.
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "Booking a carpet clean (FAQs)"
+            description: "The wool rug answer depends on TLB confirming it cleans wool in home."
+          - name: nonBrandedFaq
+            component: faq
+            label: "Carpet cleaning questions (FAQs)"
+            description: "No health claims (no dust mites or allergies). Keep the pet smell answer's honesty about underlay: never cut it. Answers in [brackets] are waiting on TLB."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Book your clean online\"."
