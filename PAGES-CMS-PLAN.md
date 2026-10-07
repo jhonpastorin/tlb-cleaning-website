@@ -2,7 +2,7 @@
 
 **Goal:** every piece of visible copy and every photo on every page of tlbcleaning.com.au can be edited in a friendly web editor (Pages CMS), by people without GitHub accounts, while the site stays a fully static Astro build on Render.
 
-**Status:** Phase 1 done on `feature/pages-cms` (7 Oct 2026). Phase 0 has three Pages CMS checks still open (photos, emptied fields, `.JPG` uploads); they must pass before Phase 3. See "Spike findings" and "Phase 1 results" in section 9.
+**Status:** Phases 1 and 2 done on `feature/pages-cms` (7 Oct 2026). Phase 0 has three Pages CMS checks still open (photos, emptied fields, `.JPG` uploads); they must pass before Phase 3. See "Spike findings" and "Phase 1 results" in section 9.
 
 ---
 
@@ -554,13 +554,26 @@ The test paragraph from commit c7e1539 was removed in code; the second round of 
 - `yaml` is now a direct dev dependency (the lint and the config check import it).
 - **Deferred to Phase 2:** collections for site settings, towns, regions, team and reviews. Astro warns about collections with no files, so each is added with its first content.
 
+## Phase 2 results (7 Oct 2026)
+
+- **73 content files**: 15 in `src/content/site/`, one per town in `src/content/towns/` (56), one per region page in `src/content/regions/` (2). Values were extracted by bundling and running the old `src/data/*.ts` modules, not retyped. All 112 pages match the baseline.
+- **Every `src/data/*.ts` module keeps its exports, names and types**, so no page changed. Each now validates its YAML with Zod through `src/lib/cms-data.ts` (synchronous: the YAML is bundled as text, because these modules are imported at the top of every page and cannot await). The logic stays in TypeScript: menu filtering, the town menu, neighbour clusters, guards, JSON-LD builders.
+- **Decisions that lived in comments are now fields**, because Pages CMS deletes comments on save: 24 menu items and rows carry `hidden: true`, 22 rows keep the URL they will get plus a `note` (built but unlinked, or no page yet; the forensic and hoarder notes carry the licensing warning for editors), and the two comparison rows code looks up carry a read-only `id`.
+- **`hidden: true`, not `linked: false`.** Pages CMS saves an unticked checkbox as false, so a `linked` flag would have unlinked every menu row the first time an editor saved the menu. Every boolean in the config is now one where missing and unticked mean the same safe thing.
+- **Developer-only on purpose:** the 56 town names and their neighbour clusters (a new town also needs a photo, a cluster and a page), the region labels (sent verbatim to Monday.com by the contact form), URLs of the guides, premises and team pages (checked against their TypeScript unions, so a typo fails the build), the contact form's endpoint and fields.
+- **Editable:** contact details (now also feeding the three JSON-LD builders, so they cannot disagree with the footer), site-wide buttons, menus, trust bar, brand lines, comparison table, contact form copy and service options (with the Monday.com warning), the "who is in my home" card, Google reviews (with the verbatim rules), the five cross-link lists, live towns, region photos, each town's photo, local paragraph and neighbours, and the region pages' copy.
+- **End-to-end test:** changing the phone in `site/contact.yaml` changed all 112 pages; unhiding "Window cleaning" put it in the menu on all 112. Both reverted.
+- **Brand lint:** same 63 blockers; em-dash warnings 248 to 224, all 24 from trailing code comments removed with the old menu rows. No copy was lost.
+- `npm run check-cms` now checks collections file by file and multi-select fields (74 files agree).
+- **Still in pages, for Phase 3:** several pages build their own LocalBusiness object with the phone and email typed in (e.g. `house-cleaning.astro`). They move to the shared contact details when each page is migrated.
+
 ---
 
 ## 10. Checklist
 
 - [ ] Phase 0: Pages CMS installed and round-trips text (done); photos, emptied fields, `.JPG` uploads still to test
 - [x] Phase 1: section schemas, CMS components, helpers, brand lint on YAML, output diff script, CI
-- [ ] Phase 2: Site settings, reviews, team, towns, regions, locations moved
+- [x] Phase 2: Site settings, reviews, team, towns, regions, locations moved
 - [ ] Phase 3a: Home, hubs, Contact, About
 - [ ] Phase 3b: Remaining top-level pages
 - [ ] Phase 3c: 16 house cleaning service pages
