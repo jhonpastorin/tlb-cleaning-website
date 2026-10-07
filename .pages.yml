@@ -2259,3 +2259,90 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+      - name: hospitality-cleaning
+        label: "Hospitality cleaning"
+        type: file
+        path: src/content/pages/commercial-cleaning/hospitality-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "This page was refocused on restaurants, cafes, pubs and venues (22 Sep 2026). The holiday park content is held in content-plans/HELD-holiday-park-and-cabin-content.md, waiting on a client decision."
+          - name: ctaLabel
+            label: "Main button text"
+            type: string
+            description: "Used by the hero, any card whose button is left empty, the button under the scope list and the closing block. \"Book a visit\" can read as booking a table; \"Book a walkthrough\" was suggested. It links to the quote page set under Site settings > Site-wide buttons. Leave empty to use the site-wide walkthrough button text."
+          - name: hero
+            component: hero
+            description: "Leave the hero's button empty to use the main button above."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
+          - name: pathways
+            component: pathwayCards
+            label: "Two kinds of premises, two different clocks (cards)"
+            description: "A card whose button is left empty uses the main button."
+          - name: scope
+            component: iconGrid
+            label: "What our commercial restaurant cleaning services cover (list with icons)"
+            description: "Every item is drafted, not confirmed by TLB. The last item carries a [Confirm] bracket on kitchen work. The button under the list is the main button."
+          - { name: worthKnowing, component: textBlock, label: "Count the one-star reviews (dark band)" }
+          - name: related
+            label: "Other premises we clean (links)"
+            type: object
+            description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: subheading, label: Subheading, type: string, required: true }
+              - name: tags
+                label: Extra links (shown after the other premises pages)
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Link text, type: string, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    pattern: "^(/|https://|tel:|mailto:|#)"
+              - { name: note, label: Note under the links, type: text, list: true }
+          - name: comparison
+            label: "How TLB compares (table)"
+            type: object
+            description: "The columns and rows are the shared table under Site settings > Comparison table. The two competitor columns are not yet signed off."
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - name: whoCleansLabel
+                label: "Heading of the \"Who cleans your home\" row on this page"
+                type: string
+                required: true
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
+              - { name: note, label: Note under the towns, type: text, list: true }
+          - name: brandLine
+            component: sectionHeading
+            label: "Easy to book heading (above the brand lines)"
+            description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
+          - { name: brandedFaq, component: faq, label: "Booking a venue clean (FAQs)" }
+          - name: faq
+            component: faq
+            label: "Restaurant and venue cleaning questions (FAQs)"
+            description: "The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the main button."
