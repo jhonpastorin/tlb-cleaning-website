@@ -2590,3 +2590,121 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+      - name: strata-cleaning
+        label: "Strata cleaning"
+        type: file
+        path: src/content/pages/commercial-cleaning/strata-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: ctaLabel
+            label: "Main button text"
+            type: string
+            description: "Used by the hero and the closing block. It links to the quote page set under Site settings > Site-wide buttons. Leave empty to use the site-wide walkthrough button text."
+          - name: hero
+            component: hero
+            description: "Leave the hero's button empty to use the main button above."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
+          - name: areas
+            label: "Every common area (list of links)"
+            type: object
+            description: "Every row is drafted, not confirmed by TLB. The bin room row carries a [Confirm] bracket."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: note, label: Note under the list, type: text }
+              - name: items
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - { name: icon, component: serviceIcon }
+                  - { name: title, label: Title, type: string, required: true }
+                  - { name: description, label: Sentence under the title, type: text, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    required: true
+                    description: A page on this site, starting and ending with a slash, e.g. /commercial-cleaning/
+                    pattern: "^(/|https://)"
+          - { name: binRoom, component: callout, label: "Do not cut the bin room (warning box)" }
+          - { name: binRoomPhoto, component: imageBand, label: "Bin room photo band" }
+          - { name: reporting, component: storyMosaic, label: "Three people read this page (dark mosaic)" }
+          - { name: scopeFailures, component: contentGrid, label: "Three ways a strata scope goes wrong (grid)" }
+          - name: comparison
+            label: "How TLB compares (table)"
+            type: object
+            description: "The column headings are the shared ones under Site settings > Comparison table. The rows are this page's own. The two competitor columns are not yet signed off."
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - name: rows
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Row heading, type: string, required: true }
+                  - { name: description, label: Detail under the row heading, type: text }
+                  - name: values
+                    label: One cell per column, left to right
+                    type: string
+                    list: true
+                    description: Type yes for a tick, no for a cross, or write the text to show.
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - name: related
+            label: "Other premises we clean (links)"
+            type: object
+            description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: subheading, label: Subheading, type: string, required: true }
+              - name: tags
+                label: Extra links (shown after the other premises pages)
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Link text, type: string, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    pattern: "^(/|https://|tel:|mailto:|#)"
+              - { name: note, label: Note under the links, type: text, list: true }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
+              - { name: note, label: Note under the towns, type: text, list: true }
+          - name: brandLine
+            component: sectionHeading
+            label: "Easy to book heading (above the brand lines)"
+            description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
+          - { name: brandedFaq, component: faq, label: "Working with us on your building (FAQs)" }
+          - name: faq
+            component: faq
+            label: "Strata cleaning services, common questions (FAQs)"
+            description: "The legal answer names the Strata Schemes Management Act 2015 (NSW only). Never add a section number, and keep the \"not legal advice\" line. The cost and insurance answers carry [Confirm] brackets."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the main button."
