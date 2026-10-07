@@ -62,6 +62,10 @@ import {
 import { trustBarCards } from '../data/trust';
 import { isNavigableTown, townSlug } from '../data/locations';
 import { regionHero, regionPageBySlug } from '../data/regionPages';
+import { localBusiness } from '../data/business';
+import { z } from 'astro/zod';
+import { loadData } from '../lib/cms-data';
+import * as section from '../lib/cms-schemas';
 
 interface Props {
   /** A slug from regionPages.ts. */
@@ -71,6 +75,73 @@ interface Props {
 const { slug } = Astro.props;
 const region = regionPageBySlug(slug);
 const hero = regionHero(region);
+
+// CONTENT. Each region's own copy (search listing, heading, intro sentence and
+// paragraphs) is in src/content/regions/<slug>.yaml. The copy both region
+// pages share is in src/content/site/region-page.yaml, edited in Pages CMS
+// ("Locations > Region page template"). This file owns the layout. The notes
+// below explain why each section says what it says; they stay here because
+// Pages CMS rewrites the YAML on save and would drop them.
+//
+// The shared copy sits with the site-wide files rather than in
+// src/content/pages/ because every file there must carry its own search
+// listing (src/content/config.ts), and the region pages' listings are each
+// region's own. It is read with loadData(), which validates it the same way.
+//
+// The region reaches the shared copy through placeholders an editor types in
+// any text field, e.g. "Cleaning in {region}." Single braces, so they cannot
+// be confused with the site-wide {{tokens}}. A placeholder this layout does
+// not know fails the build, so a typo never ships as "Cleaning in {regoin}."
+const placeholders: Record<string, string> = {
+  region: region.label,
+  regionAndState: region.headingLabel,
+  state: region.state,
+  townCount: String(region.towns.length),
+};
+
+function fillPlaceholders(value: unknown, path: string): unknown {
+  if (typeof value === 'string') {
+    return value.replace(/(?<!\{)\{(\w+)\}(?!\})/g, (_, name: string) => {
+      const filled = placeholders[name];
+      if (filled === undefined) {
+        throw new Error(
+          `[CMS] src/content/site/region-page.yaml: ${path} uses {${name}}, which the region pages do not fill in. Available: ${Object.keys(
+            placeholders,
+          )
+            .map((key) => `{${key}}`)
+            .join(', ')}`,
+        );
+      }
+      return filled;
+    });
+  }
+  if (Array.isArray(value)) return value.map((item, i) => fillPlaceholders(item, `${path}.${i}`));
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, fillPlaceholders(item, path ? `${path}.${key}` : key)]),
+    );
+  }
+  return value;
+}
+
+const page = loadData(
+  'site/region-page',
+  z.preprocess(
+    (raw) => fillPlaceholders(raw, ''),
+    z.object({
+      // The heading, intro sentence and photo are the region's own.
+      hero: section.hero.pick({ kicker: true, cta: true }),
+      // The paragraphs are the region's own `intro`.
+      definition: section.textBlock.omit({ body: true }),
+      // The six services come from the site-wide service list.
+      services: section.sectionIntro,
+      // The towns are the region's, worked out in code (see below).
+      towns: section.tagCloud.omit({ tags: true }),
+      faq: section.faq,
+      closingCta: section.callToAction,
+    }),
+  ),
+);
 
 const pageMeta = {
   title: region.meta.title,
@@ -83,13 +154,10 @@ const pageMeta = {
 // the /locations/ hub carries the wide three-region string instead. Every
 // other field is empty, inherited from every page built before these; one
 // fix in one place would fill the whole site's structured data and nobody
-// has supplied the details yet.
+// has supplied the details yet. The address carries the region's state, so
+// it replaces the empty site-wide one.
 const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
+  ...localBusiness({ description: pageMeta.description, areaServed: `${region.headingLabel}` }),
   address: {
     streetAddress: '',
     addressLocality: '',
@@ -97,9 +165,6 @@ const business = {
     postalCode: '',
     addressCountry: 'AU',
   },
-  sameAs: [],
-  areaServed: `${region.headingLabel}`,
-  description: pageMeta.description,
 };
 
 // The town pills. Every town in the region is NAMED; only a navigable one is
@@ -149,33 +214,7 @@ const serviceItems = serviceLinks.map((service) => ({
 // and the hub's version now covers the same full list. If TLB does
 // charge for the outer reaches, this is the first answer to fix and it is
 // wrong on four pages, not one.
-const faqItems = [
-  {
-    question: `Do you clean every town in ${region.label}?`,
-    answer: `Every town on this page, yes. If your suburb is not named here, ask anyway — the list is where we work regularly, not a fence. We would rather tell you straight than have you guess from a map.`,
-  },
-  {
-    question: 'Is there a travel charge for the outer towns?',
-    answer:
-      'No. The price is the same wherever you are on this page. [CONFIRM] — this promise is made on every location page on the site and has not been confirmed operationally.',
-  },
-  {
-    question: 'Do you work across the border?',
-    answer:
-      'Yes. We work both sides of the Tweed, which is unusual — most cleaners pick a state. It matters most at the end of a lease, when the paperwork changes even though the cleaning does not.',
-  },
-  {
-    question: 'Can I get the same cleaner each visit?',
-    answer:
-      'That is how regular cleaning is set up: a set day and the same team, so nobody has to be talked through your house twice. One-off and end-of-lease jobs are scheduled around the date you need rather than a standing slot.',
-  },
-];
 
-const closingCta = {
-  heading: `Get a quote for ${region.label}.`,
-  lead: 'Tell us the suburb and what needs doing. We will come back with a price and a day, not a call centre.',
-  cta: quoteCta,
-};
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -194,10 +233,10 @@ const closingCta = {
         never depends on the photo's own contrast. */}
     <Hero
       variant="full-width-photo"
-      kicker="Areas we clean"
+      kicker={page.hero.kicker}
       headingLines={region.headingLines}
       lead={region.lead}
-      cta={quoteCta}
+      cta={page.hero.cta ?? quoteCta}
       image={{ ratio: '16/9', label: hero.label, src: hero.src }}
     />
 
@@ -206,8 +245,10 @@ const closingCta = {
     <TextBlock
       theme="light"
       align="left"
-      heading={`Cleaning in ${region.label}.`}
+      heading={page.definition.heading}
       body={region.intro}
+      cta={page.definition.cta}
+      backgroundImage={page.definition.backgroundImage}
     />
 
     {/* `list` variant rather than the homepage's image tiles, same call the
@@ -215,25 +256,26 @@ const closingCta = {
         that the photo was taken in this region. */}
     <ServiceBlocks
       variant="list"
-      heading={`What we do across ${region.label}`}
-      lead="Every service below is available in every town on this page."
+      heading={page.services.heading}
+      lead={page.services.lead}
       items={serviceItems}
     />
 
     <TagCloud
-      heading={`Towns we clean in ${region.label}`}
-      subheading={`${region.towns.length} towns and suburbs, ${region.headingLabel}.`}
+      heading={page.towns.heading}
+      subheading={page.towns.subheading}
       tags={townTags}
-      note={["If a suburb isn't listed, ask us anyway."]}
+      note={page.towns.note}
     />
 
-    <Faq heading={`Cleaning in ${region.label}: your questions`} items={faqItems} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? quoteCta}
     />
   </main>
 

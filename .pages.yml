@@ -1781,6 +1781,65 @@ content:
             label: Closing call to action
             description: "Placeholders: {town}, {region}, {regionName}, {state}."
 
+      - name: region-template
+        label: Region page template (both region pages)
+        type: file
+        path: src/content/site/region-page.yaml
+        format: yaml
+        fields:
+          - name: hero
+            label: Hero (top of the page)
+            type: object
+            description: "Shared by both region pages. Each region's heading, intro sentence and paragraphs are under Locations > Region pages. Type {region} for the region with \"the\" (the Northern Rivers), {regionAndState} for it with its state (Northern Rivers NSW), {state} for NSW or QLD and {townCount} for its number of towns. These work in any text on this page; a misspelt one stops the site from publishing."
+            fields:
+              - name: kicker
+                label: Small label above the heading
+                type: string
+              - name: cta
+                component: link
+                label: Button (leave empty to use the page's usual button)
+          - name: definition
+            label: "Intro heading (under the trust bar)"
+            type: object
+            description: "The paragraphs are each region's own, under Locations > Region pages. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+              - name: cta
+                component: link
+                label: Button (optional)
+              - name: backgroundImage
+                component: backgroundPhoto
+          - name: services
+            component: sectionIntro
+            label: What we do across the region (list of services)
+            description: "The six services and their sentences are edited under Site settings > Menus > Our services. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+          - name: towns
+            label: Towns we clean in the region
+            type: object
+            description: "The towns are the region's own; which ones link to a page is set under Locations > Live towns and region photos. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+                required: true
+              - name: subheading
+                label: Subheading
+                type: string
+                required: true
+              - name: note
+                component: paragraphList
+                label: Note under the towns
+          - name: faq
+            component: faq
+            label: FAQs
+            description: "The travel charge answer is a promise TLB has not yet confirmed, and it still shows its [CONFIRM] note to readers. Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+          - name: closingCta
+            component: callToAction
+            label: Closing call to action
+            description: "Placeholders: {region}, {regionAndState}, {state}, {townCount}."
+
 
   - name: house-cleaning-pages
     label: House cleaning
