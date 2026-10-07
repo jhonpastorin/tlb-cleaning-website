@@ -1094,6 +1094,43 @@ content:
             label: "FAQs"
             description: "Four answers are still the brief's suggested wording, waiting for Teagan to confirm: same cleaner every time, how long a house clean takes, weekly or fortnightly, and extra charges for inland towns."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: about
+        label: About
+        type: file
+        path: src/content/pages/about.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: The photo also sits faintly behind the trust bar and the intro below it. Check the text there is still easy to read after changing it.
+          - { name: definition, component: textBlock, label: "Intro (under the trust bar)" }
+          - { name: statement, component: textBlock, label: "One-line statement (dark band)" }
+          - name: story
+            component: storyMosaic
+            label: "How TLB started"
+            description: Teagan's portrait is an empty, labelled slot until a real photo of her arrives, with her permission. Never use a generated or stock portrait.
+          - name: values
+            component: textGrid
+            label: "What we actually mean by local"
+            description: "\"Employed, not subcontracted\" is a claim with legal weight. Keep it only while it is true of every current team member."
+          - { name: wordOfMouth, component: textBlock, label: "Grown by word of mouth (dark band)" }
+          - name: team
+            component: photoGallery
+            label: "The team (hidden on the site for now)"
+            description: Hidden until real photos of the team exist, with each person's written consent. Never use generated or stock faces.
+          - name: introduction
+            component: callout
+            label: "Meet your cleaner first (callout)"
+            description: This promises an introduction on every new booking. Change it if that stops being true.
+          - { name: moreAbout, component: sectionIntro, label: "More about how we work (links to the team pages)" }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: Questions about insurance and police checks are held back on purpose. Add them only once the policy and the check are confirmed, and say exactly what they are.
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
 
   - name: site-settings
     label: Site settings
