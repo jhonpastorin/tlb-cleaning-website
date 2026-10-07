@@ -73,13 +73,8 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // apron in a forklift aisle would be a photo of something that must not
 // happen. The amenities frames keep the apron, because a crib room is not a
 // traffic zone — which is itself the §6 argument in miniature.
-import heroImg from '../../assets/commercial_cleaning/premises/warehouse-cleaner-with-a-floor-scrubber-in-a-storage-aisle.jpg';
-import dockImg from '../../assets/commercial_cleaning/premises/warehouse-loading-dock-swept-and-clear.jpg';
-import lunchroomImg from '../../assets/commercial_cleaning/premises/warehouse-mezzanine-office-and-lunchroom-cleaned.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -104,7 +99,11 @@ import {
 import { locationGroups, locationSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 // §0 Metadata. Title and description are the SIGNED-OFF workbook text
 // (Keyword Mapping & Metadata, sheet 1 row 37), reproduced verbatim. The old
@@ -126,13 +125,9 @@ import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from 
 //   'Commercial Warehouse & Industrial Cleaning | TLB Cleaning'
 // Until that is decided, the eyebrow label in §1 is the only thing above the
 // fold still naming half the service, which is why it is left alone.
-const pageMeta = {
-  title: 'Commercial Warehouse Cleaning Services | TLB Cleaning',
-  description:
-    'Warehouse and industrial cleaning for amenities, offices, floors and racking, scheduled around your shifts. Talk to us about your site today.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/warehouse-and-industrial-cleaning/',
-};
+//
+// In `pageMeta`, on `canonical`:
+// ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
 
 // Brief §7. The approved workbook CTA is the full sentence `Talk to us about
 // your site today`, which at 32 characters is long for a button: per Rule 4
@@ -149,8 +144,6 @@ const pageMeta = {
 //
 // No BFD 13.2 conflict on this page: there is no `Get an instant quote` on it
 // and the pricing block promises a walkthrough and a written scope.
-const walkthroughCta = { label: 'Talk to us about your site', href: quoteCta.href };
-const primaryCtaSentence = 'Talk to us about your site today.';
 
 // §1 Hero. `split-single-image`, image right, matching the rest of the
 // commercial cluster. `imageFocus="86%"` because the cleaner stands about 70%
@@ -158,49 +151,37 @@ const primaryCtaSentence = 'Talk to us about your site today.';
 // her to the left of the panel. 86% puts her in the middle of it.
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED, and note the hi-vis exception above.
-const hero = {
-  kicker: 'Warehouse and industrial cleaning',
-  // Brief §4. The mapped primary `commercial warehouse cleaning services`
-  // (60/mo) appeared nowhere in the old H1, and the H1 is scored present or
-  // absent. Region is the extension, because this is the only heading slot on
-  // the page that can carry it and the page otherwise never says where it
-  // works above the fold.
-  //
-  // The old line — the best single sentence on the page — is not cut. It opens
-  // the lead, because it works as a flat contradiction of an assumption and
-  // adding six words to it kills the timing.
-  headingLines: ['Commercial warehouse cleaning services', 'across the Northern Rivers and the Tweed'],
-  // Brief §5. Rule 5's second slot, which this page did not have. Its
-  // extension is the PRICING STRUCTURE rather than the H1's region, and it
-  // puts the page's central commercial argument above the fold: the floor and
-  // the amenities are two different jobs and a good quote prices them
-  // separately. The body says that three times and never before the scroll.
-  subheading: 'Commercial warehouse cleaning services priced by zone, floor and amenities separately',
-  // Brief §6. The region comes out because the new H1 carries it. "Amenities
-  // done properly" becomes "the crib room and bathrooms done daily", which is
-  // more specific and matches the section the page argues hardest, and "a
-  // scope that says which is which" gains "written", which is the word the
-  // pricing block relies on.
-  lead:
-    `A concrete floor is not a mopping job. Aisles machine scrubbed, racking and docks cleared, the crib room and bathrooms done daily, and a written scope that says which is which. ${theLine.fast}`,
-  cta: walkthroughCta,
-  image: {
-    ratio: '16/9',
-    label:
-      'A cleaner in a high-visibility vest walking a compact floor scrubbing machine down a wide aisle in a bright, tidy warehouse',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on `headingLines`:
+// Brief §4. The mapped primary `commercial warehouse cleaning services`
+// (60/mo) appeared nowhere in the old H1, and the H1 is scored present or
+// absent. Region is the extension, because this is the only heading slot on
+// the page that can carry it and the page otherwise never says where it
+// works above the fold.
+//
+// The old line — the best single sentence on the page — is not cut. It opens
+// the lead, because it works as a flat contradiction of an assumption and
+// adding six words to it kills the timing.
+// In `hero`, on `subheading`:
+// Brief §5. Rule 5's second slot, which this page did not have. Its
+// extension is the PRICING STRUCTURE rather than the H1's region, and it
+// puts the page's central commercial argument above the fold: the floor and
+// the amenities are two different jobs and a good quote prices them
+// separately. The body says that three times and never before the scroll.
+// In `hero`, on `lead`:
+// Brief §6. The region comes out because the new H1 carries it. "Amenities
+// done properly" becomes "the crib room and bathrooms done daily", which is
+// more specific and matches the section the page argues hardest, and "a
+// scope that says which is which" gains "written", which is the word the
+// pricing block relies on.
 
 // §2 Definition. Answer-target block. Paragraph two names the split that the
 // rest of the page is built on and that most quotes silently get wrong.
-const definitionBody: TextBlockBody[] = [
-  // Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
-  // points and needs the mapped phrase inside the first two sentences. Four
-  // words changed does it; the scope list is untouched.
-  'Commercial warehouse cleaning services cover the scheduled cleaning of a storage, distribution or light-industrial site: the floor and aisles, racking and shelving, the loading dock and hardstand, mezzanine offices, and the crib room, bathrooms and locker areas your team uses every shift. TLB Cleaning does this work across the Northern Rivers and the Tweed.',
-  'It is two jobs in one contract and they have almost nothing in common. The floor is a machine job on a large area with a forklift moving through it, priced on square metres and access. The amenities are a small, detailed, daily job priced on fixtures. Quotes get compared badly because one contractor has assumed the amenities are included and another has not, so the useful thing to settle first is which of the two you are actually buying.',
-];
+//
+// In `definitionBody`, on paragraph 1:
+// Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
+// points and needs the mapped phrase inside the first two sentences. Four
+// words changed does it; the scope list is untouched.
 
 // §3 The boundary. `warning`, and FIRST — before any scope.
 //
@@ -224,13 +205,6 @@ const definitionBody: TextBlockBody[] = [
 //     Correct, and the most important of the four.
 //   - Safe Work Australia and SafeWork NSW are the right primary sources, and
 //     the brand foundation document (§3.3) already approves them.
-const boundaryCallout = {
-  heading: 'Four things we will say no to, and you should want us to.',
-  body: [
-    'Working at height. Dusting the top of racking, cleaning high-bay light fittings or getting to the underside of a roof needs an elevating work platform and the training and licensing that goes with operating one, plus a fall-prevention plan for the site. [Whether TLB will do any work at height. Confirm, the likely honest answer is no.] Driving your forklift or a reach truck to get us up there is not a workaround; that needs a high risk work licence.',
-    'Racking inspection, and spills of anything we cannot identify. A cleaner who notices a bent upright should tell you, and ours will, but a racking inspection is an engineering assessment and no cleaning contract substitutes for one. And if something has leaked and nobody can tell us what it is, we stop and we come and find you. Your emergency procedure and the Safety Data Sheet decide what happens next, not a mop and a guess. A contractor who cleans it up anyway is doing you harm with good intentions.',
-  ],
-};
 
 // §4 Scope, grouped BY ZONE — floor, racking, dock, amenities, office,
 // periodic. That is the grouping a warehouse manager walks the site in, and
@@ -240,45 +214,9 @@ const boundaryCallout = {
 // ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
 // The floor item carries the biggest bracket on the page: without a machine,
 // this page is not honest.
-const zoneItems = [
-  {
-    icon: 'office' as const,
-    title: 'The floor: machine scrubbed, not mopped',
-    description:
-      // ⚠️ THE bracket. See the file header.
-      'Aisles and open floor swept then scrubbed with a walk-behind or ride-on autoscrubber, which lifts the tyre rubber, dust and film that a mop just redistributes. Line markings and pedestrian walkways done rather than skipped. [Whether TLB owns or hires an autoscrubber, and what area it can cover in a shift. Confirm.] A mop on two thousand square metres of concrete is not a service.',
-  },
-  {
-    icon: 'chart-bars' as const,
-    title: 'Racking, shelving and stock surfaces',
-    description:
-      'Beam faces, upright bases, the accessible levels of shelving and the tops of anything reachable from the ground. Dust on racking is not cosmetic in a food, pharmaceutical or electronics warehouse and it is a pest harbourage everywhere else. Anything above safe reach from the floor needs an EWP and is not part of this scope.',
-  },
-  {
-    icon: 'key' as const,
-    title: 'Loading dock and hardstand',
-    description:
-      'Dock apron and edge swept, pallet wrap and strapping cleared, dock levellers and the edge plate cleaned, drains checked clear, and the hardstand outside swept. Concrete in this region goes dark with algae through a wet season, so the apron needs pressure cleaning periodically rather than sweeping.',
-  },
-  {
-    icon: 'target' as const,
-    title: 'Crib room, bathrooms and lockers',
-    description:
-      'Tables and benches, kitchenette and sink, microwave and fridge inside and out, bins emptied and relined, bathrooms cleaned and disinfected and restocked, locker tops and the floor mopped. Daily, not weekly. This is the section this page argues hardest for and the one every quote thins out first.',
-  },
-  {
-    icon: 'suitcase' as const,
-    title: 'Mezzanine and front office',
-    description:
-      'Desks, floors, kitchenette, bathrooms and the internal glass looking down onto the floor, which shows every mark from both sides. Reception and the visitor area, because that is where a customer forms their view of how the operation is run before they see any of it.',
-  },
-  {
-    icon: 'spark' as const,
-    title: 'Periodically, booked to a shutdown',
-    description:
-      'Deep floor scrub or re-seal where the concrete needs it, pressure cleaning the dock and hardstand, high dusting within safe reach, internal and external glass at ground level, and vents. Booked into a shutdown or a stocktake weekend, because none of it fits around a live pick face.',
-  },
-];
+//
+// In `zoneItems`, on "The floor: machine scrubbed, not mopped" (description):
+// ⚠️ THE bracket. See the file header.
 
 // §5 The amenities argument. `ContentGrid columns={2}` with an `image` cell —
 // THE ONLY USE OF ContentGrid's `image` cell type IN THE CLUSTER, and it is
@@ -287,38 +225,6 @@ const zoneItems = [
 //
 // This is the asymmetry the file header describes: the floor got six lines in
 // §4, and the smallest zone gets its own section.
-const amenitiesBlocks = [
-  {
-    type: 'text' as const,
-    heading: 'The crib room is not the small line',
-    body: [
-      'On a warehouse quote the amenities are usually a rounding error against the floor, so they are the first thing trimmed when a price needs to come down. Then they are cleaned three times a week instead of daily, and within a month the crib room is the thing your team talks about. Nobody complains about the floor. They complain about the microwave, the bathroom, and the fridge nobody has emptied since March.',
-      'That matters more on an industrial site than almost anywhere, because the amenities are the entire non-working experience of the shift. A picker spends eight hours in a space with no windows and one room to eat in. Cleaning that room properly, every day, is one of the least expensive retention levers on the site, and it costs a fraction of what the floor does.',
-    ],
-  },
-  {
-    type: 'image' as const,
-    ratio: '4/3',
-    label:
-      'A cleaner wiping down the table of a clean, empty staff lunchroom on a warehouse mezzanine, the warehouse floor visible through the window behind her',
-    src: lunchroomImg,
-  },
-  {
-    type: 'image' as const,
-    ratio: '4/3',
-    label:
-      'A cleaner in a high-visibility vest sweeping the concrete apron of a clean, empty warehouse loading dock with the roller door up',
-    src: dockImg,
-  },
-  {
-    type: 'text' as const,
-    heading: 'The dock is where your housekeeping is judged',
-    body: [
-      'The other zone that gets under-scoped is the dock, and it is the one every visitor sees. Drivers, customers, auditors and your own insurer form a view of how the site is run from the state of the apron: whether there is pallet wrap blowing around, whether the drains are clear, whether the edge plate is buried under debris.',
-      'It is also a genuine safety zone rather than a presentation one. Strapping and wrap on a dock floor is a slip and a trip hazard in the one place on site where people work alongside moving vehicles, and a blocked drain on an apron in this region means water across that same floor within an hour of a storm.',
-    ],
-  },
-];
 
 // §6 "Worth knowing". The lever here is that a warehouse floor and a
 // warehouse's dust are both safety items rather than cosmetic ones, which
@@ -338,10 +244,6 @@ const amenitiesBlocks = [
 //     deliberately hedged to the settings where it applies.
 //   - Sealed concrete deteriorates faster under tyre rubber and abrasive dust
 //     if not cleaned; re-sealing is a capital cost. Correct in substance.
-const worthKnowingBody: TextBlockBody[] = [
-  'A warehouse floor is a safety item, not a presentation one, and that changes who should be signing off the cleaning scope. Slips and trips are among the most common causes of workplace injury in the country, and on a concrete floor the mechanism is almost always the same: a film of tyre rubber, dust and moisture that a mop spreads rather than removes, in a building where people walk alongside forklifts. A machine-scrubbed floor is not a tidier floor. It is a floor with more grip.',
-  'Dust does two things worth budgeting for. In the wrong setting — timber, grain, flour, some plastics and metals — accumulated combustible dust on racking and roof structure is a recognised fire and explosion risk, and it is exactly the dust nobody can reach without an EWP. Everywhere else it is quieter and slower: abrasive dust and tyre rubber ground into sealed concrete shortens the life of the seal, and re-sealing a warehouse floor is a capital job that comes out of a different budget than cleaning does. A business has a duty to provide and maintain a work environment without risks to health and safety, and on an industrial site housekeeping is a large part of how that duty is actually met.',
-];
 
 // §7 Related pages. Factories is the nearest neighbour and construction the
 // second, since a new industrial unit gets a builders clean before it gets a
@@ -351,41 +253,12 @@ const relatedTags = relatedPremises('/commercial-cleaning/warehouse-and-industri
 
 // §9 Branded FAQs, in the CUSTOMER'S voice — a warehouse, operations or site
 // manager.
-const brandedFaqItems = [
-  {
-    question: 'Can your team meet our site induction?',
-    answer:
-      // ⚠️ Real bracket. An industrial site will not let anyone past the
-      // gate without this.
-      'They have to, and it should be a condition of the contract rather than a formality. Most industrial sites require a site-specific induction, a sign-in, high-visibility clothing and safety footwear as a minimum, and some require more. [What inductions, tickets and PPE TLB’s team can meet, and whether that includes a general construction induction card. Confirm.] Tell us your requirements at the walkthrough and we will tell you honestly what we hold.',
-  },
-  {
-    question: 'When would you be on site, if we run two shifts?',
-    answer:
-      'In whatever gap genuinely exists, and if there is not one, zone by zone around live work. Amenities can be done between shifts because they empty out. Floor scrubbing needs an aisle with nothing moving in it, so it gets done aisle by aisle in your quietest window rather than in one pass. If you run around the clock, the floor becomes a weekend or shutdown job and we will say so rather than promise a nightly pass.',
-  },
-  {
-    question: 'Do you do the floor with a machine?',
-    answer:
-      // ⚠️ Same bracket as §4. This is the page's honesty test.
-      'That is the right question to ask every contractor quoting you, because it is the difference between a service and an appearance. [Whether TLB owns or hires an autoscrubber, and the area it covers in a shift. Confirm.] A mop and bucket on a warehouse floor moves the tyre rubber and dust film around instead of lifting it, which is why a mopped concrete floor can look wet-clean and still be slippery.',
-  },
-  {
-    question: 'Can you work around forklifts?',
-    answer:
-      'We work around them by not being in the same aisle at the same time, which is a scheduling answer rather than a bravery one. Our team stays in pedestrian walkways, wears high-visibility clothing, and clears an aisle with your supervisor before working in it. What we will not do is drive your plant, ride on it, or work under a raised load. None of those are negotiable.',
-  },
-  {
-    question: 'Will you clear the pallet wrap and strapping?',
-    answer:
-      'Yes, that is part of the dock and floor scope, and it is one of the best-value lines on it: wrap and strapping on a floor is a trip hazard in the one part of the site where people and vehicles share space. Where it goes matters though. It gets bagged and put in your waste stream, and if you want it taken off site or separated for recycling, that goes on the scope with its own price.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We walk the site with you and look at four things: the floor and how much of it a machine can actually reach, the racking, the dock, and the crib room and bathrooms. Then you get a written scope split by zone with a frequency against each, a price per visit, and the periodic work booked to a shutdown. No obligation.',
-  },
-];
+//
+// In `brandedFaqItems`, on "Can your team meet our site induction?" (answer):
+// ⚠️ Real bracket. An industrial site will not let anyone past the
+// gate without this.
+// In `brandedFaqItems`, on "Do you do the floor with a machine?" (answer):
+// ⚠️ Same bracket as §4. This is the page's honesty test.
 
 // §10 Non-branded FAQs, the long-tail block.
 //
@@ -400,47 +273,60 @@ const brandedFaqItems = [
 //     hedged.
 //   - Forklift operation requires a high risk work licence in NSW. Correct.
 //   - No dollar figure anywhere, same as every sibling page.
-const nonBrandedFaqItems = [
-  {
-    question: 'How much does warehouse cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
-      'The floor is usually priced per square metre and the amenities per visit, and a good quote shows them separately so you can see what you are buying. The number moves with how much of the floor a machine can actually reach around racking and stock, how many bathrooms and crib rooms there are, whether the dock and hardstand are included, and whether there is a gap in your shifts. [TLB’s pricing basis. Confirm.]',
-  },
-  {
-    question: 'How often should a warehouse floor be cleaned?',
-    answer:
-      'Aisles and pedestrian walkways weekly to fortnightly for a normal storage site, and daily to weekly for a busy distribution centre or anywhere handling food. The driver is forklift traffic rather than floor area, because tyre rubber and the dust it grinds in are what actually build up. Amenities and bathrooms are daily regardless of how quiet the floor is.',
-  },
-  {
-    question: 'Why use a floor scrubber instead of a mop?',
-    answer:
-      'Because a mop and a scrubber do different things. A scrubber applies solution, agitates the floor with a brush or pad, and vacuums the dirty water straight back off, so the soil leaves the building. A mop puts solution down, moves the soil around in it, and leaves most of it behind in a thin film as the floor dries. On a large sealed concrete floor that film is what makes a "clean" floor slippery.',
-  },
-  {
-    question: 'Is warehouse cleaning a work health and safety requirement?',
-    answer:
-      'Not as a named task, but the outcome is. A business has a primary duty under the model work health and safety laws to provide and maintain a work environment without risks to health and safety, and on an industrial site housekeeping is a large part of how that is met: clear walkways, floors with grip, dock aprons without trip hazards, drains that are not blocked. Your regulator, SafeWork NSW, is the right primary source. This is general information, not safety advice.',
-  },
-  {
-    question: 'Is dust in a warehouse a fire risk?',
-    answer:
-      'It can be, and it depends what the dust is. In sites handling timber, grain, flour, sugar, some plastics and some metals, accumulated combustible dust on racking, ledges and roof structure is a recognised fire and, in the right conditions, explosion risk. In a general storage warehouse it is a pest and product-contamination issue rather than a fire one. Either way the dust that matters most is usually the dust nobody can reach without an elevating work platform.',
-  },
-  {
-    question: 'Can a cleaner clean high-level racking?',
-    answer:
-      'Not from the floor, and not from a forklift. Anything beyond safe reach needs an elevating work platform, which requires appropriate training to operate and, above certain machine types, a high risk work licence, plus a fall-prevention plan for the site. Riding a pallet on a forklift to get up there is unlawful and is how people die in warehouses. High-level work is a separate specialist engagement, usually booked into a shutdown.',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "How much does warehouse cleaning cost?" (answer):
+// ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
 
 // §11 Closing CTA.
-const closingCta = {
-  kicker: 'Warehouse and industrial cleaning',
-  heading: 'We will look at the crib room too.',
-  lead: `A walk of the site at the floor, the racking, the dock and the amenities. Then a written scope split by zone, with the floor and the amenities priced separately so you can see both. ${primaryCtaSentence}`,
-  cta: walkthroughCta,
+// The closing lead ends on the full approved CTA sentence, which used to be
+// a separate constant (`primaryCtaSentence`). It is now part of that lead in
+// the content file.
+
+// CONTENT lives in src/content/pages/commercial-cleaning/warehouse-and-industrial-cleaning.yaml
+// and is edited in Pages CMS ("Warehouse and industrial cleaning"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning/warehouse-and-industrial-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of the page's main button. It links to the quote page in Site
+    // settings. Empty falls back to the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    boundary: section.callout,
+    scope: section.iconGrid,
+    amenities: section.contentGrid,
+    worthKnowing: section.textBlock,
+    // The pills are the other premises pages, from Site settings.
+    related: section.tagCloud.omit({ tags: true }).extend({ note: section.optional(z.array(section.text)) }),
+    reviews: section.sectionHeading,
+    // The subheading falls back to the shared service-area line, and the towns
+    // come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }).extend({ subheading: section.optional(section.text) }),
+    // Heading only. The paragraphs are the shared brand lines.
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/warehouse-and-industrial-cleaning/',
 };
+
+const walkthroughCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '16/9');
+
+const amenitiesBlocks = page.amenities.items.map((item) =>
+  item.type === 'image' ? { type: 'image' as const, ...sized(item.image, '4/3') } : item,
+);
 
 const business = commercialBusiness(pageMeta.description);
 ---
@@ -459,28 +345,35 @@ const business = commercialBusiness(pageMeta.description);
       variant="split-single-image"
       imagePosition="right"
       imageFocus="86%"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      subheading={hero.subheading}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? walkthroughCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
     {/* §3 — the four refusals, before any scope. On an industrial site the
         dangerous contractor is the one who says yes to everything. */}
-    <Callout tone="warning" heading={boundaryCallout.heading} body={boundaryCallout.body} />
+    <Callout tone="warning" heading={page.boundary.heading} body={page.boundary.body} cta={page.boundary.cta} />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What our commercial warehouse cleaning services cover, zone by zone"
-      lead="Grouped by zone, in the order you would walk the site. The floor and the amenities are two different jobs and a good quote prices them separately."
-      items={zoneItems}
+      heading={page.scope.heading}
+      lead={page.scope.lead}
+      note={page.scope.note}
+      items={page.scope.items}
       cta={walkthroughCta}
     />
 
@@ -488,18 +381,15 @@ const business = commercialBusiness(pageMeta.description);
         Array order is the layout, so this reads text / photo / photo / text:
         the crib room argument beside the crib room, then the dock beside the
         dock. The asymmetry with §4 is deliberate — see the file header. */}
-    <ContentGrid
-      heading="The two zones every quote thins out"
-      lead="Both are small against the floor. Both are what your team and your visitors actually judge the site on."
-      columns={2}
-      blocks={amenitiesBlocks}
-    />
+    <ContentGrid heading={page.amenities.heading} lead={page.amenities.lead} columns={2} blocks={amenitiesBlocks} />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="A machine-scrubbed floor is a floor with more grip"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
@@ -513,19 +403,19 @@ const business = commercialBusiness(pageMeta.description);
         pages. */}
 
     <TagCloud
-      heading="Other premises we clean"
-      subheading="Commercial cleaning for every kind of site across the Northern Rivers and the Tweed."
+      heading={page.related.heading}
+      subheading={page.related.subheading}
       tags={relatedTags}
-      note={[]}
+      note={page.related.note ?? []}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading={locationSubheading}
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading ?? locationSubheading}
       groups={locationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -541,7 +431,7 @@ const business = commercialBusiness(pageMeta.description);
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
@@ -552,15 +442,15 @@ const business = commercialBusiness(pageMeta.description);
         its siblings and keeps the exact primary out of a fourth heading slot.
         The second heading stays: it carries "warehouse cleaning" but has
         neither "commercial" nor "services", so it is not a fourth instance. */}
-    <Faq heading="Booking a warehouse clean" items={brandedFaqItems} />
-    <Faq heading="Warehouse Cleaning FAQs" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? walkthroughCta}
     />
   </main>
 
