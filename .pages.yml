@@ -2719,3 +2719,493 @@ content:
             label: "FAQs: property management cleaning"
             description: "The answer on whether a tenant can be required to use a professional cleaner is general information about tenancy law in two states. Do not add a specific rule without a compliance check."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+
+  - name: guide-pages
+    label: Guides
+    type: group
+    items:
+      - name: guides-index
+        label: Guides (hub)
+        type: file
+        path: src/content/pages/guides/index.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: intro
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it. The second paragraph repeats what the end of lease law guide says about cleaning receipts: keep the two in step, and do not change it without re-checking the current NSW and QLD rules."
+          - { name: tenancyGuides, component: sectionIntro, label: "End of lease and tenancy guides (heading)", description: "The guides listed under it come from Site settings > Cross-links: guides." }
+          - { name: homesGuides, component: sectionIntro, label: "Homes, hosting and commercial guides (heading)", description: "The guides listed under it come from Site settings > Cross-links: guides." }
+          - { name: services, component: sectionIntro, label: "Or go straight to the service (heading)", description: "The six services listed under it come from Site settings > Menus > Our services." }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: guide-what-the-law-actually-says
+        label: "What the law actually says (NSW and QLD)"
+        type: file
+        path: src/content/pages/guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "States the legal standard in both states (\"the condition at the start, fair wear and tear excepted\"). Do not change that wording without re-checking the current NSW and QLD tenancy agreements. The \"Last reviewed\" line under these paragraphs is set in Site settings > Cross-links: guides; update it only after re-checking the page. The background photo also sits behind the trust bar: check the text is still easy to read after changing it."
+          - name: disclaimer
+            component: callout
+            label: "This is a guide, not legal advice (box)"
+            description: "The page's legal disclaimer. Keep it, and keep it near the top."
+          - name: stateTable
+            component: comparisonTable
+            label: "NSW and QLD side by side (table)"
+            description: "Every cell is a legal fact: the Acts, the regulators, who holds the bond, the condition report forms (QLD Form 1a and Form 14a) and the tribunals. Do not change a cell without re-checking it on the regulator's own website. Never add timeframes or dollar amounts."
+          - name: wearDamageDirt
+            component: textGrid
+            label: "Wear, damage, dirt (four boxes)"
+            description: "Examples of a principle, not rulings. Never say a reader will not be charged for something: whether a mark is wear or damage is for a tribunal to decide."
+          - name: professionalCleaning
+            component: callout
+            label: "\"Professional cleaning required\" (warning box)"
+            description: "The NSW rule in the second paragraph (a carpet cleaning or fumigation term only where the tenant was allowed an animal) depends on current law. Do not change it without re-checking the current Residential Tenancies Regulation and the standard form agreement. Explain, never advise: the page does not tell readers to refuse a clause."
+          - name: regulators
+            label: "Where to check (links to the regulators)"
+            description: "Each row links to the regulator's home page on purpose, because deeper links break. Check every link still works after editing. The third row is a placeholder pointing at NSW Fair Trading until the real NSW and QLD tenant advice services are confirmed."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: note, label: Note under the list, type: text }
+              - name: items
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - { name: icon, component: serviceIcon }
+                  - { name: title, label: Title, type: string, required: true }
+                  - { name: description, label: Sentence under the title, type: text, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    required: true
+                    description: "A full https:// address, or a page on this site starting with a slash."
+                    pattern: "^(/|https://)"
+          - name: bond
+            component: textBlock
+            label: "What actually happens to the bond (dark band)"
+            description: "Process only, as it works in both states. Never add time limits, amounts or entitlements: they differ by state and change without notice."
+          - { name: practical, component: textBlock, label: "So what does this mean for your move?" }
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "The first, third, fourth and fifth answers state what NSW and QLD tenancy law says. Do not change them without re-checking the current rules."
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Never promise bond back, a pass or a refund, here or anywhere on the page."
+      - name: guide-the-end-of-lease-cleaning-checklist
+        label: "The end of lease checklist"
+        type: file
+        path: src/content/pages/guides/the-end-of-lease-cleaning-checklist.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: howTo, component: callout, label: "Do two things before you start (box)" }
+          - { name: order, component: textBlock, label: "Work in this order (dark band)" }
+          - name: checklist
+            component: textGrid
+            label: "The checklist, room by room"
+            description: "Tenants hold TLB to a published checklist, so check every line with whoever quotes these jobs. It must agree with the inclusions on the End of lease cleaning page. Carpets, outside windows, balconies and garages appear here but are quoted separately: the warning box below says so, keep the two in step."
+          - name: markedFirst
+            component: iconGrid
+            label: "The six lines that get marked first"
+            description: "The button under the grid is the site-wide quote button."
+          - name: notCleaning
+            component: callout
+            label: "Some of this list is not cleaning (warning box)"
+            description: "Keep the separately quoted jobs in step with the End of lease cleaning page. Never promise a bond back or a pass."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - { name: faq, component: faq, label: "FAQs" }
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Never promise bond back, a pass or a refund, here or anywhere on the page."
+      - name: guide-how-much-does-end-of-lease-cleaning-cost
+        label: "What a bond clean costs"
+        type: file
+        path: src/content/pages/guides/how-much-does-end-of-lease-cleaning-cost.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The last sentence commits TLB to quoting against the published task list before work starts, as the End of lease cleaning page does. If that stops being true, change both pages together. The background photo also sits behind the trust bar: check the text is still easy to read after changing it."
+          - name: priceDrivers
+            component: textGrid
+            label: "What moves the price, in order (six boxes)"
+            description: "Listed by how much each one moves a quote. Reorder them if TLB's own quoting weighs them differently."
+          - name: quoteTable
+            component: comparisonTable
+            label: "Why one quote is half the other (table)"
+            description: "The first column (highlighted) describes how TLB quotes: every claim in it is a commitment also made on the End of lease cleaning page and in the site-wide comparison table. The second column describes a type of quote. Never name a competitor."
+          - name: pricing
+            component: textBlock
+            label: "How we price ours (dark band)"
+            description: "Every [CONFIRM] bracket must be replaced with TLB's real, checked figures before launch. Never publish a made-up price or a single figure (Australian Consumer Law). If the numbers are not coming, ask for this section to be removed rather than softening it."
+          - { name: falseEconomy, component: callout, label: "The lowest quote is sometimes the most expensive (warning box)" }
+          - name: quoteWell
+            component: iconGrid
+            label: "How to get a quote that holds on the day"
+            description: "The button under the grid is the site-wide quote button."
+          - name: guarantees
+            component: textBlock
+            label: "About bond back guarantees"
+            description: "TLB's own re-clean policy is not confirmed yet, so this section describes guarantees in general. Never promise bond back, a pass or a refund."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "No answer contains a dollar figure, on purpose. Add one only once TLB's real prices are confirmed."
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Never promise bond back, a pass or a refund, here or anywhere on the page."
+      - name: guide-how-much-does-house-cleaning-cost
+        label: "What house cleaning costs"
+        type: file
+        path: src/content/pages/guides/how-much-does-house-cleaning-cost.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: modelTable
+            component: comparisonTable
+            label: "Hourly or fixed price (table)"
+            description: "Neither column is highlighted on purpose: both models are fair. If TLB prices one way only, say so in How we price ours below."
+          - { name: priceDrivers, component: textGrid, label: "What moves the price (six boxes)" }
+          - name: firstClean
+            component: callout
+            label: "The first clean costs more (box)"
+            description: "Describes how the category works. Check it matches how TLB actually charges for a first visit."
+          - name: pricing
+            component: textBlock
+            label: "How we price ours (dark band)"
+            description: "Every [CONFIRM] bracket must be replaced with TLB's real, checked figures before launch. Never publish a made-up price or a single figure (Australian Consumer Law). If the numbers are not coming, ask for this section to be removed rather than softening it."
+          - name: rate
+            component: callout
+            label: "Why one rate is half another (warning box)"
+            description: "The last paragraph rests on TLB employing its cleaners rather than subcontracting. If that ever changes, this box must change. Describe costs only: never comment on anyone else's tax or legal arrangements."
+          - name: compare
+            component: iconGrid
+            label: "Six questions that make two quotes comparable"
+            description: "The button under the grid is the site-wide quote button."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "No answer contains a dollar figure, on purpose. Add one only once TLB's real prices are confirmed."
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: guide-steam-dry-or-shampoo
+        label: "Which carpet cleaning method"
+        type: file
+        path: src/content/pages/guides/steam-dry-or-shampoo-which-carpet-cleaning-method.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: methodTable
+            component: comparisonTable
+            label: "The three methods, side by side (table)"
+            description: "The first column (highlighted) is the method TLB uses. Drying times stay ranges with humidity named, never single figures."
+          - name: methods
+            component: contentGrid
+            label: "The three methods in full (text and photos)"
+            description: "Cells sit two to a row in this order, so a photo and its text swap sides by position. A text cell left alone on the last row spans the full width. Only use photos that really show the method beside them."
+          - name: fibre
+            component: callout
+            label: "The method matters less than the fibre (warning box)"
+            description: "Describes what wool needs without saying TLB cleans wool: that is still unconfirmed on the Carpet and rug cleaning page. Keep the viscose warning."
+          - name: ourMethod
+            component: textBlock
+            label: "Which one we use"
+            description: "Must not claim more than the Carpet and rug cleaning page does: TLB cleans by hot water extraction, and does not offer dry or shampoo methods on that page."
+          - name: choose
+            component: iconGrid
+            label: "How to choose, in six lines"
+            description: "The button under the grid is the site-wide quote button."
+          - { name: drying, component: textBlock, label: "Drying, and why February is different (dark band)" }
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - { name: faq, component: faq, label: "FAQs" }
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: guide-what-is-included-in-a-deep-clean
+        label: "What is in a deep clean"
+        type: file
+        path: src/content/pages/guides/what-is-included-in-a-deep-clean.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: categories
+            component: textGrid
+            label: "What makes a deep clean deep (six boxes)"
+            description: "Kinds of work, not a task list. The full task list belongs on the Deep cleaning page, so do not copy it here."
+          - name: cleanTable
+            component: comparisonTable
+            label: "Regular, deep, or bond (table)"
+            description: "The middle column (highlighted) follows the Deep cleaning page, and the bond column follows the End of lease cleaning page: change them together. The regular clean column is drafted and still needs checking."
+          - { name: order, component: callout, label: "Deep clean first, then regular (box)" }
+          - name: willItFix
+            component: iconGrid
+            label: "Will it fix the thing that is bothering you?"
+            description: "The button under the grid is the site-wide quote button."
+          - name: exclusions
+            component: callout
+            label: "What is quoted separately (warning box)"
+            description: "Must match the exclusions on the Deep cleaning page, which are still marked to confirm there. Change both together."
+          - name: when
+            component: textBlock
+            label: "When people book one (dark band)"
+            description: "The six occasions follow the Deep cleaning page's own list. Keep the two in step."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - { name: faq, component: faq, label: "FAQs" }
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: guide-the-airbnb-turnover-checklist
+        label: "The Airbnb turnover checklist"
+        type: file
+        path: src/content/pages/guides/the-airbnb-turnover-checklist.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: "For the whole page: never imply a link with, or endorsement by, Airbnb (say \"the platform\" where the brand is not needed), and never promise a rating, Superhost status or any review outcome."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: run, component: textBlock, label: "The run, in order (dark band)" }
+          - name: checklist
+            component: textGrid
+            label: "The changeover checklist (six boxes)"
+            description: "A general short-stay standard, not a list of what TLB supplies. What TLB provides (linen, restocking) belongs on the Airbnb and holiday let page."
+          - name: failures
+            component: iconGrid
+            label: "The four things that cost you reviews"
+            description: "Patterns, not statistics: no percentages or claims about \"most reviews\". The button under the grid is the site-wide quote button."
+          - { name: photos, component: callout, label: "Photograph on arrival (box)" }
+          - name: notTurnover
+            component: contentGrid
+            label: "Two things a turnover is not (text and photos)"
+            description: "Cells sit two to a row in this order, so a photo and its text swap sides by position."
+          - name: ourService
+            component: textBlock
+            label: "How we run them"
+            description: "Keep commitments (linen, restocking, late checkouts) on the Airbnb and holiday let page, not here."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - { name: faq, component: faq, label: "FAQs" }
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: guide-the-byron-shire-60-day-cap
+        label: "The Byron Shire 60-day cap"
+        type: file
+        path: src/content/pages/guides/the-byron-shire-60-day-short-stay-cap-what-it-means-for-hosts.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: "For the whole page: it takes no position on whether the cap is good policy. Describe effects on running a property, never a view on the policy."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "States the cap itself: 60 days a year, non-hosted letting only, in place since late September 2024, some mapped precincts exempt. Do not change any of it without re-checking with Byron Shire Council and the NSW planning portal, and never name the exempt precincts. The \"Last reviewed\" line under these paragraphs is set in Site settings > Cross-links: guides; update it only after re-checking the page. The background photo also sits behind the trust bar: check the text is still easy to read after changing it."
+          - name: policy
+            component: textGrid
+            label: "Four things worth being clear on (four boxes)"
+            description: "The policy summary, kept deliberately thin. Every sentence depends on current rules: do not add detail or change a claim without re-checking with Byron Shire Council and the NSW planning portal. Never list the exempt precincts."
+          - name: disclaimer
+            component: callout
+            label: "We do not advise on planning controls (box)"
+            description: "The page's planning and legal disclaimer. Keep it, and keep it straight after the policy summary."
+          - name: authorities
+            label: "Where to get the real answer (links to the authorities)"
+            description: "Each row links to the authority's home page on purpose, because deeper links break. Check every link still works after editing."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: note, label: Note under the list, type: text }
+              - name: items
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - { name: icon, component: serviceIcon }
+                  - { name: title, label: Title, type: string, required: true }
+                  - { name: description, label: Sentence under the title, type: text, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    required: true
+                    description: "A full https:// address, or a page on this site starting with a slash."
+                    pattern: "^(/|https://)"
+          - name: effects
+            component: textGrid
+            label: "What a compressed letting year changes (six boxes)"
+            description: "Observations about looking after a property. No figures, forecasts or advice on whether to change how a property is let."
+          - name: patternTable
+            component: comparisonTable
+            label: "Before the cap, and after it (table)"
+            description: "Neither column is highlighted on purpose. Nothing about revenue."
+          - name: calendar
+            component: iconGrid
+            label: "The off-season, in order"
+            description: "The button under the grid is the site-wide quote button."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "The first three answers state what the cap covers and where it applies. Do not change them without re-checking with Byron Shire Council, and never name the exempt precincts."
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: guide-how-to-choose-a-commercial-cleaner
+        label: "Choosing a commercial cleaner"
+        type: file
+        path: src/content/pages/guides/how-to-choose-a-commercial-cleaner.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: "For the whole page: every piece of advice must apply to any cleaner, including ones TLB would lose to. Never name or describe a competitor, and never state what the law requires of anyone: say what to ask instead. Leave the button empty to use the commercial pages' button (Site settings > Site-wide buttons)."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: scope, component: textBlock, label: "Write the scope first (dark band)" }
+          - name: questions
+            component: iconGrid
+            label: "Six questions, asked of everybody"
+            description: "The button under the grid is the commercial pages' button (Site settings > Site-wide buttons)."
+          - name: cheapQuote
+            component: callout
+            label: "What the low number cannot contain (warning box)"
+            description: "Arithmetic, not accusation: never name anyone or say anything about the legality of other businesses' arrangements."
+          - name: termsTable
+            component: comparisonTable
+            label: "The terms to look at before the price (table)"
+            description: "Two kinds of agreement, not two companies, so neither column is highlighted."
+          - name: sectors
+            component: textGrid
+            label: "If your site has its own requirements (four boxes)"
+            description: "Say what to ask a cleaner about, never what a regulation requires: those obligations belong to the reader."
+          - name: whereWeFit
+            component: textBlock
+            label: "Where we fit, and where we do not"
+            description: "Keep the paragraph about the jobs TLB is the wrong answer for. It is what makes the rest of the page credible."
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The two guides listed under it come from Site settings > Cross-links: guides."
+          - { name: faq, component: faq, label: "FAQs" }
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - name: whereWeClean
+            component: tagCloud
+            label: "Where we clean"
+            description: "This page lists the NSW towns only, because commercial work is NSW only."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the commercial pages' button (Site settings > Site-wide buttons)."

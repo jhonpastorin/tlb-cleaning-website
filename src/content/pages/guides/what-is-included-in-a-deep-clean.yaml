@@ -1,0 +1,304 @@
+seo:
+  title: What Is Included in a Deep Clean? | TLB Cleaning
+  description: What a deep clean covers that a regular clean does not, where it
+    stops short of a bond clean, and how to tell which of the three your house
+    actually needs.
+hero:
+  kicker: Guide · Homes and hosting
+  headingLines:
+    - A deep clean is not
+    - a regular clean done harder.
+  lead: What is actually in a deep clean, what a regular clean leaves alone on
+    purpose, where a bond clean goes further, and how to tell which of the three
+    your house needs.
+  image:
+    src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-tidy-living-room-kept-up-by-regular-visits.jpg
+    alt: A calm, tidy living room with clear surfaces and a made-up sofa, kept up by
+      regular visits
+definition:
+  body:
+    - type: paragraph
+      text: "A deep clean is a one-off, room-by-room reset that covers the surfaces a
+        regular clean does not reach: inside and behind things, up high, down
+        low, and the built-up grime that a weekly visit has no time in it for.
+        It returns a house to a baseline. A regular clean then holds it there."
+    - type: paragraph
+      text: "The simplest way to tell the two apart is what gets touched. A regular
+        clean works on the surfaces you use. A deep clean works on the ones you
+        do not: the tops of doors, behind the appliances, the tracks, the grout,
+        the skirtings, the vents and the light fittings."
+  backgroundImage: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-comparing-clean-types-with-a-checklist.jpg
+categories:
+  heading: What makes a deep clean deep
+  lead: Five groups of work, organised by where the work actually is, and one
+    honest note about what none of them can do.
+  items:
+    - heading: Up high
+      body:
+        - Cornices and ceiling corners, the tops of doors and door frames, light
+          fittings and shades, ceiling fan blades, the tops of wardrobes and
+          cupboards, exhaust fan covers, air vents and returns.
+        - None of it is visible from where you sit and all of it is obvious the
+          moment someone looks up. It is also where a house holds most of its
+          dust.
+    - heading: Down low
+      body:
+        - Skirting boards all the way round, the edges and corners of every
+          floor, behind doors, under the toe-kick, the floor waste in the
+          laundry.
+        - Vacuuming a room and vacuuming its edges are different amounts of
+          time, and the edges are where the difference between a tidy house and
+          a clean one actually shows.
+    - heading: Inside and behind
+      body:
+        - Inside and outside of cupboards, behind and beside the appliances
+          where they can be moved safely, inside the rangehood, the fridge
+          seals, the dishwasher filter.
+        - This is the group people mean when they say a house feels clean rather
+          than looks clean, and it is almost entirely absent from a regular
+          visit for the good reason that there are not enough hours in one.
+    - heading: Build-up rather than mess
+      body:
+        - Soap scum on a shower screen, grout that has gone grey, the film on a
+          splashback, the tide line in a toilet, the greasy haze above a
+          cooktop.
+        - None of it appears overnight and none of it comes off in a normal
+          wipe. It takes dwell time and the right product, which is the part a
+          rushed clean skips because it looks like waiting around.
+    - heading: The detail work
+      body:
+        - Window sills, reveals and tracks, light switches and power points,
+          door handles, architraves, wardrobe rails and shelves, curtain and
+          blind dusting.
+        - Individually trivial and collectively most of the hours. A deep clean
+          is not one big job, it is roughly two hundred small ones.
+    - heading: What it is still not
+      body:
+        - It is not a repair, it is not a declutter and it is not a renovation.
+          Cleaning removes what has settled on a surface; it does not restore a
+          surface that has worn, faded, chipped or stained through.
+        - A good deep clean tells you which is which. Some of what looks like
+          dirt is a finish that has gone, and knowing that saves you paying
+          twice to find out.
+cleanTable:
+  heading: Regular, deep, or bond
+  cornerLabel: Which clean covers what
+  lead: The same house, three different jobs. Read down the column you think you
+    want, then check the rows you were not expecting.
+  columns:
+    - label: Regular clean
+    - label: Deep clean
+    - label: End of lease clean
+  rows:
+    - label: What it is for
+      values:
+        - Holding a standard week to week
+        - Getting back to a standard once
+        - Meeting somebody else’s checklist
+    - label: Benches, basins, toilets, floors
+      values:
+        - yes
+        - yes
+        - yes
+    - label: Skirtings, door frames, switches, vents
+      values:
+        - Rotated, a few each visit
+        - yes
+        - yes
+    - label: Inside the oven
+      values:
+        - no
+        - Quoted separately
+        - yes
+    - label: Inside cupboards and drawers
+      values:
+        - no
+        - yes
+        - yes
+    - label: Window tracks and interior glass
+      values:
+        - Sills only
+        - yes
+        - yes
+    - label: Behind and beside appliances
+      values:
+        - no
+        - Where they move safely
+        - Where they move safely
+    - label: Grout and shower screen build-up
+      values:
+        - Surface only
+        - yes
+        - yes
+    - label: Inside the fridge
+      values:
+        - no
+        - Quoted separately
+        - The cavity, once it is empty
+    - label: Carpet steam cleaning
+      values:
+        - no
+        - Quoted separately
+        - Quoted separately, and often required
+    - label: Measured against
+      values:
+        - Last visit
+        - A baseline you set
+        - The entry condition report
+  footnote: Most people book a deep clean first and set up a regular clean
+    afterwards. It costs less that way round, because the deep clean does the
+    heavy work once rather than paying for a very long first regular visit.
+order:
+  heading: Deep clean first, then regular. Not the other way around.
+  body:
+    - If you are setting up an ongoing clean for a house that has not had one,
+      the best order is a deep clean once and then a regular schedule on top of
+      it. The heavy work gets done at the right price for heavy work, and every
+      visit after that fits the hours it is priced for.
+    - Going the other way means either a very long, expensive first regular
+      visit, or three or four normal visits during which the backlog is slowly
+      chipped at while you pay full price and wonder why the house does not feel
+      finished. It usually costs more and it always feels worse.
+willItFix:
+  heading: Will it fix the thing that is actually bothering you?
+  lead: Three of these six are a yes. The other three are worth knowing before you
+    book, because a deep clean will not touch them.
+  items:
+    - icon: spray-bottle
+      title: Grey grout
+      description: Usually yes, substantially. Grout that is dirty comes back a long
+        way with dwell time and agitation. Grout that is stained through, or
+        that has failed and gone porous, is a regrouting job and no amount of
+        scrubbing changes that.
+    - icon: spark
+      title: A shower screen that never looks clean
+      description: Usually yes. Soap scum is a film and it comes off with the right
+        product and enough contact time. Etched glass, where minerals have
+        pitted the surface itself, does not, and it looks the same until someone
+        tries.
+    - icon: idea
+      title: A smell you cannot find
+      description: Sometimes. Kitchen bins, fridge seals, the dishwasher filter and
+        the laundry floor waste account for most of them. If it is damp in a
+        wall or a carpet backing, that is a different problem and a deep clean
+        will not touch it.
+    - icon: house
+      title: Mould spotting in the bathroom
+      description: Surface mould on tiles and silicone, often. Anything growing behind
+        paint, in a ceiling or through a wall is not a cleaning job at all, and
+        we have a separate page about that for a reason.
+    - icon: puzzle
+      title: Carpet that has gone dull in the traffic lanes
+      description: No, not from a deep clean. That is carpet cleaning, which is a
+        separate job with separate equipment, and it is quoted separately by
+        nearly everyone including us.
+    - icon: target
+      title: A house that is just cluttered
+      description: No, and it is worth saying plainly. Cleaning around belongings is
+        slower and finishes worse than cleaning an empty surface. An hour of
+        putting things away before we arrive is the highest-value hour of the
+        whole job.
+exclusions:
+  heading: What is quoted separately, and what is not cleaning at all
+  body:
+    - "Quoted separately, by us and by most cleaners: inside the oven, inside
+      the fridge, carpet steam cleaning, exterior windows, walls needing a full
+      wash rather than spot cleaning, balconies, garages and anything at height.
+      They are real jobs with real time in them, and a deep clean price that
+      silently includes all of them is a price that will move on the day."
+    - "Not cleaning at all: repairs, painting, gardening, rubbish and hard waste
+      removal, decluttering, pest control, and anything that needs a licensed
+      trade. If a property needs one of those we will say so when we quote,
+      rather than leaving you to find out afterwards."
+    - "And the honest one: cleaning cannot restore a finish that has gone. Worn
+      timber, etched glass, failed grout, stained silicone and faded paint all
+      look like dirt from across a room. We would rather tell you which is which
+      before you pay than afterwards."
+when:
+  heading: When people book one
+  body:
+    - type: paragraph
+      text: "A deep clean is a one-off, so the question is usually when rather than
+        how often. The six occasions that account for almost all of them:"
+    - type: list
+      items:
+        - Moving in, before the furniture arrives, which is the easiest version
+          of this job and the one that finishes best.
+        - Before guests, particularly the ones staying a while over Christmas.
+        - After a party, which is self-explanatory.
+        - Before a property goes to market, because photographs are unforgiving
+          and buyers read a dirty house as a neglected one.
+        - The spring reset, or on this coast the after-the-wet reset, which
+          lands a little later.
+        - After a long absence, an illness, or a stretch where the house got
+          away from you. This one is more common than the other five put
+          together and nobody needs to explain it.
+    - type: paragraph
+      text: If none of those is you and the house just needs holding steady, a regular
+        clean is the less expensive answer and we will say so.
+readNext:
+  heading: Read next
+  lead: The three guides that follow on from this one.
+faq:
+  heading: "Deep cleaning: frequently asked questions"
+  items:
+    - question: What is included in a deep clean?
+      answer: "The surfaces a regular clean does not reach: up high, down low, inside
+        and behind. Cornices, tops of doors, light fittings, fan blades, vents,
+        skirtings, floor edges, inside cupboards, behind appliances, window
+        tracks, grout and shower screen build-up. Our deep cleaning page
+        publishes the full room-by-room list."
+    - question: What is the difference between a deep clean and a regular clean?
+      answer: A regular clean works on the surfaces you use and holds a standard week
+        to week. A deep clean works on the ones you do not and gets back to that
+        standard once. It is not the same job done harder; the task lists
+        genuinely differ, most obviously on inside cupboards, tracks, skirtings
+        and build-up.
+    - question: Is a deep clean the same as a bond clean?
+      answer: No. A bond clean is measured against the entry condition report and
+        includes work a deep clean quotes separately, most notably inside the
+        oven and inside every cupboard and drawer. A deep clean is measured
+        against a baseline you set. The bond clean is the more thorough and the
+        more expensive of the two.
+    - question: How long does a deep clean take?
+      answer: Longer than a regular clean, because it is detail work rather than
+        surface work, and the honest answer depends on the size and condition of
+        the property. It is quoted per job for that reason. An empty property is
+        considerably faster than a furnished one, which is why moving-in deep
+        cleans are the quickest of all.
+    - question: Do I need a deep clean before starting a regular clean?
+      answer: Not always, but usually it costs less. A deep clean first does the
+        backlog once at the right price, and every regular visit afterwards fits
+        the hours it is priced for. The alternative is either a very long first
+        visit or several normal visits spent chipping away at build-up at full
+        rate.
+    - question: Should I tidy before a deep clean?
+      answer: Yes, and it is the best hour you will spend on the job. Cleaning around
+        belongings is slower and finishes worse than cleaning a clear surface.
+        You do not need to clean anything, just clear the floors and the
+        benches. Everything else is what you are paying us for.
+moreGuides:
+  heading: More guides
+  subheading: Everything else we have written down.
+  tags:
+    - label: Deep cleaning
+      href: /house-cleaning/deep-cleaning/
+    - label: Regular home cleaning
+      href: /house-cleaning/
+    - label: Mould cleaning and removal
+      href: /house-cleaning/mould-removal/
+  note:
+    - Something we have not covered? Ask us and we will write it.
+whereWeClean:
+  heading: Where we clean
+  subheading: Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+closingCta:
+  kicker: Deep and one-off cleans
+  heading: The full room-by-room list is on the service page.
+  lead: Including the two groups that are quoted separately, so nothing arrives as
+    a surprise on the day.
+  cta:
+    label: See what a deep clean covers
+    href: /house-cleaning/deep-cleaning/

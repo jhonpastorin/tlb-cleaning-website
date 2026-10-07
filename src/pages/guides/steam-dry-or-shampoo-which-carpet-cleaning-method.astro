@@ -59,11 +59,6 @@ import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import heroImg from '../../assets/home_cleaning/appliances/carpet_and_rug/living-room-rug-with-a-worn-traffic-path.jpg';
-import extractionImg from '../../assets/home_cleaning/appliances/carpet_and_rug/cleaner-extracting-a-wool-rug.png';
-import officeExtractionImg from '../../assets/commercial_cleaning/carpet/commercial-carpet-extraction-along-an-office-corridor.jpg';
-import definitionBgImg from '../../assets/commercial_cleaning/carpet/commercial-carpet-extraction-in-an-open-plan-office.jpg';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -76,50 +71,20 @@ import {
 import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherGuides, relatedGuides } from '../../data/guides';
+import { localBusiness } from '../../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized, highlightColumn } from '../../lib/cms-schemas';
 
 const selfHref = '/guides/steam-dry-or-shampoo-which-carpet-cleaning-method/' as const;
 
-const pageMeta = {
-  title: 'Steam, Dry or Shampoo: Which Carpet Cleaning Method? | TLB Cleaning',
-  description:
-    'Hot water extraction, low-moisture dry cleaning and rotary shampoo compared: how each works, what it is genuinely good at, drying times, and which suits wool, viscose and a deadline.',
-  // ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
-  canonical: `https://tlbcleaning.com.au${selfHref}`,
-};
-
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: [],
-  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
-  description: pageMeta.description,
-};
+// In `pageMeta`:
+// ⚠️ Placeholder domain, same as every page on the site. Confirm before launch.
 
 // §1 Hero. The heading leads with the naming problem, because "steam
 // cleaning" is the term everybody searches and it describes something that
 // does not happen. Clearing that up in the first line is what earns the rest.
-const hero = {
-  kicker: 'Guide · Homes and hosting',
-  headingLines: ['Three methods, one of which', 'is not what its name says.'],
-  lead:
-    'Hot water extraction, low-moisture dry cleaning and rotary shampoo. What each one actually does to a carpet, how long each takes to dry, and which one your floor and your deadline want.',
-  cta: quoteCta,
-  image: {
-    ratio: '4/3',
-    label: 'A living room rug with a visibly worn, darker traffic path running from the doorway past the sofa',
-    src: heroImg,
-  },
-};
 
 // §2 The answer block. Definition-style, then the naming correction, which is
 // the passage most likely to be lifted whole.
@@ -128,10 +93,6 @@ const hero = {
 // in its own FAQ. Repeating it here is deliberate: this is the page people
 // searching the method question land on, and it should not require a second
 // click to get the answer.
-const definitionBody: TextBlockBody[] = [
-  'There are three carpet cleaning methods in common use: hot water extraction, low-moisture dry cleaning, and rotary shampoo. They differ in how much water goes into the carpet, how much soil comes back out, and how long the floor is out of action afterwards.',
-  'Steam cleaning and hot water extraction are two names for the same method, and neither involves steam. Heated water and cleaning solution are pushed into the pile under pressure and drawn straight back out with the soil in them. It is the method most carpet manufacturers name in their own care instructions, and it removes soil rather than redistributing it.',
-];
 
 // §3 The comparison. THE section of the page, and a genuine ComparisonTable
 // job: three compared entities, one property per row, and the whole value is
@@ -148,62 +109,6 @@ const definitionBody: TextBlockBody[] = [
 // describe the METHODS generally, which is a different and defensible claim,
 // but if TLB wants its own number it belongs on the service page and this
 // table should point at it rather than compete with it.
-const methodTable = {
-  heading: 'The three methods, side by side',
-  cornerLabel: 'What each one actually does',
-  lead: 'Read across a row rather than down a column. Every method here is legitimate; they are simply built for different jobs.',
-  columns: [
-    { label: 'Hot water extraction', highlight: true },
-    { label: 'Low-moisture / dry' },
-    { label: 'Rotary shampoo' },
-  ],
-  rows: [
-    {
-      label: 'How it works',
-      values: [
-        'Heated water and solution injected under pressure, vacuumed straight back out',
-        'A polymer or absorbent pad or compound that traps soil, then gets vacuumed away',
-        'Foaming detergent worked into the pile with a rotary brush, vacuumed once dry',
-      ],
-    },
-    {
-      label: 'How much soil it removes',
-      description: '(Including what has settled at the base of the pile)',
-      values: ['Most', 'The surface layer', 'The surface layer, and it leaves some behind'],
-    },
-    {
-      label: 'Typical drying time',
-      description: '(Longer in a humid Northern Rivers summer, whichever method)',
-      values: ['Several hours', 'Under an hour to a couple of hours', 'Several hours, then a second vacuum'],
-    },
-    {
-      label: 'Reaches the backing',
-      values: [true, false, false],
-    },
-    {
-      label: 'Risk of over-wetting',
-      values: ['Real, and it is why technique matters', 'Very low', 'Moderate'],
-    },
-    {
-      label: 'Risk of leaving residue',
-      values: ['Low if rinsed properly', 'Low', 'High, and it is this method’s main problem'],
-    },
-    {
-      label: 'Best for',
-      values: [
-        'An annual or six-monthly deep clean, and anything actually dirty',
-        'Maintenance between deep cleans, and floors that cannot be out of action',
-        'Little, now. It survives mostly on older commercial jobs',
-      ],
-    },
-    {
-      label: 'Named in most carpet makers’ care instructions',
-      values: [true, 'Sometimes, as maintenance', false],
-    },
-  ],
-  footnote:
-    'The honest summary: extraction is the clean, low-moisture is the maintenance in between, and shampoo is the one that was superseded for a reason. A cleaner offering only the fast method for the annual deep clean is offering you a lighter job at a similar price.',
-};
 
 // §4 The three methods in longer form, with photographs. ContentGrid at two
 // columns, laid out purely by array order the same way StoryMosaic is, so
@@ -215,49 +120,6 @@ const methodTable = {
 // show". So the shampoo row is text at span 2 rather than text beside a photo
 // of the wrong method — a full-width cell reads as a deliberate closing
 // paragraph, which is what it is.
-const methodBlocks = [
-  {
-    type: 'image' as const,
-    ratio: '4/3',
-    label:
-      'A cleaner in an aqua polo and teal gloves kneeling to draw a carpet extraction wand across a pale wool rug',
-    src: extractionImg,
-  },
-  {
-    type: 'text' as const,
-    heading: 'Hot water extraction, the one people call steam',
-    body: [
-      'A wand injects heated water and solution into the pile under pressure and vacuums it straight back out in the same pass. The soil leaves the building in the waste tank rather than being broken up and left in place.',
-      'It is the most thorough of the three and the only one that reaches down to the base of the pile and the backing, which is where the grit that wears carpet out actually lives. It is also the one with a real technique requirement: too much water and not enough extraction is how a carpet ends up damp underneath and smelling of it a fortnight later.',
-      'Expect the floor to be out of action for a few hours, longer in humid weather. Air movement across the pile is what shortens that, not heat.',
-    ],
-  },
-  {
-    type: 'text' as const,
-    heading: 'Low-moisture and dry methods',
-    body: [
-      'A family of methods rather than one: encapsulation, where a polymer crystallises around each soil particle so it can be vacuumed out later; bonnet cleaning, where an absorbent pad on a rotary machine lifts soil off the tips of the pile; and dry compound, where absorbent granules are brushed in and vacuumed out.',
-      'All three are fast, use very little water, and dry quickly, which makes them genuinely useful in an office that has to open, a rental between guests, or a hallway that cannot be closed off. What none of them do is reach the bottom of the pile.',
-      'The caution with bonnet work specifically is that a rotary pad run hard on a cut pile can fuzz or distort it. It is a maintenance tool, and used as one it is fine.',
-    ],
-  },
-  {
-    type: 'image' as const,
-    ratio: '4/3',
-    label: 'A cleaner drawing a carpet extraction wand along an office corridor between workstation banks',
-    src: officeExtractionImg,
-  },
-  {
-    type: 'text' as const,
-    span: 2,
-    heading: 'Rotary shampoo, and why it faded',
-    body: [
-      'A foaming detergent is worked into the pile with a rotary brush, left to dry, and vacuumed out. It was the standard method for decades and it does lift a lot of surface soil, so a shampooed carpet can look impressive on the day.',
-      'Its problem is what stays behind. Detergent residue left in the pile does not stop being sticky, so it collects the next lot of soil, and the traffic lanes come back darker and faster than they were before the clean. If a carpet has been shampooed repeatedly, the fastest way to fix it is a proper extraction clean with a rinse step, which is the opposite of what most people expect.',
-      'You will still meet it, mostly on older commercial contracts and occasionally on a very low domestic quote. If a quote is unusually low and the method is not named, this is worth asking about.',
-    ],
-  },
-];
 
 // §5 The fibre question. Warning tone, used once, and it is the highest-value
 // warning on the page because the mistake it prevents is unrecoverable.
@@ -271,14 +133,6 @@ const methodBlocks = [
 // claim TLB cleans it, because carpet-and-rug-cleaning.astro still carries
 // "[Confirm TLB cleans wool in home]" as an open blocker. When that is
 // answered, this paragraph gains one sentence and not before.
-const fibreCallout = {
-  heading: 'The method matters less than the fibre',
-  body: [
-    'Before anyone chooses a method, somebody should establish what the floor is made of. A fitted synthetic carpet is forgiving. Wool is not: it takes less water, a gentler pH and much more care over drying, and it will felt or shrink if it is treated like nylon.',
-    'Viscose and rayon are the ones to be careful of, and they turn up constantly in the flat-weave rugs sold as "art silk" or "bamboo silk". They lose strength when wet and can mark permanently from clean water alone. A viscose rug wet-cleaned on the floor of a living room is usually not damaged, it is finished. Jute-backed rugs are the other trap: over-wetting browns them from the backing up, and the stain comes through the face of the rug days later.',
-    'So the useful question to ask a carpet cleaner is not which method they use. It is what they will do to find out what your floor is, and what they will say if the answer is "this one should not be wet-cleaned here". A cleaner who has a fibre test and a referral for rug-plant work is telling you something about the whole job.',
-  ],
-};
 
 // §6 What TLB actually does. Short, and it stops exactly where the service
 // page stops.
@@ -288,69 +142,12 @@ const fibreCallout = {
 // would be getting, and a guide that compares three and offers no answer
 // reads as evasive. It claims nothing the carpet page has not already
 // claimed.
-const ourMethodBody: TextBlockBody[] = [
-  'We clean carpet and rugs by hot water extraction, because it is the method that removes soil rather than moving it around, and it is the one carpet makers name in their own care instructions.',
-  'That is not a claim that the fast methods are worthless. Encapsulation and dry compound have a real place in maintenance, particularly on commercial floors that cannot be closed for an afternoon, and our commercial carpet work is built around exactly that constraint. What we will not do is sell you a maintenance clean at the price of a deep one.',
-  'On rugs we look at the fibre before we look at the machine, and if a rug should go to a rug plant rather than be cleaned in your living room, we say so instead of taking the job.',
-];
 
 // §7 How to choose, practically. Six items, icon-grid — the decision made
 // concrete, since the table gives properties and this gives instructions.
-const chooseItems = [
-  {
-    icon: 'target' as const,
-    title: 'If it is genuinely dirty, extract',
-    description:
-      'Traffic lanes, sand, pet hair worked into the pile, an annual or six-monthly clean. Nothing else reaches the base of the pile, and a surface method on a dirty carpet is money spent on the top third of it.',
-  },
-  {
-    icon: 'spark' as const,
-    title: 'If it has to be walked on tonight, go low-moisture',
-    description:
-      'A holiday let between guests, an office that opens at eight, a hallway nobody can close off. Fast drying is a real advantage and it is worth trading some soil removal for.',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'If it is wool, ask about pH and drying before price',
-    description:
-      'Wool takes less water and gentler chemistry, and drying is where wool jobs go wrong. A cleaner who talks about drying before they talk about the machine is the one to book.',
-  },
-  {
-    icon: 'idea' as const,
-    title: 'If it might be viscose, do not let anyone wet it',
-    description:
-      'Flat-weave rugs sold as art silk or bamboo silk are the usual suspects. Get the fibre identified first. This is the one mistake on this page that cannot be undone.',
-  },
-  {
-    icon: 'chart-bars' as const,
-    title: 'If it is a bond clean, book the carpets after the clean',
-    description:
-      'Not before. Otherwise the carpet is walked on damp all day while the rest of the property is cleaned, and you have paid for the clean twice.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'If a quote is remarkably low, ask which method',
-    description:
-      'A very low price for an annual deep clean is usually a surface method priced as a deep one, or a shampoo. Both look fine on the day. Ask, and the answer will tell you what you are buying.',
-  },
-];
 
 // §8 Drying, and the local variable. Dark TextBlock — short, and it is the
 // piece of advice that is specific to this coast rather than generic.
-const dryingBody: TextBlockBody[] = [
-  'Humidity is the reason a carpet that dries in three hours in July takes most of a day in February. Air cannot take up moisture it is already holding, so on a still, humid afternoon on this coast a carpet simply stops drying.',
-  'What actually helps:',
-  {
-    list: [
-      'Air movement across the pile, not heat. A pedestal fan aimed low along the floor does more than an air conditioner set cold.',
-      'Ventilation as well as circulation. Moving humid air around a closed room achieves very little; get some of it out.',
-      'A dehumidifier if you own one, which beats both.',
-      'Staying off it, or walking on it only in clean socks. Bare feet and shoes both put back what was just removed.',
-      'Leaving furniture off it until it is dry. Timber legs on damp wool is how you get a stain shaped like a chair.',
-    ],
-  },
-  'If a cleaner tells you an extraction clean in a humid February will be dry in an hour, they are either using a surface method or they have not been doing this on the Northern Rivers for long.',
-];
 
 // §9 Next reads.
 const nextGuides = otherGuides(selfHref, [
@@ -360,53 +157,68 @@ const nextGuides = otherGuides(selfHref, [
 ]);
 
 // §10 The pill band.
-const moreGuideTags = relatedGuides(selfHref, [
-  { label: 'Carpet and rug cleaning', href: '/house-cleaning/carpet-cleaning/' },
-  { label: 'Commercial carpet cleaning', href: '/commercial-cleaning/commercial-carpet-cleaning/' },
-  { label: 'Upholstery and lounge cleaning', href: '/house-cleaning/upholstery-cleaning/' },
-]);
 
 // §11 FAQs.
-const faqItems = [
-  {
-    question: 'Which carpet cleaning method is best?',
-    answer:
-      'For an annual or six-monthly deep clean, hot water extraction, because it is the only one of the three that removes soil from the base of the pile rather than the surface. Low-moisture methods are better when the floor has to be walked on within the hour. Rotary shampoo has largely been superseded because of the residue it leaves.',
-  },
-  {
-    question: 'Is steam cleaning the same as hot water extraction?',
-    answer:
-      'Yes, and no steam is involved in either. Heated water and cleaning solution are injected into the pile under pressure and vacuumed straight back out with the soil. Nothing is being sterilised. "Steam cleaning" is simply the name that stuck with the public, and the trade name for it is hot water extraction.',
-  },
-  {
-    question: 'How long does carpet take to dry?',
-    answer:
-      'An extraction clean is usually a few hours; low-moisture methods can be under an hour. Humidity changes both substantially, and on this coast in a wet February everything takes longer. Air movement across the floor helps far more than heat, and a dehumidifier helps more than either.',
-  },
-  {
-    question: 'Can wool carpet and rugs be steam cleaned?',
-    answer:
-      'Wool can be wet-cleaned, but not the way a synthetic can. It needs less moisture, a gentler pH and much closer attention to drying, and treated like nylon it will felt or shrink. Ask any cleaner what they change for wool. If the answer is nothing, that is the answer.',
-  },
-  {
-    question: 'Why did my carpet get dirty again so quickly?',
-    answer:
-      'Almost always detergent residue left in the pile. It stays tacky, holds the next lot of soil, and the traffic lanes come back darker than they were before the clean. It is the characteristic failure of shampoo methods and of any clean without a proper rinse step, and a rinsing extraction clean is what fixes it.',
-  },
-  {
-    question: 'What about a rug that might be viscose?',
-    answer:
-      'Get the fibre identified before anybody puts water near it. Viscose and rayon, often sold as art silk or bamboo silk, lose strength when wet and can mark permanently from clean water alone. A rug like that belongs at a rug plant with a controlled dry, not on the floor of a living room.',
-  },
-];
 
 // §12 Closing CTA.
-const closingCta = {
-  kicker: 'Carpet and rug cleaning',
-  heading: 'Tell us what the floor is, first.',
-  lead: 'We look at the fibre and the wear before we quote, and we tell you what will lift and what is in there for good.',
-  cta: { label: 'See carpet and rug cleaning', href: '/house-cleaning/carpet-cleaning/' },
+
+// CONTENT lives in src/content/pages/guides/steam-dry-or-shampoo-which-carpet-cleaning-method.yaml
+// and is edited in Pages CMS ("Guides > Which carpet cleaning method"). This
+// file owns the layout. The notes above explain why each section says what it
+// says; they stay here because Pages CMS rewrites the YAML on save and would
+// drop them. The editor carries the short version of each warning as a field
+// description.
+const page = await getPage(
+  'guides/steam-dry-or-shampoo-which-carpet-cleaning-method',
+  z.object({
+    seo: section.seo,
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    methodTable: section.comparisonTable,
+    methods: section.contentGrid,
+    fibre: section.callout,
+    ourMethod: section.textBlock,
+    // The button under the grid is the site-wide quote button, set in code.
+    choose: section.iconGrid,
+    drying: section.textBlock,
+    // The three guides listed come from site data (nextGuides above).
+    readNext: section.sectionIntro,
+    faq: section.faq,
+    // `tags` holds only this page's own extra links. relatedGuides() adds the
+    // other guides before them and the hub link after them.
+    moreGuides: section.tagCloud,
+    whereWeClean: section.tagCloud,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: `https://tlbcleaning.com.au${selfHref}`,
 };
+
+const business = localBusiness({
+  description: pageMeta.description,
+  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
+});
+
+const heroImage = page.hero.image && sized(page.hero.image, '4/3');
+
+// Hot water extraction (the first column) is the highlighted one.
+const methodColumns = highlightColumn(page.methodTable.columns, 0);
+
+// Photos are laid out at 4/3. A text cell left alone on the last row (the
+// shampoo cell today) spans both columns, the full-width closing paragraph the
+// §4 note above describes.
+const methodBlocks = page.methods.items.map((item, i, all) => {
+  if (item.type === 'image') return { type: 'image' as const, ratio: '4/3', ...item.image };
+  const lastAlone = i === all.length - 1 && all.length % 2 === 1;
+  return lastAlone ? { ...item, span: 2 } : item;
+});
+
+const moreGuideTags = relatedGuides(selfHref, page.moreGuides.tags ?? []);
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -422,25 +234,33 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? quoteCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90} focus="center">
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90} focus="center">
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
     <ComparisonTable
-      heading={methodTable.heading}
-      cornerLabel={methodTable.cornerLabel}
-      lead={methodTable.lead}
-      columns={methodTable.columns}
-      rows={methodTable.rows}
-      footnote={methodTable.footnote}
+      heading={page.methodTable.heading}
+      cornerLabel={page.methodTable.cornerLabel}
+      lead={page.methodTable.lead}
+      columns={methodColumns}
+      rows={page.methodTable.rows}
+      footnote={page.methodTable.footnote}
+      cta={page.methodTable.cta}
     />
 
     {/* Two columns, and which side a block lands on is purely its position in
@@ -448,55 +268,71 @@ const closingCta = {
         shampoo cell spans both columns because no honest photograph of that
         method exists in this library. */}
     <ContentGrid
-      heading="The three methods in full"
-      lead="What is actually happening to the pile in each case, which is what decides the result."
+      heading={page.methods.heading}
+      lead={page.methods.lead}
       columns={2}
       blocks={methodBlocks}
     />
 
-    <Callout tone="warning" heading={fibreCallout.heading} body={fibreCallout.body} />
+    <Callout tone="warning" heading={page.fibre.heading} body={page.fibre.body} cta={page.fibre.cta} />
 
-    <TextBlock theme="light" align="left" heading="Which one we use" body={ourMethodBody} />
+    <TextBlock
+      theme="light"
+      align="left"
+      heading={page.ourMethod.heading}
+      body={page.ourMethod.body}
+      cta={page.ourMethod.cta}
+      backgroundImage={page.ourMethod.backgroundImage}
+    />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="How to choose, in six lines"
-      lead="Match the method to the job rather than to the price, and the decision makes itself."
-      items={chooseItems}
+      heading={page.choose.heading}
+      lead={page.choose.lead}
+      note={page.choose.note}
+      items={page.choose.items}
       cta={quoteCta}
     />
 
-    <TextBlock theme="dark" align="left" heading="Drying, and why February is different" body={dryingBody} />
+    <TextBlock
+      theme="dark"
+      align="left"
+      heading={page.drying.heading}
+      body={page.drying.body}
+      cta={page.drying.cta}
+      backgroundImage={page.drying.backgroundImage}
+    />
 
     <ServiceBlocks
       variant="list"
-      heading="Read next"
-      lead="The three guides that follow on from this one."
+      heading={page.readNext.heading}
+      lead={page.readNext.lead}
       items={nextGuides}
     />
 
-    <Faq heading="Carpet cleaning methods: frequently asked questions" items={faqItems} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <TagCloud
-      heading="More guides"
-      subheading="Everything else we have written down."
+      heading={page.moreGuides.heading}
+      subheading={page.moreGuides.subheading}
       tags={moreGuideTags}
-      note={['Something we have not covered? Ask us and we will write it.']}
+      note={page.moreGuides.note}
     />
 
     <TagCloud
-      heading="Where we clean"
-      subheading="Northern Rivers, the Tweed and the Southern Gold Coast."
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading}
+      tags={page.whereWeClean.tags}
       groups={locationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? quoteCta}
     />
   </main>
 

@@ -1,0 +1,280 @@
+seo:
+  title: How Much Does End of Lease Cleaning Cost? | TLB Cleaning
+  description: What moves the price of a bond clean in the Northern Rivers, the
+    Tweed and the Southern Gold Coast, what a low quote has usually left out,
+    and how to compare two quotes properly.
+hero:
+  kicker: Guide · End of lease and tenancy
+  headingLines:
+    - Nobody can price your bond clean
+    - without knowing what state it is in.
+  lead: What actually moves the price of an end of lease clean, in the order it
+    moves it by. Plus the four things a low quote has almost always left out,
+    and how to hold two quotes against each other.
+  image:
+    src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-empty-room-on-moving-out-day.jpg
+    alt: An empty room on moving-out day, bare floor and stripped walls, light
+      through an uncurtained window
+definition:
+  body:
+    - type: paragraph
+      text: End of lease cleaning is priced per job rather than per hour by most
+        cleaners in this region, and the quote is built from the size of the
+        property, its condition, whether it is empty, and which extras the
+        property needs. Two identical floor plans can be hundreds of dollars
+        apart, and condition is usually the reason.
+    - type: paragraph
+      text: Anyone who gives you a firm price for a bond clean without asking about
+        the oven, the carpets and whether the place is empty is either guessing
+        or planning to revise it on the day. TLB Cleaning quotes against the
+        task list published on our end of lease page, before the work starts.
+  backgroundImage: /src/assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-property-manager-at-a-vacant-handover.jpg
+priceDrivers:
+  heading: What moves the price, in order
+  lead: Six variables. They are listed by how much they actually change a quote,
+    which is not the order most price pages use.
+  items:
+    - heading: 1. Condition, not size
+      body:
+        - The single biggest variable, and the one that surprises people. A
+          well-kept four-bedroom house can quote under a neglected two-bedroom
+          unit, because the hours go into build-up rather than into floor area.
+        - This is why a real quote asks how long you have been there, whether
+          there were pets, and whether anyone has cleaned the oven in that time.
+    - heading: 2. Empty or furnished
+      body:
+        - A furnished property is roughly twice the work and it never finishes
+          as well. Everything has to be moved, worked around and put back, and
+          half the surfaces the inspection checks are underneath something.
+        - Book the clean for the day after the truck. It is the least expensive
+          single decision on this page.
+    - heading: 3. The oven, and how bad it is
+      body:
+        - An oven that has been wiped through the tenancy is twenty minutes. An
+          oven that has not been touched in three years is a job of its own, and
+          on a fixed-price quote it is the item most likely to be re-priced when
+          the cleaner sees it.
+        - Send a photo of the inside of it when you ask for a quote. It is the
+          most useful photo you can send.
+    - heading: 4. Bathrooms and wet areas
+      body:
+        - Bathroom count moves a bond clean price more than bedroom count does,
+          because a bathroom is dense detail work — screen, grout, base, drain,
+          fan, toilet — and a bedroom is mostly floor.
+        - A three-bedroom, one-bathroom house and a three-bedroom,
+          three-bathroom house are not the same job.
+    - heading: 5. The extras the property needs
+      body:
+        - Carpet steam cleaning, exterior windows, balconies, garages, wall
+          washing beyond spot cleaning, pest control. Each is quoted separately
+          by nearly every cleaner, including us.
+        - They are the reason two quotes for "the same job" can be far apart.
+          One has included them and one has not.
+    - heading: 6. Timing and access
+      body:
+        - A clean squeezed into the last afternoon before a handover, on a
+          weekend, at the end of the month, in a building with one lift and a
+          loading dock booking, costs more than the same clean on a quiet
+          Tuesday.
+        - The end of the month is peak in this region for exactly the reason you
+          would expect. Book earlier and you have more to negotiate with.
+quoteTable:
+  heading: Why one quote is half the other
+  cornerLabel: What to check before you compare two numbers
+  lead: Almost every large gap between two bond clean quotes comes from one of
+    these six rows, not from one cleaner being greedy.
+  columns:
+    - label: A complete quote
+    - label: A low quote
+  rows:
+    - label: A written scope of works
+      description: (You can see which tasks the number covers)
+      values:
+        - yes
+        - no
+    - label: Carpet steam cleaning
+      values:
+        - Named as included or excluded
+        - Usually silent, and usually not included
+    - label: The oven
+      values:
+        - Priced after asking about its condition
+        - Priced as a line item, re-priced on the day
+    - label: Exterior windows and balconies
+      values:
+        - Named either way
+        - Assumed to be out of scope without saying so
+    - label: Who turns up
+      description: (And whether they are the person you spoke to)
+      values:
+        - An employed team, briefed on the scope
+        - Whoever the platform assigned this morning
+    - label: What happens if the agent comes back
+      values:
+        - A stated policy you can read before you book
+        - A guarantee badge, with the terms elsewhere
+  footnote: If you are comparing two quotes, do not compare the numbers. Compare
+    the task lists, and add the missing items to the lower one before you
+    decide. Very often that is the entire difference.
+pricing:
+  heading: How we price ours
+  body:
+    - type: paragraph
+      text: Here is how ours works, in plain terms.
+    - type: list
+      items:
+        - "Basis: [CONFIRM. Is a TLB bond clean priced as a fixed quote per
+          property, or hourly, or fixed with an hourly overrun clause? This is
+          the first thing a reader wants and the first thing a competitor
+          states.]"
+        - "Minimum charge: [CONFIRM the minimum job charge, if there is one. A
+          studio or a one-bedroom unit is the case this answers.]"
+        - "What a typical range looks like: [CONFIRM. A range by property size,
+          stated as a range with condition named as the variable. Do not publish
+          a single figure, and do not publish anything that has not been checked
+          against real recent jobs.]"
+        - "Extras: [CONFIRM the pricing basis for carpet steam cleaning,
+          exterior windows, balconies and garages. Per room, per square metre,
+          or per job.]"
+        - "Deposit and payment: [CONFIRM whether a deposit is taken, and when
+          payment falls due relative to the inspection.]"
+    - type: paragraph
+      text: Every one of those is quoted against the published task list rather than
+        against a guess, and the quote comes before the work does. If something
+        turns up on the day that changes the job, you hear about it before it is
+        done and not on the invoice.
+falseEconomy:
+  heading: The lowest quote is sometimes the most expensive one
+  body:
+    - A bond clean is one of the few purchases where a bad outcome costs more
+      than the job did. If the clean is rejected, the usual sequence is that the
+      agent has it re-done at a rate nobody negotiated and takes it from your
+      bond, and you are now out both amounts. The gap between the lowest quote
+      and a complete one is routinely smaller than a single re-clean.
+    - That is not an argument for the most expensive quote either. It is an
+      argument for the quote you can read. Ask for the task list, check the four
+      usual omissions against it, and pick on the basis of what is actually
+      being done.
+quoteWell:
+  heading: How to get a quote that holds on the day
+  lead: Six things to tell whoever is quoting. All of them protect you from a
+    price that changes when the van arrives.
+  items:
+    - icon: target
+      title: Say whether it will be empty
+      description: It changes the price more than almost anything else, and a quote
+        given for an empty property and delivered on a furnished one gets
+        revised on the day. Say which it is.
+    - icon: idea
+      title: Photograph the oven
+      description: Open the door and take one photo of the inside. It is the item most
+        often re-priced on arrival and the one a photo settles instantly.
+    - icon: puzzle
+      title: Count the wet areas, not the bedrooms
+      description: Bathrooms, ensuites, separate toilets and the laundry. That count
+        moves a bond clean quote more than the bedroom count does.
+    - icon: spray-bottle
+      title: Ask about carpets explicitly
+      description: Whether they are included, what method is used, and whether it is
+        booked for after the clean. It is the most common gap between two quotes
+        in this category.
+    - icon: chart-bars
+      title: Give the real handover date
+      description: Not the date you hope for. A clean booked with a day of slack in
+        front of the inspection can be finished properly; one booked for the
+        morning of cannot be redone if something goes wrong.
+    - icon: chart-pie
+      title: Ask for it in writing, against a list
+      description: A number in a text message is not a quote you can compare or hold
+        anyone to. A number attached to a task list is.
+guarantees:
+  heading: About bond back guarantees
+  body:
+    - type: paragraph
+      text: Almost every national platform in this category leads with a bond back
+        guarantee, and it is worth understanding what is usually behind the
+        badge.
+    - type: paragraph
+      text: "In nearly every case the guarantee is a re-clean commitment, not a money
+        commitment: if the agent lists something from the agreed scope, the
+        cleaner returns within a stated window and fixes it. That is a genuinely
+        useful thing to be offered. It is not, however, a promise that your bond
+        will be returned, because no cleaner controls what an agent writes in a
+        report or what a tribunal decides."
+    - type: paragraph
+      text: "So read the terms rather than the badge. The questions worth asking are:
+        how long is the window, does it cover only the items that were in the
+        original scope, and do you have to notify the cleaner before you respond
+        to the agent. A cleaner who answers those three plainly is offering you
+        something real."
+    - type: paragraph
+      text: We do not advertise a bond back guarantee, for the reason above. What we
+        do offer is set out on the end of lease page, in the same words we would
+        use on the phone.
+readNext:
+  heading: Read next
+  lead: The three guides that follow on from this one.
+faq:
+  heading: "End of lease cleaning costs: frequently asked questions"
+  items:
+    - question: How much does end of lease cleaning cost?
+      answer: It is quoted per property rather than sold at a list price, because
+        condition moves it more than size does. The quote is built from the
+        property’s size, how it has been kept, whether it will be empty, how
+        many wet areas there are, and which extras the place needs. Ask for the
+        quote against a written task list so you can compare it to another one.
+    - question: Why are two quotes for the same house so far apart?
+      answer: Usually because one includes carpet steam cleaning, exterior windows or
+        the oven and the other does not, and neither says so on the front page.
+        Add the missing items to the lower quote before comparing. Very often
+        that closes the whole gap, and sometimes it reverses which one is lower.
+    - question: Is a bond clean more expensive than a deep clean?
+      answer: Generally yes, for the same property. A deep clean is measured against a
+        baseline you set; a bond clean is measured against someone else’s
+        checklist and includes work a deep clean quotes separately, notably
+        inside the oven and inside every cupboard. The two are different jobs at
+        different standards, not the same job at two prices.
+    - question: Does it cost more if the property is still furnished?
+      answer: Yes, and by a lot. A furnished bond clean is roughly twice the work,
+        because every surface has to be moved around rather than simply cleaned,
+        and it still does not finish as well. Booking the clean for the day
+        after the removal truck is the single least expensive decision available
+        to you.
+    - question: Do I need carpet steam cleaning as well?
+      answer: It depends on your agreement, your state and the condition of the
+        carpet. It is quoted separately by nearly every cleaner, so ask for it
+        with the main quote rather than after the inspection. If it is being
+        done, book it for after the clean rather than before, or the carpet is
+        walked on damp all day.
+    - question: What happens if the agent is not satisfied?
+      answer: That depends on what the cleaner has committed to before you booked,
+        which is why it is worth reading. Most offer a return visit within a
+        stated window for items that were in the original scope. None of them
+        can promise what an agent will write in a report, so treat a plain
+        re-clean policy as the useful thing and a guarantee badge as the thing
+        to read the terms of.
+moreGuides:
+  heading: More guides
+  subheading: Everything else we have written down.
+  tags:
+    - label: End of lease and bond cleaning
+      href: /house-cleaning/end-of-lease-cleaning/
+    - label: Carpet and rug cleaning
+      href: /house-cleaning/carpet-cleaning/
+    - label: Deep cleaning
+      href: /house-cleaning/deep-cleaning/
+  note:
+    - Something we have not covered? Ask us and we will write it.
+whereWeClean:
+  heading: Where we clean
+  subheading: Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+closingCta:
+  kicker: End of lease and bond cleaning
+  heading: Get the quote and the list together.
+  lead: Tell us the property, the handover date and whether it will be empty. You
+    get a price and the task list it is priced against, before anybody starts.
+  cta:
+    label: Get an end of lease quote
+    href: /house-cleaning/end-of-lease-cleaning/

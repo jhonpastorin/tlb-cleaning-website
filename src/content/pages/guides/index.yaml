@@ -1,0 +1,51 @@
+seo:
+  title: Cleaning Guides | TLB Cleaning
+  description: Straight answers on end of lease cleaning, bond clean costs, deep
+    cleans, carpet cleaning methods, Airbnb turnovers and choosing a commercial
+    cleaner, written for the Northern Rivers and the Tweed.
+hero:
+  kicker: Guides
+  headingLines:
+    - The answers we give on the phone,
+    - written down.
+  lead: "Nine guides on the questions we get asked most: what the law actually
+    requires at the end of a tenancy, what things cost and why, and how to tell
+    a complete quote from a thin one."
+  image:
+    src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-comparing-clean-types-with-a-checklist.jpg
+    alt: A homeowner comparing cleaning options against a checklist on a tablet at a
+      kitchen bench
+intro:
+  body:
+    - type: paragraph
+      text: These are the questions people ring and ask before they book anything,
+        answered properly rather than in a paragraph that stops just short of
+        the useful part.
+    - type: paragraph
+      text: A few of them do not end where you would expect. The end of lease law
+        guide explains that nobody can require you to produce a cleaner’s
+        receipt if the property is in the right condition. The deep clean guide
+        lists three common problems a deep clean will not fix. We would rather
+        be the business that told you than the one that sold you the wrong
+        thing.
+  backgroundImage: /src/assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg
+tenancyGuides:
+  heading: End of lease and tenancy
+  lead: For anyone handing back a set of keys, on either side of the border.
+homesGuides:
+  heading: Homes, hosting and commercial
+  lead: Costs, methods, checklists, and the one that only matters if you let a
+    property in Byron Shire.
+services:
+  heading: Or go straight to the service
+  lead: If you already know what you need, these are the six.
+whereWeClean:
+  heading: Where we clean
+  subheading: Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+closingCta:
+  kicker: Still not sure?
+  heading: Ring us and ask.
+  lead: Every one of these guides started as a question somebody asked on the
+    phone. If yours is not here, it probably should be.
