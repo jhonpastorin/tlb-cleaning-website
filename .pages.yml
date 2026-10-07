@@ -2719,6 +2719,546 @@ content:
             label: "FAQs: property management cleaning"
             description: "The answer on whether a tenant can be required to use a professional cleaner is general information about tenancy law in two states. Do not add a specific rule without a compliance check."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: deep-cleaning
+        label: Deep cleaning
+        type: file
+        path: src/content/pages/house-cleaning/deep-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Get a fast quote\" button. Deep cleans are quoted fast, not priced instantly, so avoid the word instant here."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: pathways, component: pathwayCards, label: "Not sure a deep clean is the one? (cards)" }
+          - name: inclusions
+            component: textGrid
+            label: "What's included in a deep clean (grid)"
+            description: "This is the page's central promise, and the full list still needs Teagan's sign-off. The FAQ \"What isn't included in a deep clean?\" and the exclusions box below repeat parts of it, so change them together."
+          - name: exclusions
+            component: callout
+            label: "Quoted separately and not included (box under the grid)"
+            description: "Keep this in step with the FAQ \"What isn't included in a deep clean?\", which says the same thing."
+          - { name: moments, component: textGrid, label: "When people book a deep clean (grid)" }
+          - { name: comparison, component: comparisonTable, label: "Deep clean, regular clean or bond clean (table)" }
+          - { name: beforeAfter, component: beforeAfter, label: "Before and after" }
+          - { name: video, component: videoFeature, label: "Video (hidden on the site for now)" }
+          - name: booking
+            component: textBlock
+            label: "Easy to book, fast quoting (dark band)"
+            description: "This page's own paragraphs, starting with its \"Managed for you\" line. The How it works steps below them come from Site settings > Brand lines. Leave the button empty to keep \"Get a fast quote\"."
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "Three answers still need Teagan's read-through: how long a deep clean takes, what isn't included, and bringing your own products. The moving furniture answer is worth checking with her too."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: blind-cleaning
+        label: Blind cleaning
+        type: file
+        path: src/content/pages/house-cleaning/blind-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "The title and description name curtains. Confirm TLB cleans curtains, and how, before launch."
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "People arrive here with three questions (cards)"
+            description: "This page's own cards. The last card, \"Who is in my home\", is shared and edited under Site settings."
+          - name: method
+            component: iconGrid
+            label: "How our venetian blind cleaning works (grid)"
+            description: "Two points carry [brackets] waiting on TLB: whether fabric blinds are cleaned at all, and the height limit."
+          - { name: scope, component: callout, label: "Ask whether your blinds are leaving the house (box)" }
+          - { name: worthKnowing, component: textBlock, label: "Most damaged blinds were damaged by cleaning (dark band)" }
+          - name: sameVisit
+            component: sectionIntro
+            label: "On the same visit (list of other services)"
+            description: "The rows under this heading come from Site settings > Cross-links: outside your home and Cross-links: appliances."
+          - name: comparison
+            label: "How TLB compares (table)"
+            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "Answers in [brackets] are waiting on TLB (height limit). Keep them until confirmed."
+          - name: nonBrandedFaq
+            component: faq
+            label: "Blind, fan and curtain cleaning FAQs"
+            description: "No health or allergy claims here (brand rule). Answers in [brackets] are waiting on TLB."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: carpet-cleaning
+        label: Carpet cleaning
+        type: file
+        path: src/content/pages/house-cleaning/carpet-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "The description promises \"steam or dry methods\" and \"rugs and stairs included\". Nothing on the page yet says TLB offers a dry method; confirm before launch."
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Book your clean online\" button."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "People arrive here with three questions (cards)"
+            description: "This page's own cards. The last card, \"Who is in my home\", is shared and edited under Site settings."
+          - name: method
+            component: iconGrid
+            label: "How we clean a carpet (grid)"
+            description: "Two points carry [brackets] waiting on TLB: whether wool is cleaned in home, and the drying time."
+          - { name: worthKnowing, component: textBlock, label: "What a low carpet quote usually leaves out (dark band)" }
+          - { name: endOfLease, component: textBlock, label: "End of lease carpet cleaning" }
+          - name: otherServices
+            component: sectionIntro
+            label: "Other things we clean around the house (list)"
+            description: "The rows under this heading come from Site settings > Cross-links: appliances."
+          - name: comparison
+            label: "How TLB compares (table)"
+            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                description: "Leave empty to use the shared line under Locations > Live towns and region photos."
+              - name: tags
+                label: Tags (leave empty where the page lists towns)
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Tag text, type: string, required: true }
+                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#)" }
+              - name: note
+                label: Note under the tags
+                type: text
+                list: true
+                description: The towns themselves are edited once for the whole site, not here.
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "Booking a carpet clean (FAQs)"
+            description: "The wool rug answer depends on TLB confirming it cleans wool in home."
+          - name: nonBrandedFaq
+            component: faq
+            label: "Carpet cleaning questions (FAQs)"
+            description: "No health claims (no dust mites or allergies). Keep the pet smell answer's honesty about underlay: never cut it. Answers in [brackets] are waiting on TLB."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Book your clean online\"."
+      - name: mattress-cleaning
+        label: Mattress cleaning
+        type: file
+        path: src/content/pages/house-cleaning/mattress-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "The description deliberately leaves out the workbook's dust-mite promise, because the page will not make that claim. Do not add it back."
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Book a mattress clean\" button."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "People arrive here with three questions (cards)"
+            description: "This page's own cards. The last card, \"Who is in my home\", is shared and edited under Site settings."
+          - name: method
+            component: iconGrid
+            label: "How our mattress cleaning service works (grid)"
+            description: "Two points carry [brackets] waiting on TLB: the method, and the drying time."
+          - { name: scope, component: callout, label: "What a mattress clean does not do (box)" }
+          - { name: worthKnowing, component: textBlock, label: "Why less water is the whole job (dark band)" }
+          - name: otherServices
+            component: sectionIntro
+            label: "Other things we clean around the house (list)"
+            description: "The rows under this heading come from Site settings > Cross-links: appliances and Cross-links: outside your home."
+          - name: comparison
+            label: "How TLB compares (table)"
+            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "Booking a mattress clean (FAQs)"
+            description: "The drying time is in [brackets] until TLB confirms it. Do not turn it into a number without confirming."
+          - name: nonBrandedFaq
+            component: faq
+            label: "Mattress cleaning FAQs"
+            description: "No health claims: every answer here deliberately declines to make one, including the dust-mite answer. Answers in [brackets] are waiting on TLB."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Book a mattress clean\"."
+      - name: gutter-cleaning
+        label: Gutter cleaning
+        type: file
+        path: src/content/pages/house-cleaning/gutter-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "Blocks launch: the description says \"Fully insured\" and \"photographed on completion\". Insurance is unconfirmed and the page only promises photos of damage found. Confirm both or change the description."
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Book today\" button."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: onTheDay, component: storySteps, label: "What our gutter cleaning covers on the day (steps)" }
+          - name: ladder
+            component: callout
+            label: "Please do not do this one yourself (warning box)"
+            description: "A statement about risk: keep it free of figures. Leave the button empty to keep \"Book today\"."
+          - name: consequences
+            component: contentGrid
+            label: "What a blocked gutter actually costs (grid)"
+            description: "The third cell is shown tinted, and a last cell on its own row spans the full width. The bushfire point is worded as a reason to book, never as a promise of protection."
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: "These are sample illustrations, not real jobs, and the note says so. If you swap in real TLB photos, change the note too."
+          - name: who
+            component: textBlock
+            label: "Who turns up (dark band)"
+            description: "[insured] is waiting on TLB's confirmation. Leave the button empty to keep \"Book today\"."
+          - name: outside
+            component: sectionIntro
+            label: "The rest of the outside (list)"
+            description: "The rows under this heading come from Site settings > Cross-links: outside your home."
+          - name: comparison
+            label: "How TLB compares (table)"
+            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "Booking a gutter clean (FAQs)"
+            description: "The two-storey answer carries a [bracket] until TLB confirms its height limit."
+          - name: nonBrandedFaq
+            component: faq
+            label: "How often gutters need doing, and what it costs (FAQs)"
+            description: "Answers in [brackets] are waiting on TLB. Keep the price answer free of a \"from $X\" figure until TLB confirms one."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Book today\"."
+      - name: exterior-house-washing
+        label: Exterior house washing
+        type: file
+        path: src/content/pages/house-cleaning/exterior-house-washing.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Book a house wash today\" button."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: carousel, component: cardCarousel, label: "One wall, three ways of looking at it (carousel)" }
+          - name: scope
+            component: iconGrid
+            label: "What exterior house cleaning covers (grid)"
+            description: "Drafted from ordinary practice, not supplied by TLB. Points in [brackets] wait on TLB: the cleaning solution and the garden protection protocol."
+          - { name: softWash, component: callout, label: "Why a wash lasts longer than a blast (box)" }
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: "These are sample illustrations, not real jobs, and the note says so. If you swap in real TLB photos, change the note too."
+          - name: order
+            component: textBlock
+            label: "Do it in this order (dark band)"
+            description: "Leave the button empty to keep \"Book a house wash today\"."
+          - name: outside
+            component: sectionIntro
+            label: "The rest of the outside (list)"
+            description: "The rows under this heading come from Site settings > Cross-links: outside your home."
+          - name: comparison
+            label: "How TLB compares (table)"
+            description: "The table's columns and rows are shared by every page and edited under Site settings > Comparison table."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "Booking a house wash (FAQs)"
+            description: "Answers in [brackets] are waiting on TLB: flaking paint, garden protection and the height limit."
+          - name: nonBrandedFaq
+            component: faq
+            label: "Exterior house washing FAQs"
+            description: "The fibre cement (asbestos) answer must match TLB's actual policy, and stays a referral rather than advice. Answers in [brackets] are waiting on TLB."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Book a house wash today\"."
+      - name: end-of-lease-cleaning
+        label: End of lease cleaning
+        type: file
+        path: src/content/pages/house-cleaning/end-of-lease-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "The description's \"passes the first inspection\" and \"fixed quote\" were shipped on TLB's instruction and contradict the page's own FAQ. Do not repeat those claims elsewhere."
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Get a fast quote\" button. Bond cleans are quoted fast, not priced instantly. Never promise a bond back, a pass at inspection or a refund anywhere on this page (Australian Consumer Law)."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: pathways, component: pathwayCards, label: "Two people read this page (cards)" }
+          - name: inclusions
+            component: textGrid
+            label: "What end of lease cleaning includes (grid)"
+            description: "Not yet confirmed by Teagan, and a tenant will hold TLB to every line. The exclusions box and the FAQ \"What isn't included in a bond clean?\" must stay in step with it."
+          - name: exclusions
+            component: callout
+            label: "Quoted separately and not included (box under the grid)"
+            description: "Not yet confirmed. Keep in step with the FAQ \"What isn't included in a bond clean?\"."
+          - name: standard
+            component: textGrid
+            label: "How the standard is actually set (grid)"
+            description: "Describes tenancy law in NSW and QLD in general terms. Do not add an Act, timeframe, dollar figure or entitlement without a legal read."
+          - name: reClean
+            component: textBlock
+            label: "If the agent comes back to you"
+            description: "The re-clean policy is not yet confirmed by Teagan. It is a promise about money and time; change it together with the first FAQ."
+          - name: agentPaperwork
+            component: textBlock
+            label: "What we give you for the agent"
+            description: "Needs confirming that invoices are itemised to task level and carpet cleaning is receipted separately."
+          - { name: border, component: textBlock, label: "Both sides of the border" }
+          - name: readingGuides
+            component: linkList
+            label: "Before you book, three things worth reading (links to guides)"
+            description: "Each link must be one of the guides, e.g. /guides/the-end-of-lease-cleaning-checklist/. The icons come from the guides list."
+          - { name: comparison, component: comparisonTable, label: "Bond clean, deep clean or regular clean (table)" }
+          - name: cost
+            component: textBlock
+            label: "What an end of lease clean costs"
+            description: "No price band until Teagan confirms one. Never publish a figure in [brackets]."
+          - { name: beforeAfter, component: beforeAfter, label: "Before and after" }
+          - { name: video, component: videoFeature, label: "Video (hidden on the site for now)" }
+          - name: booking
+            component: textBlock
+            label: "Book it around the handover date (dark band)"
+            description: "Leave the button empty to keep \"Get a fast quote\"."
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "Every answer is drafted, not briefed. The re-clean, exclusions, carpet and products answers still need Teagan's confirmation. Never promise a bond back."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Get a fast quote\"."
+      - name: mould-removal
+        label: Mould removal
+        type: file
+        path: src/content/pages/house-cleaning/mould-removal.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "The description's \"Book an inspection today\" contradicts the page, which says we do not do an inspection. It shipped on TLB's instruction; expect callers asking for one."
+          - name: hero
+            component: hero
+            description: "Strict rules on this page: no health claims of any kind, never promise the mould will stay gone, and never imply remediation, an inspection or a report. Leave the button empty to keep \"Book an inspection today\"."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it. Keep it mechanical, not medical."
+          - { name: pathways, component: pathwayCards, label: "Mould turns up three ways here (cards)" }
+          - name: surfaces
+            component: textGrid
+            label: "Where it turns up, and what we do about it (grid)"
+            description: "Not yet confirmed by Teagan (silicone and grout, soft furnishings). Describe where and what, never how: no products, methods or dilutions."
+          - name: scope
+            component: callout
+            label: "Quoted separately and not a cleaning job (box)"
+            description: "This draws the page's scope boundary and names who to call instead. Do not soften it to sell harder. Not yet confirmed by Teagan."
+          - name: climate
+            component: textGrid
+            label: "Why it happens here (grid)"
+            description: "Climate and buildings only, nothing about health or risk. The 2022 floods are left out on purpose."
+          - name: safety
+            component: callout
+            label: "Three things worth not doing first (warning box)"
+            description: "Strictly limited: no method, no product, no dilution, no PPE advice. Each point says what not to do, and any health claim is attributed to Queensland Health by name. Do not turn it into a how-to or add a fourth point without that test."
+          - name: moisture
+            component: textBlock
+            label: "Cleaning takes it off. Moisture is what brings it back."
+            description: "Never soften this into \"gone for good\". The last paragraph promises noticing and routine, not that the mould stops coming back."
+          - name: comparison
+            label: "Mould clean, deep clean or specialist remediation (table)"
+            description: "The third column is not a TLB service, on purpose. The first column is not yet confirmed by Teagan. This table has no ticks or crosses: every cell shows exactly what you type, including \"No\"."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - name: columns
+                label: Column headings
+                type: object
+                list: true
+                fields:
+                  - { name: label, label: Column heading, type: string, required: true }
+              - name: rows
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Row heading, type: string, required: true }
+                  - { name: description, label: Detail under the row heading, type: text }
+                  - name: values
+                    label: One cell per column, left to right
+                    type: string
+                    list: true
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - name: commercial
+            label: "For agencies, holiday lets and commercial premises (list)"
+            description: "Same surface work as the rest of the page. No row may imply remediation, an inspection or a report."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: note, label: Note under the list, type: text }
+              - name: items
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - { name: icon, component: serviceIcon }
+                  - { name: title, label: Title, type: string, required: true }
+                  - { name: description, label: Sentence under the title, type: text, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    required: true
+                    description: A page on this site, starting and ending with a slash, e.g. /commercial-cleaning/
+                    pattern: "^(/|https://)"
+          - name: health
+            component: textBlock
+            label: "On the health question"
+            description: "This section defers, it does not answer. Never add symptoms, risks or reassurance. A version quoting NSW Health is ready in the code and waits on Teagan's approval."
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: "These are AI-generated illustrations, not real jobs, and the note and alt text say so. If you swap in real TLB photos, change the note too."
+          - name: booking
+            component: textBlock
+            label: "Send us a photo (dark band)"
+            description: "The photo-before-quoting flow is not yet confirmed. Leave the button empty to keep \"Get a fast quote\"."
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "The \"will it come back\" and health answers are compliance lines: never soften them into a promise or a health claim. Several answers still need Teagan's confirmation, and the cost answer has no price until she supplies one."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Get a fast quote\"."
 
   - name: guide-pages
     label: Guides

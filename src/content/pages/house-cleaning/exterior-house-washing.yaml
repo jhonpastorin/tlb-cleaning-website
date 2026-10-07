@@ -1,0 +1,244 @@
+seo:
+  title: Exterior House Cleaning & Soft Washing | TLB Cleaning
+  description: Exterior house cleaning and soft washing that lifts salt, mould and
+    grime from render, weatherboard and eaves, safely. Book a house wash today.
+hero:
+  kicker: Exterior house washing
+  headingLines:
+    - Exterior house cleaning for salt,
+    - mould and coastal grime
+  subheading: Exterior house cleaning that suits the surface, not just the stain
+  lead: Your house is not that colour. Not really. Walls, eaves, soffits,
+    downpipes and window frames soft washed across the Northern Rivers, the
+    Tweed and the Southern Gold Coast, at low pressure so nothing gets stripped.
+    {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/outside_your_home/exterior_house_washing/soft-washing-a-weatherboard-wall.jpg
+    alt: A cleaner in an aqua polo and teal gloves soft washing the white
+      weatherboard wall of a home with a low pressure lance, the treated boards
+      bright and the untreated section still greyed
+definition:
+  body:
+    - type: paragraph
+      text: "Exterior house cleaning, or house washing, is the washing down of the
+        outside of a house: the walls, the eaves and soffits, the gable ends,
+        the window frames and sills, the downpipes and the fascia. TLB Cleaning
+        washes house exteriors across the Northern Rivers, the Tweed and the
+        Southern Gold Coast, using low pressure soft washing rather than a high
+        pressure blast."
+    - type: paragraph
+      text: What is on the wall is mostly not dirt. It is a film of mould, algae and
+        lichen living on the surface, held there by humidity and shade, mixed
+        with salt if you are near the water and dust if you are near a road.
+        That is why the shaded side of a house looks like a different colour
+        from the sunny side, and why the answer is a cleaning solution with
+        dwell time rather than force.
+  backgroundImage: /src/assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg
+carousel:
+  heading: One wall, three ways of looking at it
+  lead: Use the arrows to move through it.
+  cards:
+    - image:
+        src: /src/assets/home_cleaning/outside_your_home/exterior_house_washing/mould-and-algae-on-a-rendered-wall.jpg
+        alt: The shaded rendered side wall of a home filmed with grey green mould and
+          algae, with streaks below the eaves and green growth rising from the
+          garden bed
+      heading: This is what five years looks like
+      body:
+        - Nobody notices it happening, because it arrives one shade at a time
+          and always on the side of the house you do not use. The giveaways are
+          the streaks under the eaves, the green rising out of the garden bed
+          and the window frames that have gone from white to grey.
+    - image:
+        src: /src/assets/home_cleaning/outside_your_home/exterior_house_washing/clean-weatherboard-wall-and-eaves.jpg
+        alt: The freshly washed white weatherboard wall and eaves of a home, the boards
+          bright and even, the window frames and sills clean, no cobwebs in the
+          soffit
+      heading: This is the same wall, washed
+      body:
+        - "No paint, no render, no repairs. This is the reason people book it
+          before selling, before Christmas and before the family arrives: it is
+          the least expensive thing you can do to a house that changes how the
+          whole place reads from the street."
+    - image:
+        src: /src/assets/home_cleaning/outside_your_home/exterior_house_washing/cleaner-with-a-soft-wash-lance-at-a-house-wall.jpg
+        alt: A cleaner in uniform standing on the lawn beside a washed house wall
+          holding a low pressure soft wash lance, turning to the camera with a
+          friendly expression
+      heading: And this is who does it
+      body:
+        - The same small local team who does the rest of your cleaning, working
+          top down with low pressure, wetting the garden beds first and rinsing
+          everything they touched on the way out.
+scope:
+  heading: What exterior house cleaning covers on a coastal home
+  lead: Six things, in the order they happen. The order is not decoration, it is
+    why the lower boards come out clean.
+  items:
+    - icon: chart-bars
+      title: Top down, always
+      description: Eaves and gables first, then the walls, then the window frames,
+        then whatever the run-off landed on. Washing bottom up means the dirty
+        water runs over what you just cleaned, which is why a rushed job leaves
+        streaks on the lower boards.
+    - icon: spray-bottle
+      title: Low pressure and a solution
+      description: A cleaning solution applied gently, given time to kill the growth,
+        then rinsed at a pressure the surface can take. [Confirm the solution
+        TLB uses and its dilution, so this page can name it plainly.]
+    - icon: target
+      title: Eaves, soffits and cobwebs
+      description: The underside of the eaves is where the webs, the mud nests and the
+        dust live, and it is the part everyone forgets. Nests and hives get
+        pointed out and left alone rather than knocked down without asking.
+    - icon: idea
+      title: Window frames, sills and downpipes
+      description: Frames, sills, fascia, downpipes, gutters from the outside, and the
+        meter box. These are the parts that read as grubby even when the wall is
+        clean, and leaving them undone is what makes a wash look half finished.
+    - icon: bloom
+      title: Plants, pets and furniture
+      description: Beds along the wall get wet down before and rinsed after, furniture
+        and pots move out of the way, pets come inside, and anything precious in
+        the garden gets pointed out to us first. [Confirm TLB’s garden
+        protection protocol.]
+    - icon: puzzle
+      title: Where we stop
+      description: Sound painted surfaces, render, weatherboard, brick, fibre cement,
+        colorbond and cladding are all fine. Flaking paint, rotten timber and
+        old fibre cement that might contain asbestos are not, and we will tell
+        you rather than wash them and see.
+softWash:
+  heading: Why a wash lasts longer than a blast
+  body:
+    - Force removes what you can see. It leaves the roots and spores in the
+      surface of the render or the grain of the timber, and they start again
+      from there, which is why a blasted wall can look green again within a
+      season. A solution with dwell time kills the growth, so the wall comes
+      back slowly and from scratch.
+    - It also matters for what the wall is made of. Enough pressure to scour
+      mould out of render is enough to take the render with it, and on
+      weatherboard it drives water up behind the boards where you cannot see it
+      and it does not dry. Slower, gentler and chemically correct is genuinely
+      the version that lasts.
+beforeAfter:
+  heading: The shaded side, both ways.
+  lead: Drag the handle across the photo.
+  note: Illustrative sample, shown while we collect before and after photos from
+    real TLB jobs.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/sample-wall-before.png
+        alt: "Sample illustration: a weatherboard wall filmed with grey green mould,
+          streaks under the eaves, cobwebs in the soffit and green growth at the
+          base"
+      after:
+        src: /src/assets/home_cleaning/before_after/sample-wall-after.png
+        alt: "Sample illustration: the same wall bright and even, the eaves and window
+          frame clean, no growth at the base"
+      caption: A shaded weatherboard elevation, filmed and then washed
+      start: 42
+order:
+  heading: Do it in this order
+  body:
+    - type: paragraph
+      text: If you are doing the whole outside, the order saves you money.
+    - type: list
+      items:
+        - Roof first, if it needs doing. Everything that comes off a roof lands
+          on the walls, the windows and the ground.
+        - Then the walls, the eaves and the window frames. This page.
+        - Then the windows, so the glass is done after the wall above it has
+          been rinsed.
+        - Then the gutters, because they catch what the roof and walls shed.
+        - Ground last. Driveways, paths and patios take whatever ran off
+          everything above them.
+    - type: paragraph
+      text: Booked the other way around, you pay to clean the driveway twice. We quote
+        it as one job when you ask us to, and we will tell you what genuinely
+        needs doing this year rather than all five of them.
+outside:
+  heading: The rest of the outside
+  lead: The other four, in the order they are worth doing.
+comparison:
+  heading: How TLB compares
+  lead: The person washing your house is on our team, and they are the one who
+    will be back next year.
+  cornerLabel: Why TLB Cleaning is different
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+faq:
+  heading: Booking a house wash
+  items:
+    - question: Will it strip our paint?
+      answer: "Not sound paint. The pressure is closer to a garden hose than a
+        pressure washer, which is the whole point of soft washing. Paint that is
+        already flaking or chalking is a different matter: we will show you
+        before we start, because a wash will lift what was already letting go.
+        [Confirm TLB’s position on flaking paint.]"
+    - question: How long does the whole house take?
+      answer: A single-storey house is usually most of a day, and a two-storey one is
+        a day or more depending on access and how much growth there is. Most of
+        that time is application and rinsing rather than scrubbing. You get the
+        estimate with the price, and we work around whether anyone is home.
+    - question: What about our garden?
+      answer: Beds along the wall get wet down before we start and rinsed again
+        afterwards, which is what protects them. Furniture and pots move, pets
+        stay inside, and anything you are precious about gets pointed out to us
+        first. [Confirm TLB’s garden protection protocol and what happens to the
+        run-off.]
+    - question: Can you reach a two-storey wall and the gable?
+      answer: "Usually, from the ground, with the right reach on the lance. [Confirm
+        TLB’s height limit and what is quoted out.] Access is what decides it: a
+        gable end over a steep garden bed is harder than a two-storey wall over
+        a lawn. If we cannot reach something safely we will say so instead of
+        improvising."
+    - question: Can you do the inside mould as well?
+      answer: That is a different service, and it has a health dimension that outside
+        work does not. Have a look at our mould cleaning and removal page, which
+        covers ceilings, cornices, bathrooms and wardrobes, and what causes it
+        in the first place. We can do both, quoted separately.
+nonBrandedFaq:
+  heading: Exterior house washing FAQs
+  items:
+    - question: What is soft washing a house?
+      answer: A low pressure application of a cleaning solution to the walls, eaves
+        and trim, left to work and then rinsed off gently. The force is close to
+        a garden hose. It suits render, paint, weatherboard, cladding and roofs,
+        where high pressure would strip the finish or push water in behind it.
+    - question: Why is one side of my house darker than the others?
+      answer: Because that side stays damp longest. The southern and shaded elevations
+        get less sun and less drying wind, so mould and algae live there happily
+        while the sunny walls stay clear. Overhanging trees, a fence close to
+        the wall and garden beds against the base all make it worse.
+    - question: How often should a house exterior be washed?
+      answer: "Every one to two years suits most homes here, and shaded, coastal or
+        tree covered houses sit at the shorter end of that. Humidity is the
+        driver: the further inland and the more sun a wall gets, the longer it
+        stays clean. Doing it before the growth is thick is faster and costs
+        less than rescuing it."
+    - question: Can old fibre cement cladding be washed?
+      answer: Not by us. Fibre cement cladding and eave sheeting installed before the
+        1990s can contain asbestos, and washing disturbs the surface, so it is
+        work for a licensed asbestos removalist rather than a cleaner. If you
+        are not sure what your walls are made of, get it identified before
+        anyone cleans them.
+    - question: How much does exterior house washing cost?
+      answer: It is usually priced on the size of the house and the access, with a
+        minimum charge, and it moves with the number of storeys, how much growth
+        there is, the wall material and whether the roof, windows or driveway
+        are done at the same time. Ask for a price against a written scope of
+        what is included. [TLB’s pricing basis and minimum charge. Confirm.]
+closingCta:
+  kicker: Exterior house washing
+  heading: Send us a photo of the shady side.
+  lead: That is the side that tells us what the job is. We will come back with a
+    price, a date and an honest word on whether the roof and the driveway are
+    worth doing at the same time. Book a house wash today.

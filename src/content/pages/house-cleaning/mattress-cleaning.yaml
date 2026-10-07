@@ -1,0 +1,207 @@
+seo:
+  title: Mattress Cleaning Service | TLB Cleaning
+  description: Professional mattress cleaning that lifts stains, sweat and odour
+    from the one thing nobody ever washes. Book a mattress clean for your home
+    today.
+hero:
+  kicker: Mattress cleaning
+  headingLines:
+    - Mattress cleaning services across
+    - the Northern Rivers and the Tweed
+  subheading: Mattress cleaning services booked for the morning, dry in time for bed
+  lead: You wash the sheets every week. The mattress, never. Ours is a mattress
+    cleaning service done in your home with as little moisture as the job needs,
+    so the bed is ready the same evening. {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/appliances/mattress/cleaner-cleaning-a-bare-mattress.png
+    alt: A TLB cleaner in an aqua polo, dark teal apron and teal gloves drawing a
+      hand-held upholstery tool across a bare mattress
+definition:
+  body:
+    - type: paragraph
+      text: A professional mattress cleaning service is the deep cleaning of the
+        mattress itself, not the bedding. It is done in your home with a
+        hand-held extraction tool that puts a controlled amount of solution into
+        the surface and draws it straight back out, so the top layers are
+        cleaned without the mattress being soaked. TLB Cleaning cleans
+        mattresses across the Northern Rivers and the Tweed.
+    - type: paragraph
+      text: It is worth doing because a mattress is the one soft thing in a house that
+        never gets washed. Sheets go through the machine weekly, a mattress
+        protector occasionally, and the mattress underneath absorbs sweat, body
+        oil and skin for eight hours a night for years. Nothing about that is an
+        emergency. It is just a job that quietly never gets done.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: People arrive here with three questions.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/home_cleaning/appliances/mattress/stripped-bed-ready-for-mattress-cleaning.jpg
+        alt: A bed stripped back to a bare mattress with the linen folded on a chair
+          beside it
+      title: It has never been cleaned and I have done the maths
+      description: Most mattresses have never been touched since the day they arrived.
+        If yours is five or ten years old and still has years left in it, this
+        is the job that makes it feel looked after rather than tolerated.
+      cta:
+        label: Book a mattress clean
+        href: /contact/
+    - image:
+        src: /src/assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg
+        alt: A TLB cleaner and a homeowner talking through the job in a living room
+      title: Something happened and it soaked in
+      description: A wet bed, a sick child, a spilled drink. Fresh is far better than
+        dry, so ring us sooner rather than after it has set. We will be straight
+        with you about how deep it has gone.
+      cta:
+        label: Book a mattress clean
+        href: /contact/
+method:
+  heading: How our mattress cleaning service works, stage by stage
+  lead: Five stages. Putting less water in is the skill, not more.
+  items:
+    - icon: target
+      title: Stripped and checked
+      description: "Bedding comes off and we look at what we are dealing with: the
+        fabric, the seams, any existing marks and whether there is damage or
+        damp underneath. Pillow top, quilted and foam surfaces all take slightly
+        different handling."
+    - icon: spray-bottle
+      title: Vacuumed properly, both sides where we can
+      description: A slow pass with a brush head across the surface, into the quilting
+        and right along the piped seams, which is where everything collects. If
+        the mattress can be turned safely we do the other side too. A lot of the
+        result comes from this step alone.
+    - icon: spark
+      title: Marks treated individually
+      description: Body oil marks, spills and old stains each need something
+        different, and they are treated by what caused them. We will tell you
+        before we start which marks are likely to lift and which have been there
+        long enough to be permanent.
+    - icon: chart-bars
+      title: Low moisture extraction
+      description: "A hand tool puts in as little solution as the job needs and pulls
+        it straight back out. Deliberately restrained: the inside of a mattress
+        cannot be dried out once it is wet, so putting less in is the whole
+        skill. [Confirm TLB uses low moisture extraction.]"
+    - icon: office
+      title: Dried before the bed goes back together
+      description: Air moved across the surface until it is dry to the touch, and we
+        book mornings so it has the day. Typical drying time is [X to Y hours.
+        Confirm]. We would rather come back another day than have you make up a
+        bed that is not properly dry.
+scope:
+  heading: What a mattress clean does not do
+  body:
+    - A clean is not a repair and it is not a rescue. A mattress that has
+      collapsed in the middle, lost its support or been soaked right through is
+      at the end of its life, and cleaning it will not change that. If that is
+      what we find, we will say so and you can put the money towards the
+      replacement instead.
+worthKnowing:
+  heading: Why less water is the whole job
+  body:
+    - type: paragraph
+      text: The thing that decides whether a mattress clean goes well is moisture, and
+        it works the opposite way to how people expect. More water does not mean
+        a better clean. A mattress is thick, dense and completely enclosed, and
+        unlike a carpet you cannot lift it, get air underneath it and dry it
+        out. Whatever soaks past the top few centimetres stays there. That is
+        why a proper mattress clean uses as little liquid as it can get away
+        with, and why anyone offering to shampoo or saturate one is offering you
+        a damp mattress.
+    - type: paragraph
+      text: The other half is timing. We book mattresses in the morning so there is a
+        whole day of airflow before anyone needs the bed, and we would genuinely
+        rather move the booking than hand back something that is still cool to
+        the touch. If a cleaner cannot tell you how long yours will take to dry,
+        they have not thought about the part of the job that matters most.
+otherServices:
+  heading: Other things we clean around the house
+  lead: The jobs a regular clean never has time for. Any of them can go on the
+    same visit.
+comparison:
+  heading: How TLB compares
+  lead: This is a job in your bedroom, on the bed you sleep in. Who does it
+    matters more here than almost anywhere else in the house.
+  cornerLabel: Why TLB Cleaning is different
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Across the Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+faq:
+  heading: Booking a mattress clean
+  items:
+    - question: Can we sleep in the bed that night?
+      answer: That is the plan, and it is why we book mattresses in the morning. We
+        use as little moisture as the job allows and get air moving across the
+        surface before we leave. Typical drying is [X to Y hours. Confirm]. If
+        it is a humid week we will tell you honestly rather than have you make
+        the bed up over a damp mattress.
+    - question: Do we need to strip the bed first?
+      answer: It helps a lot if you can. Sheets, protector and pillows off, and
+        somewhere to put them. If you would rather we did it, that is fine, just
+        tell us when you book so we allow the time. We will not put the bedding
+        back on until the surface is properly dry.
+    - question: Will old stains come out?
+      answer: Some will and some will not, and we will tell you which before we start.
+        Recent spills usually lift well. Old marks that have gone through into
+        the padding and dried there are often permanent, because the mark is no
+        longer on the surface we can reach. Anyone promising a mattress will
+        come back looking new has not seen it yet.
+    - question: How often is it worth doing?
+      answer: Every year or two suits most beds, and more often for a child’s bed or
+        if someone in the house sweats heavily at night. Between cleans the
+        useful habits are a washable mattress protector, washing it with the
+        sheets, and airing the bed before you make it rather than pulling the
+        covers straight up.
+    - question: What happens if I get in touch?
+      answer: Tell us how many beds, what size and roughly how old. We will give you a
+        price and book a morning. It can go on the same visit as your regular
+        clean, and most people do the whole house at once rather than one bed at
+        a time.
+nonBrandedFaq:
+  heading: Mattress cleaning FAQs
+  items:
+    - question: Does mattress cleaning get rid of dust mites?
+      answer: We are a cleaning business, not a health service, so we will not make
+        claims about mites or what they do. What a clean actually does is remove
+        dust, hair, skin and surface soil from the mattress and the seams. If
+        mites or allergies are the reason you are asking, that is a question for
+        your GP or a health service rather than for us, and be cautious of any
+        cleaner who answers it confidently.
+    - question: How long does a mattress take to dry?
+      answer: Several hours for a properly done low moisture clean, and a full day is
+        the safe assumption in humid weather. It depends almost entirely on how
+        much liquid went in, how much air is moving through the room and the
+        humidity that day. A mattress that is still cool to the touch is still
+        wet inside, whatever the surface feels like.
+    - question: Can a mattress be cleaned with a steam cleaner?
+      answer: It is a poor idea for the same reason saturating one is. Steam puts heat
+        and moisture into a thick enclosed item that cannot be dried from the
+        other side, and moisture that gets down into the foam or springs has no
+        way out. Low moisture methods exist precisely because a mattress cannot
+        be treated like a floor.
+    - question: Is it worth cleaning an old mattress?
+      answer: It depends on what is left of it. If the mattress still supports you
+        properly and has a few years in it, a clean is an inexpensive way to
+        make it pleasant again. If it sags in the middle, has broken down at the
+        edges or has been soaked through at some point, cleaning it is money
+        spent on something that needs replacing.
+    - question: How much does mattress cleaning cost?
+      answer: Mattresses are usually priced per mattress by size, so a king costs more
+        than a single, with a lower rate per bed when several are done in the
+        same visit. Heavy staining or a mattress that has to be turned may add
+        to it. [TLB’s pricing basis and minimum charge. Confirm.]
+closingCta:
+  kicker: Mattress cleaning
+  heading: Book it for a morning.
+  lead: We strip it, clean it with as little moisture as the job needs and get air
+    across it, so the bed is ready by the evening. Do the whole house at once if
+    it is easier. Book a mattress clean for your home today.

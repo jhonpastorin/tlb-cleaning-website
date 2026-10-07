@@ -1,0 +1,263 @@
+seo:
+  title: House Deep Cleaning Services - One-Off | TLB Cleaning
+  description: "A one-off deep clean that resets the whole house: ovens,
+    skirtings, tracks and tiles. Ideal before guests, after a reno or at spring.
+    Book today."
+hero:
+  headingLines:
+    - Deep cleaning that resets the whole house
+  lead: A one-off deep clean across the Northern Rivers, the Tweed and the
+    Southern Gold Coast. Before the guests arrive, when you move in, or when
+    it's just got away from you. {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-cleaner-wiping-down-a-walk-in-shower.jpg
+    alt: A TLB cleaner crouched in a walk-in shower, wiping down the tiles and glass
+definition:
+  body:
+    - type: paragraph
+      text: A deep clean is a one-off, room-by-room reset that covers the detail work
+        a regular clean doesn't reach. Some people call it a once-off clean or a
+        move in clean, and it's the same job. TLB Cleaning provides house deep
+        cleaning services across the Northern Rivers, the Tweed and the Southern
+        Gold Coast.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: Not sure a deep clean is the one?
+  headingAccent: Start here.
+  cards:
+    - image:
+        src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-tidy-kitchen-kept-up-by-regular-visits.jpg
+        alt: Tidy, sunlit kitchen kept up by regular visits
+      title: Actually, I want this regularly
+      description: Most people book a deep clean first and then set up a fortnightly.
+        That way round works well, and it costs less than doing it the other
+        way.
+      cta:
+        label: Regular house cleaning
+        href: /house-cleaning/
+    - image:
+        src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-cleaner-wiping-down-the-kitchen-bench.jpg
+        alt: A TLB cleaner wiping down the kitchen bench beside the sink
+      title: I'm moving out
+      description: That's an end of lease clean, a different standard measured against
+        an inspection. Different page.
+      cta:
+        label: End of lease cleaning
+        href: /house-cleaning/end-of-lease-cleaning/
+    - image:
+        src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-cleaner-tidying-a-shower-niche.jpg
+        alt: Cleaner tidying the bottles in a tiled shower niche
+      title: I'm not sure which I need
+      description: Fair enough. Here's how the three differ, in plain terms.
+      cta:
+        label: Compare the three
+        href: "#compare"
+inclusions:
+  heading: What's included in a deep clean
+  lead: Everything in a regular clean, plus the detail work underneath it. This is
+    the full deep cleaning checklist, published before you book rather than
+    after.
+  items:
+    - heading: Kitchen
+      body:
+        - Inside and outside of cupboards, splashback, rangehood, oven exterior,
+          benchtops, sink and taps, appliance exteriors, behind and beside where
+          we can reach, floors including edges and corners.
+    - heading: Bathrooms and toilets
+      body:
+        - Shower screen and tiles including grout, bath, basin, taps and
+          fittings, mirrors, exhaust fan cover, toilet inside and out including
+          the base and behind, floors and skirting.
+    - heading: Bedrooms and living areas
+      body:
+        - Skirting boards, door frames, architraves, light switches and power
+          points, window sills and tracks, inside windows, ceiling fans,
+          cobwebs, vents, full vacuum including edges, under moveable furniture,
+          mop.
+    - heading: Laundry
+      body:
+        - Sink, benches, cupboard fronts, behind and beside appliances where
+          accessible, floors.
+    - heading: Throughout
+      body:
+        - Doors, handles, light fittings, air vents, all floors and edges.
+exclusions:
+  body:
+    - "Quoted separately: inside the oven, carpet steam cleaning, exterior
+      windows, blinds, inside the fridge, cleaning at height."
+    - "Not included: dishes, laundry, tidying or organising belongings."
+    - Want it as something you can print and tick off before we arrive? The full
+      deep cleaning checklist is in our guide.
+  cta:
+    label: The deep cleaning checklist
+    href: /guides/what-is-included-in-a-deep-clean/
+moments:
+  heading: When people book a deep clean
+  items:
+    - heading: Moving in
+      body:
+        - Before the furniture goes in, while the place is empty and it's easy.
+          A move in clean takes someone else's house back to a baseline before
+          it becomes yours.
+    - heading: Before guests
+      body:
+        - Family for Christmas, or the in-laws for a week. High stakes, short
+          notice.
+    - heading: After a party
+      body:
+        - Self-explanatory.
+    - heading: Before it goes to market
+      body:
+        - Photos, open homes and first impressions, and the detail an agent's
+          camera picks up.
+    - heading: The spring reset
+      body:
+        - Windows open, everything out, the once-a-year one.
+    - heading: After a long absence
+      body:
+        - Coming back to a house that's been shut up for months.
+comparison:
+  heading: Deep clean, regular clean or bond clean
+  cornerLabel: Which one you need
+  columns:
+    - label: Deep clean
+    - label: Regular clean
+    - label: End of lease clean
+  rows:
+    - label: What it is
+      values:
+        - A one-off reset, room by room
+        - Ongoing upkeep on a set schedule
+        - A clean measured against an exit inspection
+    - label: The standard
+      values:
+        - Back to a baseline
+        - Held at that baseline
+        - Whatever the inspection requires
+    - label: When
+      values:
+        - Moving in, before guests, spring, after a long gap
+        - Weekly, fortnightly or monthly
+        - When the keys go back
+    - label: Who decides it passed
+      values:
+        - The client
+        - The client
+        - The agent or landlord
+  footnote: Most people book a deep clean first and set up a regular clean
+    afterwards. It costs less that way round, because the deep clean does the
+    heavy work once rather than paying for a long first regular visit.
+beforeAfter:
+  heading: The difference a deep clean makes.
+  lead: Drag the handle across each photo to see the same spot before and after a
+    deep clean.
+  note: Photographed on real TLB cleans, published with the client's permission.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-before.jpg
+        alt: A kitchen benchtop before a TLB deep clean, with dishes stacked in and
+          beside the sink and pots left on the stove
+      after:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-after.jpg
+        alt: The same kitchen benchtop after the deep clean, sink empty and the bench
+          clear and wiped down
+      caption: Kitchen benchtop and sink
+    - before:
+        src: /src/assets/home_cleaning/before_after/cooktop-before.jpg
+        alt: A gas cooktop before a TLB deep clean, with spilled coffee grounds, crumbs
+          and food scraps across the black enamel
+      after:
+        src: /src/assets/home_cleaning/before_after/cooktop-after.jpg
+        alt: The same gas cooktop after the deep clean, the enamel wiped back to an even
+          black finish
+      caption: Gas cooktop and burners
+video:
+  headingLines:
+    - Watch a deep clean, room by room.
+  video:
+    label: Before-and-after video of a TLB deep clean, room by room
+booking:
+  heading: "{{line.fast.heading}}"
+  body:
+    - type: paragraph
+      text: "Managed for you. The part people put off isn't the cleaning, it's the
+        organising: working out who to ask, waiting on a quote that never lands,
+        then wondering whether anyone's actually coming. You pick a date that
+        suits you, you get it confirmed in writing, you get a message when we're
+        on the way, and if anything changes you hear it from us first."
+    - type: paragraph
+      text: Book online in a couple of minutes, or send a text, ring us or drop us an
+        email, whichever you'd actually do.
+    - type: paragraph
+      text: You get a quote back fast rather than waiting days on someone to come out.
+        It's based on the house as it actually is, so tell us honestly what
+        condition it's in when you book. Nothing you say will surprise us, and
+        it means we allow the right amount of time rather than running short on
+        the day.
+    - type: paragraph
+      text: Cost effective because one deep clean does the heavy work in a single
+        visit. If you're setting up a regular clean afterwards, this is the
+        better way round. And if your home needs more time than we've quoted,
+        you'll hear that before we start rather than on the invoice.
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+faq:
+  heading: Frequently asked questions about deep cleaning
+  items:
+    - question: My house hasn't had a proper clean in years. Is that a problem?
+      answer: Not at all, that's the job. Tell us honestly how it is when you book so
+        we can allow the right time, and we'll quote for what's actually there
+        rather than a guess.
+    - question: How do I know it'll actually be a deep clean and not a quick once-over?
+      answer: Because the task list is published on this page before you book. You
+        know what you're getting, and so do we.
+    - question: What if the house needs more time than we booked?
+      answer: We'll tell you before we start, not after. You'll have the option to add
+        time, or to tell us what matters most so we prioritise that. You won't
+        get a surprise on the invoice.
+    - question: How long does a deep clean take?
+      answer: Considerably longer than a regular clean, because it's the detail work.
+        A three-bedroom home in reasonable condition is usually most of a day
+        for a team. If it's been a while, longer. We'll give you a realistic
+        window when we quote.
+    - question: How much does a deep clean cost?
+      answer: It depends on the size of the house and the condition it's in, which is
+        why we quote rather than publish a flat rate. Tell us the basics and
+        you'll have a price back quickly, with no obligation attached.
+    - question: What isn't included in a deep clean?
+      answer: A deep clean covers the detail work inside your home, so a few jobs sit
+        outside it. We don't wash dishes, do laundry, or tidy and organise your
+        belongings. Cleaning at height, exterior windows, carpet steam cleaning
+        and inside-the-oven work are all quoted separately. If you're unsure
+        whether something is covered, ask when you book and we'll tell you
+        straight.
+    - question: Do cleaners move furniture during a deep clean?
+      answer: Yes, within reason. Our team moves light furniture like dining chairs,
+        bedside tables and small items so we can clean properly underneath and
+        behind. We don't move heavy furniture, appliances or anything that could
+        be damaged. If you want behind a wardrobe or under a bed done, move it
+        beforehand or tell us and we'll work out what's possible.
+    - question: Do you bring your own products and equipment?
+      answer: Yes, everything. If you'd prefer particular products used in your home,
+        tell us when you book.
+    - question: Can I book a deep clean and then set up a regular one?
+      answer: Yes, and most people do. It's the better way round, because the deep
+        clean does the heavy work once and the regular visits hold it there.
+    - question: Can I book over the phone instead of online?
+      answer: Yes. Online, text, phone or email, whichever suits you.
+    - question: Do you deep clean apartments and units?
+      answer: Yes. An apartment deep clean is the same task list in a smaller
+        footprint, so it usually takes less time than a house with the same
+        number of bedrooms. Strata buildings sometimes have lift bookings or
+        access rules for contractors, so tell us the building when you book and
+        we'll sort that out beforehand rather than on the day.
+closingCta:
+  heading: One deep clean, and the house starts again.
+  lead: Tell us the condition your home is in and we'll quote for what's actually
+    there. Most people book this once, then set up a fortnightly and stop
+    thinking about the house altogether.
