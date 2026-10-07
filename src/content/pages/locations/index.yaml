@@ -1,0 +1,135 @@
+seo:
+  title: Areas We Clean | Northern Rivers, The Tweed & Southern Gold Coast | TLB
+    Cleaning
+  description: Every town TLB Cleaning services across the Northern Rivers, the
+    Tweed and the Southern Gold Coast — from Kyogle and Casino to Byron Bay,
+    Kingscliff and Burleigh Heads.
+hero:
+  kicker: Areas we clean
+  headingLines:
+    - From the Kyogle hills
+    - to Burleigh Heads.
+  lead: "{townCount} towns across three regions and both sides of the border,
+    worked by one local team rather than by whoever is nearest on the day."
+definition:
+  heading: Where we clean
+  body:
+    - type: paragraph
+      text: TLB Cleaning services {townCount} towns across the Northern Rivers and the
+        Tweed in New South Wales, and the Southern Gold Coast in Queensland.
+        Homes, holiday lets and businesses, on a schedule rather than on call.
+    - type: paragraph
+      text: "The service area is a real one rather than a marketing radius: it is the
+        ground a local team can cover properly in a day and still be back for
+        the school run. That is why it stops where it stops, and why the same
+        people keep turning up at the same houses."
+    - type: paragraph
+      text: If you are just outside it, ask anyway. We would rather tell you straight
+        than have you guess from a map.
+numbers:
+  heading: The service area, in three numbers
+  lead: All three are counted from the town list further down this page rather
+    than typed in, so they cannot drift away from it.
+  metrics:
+    - value: "{townCount}"
+      caption: towns and suburbs serviced
+    - value: "{regionCount}"
+      caption: regions, from the hinterland to the coast
+    - value: "{stateCount}"
+      caption: states, either side of the Tweed
+regions:
+  heading: Three regions, three different jobs
+  lead: They run end to end down one stretch of coast and hinterland, and they do
+    not clean the same way. What changes is the housing, the weather and what
+    the salt gets to.
+  items:
+    - heading: Northern Rivers, NSW — {northernRiversCount} towns
+      body:
+        - The biggest of the three and the most varied. It runs from Kyogle and
+          Casino in the west, through Lismore and the hinterland villages, out
+          to Ballina, Lennox Head and Byron Bay on the coast.
+        - Two quite different cleaning jobs sit inside one region here. Inland,
+          it is older housing stock, a lot of timber, and mould and damp that
+          arrive with the wet rather than with neglect. On the coast it is salt
+          haze on glass, sand in every track, and a holiday-let calendar that
+          turns the whole thing over each Saturday.
+        - Byron Shire also carries its own short-stay rules, which changed what
+          a letting year looks like for a lot of owners here.
+    - heading: The Tweed, NSW — {tweedCount} towns
+      body:
+        - Murwillumbah and the caldera villages on one side, the Kingscliff and
+          Pottsville coastal strip on the other, and Tweed Heads pressed right
+          against the border.
+        - This is the part of the map that makes the business what it is. A
+          tenancy in Tweed Heads and a tenancy in Coolangatta are four
+          kilometres and one state apart, and most cleaners work only one side
+          of that line. We work both, which matters most at the end of a lease,
+          when the paperwork changes even though the cleaning does not.
+        - "It is also the fastest-growing stretch we cover, so a good deal of it
+          is newer housing with its own quirks: a lot of glass, a lot of tile,
+          and outdoor living that needs as much attention as the inside."
+    - heading: Southern Gold Coast, QLD — {southernGoldCoastCount} towns
+      body:
+        - Coolangatta up through Tugun, Currumbin and Palm Beach to Burleigh
+          Heads and Miami. Nine suburbs in one continuous coastal strip, which
+          is why they are close enough together to run properly in a day.
+        - Density changes the work here more than distance does. A great deal of
+          it is apartments and townhouses rather than free-standing houses,
+          which means lifts, loading docks, building access windows and a body
+          corporate with a view about when anyone can be on site.
+        - Salt is the constant. Glass, balustrades, window hardware and outdoor
+          furniture all age faster within sight of the water, and a place that
+          is cleaned on a schedule holds up visibly better than one that is not.
+towns:
+  heading: The towns we clean
+  subheading: Pick a town for local availability, or ask us if yours is not here.
+  note:
+    - If a town isn't listed, ask us anyway.
+services:
+  heading: What we do, everywhere on that list
+  lead: Every service is available across all three regions. Nothing on this list
+    is coast-only or town-only.
+faq:
+  heading: "Service areas: frequently asked questions"
+  items:
+    - question: What areas does TLB Cleaning service?
+      answer: "{townCount} towns across three regions: the Northern Rivers and the
+        Tweed in New South Wales, and the Southern Gold Coast in Queensland.
+        That runs from Kyogle and Casino in the west, through Lismore and the
+        hinterland, out to Ballina, Lennox Head and Byron Bay on the coast,
+        north through Murwillumbah, Kingscliff and Tweed Heads, and over the
+        border to Palm Beach and Burleigh Heads. Every one of them is named on
+        this page — ask us if yours is not."
+    - question: My town is not on the list. Can you still come?
+      answer: Ask us. The list is where we regularly work, not a fence. If you are a
+        few minutes outside it we will usually say yes, and if we genuinely
+        cannot get there we will tell you rather than book you in and let you
+        find out. Either way you get a straight answer the same day.
+    - question: Is there a travel charge for the outer towns?
+      answer: No. Everything on this page is inside our regular run, so the price you
+        are quoted is the price, whether you are in Byron Bay, out at Kyogle or
+        up at Burleigh Heads. If a job were ever far enough out to change that,
+        you would hear it at the quote and not on the invoice.
+    - question: Do you work on both sides of the NSW and Queensland border?
+      answer: Yes, and it is one of the more useful things about us. We work the
+        Northern Rivers in New South Wales and the Southern Gold Coast in
+        Queensland, so a move from one side of the border to the other can be
+        cleaned at both ends by the same team. That matters most at the end of a
+        lease, where the cleaning barely changes but the paperwork and the
+        regulator do.
+    - question: Do I get the same cleaners each visit?
+      answer: Yes, wherever we can. Your place is assigned to a team and that is who
+        you see, which is the main reason the service area stops where it does —
+        a run that stretched further would mean whoever was nearest that day
+        instead. If someone is away, another member of your team covers and we
+        tell you first.
+    - question: Do you clean holiday lets and businesses in these areas, or only homes?
+      answer: All three. Regular home cleaning, deep and one-off cleans, end of lease,
+        holiday let turnovers timed to the booking calendar, managed-property
+        work for agencies, and commercial cleaning for offices, shopfronts and
+        premises. The six services are listed above and each has its own page.
+closingCta:
+  kicker: Wherever you are on the map
+  heading: Tell us the suburb and we will tell you the price.
+  lead: Same team, same day each visit, no lock-in, and no travel charge inside
+    the area above.
