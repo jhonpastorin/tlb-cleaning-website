@@ -1,0 +1,262 @@
+seo:
+  title: Post Construction Cleaning Services | TLB Cleaning
+  description: "Post construction, builders and post-renovation cleaning, from
+    rough clean to handover detail: dust, render, stickers and glass. Book your
+    clean."
+ctaLabel: Book your clean
+hero:
+  kicker: Builders clean and construction site cleaning
+  headingLines:
+    - Post construction cleaning services, booked to your handover date
+  lead: The last trade on site is the one they remember. Post construction
+    cleaning services for new builds, renovations and fitouts across the
+    Northern Rivers and the Tweed. Builders cleans and final detail cleans,
+    booked to your handover date, not to ours. {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/premises/construction-cleaner-sweeping-a-new-build-before-handover.jpg
+    alt: A cleaner in a high-visibility vest sweeping fine dust from the concrete
+      floor of a newly finished, unfurnished interior
+definition:
+  body:
+    - type: paragraph
+      text: "A builders clean is the cleaning of a construction site as the work
+        finishes: removing dust, debris, adhesive, plaster and stickers so the
+        building can be inspected, handed over and lived in. TLB Cleaning does
+        builders cleans and final detail cleans across the Northern Rivers and
+        the Tweed, for new builds, renovations, fitouts and unit developments."
+    - type: paragraph
+      text: It is really three jobs at three different moments, and quotes get
+        compared wrongly because people mean different ones by the same phrase.
+        A progress clean keeps a working site safe and passable. A builders
+        clean happens once the trades are out and takes the building from
+        construction-dirty to visibly clean. A final detail clean is the pass
+        after that, where a building goes from clean to handover ready. Which
+        ones you need changes the price enormously, so it is the first thing
+        worth settling.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+silica:
+  heading: Dry sweeping construction dust is not cleaning. It is exposure.
+  body:
+    - The dust on a new build is not house dust. Cutting, grinding and even
+      sweeping concrete, brick, tile, render and engineered stone puts
+      respirable crystalline silica into the air, and it is fine enough to stay
+      there for hours and small enough to reach the deepest part of the lung. It
+      causes silicosis, and silicosis does not get better. Engineered stone
+      benchtops were banned outright in Australia from 1 July 2024 because of
+      it.
+    - "So a cleaner who turns up to a builders clean with a broom and a domestic
+      vacuum is not saving you anything, they are generating an exposure on your
+      site and putting it in your incident history rather than theirs. The
+      controls are not exotic: wet methods where the surface allows, an H-class
+      vacuum with the right filtration rather than a shop vac, and respiratory
+      protection worn properly. Ask any cleaner quoting your site which of those
+      three they are bringing."
+stages:
+  heading: Three cleans, in this order
+  lead: Most quotes get compared wrongly because two people mean different stages
+    by the same phrase. Settle which of these you want first.
+  items:
+    - image:
+        src: /src/assets/commercial_cleaning/premises/construction-cleaner-sweeping-a-new-build-before-handover.jpg
+        alt: A cleaner in a high-visibility vest sweeping fine dust from the concrete
+          floor of a newly finished, unfurnished interior
+      title: "Stage one: progress clean, while the trades are still in"
+      description: Offcuts, packaging and general debris cleared so the site stays
+        passable and nobody trips over the last trade’s mess. Floors kept clear
+        for the trades who need a clean substrate. Amenities and the site office
+        cleaned, which is the part everyone skips and everyone complains about.
+        Waste removal from site is [included / quoted separately, and requires a
+        tip fee. Confirm].
+    - image:
+        src: /src/assets/commercial_cleaning/premises/construction-cleaner-detailing-new-window-frames.jpg
+        alt: A cleaner in a high-visibility vest detailing plaster dust off a new
+          aluminium window frame in an unfurnished new build
+      title: "Stage two: the builders clean, once the trades are out"
+      description: The heavy pass. Plaster dust off every horizontal surface including
+        the tops of doors, architraves and skirtings. Paint spots, adhesive,
+        silicone smears and stickers off glass, tiles and tapware. Window frames
+        and tracks vacuumed out. Cupboards and drawers cleaned inside. Floors
+        vacuumed then washed, not swept. Done with [an H-class vacuum. Confirm
+        TLB owns one] rather than a broom, for the reason in the block above.
+    - image:
+        src: /src/assets/commercial_cleaning/premises/construction-final-detail-clean-of-a-new-bathroom.jpg
+        alt: A cleaner in a high-visibility vest polishing the brushed-metal tapware of
+          a brand new bathroom during a final detail clean
+      title: "Stage three: the final detail clean, before handover"
+      description: The pass that decides how the building feels on the day. Glass and
+        mirrors polished streak free, tapware and stainless finished, appliance
+        protective film removed, splashbacks and grout lines detailed, light
+        fittings and switch plates wiped, and the dust that settled out of the
+        air overnight taken off again. Timed to the morning of handover where
+        the program allows, because dust keeps landing.
+detailPhoto:
+  image:
+    src: /src/assets/commercial_cleaning/premises/construction-final-detail-clean-of-a-new-bathroom.jpg
+    alt: A brand new bathroom during the final detail clean, tapware polished and
+      the glass screen finished
+  caption: The final detail clean. This is the pass that decides what the defect
+    list looks like.
+priceDrivers:
+  heading: What actually decides the price
+  lead: Four variables, none of which is floor area on its own.
+  items:
+    - type: feature
+      icon: chart-pie
+      heading: Which stages you actually want
+      body:
+        - One builders clean and one detail clean is the normal pair. A quote
+          for one, compared against a quote for both, looks like one cleaner is
+          half the price of the other. Settle the stages before you compare
+          anything.
+    - type: feature
+      icon: idea
+      heading: How much glass there is
+      body:
+        - Glass is the slowest surface on a new build and the one a handover is
+          judged on. A house with a wall of stacker doors takes hours longer
+          than the same floor area in solid wall, and adhesive residue on new
+          glass takes longer again.
+    - type: feature
+      icon: target
+      heading: What the trades left behind
+      body:
+        - A site handed over swept and free of rubbish costs less to clean than
+          one with offcuts in every room. Paint overspray, silicone smears and
+          render splatter on tile are the three that turn a day into two.
+    - type: feature
+      icon: key
+      heading: Whether the date can move
+      body:
+        - A builders clean booked to a fixed handover date, on a weekend, at
+          short notice, is a different price from one with a week of float
+          either side. Penalty rates under the Cleaning Services Award are real
+          and they appear on the quote rather than in the fine print.
+worthKnowing:
+  heading: Cleaning items on a defect list are still your problem
+  body:
+    - type: paragraph
+      text: "The reason a builders clean is worth doing properly has nothing to do
+        with how it looks and everything to do with the defect list. At handover
+        somebody walks the building specifically looking for things to write
+        down. Dust in a window track, adhesive on a shower screen, plaster on
+        the top of a door, a sticker still on an appliance: none of those are
+        building defects, but they all get written up as ones, and then a
+        supervisor spends a fortnight closing items that a cleaner should have
+        closed in an afternoon."
+    - type: paragraph
+      text: The other reason is that dust keeps arriving. A building that has been
+        sealed for a week still has fine dust settling out of the air, off the
+        ceiling and out of the ducts. That is why the final detail clean is a
+        separate stage rather than the same clean done more carefully, and why
+        timing it close to handover is worth more than doing it thoroughly a
+        fortnight early. We book to your program and we will tell you honestly
+        if the date you have picked is the wrong one.
+related:
+  heading: Other premises we clean
+  subheading: Commercial cleaning for every kind of site across the Northern
+    Rivers and the Tweed.
+  tags:
+    - label: Real estate cleaners
+      href: /house-cleaning/real-estate-cleaning/
+    - label: End of lease and bond cleaning
+      href: /house-cleaning/end-of-lease-cleaning/
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Working with us on your build
+  items:
+    - question: Are your cleaners inducted to work on site?
+      answer: Any cleaner attending a construction site needs a general construction
+        induction card, the white card, plus your own site induction, and they
+        need to sign in and out like every other trade. [Whether TLB holds a
+        current white card for every cleaner who would attend, and whether TLB
+        can provide a SWMS for the work. Confirm before this page ships.] Ask us
+        for the cards and the SWMS before we come on site, not after.
+    - question: Can you work to our handover date?
+      answer: "Yes, and that is usually the whole brief. Tell us the handover date and
+        we work backwards: the builders clean once the trades are genuinely out,
+        then the final detail clean as close to the morning of handover as your
+        program allows. If the date moves, tell us as early as you can and we
+        will move with it where we have the capacity."
+    - question: Do you take the rubbish away?
+      answer: Debris and packaging get cleared and bagged as part of the clean. Taking
+        it off site is [included / a separate line with a tip fee. Confirm],
+        because it needs a vehicle and a disposal cost rather than just labour.
+        Bins on site cost everyone less, so if there is still a skip when we
+        arrive, say so.
+    - question: What about the windows?
+      answer: Internal glass, frames and tracks are part of a builders clean, and we
+        detail adhesive, paint and render off glass rather than scraping at it.
+        External glass at ground level is included. Anything above ground level
+        needs its own plan and pricing, and depending on the building that means
+        a different licence and equipment than a cleaning team carries. We will
+        tell you which it is at the walkthrough rather than after.
+    - question: Do you do renovations, not just new builds?
+      answer: Yes, and it is a different job. A renovation is dirtier per square metre
+        than a new build because the dust travels into a house that is already
+        furnished and lived in, so the clean extends past the work area into the
+        rooms nobody touched. If you are moving back into your own renovated
+        house, that is the version of this we do most.
+    - question: What happens if I get in touch?
+      answer: We walk the site, work out which stages you actually need, and tell you
+        which ones you do not. Then you get a written scope per stage with a
+        price against each and the date each one would happen. No obligation. If
+        the program is not settled yet, we will hold an indicative date rather
+        than pretend it is booked.
+faq:
+  heading: Post construction cleaning services, common questions
+  items:
+    - question: How much does a builders clean cost?
+      answer: It is priced per job rather than per hour, against a written scope, and
+        the number moves with which stages you need, how much glass there is,
+        how much the trades left behind and whether the date is fixed. Floor
+        area on its own is a poor predictor, which is why a phone quote for a
+        builders clean is usually wrong. [TLB’s pricing basis. Confirm.]
+    - question: What is included in a builders clean?
+      answer: There is no standard definition, which is exactly why it should be
+        written down. A normal scope covers dust removal from all surfaces
+        including the tops of doors and architraves, adhesive stickers silicone
+        and paint spots off glass tiles and tapware, window frames and tracks
+        vacuumed, cupboards cleaned inside, and floors vacuumed then washed. If
+        a quote just says "builders clean", ask for that list.
+    - question: What is the difference between a builders clean and a final clean?
+      answer: The builders clean is the heavy pass that takes a building from
+        construction-dirty to clean, done once the trades are out. The final
+        clean, or detail clean, is the pass after it that takes the building
+        from clean to handover ready, and it exists because fine dust keeps
+        settling for days. Doing only the first leaves dust on every sill on
+        handover morning. Doing only the second costs more, because the second
+        pass is not designed to shift plaster.
+    - question: Do construction cleaners need a white card?
+      answer: Yes. Anyone carrying out construction work on a site in New South Wales
+        needs a general construction induction card, commonly called a white
+        card, and they also need the site-specific induction for that particular
+        site. It is the principal contractor who carries the duty to make sure
+        everyone on site is inducted, so a cleaner without one is the builder’s
+        problem as much as the cleaner’s.
+    - question: Why is construction dust dangerous?
+      answer: Because of what is in it. Concrete, brick, tile, render and engineered
+        stone contain crystalline silica, and cutting, grinding or dry sweeping
+        them produces respirable particles fine enough to reach deep into the
+        lung and cause silicosis, which is irreversible. Dry sweeping is one of
+        the worst methods because it re-suspends dust that had already settled.
+        Wet methods, H-class vacuum extraction and properly fitted respiratory
+        protection are the controls that actually work.
+    - question: When should the builders clean be booked?
+      answer: Once the trades are genuinely finished, not when they are nearly
+        finished. A builders clean done while one trade is still cutting is
+        money spent twice, and it is the single most common scheduling mistake
+        on a build. Book the heavy pass for after the last trade leaves, and the
+        detail clean as close to handover as the program allows.
+closingCta:
+  kicker: Builders clean and construction site cleaning
+  heading: Tell us your handover date.
+  lead: We will walk the site, work out which stages you actually need, and price
+    each one separately. If the date you have picked is the wrong one, we will
+    say so.

@@ -2036,3 +2036,81 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+      - name: construction-site-cleaning
+        label: "Construction site cleaning"
+        type: file
+        path: src/content/pages/commercial-cleaning/construction-site-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: ctaLabel
+            label: "Main button text"
+            type: string
+            description: "Used by the hero, any stage whose button is left empty and the closing block. \"Book your clean\" is the workbook's approved label but contradicts the page; it is waiting on a ruling (suggested: \"Tell us your handover date.\"). It links to the quote page set under Site settings > Site-wide buttons. Leave empty to use the site-wide walkthrough button text."
+          - name: hero
+            component: hero
+            description: "Leave the hero's button empty to use the main button above."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
+          - name: silica
+            component: callout
+            label: "Dry sweeping is exposure (warning box)"
+            description: "The most serious warning on the site. Never add a silica exposure figure: the standard has changed and a stale number is dangerous."
+          - name: stages
+            component: imageCards
+            label: "Three cleans, in this order (slider)"
+            description: "A stage whose button is left empty uses the main button. Stages 1 and 2 carry [Confirm] brackets (waste removal, H-class vacuum)."
+          - { name: detailPhoto, component: imageBand, label: "Final detail clean photo band" }
+          - { name: priceDrivers, component: contentGrid, label: "What actually decides the price (grid)" }
+          - { name: worthKnowing, component: textBlock, label: "Cleaning items on a defect list (dark band)" }
+          - name: related
+            label: "Other premises we clean (links)"
+            type: object
+            description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: subheading, label: Subheading, type: string, required: true }
+              - name: tags
+                label: Extra links (shown after the other premises pages)
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Link text, type: string, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    pattern: "^(/|https://|tel:|mailto:|#)"
+              - { name: note, label: Note under the links, type: text, list: true }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
+              - { name: note, label: Note under the towns, type: text, list: true }
+          - name: brandLine
+            component: sectionHeading
+            label: "Easy to book heading (above the brand lines)"
+            description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
+          - name: brandedFaq
+            component: faq
+            label: "Working with us on your build (FAQs)"
+            description: "The white card answer is a launch gate: it carries a [Confirm] bracket on white cards and SWMS and must not ship unresolved. The rubbish answer carries a [Confirm] bracket."
+          - name: faq
+            component: faq
+            label: "Post construction cleaning services, common questions (FAQs)"
+            description: "The white card answer covers NSW only. The cost answer carries a [Confirm] bracket. Never add a silica exposure figure."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the main button."
