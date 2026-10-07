@@ -1919,3 +1919,87 @@ content:
             label: "FAQs: NDIS house cleaning questions"
             description: "These quote the NDIS Pricing Arrangements (a line item code, the NDIA phone number, cancellation rules), which are reissued every year. Have someone who works with plans check them before launch and after each new release. Keep the hedged wording."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+
+      - name: house-cleaning-real-estate-cleaning
+        label: Real estate and property management
+        type: file
+        path: src/content/pages/house-cleaning/real-estate-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "Never promise \"no re-clean callbacks\", a bond back guarantee or a headcount here: none is confirmed, and no cleaner controls whether a bond is returned."
+          - name: buttonLabel
+            label: Main button text
+            type: string
+            required: true
+            description: Used on the hero, the first card, the working with us grid and the closing section, wherever their own button is left empty. It always links to the quote page.
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "Agencies hand us three kinds of job (cards)"
+            description: "A card with no button uses the main button. The third card's [insured] and [police-checked] notes are waiting on TLB to confirm."
+          - name: workingWithUs
+            component: iconGrid
+            label: "What working with us looks like (grid)"
+            description: "Three points carry a [bracketed] note for TLB: capacity, the re-clean commitment and invoicing. Word the re-clean as a re-clean, never as a bond back guarantee."
+          - { name: worthKnowing, component: callout, label: "The quote is not the cost (note)" }
+          - { name: rentRoll, component: textBlock, label: "What a rent roll actually needs (dark band)" }
+          - { name: beforeAfter, component: beforeAfter, label: "Before and after" }
+          - name: services
+            component: tagCloud
+            label: "What we do for agencies (tags)"
+            description: A tag left without a link goes to the site-wide quote page.
+          - name: comparison
+            label: "How TLB compares (table)"
+            type: object
+            description: "The rows are this page's own; the three column headings are shared by every service page (Site settings > Comparison table). Write each row as a fact about how the work is organised, never as a verdict on a competitor. If TLB does not confirm its re-clean terms, delete the re-clean row rather than softening it."
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - name: rows
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Row heading, type: string, required: true }
+                  - { name: description, label: Detail under the row heading, type: text }
+                  - name: values
+                    label: One cell per column, left to right
+                    type: string
+                    list: true
+                    description: Type yes for a tick, no for a cross, or write the text to show.
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: Where we clean
+            type: object
+            description: The subheading and the towns are edited once for the whole site, under Locations > Live towns and region photos.
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: tags
+                label: Tags (leave empty where the page lists towns)
+                type: object
+                list: true
+                fields:
+                  - { name: label, label: Tag text, type: string, required: true }
+                  - { name: href, label: Links to, type: string, pattern: "^(/|https://|tel:|mailto:|#)" }
+              - { name: note, label: Note under the tags, type: text, list: true }
+          - name: bookingFaq
+            component: faq
+            label: "FAQs: working with us on your rent roll"
+            description: "Three answers carry [bracketed] notes (turnaround, the re-clean commitment, invoicing) until TLB confirms. Do not fill the re-clean one with the words \"bond back guarantee\"."
+          - name: generalFaq
+            component: faq
+            label: "FAQs: property management cleaning"
+            description: "The answer on whether a tenant can be required to use a professional cleaner is general information about tenancy law in two states. Do not add a specific rule without a compliance check."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
