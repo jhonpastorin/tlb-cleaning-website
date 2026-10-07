@@ -1,0 +1,171 @@
+seo:
+  title: How Booking Works | Book a Cleaner Online | TLB Cleaning
+  description: Check we clean your town, tell us about your place, pick a day. How
+    booking a cleaner with TLB works across the Northern Rivers and the Tweed,
+    and what happens on the day.
+hero:
+  kicker: How booking works
+  headingLines:
+    - Set it up once,
+    - then stop thinking about it.
+  lead: Book online in a couple of minutes, or send a text if that's what you'd
+    actually do. Either way, here is exactly what happens next.
+  image:
+    src: /src/assets/how_booking_works/how-booking-works-cleaner-greeted-at-the-front-door.jpg
+    alt: A TLB cleaner with her caddy being greeted at the front door of a home
+definition:
+  body:
+    - type: paragraph
+      text: "Booking a clean with TLB takes three steps: check we clean your town,
+        tell us what your place needs, then pick a day. You can do all three
+        online, or by text, phone or email if you would rather talk it through."
+    - type: paragraph
+      text: Nothing about it locks you in. There is no minimum term and no exit fee,
+        so the first booking is a first booking rather than a commitment.
+steps:
+  heading: Three steps, and none of them are hard
+  lead: The whole arrangement, from checking your town to a day you never have to
+    think about again.
+  steps:
+    - step: Step 1
+      heading: Check we clean your town
+      body:
+        - We work right across the Northern Rivers and the Tweed, inland and on
+          the coast, and cross the border into Coolangatta, Palm Beach and
+          Burleigh Heads. The full list of towns is further down this page.
+        - If your town isn't on it, ask anyway. Our teams live across the region
+          rather than driving out from one depot, so the answer depends on where
+          the nearest run already goes.
+      image:
+        src: /src/assets/locations/weatherboard-home-with-hinterland-hills.jpg
+        alt: A weatherboard home on a quiet street with the Northern Rivers hinterland
+          behind it
+    - step: Step 2
+      heading: Tell us about your place
+      body:
+        - Size, condition and how often you want us. We quote on your actual
+          place rather than a published rate that would be wrong for most homes,
+          so the more you tell us the closer the number is.
+        - If it turns out you need less than you asked for, we'll say so. A
+          one-off deep clean followed by a fortnightly usually works out better
+          than paying for a long first regular clean.
+      image:
+        src: /src/assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg
+        alt: A homeowner and a TLB cleaner talking through what the house needs
+    - step: Step 3
+      heading: Pick a day, and keep it
+      body:
+        - Choose the day that suits and we'll put you with the team that covers
+          your area, on that day, at that frequency. You'll get a reminder in
+          the lead-up so it never sneaks up on you, and a message when we're on
+          our way.
+        - After that there is nothing to organise. Most clients never think
+          about the booking again until something in their week changes, and
+          then they text us.
+      image:
+        src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-tidy-living-room-kept-up-by-regular-visits.jpg
+        alt: A tidy living room kept up by regular fortnightly visits
+onTheDay:
+  heading: What happens on the day
+  body:
+    - type: paragraph
+      text: Some clients want a quick chat and a walk through before we start. Others
+        would rather we let ourselves in and they come home to it done. Both are
+        completely fine, and you can change your mind whenever you like.
+    - type: paragraph
+      text: You don't need to be home. Most of our clients aren't, and how we get in
+        is agreed when you book rather than worked out at the door.
+practical:
+  heading: The practical bits
+  lead: The questions clients ask in the first week.
+  items:
+    - heading: Getting in
+      body:
+        - Agreed when you book, and written into the notes for your place. A
+          key, a lockbox, a code, or you let us in. If it changes, tell us once
+          and the notes change with it.
+    - heading: What we bring
+      body:
+        - Everything. Vacuum, caddy, cloths and products. If you would rather we
+          used something specific on a particular surface, leave it out and tell
+          us, and that becomes part of your notes too.
+    - heading: The first clean
+      body:
+        - It usually takes longer and costs more, and we will tell you that
+          upfront. The first visit starts from wherever the house actually is
+          rather than holding a standard that is already set. After that, visits
+          settle into a predictable window.
+    - heading: Skipping or moving a visit
+      body:
+        - Text us. You can skip a week, move a day or pause the whole
+          arrangement while you are away. There is no minimum term and no exit
+          fee, so none of it costs you anything to ask.
+notOnline:
+  heading: You don't have to book online
+  body:
+    - Online, text, phone or email, whichever you would actually use. Plenty of
+      people would rather talk the first one through than guess at a form, and
+      we would rather that too.
+    - The reminders and the set schedule work the same either way. Booking
+      online is faster, not better.
+otherBookings:
+  heading: Booking something other than a house
+  lead: The three steps above are written for a home. These three work a bit
+    differently.
+  items:
+    - title: Booking turnovers for a holiday let
+      description: We work straight off your booking calendar rather than a fixed day,
+        so turnovers happen around your guests without you organising each one.
+      href: /airbnb-holiday-home-cleaning/
+    - title: Booking as an agency or property manager
+      description: Vacancy turnarounds and bond cleans at short notice, on a rent roll
+        rather than one job at a time.
+      href: /house-cleaning/real-estate-cleaning/
+    - title: Booking a commercial clean
+      description: Priced on a walkthrough rather than a form, because nobody can
+        quote a building from a set of dropdowns.
+      href: /commercial-cleaning/
+whereWeClean:
+  heading: Where we clean
+  subheading: Across the Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+faq:
+  heading: "Booking: FAQs"
+  items:
+    - question: How do I book a cleaner with TLB?
+      answer: Online in a couple of minutes, or by text, phone or email. You tell us
+        your town, the size and condition of your place and how often you want
+        us, and we come back with a price. Nothing is locked in at that point.
+    - question: How far ahead should I book?
+      answer: The sooner the better for a regular slot, because a set day with a set
+        team means waiting for that day to be free in your area. One-off cleans,
+        bond cleans and turnovers are easier to fit in at shorter notice.
+    - question: Do I need to be home for the clean?
+      answer: No, and most of our clients are not. How we get in is agreed when you
+        book, and we message you when we are on the way. If you would rather be
+        there for the first one and not after that, that is completely normal.
+    - question: Can I change my regular day?
+      answer: Yes. Text us and we will move you to another day that your area is
+        covered on. It is not always the same week, because the runs are built
+        around towns rather than one big roster, so tell us early if you can.
+    - question: Can I skip a visit while I am away?
+      answer: Yes. Skip a week, pause for a month, or stop entirely. There is no
+        minimum term and no exit fee. Tell us when you are back and we will put
+        you on the next available day in your area.
+    - question: Will I know who is coming?
+      answer: Yes. Your place is assigned to a team, and you can meet whoever looks
+        after it before the first visit if you ask. If somebody is away, another
+        member of your team covers and we let you know beforehand.
+    - question: What if I only want one clean?
+      answer: That is fine, and for anyone changing cleaners we would suggest exactly
+        that. Book one, see how it goes, then decide about a regular. Nobody
+        here is going to push you to commit before you have seen the work.
+beforeYouBook:
+  heading: Before you book
+  lead: Who we are, what clients say, and what it is like working here.
+closingCta:
+  kicker: How booking works
+  heading: Pick a day and it starts running itself.
+  lead: Tell us which town you're in and what your place needs, and we'll come
+    back with a price.

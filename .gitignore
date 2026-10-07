@@ -17,3 +17,6 @@ npm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 .DS_Store
+
+# Pages CMS migration baseline (scripts/compare-build.mjs)
+dist-before/

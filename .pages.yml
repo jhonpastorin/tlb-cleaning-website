@@ -1,0 +1,328 @@
+# Pages CMS configuration. See PAGES-CMS-PLAN.md.
+#
+# Editors use the hosted app at https://app.pagescms.org. Each page's content
+# lives in src/content/pages/<id>.yaml. Each component below mirrors the
+# schema of the same name in src/lib/cms-schemas.ts: change both together, or
+# an editor's save will fail the build.
+#
+# Editors should work on the `staging` branch (branch picker, top left).
+
+media:
+  - name: images
+    label: Photos
+    input: src/assets
+    output: /src/assets
+    extensions: [jpg, jpeg, png, webp]
+    rename: safe
+
+settings:
+  content:
+    # Keep any keys in a content file that this config does not describe,
+    # instead of deleting them on save.
+    merge: true
+  commit:
+    identity: user
+    templates:
+      create: "Content: create {path} (by {userName} via Pages CMS)"
+      update: "Content: update {path} (by {userName} via Pages CMS)"
+      delete: "Content: delete {path} (by {userName} via Pages CMS)"
+      rename: "Content: rename {oldPath} to {newPath} (by {userName} via Pages CMS)"
+
+components:
+  # ------------------------------------------------------------ building blocks
+
+  seo:
+    type: object
+    label: Search engine listing
+    fields:
+      - name: title
+        label: Page title (the blue headline in Google)
+        type: string
+        required: true
+        description: Aim for about 60 characters, main search phrase first, ending "| TLB Cleaning". Google cuts off longer titles.
+        options: { maxlength: 90 }
+      - name: description
+        label: Meta description (the grey text under it)
+        type: text
+        required: true
+        description: Aim for 140 to 155 characters. Never use cheap, budget, affordable, premium or an em dash.
+        options: { maxlength: 200 }
+
+  image:
+    type: object
+    label: Photo
+    fields:
+      - name: src
+        label: Photo
+        type: image
+        options: { media: images }
+        description: Choose from the library or upload. Export phone photos at about 2400 px on the long edge. The site crops and compresses it to fit.
+      - name: alt
+        label: Describe the photo
+        type: string
+        required: true
+        description: One plain sentence for screen readers and Google, e.g. "A TLB cleaner wiping down a kitchen bench". No "image of".
+
+  textBody:
+    type: block
+    label: Body
+    list:
+      collapsible:
+        collapsed: false
+    blockKey: type
+    blocks:
+      - name: paragraph
+        label: Paragraph
+        fields:
+          - name: text
+            label: Paragraph
+            type: text
+            required: true
+      - name: list
+        label: Bullet list
+        fields:
+          - name: items
+            label: Bullet points
+            type: string
+            list: true
+          - name: ordered
+            label: Number the points instead of bullets
+            type: boolean
+      - name: subheading
+        label: Subheading
+        fields:
+          - name: text
+            label: Subheading
+            type: string
+            required: true
+
+  # ------------------------------------------------------------------ sections
+
+  hero:
+    type: object
+    label: Hero (top of the page)
+    fields:
+      - name: kicker
+        label: Small label above the heading
+        type: string
+      - name: headingLines
+        label: Main heading (H1)
+        type: string
+        list: true
+        required: true
+        description: Each line here starts a new line on the page. Most pages use one or two.
+      - name: lead
+        label: Intro sentence
+        type: text
+        required: true
+        description: "Tip: {{line.instant}} or {{line.fast}} inserts the brand line."
+      - name: image
+        component: image
+
+  textBlock:
+    type: object
+    label: Text section
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: body
+        component: textBody
+
+  storySteps:
+    type: object
+    label: Numbered steps with photos
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: steps
+        label: Steps
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{step}: {heading}"
+        fields:
+          - name: step
+            label: Step label
+            type: string
+            description: e.g. "Step 1"
+          - name: heading
+            label: Heading
+            type: string
+            required: true
+          - name: body
+            label: Paragraphs
+            type: text
+            list: true
+          - name: image
+            component: image
+
+  textGrid:
+    type: object
+    label: Grid of short answers
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: items
+        label: Cells
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{heading}"
+        fields:
+          - name: heading
+            label: Heading
+            type: string
+          - name: body
+            label: Paragraphs
+            type: text
+            list: true
+
+  callout:
+    type: object
+    label: Callout box
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: body
+        label: Paragraphs
+        type: text
+        list: true
+
+  linkList:
+    type: object
+    label: List of links
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: lead
+        label: Intro sentence
+        type: text
+      - name: items
+        label: Rows
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: description
+            label: Sentence under the title
+            type: text
+            required: true
+          - name: href
+            label: Links to
+            type: string
+            required: true
+            description: A page on this site, starting and ending with a slash, e.g. /house-cleaning/deep-cleaning/
+            pattern: "^(/|https://)"
+
+  sectionIntro:
+    type: object
+    label: Section heading
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: lead
+        label: Intro sentence
+        type: text
+
+  tagCloud:
+    type: object
+    label: Where we clean
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: subheading
+        label: Subheading
+        type: string
+        required: true
+      - name: note
+        label: Note under the towns
+        type: text
+        list: true
+        description: The towns themselves are edited once for the whole site, not here.
+
+  faq:
+    type: object
+    label: FAQs
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: items
+        label: Questions
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{question}"
+        fields:
+          - name: question
+            label: Question
+            type: string
+            required: true
+          - name: answer
+            label: Answer
+            type: text
+            required: true
+
+  callToAction:
+    type: object
+    label: Closing call to action
+    fields:
+      - name: kicker
+        label: Small label above the heading
+        type: string
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+      - name: lead
+        label: Sentence under the heading
+        type: text
+
+content:
+  - name: main-pages
+    label: Main pages
+    type: group
+    items:
+      - name: how-booking-works
+        label: How booking works
+        type: file
+        path: src/content/pages/how-booking-works.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - { name: definition, component: textBlock, label: "Intro (under the trust bar)" }
+          - { name: steps, component: storySteps, label: "The three steps" }
+          - { name: onTheDay, component: textBlock, label: "What happens on the day (dark band)" }
+          - { name: practical, component: textGrid, label: "The practical bits" }
+          - { name: notOnline, component: callout, label: "You don't have to book online (callout)" }
+          - { name: otherBookings, component: linkList, label: "Booking something other than a house" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - { name: faq, component: faq, label: "FAQs" }
+          - { name: beforeYouBook, component: sectionIntro, label: "Before you book (links to the team pages)" }
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }

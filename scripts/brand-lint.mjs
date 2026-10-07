@@ -6,6 +6,8 @@
 // mechanical (a banned word, an em dash, an unfilled bracket) stop being
 // found by a human six months later.
 //
+// Covers src/**/*.{astro,ts} and the Pages CMS content in src/content/.
+//
 // Run:  node scripts/brand-lint.mjs
 //       node scripts/brand-lint.mjs --all      (include comment lines)
 //
@@ -18,6 +20,7 @@
 
 import { readFileSync } from 'node:fs';
 import { globSync } from 'node:fs';
+import { parseDocument, isScalar, visit } from 'yaml';
 
 const ALL = process.argv.includes('--all');
 
@@ -107,24 +110,47 @@ const RULES = [
 ];
 
 const files = globSync('src/**/*.{astro,ts}', { withFileTypes: false });
+// Page content edited through Pages CMS. See PAGES-CMS-PLAN.md.
+const contentFiles = globSync('src/content/**/*.{yaml,yml}', { withFileTypes: false });
 
 let blockers = 0;
 let warns = 0;
-/** @type {Map<string, {file:string,line:number,text:string}[]>} */
+/** @type {Map<string, {file:string,line:number|string,text:string}[]>} */
 const hits = new Map();
+
+/** Run every rule over one piece of text and record what fires. */
+function lint(text, file, line) {
+  for (const r of RULES) {
+    r.re.lastIndex = 0;
+    if (!r.re.test(text)) continue;
+    if (r.allow && r.allow.test(text)) continue;
+    if (!hits.has(r.id)) hits.set(r.id, []);
+    hits.get(r.id).push({ file, line, text: text.trim().slice(0, 150) });
+  }
+}
 
 for (const file of files) {
   const lines = readFileSync(file, 'utf8').split('\n');
   lines.forEach((raw, i) => {
     const line = raw.trim();
     if (!ALL && (line.startsWith('//') || line.startsWith('*') || line.startsWith('/*'))) return;
-    for (const r of RULES) {
-      r.re.lastIndex = 0;
-      if (!r.re.test(raw)) continue;
-      if (r.allow && r.allow.test(raw)) continue;
-      if (!hits.has(r.id)) hits.set(r.id, []);
-      hits.get(r.id).push({ file, line: i + 1, text: line.slice(0, 150) });
-    }
+    lint(raw, file, i + 1);
+  });
+}
+
+// YAML wraps long text over several lines, so a banned phrase can straddle a
+// line break. Content files are linted one whole string value at a time, and
+// reported by line number and key path so an editor can find the field.
+for (const file of contentFiles) {
+  const source = readFileSync(file, 'utf8');
+  const doc = parseDocument(source);
+  visit(doc, {
+    Scalar(_, node, path) {
+      if (!isScalar(node) || typeof node.value !== 'string' || !node.range) return;
+      const keys = path.filter((p) => isScalar(p?.key)).map((p) => p.key.value);
+      const line = source.slice(0, node.range[0]).split('\n').length;
+      lint(node.value, file, `${line} (${keys.join('.')})`);
+    },
   });
 }
 
