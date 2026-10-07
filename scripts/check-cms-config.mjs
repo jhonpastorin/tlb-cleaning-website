@@ -116,6 +116,26 @@ for (const entry of entries(config.content ?? [])) {
   }
 }
 
+// Every content file must be reachable from the editor: a file with no entry
+// in .pages.yml is content nobody can change.
+const covered = new Set();
+for (const entry of entries(config.content ?? [])) {
+  if (!existsSync(entry.path)) continue;
+  if (entry.type === 'collection') {
+    for (const name of readdirSync(entry.path)) covered.add(`${entry.path}/${name}`);
+  } else {
+    covered.add(entry.path);
+  }
+}
+function contentFiles(dir) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((d) =>
+    d.isDirectory() ? contentFiles(`${dir}/${d.name}`) : /\.ya?ml$/.test(d.name) ? [`${dir}/${d.name}`] : [],
+  );
+}
+for (const path of contentFiles('src/content')) {
+  if (!covered.has(path)) problems.push(`${path}: has no entry in .pages.yml, so nobody can edit it`);
+}
+
 if (problems.length) {
   console.log(problems.map((p) => `  - ${p}`).join('\n'));
   console.log(`\n${problems.length} problem(s) between .pages.yml and the content files.`);
