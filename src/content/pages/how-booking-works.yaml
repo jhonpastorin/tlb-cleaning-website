@@ -75,6 +75,8 @@ onTheDay:
     - type: paragraph
       text: You don't need to be home. Most of our clients aren't, and how we get in
         is agreed when you book rather than worked out at the door.
+    - type: paragraph
+      text: This is a test parapgraph.
 practical:
   heading: The practical bits
   lead: The questions clients ask in the first week.
