@@ -4,8 +4,8 @@
 // renders. This compares every HTML file in dist/ against a baseline build,
 // after stripping the scope hashes Astro derives from a component's source
 // (they change whenever the .astro file changes, even when the output does not)
-// and the per-render ids several sections make with Math.random() (they change
-// on every build).
+// the per-render ids several sections make with Math.random() (they change
+// on every build), and the names of bundled scripts (see scriptFingerprint).
 //
 // Make the baseline once, from the branch you are migrating away from:
 //   git stash -u   (or check out staging)
@@ -18,6 +18,7 @@
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { createHash } from 'node:crypto';
 
 const BEFORE = 'dist-before';
 const AFTER = 'dist';
@@ -48,12 +49,41 @@ const RANDOM_ID_PREFIXES = [
 ];
 const randomIds = new RegExp(`\\b(${RANDOM_ID_PREFIXES.join('|')})-[a-z0-9]{1,7}\\b`, 'g');
 
-const normalise = (html) =>
+// Bundled scripts (/_astro/*.js) are named by a hash of the bundling, and
+// Rollup re-cuts and renames them whenever the module graph changes, even
+// when no script changed. So a script is compared by its CONTENT: each file
+// is fingerprinted with the fingerprints of the files it imports substituted
+// for their names, and a run of bare `import"x";` statements is sorted,
+// because those only load independent component scripts.
+const fingerprints = new Map();
+function scriptFingerprint(dir, name) {
+  const key = `${dir}/${name}`;
+  if (fingerprints.has(key)) return fingerprints.get(key);
+  fingerprints.set(key, 'CYCLE');
+  const path = join(dir, '_astro', name);
+  if (!existsSync(path)) return `missing:${name}`;
+  const source = readFileSync(path, 'utf8')
+    .replace(/(["'])\.\/([\w.-]+\.js)\1/g, (_, q, dep) => `${q}${scriptFingerprint(dir, dep)}${q}`)
+    .replace(/(?:import"[^"]+";?)+/g, (run) =>
+      run
+        .split(/(?<=")(?:;|(?=import))/)
+        .filter(Boolean)
+        .map((s) => s.replace(/;$/, ''))
+        .sort()
+        .join(';'),
+    );
+  const fingerprint = createHash('sha1').update(source).digest('hex').slice(0, 12);
+  fingerprints.set(key, fingerprint);
+  return fingerprint;
+}
+
+const normalise = (html, dir) =>
   html
     .replace(/\sdata-astro-cid-[a-z0-9]+(="[^"]*")?/g, '')
     .replace(/\bastro-[a-z0-9]{8}\b/g, 'astro-HASH')
     .replace(/\[data-astro-cid-[a-z0-9]+\]/g, '')
-    .replace(randomIds, '$1-ID');
+    .replace(randomIds, '$1-ID')
+    .replace(/\/_astro\/([\w.-]+\.js)/g, (_, name) => `/_astro/script-${scriptFingerprint(dir, name)}.js`);
 
 /** The first point where two strings part, with some context either side. */
 function firstDifference(a, b) {
@@ -78,8 +108,8 @@ for (const file of before) {
     failures++;
     continue;
   }
-  const a = normalise(readFileSync(join(BEFORE, file), 'utf8'));
-  const b = normalise(readFileSync(join(AFTER, file), 'utf8'));
+  const a = normalise(readFileSync(join(BEFORE, file), 'utf8'), BEFORE);
+  const b = normalise(readFileSync(join(AFTER, file), 'utf8'), AFTER);
   if (a !== b) {
     failures++;
     const { before: x, after: y } = firstDifference(a, b);
