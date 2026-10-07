@@ -2,7 +2,7 @@
 
 **Goal:** every piece of visible copy and every photo on every page of tlbcleaning.com.au can be edited in a friendly web editor (Pages CMS), by people without GitHub accounts, while the site stays a fully static Astro build on Render.
 
-**Status:** Phases 1 and 2 done on `feature/pages-cms` (7 Oct 2026). Phase 0 has three Pages CMS checks still open (photos, emptied fields, `.JPG` uploads); they must pass before Phase 3. See "Spike findings" and "Phase 1 results" in section 9.
+**Status:** Phases 1 to 3 done on `feature/pages-cms` (7 Oct 2026): every page's copy and photos are editable. Phase 0 has three Pages CMS checks still open (photos, emptied fields, `.JPG` uploads); they must pass before Phase 3. See "Spike findings" and "Phase 1 results" in section 9.
 
 ---
 
@@ -546,7 +546,7 @@ The test paragraph from commit c7e1539 was removed in code; the second round of 
 
 - **Section schemas for every component a page uses** in `src/lib/cms-schemas.ts`, with a matching component in `.pages.yml` for each: `hero`, `heroCollage`, `textBlock`, `pathwayCards`, `linkList`, `iconGrid`, `imageCards`, `storySteps`, `photoGallery`, `textGrid`, `contentGrid`, `comparisonTable`, `beforeAfter`, `storyMosaic`, `imageBand`, `tagCloud`, `faq`, `callout`, `callToAction`, `sectionHeading`, `sectionIntro`, `videoFeature`, `contactForm`, `cardCarousel`, `metricsBlock`, `logoBar`. StatBand and TestimonialCarousel have none because no page uses them.
 - **ServiceBlocks is three editor shapes** (`linkList`, `iconGrid`, `imageCards`) so an editor never sees an icon or photo field that a variant ignores.
-- **Comparison cells:** editors type `yes` (tick), `no` (cross) or text. No existing cell is literally yes or no, so this is unambiguous.
+- **Comparison cells:** editors type `yes` (tick), `no` (cross) or text. CORRECTED in Phase 3: one existing cell (mould-removal) is literally "No" as text, so that page's table uses a text-only cell schema. A general way to show a literal Yes/No is a Phase 4 item.
 - **Pass-through rule:** a page passes every content field to its component, falling back to its default button only when the field is empty (`cta={page.hero.cta ?? bookCta}`). Otherwise the editor offers fields that do nothing. Applied to `how-booking-works`.
 - **`src/lib/cms-schemas.check.ts`** makes `astro check` fail if a schema's output no longer fits its component's props. It caught one real mismatch while being written (BeforeAfter photos use `alt`, not `label`); tested by breaking a schema on purpose.
 - **`npm run check-cms`** (`scripts/check-cms-config.mjs`) fails if a content file has a key `.pages.yml` does not describe, misses a required field, uses an unknown block or select value, or `.pages.yml` names a missing component or file. Tested with injected keys.
@@ -567,6 +567,26 @@ The test paragraph from commit c7e1539 was removed in code; the second round of 
 - `npm run check-cms` now checks collections file by file and multi-select fields (74 files agree).
 - **Still in pages, for Phase 3:** several pages build their own LocalBusiness object with the phone and email typed in (e.g. `house-cleaning.astro`). They move to the shared contact details when each page is migrated.
 
+## Phase 3 results (7 Oct 2026)
+
+- **Every page is migrated**: 60 page files plus the shared copy of the 56 town pages and the two region pages. 129 content files in total, all reachable from the editor. All 112 built pages are identical to the pre-migration baseline; brand lint unchanged (63 blockers, 233 warnings); no code comment was lost (each batch checked every original comment line still exists).
+- **How:** House cleaning (hub) was migrated by hand as the reference, then six agents worked in parallel git worktrees (`C:\w\a` to `f`, short paths because long asset paths exceed Windows' 260-character limit), one commit per page, each checked against the baseline before committing.
+- **`.pages.yml` merging:** a union merge driver interleaved two branches' entries mid-entry. It was removed; branches were merged by parsing both files and appending new entries to their group. Two entry names clashed (`contact`, `reviews`) and were renamed. `npm run check-cms` now also fails on a content file with no editor entry and on duplicate entry names.
+- **Patterns the batches introduced (reuse them for new pages):**
+  - A page-wide button label (`ctaLabel`, `buttonLabel`, `applyCta`) where a page repeats one main button: editors set its text once; the link still comes from Site settings > Site-wide buttons. Card buttons that equalled it are left empty and fall back in code.
+  - Tables that use the shared comparison rows edit only their framing (heading, lead, corner label, footnote); the rows stay under Site settings > Comparison table.
+  - Template placeholders in single braces (`{town}`, `{region}`, `{state}`, `{townCount}`...), filled by the page and rejected at build time if misspelt. The region template lives in `src/content/site/region-page.yaml` because files under `pages/` must have `seo`.
+  - Copy gated behind an unconfirmed fact stays in code with its flag (deep-cleaning's pricing section and `pricingConfirmed`, mould-removal's NSW Health paragraph and `healthSourceApproved`).
+  - Removing image imports from between component imports can reorder a page's CSS (Astro orders styles partly by import position). Put the new imports where the removed ones were; the comparison script catches it.
+- **Phase 4 work the batches identified (editor friendliness, no visible change):**
+  1. Shared components for blocks now defined inline on many pages: comparison framing for shared rows, "Where we clean" with an optional subheading, a link list with an icon per row, a hero without a photo, the "related" links block, the page-wide button label.
+  2. `iconGrid` and `imageCards` lack the section-level button ServiceBlocks supports; `note` (and `iconGrid`'s per-item button and link) are offered where those variants never show them.
+  3. A way to show a literal "Yes"/"No" in a comparison cell.
+  4. ContactForm's `lead={null}` ("no lead") cannot be expressed in the editor.
+  5. Some content files store `/contact/` literally (some pathway-card buttons, the Airbnb page's "Talk to us" buttons and pills), so they will not follow the site-wide quote button if its address changes.
+  6. Site settings > Menus labels the services description "(homepage only)", but it also shows on the locations hub, town and region pages.
+- **Content issues found but deliberately not fixed** (each batch report lists more; most are already flagged in the pages' own notes): visible `[CONFIRM]`, `[TBC]`, `[insured]` and `[police-checked]` brackets on several pages (including a literal "[CONFIRM]" plus a dash in the region FAQ that the lint misses); meta descriptions that promise more than their pages (end of lease, mould, gutter, blind, carpet, oven, tile, roof, school); Title Case FAQ headings on seven commercial pages; five commercial pages still on the NSW-only town list and ten whose business details say NSW only while listing Queensland towns; Why TLB's hero and cards still render placeholder boxes; several stale code comments.
+
 ---
 
 ## 10. Checklist
@@ -574,12 +594,12 @@ The test paragraph from commit c7e1539 was removed in code; the second round of 
 - [ ] Phase 0: Pages CMS installed and round-trips text (done); photos, emptied fields, `.JPG` uploads still to test
 - [x] Phase 1: section schemas, CMS components, helpers, brand lint on YAML, output diff script, CI
 - [x] Phase 2: Site settings, reviews, team, towns, regions, locations moved
-- [ ] Phase 3a: Home, hubs, Contact, About
-- [ ] Phase 3b: Remaining top-level pages
-- [ ] Phase 3c: 16 house cleaning service pages
-- [ ] Phase 3d: 15 commercial service pages
-- [ ] Phase 3e: Guides
-- [ ] Phase 3f: Locations templates
+- [x] Phase 3a: Home, hubs, Contact, About
+- [x] Phase 3b: Remaining top-level pages
+- [x] Phase 3c: 16 house cleaning service pages
+- [x] Phase 3d: 15 commercial service pages
+- [x] Phase 3e: Guides
+- [x] Phase 3f: Locations templates
 - [ ] Phase 4: Sidebar groups, labels, descriptions, locks, validation, media folders
 - [ ] Phase 5: Publish action, image size check, commit identity, branch protection
 - [ ] Phase 6: Editors invited, EDITING-GUIDE.md, walkthrough done
