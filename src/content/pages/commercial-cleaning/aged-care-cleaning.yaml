@@ -1,0 +1,296 @@
+seo:
+  title: Aged Care Cleaning Services | TLB Cleaning
+  description: Cleaning for aged care and retirement facilities on a set schedule,
+    by employed staff who work the same site each week. Request a proposal.
+ctaLabel: Request a proposal
+hero:
+  kicker: Aged care and retirement living
+  headingLines:
+    - Aged care cleaning services that work around residents
+  lead: People live here. We clean like it. Aged care cleaning services for homes,
+    retirement villages and independent living units across the Northern Rivers
+    and the Tweed. An employed local team, on a written scope, working around
+    residents rather than through them. {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/premises/aged-care-cleaner-mopping-a-retirement-village-corridor.jpg
+    alt: A cleaner mopping the vinyl floor of a bright retirement village corridor,
+      leaving a clear path to walk past her
+definition:
+  body:
+    - type: paragraph
+      text: "Aged care cleaning is the cleaning of a residential aged care home,
+        retirement village or independent living unit complex: resident rooms
+        and units, corridors and handrails, communal lounges and dining rooms,
+        common bathrooms, laundries and the administration areas. TLB Cleaning
+        does this work across the Northern Rivers and the Tweed for operators,
+        village managers and boards."
+    - type: paragraph
+      text: It is not the same job as cleaning an older person’s own house, and it is
+        not a nursing service. This page is for the person who is responsible
+        for a site. If you are a family member looking for someone to help your
+        mum or dad at home, the next block is for you.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+wrongPage:
+  heading: Looking for help for your mum or dad at home?
+  body:
+    - Then this is the wrong page, and we would rather tell you than keep you
+      here. This one is about cleaning contracts for aged care sites and
+      retirement villages, bought by the people who run them.
+    - What you are after is a regular clean of a private home, usually
+      fortnightly, often paid through a Home Care Package or DVA. It is a
+      different service with a different price and a different conversation, and
+      it is one of the kinder things we do.
+  cta:
+    label: Cleaning for seniors at home
+    href: /house-cleaning/senior-home-cleaning/
+scope:
+  heading: What goes on the scope
+  lead: Grouped by infection risk, the way your own cleaning policy is grouped,
+    rather than room by room.
+  items:
+    - icon: target
+      title: High-touch points, every visit
+      description: Handrails the length of every corridor, door handles and push
+        plates, light switches, lift buttons, bed rails and chair arms in
+        communal rooms, and the shared kitchen and laundry handles. These are
+        the surfaces an outbreak travels on and they are the first thing a thin
+        scope drops.
+    - icon: spray-bottle
+      title: Wet areas, with separate cloths
+      description: Resident and common bathrooms, ensuites, shower chairs and grab
+        rails, sluice and laundry areas. Colour-coded cloths and mop heads so
+        nothing crosses from a bathroom to a dining table, changed between rooms
+        rather than between wings.
+    - icon: house
+      title: Resident rooms and independent living units
+      description: "Floors, surfaces, ensuite, bins, and the things residents actually
+        notice: the window sill, the top of the wardrobe, under the bed. We
+        knock, we introduce ourselves, and if a resident would rather we came
+        back later, we come back later."
+    - icon: bloom
+      title: Communal lounges and dining
+      description: Dining tables and chairs including the legs and feet, lounge
+        upholstery vacuumed, hard floors mopped and carpet vacuumed, and glass
+        at the height people actually touch it. Dining rooms turn over three
+        times a day and need a clean between sittings, not once at night.
+    - icon: chart-bars
+      title: Periodically, on a named month
+      description: Carpet extraction in corridors and lounges, upholstery cleaning,
+        high dusting, vents, window sills and external glass at ground level.
+        Each one goes on the schedule with a month against it so it happens on a
+        date rather than before an audit.
+    - icon: puzzle
+      title: What we do not do, said plainly
+      description: No personal care of any kind. No handling of clinical or sharps
+        waste, no cleaning of clinical equipment, no terminal cleans and no
+        outbreak decontamination. Those need clinically trained staff under your
+        own infection control procedures, and a cleaning contractor claiming
+        otherwise is a risk to you.
+residents:
+  heading: An office is empty. A village never is.
+  blocks:
+    - type: text
+      body:
+        - An office is empty when we clean it. A village never is. Somebody is
+          having lunch, somebody is asleep, somebody has family visiting, and
+          somebody has had a bad morning and does not want a stranger with a mop
+          in their room. That is not an obstacle to work around. It is the job.
+        - So we work slowly and we work the same way every time. Half a corridor
+          stays walkable while the other half dries, because a wet floor sign is
+          not a plan for someone with a walker. We knock and wait. We put things
+          back exactly where they were, because a chair moved thirty centimetres
+          is genuinely disorienting for a resident with dementia.
+    - type: image
+      image:
+        src: /src/assets/commercial_cleaning/premises/aged-care-cleaner-wiping-handrails-in-a-communal-lounge.jpg
+        alt: A cleaner wiping down a brushed-metal handrail at the edge of a bright
+          communal lounge in a retirement village
+    - type: text
+      body:
+        - "The other half is continuity, and in aged care it is worth more than
+          it is anywhere else on this site. Residents come to know the person
+          who cleans their room. They will tell that person things they will not
+          put on a feedback form: that the shower is not draining, that the
+          neighbour has not been out in two days, that they are worried about
+          something."
+        - A cleaner who changes every fortnight never gets told any of it. Ours
+          are employed by TLB rather than subcontracted, they stay, and they are
+          briefed to pass on what they notice to your staff instead of to each
+          other. That is not an add-on service. It is what having the same
+          people does on its own.
+    - type: image
+      image:
+        src: /src/assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg
+        alt: A TLB cleaner and a manager talking through the job in a reception area
+worthKnowing:
+  heading: The two questions worth more than the quote
+  body:
+    - type: paragraph
+      text: The question that matters most on an aged care site is not what a cleaner
+        charges, it is who they are sending. Providers are accountable for
+        screening the people who work around residents, and that accountability
+        extends to contractors. A cleaning company that answers "our team is all
+        police-checked" without being able to produce the evidence per person,
+        on request, has just made their problem your problem.
+    - type: paragraph
+      text: "The second question is turnover. Cleaning has one of the highest staff
+        turnover rates of any trade, and a subcontracted or platform-sourced
+        workforce is the reason: nobody stays because nobody is employed. On an
+        aged care site that shows up as strangers in resident rooms every few
+        weeks, a scope nobody has actually read, and no one who notices that Mr
+        Hall’s shower has stopped draining. Ask any cleaner how long their
+        people have been there. It tells you more than the quote does."
+related:
+  heading: Other premises we clean
+  subheading: Commercial cleaning for every kind of site across the Northern
+    Rivers and the Tweed.
+comparison:
+  heading: How TLB compares
+  lead: On an aged care site, the questions below stop being marketing points and
+    start being compliance ones. Who is the person in the building, are they
+    employed, and will they still be here in a year.
+  cornerLabel: Why TLB Cleaning is different
+  rows:
+    - label: Who attends your site
+      values:
+        - Whoever is rostered, often a subcontractor
+        - The same person
+        - The same small team, briefed on your site rather than handed an address
+    - label: Employment
+      values:
+        - Often subcontracted
+        - Sole trader
+        - Employed by TLB and paid to the Cleaning Services Award
+    - label: When someone is away
+      values:
+        - A different contractor
+        - The visit does not happen
+        - Cover from the same team, already briefed on your site
+    - label: How the scope is written
+      values:
+        - A standard schedule applied to your site
+        - Usually verbal
+        - Grouped by infection risk, the way your own cleaning policy is grouped
+    - label: Personal care
+      values:
+        - Policy varies
+        - Sometimes helps informally
+        - Never. Our team finds a staff member instead
+    - label: Clinical waste and terminal cleans
+      values:
+        - Sometimes offered
+        - Sometimes offered
+        - Not undertaken. Those need clinically trained staff
+    - label: Periodic work
+      values:
+        - Quoted separately when it looks bad
+        - Usually not scheduled
+        - On the schedule with a named month against each item
+    - label: Commitment
+      values:
+        - Often a fixed term
+        - None
+        - No lock-in, no minimum term, no exit fee
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Working with us on your site
+  items:
+    - question: Do you take single units, or only whole sites?
+      answer: We quote whole sites and we also do independent living unit turnovers
+        between residents, which is closer to an end of lease clean than to a
+        regular visit. [Whether TLB takes individual occupied units inside a
+        village, and whether that is billed to the village or the resident.
+        Confirm.] If a resident wants their own unit cleaned privately, we are
+        happy to arrange that separately from your contract.
+    - question: Are your cleaners screened?
+      answer: "Our cleaners are employed by TLB rather than subcontracted, which is
+        what makes screening possible to evidence at all: there is no third
+        party in between holding the paperwork. [TLB’s screening: what checks
+        are held for every cleaner, how often they are renewed, and what
+        evidence can be produced on request. Confirm before this page ships.]
+        Ask us for it in writing at the walkthrough and hold us to producing
+        it."
+    - question: Can you work around care routines and meal times?
+      answer: Yes, and the schedule is built backwards from them. We take your daily
+        rhythm at the walkthrough, meaning meals, medication rounds, physio,
+        visiting hours and when residents nap, and place each area in the gaps.
+        Dining rooms get done between sittings. Corridors get done in halves.
+        Nothing noisy happens before eight or during a rest period.
+    - question: What happens during an outbreak?
+      answer: We follow your infection control procedures, not our own, because you
+        are the ones accountable for them. In practice that usually means
+        increased high-touch cleaning, separate equipment for affected areas and
+        our team following the same PPE and movement rules as your staff. What
+        we do not do is terminal cleans or decontamination, which need
+        clinically trained staff. We will say so rather than take the work.
+    - question: Will it be the same cleaners each time?
+      answer: Yes, and on this page that answer matters more than on any other. You
+        get the same small team, they meet your staff before they start, and
+        they are briefed on your site rather than handed an address. When
+        someone takes leave, their cover comes from the same team and has
+        already walked the site. Residents should recognise the person cleaning
+        their room.
+    - question: What happens if I get in touch?
+      answer: "We walk the site with you, including the areas that never make it onto
+        a quote: the sluice room, the laundry, the back of the kitchen. Then you
+        get a written scope grouped the way your own cleaning policy is grouped,
+        a price per visit, and a schedule for the periodic work. No obligation."
+faq:
+  heading: Aged care cleaning services, common questions
+  items:
+    - question: How much does aged care cleaning cost?
+      answer: It is priced per visit against a written scope. The number moves with
+        how many resident rooms and bathrooms there are, how much communal and
+        corridor floor, whether wet areas and laundries are included, and how
+        many visits a day the dining rooms need. A village of independent living
+        units and a residential care home are different jobs at different
+        prices. [TLB’s pricing basis. Confirm.]
+    - question: What are the cleaning requirements for aged care homes in Australia?
+      answer: Approved providers are required to give residents a service environment
+        that is safe, clean, well maintained and comfortable, and that
+        obligation sits within the Aged Care Quality Standards. The Standards
+        set the outcome rather than a task list, so each provider translates it
+        into its own cleaning policy, schedule and records. Your own policy is
+        the document a cleaning contractor should be quoting against. This is
+        general information, not compliance advice.
+    - question: How often should aged care facilities be cleaned?
+      answer: High-touch surfaces and shared bathrooms are daily at minimum, and more
+        often in a home with higher care needs. Dining rooms need cleaning
+        between sittings rather than once a day. Resident rooms are usually
+        daily for floors and bins with a fuller clean weekly. Corridors,
+        handrails and communal lounges are daily. Carpet extraction, upholstery
+        and high dusting are periodic, on a set month.
+    - question: What is high-touch cleaning?
+      answer: "It is the targeted cleaning and disinfecting of the surfaces hands
+        actually land on: handrails, door handles and push plates, light
+        switches, lift buttons, bed and chair rails, tap handles and shared
+        appliance handles. It matters because infection moves by contact far
+        more than by floor, and yet floors are what a thin scope spends its time
+        on because floors are what people see."
+    - question: Do aged care cleaners need police checks?
+      answer: Providers are accountable for screening the people who work with
+        residents, and that extends to contractors as well as their own staff.
+        In practice that means a cleaning company working on an aged care site
+        should be able to evidence current screening for every individual who
+        attends, not just assert it at a company level. Ask for it per person
+        and ask when each one was last renewed.
+    - question: Can a cleaner help a resident with personal care?
+      answer: No, and a cleaning company that lets it happen informally is creating a
+        serious problem for the provider. Helping someone up, into a shower or
+        in and out of bed is personal care, it requires training and it sits
+        under the provider’s own duty of care. Our team is briefed to help by
+        finding a staff member, and nothing else. It is not unkindness. It is
+        the line that keeps residents safe.
+closingCta:
+  kicker: Aged care and retirement living
+  heading: Start with a walk of the site.
+  lead: Including the sluice room, the laundry and the back of the kitchen. Then a
+    written scope grouped the way your cleaning policy is, and a price per
+    visit.
