@@ -68,12 +68,16 @@ import PathwayCards from '../components/sections/PathwayCards.astro';
 import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
 import Callout from '../components/sections/Callout.astro';
 import BeforeAfter from '../components/sections/BeforeAfter.astro';
-import cooktopBeforeImg from '../assets/home_cleaning/before_after/cooktop-before.jpg';
-import cooktopAfterImg from '../assets/home_cleaning/before_after/cooktop-after.jpg';
 // Before/after pairs — real TLB job photos. The `sample-` files are flat
 // illustrations and stay only where no real pair exists for that subject yet.
-import kitchenBenchtopBeforeImg from '../assets/home_cleaning/before_after/kitchen-benchtop-before.jpg';
-import kitchenBenchtopAfterImg from '../assets/home_cleaning/before_after/kitchen-benchtop-after.jpg';
+// The content imports sit here, where the four before/after photo imports
+// were, on purpose: Astro orders a page's CSS by import position, so moving
+// them changes the order of the built stylesheets.
+import { localBusiness } from '../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../lib/cms';
+import * as section from '../lib/cms-schemas';
+import { sized } from '../lib/cms-schemas';
 import TagCloud from '../components/sections/TagCloud.astro';
 import ComparisonTable from '../components/sections/ComparisonTable.astro';
 import GoogleReviewSlider from '../components/sections/GoogleReviewSlider.astro';
@@ -92,25 +96,15 @@ import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 // Northern Rivers, not Australia, and the opposite season. On 6 Oct 2026 the
 // homepage replaced it everywhere with a real client-supplied hinterland
 // photo; see the sheet's opening note.
-import heroImg from '../assets/airbnb/airbnb-hero-two-cleaners-presenting-a-made-bed.jpg';
 // The three pathway cards are real TLB photos (6 Oct 2026), not generated.
 // The kitchen and bed files are pre-cropped to the cards' 4:3 so the hands
 // stay in frame; the shower one is shared with the deep cleaning page. The
 // generated frames they replaced still run on the turnover checklist guide.
-import cardKitchenImg from '../assets/airbnb/airbnb-turnover-cleaner-wiping-down-the-kitchen-window.jpg';
-import cardShowerImg from '../assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-cleaner-tidying-a-shower-niche.jpg';
-import cardBedImg from '../assets/airbnb/airbnb-turnover-cleaner-making-up-a-bed.jpg';
 // §7a "What you get after every stay". Real TLB photos (6 Oct 2026),
 // pre-cropped to the cards' 4:3; see the block above afterEveryStayItems.
-import reportPhotoImg from '../assets/airbnb/airbnb-report-two-cleaners-presenting-the-bed-cushions.jpg';
-import reportRestockImg from '../assets/airbnb/airbnb-report-cleaner-wiping-down-a-shower-pump-bottle.jpg';
-import reportFlaggedImg from '../assets/airbnb/airbnb-report-cleaner-sorting-supplies-filmed-on-a-tripod-phone.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as every sibling.
-import definitionBgImg from '../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 // Before/after. Both pairs are REAL TLB job photography. See §7.
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
-import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
 import {
   primaryNav,
   headerNav,
@@ -123,7 +117,7 @@ import {
 import { comparisonColumns, comparisonRows } from '../data/comparison';
 import { completeFootprintLocationGroups } from '../data/locations';
 import { trustBarCards } from '../data/trust';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../data/brand-lines';
+import { howItWorks, managedForYou, theLineBody } from '../data/brand-lines';
 
 // §0 Metadata. ✅ REWRITTEN against the September 2026 copy-rewrite brief
 // (workbook row 18, "Airbnb and short-stay turnovers").
@@ -175,36 +169,6 @@ import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from 
 //
 // 140 characters, and it keeps the approved CTA as its final sentence, which is
 // what §7's button label is taken from.
-const pageMeta = {
-  title: 'Airbnb & Holiday Home Cleaning | TLB Cleaning',
-  description:
-    'Airbnb cleaning services and same-day turnovers, with linen and restocking. Northern Rivers, Tweed and Southern Gold Coast. Talk to us today.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/airbnb-holiday-home-cleaning/',
-};
-
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
-  // BOTH STATES, unlike commercial-cleaning and ndis-cleaning which stop at
-  // the border. Deliberate: the BFD's own audience section for short-stay
-  // hosts names "the Northern Rivers and Southern Gold Coast" explicitly, and
-  // twice. So this page uses the full `locationGroups` below rather than
-  // `nswLocationGroups`.
-  areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
-  description: pageMeta.description,
-};
 
 // §1 Hero.
 //
@@ -271,45 +235,19 @@ const business = {
 // one paragraph. The lead's opener now names all three kinds of property
 // ("Airbnb, holiday home and short-term rental") rather than repeating the
 // mapped phrase, which the H1 still carries contiguously.
-const hero = {
-  kicker: 'Airbnb and holiday let cleaning',
-  headingLines: ['Airbnb cleaning services,', 'timed to your booking calendar'],
-  subheading: 'Set and forget hosting starts here.',
-  lead:
-    `Airbnb, holiday home and short-term rental cleaning timed to your bookings, essentials restocked and the place guest-ready before check-in. Across the Northern Rivers, the Tweed and the Southern Gold Coast. ${theLine.instant}`,
-  cta: { label: 'Talk to us today', href: quoteCta.href },
-  image: {
-    ratio: '1/1',
-    label: 'Two TLB cleaners presenting the cushions on a freshly made bed in a holiday home bedroom',
-    src: heroImg,
-  },
-};
 
 // Trust bar: the shared set, with this page's supplied wording on the client
 // count ("...served"). Overridden here only; trust.ts is unchanged.
-const pageTrustBarCards = trustBarCards.map((card) =>
-  card.title === 'Over 100 clients'
-    ? { ...card, description: 'Over 100 local homes, hosts and businesses served' }
-    : card,
-);
 
 // §2 Definition. The answer-target block for the focus keyword and the first
 // place the phrase appears in body copy. Paragraph two does the synonym work
 // ("holiday let turnover", "short-stay cleaning", "changeover") so this one
 // page answers all of those queries instead of four thin pages competing for
 // them — the same call the commercial carpet page makes with "steam cleaning".
-const definitionBody: TextBlockBody[] = [
-  'Airbnb cleaning is the turnover clean between one guest checking out and the next checking in: the whole property reset, linen changed, bathrooms and kitchen done, consumables restocked and the place presented ready for arrival. TLB Cleaning does Airbnb and holiday let turnovers across the Northern Rivers, the Tweed and the Southern Gold Coast.',
-  'A turnover, a changeover and a short-stay clean are the same job under three names. It is not a house clean on a shorter timeline. The difference is that it is scheduled off a booking calendar rather than a weekly slot, it has a hard deadline set by someone else, and presentation counts as much as cleanliness, because it is being photographed and reviewed by the person walking in.',
-];
 
 // §2a Short-term rental and holiday home cleaning. Supplied copy (September
 // 2026), verbatim. Separates the two service levels the hero's lead now names:
 // a turnover for any listing, and whole-property care for owners who live away.
-const shortStayBody: TextBlockBody[] = [
-  "Short-term rental cleaning is the same turnover for any short-stay listing, whether it's on Airbnb, Stayz, Booking.com or your own site. We work off whichever booking calendar you use.",
-  "Holiday home cleaning goes a step further. Alongside the turnovers, we look after the place between stays, with property checks, restocking and a licensed tradie organised when something's not right. It's built for owners who live away and want the whole property taken care of.",
-];
 
 // §2b What we take care of. Supplied copy (September 2026), verbatim. An icon
 // row, so it runs on ServiceBlocks' icon-grid like §4. ServiceIcon has no
@@ -317,33 +255,6 @@ const shortStayBody: TextBlockBody[] = [
 //
 // ⚠️ "Garden and outdoor care / Coming March 2027" is a dated promise on a
 // live page. Change it to a plain line (or cut it) when it launches or slips.
-const takeCareOfItems = [
-  {
-    icon: 'house' as const,
-    title: 'Turnovers',
-    description: 'Timed to your booking calendar, linen changed, guest-ready before check-in.',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'Restocking',
-    description: 'Consumables, supplies and the welcome set-up topped up every stay.',
-  },
-  {
-    icon: 'idea' as const,
-    title: 'Photo reports',
-    description: "Photos after every turnover, so you can see it's done.",
-  },
-  {
-    icon: 'suitcase' as const,
-    title: 'Trades arranged',
-    description: "If something's not right, we tell you and organise a licensed tradie.",
-  },
-  {
-    icon: 'bloom' as const,
-    title: 'Garden and outdoor care',
-    description: 'Coming March 2027.',
-  },
-];
 
 // §3 Pathway cards. The three situations a host actually arrives in, taken
 // from the BFD's pain-point list for this audience (coordination around
@@ -360,50 +271,10 @@ const takeCareOfItems = [
 // because it is the honest destination and the menu already advertises it —
 // but if the guides section slips past launch, this card needs the quote
 // flow instead. Same open item as every other guide link on the site.
-const pathwayCards = {
-  heading: 'Hosts arrive here in one of three situations.',
-  headingAccent: 'Which one is yours?',
-  cards: [
-    {
-      number: 1,
-      image: {
-        ratio: '4/3',
-        label: 'A cleaner wiping down the kitchen window sill with a sponge and spray',
-        src: cardKitchenImg,
-      },
-      title: 'I am chasing my cleaner around every booking',
-      description:
-        'Checkout at ten, check-in at two, and a message thread you have to manage yourself every single time. We work off your calendar instead of asking you to relay it, so the turnover happens without you organising it.',
-      cta: { label: 'Talk to us today', href: quoteCta.href },
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        label: 'A cleaner straightening the bottles in a tiled shower niche',
-        src: cardShowerImg,
-      },
-      title: 'The cleaning is fine, the presentation is not',
-      description:
-        'A clean property still reviews badly if the loo paper ran out on day two and the bed looks made rather than presented. Choose Turnover + Restock and restocking and presentation happen every stay, not as an extra you have to ask for.',
-      cta: { label: 'The turnover checklist', href: '/guides/the-airbnb-turnover-checklist/' },
-    },
-    {
-      number: 3,
-      image: {
-        ratio: '4/3',
-        label: 'A cleaner tucking in the bedspread on a made-up bed',
-        src: cardBedImg,
-      },
-      title: 'I host from out of town and cannot see the place',
-      description:
-        // BFD approved headline for this exact reader: "Hosting from out of
-        // town? We've got your keys covered."
-        'If you are in Brisbane or Sydney and your listing is in Byron, you are trusting someone else with the keys and with your reviews. We are a local team you can ring, the same faces each turnover, and we tell you what we found.',
-      cta: { label: 'Why TLB', href: '/why-tlb/' },
-    },
-  ],
-};
+//
+// In `pathwayCards`, on "I host from out of town and cannot see the place":
+// BFD approved headline for this exact reader: "Hosting from out of
+// town? We've got your keys covered."
 
 // §4 What a turnover includes. THE MOST IMPORTANT BLOCK ON THIS PAGE, and
 // the reason it is here rather than a paragraph: a host comparing quotes is
@@ -419,66 +290,15 @@ const pathwayCards = {
 // mechanism, linen, restock billing) are gone from the cards; the header's
 // BLOCKS LAUNCH list still stands for the FAQs that carry the same questions.
 // Cards 4 and 5 are tagged with the plans they come with.
-const turnoverItems = [
-  {
-    icon: 'target' as const,
-    title: 'Scheduled off your bookings',
-    description:
-      'We work to your booking calendar rather than a standing weekly slot, so a new booking or a changed date does not become a message you have to send.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'The full reset, not a tidy',
-    description:
-      'Kitchen, bathrooms, floors, surfaces, mirrors and glass, inside the microwave and the fridge, bins out and rebagged. Every room reset to the same state, because the guest walking in has no idea what the last one did.',
-  },
-  {
-    icon: 'bloom' as const,
-    title: 'Linen changed and beds presented',
-    description:
-      'Beds stripped, remade and presented rather than just made, towels folded and set out, and anything stained or worn flagged to you rather than put back on the bed.',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'Essentials restocked',
-    tag: 'Turnover + Restock and Full Property Care',
-    description:
-      // BFD names toilet paper and olive oil specifically. Kept, because a
-      // specific is what makes this believable.
-      'Loo paper, hand soap, dishwashing, tea and coffee, and the kitchen staples a guest expects to find rather than buy, down to the olive oil.',
-  },
-  {
-    icon: 'spark' as const,
-    title: 'The welcoming touches',
-    tag: 'Turnover + Restock and Full Property Care',
-    description:
-      'Fresh flowers, cushions squared, the outdoor setting wiped down, blinds and doors set the way they should be for arrival. Small things, and they are most of the difference between a four and a five.',
-  },
-  {
-    icon: 'idea' as const,
-    title: 'We tell you what we found',
-    description:
-      'Damage, breakages, something missing, a smoke alarm chirping or a guest who plainly had twelve people in a six-berth house, you hear about it from us the same day, in time to do something about it.',
-  },
-];
+//
+// In `turnoverItems`, on "Essentials restocked":
+// BFD names toilet paper and olive oil specifically. Kept, because a
+// specific is what makes this believable.
 
 // §4a Choose your level. Supplied copy (September 2026), verbatim. The three
 // plans the "Turnover + Restock" and "Full Property Care" tags above refer to.
 // Runs on ComparisonTable; empty strings, not `false`, so the gaps render
 // blank as supplied rather than as crosses.
-const levelsTable = {
-  heading: 'Choose your level',
-  lead: 'Start with turnovers and add more when you want less on your plate. Every level runs off your booking calendar, with photos after each stay.',
-  columns: [{ label: 'Turnover' }, { label: 'Turnover + Restock' }, { label: 'Full Property Care' }],
-  rows: [
-    { label: 'Calendar-based turnovers and linen', values: [true, true, true] },
-    { label: 'Photos after each turnover', values: [true, true, true] },
-    { label: 'Restocking and welcome set-up', values: ['', true, true] },
-    { label: 'Regular property checks with reports', values: ['', '', true] },
-    { label: 'Trades arranged', values: ['', '', true] },
-    { label: 'One contact for the whole property', values: ['', '', true] },
-  ],
-};
 
 // §7a What you get after every stay. Supplied copy (September 2026), verbatim.
 // Runs on ServiceBlocks' image-cards with no card links.
@@ -489,52 +309,12 @@ const levelsTable = {
 // list or a flagged item, so none is captioned as one. The brief's ideal is
 // still those real artefacts, with identifying details removed, if they are
 // ever supplied. The labels are the alt text and describe each photo.
-const afterEveryStayItems = [
-  {
-    image: {
-      src: reportPhotoImg,
-      ratio: '4/3',
-      label: 'Two cleaners presenting the cushions on a freshly made bed',
-    },
-    title: 'The photo report',
-    description: "Every room, photographed once it's reset, sent the same day.",
-  },
-  {
-    image: {
-      src: reportRestockImg,
-      ratio: '4/3',
-      label: 'A cleaner wiping down a pump bottle from the shower niche',
-    },
-    title: 'The restock list',
-    description: "What we topped up this stay, so you know what's been used.",
-  },
-  {
-    image: {
-      src: reportFlaggedImg,
-      ratio: '4/3',
-      label: 'A cleaner sorting supplies from her trolley on a deck, recorded on a phone on a tripod',
-    },
-    title: 'Flagged for you',
-    description: 'Anything broken, missing or worn, with a photo and what we suggest.',
-  },
-];
 
 // §7b Holiday home cleaning for owners who live away. Supplied copy (September
 // 2026), verbatim.
 //
 // ⚠️ ANCHOR IS LOAD-BEARING: interstate ads land on #owners-who-live-away.
 // Renaming the id breaks those ads silently, so change it in the ads first.
-const ownersAwayBody: TextBlockBody[] = [
-  'Many of the owners we look after live in Brisbane or Sydney. We link to your calendar, hold the keys, send photos after every stay, and you have one person to call.',
-  "When your holiday home is a flight or a long drive away, the hard part isn't the cleaning. It's not knowing. Full Property Care is built for that:",
-  {
-    list: [
-      'Regular property checks with reports, so you know the place is right between stays, not just on changeover day.',
-      'Trades arranged. If something needs fixing, you hear it from us first, and we organise a licensed tradie.',
-      "One contact for the whole property, so there's one local number to ring instead of a cleaner, a handyman and a key box.",
-    ],
-  },
-];
 
 // §5 "Worth knowing" — the interruption block. Callout, tone="note", the
 // same job it does on the NDIS page: correct something the reader probably
@@ -543,13 +323,6 @@ const ownersAwayBody: TextBlockBody[] = [
 // The lever here is the BFD's own consequence framing for this audience:
 // what inaction costs a host is not a dirty house, it is the review. That is
 // the one argument a cheaper quote cannot answer.
-const worthKnowing = {
-  heading: 'A turnover is priced per clean. It is judged per review.',
-  body: [
-    'A turnover is the only clean on this site whose result gets published. A missed shower screen is a private annoyance in a family home and a permanent three-star sentence on a listing, and it lands on the review that sits at the top of your page for the next six months.',
-    'So the number worth comparing is not the price per turnover. It is what happens when a guest checks out at eleven and the next one arrives at two, and whether anybody is going to tell you the toaster is broken before a guest does.',
-  ],
-};
 
 // §6 Why the same team matters. TextBlock dark, the sibling pages' "worth
 // knowing" long-form slot.
@@ -557,11 +330,6 @@ const worthKnowing = {
 // This is where the BFD's "first month is the critical proving period" and
 // "once a cleaner proves dependable, hosts rarely switch" insight earns its
 // place — stated as what the host should demand, not as what TLB claims.
-const whySameTeamBody: TextBlockBody[] = [
-  'Short-stay cleaning has the highest turnover of cleaners of any work we do, and it is not because the job is hard. It is because it is scheduled around other people, it clusters on Fridays and Sundays, and a sole operator with six listings physically cannot cover a Saturday when four of them change over at once. So the good ones get busy, then they get overcommitted, then one weekend they do not show, and it is your guest standing on the verandah, not theirs.',
-  'That is the whole reason TLB is a team rather than one person with a car. Capacity is what makes a Saturday changeover boring, and boring is the entire product. When you are choosing between quotes, the questions worth asking are how many people the business actually employs, what happens when your regular cleaner is sick, and who answers the phone at nine on a Sunday morning.',
-  'The person in your property is on our team, we know which property is yours, and there is one local number to ring, which is a low bar until the weekend you need it.',
-];
 
 // §7 Before/after. Shared with five other pages, per the
 // same-structure-everywhere call.
@@ -587,30 +355,6 @@ const whySameTeamBody: TextBlockBody[] = [
 //
 // ⚠️ Written permission from the host is still required, and no identifying
 // detail in frame — no street numbers, no mail, no guest belongings.
-const beforeAfterPairs: BeforeAfterPair[] = [
-  {
-    before: {
-      src: kitchenBenchtopBeforeImg,
-      alt: 'A kitchen benchtop before a TLB turnover clean, with dishes stacked in and beside the sink and pots left on the stove',
-    },
-    after: {
-      src: kitchenBenchtopAfterImg,
-      alt: 'The same kitchen benchtop after the turnover, sink empty and the bench clear and wiped down',
-    },
-    caption: 'Kitchen benchtop and sink',
-  },
-  {
-    before: {
-      src: cooktopBeforeImg,
-      alt: 'A gas cooktop before a TLB turnover clean, with spilled coffee grounds, crumbs and food scraps across the black enamel',
-    },
-    after: {
-      src: cooktopAfterImg,
-      alt: 'The same gas cooktop after the turnover, the enamel wiped back to an even black finish',
-    },
-    caption: 'Gas cooktop and burners',
-  },
-];
 
 // §8 What we turn over. The property types this work actually covers, as
 // pills — the same shape the commercial pages use for premises types.
@@ -618,18 +362,6 @@ const beforeAfterPairs: BeforeAfterPair[] = [
 // ⚠️ Every href is a flat kebab-case guess from its label except the four
 // that already exist elsewhere in the site (deep, end of lease, mould,
 // house cleaning). Unconfirmed sitewide, per navigation.ts.
-const propertyTags = [
-  { label: 'Airbnb and Stayz listings', href: quoteCta.href },
-  { label: 'Whole-house holiday lets', href: quoteCta.href },
-  { label: 'Beach houses and coastal cottages', href: quoteCta.href },
-  { label: 'Granny flats and studios', href: quoteCta.href },
-  { label: 'Apartments and units', href: quoteCta.href },
-  { label: 'Hinterland retreats and cabins', href: quoteCta.href },
-  { label: 'Multi-listing portfolios', href: quoteCta.href },
-  { label: 'Deep clean between seasons', href: '/house-cleaning/deep-cleaning/' },
-  { label: 'Mould cleaning and removal', href: '/house-cleaning/mould-removal/' },
-  { label: 'End of lease and bond cleans', href: '/house-cleaning/end-of-lease-cleaning/' },
-];
 
 // §10 Comparison table. The shared approved rows, now on a fifth page.
 //
@@ -642,72 +374,15 @@ const propertyTags = [
 // same claim on every page. If TLB would rather it were host-specific, the
 // fix is a page-local `rows` array with a holiday-let row in its place —
 // not an edit to the shared file, which four other pages read.
-const comparisonTable = {
-  heading: 'How TLB compares',
-  cornerLabel: 'Why TLB Cleaning is different',
-  lead: 'Anyone can clean a holiday let once. The thing worth paying for is the fiftieth changeover being as boring as the first.',
-  columns: comparisonColumns,
-  // The shared rows, unchanged, plus one supplied row (September 2026) for
-  // this page only. Appended here rather than in comparison.ts so the other
-  // pages' tables are untouched; Full Property Care exists only on this page.
-  rows: [
-    ...comparisonRows,
-    {
-      label: 'Property checks and trades',
-      values: ['Varies by platform', 'Depends on the person', 'Included in Full Property Care'],
-    },
-  ],
-};
+//
+// In `comparisonTable`, on "Property checks and trades":
+// The shared rows, unchanged, plus one supplied row (September 2026) for
+// this page only. Appended here rather than in comparison.ts so the other
+// pages' tables are untouched; Full Property Care exists only on this page.
 
 // §11 Branded FAQs — what hosts ask us. Supplied copy (September 2026),
 // verbatim: five kept, four new. The kept answers came without their
 // [Confirm] brackets (calendar mechanism, same-day cut-off), so those are gone.
-const brandedFaqItems = [
-  {
-    question: 'Do I have to tell you every time I get a booking?',
-    answer:
-      'No, that is the part we take off you. We work from your calendar rather than from your messages, so a new booking or a moved date flows through without you relaying it. You will still hear from us when something needs a decision.',
-  },
-  {
-    question: 'Can you do a same-day turnover?',
-    answer:
-      'Yes, and most of our short-stay work is same-day. Checkout to check-in is usually three or four hours, which is enough for a full reset with the right number of people on it.',
-  },
-  {
-    question: 'What gets restocked, and how is it charged?',
-    answer:
-      'On Turnover + Restock and Full Property Care, we top up loo paper, soap, dishwashing, tea, coffee and kitchen staples, and set up the welcome touches. Supplies are itemised on your invoice, so you see exactly what was used.',
-  },
-  {
-    question: "I'm not there. How do I know it was done?",
-    answer:
-      "You get photos after every turnover, the same day, plus anything we've flagged. On Full Property Care we also run regular property checks and send you a report, so you know the place is right between stays too.",
-  },
-  {
-    question: 'What happens if a guest leaves the place in a state?',
-    answer:
-      'We clean it and we tell you, with what we found, the same day. An extra-hours charge only ever happens after we have told you and you have said yes, so you will not find a surprise on an invoice. If it is bad enough to be a claim, you have it in writing from us while it still matters.',
-  },
-  {
-    question: 'Who pays the tradie if something breaks?',
-    answer:
-      "You do, and only after you've said yes. We tell you what's wrong, with a photo, and once you say yes, we send one of the licensed trades we work with. The work is itemised on your TLB invoice, so you only deal with us.",
-  },
-  {
-    question: 'Will it be the same cleaner every time?',
-    answer:
-      'Wherever we can, yes, and it makes a real difference on a short-stay property, someone who knows where the spare linen lives and which door sticks is faster and misses less. When your regular cleaner is away you get someone else from our team who has been briefed on your property, not a stranger from a platform.',
-  },
-  {
-    question: 'Is there a lock-in?',
-    answer: "No. There's no lock-in contract, no minimum term and no exit fee.",
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We ask about the property, how often it turns over and what presentation you want, and we look at it in person if it is local. Then you get a price and a scope in writing. No obligation, no lock-in contract. If it suits, we set it up around your calendar and it starts happening.',
-  },
-];
 
 // §12 Non-branded FAQs — the long-tail block, aimed at what hosts search
 // rather than what they ask us. Supplied copy (September 2026), verbatim: five
@@ -722,52 +397,109 @@ const brandedFaqItems = [
 //   - The night-cap answer describes NSW short-term rental planning rules and
 //     a shire day cap. See the file header: it needs a compliance read and a
 //     "last reviewed" date, or it comes off the page.
-const nonBrandedFaqItems = [
-  {
-    question: 'How much does Airbnb cleaning cost?',
-    answer:
-      'Short-stay turnovers are usually priced as a flat rate per changeover rather than hourly, because a host needs to know the number before they set their cleaning fee. The rate moves with the size of the property, how many bedrooms and bathrooms turn over, whether linen is included and how tight the same-day window is. Ask for it against a written scope, not an hourly rate.',
-  },
-  {
-    question: 'Is short-term rental cleaning different from Airbnb cleaning?',
-    answer:
-      "No, it's the same job. Short-term rental cleaning covers any short-stay listing, whether it's on Airbnb, Stayz, Booking.com or your own site. We work off whichever booking calendar you use.",
-  },
-  {
-    question: 'Should the guest cleaning fee cover the whole turnover?',
-    answer:
-      "Usually it covers most of it, and hosts who try to make it cover everything tend to lose bookings. The fee is visible at checkout and a high one reads as a red flag on a short stay. The common approach is to set the fee at or a little under the real turnover cost and treat the rest as a cost of doing business, then price the nightly rate accordingly. Check your platform's current rules before you rely on any of this: how cleaning fees are displayed, refunded on cancellation and counted toward your total is set by the platform, and it changes.",
-  },
-  {
-    question: 'Who supplies the linen and towels?',
-    answer:
-      'It goes one of two ways, and it is worth settling before the first clean. Either the host keeps three sets per bed on site and the cleaner turns and launders them, or a linen service delivers hired linen and takes the used sets away. Hired linen costs more per turnover and removes the laundry bottleneck, which is what usually breaks a same-day changeover.',
-  },
-  {
-    question: 'How long does a turnover actually take?',
-    answer:
-      'A one-bedroom apartment is usually an hour to ninety minutes with one person. A three-bedroom house with two bathrooms is closer to three hours, or half that with two cleaners on it, which is how a same-day changeover gets done inside a three-hour window at all. Laundry is the part that does not compress: if the linen has to be washed and dried on site between guests, that sets the floor, not the cleaning.',
-  },
-  {
-    question: 'Are there rules about how many nights I can let my place?',
-    answer:
-      // ⚠️ COMPLIANCE READ REQUIRED — see the file header. Written without
-      // dates, precinct names or a day count on purpose: every one of those
-      // is exactly the kind of specific that goes stale silently and that a
-      // host may act on. Do not "improve" this by adding them without a
-      // verification pass and a visible last-reviewed date.
-      'In NSW, short-term rental accommodation is regulated: properties generally have to be listed on the state register, meet fire-safety requirements and comply with a code of conduct, and non-hosted letting is capped at a set number of nights a year in some areas. The Byron Shire has its own reduced cap, applied unevenly across the shire, so two listings a few streets apart can sit under different limits. Queensland is different again and several Gold Coast rules are set locally. Check the current position with your council and the NSW planning portal before you rely on a number. This is general information, not planning advice, and the rules in this region have changed more than once.',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "Are there rules about how many nights I can let my place?":
+// ⚠️ COMPLIANCE READ REQUIRED — see the file header. Written without
+// dates, precinct names or a day count on purpose: every one of those
+// is exactly the kind of specific that goes stale silently and that a
+// host may act on. Do not "improve" this by adding them without a
+// verification pass and a visible last-reviewed date.
 
 // §13 Closing CTA. Same offer as the hero, worded as what actually happens.
 // Kicker matches the hero's, the pattern the commercial leaves set.
-const closingCta = {
-  kicker: 'Airbnb and holiday let cleaning',
-  heading: 'Hand us the calendar.',
-  lead: 'We look at the property, ask how often it turns over and what presentation you want, and put a price and a scope in writing. No lock-in, no obligation.',
-  cta: { label: 'Talk to us today', href: quoteCta.href },
+
+// CONTENT lives in src/content/pages/airbnb-holiday-home-cleaning.yaml and is
+// edited in Pages CMS ("Airbnb and holiday home cleaning"). This file owns the
+// layout. The notes above explain why each section says what it says; they
+// stay here because Pages CMS rewrites the YAML on save and would drop them.
+//
+// The "Talk to us today" buttons and the property-type pills that go to the
+// quote form carry its address (/contact/) in the content file, because each
+// is a full button an editor can repoint.
+
+// "What a turnover includes" uses two things the shared icon grid does not:
+// a plan tag on an item and a button under the grid.
+const turnoverGrid = section.iconGrid.extend({
+  items: z.array(section.iconGrid.shape.items.element.extend({ tag: section.optional(section.text) })).min(1),
+  cta: section.optional(section.link),
+});
+
+// The shared comparison rows come from Site settings; only this page's own
+// extra rows are in its content file.
+const comparisonRow = section.comparisonTable.shape.rows.element;
+
+const page = await getPage(
+  'airbnb-holiday-home-cleaning',
+  z.object({
+    seo: section.seo,
+    hero: section.hero,
+    // This page's wording on the shared "Over 100 clients" trust bar card.
+    trustBar: z.object({ clientsDescription: section.text }),
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    shortStay: section.textBlock,
+    takeCareOf: section.iconGrid,
+    pathways: section.pathwayCards,
+    turnover: turnoverGrid,
+    levels: section.comparisonTable,
+    worthKnowing: section.callout,
+    whySameTeam: section.textBlock,
+    beforeAfter: section.beforeAfter,
+    afterEveryStay: section.imageCards,
+    ownersAway: section.textBlock,
+    propertyTypes: section.tagCloud,
+    comparison: section.comparisonTable
+      .omit({ columns: true, rows: true })
+      .extend({ extraRows: section.optional(z.array(comparisonRow)) }),
+    reviews: section.sectionHeading,
+    whereWeClean: section.tagCloud,
+    // The paragraphs all come from Brand lines (the "Managed for you" line,
+    // The Line's turnover paragraphs and the turnover How it works steps), so
+    // only the heading and the optional button and photo are this page's.
+    booking: section.textBlock.omit({ body: true }),
+    hostFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
+  canonical: 'https://tlbcleaning.com.au/airbnb-holiday-home-cleaning/',
 };
+
+const business = localBusiness({
+  description: pageMeta.description,
+  // BOTH STATES, unlike commercial-cleaning and ndis-cleaning which stop at
+  // the border. Deliberate: the BFD's own audience section for short-stay
+  // hosts names "the Northern Rivers and Southern Gold Coast" explicitly, and
+  // twice. So this page uses the full `locationGroups` below rather than
+  // `nswLocationGroups`.
+  areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
+});
+
+const heroImage = page.hero.image && sized(page.hero.image, '1/1');
+
+// Trust bar: the shared set, with this page's own wording on the client count.
+const pageTrustBarCards = trustBarCards.map((card) =>
+  card.title === 'Over 100 clients' ? { ...card, description: page.trustBar.clientsDescription } : card,
+);
+
+const pathwayCards = page.pathways.cards.map((card, i) => ({
+  number: i + 1,
+  ...card,
+  image: sized(card.image, '4/3'),
+}));
+
+const afterEveryStayItems = page.afterEveryStay.items.map((item) => ({
+  ...item,
+  image: item.image && sized(item.image, '4/3'),
+}));
+
+const comparisonRowsForPage = [...comparisonRows, ...(page.comparison.extraRows ?? [])];
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -783,12 +515,12 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      subheading={hero.subheading}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? quoteCta}
+      image={heroImage}
     />
 
     {/* Trust bar and definition share ONE photo behind a Cream scrim, laid
@@ -825,38 +557,64 @@ const closingCta = {
         per-image measurements live in Backdrop.astro's `opacity` doc. The
         origin of the old 75 — and of the wrong reasoning behind it — is
         recorded at index.astro's §2 comment. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={pageTrustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
-    <TextBlock theme="light" align="left" heading="Short-term rental and holiday home cleaning" body={shortStayBody} />
-
-    <ServiceBlocks variant="icon-grid" heading="What we take care of" items={takeCareOfItems} />
-
-    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+    <TextBlock
+      theme="light"
+      align="left"
+      heading={page.shortStay.heading}
+      body={page.shortStay.body}
+      cta={page.shortStay.cta}
+      backgroundImage={page.shortStay.backgroundImage}
+    />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What a turnover includes"
-      items={turnoverItems}
-      cta={{ label: 'Talk to us today', href: quoteCta.href }}
+      heading={page.takeCareOf.heading}
+      lead={page.takeCareOf.lead}
+      note={page.takeCareOf.note}
+      items={page.takeCareOf.items}
+    />
+
+    <PathwayCards heading={page.pathways.heading} headingAccent={page.pathways.headingAccent} cards={pathwayCards} />
+
+    <ServiceBlocks
+      variant="icon-grid"
+      heading={page.turnover.heading}
+      lead={page.turnover.lead}
+      note={page.turnover.note}
+      items={page.turnover.items}
+      cta={page.turnover.cta}
     />
 
     <ComparisonTable
-      heading={levelsTable.heading}
-      lead={levelsTable.lead}
-      columns={levelsTable.columns}
-      rows={levelsTable.rows}
+      heading={page.levels.heading}
+      lead={page.levels.lead}
+      cornerLabel={page.levels.cornerLabel}
+      columns={page.levels.columns}
+      rows={page.levels.rows}
+      footnote={page.levels.footnote}
+      cta={page.levels.cta}
     />
 
-    <Callout tone="note" heading={worthKnowing.heading} body={worthKnowing.body} />
+    <Callout tone="note" heading={page.worthKnowing.heading} body={page.worthKnowing.body} cta={page.worthKnowing.cta} />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Why short-term rental cleaners disappear, and what to ask before you book one"
-      body={whySameTeamBody}
+      heading={page.whySameTeam.heading}
+      body={page.whySameTeam.body}
+      cta={page.whySameTeam.cta}
+      backgroundImage={page.whySameTeam.backgroundImage}
     />
 
     {/* Drag the handle to wipe between the two frames of each pair. The
@@ -864,16 +622,20 @@ const closingCta = {
         shower pair that is still outstanding — nothing on this page
         evidences bathroom work until it is shot. */}
     <BeforeAfter
-      heading="The difference, on real jobs."
-      lead="Drag the handle across each photo to see the same spot before and after a clean."
-      pairs={beforeAfterPairs}
-      note="Photographed on real TLB cleans, published with the client's permission."
+      heading={page.beforeAfter.heading}
+      lead={page.beforeAfter.lead}
+      pairs={page.beforeAfter.pairs}
+      note={page.beforeAfter.note}
+      beforeLabel={page.beforeAfter.beforeLabel}
+      afterLabel={page.beforeAfter.afterLabel}
     />
 
     <ServiceBlocks
       variant="image-cards"
-      heading="What you get after every stay"
-      lead="You don't have to take our word that it's done. After every turnover you get a short report, so you can see the place is ready before your next guest arrives."
+      heading={page.afterEveryStay.heading}
+      lead={page.afterEveryStay.lead}
+      note={page.afterEveryStay.note}
+      tileCtaLabel={page.afterEveryStay.tileCtaLabel}
       items={afterEveryStayItems}
       numbered
     />
@@ -882,28 +644,31 @@ const closingCta = {
       id="owners-who-live-away"
       theme="muted"
       align="left"
-      heading="Holiday home cleaning for owners who live away"
-      body={ownersAwayBody}
-      cta={{ label: 'Talk to us today', href: quoteCta.href }}
+      heading={page.ownersAway.heading}
+      body={page.ownersAway.body}
+      cta={page.ownersAway.cta}
+      backgroundImage={page.ownersAway.backgroundImage}
     />
 
     <TagCloud
-      heading="What we turn over"
-      subheading="Short-stay and holiday properties of every shape, across both sides of the border."
-      tags={propertyTags}
-      note={["Something not on the list? Ask us anyway."]}
+      heading={page.propertyTypes.heading}
+      subheading={page.propertyTypes.subheading}
+      tags={page.propertyTypes.tags}
+      note={page.propertyTypes.note}
     />
 
     <ComparisonTable
-      heading={comparisonTable.heading}
-      cornerLabel={comparisonTable.cornerLabel}
-      lead={comparisonTable.lead}
-      columns={comparisonTable.columns}
-      rows={comparisonTable.rows}
+      heading={page.comparison.heading}
+      cornerLabel={page.comparison.cornerLabel}
+      lead={page.comparison.lead}
+      columns={comparisonColumns}
+      rows={comparisonRowsForPage}
+      footnote={page.comparison.footnote}
+      cta={page.comparison.cta}
     />
 
     {/* Every review, with the Airbnb host's (tagged in src/data/googleReviews.ts) first. */}
-    <GoogleReviewSlider heading="What our clients say" reviews={reviewsFeaturing('airbnb')} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={reviewsFeaturing('airbnb')} profileUrl={googleBusinessProfileUrl} />
 
     {/* ✅ THE FULL FOOTPRINT, per the copy-rewrite brief §21, which specifies
         this list town for town. Three reasons and they stack.
@@ -923,10 +688,11 @@ const closingCta = {
         the real footprint is much wider than "Byron to Palm Beach" implies, and
         this is where the page shows it. */}
     <TagCloud
-      heading="Where we clean"
-      subheading="Byron Bay, Lennox Head, Ballina, Kingscliff, Cabarita Beach, Pottsville, Coolangatta, Palm Beach and Burleigh, plus the hinterland stays."
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading}
+      tags={page.whereWeClean.tags}
       groups={completeFootprintLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -957,12 +723,14 @@ const closingCta = {
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.instant}
+      heading={page.booking.heading}
       body={[
         managedForYou.recurring,
         ...theLineBody.turnover,
         ...howItWorks.turnover,
       ]}
+      cta={page.booking.cta}
+      backgroundImage={page.booking.backgroundImage}
     />
 
     {/* ✅ BOTH FAQ HEADINGS RENAMED (copy-rewrite brief §23 and §24).
@@ -974,15 +742,15 @@ const closingCta = {
         The second heading also lands `airbnb cleaning services` contiguously,
         which is the H2 keyword component the page previously half-scored, and
         drops the Title Case that BFD §9.2 rules out. */}
-    <Faq heading="Working with us on your property" items={brandedFaqItems} />
-    <Faq heading="Airbnb cleaning services, common questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.hostFaq.heading} lead={page.hostFaq.lead} items={page.hostFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? quoteCta}
     />
   </main>
 

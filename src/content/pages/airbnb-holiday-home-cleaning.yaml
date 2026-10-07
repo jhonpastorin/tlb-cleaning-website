@@ -1,0 +1,435 @@
+seo:
+  title: Airbnb & Holiday Home Cleaning | TLB Cleaning
+  description: Airbnb cleaning services and same-day turnovers, with linen and
+    restocking. Northern Rivers, Tweed and Southern Gold Coast. Talk to us
+    today.
+hero:
+  kicker: Airbnb and holiday let cleaning
+  headingLines:
+    - Airbnb cleaning services,
+    - timed to your booking calendar
+  subheading: Set and forget hosting starts here.
+  lead: Airbnb, holiday home and short-term rental cleaning timed to your
+    bookings, essentials restocked and the place guest-ready before check-in.
+    Across the Northern Rivers, the Tweed and the Southern Gold Coast.
+    {{line.instant}}
+  image:
+    src: /src/assets/airbnb/airbnb-hero-two-cleaners-presenting-a-made-bed.jpg
+    alt: Two TLB cleaners presenting the cushions on a freshly made bed in a holiday
+      home bedroom
+  cta:
+    label: Talk to us today
+    href: /contact/
+trustBar:
+  clientsDescription: Over 100 local homes, hosts and businesses served
+definition:
+  body:
+    - type: paragraph
+      text: "Airbnb cleaning is the turnover clean between one guest checking out and
+        the next checking in: the whole property reset, linen changed, bathrooms
+        and kitchen done, consumables restocked and the place presented ready
+        for arrival. TLB Cleaning does Airbnb and holiday let turnovers across
+        the Northern Rivers, the Tweed and the Southern Gold Coast."
+    - type: paragraph
+      text: A turnover, a changeover and a short-stay clean are the same job under
+        three names. It is not a house clean on a shorter timeline. The
+        difference is that it is scheduled off a booking calendar rather than a
+        weekly slot, it has a hard deadline set by someone else, and
+        presentation counts as much as cleanliness, because it is being
+        photographed and reviewed by the person walking in.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+shortStay:
+  heading: Short-term rental and holiday home cleaning
+  body:
+    - type: paragraph
+      text: Short-term rental cleaning is the same turnover for any short-stay
+        listing, whether it's on Airbnb, Stayz, Booking.com or your own site. We
+        work off whichever booking calendar you use.
+    - type: paragraph
+      text: Holiday home cleaning goes a step further. Alongside the turnovers, we
+        look after the place between stays, with property checks, restocking and
+        a licensed tradie organised when something's not right. It's built for
+        owners who live away and want the whole property taken care of.
+takeCareOf:
+  heading: What we take care of
+  items:
+    - icon: house
+      title: Turnovers
+      description: Timed to your booking calendar, linen changed, guest-ready before
+        check-in.
+    - icon: puzzle
+      title: Restocking
+      description: Consumables, supplies and the welcome set-up topped up every stay.
+    - icon: idea
+      title: Photo reports
+      description: Photos after every turnover, so you can see it's done.
+    - icon: suitcase
+      title: Trades arranged
+      description: If something's not right, we tell you and organise a licensed tradie.
+    - icon: bloom
+      title: Garden and outdoor care
+      description: Coming March 2027.
+pathways:
+  heading: Hosts arrive here in one of three situations.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/airbnb/airbnb-turnover-cleaner-wiping-down-the-kitchen-window.jpg
+        alt: A cleaner wiping down the kitchen window sill with a sponge and spray
+      title: I am chasing my cleaner around every booking
+      description: Checkout at ten, check-in at two, and a message thread you have to
+        manage yourself every single time. We work off your calendar instead of
+        asking you to relay it, so the turnover happens without you organising
+        it.
+      cta:
+        label: Talk to us today
+        href: /contact/
+    - image:
+        src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-cleaner-tidying-a-shower-niche.jpg
+        alt: A cleaner straightening the bottles in a tiled shower niche
+      title: The cleaning is fine, the presentation is not
+      description: A clean property still reviews badly if the loo paper ran out on
+        day two and the bed looks made rather than presented. Choose Turnover +
+        Restock and restocking and presentation happen every stay, not as an
+        extra you have to ask for.
+      cta:
+        label: The turnover checklist
+        href: /guides/the-airbnb-turnover-checklist/
+    - image:
+        src: /src/assets/airbnb/airbnb-turnover-cleaner-making-up-a-bed.jpg
+        alt: A cleaner tucking in the bedspread on a made-up bed
+      title: I host from out of town and cannot see the place
+      description: If you are in Brisbane or Sydney and your listing is in Byron, you
+        are trusting someone else with the keys and with your reviews. We are a
+        local team you can ring, the same faces each turnover, and we tell you
+        what we found.
+      cta:
+        label: Why TLB
+        href: /why-tlb/
+turnover:
+  heading: What a turnover includes
+  items:
+    - icon: target
+      title: Scheduled off your bookings
+      description: We work to your booking calendar rather than a standing weekly
+        slot, so a new booking or a changed date does not become a message you
+        have to send.
+    - icon: spray-bottle
+      title: The full reset, not a tidy
+      description: Kitchen, bathrooms, floors, surfaces, mirrors and glass, inside the
+        microwave and the fridge, bins out and rebagged. Every room reset to the
+        same state, because the guest walking in has no idea what the last one
+        did.
+    - icon: bloom
+      title: Linen changed and beds presented
+      description: Beds stripped, remade and presented rather than just made, towels
+        folded and set out, and anything stained or worn flagged to you rather
+        than put back on the bed.
+    - icon: puzzle
+      title: Essentials restocked
+      tag: Turnover + Restock and Full Property Care
+      description: Loo paper, hand soap, dishwashing, tea and coffee, and the kitchen
+        staples a guest expects to find rather than buy, down to the olive oil.
+    - icon: spark
+      title: The welcoming touches
+      tag: Turnover + Restock and Full Property Care
+      description: Fresh flowers, cushions squared, the outdoor setting wiped down,
+        blinds and doors set the way they should be for arrival. Small things,
+        and they are most of the difference between a four and a five.
+    - icon: idea
+      title: We tell you what we found
+      description: Damage, breakages, something missing, a smoke alarm chirping or a
+        guest who plainly had twelve people in a six-berth house, you hear about
+        it from us the same day, in time to do something about it.
+  cta:
+    label: Talk to us today
+    href: /contact/
+levels:
+  heading: Choose your level
+  lead: Start with turnovers and add more when you want less on your plate. Every
+    level runs off your booking calendar, with photos after each stay.
+  columns:
+    - label: Turnover
+    - label: Turnover + Restock
+    - label: Full Property Care
+  rows:
+    - label: Calendar-based turnovers and linen
+      values:
+        - yes
+        - yes
+        - yes
+    - label: Photos after each turnover
+      values:
+        - yes
+        - yes
+        - yes
+    - label: Restocking and welcome set-up
+      values:
+        - ""
+        - yes
+        - yes
+    - label: Regular property checks with reports
+      values:
+        - ""
+        - ""
+        - yes
+    - label: Trades arranged
+      values:
+        - ""
+        - ""
+        - yes
+    - label: One contact for the whole property
+      values:
+        - ""
+        - ""
+        - yes
+worthKnowing:
+  heading: A turnover is priced per clean. It is judged per review.
+  body:
+    - A turnover is the only clean on this site whose result gets published. A
+      missed shower screen is a private annoyance in a family home and a
+      permanent three-star sentence on a listing, and it lands on the review
+      that sits at the top of your page for the next six months.
+    - So the number worth comparing is not the price per turnover. It is what
+      happens when a guest checks out at eleven and the next one arrives at two,
+      and whether anybody is going to tell you the toaster is broken before a
+      guest does.
+whySameTeam:
+  heading: Why short-term rental cleaners disappear, and what to ask before you book one
+  body:
+    - type: paragraph
+      text: Short-stay cleaning has the highest turnover of cleaners of any work we
+        do, and it is not because the job is hard. It is because it is scheduled
+        around other people, it clusters on Fridays and Sundays, and a sole
+        operator with six listings physically cannot cover a Saturday when four
+        of them change over at once. So the good ones get busy, then they get
+        overcommitted, then one weekend they do not show, and it is your guest
+        standing on the verandah, not theirs.
+    - type: paragraph
+      text: That is the whole reason TLB is a team rather than one person with a car.
+        Capacity is what makes a Saturday changeover boring, and boring is the
+        entire product. When you are choosing between quotes, the questions
+        worth asking are how many people the business actually employs, what
+        happens when your regular cleaner is sick, and who answers the phone at
+        nine on a Sunday morning.
+    - type: paragraph
+      text: The person in your property is on our team, we know which property is
+        yours, and there is one local number to ring, which is a low bar until
+        the weekend you need it.
+beforeAfter:
+  heading: The difference, on real jobs.
+  lead: Drag the handle across each photo to see the same spot before and after a
+    clean.
+  note: Photographed on real TLB cleans, published with the client's permission.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-before.jpg
+        alt: A kitchen benchtop before a TLB turnover clean, with dishes stacked in and
+          beside the sink and pots left on the stove
+      after:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-after.jpg
+        alt: The same kitchen benchtop after the turnover, sink empty and the bench
+          clear and wiped down
+      caption: Kitchen benchtop and sink
+    - before:
+        src: /src/assets/home_cleaning/before_after/cooktop-before.jpg
+        alt: A gas cooktop before a TLB turnover clean, with spilled coffee grounds,
+          crumbs and food scraps across the black enamel
+      after:
+        src: /src/assets/home_cleaning/before_after/cooktop-after.jpg
+        alt: The same gas cooktop after the turnover, the enamel wiped back to an even
+          black finish
+      caption: Gas cooktop and burners
+afterEveryStay:
+  heading: What you get after every stay
+  lead: You don't have to take our word that it's done. After every turnover you
+    get a short report, so you can see the place is ready before your next guest
+    arrives.
+  items:
+    - image:
+        src: /src/assets/airbnb/airbnb-report-two-cleaners-presenting-the-bed-cushions.jpg
+        alt: Two cleaners presenting the cushions on a freshly made bed
+      title: The photo report
+      description: Every room, photographed once it's reset, sent the same day.
+    - image:
+        src: /src/assets/airbnb/airbnb-report-cleaner-wiping-down-a-shower-pump-bottle.jpg
+        alt: A cleaner wiping down a pump bottle from the shower niche
+      title: The restock list
+      description: What we topped up this stay, so you know what's been used.
+    - image:
+        src: /src/assets/airbnb/airbnb-report-cleaner-sorting-supplies-filmed-on-a-tripod-phone.jpg
+        alt: A cleaner sorting supplies from her trolley on a deck, recorded on a phone
+          on a tripod
+      title: Flagged for you
+      description: Anything broken, missing or worn, with a photo and what we suggest.
+ownersAway:
+  heading: Holiday home cleaning for owners who live away
+  body:
+    - type: paragraph
+      text: Many of the owners we look after live in Brisbane or Sydney. We link to
+        your calendar, hold the keys, send photos after every stay, and you have
+        one person to call.
+    - type: paragraph
+      text: "When your holiday home is a flight or a long drive away, the hard part
+        isn't the cleaning. It's not knowing. Full Property Care is built for
+        that:"
+    - type: list
+      items:
+        - Regular property checks with reports, so you know the place is right
+          between stays, not just on changeover day.
+        - Trades arranged. If something needs fixing, you hear it from us first,
+          and we organise a licensed tradie.
+        - One contact for the whole property, so there's one local number to
+          ring instead of a cleaner, a handyman and a key box.
+  cta:
+    label: Talk to us today
+    href: /contact/
+propertyTypes:
+  heading: What we turn over
+  subheading: Short-stay and holiday properties of every shape, across both sides
+    of the border.
+  tags:
+    - label: Airbnb and Stayz listings
+      href: /contact/
+    - label: Whole-house holiday lets
+      href: /contact/
+    - label: Beach houses and coastal cottages
+      href: /contact/
+    - label: Granny flats and studios
+      href: /contact/
+    - label: Apartments and units
+      href: /contact/
+    - label: Hinterland retreats and cabins
+      href: /contact/
+    - label: Multi-listing portfolios
+      href: /contact/
+    - label: Deep clean between seasons
+      href: /house-cleaning/deep-cleaning/
+    - label: Mould cleaning and removal
+      href: /house-cleaning/mould-removal/
+    - label: End of lease and bond cleans
+      href: /house-cleaning/end-of-lease-cleaning/
+  note:
+    - Something not on the list? Ask us anyway.
+comparison:
+  heading: How TLB compares
+  lead: Anyone can clean a holiday let once. The thing worth paying for is the
+    fiftieth changeover being as boring as the first.
+  cornerLabel: Why TLB Cleaning is different
+  extraRows:
+    - label: Property checks and trades
+      values:
+        - Varies by platform
+        - Depends on the person
+        - Included in Full Property Care
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Byron Bay, Lennox Head, Ballina, Kingscliff, Cabarita Beach,
+    Pottsville, Coolangatta, Palm Beach and Burleigh, plus the hinterland stays.
+  note:
+    - If a town isn't listed, ask us anyway.
+booking:
+  heading: "{{line.instant.heading}}"
+hostFaq:
+  heading: Working with us on your property
+  items:
+    - question: Do I have to tell you every time I get a booking?
+      answer: No, that is the part we take off you. We work from your calendar rather
+        than from your messages, so a new booking or a moved date flows through
+        without you relaying it. You will still hear from us when something
+        needs a decision.
+    - question: Can you do a same-day turnover?
+      answer: Yes, and most of our short-stay work is same-day. Checkout to check-in
+        is usually three or four hours, which is enough for a full reset with
+        the right number of people on it.
+    - question: What gets restocked, and how is it charged?
+      answer: On Turnover + Restock and Full Property Care, we top up loo paper, soap,
+        dishwashing, tea, coffee and kitchen staples, and set up the welcome
+        touches. Supplies are itemised on your invoice, so you see exactly what
+        was used.
+    - question: I'm not there. How do I know it was done?
+      answer: You get photos after every turnover, the same day, plus anything we've
+        flagged. On Full Property Care we also run regular property checks and
+        send you a report, so you know the place is right between stays too.
+    - question: What happens if a guest leaves the place in a state?
+      answer: We clean it and we tell you, with what we found, the same day. An
+        extra-hours charge only ever happens after we have told you and you have
+        said yes, so you will not find a surprise on an invoice. If it is bad
+        enough to be a claim, you have it in writing from us while it still
+        matters.
+    - question: Who pays the tradie if something breaks?
+      answer: You do, and only after you've said yes. We tell you what's wrong, with a
+        photo, and once you say yes, we send one of the licensed trades we work
+        with. The work is itemised on your TLB invoice, so you only deal with
+        us.
+    - question: Will it be the same cleaner every time?
+      answer: Wherever we can, yes, and it makes a real difference on a short-stay
+        property, someone who knows where the spare linen lives and which door
+        sticks is faster and misses less. When your regular cleaner is away you
+        get someone else from our team who has been briefed on your property,
+        not a stranger from a platform.
+    - question: Is there a lock-in?
+      answer: No. There's no lock-in contract, no minimum term and no exit fee.
+    - question: What happens if I get in touch?
+      answer: We ask about the property, how often it turns over and what presentation
+        you want, and we look at it in person if it is local. Then you get a
+        price and a scope in writing. No obligation, no lock-in contract. If it
+        suits, we set it up around your calendar and it starts happening.
+faq:
+  heading: Airbnb cleaning services, common questions
+  items:
+    - question: How much does Airbnb cleaning cost?
+      answer: Short-stay turnovers are usually priced as a flat rate per changeover
+        rather than hourly, because a host needs to know the number before they
+        set their cleaning fee. The rate moves with the size of the property,
+        how many bedrooms and bathrooms turn over, whether linen is included and
+        how tight the same-day window is. Ask for it against a written scope,
+        not an hourly rate.
+    - question: Is short-term rental cleaning different from Airbnb cleaning?
+      answer: No, it's the same job. Short-term rental cleaning covers any short-stay
+        listing, whether it's on Airbnb, Stayz, Booking.com or your own site. We
+        work off whichever booking calendar you use.
+    - question: Should the guest cleaning fee cover the whole turnover?
+      answer: "Usually it covers most of it, and hosts who try to make it cover
+        everything tend to lose bookings. The fee is visible at checkout and a
+        high one reads as a red flag on a short stay. The common approach is to
+        set the fee at or a little under the real turnover cost and treat the
+        rest as a cost of doing business, then price the nightly rate
+        accordingly. Check your platform's current rules before you rely on any
+        of this: how cleaning fees are displayed, refunded on cancellation and
+        counted toward your total is set by the platform, and it changes."
+    - question: Who supplies the linen and towels?
+      answer: It goes one of two ways, and it is worth settling before the first
+        clean. Either the host keeps three sets per bed on site and the cleaner
+        turns and launders them, or a linen service delivers hired linen and
+        takes the used sets away. Hired linen costs more per turnover and
+        removes the laundry bottleneck, which is what usually breaks a same-day
+        changeover.
+    - question: How long does a turnover actually take?
+      answer: "A one-bedroom apartment is usually an hour to ninety minutes with one
+        person. A three-bedroom house with two bathrooms is closer to three
+        hours, or half that with two cleaners on it, which is how a same-day
+        changeover gets done inside a three-hour window at all. Laundry is the
+        part that does not compress: if the linen has to be washed and dried on
+        site between guests, that sets the floor, not the cleaning."
+    - question: Are there rules about how many nights I can let my place?
+      answer: "In NSW, short-term rental accommodation is regulated: properties
+        generally have to be listed on the state register, meet fire-safety
+        requirements and comply with a code of conduct, and non-hosted letting
+        is capped at a set number of nights a year in some areas. The Byron
+        Shire has its own reduced cap, applied unevenly across the shire, so two
+        listings a few streets apart can sit under different limits. Queensland
+        is different again and several Gold Coast rules are set locally. Check
+        the current position with your council and the NSW planning portal
+        before you rely on a number. This is general information, not planning
+        advice, and the rules in this region have changed more than once."
+closingCta:
+  kicker: Airbnb and holiday let cleaning
+  heading: Hand us the calendar.
+  lead: We look at the property, ask how often it turns over and what presentation
+    you want, and put a price and a scope in writing. No lock-in, no obligation.
+  cta:
+    label: Talk to us today
+    href: /contact/
