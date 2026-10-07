@@ -1,0 +1,386 @@
+seo:
+  title: Mould Cleaning Services & Removal | TLB Cleaning
+  description: Mould cleaning and removal for humid coastal homes, done safely and
+    properly. Bathrooms, walls, ceilings and wardrobes. Book an inspection
+    today.
+hero:
+  headingLines:
+    - Mould cleaning services and mould removal that gets it off
+  lead: Our mould cleaning services cover bathrooms, walls, ceilings and wardrobes
+    right across the Northern Rivers, the Tweed and the Southern Gold Coast.
+    Mould removal on the surfaces you can see, and an honest answer about what
+    is feeding it. {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/inside_your_home/mould_cleaning_and_removal/mould-cleaning-cleaner-wiping-a-kitchen-window-frame.jpg
+    alt: Cleaner reaching up with a cloth to wipe down a kitchen window frame
+definition:
+  body:
+    - type: paragraph
+      text: Mould is a fungus that grows on damp indoor surfaces, which is why it
+        turns up on bathroom ceilings, window reveals, wardrobe backs and the
+        cool outside walls of a room. It needs moisture, and it stops needing
+        anything else once it has that. TLB Cleaning provides mould cleaning
+        services right across the Northern Rivers, the Tweed and the Southern
+        Gold Coast, on surfaces rather than inside walls.
+    - type: paragraph
+      text: Mould cleaning and mould removal are the same job by two names. What both
+        of them mean, done honestly, is removing the growth from the surface it
+        is on. What neither of them means is fixing the reason it grew there,
+        and that difference is most of this page.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: Mould turns up three ways here.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/home_cleaning/inside_your_home/mould_cleaning_and_removal/mould-cleaning-spotting-along-a-bathroom-cornice.jpg
+        alt: Dark spotting along the cornice line of a clean bathroom ceiling above a
+          shower
+      title: It's in the bathroom and it looks awful
+      description: The most common one, and the most straightforward. Ceilings,
+        cornices, silicone lines, grout and window reveals. We clean it off and
+        tell you what we saw behind it.
+      cta:
+        label: Get a fast quote
+        href: /contact/
+    - image:
+        src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-empty-room-on-moving-out-day.jpg
+        alt: Empty room on moving-out day
+      title: I'm moving out and there's mould
+      description: Then it sits inside the bond clean rather than beside it, because
+        the exit inspection is going to look at exactly those surfaces. Book the
+        two together.
+      cta:
+        label: End of lease and bond cleaning
+        href: /house-cleaning/end-of-lease-cleaning/
+    - image:
+        src: /src/assets/home_cleaning/inside_your_home/mould_cleaning_and_removal/mould-cleaning-condensation-on-a-bedroom-window.jpg
+        alt: Condensation running down the inside of a bedroom window on a humid morning
+      title: It keeps coming back
+      description: Then cleaning is not your problem, moisture is, and someone has
+        probably already cleaned it once. Here is what is actually going on.
+      cta:
+        label: Why it comes back
+        href: "#moisture"
+surfaces:
+  heading: Where it turns up, and what we do about it
+  lead: Mould grows in the same handful of places in house after house on this coast.
+  items:
+    - heading: Bathroom ceilings and cornices
+      body:
+        - The single most common place we are called to, because a bathroom
+          makes its own weather twice a day. Ceilings, cornices, the wall above
+          the shower and the corners where the extraction fan never quite
+          reaches.
+    - heading: Silicone, grout and shower seals
+      body:
+        - Grout lines, shower bases and the silicone beads around baths and
+          screens. Some of it cleans up completely. Silicone that has gone black
+          all the way through has failed rather than got dirty, and it needs
+          replacing rather than scrubbing. We tell you which one you have.
+    - heading: Window reveals, sills and tracks
+      body:
+        - Where the condensation sits every morning through winter and never
+          quite dries before the next night. Reveals, sills, the tracks
+          underneath and the rubber seals along the frame.
+    - heading: Wardrobes, cupboards and behind furniture
+      body:
+        - Cool outside walls with something pressed against them and no air
+          moving. Wardrobe backs and floors, the wall behind a bedhead, the back
+          of a linen cupboard. Usually found by smell before it is found by
+          sight.
+    - heading: Walls, ceilings and painted surfaces
+      body:
+        - Surface growth on sound paint, cleaned back. Where the paint is
+          already lifting, bubbling or soft, the moisture is behind it rather
+          than on it, and cleaning the face of it achieves nothing that lasts.
+          We say so instead of doing it.
+    - heading: What we look at while we are there
+      body:
+        - Whether there is an extraction fan and whether it works, where the air
+          does and does not move, and anything obviously wet that should not be.
+          Not an inspection and not a report, just a set of eyes and an honest
+          answer at the end of it.
+scope:
+  body:
+    - "Quoted separately: carpet and rug cleaning, upholstery and mattress
+      cleaning, and full wall washing where the mould has spread well beyond
+      spotting. Ask for these with your quote so the whole job is priced once,
+      rather than half of it being discovered on the day."
+    - "Not a cleaning job at all: mould inside a wall or ceiling cavity, mould
+      that follows a burst pipe, a roof leak or a flood, mould across a large
+      area of a home, or paint and plaster that has gone soft. Those need a
+      plumber, a builder or a licensed remediation specialist, and cleaning the
+      surface will only hide the problem until it comes back. If that is what we
+      find, we will tell you on the spot and we would rather lose the job than
+      take it."
+climate:
+  heading: Why it happens here
+  lead: This is a mould climate. It is not a reflection on how you keep your house.
+  items:
+    - heading: The humidity is the whole story
+      body:
+        - A warm subtropical coast with a wet summer is close to ideal growing
+          conditions for most of the year. Homes here get damp in ways the same
+          house would not three hours inland.
+    - heading: Houses that get shut up
+      body:
+        - Holiday homes between guests, a place left while the owners are away,
+          a spare room nobody opens. Air stops moving, humidity settles, and
+          mould does the rest quietly with nobody there to notice.
+    - heading: Bathrooms with nowhere for the steam to go
+      body:
+        - An extraction fan that vents into the roof space instead of outside,
+          or one that was never fitted, or a window nobody opens in winter. The
+          moisture has to go somewhere and it goes into the ceiling.
+safety:
+  heading: Three things worth not doing first
+  body:
+    - Do not dry-brush, dry-scrape or vacuum it while it is dry. Disturbing
+      mould dry is how the spores leave the surface and go everywhere else in
+      the room, which turns one job into four.
+    - Never mix bleach with ammonia, with a cleaner containing ammonia, or with
+      other cleaning products. That combination produces a dangerous gas, and it
+      is a genuine risk in a small, closed bathroom. If you are not sure what is
+      in the bottle, do not combine it with anything.
+    - Do not assume bleach has fixed it. Queensland Health’s advice is that
+      bleach may not be effective at killing mould on porous surfaces like
+      plaster, grout and unsealed timber, even though the stain lifts and the
+      surface looks clean. White vinegar is the other common choice, and it
+      should never be mixed with bleach either. If the spotting keeps coming
+      back in the same spot after a bottle of something, that is the moisture
+      talking, not the product.
+    - Beyond that, we would rather you left it and let us look at it than went
+      at it hard, because a surface that has been scrubbed through is a harder
+      job afterwards, not an easier one.
+moisture:
+  heading: Cleaning takes it off. Moisture is what brings it back.
+  body:
+    - type: paragraph
+      text: Mould grows where there is moisture, so it regrows wherever the moisture
+        is still there. Clean it off a bathroom ceiling that gets no ventilation
+        and it will be back, usually within a few months, because nothing about
+        the ceiling changed. That is not a bad clean. That is the clean doing
+        its job on a problem that was never a cleaning problem.
+    - type: paragraph
+      text: Sometimes the fix is small and free. Run the fan for twenty minutes after
+        a shower instead of two. Open the room up on a dry day. Pull the
+        wardrobe two centimetres off the wall so air can get behind it. Stop
+        drying washing inside a closed room, or run a dehumidifier in the worst
+        room through the wet months. We will point out the ones we can see while
+        we are there.
+    - type: paragraph
+      text: Sometimes the fix is not small, and it is a leak, a failed seal, a fan
+        venting into the roof space or no ventilation at all. Then it is a
+        plumber, an electrician or a builder, and it is worth spending that
+        money before spending ours again. We would rather tell you that once
+        than clean the same ceiling every autumn.
+    - type: paragraph
+      text: For plenty of homes on this coast the answer is not dramatic. The ceiling
+        gets cleaned when it needs it, somebody who already knows the house
+        notices the spotting before you do, and it stops being a thing you keep
+        meaning to deal with. That is what a regular clean quietly does on top
+        of everything else.
+comparison:
+  heading: Mould clean, deep clean or specialist remediation
+  cornerLabel: Which one you need
+  columns:
+    - label: Mould clean
+    - label: Deep clean
+    - label: Specialist remediation
+  rows:
+    - label: What it is
+      values:
+        - Surface mould removed from the surfaces it is growing on
+        - A one-off reset of the whole house, room by room
+        - Building work that removes affected material and fixes the cause
+    - label: When you need it
+      values:
+        - Visible growth on ceilings, seals, reveals or wardrobe walls
+        - The house is due a reset and there is some spotting along with
+          everything else
+        - Mould inside a cavity, after a leak or a flood, or across a large area
+    - label: Who does it
+      values:
+        - TLB Cleaning
+        - TLB Cleaning
+        - A licensed remediation specialist, plumber or builder
+    - label: Does it fix the cause
+      values:
+        - No. We identify what we can see and tell you
+        - No
+        - Yes, that is the whole point of it
+    - label: Will it come back
+      values:
+        - Yes, if the moisture is still there
+        - Yes, if the moisture is still there
+        - Not if the cause has actually been fixed
+  footnote: Plenty of jobs are simply the first column, and a bathroom ceiling
+    cleaned properly once or twice a year is a normal way to live in a house on
+    this coast. The point of the table is that if you are in the third column,
+    no amount of cleaning is going to be the answer, and you should know that
+    before you pay anyone.
+commercial:
+  heading: Mould cleaning services for agencies, holiday lets and commercial premises
+  lead: Most of this page is written for somebody looking at their own bathroom
+    ceiling. The work is the same when it is not your house, but the pressure
+    around it is different. One provider, one point of contact, and the same
+    people who already know the building.
+  items:
+    - icon: key
+      title: Property managers and agencies
+      description: Usually a vacancy or a routine inspection, and the question is
+        whether it can be cleaned in time rather than whether it can be cleaned.
+        Tell us at the same time as the rest of the job and it gets quoted
+        properly and allowed for on the day.
+      href: /house-cleaning/real-estate-cleaning/
+    - icon: suitcase
+      title: Holiday let owners
+      description: Usually a wardrobe or a window reveal in a house that has been shut
+        up between guests, which is when it happens here. We work off the
+        booking calendar on turnovers, so if there is spotting that keeps
+        returning in the same room we will flag it rather than wiping it and
+        moving on.
+      href: /airbnb-holiday-home-cleaning/
+    - icon: office
+      title: Offices, clinics, strata common areas and shopfronts
+      description: Usually a bathroom, a storeroom or a stairwell nobody opens, and it
+        needs doing outside trading hours. Same team each time, so keys and
+        access stay with people who are known.
+      href: /commercial-cleaning/
+health:
+  heading: On the health question
+  body:
+    - type: paragraph
+      text: People often ask us whether mould in the house is a health problem, and it
+        is a fair question to ask. It is not our question to answer. We clean,
+        we are not a health service, and we are not going to tell you what mould
+        in your home does or does not mean for the people in it.
+    - type: paragraph
+      text: If that is what is worrying you, ask someone qualified. NSW Health and
+        Queensland Health both publish guidance on damp and mould in the home,
+        and your GP is the right person for anything about your own family. What
+        we can do is remove what is on the surface and be straight with you
+        about what we saw.
+beforeAfter:
+  heading: The difference a mould clean makes.
+  lead: Drag the handle across each image to see the same spot before and after a
+    mould clean.
+  note: Illustrations, shown while we collect before and after photos from real
+    TLB cleans.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/mould-ceiling-before.jpg
+        alt: "Illustration: a bathroom ceiling and cornice above a glass shower screen,
+          mould spotting clustered in the corner and along the cornice line"
+      after:
+        src: /src/assets/home_cleaning/before_after/mould-ceiling-after.jpg
+        alt: "Illustration: the same bathroom ceiling and cornice after treatment, the
+          spotting gone and the paint back to an even white"
+      caption: Bathroom ceiling and cornice
+    - before:
+        src: /src/assets/home_cleaning/before_after/mould-shower-before.jpg
+        alt: "Illustration: the corner of a tiled shower, mould dotted through the grout
+          and a black line along the seal at the base of the glass screen"
+      after:
+        src: /src/assets/home_cleaning/before_after/mould-shower-after.jpg
+        alt: "Illustration: the same shower corner after treatment, the grout and seal
+          clean and the glass clear"
+      caption: Shower grout and screen
+booking:
+  heading: Send us a photo and we will tell you straight
+  body:
+    - type: paragraph
+      text: Book online in a couple of minutes, or send a text, ring us or drop us an
+        email, whichever you would actually do.
+    - type: paragraph
+      text: Send a photo with your enquiry if you can. Mould is one of the few jobs
+        where a picture genuinely changes the quote, because the difference
+        between spotting along a cornice and a wall that has gone through is
+        obvious in a photo and impossible to describe. It also means that if
+        this is a job we should be handing to someone else, we can tell you that
+        before anyone books a day.
+    - type: paragraph
+      text: If it turns out to be bigger than a clean, you will hear that from us
+        early and at no cost. We would rather give you an honest answer and no
+        invoice than take a booking we already know will not hold.
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+faq:
+  heading: Frequently asked questions
+  items:
+    - question: Will the mould come back after you clean it?
+      answer: If the moisture that grew it is still there, yes. Cleaning removes the
+        growth, it does not change the conditions. Where the cause is
+        ventilation or a habit we can often point out a fix that costs nothing.
+        Where it is a leak or a failed seal, it needs a trade, and we will say
+        so rather than sell you the same clean twice.
+    - question: Is mould in my home a health risk?
+      answer: That is not a question a cleaning company should be answering, so we do
+        not. NSW Health and Queensland Health both publish guidance on damp and
+        mould in the home, and your GP is the right person for anything about
+        your own family. We can tell you what we can see and remove what is on
+        the surface.
+    - question: Does bleach kill mould?
+      answer: Not reliably. Queensland Health’s advice is that bleach may not be
+        effective on porous surfaces like plaster, grout and unsealed timber,
+        even though the stain disappears and the surface looks clean. White
+        vinegar is the other thing people reach for, and it should never be
+        mixed with bleach. If the same spot keeps coming back after a bottle of
+        something, the product is not the problem, the moisture is.
+    - question: Can you get rid of mould permanently?
+      answer: Not by cleaning, and nobody can. Permanent means the moisture is gone,
+        and moisture is a building matter rather than a cleaning one. What lasts
+        is a clean plus whatever fixes the cause, whether that is running the
+        fan properly or getting a plumber in. We do the first part and tell you
+        honestly about the second.
+    - question: How do I know if it is surface mould or something worse?
+      answer: Spotting on sound paint, silicone, grout or a window reveal is usually
+        surface. Paint that is bubbling, lifting or soft, plaster that gives
+        when you press it, a musty smell with nothing visible, or growth that
+        keeps spreading after cleaning all point to moisture behind the surface.
+        Send us a photo and we will give you a straight answer before you book.
+    - question: What if the job turns out to be too big for a clean?
+      answer: We tell you, at no cost, and we do not take the booking. Mould inside a
+        cavity, mould after a leak or a flood, or mould across a large area
+        needs a licensed remediation specialist, a plumber or a builder.
+        Cleaning the surface of a problem like that hides it for a few weeks and
+        takes your money for nothing.
+    - question: Can you clean black mould out of shower silicone?
+      answer: Sometimes. If it is sitting on the surface it usually comes off. If the
+        silicone has gone black the whole way through, it has failed rather than
+        got dirty, and no amount of cleaning brings it back. In that case it
+        needs replacing, which is a small job for a handyman or a bathroom
+        trade, and we will tell you which one you have.
+    - question: Why is mould so common in the Northern Rivers?
+      answer: Warm, humid and wet for a good part of the year, which is close to ideal
+        for it. Add homes that get closed up between guests or holidays,
+        bathrooms with weak extraction and cool outside walls with wardrobes
+        pushed against them, and it turns up in the same handful of places in
+        house after house across the region.
+    - question: Can you do the mould as part of a bond clean?
+      answer: Yes, and it is worth booking them together, because an exit inspection
+        looks closely at exactly the surfaces mould likes. Tell us it is there
+        when you book the bond clean so it is quoted properly and the right
+        amount of time is allowed, rather than being found on the day when the
+        schedule is already set.
+    - question: Do you bring your own products and equipment?
+      answer: Yes, everything. If you would prefer particular products used in your
+        home, or someone in the house is sensitive to something, tell us when
+        you book and we will work with that.
+    - question: How much does mould cleaning cost?
+      answer: It depends on how much there is, what it is growing on and how much of
+        it can actually be cleaned, which is why we quote rather than publish a
+        rate. A photo with your enquiry gets you an accurate price much faster,
+        and it lets us tell you early if this is a job for a trade instead.
+closingCta:
+  heading: Tell us what you are looking at.
+  lead: Send a photo with your enquiry and you will get an honest answer,
+    including if the answer is that you need a trade rather than a cleaner.

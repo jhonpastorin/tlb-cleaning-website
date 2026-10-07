@@ -1926,3 +1926,121 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to keep \"Get a fast quote\"."
+      - name: mould-removal
+        label: Mould removal
+        type: file
+        path: src/content/pages/house-cleaning/mould-removal.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "The description's \"Book an inspection today\" contradicts the page, which says we do not do an inspection. It shipped on TLB's instruction; expect callers asking for one."
+          - name: hero
+            component: hero
+            description: "Strict rules on this page: no health claims of any kind, never promise the mould will stay gone, and never imply remediation, an inspection or a report. Leave the button empty to keep \"Book an inspection today\"."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it. Keep it mechanical, not medical."
+          - { name: pathways, component: pathwayCards, label: "Mould turns up three ways here (cards)" }
+          - name: surfaces
+            component: textGrid
+            label: "Where it turns up, and what we do about it (grid)"
+            description: "Not yet confirmed by Teagan (silicone and grout, soft furnishings). Describe where and what, never how: no products, methods or dilutions."
+          - name: scope
+            component: callout
+            label: "Quoted separately and not a cleaning job (box)"
+            description: "This draws the page's scope boundary and names who to call instead. Do not soften it to sell harder. Not yet confirmed by Teagan."
+          - name: climate
+            component: textGrid
+            label: "Why it happens here (grid)"
+            description: "Climate and buildings only, nothing about health or risk. The 2022 floods are left out on purpose."
+          - name: safety
+            component: callout
+            label: "Three things worth not doing first (warning box)"
+            description: "Strictly limited: no method, no product, no dilution, no PPE advice. Each point says what not to do, and any health claim is attributed to Queensland Health by name. Do not turn it into a how-to or add a fourth point without that test."
+          - name: moisture
+            component: textBlock
+            label: "Cleaning takes it off. Moisture is what brings it back."
+            description: "Never soften this into \"gone for good\". The last paragraph promises noticing and routine, not that the mould stops coming back."
+          - name: comparison
+            label: "Mould clean, deep clean or specialist remediation (table)"
+            description: "The third column is not a TLB service, on purpose. The first column is not yet confirmed by Teagan. This table has no ticks or crosses: every cell shows exactly what you type, including \"No\"."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - name: columns
+                label: Column headings
+                type: object
+                list: true
+                fields:
+                  - { name: label, label: Column heading, type: string, required: true }
+              - name: rows
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{label}"
+                fields:
+                  - { name: label, label: Row heading, type: string, required: true }
+                  - { name: description, label: Detail under the row heading, type: text }
+                  - name: values
+                    label: One cell per column, left to right
+                    type: string
+                    list: true
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - name: commercial
+            label: "For agencies, holiday lets and commercial premises (list)"
+            description: "Same surface work as the rest of the page. No row may imply remediation, an inspection or a report."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: note, label: Note under the list, type: text }
+              - name: items
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - { name: icon, component: serviceIcon }
+                  - { name: title, label: Title, type: string, required: true }
+                  - { name: description, label: Sentence under the title, type: text, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    required: true
+                    description: A page on this site, starting and ending with a slash, e.g. /commercial-cleaning/
+                    pattern: "^(/|https://)"
+          - name: health
+            component: textBlock
+            label: "On the health question"
+            description: "This section defers, it does not answer. Never add symptoms, risks or reassurance. A version quoting NSW Health is ready in the code and waits on Teagan's approval."
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: "These are AI-generated illustrations, not real jobs, and the note and alt text say so. If you swap in real TLB photos, change the note too."
+          - name: booking
+            component: textBlock
+            label: "Send us a photo (dark band)"
+            description: "The photo-before-quoting flow is not yet confirmed. Leave the button empty to keep \"Get a fast quote\"."
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: brandLine
+            component: sectionHeading
+            label: "Brand line heading (above the FAQs)"
+            description: "The paragraphs under this heading come from Site settings > Brand lines."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "The \"will it come back\" and health answers are compliance lines: never soften them into a promise or a health claim. Several answers still need Teagan's confirmation, and the cost answer has no price until she supplies one."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to keep \"Get a fast quote\"."
