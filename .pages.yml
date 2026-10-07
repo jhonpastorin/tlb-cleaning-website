@@ -996,6 +996,104 @@ content:
           - { name: faq, component: faq, label: "FAQs" }
           - { name: beforeYouBook, component: sectionIntro, label: "Before you book (links to the team pages)" }
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: index
+        label: Home
+        type: file
+        path: src/content/pages/index.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: pathways, component: pathwayCards, label: "Tell us what you need (cards)" }
+          - name: whatWeDo
+            label: "What we do (list with icons)"
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: note, label: Note under the list, type: text }
+              - name: items
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - name: icon
+                    component: serviceIcon
+                  - { name: title, label: Title, type: string, required: true }
+                  - { name: description, label: Sentence under the title, type: text, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    required: true
+                    description: A page on this site, starting and ending with a slash, e.g. /house-cleaning/deep-cleaning/
+                    pattern: "^(/|https://)"
+          - name: team
+            component: storyMosaic
+            label: "Local team, run properly"
+            description: The team photo is an empty, labelled slot until a real photo of the TLB team exists. Do not fill it with a stock or unrelated photo.
+          - { name: booking, component: textBlock, label: "Easy to book, local to the core (dark band)" }
+          - name: pricing
+            component: textBlock
+            label: "Instant pricing (under the dark band)"
+            description: "Only this page's own paragraphs. The \"Managed for you\" line above them and the How it works steps below them come from Site settings > Brand lines. The heading {{line.instant.heading}} inserts the brand line's heading."
+          - name: comparison
+            label: "How TLB Cleaning compares (table)"
+            type: object
+            description: The rows and columns are shared with other pages. Edit them under Site settings > Comparison table.
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: Real TLB job photos only, with the client's written permission and nothing identifying in frame (no house numbers, street signs, mail, people or names on doors). Never stock photos. Shoot each pair from one fixed spot.
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: ourServices
+            label: "Our services (photo tiles)"
+            type: object
+            description: Each tile's name, sentence and link come from Site settings > Menus > Our services. Here you choose the photo for each service.
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: tileCtaLabel, label: Link text on each tile, type: string }
+              - name: photos
+                label: Photo for each service
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{service}"
+                fields:
+                  - name: service
+                    label: Service
+                    type: select
+                    required: true
+                    options:
+                      values:
+                        - { name: /house-cleaning/, label: Regular home cleaning }
+                        - { name: /house-cleaning/deep-cleaning/, label: Deep and one-off cleans }
+                        - { name: /house-cleaning/end-of-lease-cleaning/, label: End of lease and bond cleans }
+                        - { name: /airbnb-holiday-home-cleaning/, label: Airbnb and holiday let turnovers }
+                        - { name: /house-cleaning/real-estate-cleaning/, label: Real estate and property management }
+                        - { name: /commercial-cleaning/, label: Commercial cleaning }
+                  - name: image
+                    component: image
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "Four answers are still the brief's suggested wording, waiting for Teagan to confirm: same cleaner every time, how long a house clean takes, weekly or fortnightly, and extra charges for inland towns."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
 
   - name: site-settings
     label: Site settings
