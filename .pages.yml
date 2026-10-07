@@ -1526,3 +1526,78 @@ content:
           - { name: services, component: sectionIntro, label: "Or go straight to the service (heading)", description: "The six services listed under it come from Site settings > Menus > Our services." }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: guide-what-the-law-actually-says
+        label: "What the law actually says (NSW and QLD)"
+        type: file
+        path: src/content/pages/guides/what-the-law-actually-says-end-of-lease-cleaning-in-nsw-and-qld.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "States the legal standard in both states (\"the condition at the start, fair wear and tear excepted\"). Do not change that wording without re-checking the current NSW and QLD tenancy agreements. The \"Last reviewed\" line under these paragraphs is set in Site settings > Cross-links: guides; update it only after re-checking the page. The background photo also sits behind the trust bar: check the text is still easy to read after changing it."
+          - name: disclaimer
+            component: callout
+            label: "This is a guide, not legal advice (box)"
+            description: "The page's legal disclaimer. Keep it, and keep it near the top."
+          - name: stateTable
+            component: comparisonTable
+            label: "NSW and QLD side by side (table)"
+            description: "Every cell is a legal fact: the Acts, the regulators, who holds the bond, the condition report forms (QLD Form 1a and Form 14a) and the tribunals. Do not change a cell without re-checking it on the regulator's own website. Never add timeframes or dollar amounts."
+          - name: wearDamageDirt
+            component: textGrid
+            label: "Wear, damage, dirt (four boxes)"
+            description: "Examples of a principle, not rulings. Never say a reader will not be charged for something: whether a mark is wear or damage is for a tribunal to decide."
+          - name: professionalCleaning
+            component: callout
+            label: "\"Professional cleaning required\" (warning box)"
+            description: "The NSW rule in the second paragraph (a carpet cleaning or fumigation term only where the tenant was allowed an animal) depends on current law. Do not change it without re-checking the current Residential Tenancies Regulation and the standard form agreement. Explain, never advise: the page does not tell readers to refuse a clause."
+          - name: regulators
+            label: "Where to check (links to the regulators)"
+            description: "Each row links to the regulator's home page on purpose, because deeper links break. Check every link still works after editing. The third row is a placeholder pointing at NSW Fair Trading until the real NSW and QLD tenant advice services are confirmed."
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: note, label: Note under the list, type: text }
+              - name: items
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - { name: icon, component: serviceIcon }
+                  - { name: title, label: Title, type: string, required: true }
+                  - { name: description, label: Sentence under the title, type: text, required: true }
+                  - name: href
+                    label: Links to
+                    type: string
+                    required: true
+                    description: "A full https:// address, or a page on this site starting with a slash."
+                    pattern: "^(/|https://)"
+          - name: bond
+            component: textBlock
+            label: "What actually happens to the bond (dark band)"
+            description: "Process only, as it works in both states. Never add time limits, amounts or entitlements: they differ by state and change without notice."
+          - { name: practical, component: textBlock, label: "So what does this mean for your move?" }
+          - name: readNext
+            component: sectionIntro
+            label: "Read next (heading)"
+            description: "The three guides listed under it come from Site settings > Cross-links: guides."
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "The first, third, fourth and fifth answers state what NSW and QLD tenancy law says. Do not change them without re-checking the current rules."
+          - name: moreGuides
+            component: tagCloud
+            label: "More guides (links)"
+            description: "Tags: only this page's own extra links. The other guides and the All guides link are added automatically from Site settings > Cross-links: guides."
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Never promise bond back, a pass or a refund, here or anywhere on the page."
