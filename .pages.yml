@@ -4623,3 +4623,17 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+
+# The "Publish to live site" button (.github/workflows/publish-live.yml).
+# Pages CMS shows it only to GitHub users; editors invited by email cannot
+# publish. It always runs the staging branch's copy of the workflow.
+actions:
+  - name: publish-live
+    label: Publish to live site
+    workflow: publish-live.yml
+    ref: staging
+    cancelable: false
+    confirm:
+      title: Publish staging to tlbcleaning.com.au?
+      message: Everything saved on the staging branch goes live once the checks pass, usually within ten minutes. Check the changes on the staging site first. If a check fails, nothing is published and the run says why.
+      button: Publish

@@ -19,6 +19,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Enough history for the photo size check to see what a push changed.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -34,9 +37,15 @@ jobs:
       - name: Type check and build (validates every content file)
         run: npm run build
 
-      # Report only. The lint already fails on staging (63 blockers when this
-      # was written, several of them deliberate client decisions), so making
-      # it a gate is a decision for PAGES-CMS-PLAN.md Phase 5, not a default.
+      # Report only here. The lint already fails on staging (63 blockers when
+      # this was written, several of them deliberate client decisions). The
+      # gate is in publish-live.yml: a publish is refused if it would ADD
+      # blockers to what main already has.
       - name: Brand lint (report only)
         run: npm run brand-lint
         continue-on-error: true
+
+      - name: Large photos (warning only)
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: node scripts/check-image-sizes.mjs "$BASE"

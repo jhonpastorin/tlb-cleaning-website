@@ -1,0 +1,120 @@
+# "Publish to live site": the button in Pages CMS (`actions:` in .pages.yml).
+# See PAGES-CMS-PLAN.md, Phase 5.
+#
+# Merges `staging` into `main` after the same checks CI runs, and pushes
+# `main`, which Render deploys to tlbcleaning.com.au. Nothing is published if
+# any step fails; the run in Pages CMS (and under Actions on GitHub) says why.
+#
+# WHO CAN PRESS IT. Pages CMS only lets GitHub users run actions. Editors
+# invited by email can save to staging but cannot publish, so publishing stays
+# with whoever reviews staging.
+#
+# BEFORE IT WORKS. GitHub only lets a manually triggered workflow run once the
+# file exists on the default branch (`main`). The first publish after this
+# file is added has to be a normal merge of staging into main.
+#
+# THE BRAND LINT GATE. The lint already fails on main (63 blockers when this
+# was written, several of them deliberate client decisions), so "lint passes"
+# cannot be the gate. Instead a publish is refused if it would ADD blockers:
+# the count after the merge must not exceed the count on main before it.
+name: Publish to live site
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS payload as JSON
+        required: false
+        type: string
+
+# One publish at a time, never cancelled half way through a push.
+concurrency:
+  group: publish-live
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Who asked
+        id: who
+        env:
+          PAYLOAD: ${{ inputs.payload }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          json="$PAYLOAD"
+          [ -n "$json" ] || json='{}'
+          name=$(printf '%s' "$json" | jq -r '.triggeredBy.name // .triggeredBy.githubUsername // empty' 2>/dev/null || true)
+          # Keep it to plain characters: it goes into a commit message.
+          name=$(printf '%s' "${name:-$ACTOR}" | tr -cd '[:alnum:] ._-' | cut -c1-60)
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+
+      - name: Count brand lint blockers on main
+        id: before
+        run: |
+          npm ci
+          count=$(node scripts/brand-lint.mjs 2>/dev/null | grep -oE '^[0-9]+ blocker' | grep -oE '^[0-9]+' || true)
+          echo "blockers=${count:-0}" >> "$GITHUB_OUTPUT"
+          echo "Brand lint blockers on main: ${count:-0}"
+
+      - name: Merge staging into main
+        env:
+          PUBLISHER: ${{ steps.who.outputs.name }}
+        run: |
+          git config user.name "TLB site publisher"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin staging
+          if git merge-base --is-ancestor origin/staging HEAD; then
+            echo "::notice::Nothing to publish: main already has everything on staging."
+            echo "NOTHING_TO_PUBLISH=1" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          git merge --no-ff origin/staging -m "Publish staging to the live site (by $PUBLISHER via Pages CMS)" \
+            || { echo "::error::staging and main have conflicting changes. A developer has to merge them."; exit 1; }
+
+      - name: Install
+        if: env.NOTHING_TO_PUBLISH != '1'
+        run: npm ci
+
+      - name: Pages CMS config matches the content files
+        if: env.NOTHING_TO_PUBLISH != '1'
+        run: npm run check-cms
+
+      - name: Type check and production build
+        if: env.NOTHING_TO_PUBLISH != '1'
+        env:
+          SITE_ENV: production
+        run: npm run build
+
+      - name: No new brand lint blockers
+        if: env.NOTHING_TO_PUBLISH != '1'
+        env:
+          BEFORE: ${{ steps.before.outputs.blockers }}
+        run: |
+          after=$(node scripts/brand-lint.mjs 2>/dev/null | grep -oE '^[0-9]+ blocker' | grep -oE '^[0-9]+' || true)
+          after=${after:-0}
+          before="$BEFORE"
+          echo "Brand lint blockers: main ${before}, after merging staging ${after}"
+          if [ "$after" -gt "$before" ]; then
+            node scripts/brand-lint.mjs || true
+            echo "::error::Publishing would add $((after - before)) brand lint blocker(s). Fix them on staging (the list above shows where), then publish again."
+            exit 1
+          fi
+
+      - name: Push main
+        if: env.NOTHING_TO_PUBLISH != '1'
+        run: git push origin HEAD:main
