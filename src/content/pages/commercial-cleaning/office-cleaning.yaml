@@ -1,0 +1,243 @@
+seo:
+  title: Office Cleaning Services - Small & Corporate | TLB Cleaning
+  description: Office cleaning after hours, with the same cleaners each visit and
+    no lock-in contract. Small offices and corporate floors. Book a
+    walk-through.
+ctaLabel: Book a walk-through
+hero:
+  kicker: Office cleaning
+  headingLines:
+    - Office cleaning services around how your business trades
+  lead: Your team should walk in to a finished office. Office cleaning services
+    across the Northern Rivers and the Tweed, done after you leave. The same
+    local cleaner every week, a scope you can hold us to, and one number to
+    ring. {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/premises/office-cleaner-wiping-a-boardroom-table-after-hours.jpg
+    alt: A cleaner in an aqua polo and dark teal apron wiping down a boardroom table
+      in an open plan office after hours
+definition:
+  body:
+    - type: paragraph
+      text: Office cleaning is the regular cleaning of a workplace, usually outside
+        trading hours, covering desks and shared surfaces, kitchenettes,
+        bathrooms, floors and internal glass on a fixed schedule. TLB Cleaning
+        cleans offices across the Northern Rivers and the Tweed, from
+        three-person studios to whole floors.
+    - type: paragraph
+      text: An office clean and a commercial clean are the same trade under two names,
+        and an office is simply the most common kind of commercial premises.
+        What makes it its own job is that people work in the room you are
+        cleaning. Their keyboards, their mugs, their paperwork and their bins
+        are personal, which is why the useful question to ask a cleaner is not
+        what they charge but exactly what they touch.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: People arrive here in three situations.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/commercial_cleaning/premises/office-cleaner-emptying-desk-bins-along-a-workstation-bank.jpg
+        alt: A cleaner emptying an under-desk bin into a janitorial caddy along a bank
+          of empty office workstations
+      title: Our current cleaner has gone quiet
+      description: The bins get done and the bathrooms do not. Messages go unanswered.
+        Nobody leaves a cleaner over the cleaning, they leave because the
+        relationship stopped working. We start with a walkthrough and a written
+        scope so there is nothing to argue about later.
+    - image:
+        src: /src/assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg
+        alt: A TLB cleaner and an office manager talking through the job in an office
+          reception area
+      title: We are setting up a new office
+      description: New lease, new fitout, or the team has outgrown taking turns with
+        the vacuum. We walk the floor with you, work out what actually needs
+        doing and how often, and put it in writing before anyone signs anything.
+      cta:
+        label: Commercial cleaning
+        href: /commercial-cleaning/
+    - image:
+        src: /src/assets/commercial_cleaning/premises/office-cleaner-restocking-a-kitchenette-and-wiping-the-sink.jpg
+        alt: A cleaner wiping down the stainless sink of an office kitchenette with the
+          bench cleared
+      title: I need to know who is in the building
+      description: The same person each visit, in TLB uniform, and you can meet them
+        before the first one. We are a local business, [insured] and
+        [police-checked], and if something is not right you ring a local number
+        and get a local answer.
+      cta:
+        label: Why TLB
+        href: /why-tlb/
+scope:
+  heading: What goes on the scope
+  lead: Grouped by how often it happens, not by which room it is in. That is the
+    difference two quotes are actually hiding.
+  items:
+    - icon: office
+      title: "Every visit: the floors"
+      description: Vacuum all carpet including under and around desks, mop hard
+        floors, and spot clean marks on entry matting. Traffic lanes and the run
+        from the lift get the attention they actually need rather than one pass
+        with everything else.
+    - icon: spray-bottle
+      title: "Every visit: the touch points"
+      description: Door handles, light switches, lift buttons, rails, shared desk
+        edges and the fridge and microwave handles. These take five minutes and
+        they are the first thing to disappear from a thin scope, because nobody
+        notices them being skipped.
+    - icon: target
+      title: "Every visit: kitchenette and bathrooms"
+      description: Benches and sink wiped down, dishwasher emptied if it has finished,
+        bins emptied and relined, toilets and basins cleaned and disinfected,
+        mirrors done, floors mopped. Bathrooms are the part of an office a
+        visitor judges you on.
+    - icon: spark
+      title: "Every visit: desks, on your terms"
+      description: We wipe clear desk surfaces and leave anything with paper, a
+        keyboard or a coffee cup on it alone unless you tell us otherwise. Some
+        offices want a clear-desk rule and full wipe-down. Both are fine. What
+        matters is that it is written down, not assumed.
+    - icon: chart-bars
+      title: "Periodically: the things you forget"
+      description: Internal glass and partitions, skirtings, air vents, window sills,
+        high dusting, fridge interiors and the top of the kitchen cupboards.
+        These go on the scope with a frequency against each one, so they happen
+        on a date rather than when someone complains.
+    - icon: puzzle
+      title: Not included, and said out loud
+      description: Carpet extraction, external windows above ground level and pressure
+        cleaning are separate services rather than part of a nightly scope, and
+        we quote them separately. Consumables are [supplied by us / supplied by
+        you. Confirm]. We do not handle clinical or hazardous waste.
+callout:
+  heading: An hourly rate tells you nothing.
+  body:
+    - Two quotes at the same hourly rate are not the same offer, because the
+      number of hours is the variable and it is the one nobody writes down. A
+      cleaner who is in your office for 45 minutes and one who is there for two
+      hours can quote the same rate and deliver completely different cleans.
+    - Ask for a price per visit against a written scope instead. Then you are
+      comparing what gets done, which is the thing you actually care about, and
+      the cleaner carries the risk of it taking longer than they thought rather
+      than you.
+worthKnowing:
+  heading: What sits behind the number on an office quote
+  body:
+    - type: paragraph
+      text: An office quote can come in well under the others for one of three
+        reasons, and none of them is efficiency. Either the scope is thinner
+        than the one you asked for, or the hours are shorter than the work
+        takes, or the person doing it is not being paid the Cleaning Services
+        Award. The first two you find out about in a month. The third one is the
+        one that can land on you.
+    - type: paragraph
+      text: Cleaning is one of the most commonly underpaid trades in the country,
+        which is why it is worth asking any quote how the number is built. If
+        the cleaner in your office is not a legitimate employee, your business
+        is exposed to that in ways an office manager should not have to think
+        about. Our cleaners are employed by TLB, paid to the Award, and covered
+        by our insurance. That is what the price reflects.
+related:
+  heading: Other premises we clean
+  subheading: Commercial cleaning for every kind of workplace across the Northern
+    Rivers and the Tweed.
+comparison:
+  heading: How TLB compares
+  lead: Anyone can clean an office once. The hard part is being the same people,
+    at the same standard, on week forty.
+  cornerLabel: Why TLB Cleaning is different
+  whoCleansLabel: Who cleans your office
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Booking an office clean
+  items:
+    - question: Can you clean after we close?
+      answer: Yes, and most office work is done that way. We clean in the evening or
+        early morning so your team walks in on a finished floor and nobody works
+        around a vacuum. After hours and weekend work attracts penalty rates
+        under the Cleaning Services Award, so both options go on the quote with
+        their own price and you choose.
+    - question: Will it be the same cleaner every week?
+      answer: Yes. You get the same person on the same day, and you meet them before
+        you sign anything. When they take leave you get someone from the same
+        small team who has already been briefed on your scope, not a stranger
+        from an agency. That continuity is most of the reason our office clients
+        stay.
+    - question: Do we need a lock-in contract?
+      answer: No. Our office work runs on an ongoing schedule with no lock-in term,
+        and you can change frequency or cancel with reasonable notice. A cleaner
+        who needs to trap you in a two-year term is telling you something about
+        how they expect the service to go.
+    - question: What if something gets missed?
+      answer: You ring or message the local number and we fix it on the next visit, or
+        sooner if it matters. Because you have a written scope, "missed" is a
+        fact rather than an opinion, which is what makes that conversation
+        short. We would rather hear about it in week one than lose the contract
+        in month six.
+    - question: Do you bring your own equipment and products?
+      answer: Yes. Vacuums, mops, cloths and cleaning products all come with us, and
+        we do not use your kitchen sponge on the bathroom. Consumables such as
+        hand towel, toilet paper and bin liners are [supplied by us / supplied
+        by you. Confirm], and whichever it is goes on the scope so it is never a
+        surprise.
+    - question: What happens if I get in touch?
+      answer: We walk your office with you, usually for twenty minutes, and ask what
+        has been going wrong. Then you get a written scope and a price per
+        visit, with an after hours option shown separately. No obligation. If it
+        suits, we book a start date and you meet your cleaner before they start.
+faq:
+  heading: Office cleaning services, common questions
+  items:
+    - question: How much does office cleaning cost?
+      answer: Office cleaning is normally priced per visit rather than per hour, and
+        the price moves with floor area, how many bathrooms and kitchenettes
+        there are, how often you want it done and whether the work is after
+        hours. Ask every quote for a price per visit against a written scope so
+        you are comparing the same job. [TLB’s pricing basis and any minimum
+        charge. Confirm.]
+    - question: How often should an office be cleaned?
+      answer: "It comes down to headcount and whether there are client-facing rooms,
+        not floor area. A small office with a handful of desks and one bathroom
+        usually works on two or three visits a week. Anything with a reception,
+        a shared kitchen used daily or twenty-plus people generally needs daily.
+        Bathrooms are what set the floor: once they are shared by more than
+        about ten people, every second day stops being enough."
+    - question: What is included in a standard office clean?
+      answer: "Floors vacuumed and mopped, bins emptied and relined, kitchenette
+        benches and sink cleaned, bathrooms cleaned and disinfected, and shared
+        touch points wiped. Anything beyond that should appear on the scope with
+        a frequency against it: internal glass, high dusting, skirtings, fridge
+        interiors and carpet extraction. If a quote does not name those, assume
+        they are not happening."
+    - question: Should an office cleaner be insured?
+      answer: Yes, and you should ask to see the certificate rather than take the word
+        for it. Public liability cover is what protects your business if a
+        cleaner damages equipment or a third party is injured on your premises,
+        and most commercial leases and building managers require it of any
+        contractor working on site. Ask for the currency date too, since a
+        certificate that expired last year is worth nothing.
+    - question: Does it cost less to hire a cleaner directly?
+      answer: "It looks like less and it usually is not, once you count what comes
+        with being an employer: superannuation, leave, workers compensation,
+        Award rates and penalty rates, plus equipment, products and cover when
+        they are sick. A contracted cleaning business absorbs all of that and
+        turns up regardless. Direct hire makes sense at the point where you need
+        someone on site all day, every day."
+    - question: What is the difference between office cleaning and commercial cleaning?
+      answer: "None, in practice. Commercial cleaning is the whole category for any
+        premises that is not a home, and offices are the largest single type
+        within it. The term matters only when a cleaner specialises: a clinic, a
+        commercial kitchen and a warehouse each need things an office scope does
+        not cover, which is why those are quoted differently."
+closingCta:
+  kicker: Office cleaning
+  heading: Start with a walkthrough.
+  lead: Twenty minutes on site, then a written scope and a price per visit. You
+    meet your cleaner before they start, and there is no lock-in term.

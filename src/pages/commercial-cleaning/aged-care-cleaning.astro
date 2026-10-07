@@ -142,16 +142,11 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // the prompts are in that folder's IMAGE-PROMPTS.md. Both were generated
 // warm and homely rather than clinical, on purpose: a village corridor that
 // photographs like a hospital corridor sells the wrong service.
-import heroImg from '../../assets/commercial_cleaning/premises/aged-care-cleaner-mopping-a-retirement-village-corridor.jpg';
-import loungeImg from '../../assets/commercial_cleaning/premises/aged-care-cleaner-wiping-handrails-in-a-communal-lounge.jpg';
 // REUSED from the hub's folder per IMAGE-GUIDELINES §5. The subject is the
 // walkthrough conversation where a scope gets agreed, which is exactly what
 // the hub uses this frame to mean, and the label is the hub's verbatim.
-import walkthroughImg from '../../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -164,46 +159,48 @@ import {
 import { comparisonColumns } from '../../data/comparison';
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
-import { commercialBusiness, relatedPremises } from '../../data/premises';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 // §0 Metadata. The title leads with "aged care and retirement village
 // cleaning" rather than the menu's "and seniors", because the menu label is
 // what causes the confusion §3 exists to fix and the meta description is the
 // first chance to prevent the wrong click.
-const pageMeta = {
-  // Brief §2. The approved title, verbatim, at 41 characters. It carries
-  // `aged care cleaning services` contiguously where the live one split it
-  // with "and Retirement Village".
-  //
-  // ⚠️ CHANGE REQUEST for the workbook owner, brief §2: the approved title
-  // drops "retirement village" entirely and uses only 41 of 60 characters.
-  // Retirement villages and independent living units are a distinct buyer
-  // from residential aged care, they are named throughout the page, and there
-  // are nineteen characters spare. Pasted as approved per Rule 3, and worth a
-  // decision, especially if the cluster is being re-pulled anyway. The kicker
-  // below keeps retirement living named above the fold in the meantime.
-  title: 'Aged Care Cleaning Services | TLB Cleaning',
-  // Brief §3, with ONE substitution: "police-checked" becomes "employed", for
-  // the reason set out at length in the file header. 141 characters. The live
-  // meta was 197 — the longest in the engagement — and would have been cut off.
-  //
-  // 🔴 Restore the approved wording the moment screening is confirmed.
-  //
-  // ⚠️ SECOND CHANGE REQUEST, brief §3: the approved meta does not contain the
-  // mapped phrase `aged care cleaning services` at all — it says "Cleaning for
-  // aged care and retirement facilities" — so even once implemented the meta
-  // component cannot score.
-  //
-  // What is lost either way: the live meta ended on "residents treated like
-  // neighbours", which is the truest line about this page and the thing that
-  // separates TLB from a national contractor. Neither version of the approved
-  // meta keeps it. Worth returning to if the workbook owner revisits this row.
-  description:
-    'Cleaning for aged care and retirement facilities on a set schedule, by employed staff who work the same site each week. Request a proposal.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/aged-care-cleaning/',
-};
+//
+// In `pageMeta`, on "Aged Care Cleaning Services | TLB Cleaning":
+// Brief §2. The approved title, verbatim, at 41 characters. It carries
+// `aged care cleaning services` contiguously where the live one split it
+// with "and Retirement Village".
+//
+// ⚠️ CHANGE REQUEST for the workbook owner, brief §2: the approved title
+// drops "retirement village" entirely and uses only 41 of 60 characters.
+// Retirement villages and independent living units are a distinct buyer
+// from residential aged care, they are named throughout the page, and there
+// are nineteen characters spare. Pasted as approved per Rule 3, and worth a
+// decision, especially if the cluster is being re-pulled anyway. The kicker
+// below keeps retirement living named above the fold in the meantime.
+// In `pageMeta`, on `description`:
+// Brief §3, with ONE substitution: "police-checked" becomes "employed", for
+// the reason set out at length in the file header. 141 characters. The live
+// meta was 197 — the longest in the engagement — and would have been cut off.
+//
+// 🔴 Restore the approved wording the moment screening is confirmed.
+//
+// ⚠️ SECOND CHANGE REQUEST, brief §3: the approved meta does not contain the
+// mapped phrase `aged care cleaning services` at all — it says "Cleaning for
+// aged care and retirement facilities" — so even once implemented the meta
+// component cannot score.
+//
+// What is lost either way: the live meta ended on "residents treated like
+// neighbours", which is the truest line about this page and the thing that
+// separates TLB from a national contractor. Neither version of the approved
+// meta keeps it. Worth returning to if the workbook owner revisits this row.
+// In `pageMeta`, on `canonical`:
+// ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
 
 // §9 The primary CTA, defined once and repeated in three places per BFD
 // §9.5: the hero button, the button after the six scope blocks and the
@@ -220,7 +217,6 @@ const pageMeta = {
 // or five. The routing block and the two-questions section both end without
 // one. A conversion gap rather than a copy error, and a template job. Brief
 // §9.
-const walkthroughCta = { label: 'Request a proposal', href: quoteCta.href };
 
 // §1 Hero. `split-single-image` with the image LEFT, mirroring the office
 // page's right. Reading order puts the photo first here on purpose: the
@@ -228,47 +224,34 @@ const walkthroughCta = { label: 'Request a proposal', href: quoteCta.href };
 // live, and the corridor answers it faster than the lead does.
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
-const hero = {
-  // Brief §7. The kicker does not change: it keeps retirement living named
-  // above the fold, which the approved title drops.
-  kicker: 'Aged care and retirement living',
-  // Brief §4. The exact phrase `aged care cleaning services` is worth 15
-  // points scored present or absent, and the extension is the page's actual
-  // argument, taken from its own hero paragraph and from §6.
-  //
-  // ON DEMOTING THE OLD LINE. "People live here. We clean like it." is the
-  // best headline on the site: six words, and it states a whole operating
-  // philosophy. It is NOT being cut. It lands one line lower, opening the
-  // lead, and it still does the same work — the new H1 above it says the same
-  // thing in the words a procurement search uses.
-  headingLines: ['Aged care cleaning services that work around residents'],
-  // Brief §5 and §6, in that order, with the demoted H1 opening the lead. Hero
-  // has no separate subheading slot, so the two run as one lead paragraph.
-  //
-  // 🔴 "AN EMPLOYED LOCAL TEAM", NOT "A SCREENED LOCAL TEAM". The brief
-  // supplies both versions and says to use this one unless and until the
-  // screening is confirmed: "a screened local team" is the same unverified
-  // claim as the meta, sixty words into the page, and BFD §2.4 bars it from
-  // copy until confirmed. "Employed" is confirmed, it is what §7 says makes
-  // screening evidenceable in the first place, and it is the process promise
-  // §2.4 asks for. See the file header.
-  lead:
-    `People live here. We clean like it. Aged care cleaning services for homes, retirement villages and independent living units across the Northern Rivers and the Tweed. An employed local team, on a written scope, working around residents rather than through them. ${theLine.fast}`,
-  cta: walkthroughCta,
-  image: {
-    ratio: '16/9',
-    label:
-      'A cleaner mopping the vinyl floor of a bright retirement village corridor, leaving a clear path to walk past her',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on "Aged care and retirement living":
+// Brief §7. The kicker does not change: it keeps retirement living named
+// above the fold, which the approved title drops.
+// In `hero`, on `headingLines`:
+// Brief §4. The exact phrase `aged care cleaning services` is worth 15
+// points scored present or absent, and the extension is the page's actual
+// argument, taken from its own hero paragraph and from §6.
+//
+// ON DEMOTING THE OLD LINE. "People live here. We clean like it." is the
+// best headline on the site: six words, and it states a whole operating
+// philosophy. It is NOT being cut. It lands one line lower, opening the
+// lead, and it still does the same work — the new H1 above it says the same
+// thing in the words a procurement search uses.
+// In `hero`, on `lead`:
+// Brief §5 and §6, in that order, with the demoted H1 opening the lead. Hero
+// has no separate subheading slot, so the two run as one lead paragraph.
+//
+// 🔴 "AN EMPLOYED LOCAL TEAM", NOT "A SCREENED LOCAL TEAM". The brief
+// supplies both versions and says to use this one unless and until the
+// screening is confirmed: "a screened local team" is the same unverified
+// claim as the meta, sixty words into the page, and BFD §2.4 bars it from
+// copy until confirmed. "Employed" is confirmed, it is what §7 says makes
+// screening evidenceable in the first place, and it is the process promise
+// §2.4 asks for. See the file header.
 
 // §2 Definition. Answer-target block. Paragraph two draws the line the whole
 // page depends on, in the reader's own words, before §3 acts on it.
-const definitionBody: TextBlockBody[] = [
-  'Aged care cleaning is the cleaning of a residential aged care home, retirement village or independent living unit complex: resident rooms and units, corridors and handrails, communal lounges and dining rooms, common bathrooms, laundries and the administration areas. TLB Cleaning does this work across the Northern Rivers and the Tweed for operators, village managers and boards.',
-  'It is not the same job as cleaning an older person’s own house, and it is not a nursing service. This page is for the person who is responsible for a site. If you are a family member looking for someone to help your mum or dad at home, the next block is for you.',
-];
 
 // §3 The redirect. THE MOST IMPORTANT BLOCK ON THIS PAGE, and the reason it
 // sits above every piece of commercial copy.
@@ -285,14 +268,6 @@ const definitionBody: TextBlockBody[] = [
 // starts working with no change needed. If the decision is that it will
 // never ship, change this to /house-cleaning/ rather than deleting the
 // block.
-const wrongPageCallout = {
-  heading: 'Looking for help for your mum or dad at home?',
-  body: [
-    'Then this is the wrong page, and we would rather tell you than keep you here. This one is about cleaning contracts for aged care sites and retirement villages, bought by the people who run them.',
-    'What you are after is a regular clean of a private home, usually fortnightly, often paid through a Home Care Package or DVA. It is a different service with a different price and a different conversation, and it is one of the kinder things we do.',
-  ],
-  cta: { label: 'Cleaning for seniors at home', href: '/house-cleaning/senior-home-cleaning/' },
-};
 
 // §4 Scope, grouped BY INFECTION RISK rather than by frequency or by area.
 // That is the grouping an aged care operator's own cleaning policy uses, and
@@ -306,78 +281,10 @@ const wrongPageCallout = {
 // ⚠️ Nothing below claims clinical or infection-control cleaning
 // certification, and the last item says out loud what we do not do. Do not
 // soften that item to win work.
-const scopeItems = [
-  {
-    icon: 'target' as const,
-    title: 'High-touch points, every visit',
-    description:
-      'Handrails the length of every corridor, door handles and push plates, light switches, lift buttons, bed rails and chair arms in communal rooms, and the shared kitchen and laundry handles. These are the surfaces an outbreak travels on and they are the first thing a thin scope drops.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'Wet areas, with separate cloths',
-    description:
-      'Resident and common bathrooms, ensuites, shower chairs and grab rails, sluice and laundry areas. Colour-coded cloths and mop heads so nothing crosses from a bathroom to a dining table, changed between rooms rather than between wings.',
-  },
-  {
-    icon: 'house' as const,
-    title: 'Resident rooms and independent living units',
-    description:
-      'Floors, surfaces, ensuite, bins, and the things residents actually notice: the window sill, the top of the wardrobe, under the bed. We knock, we introduce ourselves, and if a resident would rather we came back later, we come back later.',
-  },
-  {
-    icon: 'bloom' as const,
-    title: 'Communal lounges and dining',
-    description:
-      'Dining tables and chairs including the legs and feet, lounge upholstery vacuumed, hard floors mopped and carpet vacuumed, and glass at the height people actually touch it. Dining rooms turn over three times a day and need a clean between sittings, not once at night.',
-  },
-  {
-    icon: 'chart-bars' as const,
-    title: 'Periodically, on a named month',
-    description:
-      'Carpet extraction in corridors and lounges, upholstery cleaning, high dusting, vents, window sills and external glass at ground level. Each one goes on the schedule with a month against it so it happens on a date rather than before an audit.',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'What we do not do, said plainly',
-    description:
-      'No personal care of any kind. No handling of clinical or sharps waste, no cleaning of clinical equipment, no terminal cleans and no outbreak decontamination. Those need clinically trained staff under your own infection control procedures, and a cleaning contractor claiming otherwise is a risk to you.',
-  },
-];
 
 // §5 Cleaning around people who live there. `StoryMosaic theme="dark"` —
 // this premises type's whole difficulty, and it has no analogue on the office
 // or warehouse pages. Array order IS the layout (see SECTIONS.md).
-const residentsBlocks = [
-  {
-    type: 'text' as const,
-    body: [
-      'An office is empty when we clean it. A village never is. Somebody is having lunch, somebody is asleep, somebody has family visiting, and somebody has had a bad morning and does not want a stranger with a mop in their room. That is not an obstacle to work around. It is the job.',
-      'So we work slowly and we work the same way every time. Half a corridor stays walkable while the other half dries, because a wet floor sign is not a plan for someone with a walker. We knock and wait. We put things back exactly where they were, because a chair moved thirty centimetres is genuinely disorienting for a resident with dementia.',
-    ],
-  },
-  {
-    type: 'image' as const,
-    ratio: '4/3',
-    label:
-      'A cleaner wiping down a brushed-metal handrail at the edge of a bright communal lounge in a retirement village',
-    src: loungeImg,
-  },
-  {
-    type: 'text' as const,
-    body: [
-      'The other half is continuity, and in aged care it is worth more than it is anywhere else on this site. Residents come to know the person who cleans their room. They will tell that person things they will not put on a feedback form: that the shower is not draining, that the neighbour has not been out in two days, that they are worried about something.',
-      'A cleaner who changes every fortnight never gets told any of it. Ours are employed by TLB rather than subcontracted, they stay, and they are briefed to pass on what they notice to your staff instead of to each other. That is not an add-on service. It is what having the same people does on its own.',
-    ],
-  },
-  {
-    type: 'image' as const,
-    ratio: '4/3',
-    label:
-      'A TLB cleaner and a manager talking through the job in a reception area',
-    src: walkthroughImg,
-  },
-];
 
 // §6 "Worth knowing". On this page the lever is not price, it is screening
 // and turnover — the two things an operator is actually accountable for.
@@ -394,10 +301,6 @@ const residentsBlocks = [
 //   - Nothing here states TLB's own screening status. That is the
 //     [police-checked] bracket, and on this page it is a gate rather than a
 //     to-do. See the file header.
-const worthKnowingBody: TextBlockBody[] = [
-  'The question that matters most on an aged care site is not what a cleaner charges, it is who they are sending. Providers are accountable for screening the people who work around residents, and that accountability extends to contractors. A cleaning company that answers "our team is all police-checked" without being able to produce the evidence per person, on request, has just made their problem your problem.',
-  'The second question is turnover. Cleaning has one of the highest staff turnover rates of any trade, and a subcontracted or platform-sourced workforce is the reason: nobody stays because nobody is employed. On an aged care site that shows up as strangers in resident rooms every few weeks, a scope nobody has actually read, and no one who notices that Mr Hall’s shower has stopped draining. Ask any cleaner how long their people have been there. It tells you more than the quote does.',
-];
 
 // §7 Related pages, with this page filtered out of its own band.
 const relatedTags = relatedPremises('/commercial-cleaning/aged-care-cleaning/');
@@ -434,116 +337,20 @@ const relatedTags = relatedPremises('/commercial-cleaning/aged-care-cleaning/');
 // this page is worse than none. It is deleted. Add it back — verbatim — the
 // moment screening is confirmed, and it becomes the strongest row in the
 // table.
-const comparisonTable = {
-  heading: 'How TLB compares',
-  cornerLabel: 'Why TLB Cleaning is different',
-  lead: 'On an aged care site, the questions below stop being marketing points and start being compliance ones. Who is the person in the building, are they employed, and will they still be here in a year.',
-  columns: comparisonColumns,
-  rows: [
-    {
-      label: 'Who attends your site',
-      values: [
-        'Whoever is rostered, often a subcontractor',
-        'The same person',
-        'The same small team, briefed on your site rather than handed an address',
-      ],
-    },
-    {
-      label: 'Employment',
-      values: [
-        'Often subcontracted',
-        'Sole trader',
-        'Employed by TLB and paid to the Cleaning Services Award',
-      ],
-    },
-    {
-      label: 'When someone is away',
-      values: [
-        'A different contractor',
-        'The visit does not happen',
-        'Cover from the same team, already briefed on your site',
-      ],
-    },
-    {
-      label: 'How the scope is written',
-      values: [
-        'A standard schedule applied to your site',
-        'Usually verbal',
-        'Grouped by infection risk, the way your own cleaning policy is grouped',
-      ],
-    },
-    {
-      label: 'Personal care',
-      values: [
-        'Policy varies',
-        'Sometimes helps informally',
-        'Never. Our team finds a staff member instead',
-      ],
-    },
-    {
-      label: 'Clinical waste and terminal cleans',
-      values: [
-        'Sometimes offered',
-        'Sometimes offered',
-        'Not undertaken. Those need clinically trained staff',
-      ],
-    },
-    {
-      label: 'Periodic work',
-      values: [
-        'Quoted separately when it looks bad',
-        'Usually not scheduled',
-        'On the schedule with a named month against each item',
-      ],
-    },
-    {
-      label: 'Commitment',
-      values: ['Often a fixed term', 'None', 'No lock-in, no minimum term, no exit fee'],
-    },
-  ],
-};
 
 // §10 Branded FAQs, in the CUSTOMER'S voice — here that is an operator, a
 // village manager or a board member.
-const brandedFaqItems = [
-  {
-    question: 'Do you take single units, or only whole sites?',
-    answer:
-      // ⚠️ Real bracket, and it decides who this page is for.
-      'We quote whole sites and we also do independent living unit turnovers between residents, which is closer to an end of lease clean than to a regular visit. [Whether TLB takes individual occupied units inside a village, and whether that is billed to the village or the resident. Confirm.] If a resident wants their own unit cleaned privately, we are happy to arrange that separately from your contract.',
-  },
-  {
-    question: 'Are your cleaners screened?',
-    answer:
-      // ⚠️ This is the page's gate, not a to-do. See the file header.
-      'Our cleaners are employed by TLB rather than subcontracted, which is what makes screening possible to evidence at all: there is no third party in between holding the paperwork. [TLB’s screening: what checks are held for every cleaner, how often they are renewed, and what evidence can be produced on request. Confirm before this page ships.] Ask us for it in writing at the walkthrough and hold us to producing it.',
-  },
-  {
-    question: 'Can you work around care routines and meal times?',
-    answer:
-      // Brief §25. BFD §9.2 bans em dashes outright. Recast with commas, no
-      // item lost. Protected otherwise: listing meals, medication rounds,
-      // physio, visiting hours and rest periods as the things the schedule is
-      // built backwards from is the operational detail that tells a facility
-      // manager TLB has done this before.
-      'Yes, and the schedule is built backwards from them. We take your daily rhythm at the walkthrough, meaning meals, medication rounds, physio, visiting hours and when residents nap, and place each area in the gaps. Dining rooms get done between sittings. Corridors get done in halves. Nothing noisy happens before eight or during a rest period.',
-  },
-  {
-    question: 'What happens during an outbreak?',
-    answer:
-      'We follow your infection control procedures, not our own, because you are the ones accountable for them. In practice that usually means increased high-touch cleaning, separate equipment for affected areas and our team following the same PPE and movement rules as your staff. What we do not do is terminal cleans or decontamination, which need clinically trained staff. We will say so rather than take the work.',
-  },
-  {
-    question: 'Will it be the same cleaners each time?',
-    answer:
-      'Yes, and on this page that answer matters more than on any other. You get the same small team, they meet your staff before they start, and they are briefed on your site rather than handed an address. When someone takes leave, their cover comes from the same team and has already walked the site. Residents should recognise the person cleaning their room.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We walk the site with you, including the areas that never make it onto a quote: the sluice room, the laundry, the back of the kitchen. Then you get a written scope grouped the way your own cleaning policy is grouped, a price per visit, and a schedule for the periodic work. No obligation.',
-  },
-];
+//
+// In `brandedFaqItems`, on "Do you take single units, or only whole sites?" (answer):
+// ⚠️ Real bracket, and it decides who this page is for.
+// In `brandedFaqItems`, on "Are your cleaners screened?" (answer):
+// ⚠️ This is the page's gate, not a to-do. See the file header.
+// In `brandedFaqItems`, on "Can you work around care routines and meal times?" (answer):
+// Brief §25. BFD §9.2 bans em dashes outright. Recast with commas, no
+// item lost. Protected otherwise: listing meals, medication rounds,
+// physio, visiting hours and rest periods as the things the schedule is
+// built backwards from is the operational detail that tells a facility
+// manager TLB has done this before.
 
 // §11 Non-branded FAQs, the long-tail block.
 //
@@ -558,47 +365,59 @@ const brandedFaqItems = [
 //     Correct and important — it is the distinction the last answer makes.
 //   - Nothing here should be read as compliance advice, and the answers say
 //     so where it matters.
-const nonBrandedFaqItems = [
-  {
-    question: 'How much does aged care cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
-      'It is priced per visit against a written scope. The number moves with how many resident rooms and bathrooms there are, how much communal and corridor floor, whether wet areas and laundries are included, and how many visits a day the dining rooms need. A village of independent living units and a residential care home are different jobs at different prices. [TLB’s pricing basis. Confirm.]',
-  },
-  {
-    question: 'What are the cleaning requirements for aged care homes in Australia?',
-    answer:
-      'Approved providers are required to give residents a service environment that is safe, clean, well maintained and comfortable, and that obligation sits within the Aged Care Quality Standards. The Standards set the outcome rather than a task list, so each provider translates it into its own cleaning policy, schedule and records. Your own policy is the document a cleaning contractor should be quoting against. This is general information, not compliance advice.',
-  },
-  {
-    question: 'How often should aged care facilities be cleaned?',
-    answer:
-      'High-touch surfaces and shared bathrooms are daily at minimum, and more often in a home with higher care needs. Dining rooms need cleaning between sittings rather than once a day. Resident rooms are usually daily for floors and bins with a fuller clean weekly. Corridors, handrails and communal lounges are daily. Carpet extraction, upholstery and high dusting are periodic, on a set month.',
-  },
-  {
-    question: 'What is high-touch cleaning?',
-    answer:
-      'It is the targeted cleaning and disinfecting of the surfaces hands actually land on: handrails, door handles and push plates, light switches, lift buttons, bed and chair rails, tap handles and shared appliance handles. It matters because infection moves by contact far more than by floor, and yet floors are what a thin scope spends its time on because floors are what people see.',
-  },
-  {
-    question: 'Do aged care cleaners need police checks?',
-    answer:
-      'Providers are accountable for screening the people who work with residents, and that extends to contractors as well as their own staff. In practice that means a cleaning company working on an aged care site should be able to evidence current screening for every individual who attends, not just assert it at a company level. Ask for it per person and ask when each one was last renewed.',
-  },
-  {
-    question: 'Can a cleaner help a resident with personal care?',
-    answer:
-      'No, and a cleaning company that lets it happen informally is creating a serious problem for the provider. Helping someone up, into a shower or in and out of bed is personal care, it requires training and it sits under the provider’s own duty of care. Our team is briefed to help by finding a staff member, and nothing else. It is not unkindness. It is the line that keeps residents safe.',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "How much does aged care cleaning cost?" (answer):
+// ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
 
 // §12 Closing CTA.
-const closingCta = {
-  kicker: 'Aged care and retirement living',
-  heading: 'Start with a walk of the site.',
-  lead: 'Including the sluice room, the laundry and the back of the kitchen. Then a written scope grouped the way your cleaning policy is, and a price per visit.',
-  cta: walkthroughCta,
+
+// CONTENT lives in src/content/pages/commercial-cleaning/aged-care-cleaning.yaml
+// and is edited in Pages CMS ("Aged care cleaning"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning/aged-care-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of the page's main button. It links to the quote page in Site
+    // settings. Empty falls back to the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    wrongPage: section.callout,
+    scope: section.iconGrid,
+    residents: section.storyMosaic,
+    worthKnowing: section.textBlock,
+    // The pills are the other premises pages, from Site settings.
+    related: section.tagCloud.omit({ tags: true }).extend({ note: section.optional(z.array(section.text)) }),
+    // The columns are the shared ones in Site settings; the rows are this page's.
+    comparison: section.comparisonTable.omit({ columns: true }),
+    reviews: section.sectionHeading,
+    // The subheading falls back to the shared footprint line, and the towns
+    // come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }).extend({ subheading: section.optional(section.text) }),
+    // Heading only. The paragraphs are the shared brand lines.
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/aged-care-cleaning/',
 };
+
+const walkthroughCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '16/9');
+
+const residentsBlocks = page.residents.blocks.map((block) =>
+  block.type === 'image' ? { type: 'image' as const, ...sized(block.image, '4/3') } : block,
+);
 
 const business = commercialBusiness(pageMeta.description);
 ---
@@ -616,16 +435,23 @@ const business = commercialBusiness(pageMeta.description);
     <Hero
       variant="split-single-image"
       imagePosition="left"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? walkthroughCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
     {/* §3 — deliberately above every piece of commercial copy on the page.
@@ -633,50 +459,55 @@ const business = commercialBusiness(pageMeta.description);
         members here and the kindest thing this page can do is send them on. */}
     <Callout
       tone="note"
-      heading={wrongPageCallout.heading}
-      body={wrongPageCallout.body}
-      cta={wrongPageCallout.cta}
+      heading={page.wrongPage.heading}
+      body={page.wrongPage.body}
+      cta={page.wrongPage.cta}
     />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What goes on the scope"
-      lead="Grouped by infection risk, the way your own cleaning policy is grouped, rather than room by room."
-      items={scopeItems}
+      heading={page.scope.heading}
+      lead={page.scope.lead}
+      note={page.scope.note}
+      items={page.scope.items}
       cta={walkthroughCta}
     />
 
-    <StoryMosaic theme="dark" heading="An office is empty. A village never is." blocks={residentsBlocks} />
+    <StoryMosaic theme="dark" heading={page.residents.heading} blocks={residentsBlocks} cta={page.residents.cta} />
 
     <TextBlock
       theme="light"
       align="left"
-      heading="The two questions worth more than the quote"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     <TagCloud
-      heading="Other premises we clean"
-      subheading="Commercial cleaning for every kind of site across the Northern Rivers and the Tweed."
+      heading={page.related.heading}
+      subheading={page.related.subheading}
       tags={relatedTags}
-      note={[]}
+      note={page.related.note ?? []}
     />
 
     <ComparisonTable
-      heading={comparisonTable.heading}
-      cornerLabel={comparisonTable.cornerLabel}
-      lead={comparisonTable.lead}
-      columns={comparisonTable.columns}
-      rows={comparisonTable.rows}
+      heading={page.comparison.heading}
+      cornerLabel={page.comparison.cornerLabel}
+      lead={page.comparison.lead}
+      columns={comparisonColumns}
+      rows={page.comparison.rows}
+      footnote={page.comparison.footnote}
+      cta={page.comparison.cta}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading={footprintSubheading}
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading ?? footprintSubheading}
       groups={footprintLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -692,7 +523,7 @@ const business = commercialBusiness(pageMeta.description);
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
@@ -701,15 +532,15 @@ const business = commercialBusiness(pageMeta.description);
         lands the mapped phrase contiguously, which is the 10-point H2
         component the page previously half scored, and drops Title Case,
         which BFD §9.2 bans. */}
-    <Faq heading="Working with us on your site" items={brandedFaqItems} />
-    <Faq heading="Aged care cleaning services, common questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? walkthroughCta}
     />
   </main>
 

@@ -134,13 +134,8 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // apron on a live site would be a photo of something that must not happen.
 // The apron is dropped for the same reason. Documented in the folder's
 // IMAGE-PROMPTS.md so this does not get "corrected" back later.
-import heroImg from '../../assets/commercial_cleaning/premises/construction-cleaner-sweeping-a-new-build-before-handover.jpg';
-import windowsImg from '../../assets/commercial_cleaning/premises/construction-cleaner-detailing-new-window-frames.jpg';
-import bathroomImg from '../../assets/commercial_cleaning/premises/construction-final-detail-clean-of-a-new-bathroom.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -152,39 +147,41 @@ import {
 } from '../../data/navigation';
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
-import { commercialBusiness, relatedPremises } from '../../data/premises';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 // §0 Metadata. "Builders clean" leads the title because it is the head term,
 // even though the slug is the menu's literal label. See the file header.
-const pageMeta = {
-  // Brief §2. The approved title, verbatim, at 49 characters. It carries
-  // `post construction cleaning services` 150/mo contiguously; the live one
-  // carried neither that phrase nor `construction site cleaning services`,
-  // because the word "and" broke both.
-  //
-  // ⚠️ CHANGE REQUEST for the workbook owner, brief §2: the approved title
-  // drops "builders clean" entirely, and that is the phrase a Northern Rivers
-  // builder actually says. The live SERP on 16 September 2026 showed
-  // Australian competitors running both phrases together, which is what the
-  // live title was doing, and there are nine spare characters. Pasted as
-  // approved per Rule 3.
-  title: 'Post Construction Cleaning Services | TLB Cleaning',
-  // Brief §3. The approved meta, verbatim, at 143 characters. The live one was
-  // 167 and would have been cut off. This opens on the mapped phrase, picks up
-  // `post renovation cleaning` and names the stage range, which is the page's
-  // own framing.
-  //
-  // 🔴 The blocking CTA below is the last sentence of this meta too. What is
-  // lost either way: the live meta said "Booked to your handover date", which
-  // is this page's single strongest promise and the thing a site supervisor
-  // actually clicks. If the workbook owner is revisiting the CTA anyway, that
-  // is the wording to return to. The H1 rescues the line in the meantime.
-  description:
-    'Post construction, builders and post-renovation cleaning, from rough clean to handover detail: dust, render, stickers and glass. Book your clean.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/construction-site-cleaning/',
-};
+//
+// In `pageMeta`, on "Post Construction Cleaning Services | TLB Cleaning":
+// Brief §2. The approved title, verbatim, at 49 characters. It carries
+// `post construction cleaning services` 150/mo contiguously; the live one
+// carried neither that phrase nor `construction site cleaning services`,
+// because the word "and" broke both.
+//
+// ⚠️ CHANGE REQUEST for the workbook owner, brief §2: the approved title
+// drops "builders clean" entirely, and that is the phrase a Northern Rivers
+// builder actually says. The live SERP on 16 September 2026 showed
+// Australian competitors running both phrases together, which is what the
+// live title was doing, and there are nine spare characters. Pasted as
+// approved per Rule 3.
+// In `pageMeta`, on `description`:
+// Brief §3. The approved meta, verbatim, at 143 characters. The live one was
+// 167 and would have been cut off. This opens on the mapped phrase, picks up
+// `post renovation cleaning` and names the stage range, which is the page's
+// own framing.
+//
+// 🔴 The blocking CTA below is the last sentence of this meta too. What is
+// lost either way: the live meta said "Booked to your handover date", which
+// is this page's single strongest promise and the thing a site supervisor
+// actually clicks. If the workbook owner is revisiting the CTA anyway, that
+// is the wording to return to. The H1 rescues the line in the meantime.
+// In `pageMeta`, on `canonical`:
+// ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
 
 // §7 The primary CTA, defined once and repeated in five places per BFD §9.5:
 // the hero button, each of the three stage slides and the closing block.
@@ -197,46 +194,32 @@ const pageMeta = {
 // the button beneath it says "Book your clean" on a page that has just
 // explained why the clean cannot be booked until the stages are settled.
 // Suggested replacement for the workbook: "Tell us your handover date."
-const walkthroughCta = { label: 'Book your clean', href: quoteCta.href };
 
 // §1 Hero. `split-single-image`, image right, matching the rest of the
 // commercial cluster.
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED, and note the hi-vis exception above.
-const hero = {
-  // Brief §8. The kicker does not change. With the H1 now carrying the mapped
-  // phrase, this is where the builder's own vocabulary lives, and keeping both
-  // is how the page serves the search term and the reader at the same time.
-  kicker: 'Builders clean and construction site cleaning',
-  // Brief §4. The exact phrase `post construction cleaning services` is worth
-  // 15 points scored present or absent, and the handover extension is the
-  // page's real promise rather than decoration — it also rescues the line the
-  // approved meta drops.
-  headingLines: ['Post construction cleaning services, booked to your handover date'],
-  // Brief §5 and §6, in that order. The demoted H1 opens the lead — it is the
-  // best opening line on the site, it speaks directly to a builder's standing
-  // with a client, and it survives the move intact — and the hero paragraph
-  // follows. Hero has no separate subheading slot, so the two run as one lead.
-  //
-  // Every word of the builder language is kept, moved into sentence three.
-  lead:
-    `The last trade on site is the one they remember. Post construction cleaning services for new builds, renovations and fitouts across the Northern Rivers and the Tweed. Builders cleans and final detail cleans, booked to your handover date, not to ours. ${theLine.fast}`,
-  cta: walkthroughCta,
-  image: {
-    ratio: '16/9',
-    label:
-      'A cleaner in a high-visibility vest sweeping fine dust from the concrete floor of a newly finished, unfurnished interior',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on "Builders clean and construction site cleaning":
+// Brief §8. The kicker does not change. With the H1 now carrying the mapped
+// phrase, this is where the builder's own vocabulary lives, and keeping both
+// is how the page serves the search term and the reader at the same time.
+// In `hero`, on `headingLines`:
+// Brief §4. The exact phrase `post construction cleaning services` is worth
+// 15 points scored present or absent, and the handover extension is the
+// page's real promise rather than decoration — it also rescues the line the
+// approved meta drops.
+// In `hero`, on `lead`:
+// Brief §5 and §6, in that order. The demoted H1 opens the lead — it is the
+// best opening line on the site, it speaks directly to a builder's standing
+// with a client, and it survives the move intact — and the hero paragraph
+// follows. Hero has no separate subheading slot, so the two run as one lead.
+//
+// Every word of the builder language is kept, moved into sentence three.
 
 // §2 Definition. Answer-target block, and it has to do double duty: define
 // the term and separate the three stages, because "builders clean" means a
 // different thing to a builder, a project manager and a homeowner.
-const definitionBody: TextBlockBody[] = [
-  'A builders clean is the cleaning of a construction site as the work finishes: removing dust, debris, adhesive, plaster and stickers so the building can be inspected, handed over and lived in. TLB Cleaning does builders cleans and final detail cleans across the Northern Rivers and the Tweed, for new builds, renovations, fitouts and unit developments.',
-  'It is really three jobs at three different moments, and quotes get compared wrongly because people mean different ones by the same phrase. A progress clean keeps a working site safe and passable. A builders clean happens once the trades are out and takes the building from construction-dirty to visibly clean. A final detail clean is the pass after that, where a building goes from clean to handover ready. Which ones you need changes the price enormously, so it is the first thing worth settling.',
-];
 
 // §3 Silica. `warning`, and THE MOST SERIOUS WARNING ON THIS SITE.
 //
@@ -259,13 +242,6 @@ const definitionBody: TextBlockBody[] = [
 //     both wrong and dangerous.
 //   - The brand foundation document (§3.3) names Safe Work Australia as an
 //     approved authoritative source, so a link belongs here at launch.
-const silicaCallout = {
-  heading: 'Dry sweeping construction dust is not cleaning. It is exposure.',
-  body: [
-    'The dust on a new build is not house dust. Cutting, grinding and even sweeping concrete, brick, tile, render and engineered stone puts respirable crystalline silica into the air, and it is fine enough to stay there for hours and small enough to reach the deepest part of the lung. It causes silicosis, and silicosis does not get better. Engineered stone benchtops were banned outright in Australia from 1 July 2024 because of it.',
-    'So a cleaner who turns up to a builders clean with a broom and a domestic vacuum is not saving you anything, they are generating an exposure on your site and putting it in your incident history rather than theirs. The controls are not exotic: wet methods where the surface allows, an H-class vacuum with the right filtration rather than a shop vac, and respiratory protection worn properly. Ask any cleaner quoting your site which of those three they are bringing.',
-  ],
-};
 
 // §4 The three stages. `ServiceBlocks variant="slider"` — THE ONLY USE OF
 // THIS VARIANT IN THE CLUSTER, and it is here because these three genuinely
@@ -276,140 +252,34 @@ const silicaCallout = {
 // ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
 // Two of the three carry real brackets, and both are equipment or licensing
 // questions rather than copy questions.
-const stageItems = [
-  {
-    image: {
-      ratio: '16/9',
-      label:
-        'A cleaner in a high-visibility vest sweeping fine dust from the concrete floor of a newly finished, unfurnished interior',
-      src: heroImg,
-    },
-    title: 'Stage one: progress clean, while the trades are still in',
-    description:
-      // ⚠️ Real bracket. Builders routinely expect the cleaner to remove
-      // rubbish, and that needs a vehicle, a tip account and a price.
-      'Offcuts, packaging and general debris cleared so the site stays passable and nobody trips over the last trade’s mess. Floors kept clear for the trades who need a clean substrate. Amenities and the site office cleaned, which is the part everyone skips and everyone complains about. Waste removal from site is [included / quoted separately, and requires a tip fee. Confirm].',
-    cta: walkthroughCta,
-  },
-  {
-    image: {
-      ratio: '4/3',
-      label:
-        'A cleaner in a high-visibility vest detailing plaster dust off a new aluminium window frame in an unfurnished new build',
-      src: windowsImg,
-    },
-    title: 'Stage two: the builders clean, once the trades are out',
-    description:
-      // ⚠️ Real bracket, and it is the equipment question a builder asks.
-      'The heavy pass. Plaster dust off every horizontal surface including the tops of doors, architraves and skirtings. Paint spots, adhesive, silicone smears and stickers off glass, tiles and tapware. Window frames and tracks vacuumed out. Cupboards and drawers cleaned inside. Floors vacuumed then washed, not swept. Done with [an H-class vacuum. Confirm TLB owns one] rather than a broom, for the reason in the block above.',
-    cta: walkthroughCta,
-  },
-  {
-    image: {
-      ratio: '4/3',
-      label:
-        'A cleaner in a high-visibility vest polishing the brushed-metal tapware of a brand new bathroom during a final detail clean',
-      src: bathroomImg,
-    },
-    title: 'Stage three: the final detail clean, before handover',
-    description:
-      'The pass that decides how the building feels on the day. Glass and mirrors polished streak free, tapware and stainless finished, appliance protective film removed, splashbacks and grout lines detailed, light fittings and switch plates wiped, and the dust that settled out of the air overnight taken off again. Timed to the morning of handover where the program allows, because dust keeps landing.',
-    cta: walkthroughCta,
-  },
-];
+//
+// In `stageItems`, on "Stage one: progress clean, while the trades are still in" (description):
+// ⚠️ Real bracket. Builders routinely expect the cleaner to remove
+// rubbish, and that needs a vehicle, a tip account and a price.
+// In `stageItems`, on "Stage two: the builders clean, once the trades are out" (description):
+// ⚠️ Real bracket, and it is the equipment question a builder asks.
 
 // §5 What decides the price. `ContentGrid` with `feature` cells. Included
 // because this is the premises type where a quote most often turns out to
 // mean something different from what the builder assumed, and naming the
 // variables is more useful than a number we do not have.
-const priceDriverBlocks = [
-  {
-    type: 'feature' as const,
-    icon: 'chart-pie' as const,
-    heading: 'Which stages you actually want',
-    body: [
-      'One builders clean and one detail clean is the normal pair. A quote for one, compared against a quote for both, looks like one cleaner is half the price of the other. Settle the stages before you compare anything.',
-    ],
-  },
-  {
-    type: 'feature' as const,
-    icon: 'idea' as const,
-    heading: 'How much glass there is',
-    body: [
-      'Glass is the slowest surface on a new build and the one a handover is judged on. A house with a wall of stacker doors takes hours longer than the same floor area in solid wall, and adhesive residue on new glass takes longer again.',
-    ],
-  },
-  {
-    type: 'feature' as const,
-    icon: 'target' as const,
-    heading: 'What the trades left behind',
-    body: [
-      'A site handed over swept and free of rubbish costs less to clean than one with offcuts in every room. Paint overspray, silicone smears and render splatter on tile are the three that turn a day into two.',
-    ],
-  },
-  {
-    type: 'feature' as const,
-    icon: 'key' as const,
-    heading: 'Whether the date can move',
-    body: [
-      'A builders clean booked to a fixed handover date, on a weekend, at short notice, is a different price from one with a week of float either side. Penalty rates under the Cleaning Services Award are real and they appear on the quote rather than in the fine print.',
-    ],
-  },
-];
 
 // §6 "Worth knowing". The lever on this page is the defect list: a builders
 // clean is the only trade whose work is judged by someone actively looking
 // for faults, and dust is what gets written up.
-const worthKnowingBody: TextBlockBody[] = [
-  'The reason a builders clean is worth doing properly has nothing to do with how it looks and everything to do with the defect list. At handover somebody walks the building specifically looking for things to write down. Dust in a window track, adhesive on a shower screen, plaster on the top of a door, a sticker still on an appliance: none of those are building defects, but they all get written up as ones, and then a supervisor spends a fortnight closing items that a cleaner should have closed in an afternoon.',
-  'The other reason is that dust keeps arriving. A building that has been sealed for a week still has fine dust settling out of the air, off the ceiling and out of the ducts. That is why the final detail clean is a separate stage rather than the same clean done more carefully, and why timing it close to handover is worth more than doing it thoroughly a fortnight early. We book to your program and we will tell you honestly if the date you have picked is the wrong one.',
-];
 
 // §7 Related pages. Real estate and end of lease are appended as extras: a
 // builder finishing a spec home and an agent presenting it are the same
 // handover from two sides, and the reader is often both.
-const relatedTags = relatedPremises('/commercial-cleaning/construction-site-cleaning/', [
-  { label: 'Real estate cleaners', href: '/house-cleaning/real-estate-cleaning/' },
-  { label: 'End of lease and bond cleaning', href: '/house-cleaning/end-of-lease-cleaning/' },
-]);
 
 // §9 Branded FAQs, in the CUSTOMER'S voice — a builder, supervisor, project
 // manager or a homeowner mid-renovation.
-const brandedFaqItems = [
-  {
-    question: 'Are your cleaners inducted to work on site?',
-    answer:
-      // ⚠️ THE page's gate, along with the H-class vacuum. See the file
-      // header. Without white cards, no builder can lawfully let TLB on site.
-      'Any cleaner attending a construction site needs a general construction induction card, the white card, plus your own site induction, and they need to sign in and out like every other trade. [Whether TLB holds a current white card for every cleaner who would attend, and whether TLB can provide a SWMS for the work. Confirm before this page ships.] Ask us for the cards and the SWMS before we come on site, not after.',
-  },
-  {
-    question: 'Can you work to our handover date?',
-    answer:
-      'Yes, and that is usually the whole brief. Tell us the handover date and we work backwards: the builders clean once the trades are genuinely out, then the final detail clean as close to the morning of handover as your program allows. If the date moves, tell us as early as you can and we will move with it where we have the capacity.',
-  },
-  {
-    question: 'Do you take the rubbish away?',
-    answer:
-      // ⚠️ Same bracket as §4 stage one.
-      'Debris and packaging get cleared and bagged as part of the clean. Taking it off site is [included / a separate line with a tip fee. Confirm], because it needs a vehicle and a disposal cost rather than just labour. Bins on site cost everyone less, so if there is still a skip when we arrive, say so.',
-  },
-  {
-    question: 'What about the windows?',
-    answer:
-      'Internal glass, frames and tracks are part of a builders clean, and we detail adhesive, paint and render off glass rather than scraping at it. External glass at ground level is included. Anything above ground level needs its own plan and pricing, and depending on the building that means a different licence and equipment than a cleaning team carries. We will tell you which it is at the walkthrough rather than after.',
-  },
-  {
-    question: 'Do you do renovations, not just new builds?',
-    answer:
-      'Yes, and it is a different job. A renovation is dirtier per square metre than a new build because the dust travels into a house that is already furnished and lived in, so the clean extends past the work area into the rooms nobody touched. If you are moving back into your own renovated house, that is the version of this we do most.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We walk the site, work out which stages you actually need, and tell you which ones you do not. Then you get a written scope per stage with a price against each and the date each one would happen. No obligation. If the program is not settled yet, we will hold an indicative date rather than pretend it is booked.',
-  },
-];
+//
+// In `brandedFaqItems`, on "Are your cleaners inducted to work on site?" (answer):
+// ⚠️ THE page's gate, along with the H-class vacuum. See the file
+// header. Without white cards, no builder can lawfully let TLB on site.
+// In `brandedFaqItems`, on "Do you take the rubbish away?" (answer):
+// ⚠️ Same bracket as §4 stage one.
 
 // §10 Non-branded FAQs, the long-tail block.
 //
@@ -423,47 +293,69 @@ const brandedFaqItems = [
 //     answer below tells the reader to define it in writing. Correct and
 //     genuinely useful.
 //   - No dollar figure anywhere, same as every sibling page.
-const nonBrandedFaqItems = [
-  {
-    question: 'How much does a builders clean cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
-      'It is priced per job rather than per hour, against a written scope, and the number moves with which stages you need, how much glass there is, how much the trades left behind and whether the date is fixed. Floor area on its own is a poor predictor, which is why a phone quote for a builders clean is usually wrong. [TLB’s pricing basis. Confirm.]',
-  },
-  {
-    question: 'What is included in a builders clean?',
-    answer:
-      'There is no standard definition, which is exactly why it should be written down. A normal scope covers dust removal from all surfaces including the tops of doors and architraves, adhesive stickers silicone and paint spots off glass tiles and tapware, window frames and tracks vacuumed, cupboards cleaned inside, and floors vacuumed then washed. If a quote just says "builders clean", ask for that list.',
-  },
-  {
-    question: 'What is the difference between a builders clean and a final clean?',
-    answer:
-      'The builders clean is the heavy pass that takes a building from construction-dirty to clean, done once the trades are out. The final clean, or detail clean, is the pass after it that takes the building from clean to handover ready, and it exists because fine dust keeps settling for days. Doing only the first leaves dust on every sill on handover morning. Doing only the second costs more, because the second pass is not designed to shift plaster.',
-  },
-  {
-    question: 'Do construction cleaners need a white card?',
-    answer:
-      'Yes. Anyone carrying out construction work on a site in New South Wales needs a general construction induction card, commonly called a white card, and they also need the site-specific induction for that particular site. It is the principal contractor who carries the duty to make sure everyone on site is inducted, so a cleaner without one is the builder’s problem as much as the cleaner’s.',
-  },
-  {
-    question: 'Why is construction dust dangerous?',
-    answer:
-      'Because of what is in it. Concrete, brick, tile, render and engineered stone contain crystalline silica, and cutting, grinding or dry sweeping them produces respirable particles fine enough to reach deep into the lung and cause silicosis, which is irreversible. Dry sweeping is one of the worst methods because it re-suspends dust that had already settled. Wet methods, H-class vacuum extraction and properly fitted respiratory protection are the controls that actually work.',
-  },
-  {
-    question: 'When should the builders clean be booked?',
-    answer:
-      'Once the trades are genuinely finished, not when they are nearly finished. A builders clean done while one trade is still cutting is money spent twice, and it is the single most common scheduling mistake on a build. Book the heavy pass for after the last trade leaves, and the detail clean as close to handover as the program allows.',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "How much does a builders clean cost?" (answer):
+// ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
 
 // §11 Closing CTA.
-const closingCta = {
-  kicker: 'Builders clean and construction site cleaning',
-  heading: 'Tell us your handover date.',
-  lead: 'We will walk the site, work out which stages you actually need, and price each one separately. If the date you have picked is the wrong one, we will say so.',
-  cta: walkthroughCta,
+
+// CONTENT lives in src/content/pages/commercial-cleaning/construction-site-cleaning.yaml
+// and is edited in Pages CMS ("Construction site cleaning"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning/construction-site-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of the page's main button. It links to the quote page in Site
+    // settings. Empty falls back to the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    silica: section.callout,
+    // A stage with no button of its own gets the page's main button.
+    stages: section.imageCards,
+    detailPhoto: section.imageBand,
+    priceDrivers: section.contentGrid,
+    worthKnowing: section.textBlock,
+    // The pills are the other premises pages, from Site settings, plus this
+    // page's own extra links (`tags`), which go in after them (§7 above).
+    related: section.tagCloud.extend({ note: section.optional(z.array(section.text)) }),
+    reviews: section.sectionHeading,
+    // The subheading falls back to the shared footprint line, and the towns
+    // come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }).extend({ subheading: section.optional(section.text) }),
+    // Heading only. The paragraphs are the shared brand lines.
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/construction-site-cleaning/',
 };
+
+const walkthroughCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '16/9');
+
+// Stage one reuses the 16:9 hero frame; the other two are 4:3 sources.
+const stageItems = page.stages.items.map((item, i) => ({
+  ...item,
+  image: item.image && sized(item.image, i === 0 ? '16/9' : '4/3'),
+  cta: item.cta ?? walkthroughCta,
+}));
+
+const priceDriverBlocks = page.priceDrivers.items.map((item) =>
+  item.type === 'image' ? { type: 'image' as const, ...sized(item.image, '4/3') } : item,
+);
+
+const relatedTags = relatedPremises('/commercial-cleaning/construction-site-cleaning/', page.related.tags ?? []);
 
 const business = commercialBusiness(pageMeta.description);
 ---
@@ -481,29 +373,38 @@ const business = commercialBusiness(pageMeta.description);
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? walkthroughCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
     {/* §3 — before the scope. The most serious warning on the site, and the
         thing a competent supervisor screens a cleaner for first. */}
-    <Callout tone="warning" heading={silicaCallout.heading} body={silicaCallout.body} />
+    <Callout tone="warning" heading={page.silica.heading} body={page.silica.body} cta={page.silica.cta} />
 
     {/* §4 — the only `slider` in the cluster. Three stages that genuinely
         happen in order, so navigation through a sequence rather than a
         selection between alternatives. See SECTIONS.md on the distinction. */}
     <ServiceBlocks
       variant="slider"
-      heading="Three cleans, in this order"
-      lead="Most quotes get compared wrongly because two people mean different stages by the same phrase. Settle which of these you want first."
+      heading={page.stages.heading}
+      lead={page.stages.lead}
+      note={page.stages.note}
+      tileCtaLabel={page.stages.tileCtaLabel}
       items={stageItems}
     />
 
@@ -515,39 +416,36 @@ const business = commercialBusiness(pageMeta.description);
         Checked: the vanity, the tapware and the screen all survive it. */}
     <ImageBand
       ratio="16/9"
-      label="A brand new bathroom during the final detail clean, tapware polished and the glass screen finished"
-      caption="The final detail clean. This is the pass that decides what the defect list looks like."
-      src={bathroomImg}
+      label={page.detailPhoto.image.label}
+      caption={page.detailPhoto.caption}
+      src={page.detailPhoto.image.src}
     />
 
-    <ContentGrid
-      heading="What actually decides the price"
-      lead="Four variables, none of which is floor area on its own."
-      columns={2}
-      blocks={priceDriverBlocks}
-    />
+    <ContentGrid heading={page.priceDrivers.heading} lead={page.priceDrivers.lead} columns={2} blocks={priceDriverBlocks} />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Cleaning items on a defect list are still your problem"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     <TagCloud
-      heading="Other premises we clean"
-      subheading="Commercial cleaning for every kind of site across the Northern Rivers and the Tweed."
+      heading={page.related.heading}
+      subheading={page.related.subheading}
       tags={relatedTags}
-      note={[]}
+      note={page.related.note ?? []}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading={footprintSubheading}
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading ?? footprintSubheading}
       groups={footprintLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -563,7 +461,7 @@ const business = commercialBusiness(pageMeta.description);
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
@@ -573,15 +471,15 @@ const business = commercialBusiness(pageMeta.description);
         second heading also lands the mapped phrase contiguously, which is
         the 10-point H2 component the page previously half scored, and drops
         Title Case, which BFD §9.2 bans. */}
-    <Faq heading="Working with us on your build" items={brandedFaqItems} />
-    <Faq heading="Post construction cleaning services, common questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? walkthroughCta}
     />
   </main>
 

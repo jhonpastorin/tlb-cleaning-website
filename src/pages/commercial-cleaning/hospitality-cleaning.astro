@@ -60,16 +60,12 @@ import SiteFooter from '../../components/sections/SiteFooter.astro';
 import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // This page's own frames are in src/assets/commercial_cleaning/premises/;
 // the prompts are in that folder's IMAGE-PROMPTS.md.
-import heroImg from '../../assets/commercial_cleaning/premises/hospitality-cleaner-resetting-a-cafe-dining-room-before-service.jpg';
-import functionRoomImg from '../../assets/commercial_cleaning/premises/function-room-reset-after-an-event.jpg';
 // NOTE: the holiday park amenities photograph that used to be imported here
 // is still in src/assets/commercial_cleaning/premises/ and is now unused. It
 // belongs with the held accommodation content, not on this page. Do not delete
 // the asset.
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -89,8 +85,12 @@ import { comparisonColumns, serviceComparisonRows } from '../../data/comparison'
 // already render.
 import { locationGroups, locationSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
-import { commercialBusiness, relatedPremises } from '../../data/premises';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 // 🔴 THIS PAGE WAS REFOCUSED, NOT JUST REWRITTEN. Per the client's decision of
 // 22 September 2026, workbook row 33 wins: this page is about restaurants,
@@ -129,13 +129,9 @@ import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from 
 // cells were never populated or the tool genuinely returned nothing. If
 // `restaurant cleaning services` turns out to have real volume, the approved
 // title is the wrong one and this restructure stands on firmer ground.
-const pageMeta = {
-  title: 'Commercial Restaurant Cleaning Services | TLB Cleaning',
-  description:
-    'Cleaning for restaurants, cafes, pubs and venues, scheduled around trade so nothing stops service. Local team, no subcontractors. Book a visit.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/hospitality-cleaning/',
-};
+//
+// In `pageMeta`, on `canonical`:
+// ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
 
 // Brief §7. The approved workbook CTA is `Book a visit`, so per Rule 4 it goes
 // on every in-page button. At twelve characters it fits easily. One primary
@@ -150,106 +146,65 @@ const pageMeta = {
 //
 // No BFD 13.2 conflict on this page: there is no `Get an instant quote` on it
 // and the pricing block promises a walkthrough and a written scope.
-const walkthroughCta = { label: 'Book a visit', href: quoteCta.href };
 
 // §1 Hero. `split-single-image`, image right. The café reset is the frame
 // that reads as hospitality fastest, and hospitality is the broadest of the
 // three audiences.
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED. Same standing note as every premises page.
-const hero = {
-  // Brief §8. The old label named holiday parks, which this page no longer
-  // covers. The replacement is the workbook's own Page column scope minus the
-  // word "cleaning", which the H1 beneath it carries.
-  kicker: 'Restaurants, pubs and venues',
-  // Brief §4. The mapped primary appeared nowhere in the old H1, and the H1 is
-  // scored present or absent. The extension is the premises list, doing double
-  // work here: it carries the three types the approved title drops.
-  //
-  // The old line survives the refocus better than anything else on the page,
-  // because a restaurant lives on reviews exactly as a cabin does. It opens
-  // the lead and keeps working without a word changed.
-  headingLines: ['Commercial restaurant cleaning services', 'for cafes, pubs and function venues'],
-  // Brief §5. Rule 5's second slot, which this page did not have. Its
-  // extension is the SCHEDULING PROMISE rather than the H1's premises list,
-  // and "not around our roster" is lifted from the old hero, so a good phrase
-  // survives the refocus. It answers the objection a venue raises first: lost
-  // trading hours.
-  subheading: 'Commercial restaurant cleaning services scheduled around trade, not around our roster',
-  // Brief §6. "Cabins and holiday parks" comes out per the refocus, and the
-  // scheduling promise comes out because the subheading now carries it. What
-  // replaces both is the three things this page actually sells, which the
-  // reader previously had to scroll to find.
-  lead:
-    `Your reviews are written about the cleaning. Front of house reset before you open, the periodic work your team never gets to, and the overnight turnaround after a function, across the Northern Rivers and the Tweed. ${theLine.fast}`,
-  cta: walkthroughCta,
-  image: {
-    ratio: '16/9',
-    label:
-      'A cleaner wiping down a long communal table in a bright coastal café dining room before opening',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on "Restaurants, pubs and venues":
+// Brief §8. The old label named holiday parks, which this page no longer
+// covers. The replacement is the workbook's own Page column scope minus the
+// word "cleaning", which the H1 beneath it carries.
+// In `hero`, on `headingLines`:
+// Brief §4. The mapped primary appeared nowhere in the old H1, and the H1 is
+// scored present or absent. The extension is the premises list, doing double
+// work here: it carries the three types the approved title drops.
+//
+// The old line survives the refocus better than anything else on the page,
+// because a restaurant lives on reviews exactly as a cabin does. It opens
+// the lead and keeps working without a word changed.
+// In `hero`, on `subheading`:
+// Brief §5. Rule 5's second slot, which this page did not have. Its
+// extension is the SCHEDULING PROMISE rather than the H1's premises list,
+// and "not around our roster" is lifted from the old hero, so a good phrase
+// survives the refocus. It answers the objection a venue raises first: lost
+// trading hours.
+// In `hero`, on `lead`:
+// Brief §6. "Cabins and holiday parks" comes out per the refocus, and the
+// scheduling promise comes out because the subheading now carries it. What
+// replaces both is the three things this page actually sells, which the
+// reader previously had to scroll to find.
 
 // §2 Definition. Answer-target block. Paragraph two states the thing that
 // makes this premises type genuinely different from every other page in the
 // cluster: the clean is not maintenance, it is the product.
-const definitionBody: TextBlockBody[] = [
-  // Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
-  // points and needs the mapped phrase inside the first two sentences. "And
-  // stay" plus the cabins clause come out per the refocus. The definition
-  // still works, because the four retained premises types genuinely are one
-  // service.
-  'Commercial restaurant cleaning services cover the premises where people eat, drink and gather: cafes and restaurants, pubs and taprooms, function rooms and event venues. TLB Cleaning does this work across the Northern Rivers and the Tweed, on schedules built around trading hours rather than around ours.',
-  // One edit inside an otherwise untouched paragraph. "Cabin shower" and
-  // "bookings" are accommodation; "bathroom since lunch" and "covers" are the
-  // restaurant equivalents and they are sharper, because a mid-service
-  // bathroom is the single most common hospitality complaint. The argument is
-  // unchanged.
-  'On every other kind of premises, cleaning is maintenance. Here it is the product. A customer who sits at a sticky table or uses a bathroom that has not been done since lunch is not noting a maintenance issue, they are writing a review that costs you the next twenty covers. That changes the useful question from how cheaply a place can be cleaned to how reliably it can be turned around inside the window you actually have.',
-];
+//
+// In `definitionBody`, on paragraph 1:
+// Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
+// points and needs the mapped phrase inside the first two sentences. "And
+// stay" plus the cabins clause come out per the refocus. The definition
+// still works, because the four retained premises types genuinely are one
+// service.
+// In `definitionBody`, on paragraph 2:
+// One edit inside an otherwise untouched paragraph. "Cabin shower" and
+// "bookings" are accommodation; "bathroom since lunch" and "covers" are the
+// restaurant equivalents and they are sharper, because a mid-service
+// bathroom is the single most common hospitality complaint. The argument is
+// unchanged.
 
 // §3 The three buyers. `PathwayCards` — used here for genuinely different
 // buyers rather than for three situations one buyer might be in, which is
 // what the office page uses it for. A venue manager, a park manager and a
 // café owner want three different things from the same contractor.
-const pathwayCards = {
-  heading: 'Two kinds of premises, two different clocks.',
-  headingAccent: 'Which one is yours?',
-  cards: [
-    {
-      number: 1,
-      image: {
-        ratio: '4/3',
-        label:
-          'A cleaner wiping down a long communal table in a bright coastal café dining room before opening',
-        src: heroImg,
-      },
-      title: 'A café, restaurant or bar',
-      description:
-        'Front of house cleaned and reset before you open, floors and bathrooms done daily, and the periodic work that never happens when the team is doing it themselves. Your kitchen is a separate scope with its own rules, and there is a page for it.',
-      cta: { label: 'Commercial kitchen cleaning', href: '/commercial-cleaning/commercial-kitchen-cleaning/' },
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        label:
-          'A cleaner setting the last chair straight in a bright function room reset after an event, the carpet freshly vacuumed',
-        src: functionRoomImg,
-      },
-      title: 'A function or event venue',
-      description:
-        'The reset after an event and the presentation clean before the next one, done overnight so a Saturday wedding and a Sunday lunch can share the same room. We work to the run sheet you already have rather than asking you to build a new one.',
-      cta: walkthroughCta,
-    },
-    // Brief §11. Card 3, "A holiday park or cabin accommodation", MOVED to
-    // content-plans/HELD-holiday-park-and-cabin-content.md. It routed to a service this page no longer
-    // sells, so it went with the rest of the accommodation content rather
-    // than being kept as an orphan. Two cards is still a functioning router
-    // and the heading above counts to match.
-  ],
-};
+//
+// In `pathwayCards`, after card 2:
+// Brief §11. Card 3, "A holiday park or cabin accommodation", MOVED to
+// content-plans/HELD-holiday-park-and-cabin-content.md. It routed to a service this page no longer
+// sells, so it went with the rest of the accommodation content rather
+// than being kept as an orphan. Two cards is still a functioning router
+// and the heading above counts to match.
 
 // Brief §12. The §4 single-property redirect, "One cabin, one cottage, one
 // apartment?", MOVED to content-plans/HELD-holiday-park-and-cabin-content.md.
@@ -265,41 +220,20 @@ const pathwayCards = {
 //
 // ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
 // The linen item carries the biggest bracket on the page.
-const scopeItems = [
-  {
-    icon: 'spark' as const,
-    title: 'Before service: the front of house reset',
-    description:
-      'Floors swept and mopped or vacuumed, tables and banquettes wiped down including the undersides and the legs, high chairs done properly, glass and entry doors cleaned, bathrooms cleaned and restocked. Finished and dry before your first customer, every day.',
-  },
-  // Brief §13.2. "Between guests: the cabin turnover" MOVED to
-  // content-plans/HELD-holiday-park-and-cabin-content.md. It carried the biggest
-  // unresolved bracket on the page, the linen question.
-  {
-    icon: 'bloom' as const,
-    title: 'After an event: the reset',
-    description:
-      'Tables cleared and stacked, floors vacuumed or mopped, spills and food off carpet before they set, bathrooms brought back, bins emptied and the room put back to its standard layout ready for the next booking. Done overnight so one room can carry two events in a weekend.',
-  },
-  // Brief §13.4. "Amenities blocks, more than once a day" MOVED to
-  // content-plans/HELD-holiday-park-and-cabin-content.md. Holiday park specific.
-  {
-    icon: 'chart-bars' as const,
-    // Brief §13.5. Kept, with the seasonality changed. "Out of season" and
-    // "January" are accommodation constraints; a restaurant's constraint is
-    // December trade. The list itself is all retained work.
-    title: 'Periodically, booked outside trade',
-    description:
-      'Carpet extraction in function rooms, upholstery and banquette cleaning, high dusting, light fittings, external glass and pressure cleaning the paths and forecourt. Booked into your quietest weeks on purpose, because none of it is possible in December.',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'Not us, and said out loud',
-    description:
-      // ⚠️ Real bracket, and it is the honest boundary of this page.
-      'Commercial kitchens are a separate scope with their own rules and their own page. Exhaust canopy certification, pest control, pool water and grease trap servicing are all separate licensed trades. [Whether TLB works inside a commercial kitchen at all or stops at the pass. Confirm.] We would rather name the boundary than quote past it.',
-  },
-];
+//
+// In `scopeItems`, before "After an event: the reset":
+// Brief §13.2. "Between guests: the cabin turnover" MOVED to
+// content-plans/HELD-holiday-park-and-cabin-content.md. It carried the biggest
+// unresolved bracket on the page, the linen question.
+// In `scopeItems`, before "Periodically, booked outside trade":
+// Brief §13.4. "Amenities blocks, more than once a day" MOVED to
+// content-plans/HELD-holiday-park-and-cabin-content.md. Holiday park specific.
+// In `scopeItems`, on "Periodically, booked outside trade":
+// Brief §13.5. Kept, with the seasonality changed. "Out of season" and
+// "January" are accommodation constraints; a restaurant's constraint is
+// December trade. The list itself is all retained work.
+// In `scopeItems`, on "Not us, and said out loud" (description):
+// ⚠️ Real bracket, and it is the honest boundary of this page.
 
 // Brief §14. The §6 MetricsBlock, "Turnaround is the product here", MOVED to
 // content-plans/HELD-holiday-park-and-cabin-content.md. All four metrics were
@@ -322,71 +256,36 @@ const scopeItems = [
 // The accommodation original is preserved in
 // content-plans/HELD-holiday-park-and-cabin-content.md and should be reinstated
 // if that content gets its own page.
-const worthKnowingBody: TextBlockBody[] = [
-  'Look at the one and two star reviews for any café, pub or restaurant in this region and count how many are about the room rather than the food. It is more of them than anyone expects. Not the menu, not the prices, not the service: a sticky table, a bathroom that had not been done since lunch, crumbs on the banquette, a smell near the bins. Each of those is a fifteen minute failure that sits on your listing for years and gets read by everyone deciding between you and the place across the road.',
-  'The economics run the other way to how cleaning usually gets budgeted. Cutting the pre-open reset from forty minutes to twenty saves you a third of an hour of labour and costs you a review, and the review costs more than the year’s savings. Which is why the thing to buy is not the cheapest visit, it is a visit that happens the same way every single time, by somebody who has reset that room before and knows which table the afternoon sun hits.',
-];
 
 // §8 Related pages. Airbnb, real estate and commercial pressure cleaning are
 // appended: the first because it is this page's nearest neighbour, the second
 // because park and venue operators often hold rental property too, and the
 // third because a forecourt and a path are half of what a guest sees first.
-const relatedTags = relatedPremises('/commercial-cleaning/hospitality-cleaning/', [
-  { label: 'Airbnb cleaning', href: '/airbnb-holiday-home-cleaning/' },
-]);
 
 // §10 Comparison table. Kept on this page, unlike strata and construction.
 // Rows one and four are about who the person on site is and whether you have
 // met them, and in accommodation that is the same question as whether your
 // cabins get turned over the same way every time. The lead reframes it.
-const comparisonTable = {
-  heading: 'How TLB compares',
-  cornerLabel: 'Why TLB Cleaning is different',
-  // Brief §17. "Accommodation" and "January" are the old scope; a venue's
-  // constraint is December.
-  lead: 'In hospitality, consistency is the entire product. The rows below are all really one question: is it the same people, and will they still be here in December.',
-  columns: comparisonColumns,
-  // Brief §17, two row edits. serviceComparisonRows() drops the `Holiday lets`
-  // row, which is the accommodation row and goes with the rest of the moved
-  // content, and relabels `Who cleans your home` — a residential label left on
-  // a commercial page, wrong regardless of the refocus. The other commercial
-  // pages already call it this way.
-  rows: serviceComparisonRows('Who cleans your premises'),
-};
+//
+// In `comparisonTable`, on `lead`:
+// Brief §17. "Accommodation" and "January" are the old scope; a venue's
+// constraint is December.
+// In `comparisonTable`, on `rows`:
+// Brief §17, two row edits. serviceComparisonRows() drops the `Holiday lets`
+// row, which is the accommodation row and goes with the rest of the moved
+// content, and relabels `Who cleans your home` — a residential label left on
+// a commercial page, wrong regardless of the refocus. The other commercial
+// pages already call it this way.
 
 // §11 Branded FAQs, in the CUSTOMER'S voice — a park manager, venue manager
 // or café owner.
-const brandedFaqItems = [
-  {
-    question: 'Can you work around our trading hours rather than a fixed roster?',
-    answer:
-      'Yes, and that is how nearly all of this work runs. The daily visit happens before you open or after you close, whichever your trade allows, and it moves when your hours move seasonally. Function and event work is booked to your run sheet rather than to a standing slot. Tell us your trading pattern at the walkthrough and the schedule is built backwards from it.',
-  },
-  {
-    question: 'Can you handle peak season?',
-    answer:
-      // Honest rather than reassuring, on purpose. Overcommitting here is
-      // how an accommodation contract fails publicly.
-      'That depends entirely on how much notice we have. Christmas through January and every long weekend are the constraint for every cleaner in this region, and anyone who says yes without asking how many covers and functions you are carrying is guessing. Tell us your December bookings at the walkthrough and we will tell you honestly what we can hold and what we cannot, before you are relying on it.',
-  },
-  // Brief §21.3. "Do you supply linen and towels?" MOVED to
-  // content-plans/HELD-holiday-park-and-cabin-content.md, with its linen bracket.
-  {
-    question: 'Do you restock the consumables?',
-    answer:
-      'Yes, for the bathrooms and the back of house: toilet paper, hand towel, hand soap and bin liners. What needs agreeing is who buys the stock and how it is billed, so it goes on the scope rather than turning into a monthly conversation about receipts.',
-  },
-  {
-    question: 'Will it be the same cleaners each time?',
-    answer:
-      'Yes, and here it matters more than almost anywhere. A cleaner who has reset your function room before knows which banquettes mark, where the sun hits and that the second bathroom door sticks. That knowledge is most of the difference between a quick visit and a good one. Our cleaners are employed by TLB rather than subcontracted, they stay, and you meet them.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We walk the premises with you, including the bathrooms and the back of house, and ask about your trading pattern rather than just your floor area. Then you get a written scope per area, a price per visit, and an honest answer about capacity in December. No obligation.',
-  },
-];
+//
+// In `brandedFaqItems`, on "Can you handle peak season?" (answer):
+// Honest rather than reassuring, on purpose. Overcommitting here is
+// how an accommodation contract fails publicly.
+// In `brandedFaqItems`, before "Do you restock the consumables?":
+// Brief §21.3. "Do you supply linen and towels?" MOVED to
+// content-plans/HELD-holiday-park-and-cabin-content.md, with its linen bracket.
 
 // §12 Non-branded FAQs, the long-tail block.
 //
@@ -400,44 +299,16 @@ const brandedFaqItems = [
 //   - Nothing here should be read as compliance advice, and the food answer
 //     says so.
 //   - No dollar figure anywhere, same as every sibling page.
-const nonBrandedFaqItems = [
-  {
-    question: 'How much does restaurant cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
-      'Front of house and bathroom work is priced per visit against a written scope. The number moves with the size of the room, how many bathrooms there are, how tight the window before opening is and how much periodic work sits alongside the daily visit. [TLB’s pricing basis. Confirm.]',
-  },
-  // Brief §22.2. "How long should a cabin turnover take?" MOVED to
-  // content-plans/HELD-holiday-park-and-cabin-content.md. Replaced below.
-  {
-    question: 'How often should a restaurant be cleaned?',
-    answer:
-      'Daily for the dining room, bathrooms and front of house, because every one of those is judged by a customer on every visit. The periodic work, banquettes and upholstery, carpet extraction, high dusting, external glass, runs quarterly for most venues and more often for anywhere with a heavy lunch trade. Bathrooms are the exception to any frequency argument: in a venue doing two services they need attention between them, not just before opening.',
-  },
-  {
-    question: 'What are the cleaning requirements for a café or restaurant in Australia?',
-    answer:
-      'Food businesses are required to keep their premises, fixtures, fittings and equipment in a clean and sanitary condition under the Food Standards Code, and local councils inspect against it. That covers floors, walls, benches, equipment and food contact surfaces, and it is your food safety program rather than a cleaning contract that documents how you meet it. Your council is the right source for your own premises. This is general information, not compliance advice.',
-  },
-  // Brief §22.4. "How often should holiday park amenities be cleaned?" MOVED
-  // to content-plans/HELD-holiday-park-and-cabin-content.md. Replaced below,
-  // following the pattern the retail page uses well.
-  {
-    question: 'What gets left out of a venue cleaning quote?',
-    answer:
-      'Four things, consistently: the bathrooms between services rather than just before opening, the undersides and legs of tables and banquettes, the bin area, and the back of house corridor nobody walks a customer down. All four are invisible on the day and all four are what a review notices within a month.',
-  },
-  {
-    question: 'Who cleans a commercial kitchen, the cleaner or the kitchen staff?',
-    answer:
-      'Both, and the split should be written down. Kitchen staff clean as they go and close down the line at the end of service, because food contact surfaces and equipment are part of running a kitchen. A cleaning contractor takes the periodic work the brigade cannot do mid-service: floors and drains properly, walls and splashbacks, behind and under equipment, cool room interiors. Exhaust canopy and ductwork cleaning is a separate certified trade again.',
-  },
-  {
-    question: 'What is a function room reset?',
-    answer:
-      'It is the clean that takes a room from the end of one event to the start of the next: tables cleared and stacked, chairs returned to the standard layout, floors vacuumed or mopped, food and spills off carpet before they set, bathrooms brought back and bins emptied. It is timed rather than thorough by nature, which is why the overnight version is the one worth paying for when a room carries two bookings in a weekend.',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "How much does restaurant cleaning cost?" (answer):
+// ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
+// In `nonBrandedFaqItems`, before "How often should a restaurant be cleaned?":
+// Brief §22.2. "How long should a cabin turnover take?" MOVED to
+// content-plans/HELD-holiday-park-and-cabin-content.md. Replaced below.
+// In `nonBrandedFaqItems`, before "What gets left out of a venue cleaning quote?":
+// Brief §22.4. "How often should holiday park amenities be cleaned?" MOVED
+// to content-plans/HELD-holiday-park-and-cabin-content.md. Replaced below,
+// following the pattern the retail page uses well.
 
 // §13 Closing CTA.
 // Brief §23. The eyebrow matches the hero's, the heading keeps the old
@@ -445,12 +316,65 @@ const nonBrandedFaqItems = [
 // rooms" comes out. "Your quietest hour" is the constraint a venue recognises,
 // and keeping the December reference preserves the honest capacity answer that
 // made the original good.
-const closingCta = {
-  kicker: 'Restaurants, pubs and venues',
-  heading: 'Start with your quietest hour.',
-  lead: 'Not your floor area. Tell us when your room is actually empty and what your December looks like, and we will tell you honestly what we can hold.',
-  cta: walkthroughCta,
+
+// CONTENT lives in src/content/pages/commercial-cleaning/hospitality-cleaning.yaml
+// and is edited in Pages CMS ("Hospitality cleaning"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning/hospitality-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of the page's main button. It links to the quote page in Site
+    // settings. Empty falls back to the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    // A card with no button of its own gets the page's main button.
+    pathways: section.pathwayCards.extend({
+      cards: z.array(section.pathwayCards.shape.cards.element.extend({ cta: section.optional(section.link) })).min(1),
+    }),
+    scope: section.iconGrid,
+    worthKnowing: section.textBlock,
+    // The pills are the other premises pages, from Site settings, plus this
+    // page's own extra links (`tags`), which go in after them (§8 above).
+    related: section.tagCloud.extend({ note: section.optional(z.array(section.text)) }),
+    // The columns and rows are the shared table in Site settings. The page
+    // owns its framing and the label of the "who cleans" row.
+    comparison: section.comparisonTable
+      .pick({ heading: true, lead: true, cornerLabel: true })
+      .extend({ whoCleansLabel: section.text }),
+    reviews: section.sectionHeading,
+    // The subheading falls back to the shared service-area line, and the towns
+    // come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }).extend({ subheading: section.optional(section.text) }),
+    // Heading only. The paragraphs are the shared brand lines.
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/hospitality-cleaning/',
 };
+
+const walkthroughCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '16/9');
+
+const pathwayCards = page.pathways.cards.map((card, i) => ({
+  number: i + 1,
+  ...card,
+  image: sized(card.image, '4/3'),
+  cta: card.cta ?? walkthroughCta,
+}));
+
+const relatedTags = relatedPremises('/commercial-cleaning/hospitality-cleaning/', page.related.tags ?? []);
 
 const business = commercialBusiness(pageMeta.description);
 ---
@@ -468,58 +392,67 @@ const business = commercialBusiness(pageMeta.description);
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      subheading={hero.subheading}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? walkthroughCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
-    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+    <PathwayCards heading={page.pathways.heading} headingAccent={page.pathways.headingAccent} cards={pathwayCards} />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What our commercial restaurant cleaning services cover"
-      lead="Grouped by when it happens relative to trade, because that is the only grouping a venue roster can actually use."
-      items={scopeItems}
+      heading={page.scope.heading}
+      lead={page.scope.lead}
+      note={page.scope.note}
+      items={page.scope.items}
       cta={walkthroughCta}
     />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Count how many one-star reviews are about cleaning"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     <TagCloud
-      heading="Other premises we clean"
-      subheading="Commercial cleaning for every kind of premises across the Northern Rivers and the Tweed."
+      heading={page.related.heading}
+      subheading={page.related.subheading}
       tags={relatedTags}
-      note={[]}
+      note={page.related.note ?? []}
     />
 
     <ComparisonTable
-      heading={comparisonTable.heading}
-      cornerLabel={comparisonTable.cornerLabel}
-      lead={comparisonTable.lead}
-      columns={comparisonTable.columns}
-      rows={comparisonTable.rows}
+      heading={page.comparison.heading}
+      cornerLabel={page.comparison.cornerLabel}
+      lead={page.comparison.lead}
+      columns={comparisonColumns}
+      rows={serviceComparisonRows(page.comparison.whoCleansLabel)}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading={locationSubheading}
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading ?? locationSubheading}
       groups={locationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -535,7 +468,7 @@ const business = commercialBusiness(pageMeta.description);
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
@@ -545,15 +478,15 @@ const business = commercialBusiness(pageMeta.description);
         `restaurant cleaning services` and `venue cleaning services`, both
         mapped secondaries. Neither carries the exact primary, which keeps it
         out of a fourth heading slot. */}
-    <Faq heading="Booking a venue clean" items={brandedFaqItems} />
-    <Faq heading="Restaurant and venue cleaning questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? walkthroughCta}
     />
   </main>
 

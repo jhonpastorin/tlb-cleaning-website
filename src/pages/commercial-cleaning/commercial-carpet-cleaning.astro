@@ -93,14 +93,8 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // carpet-specific frame, because it is the one card whose subject IS carpet
 // and reusing there would have put the same photo on two pages meaning two
 // different things.
-import heroImg from '../../assets/commercial_cleaning/carpet/commercial-carpet-extraction-in-an-open-plan-office.jpg';
-import cardExtractionImg from '../../assets/commercial_cleaning/carpet/commercial-carpet-extraction-along-an-office-corridor.jpg';
-import cardWalkthroughImg from '../../assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg';
-import cardTeamImg from '../../assets/commercial_cleaning/commercial-cleaner-with-a-caddy-in-an-office-kitchenette.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -113,26 +107,30 @@ import {
 import { comparisonColumns, serviceComparisonRows } from '../../data/comparison';
 import { footprintLocationGroups, footprintSubheading } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { walkthroughCtaLabel } from '../../data/premises';
+import { localBusiness } from '../../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 // §0 Metadata. Focus keyword leads the title, matching the hub's pattern.
-const pageMeta = {
-  // Approved title and meta, pasted verbatim from the brief (workbook row 28)
-  // per its Rule 3. The one added word, "Services", is what turns the head
-  // term into the mapped primary `commercial carpet cleaning services`
-  // (150/mo, Keyword Mapping & Metadata 15 Sep 2026).
-  title: 'Commercial Carpet Cleaning Services | TLB Cleaning',
-  // 140 characters. The live one was 173 and would have been truncated.
-  //
-  // ⚠️ CHANGE REQUEST, brief §3: this carries "commercial carpet cleaning"
-  // but not the full mapped phrase, so the meta component cannot score full
-  // marks. One added word fixes it and keeps the length at 149. Pasted as
-  // approved rather than edited, per Rule 3.
-  description:
-    'Commercial carpet cleaning for offices and workspaces, done after hours so nothing stops. Low-moisture options dry fast. Book a night clean.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/commercial-carpet-cleaning/',
-};
+//
+// In `pageMeta`, on "Commercial Carpet Cleaning Services | TLB Cleaning":
+// Approved title and meta, pasted verbatim from the brief (workbook row 28)
+// per its Rule 3. The one added word, "Services", is what turns the head
+// term into the mapped primary `commercial carpet cleaning services`
+// (150/mo, Keyword Mapping & Metadata 15 Sep 2026).
+// In `pageMeta`, on `description`:
+// 140 characters. The live one was 173 and would have been truncated.
+//
+// ⚠️ CHANGE REQUEST, brief §3: this carries "commercial carpet cleaning"
+// but not the full mapped phrase, so the meta component cannot score full
+// marks. One added word fixes it and keeps the length at 149. Pasted as
+// approved rather than edited, per Rule 3.
+// In `pageMeta`, on `canonical`:
+// ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
 
 // §7 The primary CTA, defined once and repeated in four places per BFD §9.5:
 // the hero button, pathway card 1, the button after the six stages and the
@@ -146,27 +144,10 @@ const pageMeta = {
 // a walkthrough", and BFD §13.2 says instant booking works badly where
 // condition drives the price. Suggested replacement for the workbook:
 // "Get a quote for a night clean."
-const primaryCta = { label: 'Book a night clean' };
 
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
-  // ⚠️ NSW only, following the hub's call and this page's meta description.
-  // footerContact still claims the Southern Gold Coast. Same open item.
-  areaServed: 'Northern Rivers and Tweed, NSW',
-  description: pageMeta.description,
-};
+// In `business`, on `areaServed`:
+// ⚠️ NSW only, following the hub's call and this page's meta description.
+// footerContact still claims the Southern Gold Coast. Same open item.
 
 // §1 Hero. The kicker carries the focus keyword so someone arriving from a
 // search result gets confirmation above the H1, which is free to be a
@@ -195,107 +176,54 @@ const business = {
 // team member, which IMAGE-GUIDELINES §7 forbids. A real photo of a real TLB
 // cleaner on a real site would still do more, so treat this as a good
 // placeholder rather than the finished job.
-const hero = {
-  kicker: 'Commercial carpet cleaning',
-  // Brief §4. The exact phrase `commercial carpet cleaning services` is worth
-  // 15 points scored present or absent, and the old line is good writing that
-  // still lands one line lower.
-  headingLines: ['Commercial carpet cleaning services, done after you close'],
-  // Brief §5. Rule 5's second slot, which this page did not have. An earlier
-  // note here said Hero had no subheading prop; it does — Hero.astro renders
-  // `subheading` directly beneath the <h1> and above the lead, outside the
-  // heading, which is exactly where this belongs.
-  //
-  // Its extension is the PREMISES TYPE, distinct from the H1's timing, and it
-  // puts the four buyer types above the fold. That supports
-  // `office carpet cleaning services` (200/mo) — the largest term on this row,
-  // larger than the mapped primary itself — and carries
-  // `carpet cleaning services for offices` (20/mo).
-  subheading: 'Commercial carpet cleaning services for offices, clinics, venues and strata',
-  // Brief §6. The old paragraph repeated the H1's exact phrase and then the
-  // new subheading's premises list, so it said the same thing a third time
-  // directly beneath two lines that had already said it. What replaces it is
-  // the method choice, which the headings do not carry and which the process
-  // section spends a whole sub-section on. "Your carpet is the first thing
-  // anyone walks on" stays — it is the best opening line on the page.
-  lead:
-    `Your carpet is the first thing anyone walks on. Extraction where the floor has the night to dry, and a low moisture method where it does not, across the Northern Rivers and the Tweed. ${theLine.fast}`,
-  cta: { label: primaryCta.label, href: quoteCta.href },
-  image: {
-    ratio: '1/1',
-    label:
-      'A cleaner in an aqua polo, dark teal apron and teal gloves running a carpet extraction machine across the carpet of an open plan office',
-    src: heroImg,
-  },
-};
+//
+// In `hero`, on `headingLines`:
+// Brief §4. The exact phrase `commercial carpet cleaning services` is worth
+// 15 points scored present or absent, and the old line is good writing that
+// still lands one line lower.
+// In `hero`, on `subheading`:
+// Brief §5. Rule 5's second slot, which this page did not have. An earlier
+// note here said Hero had no subheading prop; it does — Hero.astro renders
+// `subheading` directly beneath the <h1> and above the lead, outside the
+// heading, which is exactly where this belongs.
+//
+// Its extension is the PREMISES TYPE, distinct from the H1's timing, and it
+// puts the four buyer types above the fold. That supports
+// `office carpet cleaning services` (200/mo) — the largest term on this row,
+// larger than the mapped primary itself — and carries
+// `carpet cleaning services for offices` (20/mo).
+// In `hero`, on `lead`:
+// Brief §6. The old paragraph repeated the H1's exact phrase and then the
+// new subheading's premises list, so it said the same thing a third time
+// directly beneath two lines that had already said it. What replaces it is
+// the method choice, which the headings do not carry and which the process
+// section spends a whole sub-section on. "Your carpet is the first thing
+// anyone walks on" stays — it is the best opening line on the page.
 
 // §2 Definition. The answer-target block for the focus keyword and the first
 // place the phrase appears in body copy. Paragraph two does the synonym work
 // ("carpet steam cleaning", "hot water extraction") so this one page can
 // answer all three queries instead of three thin pages competing.
-const definitionBody: TextBlockBody[] = [
-  // Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
-  // points and needs the mapped phrase inside the first two sentences. The
-  // phrase was here without the word "services", so two words fix it, and the
-  // third sentence keeps `commercial carpet` as a variant.
-  'Commercial carpet cleaning services cover the deep cleaning of carpet in a workplace, usually by hot water extraction, done outside trading hours so the floor is dry before your team or your customers arrive. It lifts the grit, oils and traffic marks that vacuuming alone leaves behind. TLB Cleaning cleans commercial carpet across the Northern Rivers and the Tweed.',
-  'Carpet steam cleaning and hot water extraction are the same job under two names. The machine heats water, injects it into the pile under pressure and vacuums it straight back out with the soil in it. Nothing is steamed in the literal sense, so a cleaner who leans hard on the word is selling the word rather than the method.',
-];
+//
+// In `definitionBody`, on paragraph 1:
+// Brief §10. The opening paragraph is worth 10 of the 100 primary-keyword
+// points and needs the mapped phrase inside the first two sentences. The
+// phrase was here without the word "services", so two words fix it, and the
+// third sentence keeps `commercial carpet` as a variant.
 
 // §3 Pathway cards. The three questions a commercial buyer actually arrives
 // with, in their own words. Same framing as the hub, re-pointed at carpet.
 //
 // Destinations are the hub, the quote flow and /why-tlb/. A leaf that links
 // only to a quote form strands the reader who is not ready to ask for one.
-const pathwayCards = {
-  heading: 'People arrive here with three questions.',
-  headingAccent: 'Which one is yours?',
-  cards: [
-    {
-      number: 1,
-      image: {
-        ratio: '4/3',
-        // The cleaned strip behind the wand is deliberate and it is the
-        // reason this frame exists. It is ONE frame showing work in
-        // progress, not a before/after pair implying a specific job, which
-        // IMAGE-GUIDELINES §7 rules out.
-        label:
-          'A cleaner drawing a carpet extraction wand along the worn traffic lane of an office corridor, a cleaned strip visible behind the wand',
-        src: cardExtractionImg,
-      },
-      title: 'The carpet looks tired and I need it back',
-      description:
-        'Traffic lanes, chair marks, spills and the grey path from the door to the lift. One extraction clean lifts most of it, and we tell you honestly which marks are permanent before we quote, not after.',
-      cta: { label: primaryCta.label, href: quoteCta.href },
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        label:
-          'A TLB cleaner and an office manager talking through the job in an office reception area',
-        src: cardWalkthroughImg,
-      },
-      title: 'I want it on a schedule, not as a panic',
-      description:
-        'Most workplaces settle on two extraction cleans a year with spot treatment in between. We can fold that into an ongoing commercial contract so it happens on time without anyone having to remember it.',
-      cta: { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
-    },
-    {
-      number: 3,
-      image: {
-        ratio: '4/3',
-        label: 'TLB cleaner in uniform with her cleaning caddy in an office kitchenette',
-        src: cardTeamImg,
-      },
-      title: 'I want to know who is in the building',
-      description:
-        // ⚠️ Two brackets, both inherited from the hub. Same answer fixes both.
-        'The same small team each visit, in TLB uniform, and you can meet them before the first one. We are a local business, [insured] and [police-checked], and there is one local number to ring if something is not right.',
-      cta: { label: 'Why TLB', href: '/why-tlb/' },
-    },
-  ],
-};
+//
+// In `pathwayCards`, on "A cleaner drawing a carpet extraction wand along the worn traffic lane of an office corridor, a cleaned strip visible behind the wand":
+// The cleaned strip behind the wand is deliberate and it is the
+// reason this frame exists. It is ONE frame showing work in
+// progress, not a before/after pair implying a specific job, which
+// IMAGE-GUIDELINES §7 rules out.
+// In `pathwayCards`, on "I want to know who is in the building" (description):
+// ⚠️ Two brackets, both inherited from the hub. Same answer fixes both.
 
 // §4 Scope of work. THE MOST IMPORTANT BLOCK ON THIS PAGE.
 //
@@ -313,51 +241,16 @@ const pathwayCards = {
 // icon-grid over TextBlock's { list } shape: six distinct stages with a
 // sentence each, not a flat task list. The list shape is right for "the
 // twenty things we wipe"; this is a method.
-const scopeItems = [
-  {
-    icon: 'target' as const,
-    title: 'We inspect and test first',
-    description:
-      'We check the fibre, the backing and how the carpet is laid, then test in an out of sight corner. Wool, nylon and solution dyed carpet do not take the same treatment, and getting that wrong is how carpet gets ruined.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'Pre-vacuum, then pre-spray',
-    description:
-      'Dry soil comes out with a commercial vacuum before any water touches the pile, because wet grit turns into mud. Then a pre-spray goes down and is given time to break down the oils holding the soil in place.',
-  },
-  {
-    icon: 'spark' as const,
-    title: 'Traffic lanes and stains by hand',
-    description:
-      'Doorways, corridors and the run past the printer wear faster than the rest of the floor. Those lanes are agitated separately, and individual stains are treated by type rather than with one product for everything.',
-  },
-  {
-    icon: 'chart-bars' as const,
-    title: 'Hot water extraction',
-    description:
-      'Heated water and solution go into the pile under pressure and come straight back out with the soil. This is the method carpet manufacturers name in their own maintenance requirements, and the one that removes soil rather than hiding it.',
-  },
-  {
-    icon: 'bloom' as const,
-    title: 'Encapsulation when drying time is tight',
-    description:
-      // ⚠️ Confirm TLB offers this second method. If not, cut this card and
-      // the matching sentence in non-branded FAQ 2.
-      // Brief §14. Five added words ("It is a low moisture method") are what
-      // honours the approved meta's promise of low-moisture options that dry
-      // fast. This is the one passage on the page that delivers on it.
-      'For a floor that has to be walked on in a few hours, encapsulation crystallises the soil so it vacuums out the next day. It is a low moisture method, lighter than extraction and much faster to dry, which is the right call for a corridor that never closes.',
-  },
-  {
-    icon: 'office' as const,
-    title: 'Groomed, dried and put back',
-    description:
-      // ⚠️ Real bracket. Drying time depends on the machine, the pile and the
-      // weather, and nobody has said what TLB's air movers can do.
-      'The pile is groomed so it dries evenly, air movers go down where the floor has to be back in service quickly, and furniture goes back where it was. Typical drying time is [X to Y hours. Confirm].',
-  },
-];
+//
+// In `scopeItems`, on "Encapsulation when drying time is tight" (description):
+// ⚠️ Confirm TLB offers this second method. If not, cut this card and
+// the matching sentence in non-branded FAQ 2.
+// Brief §14. Five added words ("It is a low moisture method") are what
+// honours the approved meta's promise of low-moisture options that dry
+// fast. This is the one passage on the page that delivers on it.
+// In `scopeItems`, on "Groomed, dried and put back" (description):
+// ⚠️ Real bracket. Drying time depends on the machine, the pile and the
+// weather, and nobody has said what TLB's air movers can do.
 
 // §5 "Worth knowing". The hub's equivalent block is the strongest copy on the
 // site and it works by making the reader distrust the cheapest quote rather
@@ -370,10 +263,6 @@ const scopeItems = [
 // and many name a frequency. No interval is stated here ON PURPOSE, because
 // it varies by brand and an undated specific goes stale silently. Worth a
 // verification read by someone who prices carpet work.
-const worthKnowingBody: TextBlockBody[] = [
-  'A bad carpet clean and a good one look the same on the day. The difference turns up three weeks later. Over-wetting leaves moisture in the backing, which is how you get an odour that will not shift and, in a humid Northern Rivers summer, mould under a floor that looks fine from above. Too much detergent left in the pile is worse in its own way: it stays tacky, so the carpet re-soils faster than before it was cleaned and the traffic lanes come back darker than they started.',
-  'The other thing worth knowing is that most commercial carpet is still under a manufacturer warranty, and most of those warranties require periodic hot water extraction by a professional. A bonnet clean can technically void one. So ask any cleaner which method they use, what they do about drying, and whether their work meets your carpet maker’s maintenance requirements. We put the method and the price in writing before we start, and we tell you straight when a mark is not coming out.',
-];
 
 // §17 NEW SECTION. Offices as a distinct case.
 //
@@ -390,11 +279,6 @@ const worthKnowingBody: TextBlockBody[] = [
 //
 // Placed after "What a low carpet quote usually leaves out" so the buying
 // argument comes first and the audience detail follows.
-const officeBody: TextBlockBody[] = [
-  'An office wears differently to a venue or a clinic. It goes in three places: the run from the lift to reception, the strip past the printer and the half metre of carpet under every chair. Those lanes get agitated by hand before the extraction wand goes near them, because that is where the grey comes from.',
-  'The other difference is access. Most offices are locked, alarmed and full of equipment nobody wants moved. We settle the access at the walkthrough, and the keys and alarm codes stay with the same small team every visit rather than with whoever is rostered. Desks with computers on them stay where they are and we clean around them.',
-  'Workstations, meeting rooms, boardrooms and reception get done in the one visit, so you are not letting us back in three times. Most offices land on two extraction cleans a year. A busy reception floor usually wants more than that, and a quiet upstairs office usually wants less.',
-];
 
 // §6 Related pages. NOT the hub's full fifteen-pill premises list, which
 // would compete with the hub for the same links. These are the settings
@@ -405,18 +289,6 @@ const officeBody: TextBlockBody[] = [
 // The client's URL sheet of 17 Sep 2026 gives the slugs for every Commercial
 // row it lists; factories and breweries were settled separately the same day,
 // to the sheet's own convention. See premises.ts.
-const settingTags = [
-  { label: 'Office cleaning', href: '/commercial-cleaning/office-cleaning/' },
-  { label: 'Strata and common area cleaning', href: '/commercial-cleaning/strata-cleaning/' },
-  { label: 'Medical, clinic and salon cleaning', href: '/commercial-cleaning/medical-and-clinic-cleaning/' },
-  { label: 'Aged care, retirement and seniors', href: '/commercial-cleaning/aged-care-cleaning/' },
-  { label: 'Hospitality, venues and holiday parks', href: '/commercial-cleaning/hospitality-cleaning/' },
-  { label: 'Retail and shopfronts', href: '/commercial-cleaning/retail-cleaning/' },
-  { label: 'Schools and childcare centres', href: '/commercial-cleaning/school-and-childcare-cleaning/' },
-  { label: 'Gyms and fitness studios', href: '/commercial-cleaning/gym-and-fitness-cleaning/' },
-  { label: 'Commercial pressure cleaning', href: '/commercial-cleaning/commercial-pressure-cleaning/' },
-  { label: 'Commercial cleaning', href: '/commercial-cleaning/' },
-];
 
 // §10 Comparison table. The shared rows from src/data/comparison.ts, now on a
 // fourth page.
@@ -426,49 +298,17 @@ const settingTags = [
 // commercial carpet work is subcontracted to a carpet specialist, this table
 // contradicts the page it is sitting on and has to come off this page. That
 // is a question for TLB, not a rewrite.
-const comparisonTable = {
-  heading: 'How TLB compares',
-  cornerLabel: 'Why TLB Cleaning is different',
-  lead: 'Carpet cleaning is easy to sell once. What is hard is being the same people, at the same standard, the second and third time you are asked back.',
-  columns: comparisonColumns,
-  // Brief §19, scorecard finding 7. "Who cleans your home" becomes "your
-  // premises" on a commercial page, and the holiday-lets row comes off: an
-  // office manager or a strata committee reading it here is being shown a
-  // table written for somebody else. Every other row is neutral and factual
-  // and is unchanged. See data/comparison.ts.
-  rows: serviceComparisonRows('Who cleans your premises'),
-};
+//
+// In `comparisonTable`, on `rows`:
+// Brief §19, scorecard finding 7. "Who cleans your home" becomes "your
+// premises" on a commercial page, and the holiday-lets row comes off: an
+// office manager or a strata committee reading it here is being shown a
+// table written for somebody else. Every other row is neutral and factual
+// and is unchanged. See data/comparison.ts.
 
 // §11 Branded FAQs. Written in the CUSTOMER'S voice, where "we" means the
 // reader's business rather than TLB. That register is the hub's, and it is
 // held here deliberately: a leaf that switches voice reads as bolted on.
-const brandedFaqItems = [
-  {
-    question: 'Can you do it after we close?',
-    answer:
-      'Yes, and most carpet work is done that way. We clean in the evening or across a weekend so the floor has the night to dry and your team walks in on a finished job. After hours work is priced differently, because weekends and late shifts attract penalty rates under the Cleaning Services Award 2020. Both options go on the quote so you can see what each one costs.',
-  },
-  {
-    question: 'Do we have to move all the furniture out?',
-    answer:
-      'No. We move what two people can safely move, clean underneath and put it back where it was. Desks with computers on them, heavy filing and anything fixed stay put and we clean around them. If you want the floor done wall to wall, say so at the walkthrough and we will plan the visit around a clear room.',
-  },
-  {
-    question: 'Will the stains actually come out?',
-    answer:
-      'Most will. Coffee, food, mud and general traffic soil usually lift completely. Dye based spills, bleach marks, rust and anything heat set into the fibre often will not, and an old stain that has been scrubbed before is the hardest of all. We tell you which is which at the walkthrough rather than after we have taken your money.',
-  },
-  {
-    question: 'How often should we be doing this?',
-    answer:
-      'Most workplaces land on two extraction cleans a year with spot treatment in between as things happen. A busy reception, a clinic or a venue often needs quarterly. A quiet upstairs office can stretch to annually. It comes down to foot traffic rather than floor area, and a walkthrough settles it quickly.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We come and look at the carpet, test the fibre and tell you what will lift and what will not. Then you get a written scope and a price, with the after hours option shown separately. No obligation. If it suits, we book a night that works around your trading.',
-  },
-];
 
 // §12 Non-branded FAQs. The long-tail block, aimed at what people search
 // rather than what they ask us.
@@ -485,47 +325,82 @@ const brandedFaqItems = [
 //     the honest answer depends on equipment TLB has not specified.
 // Recommended before launch: a read by someone who prices carpet work, and a
 // visible "last reviewed" date, since the Award changes every 1 July.
-const nonBrandedFaqItems = [
-  {
-    question: 'How long does commercial carpet take to dry?',
-    answer:
-      'A properly extracted carpet is usually walkable within a few hours and fully dry inside the day, which is why the work is done overnight. Drying comes down to three things: how much water went in, how much air is moving across the floor, and the humidity. Air movers cut it substantially. A carpet still damp the next morning was over-wet, not thoroughly cleaned.',
-  },
-  {
-    question: 'What is the difference between hot water extraction and encapsulation?',
-    answer:
-      'Hot water extraction injects heated water and solution into the pile under pressure and vacuums it back out with the soil. It removes the most and takes the longest to dry. Encapsulation uses a polymer that crystallises around the soil so it can be vacuumed out the next day. It is faster and drier but lighter, so it suits interim maintenance between extraction cleans rather than replacing them.',
-  },
-  {
-    question: 'Does carpet cleaning damage the carpet?',
-    answer:
-      'Done properly, no. Done badly, yes. Carpet gets damaged two ways: over-wetting, which leaves moisture in the backing and can cause odour, delamination or mould, and using the wrong chemistry for the fibre, which is how wool ends up bleached or browned. That is why a competent cleaner tests the fibre in a hidden spot before starting instead of treating every floor the same.',
-  },
-  {
-    question: 'Can carpet cleaning void a warranty?',
-    answer:
-      'It can. Many carpet manufacturers set maintenance requirements inside the warranty, and most of those specify periodic hot water extraction by a professional. Some exclude bonnet cleaning outright. If your building still has its carpet warranty, check what the maker requires before you accept a quote, and ask the cleaner in writing whether their method meets it.',
-  },
-  {
-    question: 'How much does commercial carpet cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE. The most searched question on the topic, and
-      // the page cannot answer it without a number from TLB. A "from $X per
-      // square metre" that turns out to be wrong is worse than no number, and
-      // the ACCC treats from-pricing as a claim.
-      'Commercial carpet is usually priced per square metre, with a minimum charge for small jobs, and the rate moves with the condition of the floor, how much furniture there is to work around and whether the work is after hours. Ask for the price against a written scope rather than an hourly rate, so you can see what is actually included. [TLB’s pricing basis and minimum charge. Confirm.]',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "How much does commercial carpet cleaning cost?" (answer):
+// ⚠️ BRACKETED ON PURPOSE. The most searched question on the topic, and
+// the page cannot answer it without a number from TLB. A "from $X per
+// square metre" that turns out to be wrong is worse than no number, and
+// the ACCC treats from-pricing as a claim.
 
 // §13 Closing CTA. Same offer as the hero, worded as what actually happens.
-const closingCta = {
-  kicker: 'Commercial carpet cleaning',
-  heading: 'Start with a walkthrough.',
-  lead: 'We come and look at the carpet, test the fibre and tell you what will lift and what will not. Then you get a written scope and a price. No obligation.',
-  // 🔴 This is the clearest place the conflict shows. The heading says start
-  // with a walkthrough and the button underneath says book a night clean.
-  cta: { label: primaryCta.label, href: quoteCta.href },
+//
+// In `closingCta`, on `cta`:
+// 🔴 This is the clearest place the conflict shows. The heading says start
+// with a walkthrough and the button underneath says book a night clean.
+
+// CONTENT lives in src/content/pages/commercial-cleaning/commercial-carpet-cleaning.yaml
+// and is edited in Pages CMS ("Commercial carpet cleaning"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning/commercial-carpet-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of `primaryCta` (§7 above). It links to the quote page in Site
+    // settings. Empty falls back to the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    // A card with no button of its own gets the page's main button.
+    pathways: section.pathwayCards.extend({
+      cards: z.array(section.pathwayCards.shape.cards.element.extend({ cta: section.optional(section.link) })).min(1),
+    }),
+    scope: section.iconGrid,
+    worthKnowing: section.textBlock,
+    offices: section.textBlock,
+    // This page's own short list of settings, not the shared premises list.
+    settings: section.tagCloud.extend({ note: section.optional(z.array(section.text)) }),
+    // The columns and rows are the shared table in Site settings. The page
+    // owns its framing and the label of the "who cleans" row.
+    comparison: section.comparisonTable
+      .pick({ heading: true, lead: true, cornerLabel: true })
+      .extend({ whoCleansLabel: section.text }),
+    reviews: section.sectionHeading,
+    // The subheading falls back to the shared footprint line, and the towns
+    // come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }).extend({ subheading: section.optional(section.text) }),
+    // Heading only. The paragraphs are the shared brand lines.
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/commercial-carpet-cleaning/',
 };
+
+const primaryCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const business = localBusiness({
+  description: pageMeta.description,
+  // ⚠️ NSW only. See the note "In `business`" above.
+  areaServed: 'Northern Rivers and Tweed, NSW',
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
+});
+
+const heroImage = page.hero.image && sized(page.hero.image, '1/1');
+
+const pathwayCards = page.pathways.cards.map((card, i) => ({
+  number: i + 1,
+  ...card,
+  image: sized(card.image, '4/3'),
+  cta: card.cta ?? primaryCta,
+}));
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -541,12 +416,12 @@ const closingCta = {
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      subheading={hero.subheading}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? primaryCta}
+      image={heroImage}
     />
 
     {/* Trust bar and definition share ONE photo behind a Cream scrim, laid across
@@ -554,26 +429,35 @@ const closingCta = {
         frame's own darkest region under the copy column, 75% gave 4.22:1 — an
         AA FAIL. 90% gives 5.96:1. Backdrop.astro's `opacity` doc carries the
         method. Same treatment as the hub. */}
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
-    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+    <PathwayCards heading={page.pathways.heading} headingAccent={page.pathways.headingAccent} cards={pathwayCards} />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="What our commercial carpet cleaning services involve, stage by stage"
-      lead="Six stages, in this order. Skip the first two and the rest is just wet carpet."
-      items={scopeItems}
-      cta={{ label: primaryCta.label, href: quoteCta.href }}
+      heading={page.scope.heading}
+      lead={page.scope.lead}
+      note={page.scope.note}
+      items={page.scope.items}
+      cta={primaryCta}
     />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="What a low carpet quote usually leaves out"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     {/* §17. New H2, per the brief. `light` between the dark "low quote"
@@ -582,8 +466,10 @@ const closingCta = {
     <TextBlock
       theme="light"
       align="left"
-      heading="Office carpet cleaning services, worked around a locked building"
-      body={officeBody}
+      heading={page.offices.heading}
+      body={page.offices.body}
+      cta={page.offices.cta}
+      backgroundImage={page.offices.backgroundImage}
     />
 
     {/* ⚠️ RESERVED SLOT: before and after slider (BeforeAfter.astro).
@@ -604,27 +490,27 @@ const closingCta = {
         between "Worth knowing" and the related pages. */}
 
     <TagCloud
-      heading="Where we work, and the premises we cover"
-      subheading="Commercial carpet cleaning for workplaces across the Northern Rivers and the Tweed."
-      tags={settingTags}
-      note={[]}
+      heading={page.settings.heading}
+      subheading={page.settings.subheading}
+      tags={page.settings.tags}
+      note={page.settings.note ?? []}
     />
 
     <ComparisonTable
-      heading={comparisonTable.heading}
-      cornerLabel={comparisonTable.cornerLabel}
-      lead={comparisonTable.lead}
-      columns={comparisonTable.columns}
-      rows={comparisonTable.rows}
+      heading={page.comparison.heading}
+      cornerLabel={page.comparison.cornerLabel}
+      lead={page.comparison.lead}
+      columns={comparisonColumns}
+      rows={serviceComparisonRows(page.comparison.whoCleansLabel)}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading={footprintSubheading}
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading ?? footprintSubheading}
       groups={footprintLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -640,7 +526,7 @@ const closingCta = {
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
@@ -648,15 +534,15 @@ const closingCta = {
         one made the split look like a build error. This block is about
         working with TLB, the next is about the service, and naming them that
         way makes both useful. Title Case also breaks BFD §9.2. */}
-    <Faq heading="Booking a commercial carpet clean" items={brandedFaqItems} />
-    <Faq heading="Commercial carpet cleaning questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? primaryCta}
     />
   </main>
 

@@ -1,0 +1,285 @@
+seo:
+  title: Commercial Pressure Cleaning Services | TLB Cleaning
+  description: Commercial high pressure cleaning for car parks, walkways,
+    forecourts and bin areas. Scheduled out of hours. Get a quote for your site
+    today.
+ctaLabel: Get a quote for your site today
+hero:
+  kicker: Commercial pressure cleaning
+  headingLines:
+    - Commercial pressure cleaning services for car parks, footpaths and bin
+      areas
+  subheading: Commercial pressure cleaning services scheduled early, late or on a Sunday
+  lead: Your building is judged from the footpath. Car parks, walkways,
+    forecourts, bin areas and building exteriors across the Northern Rivers and
+    the Tweed, cleaned so you never have to close for it. {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/pressure/pressure-cleaning-a-commercial-forecourt.jpg
+    alt: A cleaner in an aqua polo and teal gloves pressure washing the concrete
+      forecourt outside a modern commercial building, the cleaned slab wet
+      behind the spray
+definition:
+  body:
+    - type: paragraph
+      text: Commercial pressure cleaning services cover the outdoor hard surfaces at a
+        workplace, cleaned with pressurised water. Car parks, driveways, loading
+        docks, footpaths, entries, bin areas, awnings, render and shopfronts. It
+        removes the grime, algae, moss, oil and chewing gum that build up on any
+        site the public walks across. TLB Cleaning provides commercial pressure
+        cleaning across the Northern Rivers and the Tweed.
+    - type: paragraph
+      text: "Pressure cleaning, pressure washing and high pressure cleaning all
+        describe the same work. Soft washing is the one that is genuinely
+        different: low pressure and a cleaning solution instead of force, used
+        on render, painted surfaces, cladding and roofs where high pressure
+        would strip or gouge. A competent operator uses both and knows which
+        surface takes which."
+  backgroundImage: /src/assets/commercial_cleaning/pressure/clean-commercial-forecourt-and-entry.jpg
+pathways:
+  heading: People arrive here with three questions.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/commercial_cleaning/pressure/half-cleaned-concrete-car-park.jpg
+        alt: A concrete car park halfway through being pressure cleaned, weathered grey
+          and stained on one side of a straight line and pale and clean on the
+          other
+      title: The place looks grubby and I need it fixed
+      description: Black concrete, algae down the shaded side, oil in the car park and
+        gum across the entry. One clean resets it, and we tell you at the
+        walkthrough which stains will lift and which are in the concrete for
+        good.
+    - image:
+        src: /src/assets/commercial_cleaning/pressure/pressure-cleaning-a-shopfront-footpath-before-opening.jpg
+        alt: A cleaner pressure washing the footpath outside a shopfront in the early
+          morning before opening, with a blank hazard sign at the edge of the
+          wet area
+      title: I want it maintained, not rescued
+      description: Surfaces that get done twice a year never reach the state that
+        needs a rescue, and cost less each visit because there is less to
+        remove. We can fold it into an ongoing commercial contract so it happens
+        without a reminder.
+      cta:
+        label: Commercial cleaning
+        href: /commercial-cleaning/
+    - image:
+        src: /src/assets/commercial_cleaning/pressure/cleaner-with-a-pressure-washer-on-a-commercial-forecourt.jpg
+        alt: A cleaner in uniform standing beside her pressure washer on a commercial
+          forecourt, turning to the camera with a friendly expression
+      title: I want to know who is on my site
+      description: The same small team each visit, in TLB uniform, and you can meet
+        them before the first one. We are a local business, [insured] and
+        [police-checked], and there is one local number to ring if something is
+        not right.
+      cta:
+        label: Why TLB
+        href: /why-tlb/
+scope:
+  heading: What our commercial pressure cleaning services involve, stage by stage
+  lead: Six stages, in this order. The last two are what you are really paying for.
+  items:
+    - icon: target
+      title: We match the pressure to the surface
+      description: Concrete, pavers, tiles, render, cladding, timber and painted steel
+        all take a different setting. Too much pressure etches concrete, strips
+        paint, furs timber and forces water behind cladding. Getting this wrong
+        is expensive and it cannot be undone.
+    - icon: puzzle
+      title: We make the area safe first
+      description: Cones, signage and a taped exclusion zone go up before the machine
+        starts, because a wet hard surface with a hose across it is a slip and
+        trip hazard on a site where the public walks. Access stays open where we
+        can keep it open.
+    - icon: spray-bottle
+      title: Pre-treat, then clean
+      description: Oil, grease and organic growth get a treatment with dwell time
+        before any water goes near them, and grease needs hot water or a
+        degreaser to release at all. Blasting a stain cold just moves it around
+        and drives it deeper into the concrete.
+    - icon: chart-bars
+      title: Surface cleaner on flat ground, wand on the edges
+      description: Large flat areas are done with a rotary surface cleaner, which
+        cleans evenly and leaves no stripes. Edges, kerbs, steps and corners are
+        finished by hand with the wand. Stripes across a car park are the
+        signature of a job done entirely with a wand.
+    - icon: bloom
+      title: Soft wash for render, paint and roofs
+      description: Render, painted surfaces, cladding, signage and roofing get low
+        pressure and a cleaning solution instead of force. It kills the algae
+        and mould at the root rather than just knocking the surface off it,
+        which is why a soft washed wall stays clean longer.
+    - icon: idea
+      title: Wash water managed, not just hosed away
+      description: Water carrying oil, grease, detergent or food waste must not go
+        down a stormwater drain. On sites where that is a risk we block the
+        drains and capture the run-off, and dispose of it to sewer or to a
+        licensed facility. [Confirm TLB’s capture method and disposal
+        arrangement.]
+worthKnowing:
+  heading: Two things to ask before you let anyone start
+  body:
+    - type: paragraph
+      text: Pressure cleaning is the one trade where an inexperienced operator can do
+        permanent damage in about four seconds. Too much pressure held too long
+        etches concrete into a visible stripe, cuts the sand out from between
+        pavers, strips paint off steel, furs up timber decking and drives water
+        in behind cladding, where it goes on causing damage after the machine
+        has gone. None of that shows in a quote. It shows on your building, and
+        it does not wash off.
+    - type: paragraph
+      text: The second thing worth knowing is that the water has to go somewhere.
+        Run-off carrying oil, grease, detergent or food waste must not enter a
+        stormwater drain, because stormwater goes straight to the creek and then
+        the ocean without treatment, and the site occupier can be the one held
+        responsible. So ask any cleaner what they do about wash water before you
+        let them start, especially around a car park, a loading dock or a bin
+        bay. It is a fair question and a competent operator will have a straight
+        answer.
+industrial:
+  heading: Industrial high pressure cleaning for warehouses, factories and yards
+  body:
+    - type: paragraph
+      text: An industrial site is a different job to a shopfront. The soil is oil,
+        grease, rubber and hydraulic fluid rather than algae and coffee, the
+        areas are measured in thousands of square metres, and the surface is
+        usually a concrete hardstand that has been driven on for years.
+    - type: paragraph
+      text: Forklift tyre marks, loading dock aprons, bin bays, wash bays and the yard
+        all come up differently. Grease needs heat and dwell time before any
+        water goes near it. Long flat runs go to the rotary surface cleaner so
+        the finish is even, and the edges and bunding are finished by hand. Old
+        hardstand gets tested in a corner first, because a slab that has already
+        lost its surface can be opened up by too much pressure.
+    - type: paragraph
+      text: The wash water matters more on an industrial site than anywhere else.
+        Run-off from a loading dock or a wash bay carries oil, grease and
+        detergent, and none of that can go to stormwater. We plan the capture
+        before the machine starts rather than after. [Confirm TLB’s capture
+        method and disposal arrangement.]
+    - type: paragraph
+      text: Most sites run to a shift pattern rather than trading hours, so we work to
+        the quiet window rather than assuming a weekend.
+settings:
+  heading: Where we work, and the premises we cover
+  subheading: Outdoor hard surfaces for workplaces across the Northern Rivers and
+    the Tweed. Office car parks and entries, retail forecourts, industrial
+    hardstand, strata common areas and school grounds.
+  tags:
+    - label: Retail and shopfronts
+      href: /commercial-cleaning/retail-cleaning/
+    - label: Strata and common area cleaning
+      href: /commercial-cleaning/strata-cleaning/
+    - label: Hospitality, venues and holiday parks
+      href: /commercial-cleaning/hospitality-cleaning/
+    - label: Commercial kitchen cleaning
+      href: /commercial-cleaning/commercial-kitchen-cleaning/
+    - label: Warehouses and industrial sites
+      href: /commercial-cleaning/warehouse-and-industrial-cleaning/
+    - label: Factories
+      href: /commercial-cleaning/factory-cleaning/
+    - label: Breweries
+      href: /commercial-cleaning/brewery-cleaning/
+    - label: Construction site
+      href: /commercial-cleaning/construction-site-cleaning/
+    - label: Gyms and fitness studios
+      href: /commercial-cleaning/gym-and-fitness-cleaning/
+    - label: Office cleaning
+      href: /commercial-cleaning/office-cleaning/
+    - label: High pressure cleaning for homes
+      href: /house-cleaning/pressure-cleaning/
+    - label: Commercial carpet cleaning
+      href: /commercial-cleaning/commercial-carpet-cleaning/
+    - label: Commercial cleaning
+      href: /commercial-cleaning/
+comparison:
+  heading: How TLB compares
+  lead: Anyone can hire a machine for a day. What you are actually buying is
+    someone who knows which surface takes what pressure, and who will be
+    reachable the week after.
+  cornerLabel: Why TLB Cleaning is different
+  whoCleansLabel: Who cleans your site
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Booking a commercial pressure clean
+  items:
+    - question: Do we have to close while you do it?
+      answer: Almost never. We work early, late or on your quietest day, and we do the
+        site in sections so there is always a dry way in. Cones and signage go
+        up around whatever is wet. For a car park we usually take it a bay run
+        at a time so you never lose the whole thing at once.
+    - question: Will it damage our concrete, pavers or render?
+      answer: Not if the pressure is matched to the surface, which is the first thing
+        we work out at the walkthrough. Render, paint, cladding and roofing get
+        a soft wash rather than high pressure, because force strips them. Old or
+        already crumbling surfaces get flagged before we start rather than
+        after.
+    - question: Can you get the oil stains out of our car park?
+      answer: Usually a good way, sometimes not completely. Fresh oil and grease
+        respond well to a degreaser with dwell time and the right heat. Oil that
+        has been sitting in porous concrete for years has soaked into the slab,
+        and no amount of pressure pulls it back out. We tell you which one you
+        have before we quote.
+    - question: What do you need from us on the day?
+      answer: Vehicles moved off the area being cleaned, and access to the site at the
+        agreed time. [Confirm whether TLB brings its own water and power, or
+        needs a tap and a power point on site.] Everything else, including the
+        plant, the chemicals and the signage, comes with us.
+    - question: What happens if I get in touch?
+      answer: We come and walk the site, look at the surfaces and tell you what will
+        clean up and what will not. Then you get a written scope and a price,
+        with the after hours option shown separately. No obligation. If it
+        suits, we book a time that works around your trading.
+faq:
+  heading: Commercial pressure cleaning questions
+  items:
+    - question: How often should a commercial site be pressure cleaned?
+      answer: Most sites settle on twice a year, with high traffic entries, bin bays
+        and food areas done quarterly. In the Northern Rivers the shaded
+        southern side of a building grows algae far faster than the sunny side,
+        so it is common for one elevation to need doing twice as often as the
+        rest. Surfaces kept on a schedule cost less each visit, because there is
+        less built up to remove.
+    - question: What is the difference between pressure cleaning and soft washing?
+      answer: Pressure cleaning uses force to remove what is sitting on a hard
+        surface, and suits concrete, pavers, brick and steel. Soft washing uses
+        low pressure and a cleaning solution, and suits render, paint, cladding,
+        signage and roofs, where high pressure would strip the finish or force
+        water behind it. Soft washing also treats the algae and mould at the
+        root, so the surface stays clean longer.
+    - question: Can pressure cleaning damage concrete?
+      answer: Yes. Concrete looks tough but it etches. Holding the wand too close, or
+        too long in one spot, cuts a visible line into the surface that does not
+        fade, and a rotary surface cleaner is used on large flat areas partly to
+        avoid exactly that. Old concrete, decorative finishes, sandstone and
+        aged pavers are the ones to be careful with, and any of them should be
+        tested in a corner first.
+    - question: Where is the water allowed to go?
+      answer: "Clean rinse water off a footpath can usually go where rain would. Water
+        carrying oil, grease, detergent, paint or food waste cannot: in NSW,
+        letting polluting matter enter a stormwater drain is an offence under
+        the Protection of the Environment Operations Act 1997, and stormwater
+        runs to the creek untreated. That run-off has to be captured and
+        disposed of to sewer or to a licensed facility, and discharge to sewer
+        needs your water authority or council to agree the conditions. Ask any
+        cleaner how they handle it."
+    - question: How much does commercial pressure cleaning cost?
+      answer: Commercial pressure cleaning is usually priced per square metre, with a
+        minimum charge for small jobs. The rate moves with the surface, how
+        badly stained it is, access to water and power, whether the work is
+        after hours and whether the wash water has to be captured. Ask for the
+        price against a written scope rather than an hourly rate, so you can see
+        what is actually included. [TLB’s pricing basis and minimum charge.
+        Confirm.]
+closingCta:
+  kicker: Commercial pressure cleaning
+  heading: Start with a walkthrough.
+  lead: We come and walk the site, look at the surfaces and tell you what will
+    clean up and what will not. Then you get a written scope and a price. No
+    obligation. Get a quote for your site today.

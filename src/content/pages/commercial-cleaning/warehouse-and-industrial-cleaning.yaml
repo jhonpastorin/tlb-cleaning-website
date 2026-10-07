@@ -1,0 +1,279 @@
+seo:
+  title: Commercial Warehouse Cleaning Services | TLB Cleaning
+  description: Warehouse and industrial cleaning for amenities, offices, floors
+    and racking, scheduled around your shifts. Talk to us about your site today.
+ctaLabel: Talk to us about your site
+hero:
+  kicker: Warehouse and industrial cleaning
+  headingLines:
+    - Commercial warehouse cleaning services
+    - across the Northern Rivers and the Tweed
+  subheading: Commercial warehouse cleaning services priced by zone, floor and
+    amenities separately
+  lead: A concrete floor is not a mopping job. Aisles machine scrubbed, racking
+    and docks cleared, the crib room and bathrooms done daily, and a written
+    scope that says which is which. {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/premises/warehouse-cleaner-with-a-floor-scrubber-in-a-storage-aisle.jpg
+    alt: A cleaner in a high-visibility vest walking a compact floor scrubbing
+      machine down a wide aisle in a bright, tidy warehouse
+definition:
+  body:
+    - type: paragraph
+      text: "Commercial warehouse cleaning services cover the scheduled cleaning of a
+        storage, distribution or light-industrial site: the floor and aisles,
+        racking and shelving, the loading dock and hardstand, mezzanine offices,
+        and the crib room, bathrooms and locker areas your team uses every
+        shift. TLB Cleaning does this work across the Northern Rivers and the
+        Tweed."
+    - type: paragraph
+      text: It is two jobs in one contract and they have almost nothing in common. The
+        floor is a machine job on a large area with a forklift moving through
+        it, priced on square metres and access. The amenities are a small,
+        detailed, daily job priced on fixtures. Quotes get compared badly
+        because one contractor has assumed the amenities are included and
+        another has not, so the useful thing to settle first is which of the two
+        you are actually buying.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+boundary:
+  heading: Four things we will say no to, and you should want us to.
+  body:
+    - Working at height. Dusting the top of racking, cleaning high-bay light
+      fittings or getting to the underside of a roof needs an elevating work
+      platform and the training and licensing that goes with operating one, plus
+      a fall-prevention plan for the site. [Whether TLB will do any work at
+      height. Confirm, the likely honest answer is no.] Driving your forklift or
+      a reach truck to get us up there is not a workaround; that needs a high
+      risk work licence.
+    - Racking inspection, and spills of anything we cannot identify. A cleaner
+      who notices a bent upright should tell you, and ours will, but a racking
+      inspection is an engineering assessment and no cleaning contract
+      substitutes for one. And if something has leaked and nobody can tell us
+      what it is, we stop and we come and find you. Your emergency procedure and
+      the Safety Data Sheet decide what happens next, not a mop and a guess. A
+      contractor who cleans it up anyway is doing you harm with good intentions.
+scope:
+  heading: What our commercial warehouse cleaning services cover, zone by zone
+  lead: Grouped by zone, in the order you would walk the site. The floor and the
+    amenities are two different jobs and a good quote prices them separately.
+  items:
+    - icon: office
+      title: "The floor: machine scrubbed, not mopped"
+      description: Aisles and open floor swept then scrubbed with a walk-behind or
+        ride-on autoscrubber, which lifts the tyre rubber, dust and film that a
+        mop just redistributes. Line markings and pedestrian walkways done
+        rather than skipped. [Whether TLB owns or hires an autoscrubber, and
+        what area it can cover in a shift. Confirm.] A mop on two thousand
+        square metres of concrete is not a service.
+    - icon: chart-bars
+      title: Racking, shelving and stock surfaces
+      description: Beam faces, upright bases, the accessible levels of shelving and
+        the tops of anything reachable from the ground. Dust on racking is not
+        cosmetic in a food, pharmaceutical or electronics warehouse and it is a
+        pest harbourage everywhere else. Anything above safe reach from the
+        floor needs an EWP and is not part of this scope.
+    - icon: key
+      title: Loading dock and hardstand
+      description: Dock apron and edge swept, pallet wrap and strapping cleared, dock
+        levellers and the edge plate cleaned, drains checked clear, and the
+        hardstand outside swept. Concrete in this region goes dark with algae
+        through a wet season, so the apron needs pressure cleaning periodically
+        rather than sweeping.
+    - icon: target
+      title: Crib room, bathrooms and lockers
+      description: Tables and benches, kitchenette and sink, microwave and fridge
+        inside and out, bins emptied and relined, bathrooms cleaned and
+        disinfected and restocked, locker tops and the floor mopped. Daily, not
+        weekly. This is the section this page argues hardest for and the one
+        every quote thins out first.
+    - icon: suitcase
+      title: Mezzanine and front office
+      description: Desks, floors, kitchenette, bathrooms and the internal glass
+        looking down onto the floor, which shows every mark from both sides.
+        Reception and the visitor area, because that is where a customer forms
+        their view of how the operation is run before they see any of it.
+    - icon: spark
+      title: Periodically, booked to a shutdown
+      description: Deep floor scrub or re-seal where the concrete needs it, pressure
+        cleaning the dock and hardstand, high dusting within safe reach,
+        internal and external glass at ground level, and vents. Booked into a
+        shutdown or a stocktake weekend, because none of it fits around a live
+        pick face.
+amenities:
+  heading: The two zones every quote thins out
+  lead: Both are small against the floor. Both are what your team and your
+    visitors actually judge the site on.
+  items:
+    - type: text
+      heading: The crib room is not the small line
+      body:
+        - On a warehouse quote the amenities are usually a rounding error
+          against the floor, so they are the first thing trimmed when a price
+          needs to come down. Then they are cleaned three times a week instead
+          of daily, and within a month the crib room is the thing your team
+          talks about. Nobody complains about the floor. They complain about the
+          microwave, the bathroom, and the fridge nobody has emptied since
+          March.
+        - That matters more on an industrial site than almost anywhere, because
+          the amenities are the entire non-working experience of the shift. A
+          picker spends eight hours in a space with no windows and one room to
+          eat in. Cleaning that room properly, every day, is one of the least
+          expensive retention levers on the site, and it costs a fraction of
+          what the floor does.
+    - type: image
+      image:
+        src: /src/assets/commercial_cleaning/premises/warehouse-mezzanine-office-and-lunchroom-cleaned.jpg
+        alt: A cleaner wiping down the table of a clean, empty staff lunchroom on a
+          warehouse mezzanine, the warehouse floor visible through the window
+          behind her
+    - type: image
+      image:
+        src: /src/assets/commercial_cleaning/premises/warehouse-loading-dock-swept-and-clear.jpg
+        alt: A cleaner in a high-visibility vest sweeping the concrete apron of a clean,
+          empty warehouse loading dock with the roller door up
+    - type: text
+      heading: The dock is where your housekeeping is judged
+      body:
+        - "The other zone that gets under-scoped is the dock, and it is the one
+          every visitor sees. Drivers, customers, auditors and your own insurer
+          form a view of how the site is run from the state of the apron:
+          whether there is pallet wrap blowing around, whether the drains are
+          clear, whether the edge plate is buried under debris."
+        - It is also a genuine safety zone rather than a presentation one.
+          Strapping and wrap on a dock floor is a slip and a trip hazard in the
+          one place on site where people work alongside moving vehicles, and a
+          blocked drain on an apron in this region means water across that same
+          floor within an hour of a storm.
+worthKnowing:
+  heading: A machine-scrubbed floor is a floor with more grip
+  body:
+    - type: paragraph
+      text: "A warehouse floor is a safety item, not a presentation one, and that
+        changes who should be signing off the cleaning scope. Slips and trips
+        are among the most common causes of workplace injury in the country, and
+        on a concrete floor the mechanism is almost always the same: a film of
+        tyre rubber, dust and moisture that a mop spreads rather than removes,
+        in a building where people walk alongside forklifts. A machine-scrubbed
+        floor is not a tidier floor. It is a floor with more grip."
+    - type: paragraph
+      text: "Dust does two things worth budgeting for. In the wrong setting — timber,
+        grain, flour, some plastics and metals — accumulated combustible dust on
+        racking and roof structure is a recognised fire and explosion risk, and
+        it is exactly the dust nobody can reach without an EWP. Everywhere else
+        it is quieter and slower: abrasive dust and tyre rubber ground into
+        sealed concrete shortens the life of the seal, and re-sealing a
+        warehouse floor is a capital job that comes out of a different budget
+        than cleaning does. A business has a duty to provide and maintain a work
+        environment without risks to health and safety, and on an industrial
+        site housekeeping is a large part of how that duty is actually met."
+related:
+  heading: Other premises we clean
+  subheading: Commercial cleaning for every kind of site across the Northern
+    Rivers and the Tweed.
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Booking a warehouse clean
+  items:
+    - question: Can your team meet our site induction?
+      answer: They have to, and it should be a condition of the contract rather than a
+        formality. Most industrial sites require a site-specific induction, a
+        sign-in, high-visibility clothing and safety footwear as a minimum, and
+        some require more. [What inductions, tickets and PPE TLB’s team can
+        meet, and whether that includes a general construction induction card.
+        Confirm.] Tell us your requirements at the walkthrough and we will tell
+        you honestly what we hold.
+    - question: When would you be on site, if we run two shifts?
+      answer: In whatever gap genuinely exists, and if there is not one, zone by zone
+        around live work. Amenities can be done between shifts because they
+        empty out. Floor scrubbing needs an aisle with nothing moving in it, so
+        it gets done aisle by aisle in your quietest window rather than in one
+        pass. If you run around the clock, the floor becomes a weekend or
+        shutdown job and we will say so rather than promise a nightly pass.
+    - question: Do you do the floor with a machine?
+      answer: That is the right question to ask every contractor quoting you, because
+        it is the difference between a service and an appearance. [Whether TLB
+        owns or hires an autoscrubber, and the area it covers in a shift.
+        Confirm.] A mop and bucket on a warehouse floor moves the tyre rubber
+        and dust film around instead of lifting it, which is why a mopped
+        concrete floor can look wet-clean and still be slippery.
+    - question: Can you work around forklifts?
+      answer: We work around them by not being in the same aisle at the same time,
+        which is a scheduling answer rather than a bravery one. Our team stays
+        in pedestrian walkways, wears high-visibility clothing, and clears an
+        aisle with your supervisor before working in it. What we will not do is
+        drive your plant, ride on it, or work under a raised load. None of those
+        are negotiable.
+    - question: Will you clear the pallet wrap and strapping?
+      answer: "Yes, that is part of the dock and floor scope, and it is one of the
+        best-value lines on it: wrap and strapping on a floor is a trip hazard
+        in the one part of the site where people and vehicles share space. Where
+        it goes matters though. It gets bagged and put in your waste stream, and
+        if you want it taken off site or separated for recycling, that goes on
+        the scope with its own price."
+    - question: What happens if I get in touch?
+      answer: "We walk the site with you and look at four things: the floor and how
+        much of it a machine can actually reach, the racking, the dock, and the
+        crib room and bathrooms. Then you get a written scope split by zone with
+        a frequency against each, a price per visit, and the periodic work
+        booked to a shutdown. No obligation."
+faq:
+  heading: Warehouse Cleaning FAQs
+  items:
+    - question: How much does warehouse cleaning cost?
+      answer: The floor is usually priced per square metre and the amenities per
+        visit, and a good quote shows them separately so you can see what you
+        are buying. The number moves with how much of the floor a machine can
+        actually reach around racking and stock, how many bathrooms and crib
+        rooms there are, whether the dock and hardstand are included, and
+        whether there is a gap in your shifts. [TLB’s pricing basis. Confirm.]
+    - question: How often should a warehouse floor be cleaned?
+      answer: Aisles and pedestrian walkways weekly to fortnightly for a normal
+        storage site, and daily to weekly for a busy distribution centre or
+        anywhere handling food. The driver is forklift traffic rather than floor
+        area, because tyre rubber and the dust it grinds in are what actually
+        build up. Amenities and bathrooms are daily regardless of how quiet the
+        floor is.
+    - question: Why use a floor scrubber instead of a mop?
+      answer: Because a mop and a scrubber do different things. A scrubber applies
+        solution, agitates the floor with a brush or pad, and vacuums the dirty
+        water straight back off, so the soil leaves the building. A mop puts
+        solution down, moves the soil around in it, and leaves most of it behind
+        in a thin film as the floor dries. On a large sealed concrete floor that
+        film is what makes a "clean" floor slippery.
+    - question: Is warehouse cleaning a work health and safety requirement?
+      answer: "Not as a named task, but the outcome is. A business has a primary duty
+        under the model work health and safety laws to provide and maintain a
+        work environment without risks to health and safety, and on an
+        industrial site housekeeping is a large part of how that is met: clear
+        walkways, floors with grip, dock aprons without trip hazards, drains
+        that are not blocked. Your regulator, SafeWork NSW, is the right primary
+        source. This is general information, not safety advice."
+    - question: Is dust in a warehouse a fire risk?
+      answer: It can be, and it depends what the dust is. In sites handling timber,
+        grain, flour, sugar, some plastics and some metals, accumulated
+        combustible dust on racking, ledges and roof structure is a recognised
+        fire and, in the right conditions, explosion risk. In a general storage
+        warehouse it is a pest and product-contamination issue rather than a
+        fire one. Either way the dust that matters most is usually the dust
+        nobody can reach without an elevating work platform.
+    - question: Can a cleaner clean high-level racking?
+      answer: Not from the floor, and not from a forklift. Anything beyond safe reach
+        needs an elevating work platform, which requires appropriate training to
+        operate and, above certain machine types, a high risk work licence, plus
+        a fall-prevention plan for the site. Riding a pallet on a forklift to
+        get up there is unlawful and is how people die in warehouses. High-level
+        work is a separate specialist engagement, usually booked into a
+        shutdown.
+closingCta:
+  kicker: Warehouse and industrial cleaning
+  heading: We will look at the crib room too.
+  lead: A walk of the site at the floor, the racking, the dock and the amenities.
+    Then a written scope split by zone, with the floor and the amenities priced
+    separately so you can see both. Talk to us about your site today.

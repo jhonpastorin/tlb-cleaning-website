@@ -75,13 +75,8 @@ import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
 // business's marketing is worse again, because a parent reading this page
 // cannot tell that the child is not a real child at a real centre. Every
 // frame here is deliberately after hours or after pickup.
-import heroImg from '../../assets/commercial_cleaning/premises/childcare-cleaner-wiping-low-tables-after-pickup.jpg';
-import classroomImg from '../../assets/commercial_cleaning/premises/school-cleaner-mopping-a-classroom-after-hours.jpg';
-import bathroomImg from '../../assets/commercial_cleaning/premises/school-bathroom-block-cleaned-after-hours.jpg';
 // §2 backdrop, behind the Cream scrim — the homepage's, same as the hub.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -94,20 +89,18 @@ import {
 import { nswLocationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 // §0 Metadata. Both settings in the title because both have to land here,
 // and the description leads with the check rather than with the cleaning,
 // because that is what a director is searching for reassurance about.
-const pageMeta = {
-  title: 'School and Childcare Cleaning | TLB Cleaning',
-  description:
-    'Cleaning for schools, preschools and childcare centres across the Northern Rivers and the Tweed. A Working With Children checked local team, a written scope, and bathrooms done properly.',
-  // ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
-  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/school-and-childcare-cleaning/',
-};
-
-const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
+//
+// In `pageMeta`, on `canonical`:
+// ⚠️ Placeholder domain, same as every sibling page. Confirm before launch.
 
 // §1 Hero. `split-single-image`, image right. The childcare frame leads
 // rather than the classroom because childcare is the harder, more scrutinised
@@ -116,27 +109,10 @@ const walkthroughCta = { label: walkthroughCtaLabel, href: quoteCta.href };
 //
 // ⚠️ GENERATED, NOT PHOTOGRAPHED, AND NO CHILDREN IN FRAME. See the import
 // comment above — that second part is a hard rule on this page.
-const hero = {
-  kicker: 'Schools and childcare cleaning',
-  headingLines: ['Everything here', 'gets touched by a two-year-old.'],
-  lead:
-    `Cleaning for schools, preschools and childcare centres across the Northern Rivers and the Tweed. A Working With Children checked local team, working after pickup, on a scope written for the way children actually use a room. ${theLine.fast}`,
-  cta: walkthroughCta,
-  image: {
-    ratio: '16/9',
-    label:
-      'A cleaner wiping down a low round table in a bright, tidy childcare playroom after the last pickup of the day',
-    src: heroImg,
-  },
-};
 
 // §2 Definition. Answer-target block. Paragraph two makes the split the rest
 // of the page is built on, because a school and a childcare centre share a
 // menu label and very little else.
-const definitionBody: TextBlockBody[] = [
-  'School and childcare cleaning is the daily cleaning of an education setting: classrooms and playrooms, bathrooms, hall and library, staff rooms and offices, and the hard surfaces of outdoor play areas. TLB Cleaning does this work across the Northern Rivers and the Tweed for schools, preschools, long day care centres and out of school hours care.',
-  'The two settings need different scopes and are best not merged. A school is cleaned when it is empty, at desk height, by people nobody meets. A childcare room is cleaned around children who put their hands and their mouths on everything at knee height, and the cleaner is somebody the educators see every day. Same trade, different job, and the sections below are split for that reason.',
-];
 
 // §3 The check. `warning`, above everything else on the page, and phrased as
 // an instruction to the reader rather than as a claim about TLB.
@@ -163,13 +139,6 @@ const definitionBody: TextBlockBody[] = [
 //   - NSW Fair Trading and the Office of the Children's Guardian are the
 //     right primary sources; the brand foundation document (§3.3) already
 //     approves government sources for exactly this.
-const wwccCallout = {
-  heading: 'Ask us for the clearance numbers. Then verify them yourself.',
-  body: [
-    'In New South Wales, paid work in a child-related setting requires a Working With Children Check clearance, and cleaning a school or childcare centre is child-related work. The clearance belongs to the individual person, not to the company they work for, which is why "our team is all checked" is not an answer to anything. There is no company-level version of it.',
-    'The step organisations skip is the second one. As the engaging service you are expected to verify each clearance number online before that person starts, and to keep a record that you did. So ask any cleaning contractor for a clearance number per individual who will attend your site, verify each one yourself, and ask what happens when they send a replacement at short notice. Ask us the same, and hold us to producing it in writing rather than in a sentence.',
-  ],
-};
 
 // §3b The bridge into the two scopes. `StoryMosaic theme="light"` with two
 // blocks — text, then the classroom frame. It exists to make the page's own
@@ -179,65 +148,11 @@ const wwccCallout = {
 //
 // Array order IS the layout (see SECTIONS.md). Text first here, because the
 // photo is the school half of a claim the text has to make about both.
-const splitBlocks = [
-  {
-    type: 'text' as const,
-    body: [
-      'A school and a childcare centre arrive at the same contractor and need two different documents. In a school, the room is empty when we are in it, the work is at desk height, and nobody who uses the building ever meets the cleaner. Everything hard about it is scheduling: term breaks, sport, exams, and the fact that a hall floor cannot be sealed on a Tuesday.',
-      'In a childcare room, the cleaner is somebody the educators see every afternoon, the work is in the bottom sixty centimetres, and the surfaces that matter most are the ones children put in their mouths. Everything hard about it is trust and product choice. So the two scopes below are separate on purpose, and if you run both, you get both.',
-    ],
-  },
-  {
-    type: 'image' as const,
-    ratio: '4/3',
-    label:
-      'A cleaner mopping the vinyl floor of a bright primary school classroom after hours, chairs stacked on the desks',
-    src: classroomImg,
-  },
-];
 
 // §4 School scope. `ServiceBlocks variant="icon-grid"`, first of TWO on this
 // page — the split the file header explains.
 //
 // ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
-const schoolItems = [
-  {
-    icon: 'office' as const,
-    title: 'Classrooms, after hours',
-    description:
-      'Floors vacuumed or mopped with chairs up, desks and tables wiped, whiteboard ledges and trays done, bins emptied and relined, and the reading corner and shelving tidied rather than just dusted around. Sinks in art and science rooms cleaned properly, because that is where a term’s worth of paint ends up.',
-  },
-  {
-    icon: 'target' as const,
-    title: 'Bathrooms, twice where it counts',
-    description:
-      'Toilets, urinals, basins and taps cleaned and disinfected, floors mopped including behind the pans, mirrors done, consumables restocked. In a primary school the bathrooms need a mid-day check as well as an after hours clean, and that check is the single most valuable half hour on the schedule.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'High-touch surfaces',
-    description:
-      'Door handles and push plates, light switches, handrails, bubbler and tap handles, and the shared equipment in specialist rooms. In a school these are how a gastro outbreak crosses a year group in three days, and they are the first thing a thin scope drops because nobody sees them being skipped.',
-  },
-  {
-    icon: 'bloom' as const,
-    title: 'Hall, library, canteen and staff areas',
-    description:
-      'Hall floors, library carpet and shelving, staff room kitchenette and bathrooms, and the front office and reception where every parent and visitor arrives. Canteen front of house cleaned; anything behind a canteen servery is a food premises with its own rules and its own page.',
-  },
-  {
-    icon: 'key' as const,
-    title: 'Outdoor hard surfaces',
-    description:
-      'Covered walkways, entry paths, the COLA slab and the seating areas swept and litter cleared, drains checked clear. Concrete in this region goes dark with algae through a wet season and needs pressure cleaning periodically, which is a separate service booked into a term break.',
-  },
-  {
-    icon: 'chart-bars' as const,
-    title: 'Term breaks: the periodic work',
-    description:
-      'Carpet extraction in classrooms and the library, hard floor strip and seal where the vinyl needs it, high dusting, vents, window sills and internal glass. School holidays are the only real window for any of it, so it goes on the schedule against a named break rather than "as required".',
-  },
-];
 
 // §5 Childcare scope. The second icon grid, and deliberately shorter and
 // sharper than the school one — the things that are genuinely different, not
@@ -246,45 +161,9 @@ const schoolItems = [
 // ⚠️ EVERY ITEM IS DRAFTED against standard practice, not supplied by TLB.
 // The nappy change item carries a real bracket and it is the least pleasant
 // and most scrutinised part of the work.
-const childcareItems = [
-  {
-    icon: 'house' as const,
-    title: 'Everything at knee height',
-    description:
-      'Low tables and chairs including the undersides and the legs, shelf edges, the bottom half of every door, the skirtings and the corners behind the book box. Children live in the bottom sixty centimetres of a room, and an adult-height clean misses most of it.',
-  },
-  {
-    icon: 'spark' as const,
-    title: 'Soft surfaces and mats',
-    description:
-      'Rugs and mats vacuumed properly rather than run over, cushion covers and soft furnishings vacuumed, sleep mats wiped down, and cot and stretcher frames done. Carpet in a childcare room needs extraction more often than an office does, because what lands on it is not dust.',
-  },
-  {
-    icon: 'target' as const,
-    title: 'Bathrooms and the nappy change area',
-    description:
-      // ⚠️ Real bracket, and it needs answering before this page ships.
-      'Child-height toilets and basins, floors, and the nappy change bench, sink, bin and the wall behind it. [Whether TLB cleans the nappy change area, and with what products. Confirm.] It is the least pleasant line on any childcare scope and the one an assessor looks at first, so it needs naming rather than assuming.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'Products that belong in a room with children',
-    description:
-      'Low-odour, low-residue products, everything rinsed rather than left to dry on a surface a child will mouth, and nothing stored anywhere a child can reach. Our chemicals leave the building with us. If your centre’s policy specifies particular products, yours wins and it goes on the scope.',
-  },
-  {
-    icon: 'puzzle' as const,
-    title: 'What stays with educators',
-    description:
-      'Toys and equipment that go in mouths are sanitised by your educators, on your own rotation, under your own policy. We are happy to clean storage tubs and shelving, but a cleaner sanitising the toys is a cleaner making a food-safety-grade judgement about your service. That stays with the people who are trained for it.',
-  },
-  {
-    icon: 'idea' as const,
-    title: 'Working around the roster',
-    description:
-      'Most of the clean happens after the last pickup. What has to happen during the day — a bathroom check, a spill, an outdoor area — is done by someone your educators know by name, signed in, and never alone in a room with children. That last part is not negotiable and it is not a favour.',
-  },
-];
+//
+// In `childcareItems`, on "Bathrooms and the nappy change area" (description):
+// ⚠️ Real bracket, and it needs answering before this page ships.
 
 // §6 "Worth knowing". The lever here is absence: cleaning in an education
 // setting is measured in days children are not in the room, which is a cost
@@ -301,10 +180,6 @@ const childcareItems = [
 //     surface cleaning is part of the recognised control set. Correct.
 //   - No outbreak statistic is quoted, because any specific number would
 //     need a source this page cannot cite.
-const worthKnowingBody: TextBlockBody[] = [
-  'The cost of thin cleaning in a school or centre is not measured in complaints, it is measured in absences. A gastro run through a childcare room takes out a third of the children and a couple of educators for a week, and it travels by hands onto surfaces far more than it travels through the air. The surfaces it uses are the ones a thin scope drops first: door handles at child height, tap handles, the edge of the nappy change bench, the shelf every child grabs on the way past.',
-  'For a centre there is a second layer to it. Education and care services operate under the National Quality Framework, and a safe, clean, well maintained physical environment is part of what a service is assessed on. An assessor does not want to hear that you have a cleaner. They want to see what that cleaner does, how often, and how you know it happened. A written scope with frequencies against each area is the difference between an assertion and evidence, and it is the reason we write ours to be filed rather than to be quoted.',
-];
 
 // §7 Related pages. Aged care is the nearest neighbour in terms of screening
 // and cleaning around people, and the hospitality page's holiday parks are
@@ -313,41 +188,12 @@ const relatedTags = relatedPremises('/commercial-cleaning/school-and-childcare-c
 
 // §9 Branded FAQs, in the CUSTOMER'S voice — a director, principal or
 // business manager.
-const brandedFaqItems = [
-  {
-    question: 'Do your cleaners hold a Working With Children Check?',
-    answer:
-      // ⚠️ THE gate. See the file header. This answer must not ship with the
-      // bracket still in it.
-      'They have to, and so does anyone else quoting your site. [TLB’s position: a current WWCC clearance number for every cleaner who would attend, produced in writing on request, and what happens when a replacement is sent at short notice. Confirm before this page ships.] Because our cleaners are employed by TLB rather than subcontracted, there is no third party holding that paperwork, which is what makes it possible to give you per person rather than per company.',
-  },
-  {
-    question: 'When would you be on site?',
-    answer:
-      'After the last pickup for a centre, and after hours for a school, with the periodic work booked into term breaks. Anything that genuinely has to happen during the day — a bathroom check, a spill, an outdoor area — is done by someone your staff know, signed in through your own process, and never alone in a room with children.',
-  },
-  {
-    question: 'Can you work to our own policies?',
-    answer:
-      // ⚠️ Real bracket. A service in an assessment cycle will ask for this.
-      'Yes, and yours wins over our standard scope wherever they differ. If your cleaning and infection control policy specifies a product, a method or a frequency, it goes on the scope in writing. [Whether TLB will provide a written cleaning procedure a service can attach to its own NQF documentation. Confirm.] Ask for that at the walkthrough rather than at your next assessment.',
-  },
-  {
-    question: 'Who sanitises the toys?',
-    answer:
-      'Your educators, on your own rotation and under your own policy. It is not us being unhelpful: toy sanitising is a judgement about your service’s practice and it belongs with people trained in it, and a cleaner doing it informally creates a gap in your own records. We clean storage tubs, shelving and the surfaces the toys sit on, which is the part that supports your rotation rather than replacing it.',
-  },
-  {
-    question: 'What products would you use around children?',
-    answer:
-      'Low-odour, low-residue products, rinsed rather than left to air dry on any surface a child will touch or mouth, and nothing stored on site within reach. Our chemicals arrive and leave with the cleaner. Where your policy names particular products or requires a particular dilution, we use yours and it is written into the scope.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'We walk the site after hours with you, including the bathrooms and the nappy change area, and ask what your own policies require. Then you get a written scope split by area with a frequency against each line, a price per visit, and a schedule for the periodic work against named term breaks. No obligation.',
-  },
-];
+//
+// In `brandedFaqItems`, on "Do your cleaners hold a Working With Children Check?" (answer):
+// ⚠️ THE gate. See the file header. This answer must not ship with the
+// bracket still in it.
+// In `brandedFaqItems`, on "Can you work to our own policies?" (answer):
+// ⚠️ Real bracket. A service in an assessment cycle will ask for this.
 
 // §10 Non-branded FAQs, the long-tail block.
 //
@@ -362,47 +208,58 @@ const brandedFaqItems = [
 //   - Surface cleaning is part of the recognised control set for gastro and
 //     hand-foot-and-mouth in childcare. Correct.
 //   - No dollar figure anywhere, same as every sibling page.
-const nonBrandedFaqItems = [
-  {
-    question: 'How much does school or childcare cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
-      'It is priced per visit against a written scope. The number moves with how many rooms and bathrooms there are, how much of the floor is carpet, whether a mid-day bathroom check is included, and how much outdoor hard surface there is. A centre with four rooms and a school with twenty classrooms are different jobs at different frequencies. [TLB’s pricing basis. Confirm.]',
-  },
-  {
-    question: 'Do cleaners need a Working With Children Check in NSW?',
-    answer:
-      'Yes, where the work is child-related, and cleaning a school or childcare service generally is. The clearance is issued to the individual rather than to their employer, and the engaging organisation is expected to verify each clearance number online before that person starts and keep a record of doing so. Queensland uses a separate scheme, the Blue Card, so a contractor working across the border needs both. Check with the Office of the Children’s Guardian for the current requirements.',
-  },
-  {
-    question: 'What are the cleaning requirements for childcare centres in Australia?',
-    answer:
-      'Approved education and care services operate under the National Quality Framework, and the National Quality Standard includes obligations about the physical environment being safe, clean and well maintained. The Standard sets the outcome rather than a task list, so each service translates it into its own cleaning and hygiene policy. That policy, not a contractor’s brochure, is the document a cleaning scope should be written against. This is general information, not compliance advice.',
-  },
-  {
-    question: 'How often should a childcare centre be cleaned?',
-    answer:
-      'Daily at minimum for every room, bathroom and the nappy change area, with the main clean after the last pickup. Bathrooms and high-touch surfaces need attention during the day as well, which is why most centres run a mid-day check alongside the daily clean. Carpet extraction in a childcare room is usually two to four times a year rather than annually, because of what lands on it.',
-  },
-  {
-    question: 'How does cleaning reduce illness in childcare?',
-    answer:
-      'Because the illnesses that close a room travel by hands and surfaces rather than through the air. Gastroenteritis and hand-foot-and-mouth both spread readily in a childcare setting, and surface cleaning of the things children actually touch — low door handles, tap handles, table edges, shelf lips, the change bench — is part of the recognised control set alongside handwashing and exclusion periods. Floors matter far less than the bottom sixty centimetres of everything else.',
-  },
-  {
-    question: 'Should school cleaning happen during term breaks or during term?',
-    answer:
-      'Both, and they are different work. Daily cleaning happens during term, after hours. The periodic work — carpet extraction, hard floor strip and seal, high dusting, vents, internal glass — needs empty rooms and drying time, so it only really fits a term break. A scope that does not name which break each periodic task falls into tends to see none of them happen.',
-  },
-];
+//
+// In `nonBrandedFaqItems`, on "How much does school or childcare cleaning cost?" (answer):
+// ⚠️ BRACKETED ON PURPOSE, same as every sibling page.
 
 // §11 Closing CTA.
-const closingCta = {
-  kicker: 'Schools and childcare cleaning',
-  heading: 'Ask us for the clearance numbers first.',
-  lead: 'Then a walkthrough after hours, including the bathrooms and the change area. You get a written scope with a frequency against every line, and the periodic work booked to named term breaks.',
-  cta: walkthroughCta,
+
+// CONTENT lives in src/content/pages/commercial-cleaning/school-and-childcare-cleaning.yaml
+// and is edited in Pages CMS ("School and childcare cleaning"). This file owns the layout. The
+// notes above explain why each section says what it says; they stay here
+// because Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'commercial-cleaning/school-and-childcare-cleaning',
+  z.object({
+    seo: section.seo,
+    // The label of the page's main button. It links to the quote page in Site
+    // settings. Empty falls back to the site-wide walkthrough label.
+    ctaLabel: section.optional(section.text),
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    wwcc: section.callout,
+    split: section.storyMosaic,
+    schoolScope: section.iconGrid,
+    bathroomPhoto: section.imageBand,
+    childcareScope: section.iconGrid,
+    worthKnowing: section.textBlock,
+    // The pills are the other premises pages, from Site settings.
+    related: section.tagCloud.omit({ tags: true }).extend({ note: section.optional(z.array(section.text)) }),
+    reviews: section.sectionHeading,
+    // The towns come from Site settings.
+    whereWeClean: section.tagCloud.omit({ tags: true }),
+    // Heading only. The paragraphs are the shared brand lines.
+    brandLine: section.sectionHeading,
+    brandedFaq: section.faq,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/commercial-cleaning/school-and-childcare-cleaning/',
 };
+
+const walkthroughCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '16/9');
+
+const splitBlocks = page.split.blocks.map((block) =>
+  block.type === 'image' ? { type: 'image' as const, ...sized(block.image, '4/3') } : block,
+);
 
 const business = commercialBusiness(pageMeta.description);
 ---
@@ -420,32 +277,40 @@ const business = commercialBusiness(pageMeta.description);
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? walkthroughCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
     {/* §3 — above everything else on the page. The most important block in
         the cluster; see the file header. */}
-    <Callout tone="warning" heading={wwccCallout.heading} body={wwccCallout.body} />
+    <Callout tone="warning" heading={page.wwcc.heading} body={page.wwcc.body} cta={page.wwcc.cta} />
 
-    <StoryMosaic theme="light" heading="Same trade, two different jobs" blocks={splitBlocks} />
+    <StoryMosaic theme="light" heading={page.split.heading} blocks={splitBlocks} cta={page.split.cta} />
 
     {/* §4 and §5 — TWO scope grids, not one. A school is cleaned empty at
         desk height; a childcare room is cleaned around children at knee
         height. Merging them produces a scope that is wrong for both. */}
     <ServiceBlocks
       variant="icon-grid"
-      heading="Schools: what goes on the scope"
-      lead="Daily work after hours, a mid-day bathroom check where it is needed, and the periodic work booked to a named term break."
-      items={schoolItems}
+      heading={page.schoolScope.heading}
+      lead={page.schoolScope.lead}
+      note={page.schoolScope.note}
+      items={page.schoolScope.items}
       cta={walkthroughCta}
     />
 
@@ -458,40 +323,43 @@ const business = commercialBusiness(pageMeta.description);
         No children in frame, per the import comment. */}
     <ImageBand
       ratio="16/9"
-      label="A clean, empty primary school bathroom block after hours, basins and cubicles dry and finished"
-      caption="The bathrooms. What a parent judges the place on, and the first line a thin scope drops."
-      src={bathroomImg}
+      label={page.bathroomPhoto.image.label}
+      caption={page.bathroomPhoto.caption}
+      src={page.bathroomPhoto.image.src}
     />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="Childcare: what is genuinely different"
-      lead="Not the same list at a lower height. These are the six things a childcare room needs that a classroom scope does not cover."
-      items={childcareItems}
+      heading={page.childcareScope.heading}
+      lead={page.childcareScope.lead}
+      note={page.childcareScope.note}
+      items={page.childcareScope.items}
       cta={walkthroughCta}
     />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="Thin cleaning is measured in absences"
-      body={worthKnowingBody}
+      heading={page.worthKnowing.heading}
+      body={page.worthKnowing.body}
+      cta={page.worthKnowing.cta}
+      backgroundImage={page.worthKnowing.backgroundImage}
     />
 
     <TagCloud
-      heading="Other premises we clean"
-      subheading="Commercial cleaning for every kind of premises across the Northern Rivers and the Tweed."
+      heading={page.related.heading}
+      subheading={page.related.subheading}
       tags={relatedTags}
-      note={[]}
+      note={page.related.note ?? []}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading="Across the Northern Rivers and the Tweed."
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading}
       groups={nswLocationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -507,19 +375,19 @@ const business = commercialBusiness(pageMeta.description);
     <TextBlock
       theme="muted"
       align="left"
-      heading={theLineHeading.fast}
+      heading={page.brandLine.heading}
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
-    <Faq heading="Frequently Asked Questions" items={brandedFaqItems} />
-    <Faq heading="School and Childcare Cleaning FAQs" items={nonBrandedFaqItems} />
+    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? walkthroughCta}
     />
   </main>
 
