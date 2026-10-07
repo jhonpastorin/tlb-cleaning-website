@@ -1,0 +1,232 @@
+seo:
+  title: Best House Cleaning Services Near You | TLB Cleaning
+  description: A local team on a set day, and the same faces each visit. See how
+    TLB compares, and why changing cleaners is easier than you think.
+hero:
+  kicker: Why TLB
+  headingLines:
+    - Best house cleaning services near me,
+    - and how to choose one
+  subheading: Local team, run properly.
+  lead: We grew across the Northern Rivers one recommendation at a time, without
+    ever running an advertisement. This is what people were recommending.
+  image:
+    alt: The TLB team, the local cleaners this page names
+  cta:
+    label: See how TLB compares
+    href: "#compare"
+definition:
+  body:
+    - type: paragraph
+      text: Every client came from somebody recommending us to somebody else.
+    - type: paragraph
+      text: This page is the honest version of why.
+    - type: paragraph
+      text: TLB Cleaning is a locally owned cleaning company working across the
+        Northern Rivers, the Tweed and the Southern Gold Coast. Everyone who
+        works for TLB lives in the region. Every client has a set day and a set
+        team, a reminder before the visit and a message when we are on the way,
+        and when something has to change they hear it from us first.
+  backgroundImage: /src/assets/home/service-deep-and-one-off-cleans.png
+pathways:
+  heading: Three ways to read this page.
+  headingAccent: Start wherever you are.
+  cards:
+    - image:
+        alt: Four cleaning business models compared
+      title: How do you compare?
+      description: A franchise, an online platform, a solo cleaner or a local team.
+        They are genuinely different things and each is right for someone.
+      cta:
+        label: See the comparison
+        href: "#compare"
+    - image:
+        alt: House key being handed back
+      title: I already have a cleaner
+      description: Most people reading this do. Here is how to change without it being
+        awkward, and the one time of year not to.
+      cta:
+        label: How to switch
+        href: "#switching"
+    - image:
+        alt: The TLB cleaning team, named and photographed
+      title: Who would actually come?
+      description: The part none of the others can show you. Names and faces, before
+        anyone knocks on your door.
+      cta:
+        label: Meet the team
+        href: /about/
+tradeOff:
+  heading: Local and embedded, professionally run.
+  lead: Two halves, and both matter.
+  items:
+    - heading: Local and embedded
+      body:
+        - Everyone who works for TLB lives here. Our teams are spread right
+          across the Northern Rivers and the Tweed, inland and on the coast, and
+          they clean in the same towns they live in and shop in. Somebody you
+          could run into at the shops, which cuts both ways and we know it.
+    - heading: Run properly
+      body:
+        - Every client has a set day and a set team. You know who is coming and
+          when, you get a message when we are on the way, and if something has
+          to change you hear it from us first. There is cover when somebody is
+          away, and there is someone accountable when something is not right.
+    - heading: Family first
+      body:
+        - "We are local families ourselves. We know what it is like juggling
+          work, school drop-offs, sport, appointments and everything else that
+          fills a week. That is why we understand what a reliable cleaner
+          actually gives you: one less thing to organise, and a bit more time
+          back for everything else."
+    - heading: Employed, not subcontracted
+      body:
+        - Our cleaners are on the books rather than sent out under an ABN with
+          their own gear. It is the more expensive way to run a cleaning
+          business and it is the only way to promise you the same faces.
+resolution:
+  body:
+    - type: paragraph
+      text: Most people assume they have to choose between the two. TLB does not ask
+        them to.
+  backgroundImage: /src/assets/home/house-cleaning-team-vacuuming-open-plan-living-room.jpg
+comparison:
+  heading: How TLB Cleaning compares
+  cornerLabel: What makes the difference
+model:
+  heading: A brand can be bought. A person cannot.
+  body:
+    - type: paragraph
+      text: Everyone who cleans for TLB lives in the region, and they stay. That is
+        the part that takes years rather than a release cycle, and it is the
+        reason you can be introduced to the people who would be in your house
+        before anybody knocks on your door.
+    - type: paragraph
+      text: It is also why the schedule holds. The same team each visit means nobody
+        is relearning your house, nobody has to be told again about the side
+        gate or the dog, and the person who noticed the shower screen last month
+        is the person coming back this month.
+whyPeopleStay:
+  heading: The same faces is not luck. It is the whole design.
+  body:
+    - type: paragraph
+      text: Cleaning has a staff turnover problem across the whole industry, driven by
+        rigid hours and low engagement. Somebody treated as interchangeable
+        behaves as though the job is interchangeable, and the person whose house
+        it is can tell.
+    - type: paragraph
+      text: We built TLB so that people stay, and they do. That is why you are not
+        meeting somebody new every fortnight, and why the team looking after
+        your place this year is the team that looked after it last year. A team
+        that loves the work does better work, and there is no clever version of
+        that idea.
+switching:
+  heading: Changing cleaners is awkward. Here is how.
+  body:
+    - type: paragraph
+      text: Almost nobody puts off changing cleaners because of price or quality. They
+        put it off because someone has a key to their house and they do not want
+        to have the conversation.
+objections:
+  items:
+    - heading: '"She is lovely. I feel terrible."'
+      body:
+        - You are allowed to change a service arrangement without it being a
+          judgement on someone as a person. "We are making some changes at home
+          and are going to stop the regular clean" is true, kind and complete.
+          You do not owe a critique, and offering one usually makes it worse for
+          both of you.
+    - heading: '"She has a key."'
+      body:
+        - Ask for it back at the last clean, in person, and have the
+          conversation then. Handling it by message and asking for the key
+          afterwards is the version that goes badly. If there is a lockbox or a
+          code, change it the same day as ordinary housekeeping rather than as a
+          statement.
+    - heading: '"What if the new one is worse?"'
+      body:
+        - Do not stop the old arrangement until you have had one clean from the
+          new one. Book us once as a one-off, see how it goes, then decide.
+          Anyone who pushes you to cancel before you have seen the work is
+          selling, not advising.
+    - heading: '"She lives around here. I will run into her."'
+      body:
+        - You will, because that is what living in a small town is. Which is
+          exactly why the in-person version is worth the discomfort. Our team
+          lives here too and so does Teagan. Nobody at TLB wants to be the
+          reason a neighbourly relationship went sour.
+timing:
+  body:
+    - Do not do this in the fortnight before Christmas. If you have family
+      arriving, or you are about to list the house, or you are three weeks from
+      moving out, this is the worst possible moment to change anything. Anybody
+      telling you now is a great time to switch is thinking about their month,
+      not yours.
+contractors:
+  heading: If you are changing a contractor rather than a cleaner.
+  lead: "Moving a rent roll or a commercial contract is a different problem. You
+    are not managing a relationship, you are managing vacancy windows or an
+    office that has to be usable on Monday. The answer is the same in both
+    cases: give us one job, and not your easiest one."
+  items:
+    - title: "Agencies: give us the difficult property"
+      description: The one with the tight window or the awkward exit condition. That
+        is the job that tells you something.
+      href: /house-cleaning/real-estate-cleaning/
+    - title: "Businesses: start with a walkthrough"
+      description: Nobody can quote a building from a form. We look at it, tell you
+        what it needs, and say if we are not the right people.
+      href: /commercial-cleaning/
+reviews:
+  heading: What our clients say
+faq:
+  heading: Before you change anything
+  items:
+    - question: Am I locked into anything?
+      answer: No minimum term and no exit fee. Skip a visit when you are away and your
+        spot stays yours, and if it stops suiting you, tell us and we will stop.
+    - question: Can I book one clean without committing to a schedule?
+      answer: Yes, and for anyone changing over we would suggest you do exactly that.
+    - question: Do you need to know who I was using before?
+      answer: No, and we would rather not turn it into a conversation about someone
+        else. What is useful is knowing what you want kept the same and what you
+        want done differently.
+    - question: Do you cover everywhere a national brand does?
+      answer: No, and we would not claim to. Five Northern Rivers council areas and
+        the Southern Gold Coast.
+switchingFaq:
+  heading: Switching cleaners, common questions
+  items:
+    - question: How much notice should I give my current cleaner?
+      answer: Two to four weeks is the usual courtesy for an ongoing arrangement, and
+        many cleaning businesses ask for the same in their own terms. Check what
+        you agreed when you started, because 14 or 30 days written notice is
+        common in domestic cleaning terms. If nothing was ever written down, a
+        fortnight is fair and gives them time to fill the slot.
+    - question: Will I be charged if I cancel a booked clean?
+      answer: Usually only if you cancel late. Most Australian cleaning businesses
+        publish a window of 24 to 48 hours, though some ask for 72 hours or five
+        working days. Inside that window, fees run from 25 per cent of the price
+        up to the full amount. Nearly all of them also charge if the cleaner
+        arrives and cannot get in.
+    - question: Is there anything in my current terms I should check before I switch?
+      answer: Two things, and neither is obvious. Some cleaning businesses include a
+        non-solicitation clause that stops you hiring their cleaner directly, in
+        one published case for twelve months after your last booking, with a
+        finder's fee if you do. Others renew automatically for a further
+        twelve-month term unless you give notice. Read what you agreed before
+        you cancel anything.
+    - question: What am I entitled to if a clean is not done properly?
+      answer: The same consumer guarantees that apply to any service. Under the
+        Australian Consumer Law, services must be provided with due care and
+        skill and be fit for the purpose you asked for, and you are entitled to
+        a remedy when they are not. Many cleaning businesses also ask you to
+        report problems in writing within 24 hours, so do not sit on it.
+closingCta:
+  kicker: Meet the team
+  heading: The one thing they cannot show you.
+  lead: See how TLB compares, and why changing cleaners is easier than you think.
+    Have a look at who would actually be walking into your house.
+  cta:
+    label: Meet the team
+    href: /about/

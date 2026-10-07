@@ -1131,6 +1131,61 @@ content:
             label: "FAQs"
             description: Questions about insurance and police checks are held back on purpose. Add them only once the policy and the check are confirmed, and say exactly what they are.
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: why-tlb
+        label: Why TLB
+        type: file
+        path: src/content/pages/why-tlb.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: "No photo yet: the slot shows a labelled box until a real photo of the TLB team is chosen, and it must not go live like that. The button jumps to the comparison table (#compare)."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "Three ways to read this page (cards)"
+            description: "Links starting with # jump to a section of this page: #compare is the comparison table, #switching is \"Changing cleaners is awkward\"."
+          - name: tradeOff
+            component: textGrid
+            label: "Local and embedded, professionally run"
+            description: "\"Family first\" and \"Employed, not subcontracted\" are copied word for word from the About page: change both pages together. The employed claim has legal weight, so keep it only while it is true of every team member."
+          - { name: resolution, component: textBlock, label: "One-line resolution (dark band with photo)" }
+          - name: comparison
+            label: "How TLB Cleaning compares (table)"
+            type: object
+            description: The rows and columns are shared with other pages. Edit them under Site settings > Comparison table.
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: model, component: textBlock, label: "A brand can be bought" }
+          - name: whyPeopleStay
+            component: textBlock
+            label: "The same faces is not luck (dark band)"
+            description: The industry staff turnover claim has no source yet.
+          - { name: switching, component: textBlock, label: "Changing cleaners is awkward (intro)" }
+          - name: objections
+            component: textGrid
+            label: "Changing cleaners: four worries (cards)"
+            description: The third card holds the page's only sales line ("Book us once as a one-off"). Do not add one to the others.
+          - { name: timing, component: callout, label: "Not before Christmas (warning box)" }
+          - { name: contractors, component: linkList, label: "Changing a contractor rather than a cleaner" }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: faq
+            component: faq
+            label: "FAQs: before you change anything"
+            description: "\"Five Northern Rivers council areas\" appears nowhere else on the site. Confirm it."
+          - name: switchingFaq
+            component: faq
+            label: "FAQs: switching cleaners"
+            description: "The notice periods, cancellation windows, fees and the \"one published case\" in these answers still need sources before launch."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
 
   - name: site-settings
     label: Site settings
