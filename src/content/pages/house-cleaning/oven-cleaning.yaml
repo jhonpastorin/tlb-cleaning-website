@@ -1,0 +1,223 @@
+seo:
+  title: Oven Cleaning Service - BBQ Cleaning | TLB Cleaning
+  description: Oven cleaning that removes baked-on grease from racks, trays, doors
+    and glass, plus BBQ cleaning. Non-toxic products. Book your oven clean
+    today.
+buttonLabel: Book your oven clean today
+hero:
+  kicker: Oven, BBQ and appliance cleaning
+  headingLines:
+    - Oven cleaning services across
+    - the Northern Rivers and the Tweed
+  subheading: Oven cleaning services that reach the door glass, plus the barbecue
+  lead: Nobody has ever enjoyed cleaning an oven. Ours is an oven cleaning service
+    that takes the appliance apart, soaks the parts and puts it back together
+    working, in your home. {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/appliances/oven_bbq_and_appliances/cleaner-wiping-out-an-open-oven.png
+    alt: A TLB cleaner in an aqua polo, dark teal apron and teal gloves kneeling to
+      wipe out the inside of an open oven door
+definition:
+  body:
+    - type: paragraph
+      text: A professional oven cleaning service is a strip down rather than a wipe
+        out. The racks, trays, side rails and usually the inner door glass come
+        out of the appliance and go into a soak, and the cavity is cleaned while
+        they sit. It is the only way to reach the baked-on carbon in the corners
+        and between the door glass, which is exactly where an oven looks worst.
+        TLB Cleaning cleans ovens, barbecues and appliances across the Northern
+        Rivers and the Tweed.
+    - type: paragraph
+      text: The same method covers a barbecue and most other appliances. Grill plates,
+        burners and a fat tray come out and soak the same way a set of oven
+        racks does, and a rangehood filter is the same job again in miniature.
+        What changes is the size of the parts and how much grease is on them.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: People arrive here with three questions.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/home_cleaning/appliances/oven_bbq_and_appliances/well-used-barbecue-on-a-timber-deck.jpg
+        alt: A well-used stainless barbecue with the lid open on the timber deck of a
+          coastal home
+      title: People are coming over and I have looked at the barbecue
+      description: Grill plates, burners, the fat tray and the grey layer on the
+        inside of the hood. It is a two hour job with a wire brush and a bad
+        mood, or it is a booking.
+    - image:
+        src: /src/assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg
+        alt: A TLB cleaner and a homeowner talking through the job in a living room
+      title: We are moving out and the oven has to pass
+      description: The oven is the most common thing a property manager pulls a bond
+        clean up on, and the door glass is the most common thing inside the
+        oven. It usually costs less to have it done than to lose part of the
+        bond over it.
+      cta:
+        label: End of lease cleaning
+        href: /house-cleaning/end-of-lease-cleaning/
+method:
+  heading: How our oven cleaning service works, stage by stage
+  lead: The same method covers a barbecue and most other appliances. Soak time
+    does the work, not scrubbing.
+  items:
+    - icon: puzzle
+      title: It comes apart first
+      description: Racks, side rails, trays, burners and grill plates all come out. On
+        most ovens the inner door glass comes out too, which is the difference
+        between an oven that looks clean and one that looks clean from the sofa.
+    - icon: spray-bottle
+      title: The parts go in to soak
+      description: Soaking does the work that scrubbing otherwise has to, which is why
+        a proper job takes time rather than muscle. [Confirm whether TLB soaks
+        on site in trays, carries a heated dip tank, or takes parts away and
+        returns them.]
+    - icon: spark
+      title: The cavity is cleaned while they sit
+      description: Roof, floor, back, seals and the corners where carbon collects. The
+        fan cover and the element surrounds get done at the same time. Nothing
+        here needs to be forced, because the products have already been given
+        time to work.
+    - icon: target
+      title: The door glass, both sides of both panes
+      description: The brown film sits between the two panes of glass, so wiping the
+        outside never touches it. Separating the door is the only way to reach
+        it, and it is the single most noticeable part of the whole job when it
+        is done.
+    - icon: bloom
+      title: Rebuilt, wiped down and tested
+      description: Everything goes back where it came from, the seals go back on
+        properly, and the appliance is turned on to check it works before we
+        leave. Your kitchen gets wiped down after us rather than left as the
+        evidence.
+    - icon: house
+      title: The other appliances, same visit
+      description: Rangehood and filters, the inside of the fridge, the microwave and
+        the cooktop are the usual extras, and they are quicker done at the same
+        time than booked separately. [Confirm the full list, and whether
+        dishwashers and washing machines are included.]
+beforeAfter:
+  heading: What the cooktop looks like afterwards
+  lead: Months of boil-overs and spills, baked on and wiped around. Drag the
+    handle to see the difference.
+  note: Photographed on a real TLB clean, published with the client's permission.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/cooktop-before.jpg
+        alt: A gas cooktop before a TLB clean, with spilled coffee grounds, crumbs and
+          food scraps across the black enamel
+      after:
+        src: /src/assets/home_cleaning/before_after/cooktop-after.jpg
+        alt: The same gas cooktop after the clean, the enamel wiped back to an even
+          black finish
+      caption: Gas cooktop and burners
+      ratio: 4/3
+selfClean:
+  heading: What the self-clean cycle actually does
+  body:
+    - type: paragraph
+      text: "The self-clean cycle on a conventional oven is not what most people think
+        it is. On a pyrolytic oven it is real: the oven locks and runs itself up
+        to around 500 degrees, burning residue down to a fine ash you wipe out
+        afterwards. It works, it smells strongly for a few hours, and it puts
+        every seal, element and control board in the appliance through a very
+        hard afternoon. It is also the only cleaning method the manufacturer of
+        a pyrolytic oven will endorse, because the enamel coating inside it can
+        be damaged by the caustic products used on ordinary ovens."
+    - type: paragraph
+      text: On an oven that is not pyrolytic, the "self clean" setting usually just
+        means a steam assist function, which softens light residue and does
+        nothing at all to baked-on carbon. Either way, none of it touches the
+        film between the door glass, because that is not inside the cavity. If
+        the door of your oven is the part that looks bad, no cycle of any kind
+        will fix it. Somebody has to take the door apart.
+otherServices:
+  heading: Other things we clean around the house
+  lead: The jobs a regular clean never has time for. Any of them can go on the
+    same visit.
+comparison:
+  heading: How TLB compares
+  lead: This job involves taking apart an appliance you rely on and putting it
+    back together. It is worth knowing who is doing that, and who you ring if it
+    is not right.
+  cornerLabel: Why TLB Cleaning is different
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Across the Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+bookingFaq:
+  heading: Booking an oven or BBQ clean
+  items:
+    - question: Will the kitchen smell of chemicals afterwards?
+      answer: It should not. The parts soak away from the cavity rather than sitting
+        in the room, the oven is wiped out and rinsed rather than left coated,
+        and we ventilate while we work. If you are sensitive to smells, or
+        someone in the house is pregnant or asthmatic, tell us when you book so
+        we can plan the ventilation properly.
+    - question: How long does an oven take?
+      answer: Usually a couple of hours for a standard oven, because most of that is
+        soak time rather than scrubbing. A double oven, a very neglected one or
+        an oven plus a cooktop and rangehood takes longer. You can use it as
+        soon as we are finished, and we will have run it briefly to check it
+        before we go.
+    - question: Do you clean pyrolytic and self-cleaning ovens?
+      answer: We clean the outside, the door glass, the racks and the trays, but we do
+        not chemically clean the inside of a pyrolytic cavity. The special
+        coating in those ovens can be damaged by the products used on a standard
+        oven, and the manufacturer’s own high temperature cycle is the method
+        they specify. We will tell you which type you have if you are not sure.
+    - question: Can you do the barbecue at the same time?
+      answer: Yes, and it is a sensible way to do it, because it is the same soak and
+        the same visit. Barbecues are usually worse than people expect
+        underneath the plates, particularly the fat tray and the inside of the
+        hood. Tell us the rough size and how long it has been when you book.
+    - question: What happens if I get in touch?
+      answer: "Tell us what you have: oven, oven and cooktop, a barbecue, the fridge,
+        or the lot. We will give you a price and a time. Most people get more
+        than one thing done in the same visit because the second appliance costs
+        less than a separate booking."
+generalFaq:
+  heading: Oven, BBQ and appliance cleaning questions
+  items:
+    - question: What is the difference between a pyrolytic and a self-cleaning oven?
+      answer: "A pyrolytic oven has a genuine high temperature cycle: it locks the
+        door, heats to around 500 degrees and reduces residue to ash that you
+        wipe out. Most ovens marketed as self cleaning are not pyrolytic and
+        have a steam assist function instead, which loosens light soil and does
+        nothing to baked-on carbon. Check your manual for the word pyrolytic
+        rather than relying on the marketing."
+    - question: Why is the oven door glass brown on the inside?
+      answer: Because grease and steam get between the two panes of glass through the
+        vents in the top of the door, condense there and bake on. It is on a
+        surface you cannot reach from either side, which is why it survives
+        every clean you have ever done. The only way to it is to separate the
+        door, and on most ovens that is straightforward for someone who has done
+        it before.
+    - question: How often should an oven be cleaned?
+      answer: Every six to twelve months suits most households, and more often if you
+        roast a lot or the oven is used daily. Between cleans, wiping spills
+        while the oven is still warm rather than letting them bake on again is
+        what keeps the interval long. A tray under anything likely to bubble
+        over saves more work than any product.
+    - question: Is it safe to clean an oven with bicarbonate and vinegar?
+      answer: It is mild and it will not damage an oven, but it is slow and it does
+        not touch heavy baked-on carbon, which is what most people are actually
+        trying to remove. It also cannot reach between the door panes. It is a
+        reasonable maintenance habit and a poor rescue. ⚠️ Whatever you use,
+        never mix cleaning products together, and never mix anything with
+        bleach.
+    - question: How much does oven cleaning cost?
+      answer: "Usually priced per appliance, so an oven, a cooktop, a rangehood and a
+        barbecue are separate line items, generally with a lower rate when
+        several are done in one visit. Size and condition move it: a double oven
+        or one that has not been touched in years takes longer. [TLB’s pricing
+        basis and minimum charge. Confirm.]"
+closingCta:
+  kicker: Oven, BBQ and appliance cleaning
+  heading: Get the worst job in the house off your list.
+  lead: Oven, cooktop, rangehood, barbecue or the lot. Taken apart, soaked,
+    rebuilt and tested, with the kitchen wiped down after us. Book your oven
+    clean today.
