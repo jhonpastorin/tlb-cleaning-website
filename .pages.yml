@@ -2513,3 +2513,80 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+      - name: school-and-childcare-cleaning
+        label: "School and childcare cleaning"
+        type: file
+        path: src/content/pages/commercial-cleaning/school-and-childcare-cleaning.yaml
+        format: yaml
+        fields:
+          - name: seo
+            component: seo
+            description: "The description says the team is Working With Children checked, which TLB has not yet confirmed per person."
+          - name: ctaLabel
+            label: "Main button text"
+            type: string
+            description: "Used by the hero, the buttons under both scope lists and the closing block. It links to the quote page set under Site settings > Site-wide buttons. Leave empty to use the site-wide walkthrough button text."
+          - name: hero
+            component: hero
+            description: "Leave the hero's button empty to use the main button above. The lead also says the team is Working With Children checked, which TLB has not yet confirmed per person. Keep children out of every photo on this page."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
+          - name: wwcc
+            component: callout
+            label: "Ask us for the clearance numbers (warning box)"
+            description: "The most important block in the commercial pages. It covers NSW only. Never quote a clearance validity period."
+          - { name: split, component: storyMosaic, label: "Same trade, two different jobs (mosaic)" }
+          - name: schoolScope
+            component: iconGrid
+            label: "Schools: what goes on the scope (list with icons)"
+            description: "Every item is drafted, not confirmed by TLB. The button under the list is the main button."
+          - name: bathroomPhoto
+            component: imageBand
+            label: "School bathroom photo band"
+            description: "No children in frame."
+          - name: childcareScope
+            component: iconGrid
+            label: "Childcare: what is genuinely different (list with icons)"
+            description: "Every item is drafted, not confirmed by TLB. The nappy change item carries a [Confirm] bracket. The button under the list is the main button."
+          - name: worthKnowing
+            component: textBlock
+            label: "Thin cleaning is measured in absences (dark band)"
+            description: "Never quote an NQS quality area or element number, or an outbreak statistic."
+          - name: related
+            label: "Other premises we clean (links)"
+            type: object
+            description: "The links are the other premises pages, edited once under Site settings > Cross-links: premises."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: subheading, label: Subheading, type: string, required: true }
+              - { name: note, label: Note under the links, type: text, list: true }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                required: true
+                description: "The towns themselves are edited once for the whole site, not here."
+              - { name: note, label: Note under the towns, type: text, list: true }
+          - name: brandLine
+            component: sectionHeading
+            label: "Easy to book heading (above the brand lines)"
+            description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
+          - name: brandedFaq
+            component: faq
+            label: "Frequently asked questions (about working with us)"
+            description: "The Working With Children Check answer must not ship with its [Confirm] bracket still in it. The policies answer carries a [Confirm] bracket."
+          - name: faq
+            component: faq
+            label: "School and childcare cleaning FAQs"
+            description: "The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the main button."

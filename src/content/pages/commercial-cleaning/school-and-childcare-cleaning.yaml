@@ -1,0 +1,300 @@
+seo:
+  title: School and Childcare Cleaning | TLB Cleaning
+  description: Cleaning for schools, preschools and childcare centres across the
+    Northern Rivers and the Tweed. A Working With Children checked local team, a
+    written scope, and bathrooms done properly.
+hero:
+  kicker: Schools and childcare cleaning
+  headingLines:
+    - Everything here
+    - gets touched by a two-year-old.
+  lead: Cleaning for schools, preschools and childcare centres across the Northern
+    Rivers and the Tweed. A Working With Children checked local team, working
+    after pickup, on a scope written for the way children actually use a room.
+    {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/premises/childcare-cleaner-wiping-low-tables-after-pickup.jpg
+    alt: A cleaner wiping down a low round table in a bright, tidy childcare
+      playroom after the last pickup of the day
+definition:
+  body:
+    - type: paragraph
+      text: "School and childcare cleaning is the daily cleaning of an education
+        setting: classrooms and playrooms, bathrooms, hall and library, staff
+        rooms and offices, and the hard surfaces of outdoor play areas. TLB
+        Cleaning does this work across the Northern Rivers and the Tweed for
+        schools, preschools, long day care centres and out of school hours
+        care."
+    - type: paragraph
+      text: The two settings need different scopes and are best not merged. A school
+        is cleaned when it is empty, at desk height, by people nobody meets. A
+        childcare room is cleaned around children who put their hands and their
+        mouths on everything at knee height, and the cleaner is somebody the
+        educators see every day. Same trade, different job, and the sections
+        below are split for that reason.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+wwcc:
+  heading: Ask us for the clearance numbers. Then verify them yourself.
+  body:
+    - In New South Wales, paid work in a child-related setting requires a
+      Working With Children Check clearance, and cleaning a school or childcare
+      centre is child-related work. The clearance belongs to the individual
+      person, not to the company they work for, which is why "our team is all
+      checked" is not an answer to anything. There is no company-level version
+      of it.
+    - The step organisations skip is the second one. As the engaging service you
+      are expected to verify each clearance number online before that person
+      starts, and to keep a record that you did. So ask any cleaning contractor
+      for a clearance number per individual who will attend your site, verify
+      each one yourself, and ask what happens when they send a replacement at
+      short notice. Ask us the same, and hold us to producing it in writing
+      rather than in a sentence.
+split:
+  heading: Same trade, two different jobs
+  blocks:
+    - type: text
+      body:
+        - "A school and a childcare centre arrive at the same contractor and
+          need two different documents. In a school, the room is empty when we
+          are in it, the work is at desk height, and nobody who uses the
+          building ever meets the cleaner. Everything hard about it is
+          scheduling: term breaks, sport, exams, and the fact that a hall floor
+          cannot be sealed on a Tuesday."
+        - In a childcare room, the cleaner is somebody the educators see every
+          afternoon, the work is in the bottom sixty centimetres, and the
+          surfaces that matter most are the ones children put in their mouths.
+          Everything hard about it is trust and product choice. So the two
+          scopes below are separate on purpose, and if you run both, you get
+          both.
+    - type: image
+      image:
+        src: /src/assets/commercial_cleaning/premises/school-cleaner-mopping-a-classroom-after-hours.jpg
+        alt: A cleaner mopping the vinyl floor of a bright primary school classroom
+          after hours, chairs stacked on the desks
+schoolScope:
+  heading: "Schools: what goes on the scope"
+  lead: Daily work after hours, a mid-day bathroom check where it is needed, and
+    the periodic work booked to a named term break.
+  items:
+    - icon: office
+      title: Classrooms, after hours
+      description: Floors vacuumed or mopped with chairs up, desks and tables wiped,
+        whiteboard ledges and trays done, bins emptied and relined, and the
+        reading corner and shelving tidied rather than just dusted around. Sinks
+        in art and science rooms cleaned properly, because that is where a
+        term’s worth of paint ends up.
+    - icon: target
+      title: Bathrooms, twice where it counts
+      description: Toilets, urinals, basins and taps cleaned and disinfected, floors
+        mopped including behind the pans, mirrors done, consumables restocked.
+        In a primary school the bathrooms need a mid-day check as well as an
+        after hours clean, and that check is the single most valuable half hour
+        on the schedule.
+    - icon: spray-bottle
+      title: High-touch surfaces
+      description: Door handles and push plates, light switches, handrails, bubbler
+        and tap handles, and the shared equipment in specialist rooms. In a
+        school these are how a gastro outbreak crosses a year group in three
+        days, and they are the first thing a thin scope drops because nobody
+        sees them being skipped.
+    - icon: bloom
+      title: Hall, library, canteen and staff areas
+      description: Hall floors, library carpet and shelving, staff room kitchenette
+        and bathrooms, and the front office and reception where every parent and
+        visitor arrives. Canteen front of house cleaned; anything behind a
+        canteen servery is a food premises with its own rules and its own page.
+    - icon: key
+      title: Outdoor hard surfaces
+      description: Covered walkways, entry paths, the COLA slab and the seating areas
+        swept and litter cleared, drains checked clear. Concrete in this region
+        goes dark with algae through a wet season and needs pressure cleaning
+        periodically, which is a separate service booked into a term break.
+    - icon: chart-bars
+      title: "Term breaks: the periodic work"
+      description: Carpet extraction in classrooms and the library, hard floor strip
+        and seal where the vinyl needs it, high dusting, vents, window sills and
+        internal glass. School holidays are the only real window for any of it,
+        so it goes on the schedule against a named break rather than "as
+        required".
+bathroomPhoto:
+  image:
+    src: /src/assets/commercial_cleaning/premises/school-bathroom-block-cleaned-after-hours.jpg
+    alt: A clean, empty primary school bathroom block after hours, basins and
+      cubicles dry and finished
+  caption: The bathrooms. What a parent judges the place on, and the first line a
+    thin scope drops.
+childcareScope:
+  heading: "Childcare: what is genuinely different"
+  lead: Not the same list at a lower height. These are the six things a childcare
+    room needs that a classroom scope does not cover.
+  items:
+    - icon: house
+      title: Everything at knee height
+      description: Low tables and chairs including the undersides and the legs, shelf
+        edges, the bottom half of every door, the skirtings and the corners
+        behind the book box. Children live in the bottom sixty centimetres of a
+        room, and an adult-height clean misses most of it.
+    - icon: spark
+      title: Soft surfaces and mats
+      description: Rugs and mats vacuumed properly rather than run over, cushion
+        covers and soft furnishings vacuumed, sleep mats wiped down, and cot and
+        stretcher frames done. Carpet in a childcare room needs extraction more
+        often than an office does, because what lands on it is not dust.
+    - icon: target
+      title: Bathrooms and the nappy change area
+      description: Child-height toilets and basins, floors, and the nappy change
+        bench, sink, bin and the wall behind it. [Whether TLB cleans the nappy
+        change area, and with what products. Confirm.] It is the least pleasant
+        line on any childcare scope and the one an assessor looks at first, so
+        it needs naming rather than assuming.
+    - icon: spray-bottle
+      title: Products that belong in a room with children
+      description: Low-odour, low-residue products, everything rinsed rather than left
+        to dry on a surface a child will mouth, and nothing stored anywhere a
+        child can reach. Our chemicals leave the building with us. If your
+        centre’s policy specifies particular products, yours wins and it goes on
+        the scope.
+    - icon: puzzle
+      title: What stays with educators
+      description: Toys and equipment that go in mouths are sanitised by your
+        educators, on your own rotation, under your own policy. We are happy to
+        clean storage tubs and shelving, but a cleaner sanitising the toys is a
+        cleaner making a food-safety-grade judgement about your service. That
+        stays with the people who are trained for it.
+    - icon: idea
+      title: Working around the roster
+      description: Most of the clean happens after the last pickup. What has to happen
+        during the day — a bathroom check, a spill, an outdoor area — is done by
+        someone your educators know by name, signed in, and never alone in a
+        room with children. That last part is not negotiable and it is not a
+        favour.
+worthKnowing:
+  heading: Thin cleaning is measured in absences
+  body:
+    - type: paragraph
+      text: "The cost of thin cleaning in a school or centre is not measured in
+        complaints, it is measured in absences. A gastro run through a childcare
+        room takes out a third of the children and a couple of educators for a
+        week, and it travels by hands onto surfaces far more than it travels
+        through the air. The surfaces it uses are the ones a thin scope drops
+        first: door handles at child height, tap handles, the edge of the nappy
+        change bench, the shelf every child grabs on the way past."
+    - type: paragraph
+      text: For a centre there is a second layer to it. Education and care services
+        operate under the National Quality Framework, and a safe, clean, well
+        maintained physical environment is part of what a service is assessed
+        on. An assessor does not want to hear that you have a cleaner. They want
+        to see what that cleaner does, how often, and how you know it happened.
+        A written scope with frequencies against each area is the difference
+        between an assertion and evidence, and it is the reason we write ours to
+        be filed rather than to be quoted.
+related:
+  heading: Other premises we clean
+  subheading: Commercial cleaning for every kind of premises across the Northern
+    Rivers and the Tweed.
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Across the Northern Rivers and the Tweed.
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Frequently Asked Questions
+  items:
+    - question: Do your cleaners hold a Working With Children Check?
+      answer: "They have to, and so does anyone else quoting your site. [TLB’s
+        position: a current WWCC clearance number for every cleaner who would
+        attend, produced in writing on request, and what happens when a
+        replacement is sent at short notice. Confirm before this page ships.]
+        Because our cleaners are employed by TLB rather than subcontracted,
+        there is no third party holding that paperwork, which is what makes it
+        possible to give you per person rather than per company."
+    - question: When would you be on site?
+      answer: After the last pickup for a centre, and after hours for a school, with
+        the periodic work booked into term breaks. Anything that genuinely has
+        to happen during the day — a bathroom check, a spill, an outdoor area —
+        is done by someone your staff know, signed in through your own process,
+        and never alone in a room with children.
+    - question: Can you work to our own policies?
+      answer: Yes, and yours wins over our standard scope wherever they differ. If
+        your cleaning and infection control policy specifies a product, a method
+        or a frequency, it goes on the scope in writing. [Whether TLB will
+        provide a written cleaning procedure a service can attach to its own NQF
+        documentation. Confirm.] Ask for that at the walkthrough rather than at
+        your next assessment.
+    - question: Who sanitises the toys?
+      answer: "Your educators, on your own rotation and under your own policy. It is
+        not us being unhelpful: toy sanitising is a judgement about your
+        service’s practice and it belongs with people trained in it, and a
+        cleaner doing it informally creates a gap in your own records. We clean
+        storage tubs, shelving and the surfaces the toys sit on, which is the
+        part that supports your rotation rather than replacing it."
+    - question: What products would you use around children?
+      answer: Low-odour, low-residue products, rinsed rather than left to air dry on
+        any surface a child will touch or mouth, and nothing stored on site
+        within reach. Our chemicals arrive and leave with the cleaner. Where
+        your policy names particular products or requires a particular dilution,
+        we use yours and it is written into the scope.
+    - question: What happens if I get in touch?
+      answer: We walk the site after hours with you, including the bathrooms and the
+        nappy change area, and ask what your own policies require. Then you get
+        a written scope split by area with a frequency against each line, a
+        price per visit, and a schedule for the periodic work against named term
+        breaks. No obligation.
+faq:
+  heading: School and Childcare Cleaning FAQs
+  items:
+    - question: How much does school or childcare cleaning cost?
+      answer: It is priced per visit against a written scope. The number moves with
+        how many rooms and bathrooms there are, how much of the floor is carpet,
+        whether a mid-day bathroom check is included, and how much outdoor hard
+        surface there is. A centre with four rooms and a school with twenty
+        classrooms are different jobs at different frequencies. [TLB’s pricing
+        basis. Confirm.]
+    - question: Do cleaners need a Working With Children Check in NSW?
+      answer: Yes, where the work is child-related, and cleaning a school or childcare
+        service generally is. The clearance is issued to the individual rather
+        than to their employer, and the engaging organisation is expected to
+        verify each clearance number online before that person starts and keep a
+        record of doing so. Queensland uses a separate scheme, the Blue Card, so
+        a contractor working across the border needs both. Check with the Office
+        of the Children’s Guardian for the current requirements.
+    - question: What are the cleaning requirements for childcare centres in Australia?
+      answer: Approved education and care services operate under the National Quality
+        Framework, and the National Quality Standard includes obligations about
+        the physical environment being safe, clean and well maintained. The
+        Standard sets the outcome rather than a task list, so each service
+        translates it into its own cleaning and hygiene policy. That policy, not
+        a contractor’s brochure, is the document a cleaning scope should be
+        written against. This is general information, not compliance advice.
+    - question: How often should a childcare centre be cleaned?
+      answer: Daily at minimum for every room, bathroom and the nappy change area,
+        with the main clean after the last pickup. Bathrooms and high-touch
+        surfaces need attention during the day as well, which is why most
+        centres run a mid-day check alongside the daily clean. Carpet extraction
+        in a childcare room is usually two to four times a year rather than
+        annually, because of what lands on it.
+    - question: How does cleaning reduce illness in childcare?
+      answer: Because the illnesses that close a room travel by hands and surfaces
+        rather than through the air. Gastroenteritis and hand-foot-and-mouth
+        both spread readily in a childcare setting, and surface cleaning of the
+        things children actually touch — low door handles, tap handles, table
+        edges, shelf lips, the change bench — is part of the recognised control
+        set alongside handwashing and exclusion periods. Floors matter far less
+        than the bottom sixty centimetres of everything else.
+    - question: Should school cleaning happen during term breaks or during term?
+      answer: Both, and they are different work. Daily cleaning happens during term,
+        after hours. The periodic work — carpet extraction, hard floor strip and
+        seal, high dusting, vents, internal glass — needs empty rooms and drying
+        time, so it only really fits a term break. A scope that does not name
+        which break each periodic task falls into tends to see none of them
+        happen.
+closingCta:
+  kicker: Schools and childcare cleaning
+  heading: Ask us for the clearance numbers first.
+  lead: Then a walkthrough after hours, including the bathrooms and the change
+    area. You get a written scope with a frequency against every line, and the
+    periodic work booked to named term breaks.
