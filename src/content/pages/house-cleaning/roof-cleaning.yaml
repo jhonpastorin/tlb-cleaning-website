@@ -1,0 +1,269 @@
+seo:
+  title: Roof Cleaning Services - Roof Tiles | TLB Cleaning
+  description: Roof cleaning that clears moss, lichen and years of grime from roof
+    tiles and metal roofs, without damage. Fully insured. Get a free quote
+    today.
+buttonLabel: Get a free quote today
+hero:
+  kicker: Roof cleaning
+  headingLines:
+    - Roof cleaning across the
+    - Northern Rivers and the Tweed
+  subheading: Soft wash roof cleaning for tile and colorbond, at low pressure
+  lead: That black is not dirt. It's alive, and it spreads. We treat it at the
+    root with low pressure and a solution rather than blasting it off, so the
+    roof stays clear for years instead of a season. {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/outside_your_home/roof_cleaning/soft-washing-a-tiled-house-roof.jpg
+    alt: A cleaner in an aqua polo and a teal safety harness soft washing a tiled
+      roof with a low pressure lance, the treated tiles pale and the untreated
+      ones still dark with algae
+definition:
+  body:
+    - type: paragraph
+      text: Roof cleaning is the removal of the algae, moss and lichen growing on a
+        roof, along with the leaf litter and grime that feed them. TLB Cleaning
+        cleans tile and colorbond roofs across the Northern Rivers, the Tweed
+        and the Southern Gold Coast, using low pressure soft washing rather than
+        a high pressure blast.
+    - type: paragraph
+      text: Soft washing means a cleaning solution and dwell time instead of force. It
+        matters because high pressure on a roof strips the surface coating off
+        concrete tiles, blows water in under the laps and can crack pointing
+        along the ridge, and none of that is repaired by the clean that caused
+        it. A soft wash also kills the growth at the root, so the roof stays
+        clear for longer rather than greening up again next wet season.
+  backgroundImage: /src/assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg
+explainer:
+  heading: Before you let anyone up there
+  lead: Three things worth understanding about a roof, and one of them will save
+    you money.
+  items:
+    - type: image
+      image:
+        src: /src/assets/home_cleaning/outside_your_home/roof_cleaning/black-algae-streaks-on-a-tiled-roof.jpg
+        alt: A concrete tiled roof heavily streaked with black algae and blotched with
+          pale green lichen, worst on the shaded side and in the valley
+    - type: text
+      heading: What the black streaking actually is
+      body:
+        - It is algae, and the pale crusty blotches with it are lichen. Both
+          live on the roof rather than sitting on it, which is why hosing does
+          nothing and why the streaks always run downslope from the ridge in the
+          same pattern.
+        - "It grows fastest where the roof stays damp longest: the shaded
+          southern side, under trees, in the valleys and along the bottom two
+          rows of tiles. That is also why one elevation of a house can look
+          filthy while the sunny side looks nearly new."
+        - Lichen is the one to deal with early. It anchors into the surface of
+          the tile and holds moisture there, and on an older roof that speeds up
+          the day the tiles need replacing rather than washing.
+    - type: text
+      heading: What a soft wash does that a blast cannot
+      body:
+        - Low pressure and a cleaning solution, left to work, then rinsed. The
+          growth dies rather than being knocked off, so it comes back on a scale
+          of years instead of months.
+        - High pressure looks more impressive on the day and costs you later.
+          Enough force to strip lichen off a concrete tile also strips the
+          factory coating, which is the layer keeping the tile from soaking up
+          water. Wet tiles are heavier, they grow moss faster and they break
+          more easily underfoot.
+        - "On colorbond the same rule applies for a different reason: pressure
+          gets under the laps and into the screw holes, and a roof that has
+          never leaked can start after it has been blasted."
+    - type: image
+      image:
+        src: /src/assets/home_cleaning/outside_your_home/roof_cleaning/half-treated-roof-tiles.jpg
+        alt: A tiled roof halfway through a soft wash, one side still streaked black
+          with algae and lichen, the other side pale, even and faintly damp
+    - type: image
+      image:
+        src: /src/assets/home_cleaning/outside_your_home/roof_cleaning/cleaner-with-soft-wash-gear-beside-a-house.jpg
+        alt: A cleaner in uniform standing on the lawn beside a low pressure soft wash
+          unit with a teal harness over her shoulder, turning to the camera with
+          a friendly expression
+    - type: text
+      heading: Who is on your roof
+      body:
+        - The same small local team, in TLB uniform, harnessed and anchored. We
+          are local, [insured] and there is one number to ring if something is
+          not right.
+        - We walk the roof before we start and tell you what we found. Cracked
+          tiles, failed pointing, a rusted valley or a sheet that has lifted are
+          all things you want to hear about while somebody is up there, not in
+          the next storm. We clean roofs, we do not repair them, so there is
+          nothing in it for us either way.
+warning:
+  heading: Never let anyone high pressure your roof
+  body:
+    - A high pressure wand held on a concrete tile takes the growth off and the
+      surface coating with it. The tile underneath is porous, so it drinks
+      water, grows moss faster and gets heavier and more brittle. The roof looks
+      its best on the day it is damaged and worse every year after.
+    - On a tiled roof the other two casualties are the pointing along the ridge,
+      which cracks, and the laps, where water is forced up under the tiles into
+      the roof space. If a quote is low because the job is quick, this is
+      usually why. Ask what pressure they use and what they do about the growth
+      in the surface, and if the answer is a number of thousands of PSI, keep
+      looking.
+method:
+  heading: What our roof cleaning involves, stage by stage
+  lead: Six stages, in this order. The last three are the ones people ring about
+    afterwards.
+  items:
+    - icon: puzzle
+      title: We get on it safely, or not at all
+      description: Harness, anchor and a proper look at the pitch and the condition
+        before anyone walks on it. A brittle old tile roof in the wet is a job
+        to be assessed, not attacked, and if it cannot be walked we say so.
+    - icon: target
+      title: Roof first, then the gutters
+      description: Loose leaf litter, moss mats and debris come off before any
+        solution goes down, and the gutters and valleys are cleared afterwards,
+        because everything we take off the roof ends up in them. A roof clean
+        that leaves your gutters packed is half a job.
+    - icon: spray-bottle
+      title: Solution on, and time to work
+      description: A low pressure application, left to do its job rather than rushed,
+        then rinsed at a pressure the surface can take. [Confirm the cleaning
+        solution TLB uses and its dilution, so this page can name it plainly.]
+    - icon: bloom
+      title: Plants and pets protected
+      description: Garden beds along the drip line get wet down before and rinsed
+        after, outdoor furniture is moved or covered, and pets come inside while
+        we work. [Confirm TLB’s garden protection protocol and what is done with
+        the run-off.]
+    - icon: idea
+      title: A word on what we found
+      description: Cracked tiles, failed ridge pointing, a rusted valley, lifted
+        sheeting or a whirlybird that has seized. Photographed and shown to you,
+        with no repair quote attached, because we do not do roof repairs.
+    - icon: chart-bars
+      title: Windows and paths afterwards
+      description: "Anything that catches run-off gets rinsed down before we leave:
+        windows, walls, paved paths, the driveway. A clean roof over spotted
+        windows and a streaked wall does not look like a clean house."
+beforeAfter:
+  heading: The same roof, both ways.
+  lead: Drag the handle across the photo.
+  note: Illustrative sample, shown while we collect before and after photos from
+    real TLB jobs.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/sample-roof-before.png
+        alt: "Sample illustration: a tiled roof streaked with black algae and blotched
+          with pale lichen"
+      after:
+        src: /src/assets/home_cleaning/before_after/sample-roof-after.png
+        alt: "Sample illustration: the same tiled roof clean, the tiles even and pale
+          with no streaking"
+      caption: Algae and lichen on a tiled roof
+      start: 45
+timing:
+  heading: When to do it
+  body:
+    - type: paragraph
+      text: Roof growth here is seasonal, and the best time to deal with it is before
+        the wet rather than after.
+    - type: list
+      items:
+        - Late winter and spring is the sweet spot. The growth is dormant and
+          slower, the weather is settled enough to work, and the roof is clear
+          before the summer storms.
+        - After a long wet summer is when people notice it, and it is also when
+          everyone rings at once. It can still be done, it just books out.
+        - Before selling, do it early. A dark streaked roof is the first thing
+          in an aerial photo and the first thing a buyer values as a future
+          cost.
+    - type: paragraph
+      text: How often depends on the shade, not the calendar. A roof in full sun with
+        nothing overhanging it can go many years. A roof under trees on the
+        southern side of a hinterland block will be greening up again long
+        before that, and the honest answer is that we will tell you what yours
+        looks like rather than sell you a schedule you do not need.
+otherServices:
+  heading: The rest of the outside
+  lead: Roofs are usually booked with the gutters, and often with the walls,
+    because everything we take off the roof lands on both.
+comparison:
+  heading: How TLB compares
+  lead: This is the trade where the lowest quote can cost you a roof. What you are
+    buying is the judgement about pressure, not the hour of labour.
+  cornerLabel: Why TLB Cleaning is different
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+bookingFaq:
+  heading: Booking a roof clean
+  items:
+    - question: Will it come back?
+      answer: "Eventually, and much more slowly than after a high pressure blast. A
+        soft wash kills the algae and lichen at the root rather than knocking
+        the top off it, so the roof stays clear for years rather than a season.
+        Shade is the variable: under trees on the southern side it returns
+        sooner than in full sun."
+    - question: Can you walk on our roof without breaking tiles?
+      answer: On a sound roof, yes, and it is walked in the right places by someone
+        who knows where those are. Old, brittle or previously blasted tiles are
+        more fragile, and we assess that before starting. If a roof should not
+        be walked we will tell you rather than risk it and hope.
+    - question: Do you do colorbond as well as tiles?
+      answer: "Yes. [Confirm TLB cleans both tile and colorbond.] Colorbond usually
+        needs less work, because growth has less to hold on to, but it still
+        films up with grime and algae in the shade, and it needs low pressure
+        for a different reason: force gets under the laps and around the
+        screws."
+    - question: What about our garden and our pets?
+      answer: Beds along the drip line get wet down before and rinsed after, furniture
+        is moved or covered and pets stay inside until we have finished and
+        rinsed off. [Confirm TLB’s garden protection protocol.] Tell us about
+        anything precious in the beds when you book and we will work around it.
+    - question: Can you paint or restore the roof too?
+      answer: No. We clean roofs, we do not recoat or repair them, and we do not have
+        a painter waiting in the van. If a roof turns out to need pointing,
+        sealing or replacement, you will hear that from us with no quote
+        attached to it.
+generalFaq:
+  heading: Soft washing, roof tiles and what it costs
+  items:
+    - question: What is soft washing a roof?
+      answer: A low pressure application of a cleaning solution, left to work for a
+        period and then rinsed off gently. The pressure is closer to a garden
+        hose than a pressure washer. It suits roofs, render, painted surfaces
+        and cladding, where force would strip the finish or drive water in
+        behind it.
+    - question: Why does my roof have black streaks?
+      answer: It is algae growing on the surface, running downslope from the ridge
+        because that is the way water carries it. Humidity, shade and leaf
+        litter feed it, which is why the streaking is always worst on the shaded
+        elevation, in the valleys and under overhanging trees. The pale crusty
+        patches with it are lichen.
+    - question: Does roof cleaning damage tiles?
+      answer: "Soft washing does not. High pressure can, and often does: it strips the
+        surface coating off concrete tiles, cracks ridge pointing and forces
+        water up under the laps into the roof space. Once the coating is gone
+        the tile absorbs water, grows moss faster and becomes more brittle
+        underfoot."
+    - question: Can old fibre cement roofing be cleaned?
+      answer: Not by us. Fibre cement roofing and eave sheeting installed before the
+        1990s can contain asbestos, and cleaning disturbs the surface, so it is
+        work for a licensed asbestos removalist rather than a cleaner. If you
+        are not sure what your roof is made of, get it identified before anyone
+        washes it.
+    - question: How much does roof cleaning cost?
+      answer: Roof cleaning is usually priced per square metre of roof area, with a
+        minimum charge, and the rate moves with pitch, access, roof type, how
+        heavy the growth is and whether the gutters are done at the same time.
+        Ask for a price against a written scope that says which method is being
+        used. [TLB’s pricing basis and minimum charge. Confirm.]
+closingCta:
+  kicker: Roof cleaning
+  heading: Start with a look at it.
+  lead: Send us the address and a photo from the street if you have one. We will
+    tell you what is growing up there, what will come off and what it will cost.
+    Get a free quote today.

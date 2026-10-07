@@ -1,0 +1,329 @@
+seo:
+  title: Property Management Cleaning Services | TLB Cleaning
+  description: Cleaning for rent rolls, with an employed local team, one point of
+    contact and a re-clean commitment in writing. Add us to your panel.
+buttonLabel: Add us to your panel
+hero:
+  kicker: Real estate and property management cleaning
+  headingLines:
+    - Property management cleaning services
+    - for a whole rent roll
+  subheading: Stop chasing cleaners between tenancies.
+  lead: Property management cleaning services with the capacity for a rent roll,
+    one point of contact and vacancy cleans that pass the first inspection.
+    Working with agencies across the Northern Rivers, the Tweed and the Southern
+    Gold Coast. {{line.fast}}
+  image:
+    src: /src/assets/real_estate/real-estate-cleaning-finishing-an-empty-vacated-rental.jpg
+    alt: A cleaner in an aqua polo and dark teal apron finishing the last window of
+      an empty, freshly vacated rental home, with the keys left on the kitchen
+      bench
+definition:
+  body:
+    - type: paragraph
+      text: "Real estate cleaning is the cleaning a managing agency arranges rather
+        than a tenant: vacancy cleans between tenancies, exit cleans measured
+        against an outgoing condition report, and routine cleans on the
+        properties an agency looks after. TLB Cleaning works with agencies and
+        property managers across the Northern Rivers, the Tweed and the Southern
+        Gold Coast."
+    - type: paragraph
+      text: A vacancy clean, an exit clean, a make-ready and a bond clean are close
+        relatives with different payers. If you are a tenant cleaning your own
+        place before the final inspection, the page you want is end of lease and
+        bond cleaning. This page is for the person who has a vacancy on the
+        board, a landlord asking when it will be listed, and no interest in
+        ringing four cleaners to find out who is free.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: Agencies hand us three kinds of job.
+  headingAccent: Which one is on your desk?
+  cards:
+    - image:
+        src: /src/assets/real_estate/real-estate-cleaning-two-cleaners-arriving-at-a-rental-house.jpg
+        alt: Two cleaners in aqua polos and dark teal aprons walking up the front path
+          of a well-kept coastal rental house, each carrying a cleaning caddy
+      title: A vacancy, and a window that is already too tight
+      description: Keys back Friday, photos Monday, open home Saturday. We can put
+        more than one cleaner on a property to compress a turnaround, which is
+        the whole reason to use a team rather than a sole operator on a vacancy.
+    - image:
+        src: /src/assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-property-manager-at-a-vacant-handover.jpg
+        alt: A property manager reviewing a vacant handover in an empty rental kitchen,
+          keys on the benchtop
+      title: An exit clean that has to pass first time
+      description: "Cleaned against the condition report, not against a general idea
+        of tidy: ovens, tracks, fans, filters and the marks that get written up.
+        The second inspection is the expensive one, for you and for the tenant."
+      cta:
+        label: End of lease standard
+        href: /house-cleaning/end-of-lease-cleaning/
+    - image:
+        src: /src/assets/real_estate/real-estate-cleaning-routine-clean-in-a-tenanted-rental-kitchen.jpg
+        alt: A cleaner in an aqua polo and dark teal apron wiping down the benchtop of a
+          tidy, furnished rental kitchen during a routine scheduled clean
+      title: Standing work across the rent roll
+      description: Routine cleans on managed and holiday-let properties, common areas,
+        and the owner-occupied jobs your landlords ask you to recommend somebody
+        for. A local business, [insured] and [police-checked], with one number
+        to ring.
+      cta:
+        label: Why TLB
+        href: /why-tlb/
+workingWithUs:
+  heading: What working with us looks like
+  lead: An agency is not buying a clean. It is buying not having to think about
+    the clean, so this is the operational side rather than the task list.
+  items:
+    - icon: suitcase
+      title: One contact, not a phone tree
+      description: You send the job to one place and it is booked. You are not
+        managing which cleaner is free, chasing a confirmation or explaining the
+        property twice. When something needs a decision, the person who rings
+        you knows the job.
+    - icon: chart-bars
+      title: Capacity, in writing
+      description: A vacancy does not wait for one person to be free, and two or three
+        of our team can go on a property to compress a turnaround. [How many
+        vacancy cleans a week we can absorb, and our standard turnaround from
+        keys to done. Confirm, this is the number that wins the trial.]
+    - icon: target
+      title: Cleaned against the condition report
+      description: We clean to the standard the exit inspection is measured against,
+        not to a general idea of clean. That means the oven, the rangehood
+        filter, window tracks, fan blades, skirtings and the spots that reliably
+        get written up.
+    - icon: spark
+      title: If it fails on cleaning, we come back
+      description: "A re-clean is not a negotiation and not an invoice. [Our re-clean
+        commitment: the window it applies in, what it covers, and whether it is
+        free. Confirm. Word it as a re-clean, never as a bond back guarantee, no
+        cleaner controls whether a bond is returned.]"
+    - icon: office
+      title: Invoicing that suits your trust accounting
+      description: Referenced to the property so it can be coded without a phone call.
+        [Whether we invoice the agency, the owner or the outgoing tenant, per
+        job or consolidated, and our terms. Confirm.]
+    - icon: idea
+      title: You hear about it from us first
+      description: Damage, something abandoned, a property that was worse than the
+        notes said, or work that needs an owner’s approval before we do it, you
+        get told while you can still act on it, with photos, not after the fact.
+worthKnowing:
+  heading: The quote is not the cost. A second inspection is the cost.
+  body:
+    - A clean that comes in eighty dollars under still has to pass someone
+      else’s written report. When it does not, the cost is not the eighty
+      dollars. It is your re-inspection, the days the property sits unlisted,
+      the landlord asking why, and the tenant who now has a dispute with you
+      rather than with the cleaner.
+    - That is why agencies here tend to procure on capacity and communication
+      rather than on price, and it is why we would rather be trialled on a hard
+      property than an easy one.
+rentRoll:
+  heading: What a rent roll actually needs from a cleaner
+  body:
+    - type: paragraph
+      text: A rent roll does not produce vacancies evenly. They arrive in clusters, at
+        the end of the month and around the school terms, and a cluster is the
+        week that decides whether a cleaning arrangement is working. Four exits
+        in one week is a capacity question, not a quality question, and it is
+        worth asking about before the week arrives rather than during it.
+    - type: paragraph
+      text: "The same is true of absence. Somebody is away, or unwell, or has taken
+        other work, and the question is simply whether the arrangement continues
+        without you having to do anything. Ours does: the property goes to
+        somebody else on the same team, and you hear about it from us rather
+        than finding out when the photographer arrives."
+    - type: paragraph
+      text: Three questions sort it out quickly, and they are worth asking us as
+        readily as anyone else. How many people do you actually employ, as
+        opposed to subcontract? What happens to my job when the person who
+        normally does it is away? And who answers the phone at four on a Friday
+        when the keys have come back and the property is worse than the notes
+        said?
+beforeAfter:
+  heading: The standard an inspection is measured against.
+  lead: Drag the handle across each photo to see the same spot before and after a
+    clean.
+  note: Photographed on real TLB cleans, published with the client's permission.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/cooktop-before.jpg
+        alt: A gas cooktop before a TLB vacancy clean, with spilled coffee grounds,
+          crumbs and food scraps across the black enamel
+      after:
+        src: /src/assets/home_cleaning/before_after/cooktop-after.jpg
+        alt: The same gas cooktop after the clean, the enamel wiped back to an even
+          black finish
+      caption: Gas cooktop and burners
+    - before:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-before.jpg
+        alt: A kitchen benchtop before a TLB vacancy clean, with dishes stacked in and
+          beside the sink and pots left on the stove
+      after:
+        src: /src/assets/home_cleaning/before_after/kitchen-benchtop-after.jpg
+        alt: The same kitchen benchtop after the clean, sink empty and the bench clear
+          and wiped down
+      caption: Kitchen benchtop and sink
+services:
+  heading: What we do for agencies
+  subheading: Across the Northern Rivers, the Tweed and the Southern Gold Coast.
+  tags:
+    - label: Vacancy and exit cleans
+      href: /house-cleaning/end-of-lease-cleaning/
+    - label: Bond cleans
+      href: /house-cleaning/end-of-lease-cleaning/
+    - label: Routine managed-property cleans
+      href: /house-cleaning/
+    - label: Pre-listing and photography cleans
+    - label: Deep cleans between tenancies
+      href: /house-cleaning/deep-cleaning/
+    - label: Mould treatment and removal
+      href: /house-cleaning/mould-removal/
+    - label: Holiday let turnovers
+      href: /airbnb-holiday-home-cleaning/
+    - label: Strata and common areas
+      href: /commercial-cleaning/
+    - label: Carpet cleaning
+      href: /commercial-cleaning/commercial-carpet-cleaning/
+    - label: Driveways and exterior washing
+      href: /commercial-cleaning/commercial-pressure-cleaning/
+  note:
+    - Something not on the list? Ask us anyway.
+comparison:
+  heading: How TLB compares
+  lead: Every cleaner is reliable for the first three jobs. What an agency is
+    buying is the twentieth one, in a week when four properties came back at
+    once.
+  cornerLabel: Why TLB Cleaning is different
+  rows:
+    - label: Who attends the property
+      values:
+        - Whoever is rostered that day
+        - The same person
+        - The same local team, and we tell you who before they go
+    - label: Four exits in one week
+      values:
+        - Capacity varies by area
+        - One property at a time
+        - Two or three cleaners on a property to compress a turnaround
+    - label: When someone is away
+      values:
+        - A different contractor
+        - The job is rebooked
+        - Cover from the same team, and you hear it from us first
+    - label: What it is cleaned against
+      values:
+        - A standard checklist
+        - The cleaner's own judgement
+        - The outgoing condition report
+    - label: If the inspection fails on cleaning
+      values:
+        - Case by case
+        - Case by case
+        - A re-clean commitment in writing
+    - label: Invoicing
+      values:
+        - Head office, on their cycle
+        - Manual, variable
+        - Referenced to the property so your team can code it
+    - label: When something is wrong at the property
+      values:
+        - Reported after the job
+        - Usually a phone call
+        - Told while you can still act on it, with photos
+    - label: Commitment
+      values:
+        - Often a subscription
+        - None
+        - No lock-in, no minimum term, no exit fee
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+bookingFaq:
+  heading: Working with us on your rent roll
+  items:
+    - question: Can we trial you on a few properties first?
+      answer: "Yes, and we would rather you did. Give us the difficult one: the tight
+        window, the awkward exit condition, the property the last cleaner would
+        not go back to. An easy job tells you nothing about how we handle a hard
+        week, and there is no lock-in contract either way."
+    - question: How quickly can you turn a vacancy around?
+      answer: We can put more than one cleaner on a property, so a turnaround is
+        limited by access rather than by one person’s day. [Our standard
+        turnaround from keys to done, and how much notice we need for an urgent
+        one. Confirm.] Tell us the photography or open-home date and we will
+        work back from it.
+    - question: What happens if the exit inspection fails on cleaning?
+      answer: "We come back and fix it. [Our re-clean commitment: the window it
+        applies in, what it covers, and whether it is free. Confirm.] What we
+        will not do is argue with your report. If we missed something, we missed
+        it, and the fastest route back to a released bond is us being there
+        tomorrow."
+    - question: How does invoicing work?
+      answer: Referenced to the property so your team can code it without ringing us.
+        [Whether we invoice the agency, the owner or the outgoing tenant, per
+        job or consolidated monthly, and our terms. Confirm.]
+    - question: Are your cleaners employed or subcontracted?
+      answer: Employed, on our own team. That is what lets us tell you who is
+        attending before they do, and cover a property from within the same team
+        when someone is away. We are [insured] and [police-checked], and there
+        is one local number to ring.
+generalFaq:
+  heading: Property management cleaning services, common questions
+  items:
+    - question: What is the difference between a vacancy clean and a routine clean?
+      answer: "A routine clean maintains a property somebody lives in: surfaces,
+        floors, bathrooms and kitchen, on a schedule. A vacancy or exit clean
+        resets an empty property to the standard a written condition report is
+        measured against, which brings in everything a routine clean reasonably
+        leaves alone. That means inside the oven and rangehood filter, window
+        tracks and sills, fan blades, light fittings, skirtings, inside
+        cupboards and wardrobes, and walls where they are marked. It is a
+        different scope and a different price, and it takes two to four times as
+        long."
+    - question: Can a tenant be required to have the property professionally cleaned?
+      answer: "Not as broadly as many agreements imply. In both NSW and Queensland a
+        tenant’s obligation is generally to leave the property in the same
+        condition it was in at the start, fair wear and tear excepted. That is a
+        comparison against the entry condition report rather than a
+        professional-cleaning receipt. Blanket clauses requiring professional
+        cleaning or professional carpet cleaning regardless of condition are the
+        ones most often challenged, and pets can change the position. This is
+        general information rather than advice: check the current requirements
+        with NSW Fair Trading or the Queensland RTA, and read our guide on what
+        the law actually says."
+    - question: "Who pays for the bond clean: the tenant, the landlord or the agency?"
+      answer: Usually the outgoing tenant arranges and pays for it, because it is
+        their obligation to return the property in the agreed condition. The
+        agency arranges and bills it to the owner where the tenant has not done
+        it, where the tenant has vacated without cleaning, or where it is a
+        make-ready between tenancies rather than an exit obligation. Deducting a
+        cleaning cost from a bond is a separate process with its own evidence
+        requirements, and it needs the condition report to support it.
+    - question: How long does a vacancy clean take?
+      answer: A two-bedroom unit is usually four to six hours for one cleaner. A
+        four-bedroom house with two bathrooms is a full day, or half a day with
+        two or three cleaners on it, which is how a same-week turnaround gets
+        done. Carpet cleaning and exterior washing are separate jobs on top, and
+        carpet needs drying time before the photographer arrives, which is the
+        scheduling trap on a tight vacancy.
+    - question: What should an agency ask a cleaner before adding them to a preferred
+        trades list?
+      answer: "Five things, and none of them is the price. How many cleaners do you
+        employ rather than subcontract. What happens to my job when the usual
+        person is away. What is your commitment if an exit inspection fails on
+        cleaning. Are you insured, and can I see the certificate of currency.
+        And how do you invoice: per property, referenced how, on what terms. A
+        cleaner who answers all five without hedging is a different proposition
+        from the lowest quote."
+closingCta:
+  kicker: Real estate and property management cleaning
+  heading: Give us the difficult property.
+  lead: The one with the tight window or the awkward exit condition. That is the
+    job that tells you something, and it is a better trial than the easy one. No
+    lock-in, no obligation.

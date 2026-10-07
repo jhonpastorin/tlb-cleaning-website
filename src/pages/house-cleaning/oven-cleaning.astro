@@ -59,9 +59,11 @@ import ServiceBlocks from '../../components/sections/ServiceBlocks.astro';
 import BeforeAfter from '../../components/sections/BeforeAfter.astro';
 // Before/after pairs — real TLB job photos. The `sample-` files are flat
 // illustrations and stay only where no real pair exists for that subject yet.
-import cooktopBeforeImg from '../../assets/home_cleaning/before_after/cooktop-before.jpg';
-import cooktopAfterImg from '../../assets/home_cleaning/before_after/cooktop-after.jpg';
-import type { BeforeAfterPair } from '../../components/sections/BeforeAfter.astro';
+// The two data imports below sit here, between components, on purpose: Astro
+// orders a page's inline CSS by import position, and they hold the slots the
+// before/after photo imports used to, so the built CSS order is unchanged.
+import { comparisonColumns, comparisonRows } from '../../data/comparison';
+import { locationGroups } from '../../data/locations';
 import TagCloud from '../../components/sections/TagCloud.astro';
 import ComparisonTable from '../../components/sections/ComparisonTable.astro';
 import GoogleReviewSlider from '../../components/sections/GoogleReviewSlider.astro';
@@ -70,15 +72,10 @@ import Faq from '../../components/sections/Faq.astro';
 import CallToAction from '../../components/sections/CallToAction.astro';
 import SiteFooter from '../../components/sections/SiteFooter.astro';
 import logoImg from '../../assets/logo/tlb-logo-horizontal.png';
-import heroImg from '../../assets/home_cleaning/appliances/oven_bbq_and_appliances/cleaner-wiping-out-an-open-oven.png';
-import cardBbqImg from '../../assets/home_cleaning/appliances/oven_bbq_and_appliances/well-used-barbecue-on-a-timber-deck.jpg';
-import cardQuoteImg from '../../assets/home_cleaning/appliances/homeowner-and-cleaner-talking-in-a-living-room.jpg';
 import cardTeamImg from '../../assets/home_cleaning/appliances/cleaner-with-a-caddy-in-a-home-entry-hall.jpg';
 import { whoIsInYourHomeCard } from '../../data/whoIsInYourHome';
 // Before/after: REAL cooktop photography. See the file header.
-import definitionBgImg from '../../assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png';
 import footerLogoImg from '../../assets/logo/tlb-logo-square.png';
-import type { TextBlockBody } from '../../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -88,14 +85,17 @@ import {
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
-import { comparisonColumns, comparisonRows } from '../../data/comparison';
-import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherApplianceServices } from '../../data/appliance-services';
 // The five exterior pages, for the cross-sell grid. See the note above
 // crossSellItems.
 import { outsideServices } from '../../data/outsideYourHome';
-import { theLine, theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { theLineHeading, howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
+import { localBusiness } from '../../data/business';
+import { z } from 'astro/zod';
+import { getPage } from '../../lib/cms';
+import * as section from '../../lib/cms-schemas';
+import { sized } from '../../lib/cms-schemas';
 
 const OWN_HREF = '/house-cleaning/oven-cleaning/';
 
@@ -117,30 +117,6 @@ const OWN_HREF = '/house-cleaning/oven-cleaning/';
 //   'Oven cleaning that removes baked-on grease from racks, trays, doors and
 //    glass, plus BBQ cleaning. Ventilated as we work. Book your oven clean today.'
 // Resolve the meta, not §14 and not FAQ 1.
-const pageMeta = {
-  title: 'Oven Cleaning Service - BBQ Cleaning | TLB Cleaning',
-  description:
-    'Oven cleaning that removes baked-on grease from racks, trays, doors and glass, plus BBQ cleaning. Non-toxic products. Book your oven clean today.',
-  canonical: 'https://tlbcleaning.com.au/house-cleaning/oven-cleaning/',
-};
-
-const business = {
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: '+61 404 742 065',
-  email: 'hello@tlbcleaning.com.au',
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
-  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
-  description: pageMeta.description,
-};
 
 // The page's one primary CTA, per BFD 9.5, repeated on every in-page button.
 // `Book your oven clean today` is the approved workbook CTA and it fits a
@@ -154,7 +130,6 @@ const business = {
 // The header keeps the site-wide quoteCta — that is chrome, not this page.
 // Routing card 2 keeps `End of lease cleaning` and card 3 keeps `Why TLB`:
 // those are navigation to another page, not this page's CTA.
-const pageCta = { label: 'Book your oven clean today', href: quoteCta.href };
 
 // §1 Hero. The H1 now carries the mapped primary `oven cleaning service`
 // (400/mo) as an exact contiguous phrase — the plural counts as verbatim —
@@ -167,123 +142,20 @@ const pageCta = { label: 'Book your oven clean today', href: quoteCta.href };
 // region, it leads with the door glass because that is the page's strongest
 // and most specific hook, and it carries `oven and bbq cleaning` (100/mo) into
 // the heading structure.
-const hero = {
-  kicker: 'Oven, BBQ and appliance cleaning',
-  headingLines: ['Oven cleaning services across', 'the Northern Rivers and the Tweed'],
-  subheading: 'Oven cleaning services that reach the door glass, plus the barbecue',
-  lead:
-    `Nobody has ever enjoyed cleaning an oven. Ours is an oven cleaning service that takes the appliance apart, soaks the parts and puts it back together working, in your home. ${theLine.fast}`,
-  cta: pageCta,
-  image: {
-    ratio: '1/1',
-    label:
-      'A TLB cleaner in an aqua polo, dark teal apron and teal gloves kneeling to wipe out the inside of an open oven door',
-    src: heroImg,
-  },
-};
 
-const definitionBody: TextBlockBody[] = [
-  // Opens with the mapped phrase as a contiguous string — the opening
-  // paragraph is scored on the first two sentences — and picks up
-  // `professional oven cleaning` (200/mo). One clause changed.
-  'A professional oven cleaning service is a strip down rather than a wipe out. The racks, trays, side rails and usually the inner door glass come out of the appliance and go into a soak, and the cavity is cleaned while they sit. It is the only way to reach the baked-on carbon in the corners and between the door glass, which is exactly where an oven looks worst. TLB Cleaning cleans ovens, barbecues and appliances across the Northern Rivers and the Tweed.',
-  'The same method covers a barbecue and most other appliances. Grill plates, burners and a fat tray come out and soak the same way a set of oven racks does, and a rangehood filter is the same job again in miniature. What changes is the size of the parts and how much grease is on them.',
-];
-
-const pathwayCards = {
-  heading: 'People arrive here with three questions.',
-  headingAccent: 'Which one is yours?',
-  cards: [
-    {
-      number: 1,
-      image: {
-        ratio: '4/3',
-        label: 'A well-used stainless barbecue with the lid open on the timber deck of a coastal home',
-        src: cardBbqImg,
-      },
-      title: 'People are coming over and I have looked at the barbecue',
-      description:
-        'Grill plates, burners, the fat tray and the grey layer on the inside of the hood. It is a two hour job with a wire brush and a bad mood, or it is a booking.',
-      cta: pageCta,
-    },
-    {
-      number: 2,
-      image: {
-        ratio: '4/3',
-        label: 'A TLB cleaner and a homeowner talking through the job in a living room',
-        src: cardQuoteImg,
-      },
-      title: 'We are moving out and the oven has to pass',
-      description:
-        'The oven is the most common thing a property manager pulls a bond clean up on, and the door glass is the most common thing inside the oven. It usually costs less to have it done than to lose part of the bond over it.',
-      cta: { label: 'End of lease cleaning', href: '/house-cleaning/end-of-lease-cleaning/' },
-    },
-    whoIsInYourHomeCard(cardTeamImg),
-  ],
-};
+// In `definitionBody`:
+// Opens with the mapped phrase as a contiguous string — the opening
+// paragraph is scored on the first two sentences — and picks up
+// `professional oven cleaning` (200/mo). One clause changed.
 
 // §4 The shared method, not three separate walkthroughs. See the file header.
-const methodItems = [
-  {
-    icon: 'puzzle' as const,
-    title: 'It comes apart first',
-    description:
-      'Racks, side rails, trays, burners and grill plates all come out. On most ovens the inner door glass comes out too, which is the difference between an oven that looks clean and one that looks clean from the sofa.',
-  },
-  {
-    icon: 'spray-bottle' as const,
-    title: 'The parts go in to soak',
-    description:
-      // ⚠️ LAUNCH BLOCKER. Confirm the actual arrangement. See header.
-      'Soaking does the work that scrubbing otherwise has to, which is why a proper job takes time rather than muscle. [Confirm whether TLB soaks on site in trays, carries a heated dip tank, or takes parts away and returns them.]',
-  },
-  {
-    icon: 'spark' as const,
-    title: 'The cavity is cleaned while they sit',
-    description:
-      'Roof, floor, back, seals and the corners where carbon collects. The fan cover and the element surrounds get done at the same time. Nothing here needs to be forced, because the products have already been given time to work.',
-  },
-  {
-    icon: 'target' as const,
-    title: 'The door glass, both sides of both panes',
-    description:
-      'The brown film sits between the two panes of glass, so wiping the outside never touches it. Separating the door is the only way to reach it, and it is the single most noticeable part of the whole job when it is done.',
-  },
-  {
-    icon: 'bloom' as const,
-    title: 'Rebuilt, wiped down and tested',
-    description:
-      'Everything goes back where it came from, the seals go back on properly, and the appliance is turned on to check it works before we leave. Your kitchen gets wiped down after us rather than left as the evidence.',
-  },
-  {
-    icon: 'house' as const,
-    title: 'The other appliances, same visit',
-    description:
-      // ⚠️ LAUNCH BLOCKER. Confirm the actual list. See header.
-      'Rangehood and filters, the inside of the fridge, the microwave and the cooktop are the usual extras, and they are quicker done at the same time than booked separately. [Confirm the full list, and whether dishwashers and washing machines are included.]',
-  },
-];
+//
+// In `methodItems`, on "The parts go in to soak":
+// ⚠️ LAUNCH BLOCKER. Confirm the actual arrangement. See header.
+// In `methodItems`, on "The other appliances, same visit":
+// ⚠️ LAUNCH BLOCKER. Confirm the actual list. See header.
 
 // REAL before/after photography. See the file header. The `note` is not optional.
-const beforeAfterPairs: BeforeAfterPair[] = [
-  {
-    before: {
-      src: cooktopBeforeImg,
-      alt: 'A gas cooktop before a TLB clean, with spilled coffee grounds, crumbs and food scraps across the black enamel',
-    },
-    after: {
-      src: cooktopAfterImg,
-      alt: 'The same gas cooktop after the clean, the enamel wiped back to an even black finish',
-    },
-    caption: 'Gas cooktop and burners',
-    ratio: '4/3',
-  },
-];
-
-const worthKnowingBody: TextBlockBody[] = [
-  'The self-clean cycle on a conventional oven is not what most people think it is. On a pyrolytic oven it is real: the oven locks and runs itself up to around 500 degrees, burning residue down to a fine ash you wipe out afterwards. It works, it smells strongly for a few hours, and it puts every seal, element and control board in the appliance through a very hard afternoon. It is also the only cleaning method the manufacturer of a pyrolytic oven will endorse, because the enamel coating inside it can be damaged by the caustic products used on ordinary ovens.',
-  'On an oven that is not pyrolytic, the "self clean" setting usually just means a steam assist function, which softens light residue and does nothing at all to baked-on carbon. Either way, none of it touches the film between the door glass, because that is not inside the cavity. If the door of your oven is the part that looks bad, no cycle of any kind will fix it. Somebody has to take the door apart.',
-];
 
 // The cross-sell grid. The five interior siblings, then the five "Outside your
 // home" pages.
@@ -314,43 +186,10 @@ const crossSellItems = [
   })),
 ];
 
-const comparisonTable = {
-  heading: 'How TLB compares',
-  cornerLabel: 'Why TLB Cleaning is different',
-  lead: 'This job involves taking apart an appliance you rely on and putting it back together. It is worth knowing who is doing that, and who you ring if it is not right.',
-  columns: comparisonColumns,
-  rows: comparisonRows,
-};
-
-const brandedFaqItems = [
-  {
-    question: 'Will the kitchen smell of chemicals afterwards?',
-    answer:
-      // ⚠️ Deliberately does not characterise the products. See header.
-      'It should not. The parts soak away from the cavity rather than sitting in the room, the oven is wiped out and rinsed rather than left coated, and we ventilate while we work. If you are sensitive to smells, or someone in the house is pregnant or asthmatic, tell us when you book so we can plan the ventilation properly.',
-  },
-  {
-    question: 'How long does an oven take?',
-    answer:
-      'Usually a couple of hours for a standard oven, because most of that is soak time rather than scrubbing. A double oven, a very neglected one or an oven plus a cooktop and rangehood takes longer. You can use it as soon as we are finished, and we will have run it briefly to check it before we go.',
-  },
-  {
-    question: 'Do you clean pyrolytic and self-cleaning ovens?',
-    answer:
-      // ⚠️ LAUNCH BLOCKER. Confirm this is TLB's policy. See file header.
-      'We clean the outside, the door glass, the racks and the trays, but we do not chemically clean the inside of a pyrolytic cavity. The special coating in those ovens can be damaged by the products used on a standard oven, and the manufacturer’s own high temperature cycle is the method they specify. We will tell you which type you have if you are not sure.',
-  },
-  {
-    question: 'Can you do the barbecue at the same time?',
-    answer:
-      'Yes, and it is a sensible way to do it, because it is the same soak and the same visit. Barbecues are usually worse than people expect underneath the plates, particularly the fat tray and the inside of the hood. Tell us the rough size and how long it has been when you book.',
-  },
-  {
-    question: 'What happens if I get in touch?',
-    answer:
-      'Tell us what you have: oven, oven and cooktop, a barbecue, the fridge, or the lot. We will give you a price and a time. Most people get more than one thing done in the same visit because the second appliance costs less than a separate booking.',
-  },
-];
+// In `brandedFaqItems`, on "Will the kitchen smell of chemicals afterwards?":
+// ⚠️ Deliberately does not characterise the products. See header.
+// In `brandedFaqItems`, on "Do you clean pyrolytic and self-cleaning ovens?":
+// ⚠️ LAUNCH BLOCKER. Confirm this is TLB's policy. See file header.
 
 // §12 Non-branded FAQs.
 //
@@ -368,41 +207,70 @@ const brandedFaqItems = [
 //     gives no method or product advice, following BFD 5.3 and the same
 //     approach house-cleaning/mould-removal.astro takes. Do not turn it into
 //     a how-to.
-const nonBrandedFaqItems = [
-  {
-    question: 'What is the difference between a pyrolytic and a self-cleaning oven?',
-    answer:
-      'A pyrolytic oven has a genuine high temperature cycle: it locks the door, heats to around 500 degrees and reduces residue to ash that you wipe out. Most ovens marketed as self cleaning are not pyrolytic and have a steam assist function instead, which loosens light soil and does nothing to baked-on carbon. Check your manual for the word pyrolytic rather than relying on the marketing.',
-  },
-  {
-    question: 'Why is the oven door glass brown on the inside?',
-    answer:
-      'Because grease and steam get between the two panes of glass through the vents in the top of the door, condense there and bake on. It is on a surface you cannot reach from either side, which is why it survives every clean you have ever done. The only way to it is to separate the door, and on most ovens that is straightforward for someone who has done it before.',
-  },
-  {
-    question: 'How often should an oven be cleaned?',
-    answer:
-      'Every six to twelve months suits most households, and more often if you roast a lot or the oven is used daily. Between cleans, wiping spills while the oven is still warm rather than letting them bake on again is what keeps the interval long. A tray under anything likely to bubble over saves more work than any product.',
-  },
-  {
-    question: 'Is it safe to clean an oven with bicarbonate and vinegar?',
-    answer:
-      'It is mild and it will not damage an oven, but it is slow and it does not touch heavy baked-on carbon, which is what most people are actually trying to remove. It also cannot reach between the door panes. It is a reasonable maintenance habit and a poor rescue. ⚠️ Whatever you use, never mix cleaning products together, and never mix anything with bleach.',
-  },
-  {
-    question: 'How much does oven cleaning cost?',
-    answer:
-      // ⚠️ BRACKETED ON PURPOSE, same as every sibling.
-      'Usually priced per appliance, so an oven, a cooktop, a rangehood and a barbecue are separate line items, generally with a lower rate when several are done in one visit. Size and condition move it: a double oven or one that has not been touched in years takes longer. [TLB’s pricing basis and minimum charge. Confirm.]',
-  },
+//
+// In `nonBrandedFaqItems`, on "How much does oven cleaning cost?":
+// ⚠️ BRACKETED ON PURPOSE, same as every sibling.
+
+// CONTENT lives in src/content/pages/house-cleaning/oven-cleaning.yaml and is
+// edited in Pages CMS ("Oven cleaning"). This file owns the layout. The notes
+// above explain why each section says what it says; they stay here because
+// Pages CMS rewrites the YAML on save and would drop them.
+const page = await getPage(
+  'house-cleaning/oven-cleaning',
+  z.object({
+    seo: section.seo,
+    // The text of the page's one primary button. It always links to the
+    // site-wide quote page, so only the words are editable.
+    buttonLabel: section.text,
+    hero: section.hero,
+    // Its background photo sits behind the trust bar and this block together
+    // (the Backdrop below), so it cannot be left empty.
+    definition: section.textBlock.extend({ backgroundImage: section.backgroundPhoto }),
+    // The third card is the shared "Who is in my home" card, added in code.
+    // A card whose button is left empty gets the page's primary button.
+    pathways: section.pathwayCards.extend({
+      cards: z.array(section.pathwayCards.shape.cards.element.extend({ cta: section.optional(section.link) })).min(1),
+    }),
+    method: section.iconGrid,
+    beforeAfter: section.beforeAfter,
+    selfClean: section.textBlock,
+    // The rows are the shared appliance and outside-your-home cross-links.
+    otherServices: section.sectionIntro,
+    // The columns and rows are the shared comparison table (Site settings).
+    comparison: section.comparisonTable.omit({ columns: true, rows: true }),
+    reviews: section.sectionHeading,
+    whereWeClean: section.tagCloud,
+    bookingFaq: section.faq,
+    generalFaq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/house-cleaning/oven-cleaning/',
+};
+
+const business = localBusiness({
+  description: pageMeta.description,
+  areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
+  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
+});
+
+const pageCta = { label: page.buttonLabel, href: quoteCta.href };
+
+const heroImage = page.hero.image && sized(page.hero.image, '1/1');
+
+const pathwayCards = [
+  ...page.pathways.cards.map((card, i) => ({
+    number: i + 1,
+    ...card,
+    image: sized(card.image, '4/3'),
+    cta: card.cta ?? pageCta,
+  })),
+  whoIsInYourHomeCard(cardTeamImg),
 ];
 
-const closingCta = {
-  kicker: 'Oven, BBQ and appliance cleaning',
-  heading: 'Get the worst job in the house off your list.',
-  lead: 'Oven, cooktop, rangehood, barbecue or the lot. Taken apart, soaked, rebuilt and tested, with the kitchen wiped down after us. Book your oven clean today.',
-  cta: pageCta,
-};
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -419,26 +287,33 @@ const closingCta = {
       variant="split-single-image"
       imagePosition="right"
       imageFit="contain-bottom"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      subheading={hero.subheading}
-      lead={hero.lead}
-      cta={hero.cta}
-      image={hero.image}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? pageCta}
+      image={heroImage}
     />
 
-    <Backdrop image={definitionBgImg} tint="muted" opacity={90}>
+    <Backdrop image={page.definition.backgroundImage} tint="muted" opacity={90}>
       <TrustBar variant="card" cards={trustBarCards} />
-      <TextBlock theme="muted" align="left" body={definitionBody} />
+      <TextBlock
+        theme="muted"
+        align="left"
+        heading={page.definition.heading}
+        body={page.definition.body}
+        cta={page.definition.cta}
+      />
     </Backdrop>
 
-    <PathwayCards heading={pathwayCards.heading} headingAccent={pathwayCards.headingAccent} cards={pathwayCards.cards} />
+    <PathwayCards heading={page.pathways.heading} headingAccent={page.pathways.headingAccent} cards={pathwayCards} />
 
     <ServiceBlocks
       variant="icon-grid"
-      heading="How our oven cleaning service works, stage by stage"
-      lead="The same method covers a barbecue and most other appliances. Soak time does the work, not scrubbing."
-      items={methodItems}
+      heading={page.method.heading}
+      lead={page.method.lead}
+      items={page.method.items}
+      note={page.method.note}
       cta={pageCta}
     />
 
@@ -446,42 +321,48 @@ const closingCta = {
         describe the COOKTOP because that is what the frames show; if an
         oven-interior pair is ever added, they have to change again. */}
     <BeforeAfter
-      heading="What the cooktop looks like afterwards"
-      lead="Months of boil-overs and spills, baked on and wiped around. Drag the handle to see the difference."
-      pairs={beforeAfterPairs}
-      note="Photographed on a real TLB clean, published with the client's permission."
-
+      heading={page.beforeAfter.heading}
+      lead={page.beforeAfter.lead}
+      pairs={page.beforeAfter.pairs}
+      note={page.beforeAfter.note}
+      beforeLabel={page.beforeAfter.beforeLabel}
+      afterLabel={page.beforeAfter.afterLabel}
     />
 
     <TextBlock
       theme="dark"
       align="left"
-      heading="What the self-clean cycle actually does"
-      body={worthKnowingBody}
+      heading={page.selfClean.heading}
+      body={page.selfClean.body}
+      cta={page.selfClean.cta}
+      backgroundImage={page.selfClean.backgroundImage}
     />
 
     <ServiceBlocks
       variant="list"
-      heading="Other things we clean around the house"
-      lead="The jobs a regular clean never has time for. Any of them can go on the same visit."
+      heading={page.otherServices.heading}
+      lead={page.otherServices.lead}
       items={crossSellItems}
     />
 
     <ComparisonTable
-      heading={comparisonTable.heading}
-      cornerLabel={comparisonTable.cornerLabel}
-      lead={comparisonTable.lead}
-      columns={comparisonTable.columns}
-      rows={comparisonTable.rows}
+      heading={page.comparison.heading}
+      cornerLabel={page.comparison.cornerLabel}
+      lead={page.comparison.lead}
+      columns={comparisonColumns}
+      rows={comparisonRows}
+      footnote={page.comparison.footnote}
+      cta={page.comparison.cta}
     />
 
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
     <TagCloud
-      heading="Where we clean"
-      subheading="Across the Northern Rivers, the Tweed and the Southern Gold Coast."
+      heading={page.whereWeClean.heading}
+      subheading={page.whereWeClean.subheading}
+      tags={page.whereWeClean.tags}
       groups={locationGroups}
-      note={["If a town isn't listed, ask us anyway."]}
+      note={page.whereWeClean.note}
     />
 
     {/* §1.3 The Line as a section heading, with §1.4 as its standfirst.
@@ -508,15 +389,15 @@ const closingCta = {
         picks up `oven and bbq cleaning` (100/mo) as an exact phrase. The
         mapped primary is deliberately kept out of both: three exact instances
         is the ceiling and the H1, subheading and process H2 have spent them. */}
-    <Faq heading="Booking an oven or BBQ clean" items={brandedFaqItems} />
-    <Faq heading="Oven, BBQ and appliance cleaning questions" items={nonBrandedFaqItems} />
+    <Faq heading={page.bookingFaq.heading} lead={page.bookingFaq.lead} items={page.bookingFaq.items} />
+    <Faq heading={page.generalFaq.heading} lead={page.generalFaq.lead} items={page.generalFaq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? pageCta}
     />
   </main>
 

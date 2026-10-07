@@ -1,0 +1,258 @@
+seo:
+  title: High Pressure Cleaning Services - Driveways | TLB Cleaning
+  description: High pressure cleaning for driveways, paths, patios and pool
+    surrounds. Years of grime gone in a morning. Get a fixed quote for your home
+    today.
+buttonLabel: Get a fixed quote
+hero:
+  kicker: High pressure cleaning
+  headingLines:
+    - High pressure cleaning services
+    - across the Northern Rivers and the Tweed
+  subheading: High pressure cleaning services for driveways, paths, patios and
+    pool surrounds
+  lead: Your driveway is the first thing anyone sees. Concrete, exposed aggregate,
+    pavers, pool surrounds and fences, cleaned at a pressure the surface can
+    actually take rather than the pressure that gets it done fastest.
+    {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/outside_your_home/high_pressure_cleaning/pressure-cleaning-a-home-driveway.jpg
+    alt: A cleaner in an aqua polo and teal gloves pressure washing the concrete
+      driveway of a white weatherboard home, the cleaned slab wet and pale
+      behind the spray
+definition:
+  body:
+    - type: paragraph
+      text: A high pressure cleaning service is the cleaning of outdoor hard surfaces
+        at a home with pressurised water. Driveways, paths, patios, pool
+        surrounds, courtyards, steps, fences and retaining walls. It lifts off
+        the grime, algae, moss and oil that build up on anything left out in the
+        weather. TLB Cleaning does high pressure cleaning for homes across the
+        Northern Rivers, the Tweed and the Southern Gold Coast.
+    - type: paragraph
+      text: "Pressure cleaning, pressure washing and high pressure cleaning all
+        describe the same work. Soft washing is genuinely different: low
+        pressure and a cleaning solution instead of force, for render, paint,
+        cladding, roofs and anything else that force would strip. Most homes
+        need both, and the skill is knowing which surface takes which. If you
+        want the walls and the roof done, that is exterior house washing and
+        roof cleaning, and they are linked further down."
+  backgroundImage: /src/assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg
+pathways:
+  heading: People book this for three reasons.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/home_cleaning/outside_your_home/high_pressure_cleaning/half-cleaned-paver-path.jpg
+        alt: A paved path beside a home halfway through being pressure cleaned,
+          weathered grey and green with algae on one side of a straight line and
+          pale and clean on the other
+      title: It has gone green and slippery
+      description: Algae on a shaded path is the one that matters, because it is
+        genuinely slippery when it rains and it is usually on the way to the
+        front door. One clean fixes it, and we will tell you which marks are
+        staining and which are in the concrete for good.
+    - image:
+        src: /src/assets/home_cleaning/outside_your_home/high_pressure_cleaning/cleaning-a-pool-surround-and-patio.jpg
+        alt: A cleaner pressure washing the paved surround of a backyard swimming pool
+          at a home, the cleaned stone pale and wet, the pool still and
+          reflecting the sky
+      title: We have people coming
+      description: Christmas, a party, a birthday, or the photos going up before the
+        house is listed. Paths, patio and pool surround done in a day so the
+        outside matches the inside. Tell us the date and we will work back from
+        it.
+    - image:
+        src: /src/assets/home_cleaning/outside_your_home/high_pressure_cleaning/cleaner-beside-a-pressure-washer-on-a-driveway.jpg
+        alt: A cleaner in uniform standing beside her pressure washer on a home
+          driveway, turning to the camera with a friendly expression
+      title: I want it to just stay done
+      description: Surfaces done once a year never get back to the state that needs
+        rescuing, and each visit costs less because there is less to take off.
+        Same local team, [insured], on the same schedule as your regular clean
+        if you want it that way.
+      cta:
+        label: Set up your regular clean
+        href: /house-cleaning/
+warning:
+  heading: Some of these should never see high pressure
+  body:
+    - A wand that cleans a concrete driveway will wreck other things around the
+      same house in seconds. Rendered and painted walls strip. Timber decking
+      furs up and splinters, and the grain lifts so it goes grey again faster
+      than before. Pavers lose the sand out of the joints, which is what was
+      holding them still. Roof tiles lose their surface coating. Cladding lets
+      water in behind it, where it keeps causing damage after the machine has
+      gone.
+    - "None of that shows in a quote. It shows on your house, and it does not
+      wash off. The right answer for those surfaces is a soft wash: low pressure
+      and a cleaning solution instead of force. We use both, and at the quote we
+      will tell you which of your surfaces gets which."
+method:
+  heading: What our high pressure cleaning services involve, stage by stage
+  lead: Six stages, in this order. The second and the last are the ones a rushed
+    job skips.
+  items:
+    - icon: target
+      title: Pressure matched to the surface
+      description: Concrete, exposed aggregate, pavers, sandstone, tiles, render and
+        painted steel all take a different setting, and the wrong one leaves a
+        mark that cannot be undone. This is the first thing we work out and it
+        is most of what you are paying for.
+    - icon: puzzle
+      title: We move things and cover things first
+      description: Cars off the driveway, furniture and pots off the patio, garden
+        beds along the edge wet down, windows and door seals checked. Ten
+        minutes of setting up is the difference between a clean driveway and a
+        wet laundry.
+    - icon: spray-bottle
+      title: Pre-treat, then clean
+      description: Oil, grease and organic growth get a treatment with dwell time
+        before any water goes near them, and grease needs heat or a degreaser to
+        release at all. Blasting a stain cold just spreads it. [Confirm whether
+        TLB runs hot water or cold.]
+    - icon: chart-bars
+      title: Surface cleaner on the flat, wand on the edges
+      description: Open areas are done with a rotary surface cleaner, which cleans
+        evenly and leaves no stripes. Edges, steps, kerbs and corners are
+        finished by hand. Stripes across a driveway are the signature of a job
+        done entirely with a wand.
+    - icon: bloom
+      title: Soft wash where force would do damage
+      description: Render, painted surfaces, cladding, fences and roofs get low
+        pressure and a cleaning solution. It also kills the algae and mould at
+        the root rather than knocking the top off it, which is why a soft washed
+        surface stays clean longer.
+    - icon: idea
+      title: Your garden, your pool, your drain
+      description: Beds get rinsed, the pool gets covered or the surround is worked
+        away from it, and run-off carrying detergent or oil is kept out of the
+        stormwater drain rather than hosed into it. [Confirm what TLB does about
+        run-off on a residential job.]
+beforeAfter:
+  heading: One driveway, both ways.
+  lead: Drag the handle across the photo.
+  note: Illustrative sample, shown while we collect before and after photos from
+    real TLB jobs.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/sample-driveway-before.png
+        alt: "Sample illustration: a concrete driveway greyed with grime, algae down the
+          shaded edge and an oil patch in the middle"
+      after:
+        src: /src/assets/home_cleaning/before_after/sample-driveway-after.png
+        alt: "Sample illustration: the same driveway pale, even and clean, with the oil
+          patch and algae gone"
+      caption: Concrete driveway, grime, algae and an oil patch
+      start: 40
+surfaces:
+  heading: What we clean around a house
+  body:
+    - type: paragraph
+      text: "Around an ordinary house, this is usually the list:"
+    - type: list
+      items:
+        - Driveways, in concrete, exposed aggregate or pavers
+        - Front paths, side paths and the bit nobody looks at behind the shed
+        - Patios, courtyards, alfresco areas and outdoor steps
+        - Pool surrounds and coping, where algae is a genuine slip risk
+        - Fences, gates and retaining walls, at a pressure they can take
+        - Carports, garage floors and the oil patch under the car
+        - Bin areas, and the smell that comes with them
+        - Rendered and painted walls, by soft wash rather than force
+    - type: paragraph
+      text: If it is fixed to the ground and it is outside, ask us. If it is the walls
+        and the roof you are looking at, those are their own jobs and they are
+        linked below, because doing them in the wrong order means cleaning the
+        driveway twice.
+otherServices:
+  heading: The rest of the outside
+  lead: Do these in the right order and the driveway only gets cleaned once. Walls
+    and roof first, ground last.
+comparison:
+  heading: How TLB compares
+  lead: Anyone can hire a machine for a day. What you are actually buying is
+    someone who knows which surface takes what pressure, and who will be
+    reachable next week.
+  cornerLabel: Why TLB Cleaning is different
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+bookingFaq:
+  heading: Booking a driveway or patio clean
+  items:
+    - question: Will it damage our concrete or pavers?
+      answer: Not if the pressure is matched to the surface, which is the first thing
+        we work out. Old, decorative or already crumbling surfaces get flagged
+        before we start rather than after, and pavers get the sand in the joints
+        treated with respect. Render, paint, cladding and roofs get a soft wash
+        instead of force.
+    - question: Can you get the oil stain off our driveway?
+      answer: Usually a good way, sometimes not completely. Fresh oil responds well to
+        a degreaser with dwell time and the right heat. Oil that has been
+        soaking into porous concrete for years is in the slab, and no amount of
+        pressure pulls it back out. We tell you which one you have before we
+        quote.
+    - question: How long does it take?
+      answer: A driveway and front path at an average house is usually half a day. Add
+        the patio, the pool surround and the fences and it becomes a full day.
+        Heavily stained surfaces take longer because the time goes into
+        pre-treatment, not into more pressure. You get the estimate with the
+        price.
+    - question: What do you need from us on the day?
+      answer: Cars off the area being cleaned, furniture and pots moved if you can,
+        the gate unlocked and dogs inside. [Confirm whether TLB brings its own
+        water and power, or needs a tap and a power point.] Everything else,
+        including the machine, comes with us.
+    - question: Can you do it while we are out?
+      answer: Yes, as long as we can get in and reach a tap. Most people are at work
+        for it. We will send you a message when we are done and let you know
+        anything we found, like a cracked paver or a downpipe discharging onto
+        the path, which is often why an area keeps going green.
+generalFaq:
+  heading: High pressure cleaning FAQs
+  items:
+    - question: How often should a driveway be pressure cleaned?
+      answer: Once a year suits most homes, and shaded or tree covered areas often
+        want it more like every eight months. The shaded southern side of a
+        house grows algae far faster than the sunny side, so it is normal for
+        one path to need doing twice as often as the driveway. Surfaces kept on
+        a schedule cost less each time.
+    - question: What is the difference between pressure cleaning and soft washing?
+      answer: Pressure cleaning uses force to remove what is sitting on a hard
+        surface, and suits concrete, pavers, brick and steel. Soft washing uses
+        low pressure and a cleaning solution, and suits render, paint, cladding,
+        fences and roofs, where force would strip the finish or push water in
+        behind it. Soft washing also treats growth at the root, so it stays
+        clean longer.
+    - question: Can high pressure cleaning damage a timber deck?
+      answer: Yes, easily. Pressure lifts the soft fibres between the grain, so the
+        boards feel furry, splinter more and weather grey faster than before. A
+        deck wants a gentle wash with the right cleaner and a brush, worked
+        along the grain, not a wand held close. Anyone who quotes a deck at
+        driveway pressure is going to cost you the deck.
+    - question: Where is the water allowed to go?
+      answer: "Clean rinse water off a path can generally go where rain would. Water
+        carrying oil, grease, detergent or paint cannot: in NSW, letting
+        polluting matter enter a stormwater drain is an offence under the
+        Protection of the Environment Operations Act 1997, and stormwater runs
+        to the creek untreated. That kind of run-off has to be contained, so ask
+        any cleaner how they handle it before they start."
+    - question: How much does high pressure cleaning cost?
+      answer: It is usually priced per square metre with a minimum charge for small
+        jobs, and the rate moves with the surface, how badly stained it is,
+        access to water and power, and whether anything needs soft washing
+        instead. Ask for the price against a written scope rather than an hourly
+        rate, so you can see what is included. [TLB’s pricing basis and minimum
+        charge. Confirm.]
+closingCta:
+  kicker: High pressure cleaning
+  heading: Send us a photo of the worst bit.
+  lead: That is usually enough to price it. We will tell you what will come off,
+    what will not and which surfaces need a soft wash instead. Cleaning a
+    workplace rather than a home? Our commercial pressure cleaning page is the
+    one you want. Get a fixed quote for your home today.
