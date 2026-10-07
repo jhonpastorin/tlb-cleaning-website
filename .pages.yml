@@ -1801,3 +1801,60 @@ content:
             label: "FAQs: soft washing, roof tiles and cost"
             description: "The fibre cement (asbestos) answer must match TLB's actual policy. The cost answer ends in a [bracketed] note until TLB confirms its pricing basis."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+
+      - name: house-cleaning-window-cleaning
+        label: Window cleaning
+        type: file
+        path: src/content/pages/house-cleaning/window-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: buttonLabel
+            label: Main button text
+            type: string
+            required: true
+            description: Used on the hero, the cards, the method grid and the closing section, wherever their own button is left empty. It always links to the quote page.
+          - { name: hero, component: hero }
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - name: pathways
+            component: pathwayCards
+            label: "People arrive here for three reasons (cards)"
+            description: "A card with no button uses the main button. The third card's [insured] note is waiting on TLB to confirm."
+          - name: method
+            component: iconGrid
+            label: "What our window cleaning services cover (grid)"
+            description: "Every point is drafted, not supplied by TLB. Two end in a [Confirm ...] note (inside glass, and screens). Replace each with the confirmed answer."
+          - { name: salt, component: callout, label: "Why coastal windows go hazy faster (note)" }
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: These are illustrations, not real job photos. Keep the note saying so until real photos replace them.
+          - { name: questions, component: textBlock, label: "Two questions before you book anyone (dark band)" }
+          - name: otherServices
+            component: sectionIntro
+            label: "The rest of the outside"
+            description: "The list itself comes from Site settings > Cross-links: outside your home."
+          - name: comparison
+            label: "How TLB compares (table)"
+            type: object
+            description: The table's columns and rows are shared by every service page. Edit them under Site settings > Comparison table.
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - { name: footnote, label: Note under the table, type: text }
+              - { name: cta, component: link, label: Button (optional) }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: bookingFaq
+            component: faq
+            label: "FAQs: booking a window clean"
+            description: "Two answers carry a [Confirm ...] note until TLB confirms: whether inside glass is included, and the height limit for upstairs windows."
+          - name: generalFaq
+            component: faq
+            label: "FAQs: window cleaning"
+            description: "The cost answer ends in a [bracketed] note until TLB confirms its pricing basis. Do not add a \"from $X\" price: it is a claim the ACCC can hold TLB to."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }

@@ -1,0 +1,245 @@
+seo:
+  title: Window Cleaning Services - Streak Free | TLB Cleaning
+  description: Window cleaning inside and out, with water-fed poles for
+    streak-free glass, plus tracks, sills and screens. Book a window clean for
+    your home.
+buttonLabel: Book a window clean for your home
+hero:
+  kicker: Window cleaning
+  headingLines:
+    - Window cleaning services across
+    - the Northern Rivers and the Tweed
+  subheading: Streak-free window cleaning services, glass, frames, sills and tracks
+  lead: You paid for the view. Have a look at it. Window cleaning inside and out
+    for homes across the Northern Rivers, the Tweed and the Southern Gold Coast,
+    with the coastal salt film taken off properly. We bring the ladders, the
+    poles and the water. {{line.fast}}
+  image:
+    src: /src/assets/home_cleaning/outside_your_home/window_cleaning/cleaning-a-large-window-from-outside.jpg
+    alt: A cleaner in an aqua polo and teal gloves squeegeeing a large window from
+      outside a white weatherboard home, the finished glass clear and reflecting
+      the garden
+definition:
+  body:
+    - type: paragraph
+      text: Window cleaning is the washing of the glass, frames, sills and tracks of a
+        home, inside and out, so light comes through the way it did when the
+        windows were new. TLB Cleaning cleans windows across the Northern
+        Rivers, the Tweed and the Southern Gold Coast, either as a one-off or on
+        a schedule with your regular clean.
+    - type: paragraph
+      text: Window cleaning and window washing describe the same job. What sets a
+        coastal home apart is the film on the outside of the glass, which is
+        salt as much as dust. Salt spray dries on the surface and holds grime
+        against it, so a coastal window looks hazy again far sooner than an
+        inland one, and it will not come off with a squirt of glass cleaner and
+        paper towel.
+  backgroundImage: /src/assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg
+pathways:
+  heading: People arrive here for three reasons.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/home_cleaning/outside_your_home/window_cleaning/salt-hazed-sliding-door-glass.jpg
+        alt: A large sliding glass door on a coastal home seen from outside, the glass
+          dulled by salt haze and hard water spotting, with grit in the bottom
+          track
+      title: The glass has gone cloudy and I cannot fix it
+      description: That haze is salt and hard water, not dirt, and it sits on the
+        glass in a layer that wiping makes worse. One proper clean takes it back
+        to clear, and you get the tracks and the flyscreens done at the same
+        time.
+    - image:
+        src: /src/assets/home_cleaning/outside_your_home/window_cleaning/water-fed-pole-on-an-upstairs-window.jpg
+        alt: A cleaner standing safely on the lawn using a long water-fed pole with a
+          soft brush head to clean a first-floor window of a home
+      title: The high ones have not been done in years
+      description: Nobody wants to carry a ladder around the side of the house, and on
+        a slope nobody should. First-floor glass gets reached from the ground
+        with a water-fed pole, which is safer for us and costs you less than
+        scaffolding.
+    - image:
+        src: /src/assets/home_cleaning/outside_your_home/window_cleaning/cleaner-wiping-a-window-frame-and-track.jpg
+        alt: A cleaner in uniform crouched at the base of a window wiping the frame and
+          sill track, turning to the camera with a friendly expression
+      title: I want it done with everything else
+      description: Windows twice a year, gutters before the wet season, and your
+        regular clean carrying on as normal. Same local team, one number to
+        ring, and we are [insured]. You set it up once and stop thinking about
+        it.
+      cta:
+        label: Set up your regular clean
+        href: /house-cleaning/
+method:
+  heading: What our window cleaning services cover, inside and out
+  lead: Six things, and the last four are what separate a window clean from a wipe
+    over the glass.
+  items:
+    - icon: spray-bottle
+      title: Glass, both sides
+      description: Washed, squeegeed and edged, then the perimeter dried by hand so
+        there is no line left around the outside of the pane. [Confirm whether
+        inside glass is included as standard or quoted separately.]
+    - icon: target
+      title: Frames, sills and reveals
+      description: Wiped down with the glass rather than left as a grey border around
+        it. Aluminium frames on the coast collect a chalky salt bloom, and that
+        is usually what people are seeing when they say the window still looks
+        dirty.
+    - icon: puzzle
+      title: Tracks and drainage holes
+      description: Sliding door tracks get vacuumed out and then wiped, including the
+        weep holes at the outside edge. A blocked track is why a heavy door
+        drags, and it is the one part of a window nobody ever cleans.
+    - icon: bloom
+      title: Flyscreens and security screens
+      description: Taken out where they lift out, washed, dried and put back the way
+        they came. [Confirm whether screens are included, and whether security
+        screens are washed in place rather than removed.]
+    - icon: idea
+      title: Cobwebs and the surrounds
+      description: Webs knocked out of the reveal, the eave above the window and the
+        corners of the frame, because leaving them there undoes the look of
+        clean glass within a fortnight. Nests and hives we point out and leave
+        alone.
+    - icon: chart-bars
+      title: Purified water on the high ones
+      description: Anything above the ground floor is done from the ground with a
+        water-fed pole running filtered water, which dries without spotting so
+        there is nothing to squeegee. It also means no ladder leaning on your
+        gutter.
+salt:
+  heading: Why coastal windows go hazy faster
+  body:
+    - Salt does not blow onto glass as grit and sit there. It arrives as fine
+      spray, dries into a film and then holds every bit of dust and pollen that
+      lands afterwards against the surface. That is why a window three streets
+      back from the beach can look worse than one in a paddock, and why the haze
+      comes back sooner here than anywhere inland.
+    - It also means dry wiping makes it worse. Rubbing a dry salt film across
+      glass drags the grit it is holding, and on older glass that leaves fine
+      scratching you cannot polish out. The fix is water, a wash and a squeegee,
+      not a cloth and a spray bottle.
+beforeAfter:
+  heading: Salt film, and the same pane without it.
+  lead: Drag the handle across the photo to see the difference on one window.
+  note: Illustrative sample, shown while we collect before and after photos from
+    real TLB jobs.
+  pairs:
+    - before:
+        src: /src/assets/home_cleaning/before_after/sample-window-before.png
+        alt: "Sample illustration: a window pane hazy with salt film and hard water
+          spotting, grit in the track"
+      after:
+        src: /src/assets/home_cleaning/before_after/sample-window-after.png
+        alt: "Sample illustration: the same window pane clear, the frame and track
+          clean, the garden reflected sharply"
+      caption: Salt film and hard water spotting on a coastal pane
+      start: 45
+questions:
+  heading: Two questions before you book anyone
+  body:
+    - type: paragraph
+      text: Two questions sort out a window cleaner quickly, and neither of them is
+        about price.
+    - type: list
+      items:
+        - How do you reach the upstairs glass? A pole from the ground is safe
+          and needs nothing from you. A ladder leaned against a gutter bends the
+          gutter, and a ladder on soft ground beside a paved courtyard is how
+          people get hurt on a job that was meant to be simple.
+        - What is included besides the glass? If frames, sills, tracks and
+          screens are extra, the quote you are comparing is not the same job.
+          This is where a low number usually comes from.
+    - type: paragraph
+      text: The other thing worth knowing is that clean glass shows every mark on
+        everything around it. Windows are usually the first exterior job people
+        book and the one that makes them look at the walls, the gutters and the
+        roof for the first time in years. That is normal, and it is why we quote
+        the outside of a house as a whole when you ask us to.
+otherServices:
+  heading: The rest of the outside
+  lead: Windows are usually where people start. These are the other four, and they
+    are often quoted together.
+comparison:
+  heading: How TLB compares
+  lead: The person on your windows is on our team, and they will be the one who
+    comes back next time.
+  cornerLabel: Why TLB Cleaning is different
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  subheading: Northern Rivers, the Tweed and the Southern Gold Coast.
+  note:
+    - If a town isn't listed, ask us anyway.
+bookingFaq:
+  heading: Booking a window clean
+  items:
+    - question: Do you do the inside of the windows as well?
+      answer: Usually yes, and most people want both, because clean glass outside
+        makes the inside obvious. [Confirm whether inside glass is included as
+        standard or priced separately.] If we are doing the inside we work
+        around you, put mats down under each window and take the tracks and
+        sills as we go.
+    - question: How often should we get them done?
+      answer: Twice a year suits most homes here, and the closer you are to the beach
+        the more that matters. Holiday lets and homes right on the water often
+        go quarterly, because guests photograph the view and salt film shows up
+        in every one of those photos. We can put it on the same schedule as your
+        regular clean.
+    - question: Can you reach our upstairs windows?
+      answer: First-floor glass is done from the ground with a water-fed pole, so
+        there is no ladder against your gutter and nothing for you to hold.
+        [Confirm the height limit and whether anything is quoted out, for
+        example a stairwell window over a paved courtyard.] If a window is
+        genuinely unsafe to reach we will say so rather than improvise.
+    - question: Does anyone need to be home?
+      answer: Not for the outside. We need side access, the gate unlocked and any dogs
+        sorted out, and a tap we can use if we are running a pole system. For
+        inside glass someone needs to let us in, or we use whatever arrangement
+        your regular clean already runs on.
+    - question: What happens if it rains after you have been?
+      answer: Clean glass stays clean through rain. Rain is only a problem on glass
+        that was already dirty, because it runs the film down the pane in
+        streaks. If a storm drops mud or salt spray on windows the same week we
+        did them, ring us and we will look at it.
+generalFaq:
+  heading: Window cleaning FAQs
+  items:
+    - question: What is pure water window cleaning?
+      answer: Water run through a filter that strips out the dissolved minerals, then
+        fed up a telescopic pole to a soft brush head. Because there is nothing
+        left in the water to dry on the glass, the pane can be left wet and it
+        dries clear with no spots. That is what makes cleaning first-floor
+        windows from the ground possible at all.
+    - question: How often should windows be cleaned in a coastal home?
+      answer: Twice a year is the usual settling point, quarterly for homes on the
+        water or holiday lets that are photographed constantly, and once a year
+        is enough well back in the hinterland. Salt film is the variable. The
+        nearer the surf and the more onshore wind a wall faces, the sooner the
+        haze comes back.
+    - question: Can hard water stains be removed from glass?
+      answer: Fresh spotting comes off with a wash. Spotting that has been baking on
+        for years is different, because the minerals slowly etch into the
+        surface of the glass and the mark is then in the glass rather than on
+        it. It can often be improved with a polish, not always fully removed,
+        and a sprinkler hitting a window every morning is the usual cause.
+    - question: Is it safe to clean upstairs windows yourself?
+      answer: "Ladder falls at home are common and often serious, and the risk goes up
+        on the ground most houses actually have: soft soil, a slope, pavers, or
+        a gutter that flexes when a ladder leans on it. Working from the ground
+        with a pole avoids the fall entirely, which is why professionals moved
+        to poles for anything above the ground floor."
+    - question: How much does window cleaning cost?
+      answer: Window cleaning is usually priced per window or per pane, with a minimum
+        charge for small jobs, and the rate moves with height, access, how many
+        are sliding doors and whether screens and tracks are included. Ask for
+        the price against a written list of what is covered rather than an
+        hourly rate. [TLB’s pricing basis and minimum charge. Confirm.]
+closingCta:
+  kicker: Window cleaning
+  heading: Get your view back.
+  lead: Tell us how many windows and how high, and we will come back with a price
+    and a date. If it is easier, we will look at the whole outside of the house
+    while we are there. Book a window clean for your home.
