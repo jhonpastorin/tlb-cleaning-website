@@ -1,0 +1,260 @@
+seo:
+  title: Commercial Carpet Cleaning Services | TLB Cleaning
+  description: Commercial carpet cleaning for offices and workspaces, done after
+    hours so nothing stops. Low-moisture options dry fast. Book a night clean.
+ctaLabel: Book a night clean
+hero:
+  kicker: Commercial carpet cleaning
+  headingLines:
+    - Commercial carpet cleaning services, done after you close
+  subheading: Commercial carpet cleaning services for offices, clinics, venues and strata
+  lead: Your carpet is the first thing anyone walks on. Extraction where the floor
+    has the night to dry, and a low moisture method where it does not, across
+    the Northern Rivers and the Tweed. {{line.fast}}
+  image:
+    src: /src/assets/commercial_cleaning/carpet/commercial-carpet-extraction-in-an-open-plan-office.jpg
+    alt: A cleaner in an aqua polo, dark teal apron and teal gloves running a carpet
+      extraction machine across the carpet of an open plan office
+definition:
+  body:
+    - type: paragraph
+      text: Commercial carpet cleaning services cover the deep cleaning of carpet in a
+        workplace, usually by hot water extraction, done outside trading hours
+        so the floor is dry before your team or your customers arrive. It lifts
+        the grit, oils and traffic marks that vacuuming alone leaves behind. TLB
+        Cleaning cleans commercial carpet across the Northern Rivers and the
+        Tweed.
+    - type: paragraph
+      text: Carpet steam cleaning and hot water extraction are the same job under two
+        names. The machine heats water, injects it into the pile under pressure
+        and vacuums it straight back out with the soil in it. Nothing is steamed
+        in the literal sense, so a cleaner who leans hard on the word is selling
+        the word rather than the method.
+  backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
+pathways:
+  heading: People arrive here with three questions.
+  headingAccent: Which one is yours?
+  cards:
+    - image:
+        src: /src/assets/commercial_cleaning/carpet/commercial-carpet-extraction-along-an-office-corridor.jpg
+        alt: A cleaner drawing a carpet extraction wand along the worn traffic lane of
+          an office corridor, a cleaned strip visible behind the wand
+      title: The carpet looks tired and I need it back
+      description: Traffic lanes, chair marks, spills and the grey path from the door
+        to the lift. One extraction clean lifts most of it, and we tell you
+        honestly which marks are permanent before we quote, not after.
+    - image:
+        src: /src/assets/commercial_cleaning/commercial-cleaner-and-office-manager-talking-in-reception.jpg
+        alt: A TLB cleaner and an office manager talking through the job in an office
+          reception area
+      title: I want it on a schedule, not as a panic
+      description: Most workplaces settle on two extraction cleans a year with spot
+        treatment in between. We can fold that into an ongoing commercial
+        contract so it happens on time without anyone having to remember it.
+      cta:
+        label: Commercial cleaning
+        href: /commercial-cleaning/
+    - image:
+        src: /src/assets/commercial_cleaning/commercial-cleaner-with-a-caddy-in-an-office-kitchenette.jpg
+        alt: TLB cleaner in uniform with her cleaning caddy in an office kitchenette
+      title: I want to know who is in the building
+      description: The same small team each visit, in TLB uniform, and you can meet
+        them before the first one. We are a local business, [insured] and
+        [police-checked], and there is one local number to ring if something is
+        not right.
+      cta:
+        label: Why TLB
+        href: /why-tlb/
+scope:
+  heading: What our commercial carpet cleaning services involve, stage by stage
+  lead: Six stages, in this order. Skip the first two and the rest is just wet
+    carpet.
+  items:
+    - icon: target
+      title: We inspect and test first
+      description: We check the fibre, the backing and how the carpet is laid, then
+        test in an out of sight corner. Wool, nylon and solution dyed carpet do
+        not take the same treatment, and getting that wrong is how carpet gets
+        ruined.
+    - icon: spray-bottle
+      title: Pre-vacuum, then pre-spray
+      description: Dry soil comes out with a commercial vacuum before any water
+        touches the pile, because wet grit turns into mud. Then a pre-spray goes
+        down and is given time to break down the oils holding the soil in place.
+    - icon: spark
+      title: Traffic lanes and stains by hand
+      description: Doorways, corridors and the run past the printer wear faster than
+        the rest of the floor. Those lanes are agitated separately, and
+        individual stains are treated by type rather than with one product for
+        everything.
+    - icon: chart-bars
+      title: Hot water extraction
+      description: Heated water and solution go into the pile under pressure and come
+        straight back out with the soil. This is the method carpet manufacturers
+        name in their own maintenance requirements, and the one that removes
+        soil rather than hiding it.
+    - icon: bloom
+      title: Encapsulation when drying time is tight
+      description: For a floor that has to be walked on in a few hours, encapsulation
+        crystallises the soil so it vacuums out the next day. It is a low
+        moisture method, lighter than extraction and much faster to dry, which
+        is the right call for a corridor that never closes.
+    - icon: office
+      title: Groomed, dried and put back
+      description: The pile is groomed so it dries evenly, air movers go down where
+        the floor has to be back in service quickly, and furniture goes back
+        where it was. Typical drying time is [X to Y hours. Confirm].
+worthKnowing:
+  heading: What a low carpet quote usually leaves out
+  body:
+    - type: paragraph
+      text: "A bad carpet clean and a good one look the same on the day. The
+        difference turns up three weeks later. Over-wetting leaves moisture in
+        the backing, which is how you get an odour that will not shift and, in a
+        humid Northern Rivers summer, mould under a floor that looks fine from
+        above. Too much detergent left in the pile is worse in its own way: it
+        stays tacky, so the carpet re-soils faster than before it was cleaned
+        and the traffic lanes come back darker than they started."
+    - type: paragraph
+      text: The other thing worth knowing is that most commercial carpet is still
+        under a manufacturer warranty, and most of those warranties require
+        periodic hot water extraction by a professional. A bonnet clean can
+        technically void one. So ask any cleaner which method they use, what
+        they do about drying, and whether their work meets your carpet maker’s
+        maintenance requirements. We put the method and the price in writing
+        before we start, and we tell you straight when a mark is not coming out.
+offices:
+  heading: Office carpet cleaning services, worked around a locked building
+  body:
+    - type: paragraph
+      text: "An office wears differently to a venue or a clinic. It goes in three
+        places: the run from the lift to reception, the strip past the printer
+        and the half metre of carpet under every chair. Those lanes get agitated
+        by hand before the extraction wand goes near them, because that is where
+        the grey comes from."
+    - type: paragraph
+      text: The other difference is access. Most offices are locked, alarmed and full
+        of equipment nobody wants moved. We settle the access at the
+        walkthrough, and the keys and alarm codes stay with the same small team
+        every visit rather than with whoever is rostered. Desks with computers
+        on them stay where they are and we clean around them.
+    - type: paragraph
+      text: Workstations, meeting rooms, boardrooms and reception get done in the one
+        visit, so you are not letting us back in three times. Most offices land
+        on two extraction cleans a year. A busy reception floor usually wants
+        more than that, and a quiet upstairs office usually wants less.
+settings:
+  heading: Where we work, and the premises we cover
+  subheading: Commercial carpet cleaning for workplaces across the Northern Rivers
+    and the Tweed.
+  tags:
+    - label: Office cleaning
+      href: /commercial-cleaning/office-cleaning/
+    - label: Strata and common area cleaning
+      href: /commercial-cleaning/strata-cleaning/
+    - label: Medical, clinic and salon cleaning
+      href: /commercial-cleaning/medical-and-clinic-cleaning/
+    - label: Aged care, retirement and seniors
+      href: /commercial-cleaning/aged-care-cleaning/
+    - label: Hospitality, venues and holiday parks
+      href: /commercial-cleaning/hospitality-cleaning/
+    - label: Retail and shopfronts
+      href: /commercial-cleaning/retail-cleaning/
+    - label: Schools and childcare centres
+      href: /commercial-cleaning/school-and-childcare-cleaning/
+    - label: Gyms and fitness studios
+      href: /commercial-cleaning/gym-and-fitness-cleaning/
+    - label: Commercial pressure cleaning
+      href: /commercial-cleaning/commercial-pressure-cleaning/
+    - label: Commercial cleaning
+      href: /commercial-cleaning/
+comparison:
+  heading: How TLB compares
+  lead: Carpet cleaning is easy to sell once. What is hard is being the same
+    people, at the same standard, the second and third time you are asked back.
+  cornerLabel: Why TLB Cleaning is different
+  whoCleansLabel: Who cleans your premises
+reviews:
+  heading: What our clients say
+whereWeClean:
+  heading: Where we clean
+  note:
+    - If a town isn't listed, ask us anyway.
+brandLine:
+  heading: "{{line.fast.heading}}"
+brandedFaq:
+  heading: Booking a commercial carpet clean
+  items:
+    - question: Can you do it after we close?
+      answer: Yes, and most carpet work is done that way. We clean in the evening or
+        across a weekend so the floor has the night to dry and your team walks
+        in on a finished job. After hours work is priced differently, because
+        weekends and late shifts attract penalty rates under the Cleaning
+        Services Award 2020. Both options go on the quote so you can see what
+        each one costs.
+    - question: Do we have to move all the furniture out?
+      answer: No. We move what two people can safely move, clean underneath and put it
+        back where it was. Desks with computers on them, heavy filing and
+        anything fixed stay put and we clean around them. If you want the floor
+        done wall to wall, say so at the walkthrough and we will plan the visit
+        around a clear room.
+    - question: Will the stains actually come out?
+      answer: Most will. Coffee, food, mud and general traffic soil usually lift
+        completely. Dye based spills, bleach marks, rust and anything heat set
+        into the fibre often will not, and an old stain that has been scrubbed
+        before is the hardest of all. We tell you which is which at the
+        walkthrough rather than after we have taken your money.
+    - question: How often should we be doing this?
+      answer: Most workplaces land on two extraction cleans a year with spot treatment
+        in between as things happen. A busy reception, a clinic or a venue often
+        needs quarterly. A quiet upstairs office can stretch to annually. It
+        comes down to foot traffic rather than floor area, and a walkthrough
+        settles it quickly.
+    - question: What happens if I get in touch?
+      answer: We come and look at the carpet, test the fibre and tell you what will
+        lift and what will not. Then you get a written scope and a price, with
+        the after hours option shown separately. No obligation. If it suits, we
+        book a night that works around your trading.
+faq:
+  heading: Commercial carpet cleaning questions
+  items:
+    - question: How long does commercial carpet take to dry?
+      answer: "A properly extracted carpet is usually walkable within a few hours and
+        fully dry inside the day, which is why the work is done overnight.
+        Drying comes down to three things: how much water went in, how much air
+        is moving across the floor, and the humidity. Air movers cut it
+        substantially. A carpet still damp the next morning was over-wet, not
+        thoroughly cleaned."
+    - question: What is the difference between hot water extraction and encapsulation?
+      answer: Hot water extraction injects heated water and solution into the pile
+        under pressure and vacuums it back out with the soil. It removes the
+        most and takes the longest to dry. Encapsulation uses a polymer that
+        crystallises around the soil so it can be vacuumed out the next day. It
+        is faster and drier but lighter, so it suits interim maintenance between
+        extraction cleans rather than replacing them.
+    - question: Does carpet cleaning damage the carpet?
+      answer: "Done properly, no. Done badly, yes. Carpet gets damaged two ways:
+        over-wetting, which leaves moisture in the backing and can cause odour,
+        delamination or mould, and using the wrong chemistry for the fibre,
+        which is how wool ends up bleached or browned. That is why a competent
+        cleaner tests the fibre in a hidden spot before starting instead of
+        treating every floor the same."
+    - question: Can carpet cleaning void a warranty?
+      answer: It can. Many carpet manufacturers set maintenance requirements inside
+        the warranty, and most of those specify periodic hot water extraction by
+        a professional. Some exclude bonnet cleaning outright. If your building
+        still has its carpet warranty, check what the maker requires before you
+        accept a quote, and ask the cleaner in writing whether their method
+        meets it.
+    - question: How much does commercial carpet cleaning cost?
+      answer: Commercial carpet is usually priced per square metre, with a minimum
+        charge for small jobs, and the rate moves with the condition of the
+        floor, how much furniture there is to work around and whether the work
+        is after hours. Ask for the price against a written scope rather than an
+        hourly rate, so you can see what is actually included. [TLB’s pricing
+        basis and minimum charge. Confirm.]
+closingCta:
+  kicker: Commercial carpet cleaning
+  heading: Start with a walkthrough.
+  lead: We come and look at the carpet, test the fibre and tell you what will lift
+    and what will not. Then you get a written scope and a price. No obligation.

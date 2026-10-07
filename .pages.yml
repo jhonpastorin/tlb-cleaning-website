@@ -1821,3 +1821,72 @@ content:
             component: callToAction
             label: "Closing call to action"
             description: "Leave the button empty to use the main button."
+      - name: commercial-carpet-cleaning
+        label: "Commercial carpet cleaning"
+        type: file
+        path: src/content/pages/commercial-cleaning/commercial-carpet-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: ctaLabel
+            label: "Main button text"
+            type: string
+            description: "Used by the hero, any card whose button is left empty, the button under the six stages and the closing block. \"Book a night clean\" is the workbook's approved label but contradicts the page; it is waiting on a ruling (suggested: \"Get a quote for a night clean\"). It links to the quote page set under Site settings > Site-wide buttons. Leave empty to use the site-wide walkthrough button text."
+          - name: hero
+            component: hero
+            description: "Leave the hero's button empty to use the main button above."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: "The background photo also sits behind the trust bar. Check the text is still easy to read after changing it."
+          - name: pathways
+            component: pathwayCards
+            label: "People arrive here with three questions (cards)"
+            description: "A card whose button is left empty uses the main button. Card 3 says [insured] and [police-checked], which TLB has not yet confirmed."
+          - name: scope
+            component: iconGrid
+            label: "Stage by stage (list with icons)"
+            description: "Every stage is drafted, not confirmed by TLB. Confirm TLB offers encapsulation; the drying time carries a [Confirm] bracket. The button under the list is the main button."
+          - name: worthKnowing
+            component: textBlock
+            label: "What a low carpet quote usually leaves out (dark band)"
+            description: "No warranty interval is stated on purpose: it varies by carpet maker."
+          - { name: offices, component: textBlock, label: "Office carpet cleaning services" }
+          - { name: settings, component: tagCloud, label: "Where we work, and the premises we cover (links)" }
+          - name: comparison
+            label: "How TLB compares (table)"
+            type: object
+            description: "The columns and rows are the shared table under Site settings > Comparison table. Its first row says the cleaners are employed by TLB, not subcontracted: if carpet work is subcontracted, the table has to come off this page."
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - { name: cornerLabel, label: Top-left corner label, type: string }
+              - name: whoCleansLabel
+                label: "Heading of the \"Who cleans your home\" row on this page"
+                type: string
+                required: true
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: whereWeClean
+            label: "Where we clean"
+            type: object
+            description: "Lists the Southern Gold Coast towns as well, while the page's business details say NSW only. Whether commercial work crosses the border is still open."
+            fields:
+              - { name: heading, label: Heading, type: string, required: true }
+              - name: subheading
+                label: Subheading
+                type: string
+                description: "Leave empty to use the site-wide service-area line. The towns themselves are edited once for the whole site, not here."
+              - { name: note, label: Note under the towns, type: text, list: true }
+          - name: brandLine
+            component: sectionHeading
+            label: "Easy to book heading (above the brand lines)"
+            description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
+          - { name: brandedFaq, component: faq, label: "Booking a commercial carpet clean (FAQs)" }
+          - name: faq
+            component: faq
+            label: "Commercial carpet cleaning questions (FAQs)"
+            description: "The cost answer ends with a [Confirm] bracket for TLB's pricing. Never add a from-price without TLB's figure, and never add a drying time in hours."
+          - name: closingCta
+            component: callToAction
+            label: "Closing call to action"
+            description: "Leave the button empty to use the main button."
