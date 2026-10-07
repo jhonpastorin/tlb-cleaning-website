@@ -46,13 +46,8 @@ import GoogleReviewSlider from '../components/sections/GoogleReviewSlider.astro'
 import { googleBusinessProfileUrl, googleReviews } from '../data/googleReviews';
 import LogoBar from '../components/sections/LogoBar.astro';
 import BeforeAfter from '../components/sections/BeforeAfter.astro';
-import cooktopBeforeImg from '../assets/home_cleaning/before_after/cooktop-before.jpg';
-import cooktopAfterImg from '../assets/home_cleaning/before_after/cooktop-after.jpg';
 // Before/after pairs — real TLB job photos. The `sample-` files are flat
 // illustrations and stay only where no real pair exists for that subject yet.
-import kitchenBenchtopBeforeImg from '../assets/home_cleaning/before_after/kitchen-benchtop-before.jpg';
-import kitchenBenchtopAfterImg from '../assets/home_cleaning/before_after/kitchen-benchtop-after.jpg';
-import type { BeforeAfterPair } from '../components/sections/BeforeAfter.astro';
 import Callout from '../components/sections/Callout.astro';
 import ServiceBlocks from '../components/sections/ServiceBlocks.astro';
 import Faq from '../components/sections/Faq.astro';
@@ -66,7 +61,6 @@ import footerLogoImg from '../assets/logo/tlb-logo-square.png';
 // generating two more sample scenes: they are the two rooms every service on
 // this site touches, so they read for the whole business, which is what this
 // page needs them to do.
-import type { TextBlockBody } from '../components/sections/TextBlock.astro';
 import {
   primaryNav,
   headerNav,
@@ -78,15 +72,10 @@ import {
 } from '../data/navigation';
 import { trustBarCards } from '../data/trust';
 import { meetTheTeamBusiness, otherMeetTheTeamPages } from '../data/meetTheTeam';
-
-const pageMeta = {
-  title: 'Reviews | What TLB Cleaning Clients Say',
-  description:
-    'TLB Cleaning grew across the Northern Rivers and the Tweed on recommendations rather than advertising. Read what clients say, and how we handle it when a clean is not right.',
-  canonical: 'https://tlbcleaning.com.au/reviews/',
-};
-
-const business = meetTheTeamBusiness(pageMeta.description);
+import { z } from 'astro/zod';
+import { getPage } from '../lib/cms';
+import * as section from '../lib/cms-schemas';
+import { sized } from '../lib/cms-schemas';
 
 // HERO IS `minimal`, WITH NO PHOTO, AND THAT IS A DELIBERATE DEPARTURE from
 // the split-single-image opening every other page on this site uses.
@@ -102,21 +91,10 @@ const business = meetTheTeamBusiness(pageMeta.description);
 // consent. At that point this hero should probably match its siblings.
 //
 // No `stats` row. See absence 1 at the top of this file.
-const hero = {
-  kicker: 'Reviews',
-  headingLines: ['Every client we have', 'came from a recommendation.'],
-  lead:
-    'TLB grew to a full team, and to steady work with real estate agencies across the region, without ever running an advertisement. This is the page where that gets checked.',
-  cta: quoteCta,
-};
 
 // How the reputation was built. This is the page's substance while the
 // quotes are still being collected, and it is all verifiable from facts
 // already published on this site.
-const reputationBody: TextBlockBody[] = [
-  'Word of mouth is a slower way to grow a cleaning business and a harder one to fake. Nobody recommends their cleaner to a neighbour on the strength of an advertisement. They do it because the house was right, again, on the day it was supposed to be.',
-  'It also means our reputation has always been held by other people rather than by us. The reviews below are being collected from clients who have had us in their homes for years, in their words rather than ours.',
-];
 
 // The agency band. RESERVED SLOTS, not logos.
 //
@@ -139,22 +117,6 @@ const reputationBody: TextBlockBody[] = [
 // 2023" means since 2023. This site already claims agency work in its shared
 // trust bar and on /house-cleaning/real-estate-cleaning/, so this band is where that claim
 // either gets substantiated or gets softened everywhere.
-const agencyLogos = [
-  {
-    logo: { ratio: '2/1', label: 'Real estate agency mark, supplied with permission' },
-    quote:
-      '[TBC - a quote from a property manager about bond cleans passing inspection first time, or about being able to hand TLB a difficult vacate at short notice.]',
-    company: '[Agency name - TBC]',
-    tag: '[Relationship, e.g. "Managed properties since [year]" - TBC]',
-  },
-  {
-    logo: { ratio: '2/1', label: 'Real estate agency mark, supplied with permission' },
-    quote:
-      '[TBC - a second agency, ideally one on the Queensland side of the border, since this site claims work in both states.]',
-    company: '[Agency name - TBC]',
-    tag: '[Relationship - TBC]',
-  },
-];
 
 // BOTH PAIRS ARE REAL TLB JOB PHOTOGRAPHS, and on this page that matters
 // more than anywhere else on the site. They are published with the client's
@@ -172,30 +134,6 @@ const agencyLogos = [
 // both unchanged from the homepage's own block: written client permission,
 // and no identifying detail in frame (no house numbers, street signs, mail,
 // people, or names on doors).
-const beforeAfterPairs: BeforeAfterPair[] = [
-  {
-    before: {
-      src: kitchenBenchtopBeforeImg,
-      alt: 'A kitchen benchtop before a TLB clean, with dishes stacked in and beside the sink and pots left on the stove',
-    },
-    after: {
-      src: kitchenBenchtopAfterImg,
-      alt: 'The same kitchen benchtop after the clean, sink empty and the bench clear and wiped down',
-    },
-    caption: 'Kitchen benchtop and sink',
-  },
-  {
-    before: {
-      src: cooktopBeforeImg,
-      alt: 'A gas cooktop before a TLB clean, with spilled coffee grounds, crumbs and food scraps across the black enamel',
-    },
-    after: {
-      src: cooktopAfterImg,
-      alt: 'The same gas cooktop after the clean, the enamel wiped back to an even black finish',
-    },
-    caption: 'Gas cooktop and burners',
-  },
-];
 
 // The honesty callout. This is the page telling the reader what it does not
 // have, which is the only way a proof page with empty slots keeps any
@@ -207,13 +145,6 @@ const beforeAfterPairs: BeforeAfterPair[] = [
 // exist, and fill `sameAs` in src/data/meetTheTeam.ts at the same time. The
 // second paragraph promises a place to leave a review and currently cannot
 // point at one.
-const honestyCallout = {
-  heading: 'Why there is no rating on this page yet',
-  body: [
-    'TLB has been booked by word of mouth for years and has only just built a website, so there is no long review history to show you. We would rather say that than put up a number nobody can check.',
-    'The quotes on this page are being collected from real clients, with their permission, and they will appear here with their first name and their town. If we have cleaned for you and you are willing to say so, tell us and we will point you at where to leave it.',
-  ],
-};
 
 // Cross-links to the other three pages in this cluster.
 const clusterItems = otherMeetTheTeamPages('/reviews/');
@@ -230,45 +161,38 @@ const clusterItems = otherMeetTheTeamPages('/reviews/');
 // FAQ 3's characterisation of the consumer guarantees is the same one
 // why-tlb.astro's non-branded FAQ makes, and is sound as a general statement
 // of the Australian Consumer Law.
-const faqItems = [
-  {
-    question: 'Where can I read reviews of TLB Cleaning?',
-    answer:
-      'Reviews are being collected from clients as the website launches, and they will appear on this page in their own words. [TBC - add the Google Business Profile and Facebook page links here, and to sameAs in src/data/meetTheTeam.ts, as soon as those profiles exist.]',
-  },
-  {
-    question: 'Do you guarantee my bond back?',
-    answer:
-      'No, and be careful with anyone who does, because a bond is released by an agent or a tribunal rather than by a cleaner. What we do is clean to the standard your exit inspection is measured against, and come back and fix anything the inspection picks up on the cleaning.',
-  },
-  {
-    question: 'What happens if a clean is not up to standard?',
-    answer:
-      'Tell us and we come back. Under the Australian Consumer Law a service has to be provided with due care and skill and be fit for the purpose you asked for, and you are entitled to a remedy when it is not. Reporting it within a day or two makes it much easier to put right.',
-  },
-  {
-    question: 'Can I speak to an existing client before I book?',
-    answer:
-      'Ask us. We will not hand out a client list, but plenty of people are happy to be asked, and in a region this size you may well already know somebody we clean for. That is how nearly every client we have found us.',
-  },
-  {
-    question: 'Do you work with real estate agencies?',
-    answer:
-      'Yes. Bond cleans, vacancy turnarounds and routine cleans on managed properties are a steady part of what we do, and agency work is where the standard is least forgiving. [TBC - name the agencies here once each has given written permission.]',
-  },
-  {
-    question: 'Are the before and after photos on this site real jobs?',
-    answer:
-      'Yes. Both comparisons on this page are real TLB jobs, published with the client’s written permission and with nothing identifying in frame — no house numbers, no street signs, no people. Any pair we add later goes up the same way, or it does not go up.',
-  },
-];
 
-const closingCta = {
-  kicker: 'Reviews',
-  heading: 'Ask the person who recommended us.',
-  lead: "Then tell us which town you're in and what your place needs, and we'll come back with a price.",
-  cta: quoteCta,
+// CONTENT lives in src/content/pages/reviews.yaml and is edited in Pages CMS
+// ("Reviews"). This file owns the layout. The notes above explain why each
+// section says what it says; they stay here because Pages CMS rewrites the
+// YAML on save and would drop them.
+const page = await getPage(
+  'reviews',
+  z.object({
+    seo: section.seo,
+    // The `minimal` hero has no photo, so it offers none.
+    hero: section.hero.omit({ image: true }),
+    reputation: section.textBlock,
+    reviews: section.sectionHeading,
+    // The `list` variant: the featured quote only shows on `carousel`.
+    agencies: section.logoBar.omit({ featuredQuote: true }),
+    beforeAfter: section.beforeAfter,
+    honesty: section.callout,
+    otherWays: section.sectionIntro,
+    faq: section.faq,
+    closingCta: section.callToAction,
+  }),
+);
+
+const pageMeta = {
+  ...page.seo,
+  canonical: 'https://tlbcleaning.com.au/reviews/',
 };
+
+const business = meetTheTeamBusiness(pageMeta.description);
+
+// The agency marks are still reserved slots (see the agency band note above).
+const agencyLogos = page.agencies.logos.map((item) => ({ ...item, logo: sized(item.logo, '2/1') }));
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -284,10 +208,11 @@ const closingCta = {
     <Hero
       variant="minimal"
       align="left"
-      kicker={hero.kicker}
-      headingLines={hero.headingLines}
-      lead={hero.lead}
-      cta={hero.cta}
+      kicker={page.hero.kicker}
+      headingLines={page.hero.headingLines}
+      subheading={page.hero.subheading}
+      lead={page.hero.lead}
+      cta={page.hero.cta ?? quoteCta}
     />
 
     {/* The shared client trust bar, no Backdrop photo behind it. Every other
@@ -296,43 +221,48 @@ const closingCta = {
         a decorative room behind a section about evidence. See blocker 2. */}
     <TrustBar variant="card" cards={trustBarCards} />
 
-    <TextBlock theme="muted" align="left" heading="A reputation held by other people" body={reputationBody} />
-
-    <GoogleReviewSlider heading="What our clients say" reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
-
-    <LogoBar
-      heading="Trusted by local agencies"
-      lead="Bond cleans and vacancy turnarounds for real estate agencies across the region. These slots hold their marks and their words, with permission, or they stay empty."
-      logos={agencyLogos}
+    <TextBlock
+      theme="muted"
+      align="left"
+      heading={page.reputation.heading}
+      body={page.reputation.body}
+      cta={page.reputation.cta}
+      backgroundImage={page.reputation.backgroundImage}
     />
+
+    <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
+
+    <LogoBar heading={page.agencies.heading} lead={page.agencies.lead} logos={agencyLogos} />
 
     {/* Drag the handle to wipe between the two frames of each pair. The
         pairs are both real TLB job photography, and the `note` plus FAQ 6
         say so on the page — keep those two in step. */}
     <BeforeAfter
-      heading="The difference, room by room"
-      lead="Drag the handle across each frame to see the same spot before and after a clean."
-      pairs={beforeAfterPairs}
-      note="Photographed on real TLB cleans, published with the client's permission."
+      heading={page.beforeAfter.heading}
+      lead={page.beforeAfter.lead}
+      pairs={page.beforeAfter.pairs}
+      note={page.beforeAfter.note}
+      beforeLabel={page.beforeAfter.beforeLabel}
+      afterLabel={page.beforeAfter.afterLabel}
     />
 
-    <Callout tone="note" heading={honestyCallout.heading} body={honestyCallout.body} />
+    <Callout tone="note" heading={page.honesty.heading} body={page.honesty.body} cta={page.honesty.cta} />
 
     <ServiceBlocks
       variant="list"
-      heading="Other ways to check us out"
-      lead="Who we are, what happens after you book, and what it is like working here."
+      heading={page.otherWays.heading}
+      lead={page.otherWays.lead}
       items={clusterItems}
     />
 
-    <Faq heading="Reviews and standards: FAQs" items={faqItems} />
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
 
     <CallToAction
       variant="secondary"
-      kicker={closingCta.kicker}
-      heading={closingCta.heading}
-      lead={closingCta.lead}
-      cta={closingCta.cta}
+      kicker={page.closingCta.kicker}
+      heading={page.closingCta.heading}
+      lead={page.closingCta.lead}
+      cta={page.closingCta.cta ?? quoteCta}
     />
   </main>
 

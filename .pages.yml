@@ -1186,6 +1186,67 @@ content:
             label: "FAQs: switching cleaners"
             description: "The notice periods, cancellation windows, fees and the \"one published case\" in these answers still need sources before launch."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: reviews
+        label: Reviews
+        type: file
+        path: src/content/pages/reviews.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            label: Hero (top of the page, no photo)
+            type: object
+            description: No photo here on purpose. Never add a star rating or review count unless it is a real, checkable figure.
+            fields:
+              - { name: kicker, label: Small label above the heading, type: string }
+              - name: headingLines
+                label: Main heading (H1)
+                type: string
+                list: true
+                required: true
+                description: Each line here starts a new line on the page. Most pages use one or two.
+              - { name: subheading, label: Line under the heading, type: string }
+              - name: lead
+                label: Intro sentence
+                type: text
+                required: true
+                description: "Tip: {{line.instant}} or {{line.fast}} inserts the brand line."
+              - { name: cta, component: link, label: "Button (leave empty to use the page's usual button)" }
+          - { name: reputation, component: textBlock, label: "A reputation held by other people (under the trust bar)" }
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - name: agencies
+            label: "Trusted by local agencies (logos)"
+            type: object
+            description: "Each agency needs to give written permission, supply its own logo and agree to the quote before it goes here. Never a generated logo or a screenshot of their website. The relationship line must be literally true."
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: lead, label: Intro sentence, type: text }
+              - name: logos
+                label: Logos
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{company}"
+                fields:
+                  - { name: logo, component: image, label: Logo }
+                  - { name: company, label: Company name, type: string }
+                  - { name: quote, label: Quote, type: text }
+                  - { name: tag, label: Relationship (e.g. managed properties since 2023), type: string }
+          - name: beforeAfter
+            component: beforeAfter
+            label: "Before and after"
+            description: Real TLB job photos only, with the client's written permission and nothing identifying in frame. The note under the photos and the last FAQ both say they are real, so keep all three in step.
+          - name: honesty
+            component: callout
+            label: "Why there is no rating yet (callout)"
+            description: Add the Google and Facebook review links here as soon as those profiles exist.
+          - { name: otherWays, component: sectionIntro, label: "Other ways to check us out (links to the team pages)" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: Do not promise a bond-back or satisfaction guarantee unless Teagan formally adopts one.
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
 
   - name: site-settings
     label: Site settings
