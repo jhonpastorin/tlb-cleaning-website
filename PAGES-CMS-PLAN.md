@@ -2,7 +2,7 @@
 
 **Goal:** every piece of visible copy and every photo on every page of tlbcleaning.com.au can be edited in a friendly web editor (Pages CMS), by people without GitHub accounts, while the site stays a fully static Astro build on Render.
 
-**Status:** Phase 0 (spike) in progress on `feature/pages-cms`. See "Spike findings" in section 9.
+**Status:** Phase 1 done on `feature/pages-cms` (7 Oct 2026). Phase 0 has three Pages CMS checks still open (photos, emptied fields, `.JPG` uploads); they must pass before Phase 3. See "Spike findings" and "Phase 1 results" in section 9.
 
 ---
 
@@ -527,25 +527,39 @@ export const collections = { pages };
 - **SEO length limits are guidance, not errors.** 60 of 112 titles are over 60 characters and 74 of 112 descriptions are over 160 (longest 80 and 197). The hard caps are 90 and 200 so existing pages stay saveable; the editor shows "aim for 60 / 155". Shortening the existing metadata is a separate SEO task.
 - **Duplicate images removed.** Nine files in `src/assets` were byte-identical copies of others. Once the CMS helper loads every image, the build kept whichever name it met first, which renamed published image files on 29 pages. Each duplicate was deleted and its six imports pointed at the copy the live site already published, so output is unchanged and editors will not see the same photo twice. A few `IMAGE-PROMPTS.md` notes and `IMAGE-GUIDELINES.md` still mention the deleted names.
 - **The compare script normalises random ids.** Ten section components build ids with `Math.random()` (`faq-x1y2z3a`), which differ on every build.
-- **Hoisted script order can vary between builds.** One run showed two pages whose bundled scripts imported the same modules in a different order; the next run matched exactly. Harmless (each script only binds its own elements), but expect it occasionally.
+- **Bundled script names and order vary.** Rollup renames `/_astro/*.js` bundles whenever the module graph changes (69 pages after Phase 1 added files), and once reordered two independent imports. The compare script now fingerprints scripts by content, with imported files' fingerprints substituted for their names and runs of bare imports sorted. Tested: a one-character script change is still caught.
 - **The brand lint now covers `src/content/**/*.yaml`**, linting each whole text value (YAML wraps long text over lines) and reporting `file:line (field.path)`. Tested with an injected banned word.
 - **The brand lint already fails on `staging`**: 63 blockers (`mums`, `price-words`, `brackets-copy`), several of them deliberate client decisions. So Phase 5 cannot use "lint passes" as the publish gate as-is. Options: resolve or allow-list the existing ones, or gate on *new* blockers only (compare against `main`).
 
 **Still to check in Pages CMS itself** (needs the GitHub App installed and the branch pushed)
 
-- [ ] `.pages.yml` loads without errors, including components that use other components (Hero uses `image`; the docs do not say whether nesting is allowed).
-- [ ] The `textBody` block list (paragraph / bullet list / subheading) edits and saves as `- type: paragraph` items.
+- [x] `.pages.yml` loads without errors, including components that use other components (Hero uses `image`). Confirmed 7 Oct.
+- [x] The `textBody` block list saves as `- type: paragraph` items, and the build renders the new paragraph. Confirmed 7 Oct (commit c7e1539).
 - [ ] Choosing an image writes `/src/assets/...` and the build resolves it; uploading a new photo lands in `src/assets`.
-- [ ] Saving without changes leaves the file untouched, or only reformats it once. The YAML was written with the `yaml` package's defaults (80-column folding), which is our best guess at Pages CMS's output.
+- [x] Pages CMS's YAML output matches the migrated files' formatting: adding one paragraph produced a 2-line diff, nothing reformatted. Confirmed 7 Oct (commit c7e1539). Commit message template and author identity also work.
 - [ ] Emptying an optional field saves as missing, `null` or `''` (the schemas accept all three).
 - [ ] An uppercase `.JPG` upload resolves.
+
+The test paragraph from commit c7e1539 was removed in code; the second round of Pages CMS edits (photos, emptied field, deleting that paragraph) never reached GitHub, cause unknown.
+
+## Phase 1 results (7 Oct 2026)
+
+- **Section schemas for every component a page uses** in `src/lib/cms-schemas.ts`, with a matching component in `.pages.yml` for each: `hero`, `heroCollage`, `textBlock`, `pathwayCards`, `linkList`, `iconGrid`, `imageCards`, `storySteps`, `photoGallery`, `textGrid`, `contentGrid`, `comparisonTable`, `beforeAfter`, `storyMosaic`, `imageBand`, `tagCloud`, `faq`, `callout`, `callToAction`, `sectionHeading`, `sectionIntro`, `videoFeature`, `contactForm`, `cardCarousel`, `metricsBlock`, `logoBar`. StatBand and TestimonialCarousel have none because no page uses them.
+- **ServiceBlocks is three editor shapes** (`linkList`, `iconGrid`, `imageCards`) so an editor never sees an icon or photo field that a variant ignores.
+- **Comparison cells:** editors type `yes` (tick), `no` (cross) or text. No existing cell is literally yes or no, so this is unambiguous.
+- **Pass-through rule:** a page passes every content field to its component, falling back to its default button only when the field is empty (`cta={page.hero.cta ?? bookCta}`). Otherwise the editor offers fields that do nothing. Applied to `how-booking-works`.
+- **`src/lib/cms-schemas.check.ts`** makes `astro check` fail if a schema's output no longer fits its component's props. It caught one real mismatch while being written (BeforeAfter photos use `alt`, not `label`); tested by breaking a schema on purpose.
+- **`npm run check-cms`** (`scripts/check-cms-config.mjs`) fails if a content file has a key `.pages.yml` does not describe, misses a required field, uses an unknown block or select value, or `.pages.yml` names a missing component or file. Tested with injected keys.
+- **CI** (`.github/workflows/ci.yml`) on pushes to `staging`, `main` and `feature/**`, and on PRs: `check-cms`, then `npm run build` (type check plus every content file validated). Brand lint runs **report only** until the 63 existing blockers are dealt with (Phase 5 decision).
+- `yaml` is now a direct dev dependency (the lint and the config check import it).
+- **Deferred to Phase 2:** collections for site settings, towns, regions, team and reviews. Astro warns about collections with no files, so each is added with its first content.
 
 ---
 
 ## 10. Checklist
 
-- [ ] Phase 0: Pages CMS installed; spike page round-trips; spike questions answered
-- [ ] Phase 1: section schemas, CMS components, helpers, brand lint on YAML, output diff script, CI
+- [ ] Phase 0: Pages CMS installed and round-trips text (done); photos, emptied fields, `.JPG` uploads still to test
+- [x] Phase 1: section schemas, CMS components, helpers, brand lint on YAML, output diff script, CI
 - [ ] Phase 2: Site settings, reviews, team, towns, regions, locations moved
 - [ ] Phase 3a: Home, hubs, Contact, About
 - [ ] Phase 3b: Remaining top-level pages
