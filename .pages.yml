@@ -1504,3 +1504,41 @@ content:
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - { name: faq, component: faq, label: "FAQs" }
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
+      - name: deep-cleaning
+        label: Deep cleaning
+        type: file
+        path: src/content/pages/house-cleaning/deep-cleaning.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            component: hero
+            description: "Leave the button empty to keep this page's \"Get a fast quote\" button. Deep cleans are quoted fast, not priced instantly, so avoid the word instant here."
+          - name: definition
+            component: textBlock
+            label: "Intro (under the trust bar)"
+            description: The background photo also sits behind the trust bar. Check the text is still easy to read after changing it.
+          - { name: pathways, component: pathwayCards, label: "Not sure a deep clean is the one? (cards)" }
+          - name: inclusions
+            component: textGrid
+            label: "What's included in a deep clean (grid)"
+            description: "This is the page's central promise, and the full list still needs Teagan's sign-off. The FAQ \"What isn't included in a deep clean?\" and the exclusions box below repeat parts of it, so change them together."
+          - name: exclusions
+            component: callout
+            label: "Quoted separately and not included (box under the grid)"
+            description: "Keep this in step with the FAQ \"What isn't included in a deep clean?\", which says the same thing."
+          - { name: moments, component: textGrid, label: "When people book a deep clean (grid)" }
+          - { name: comparison, component: comparisonTable, label: "Deep clean, regular clean or bond clean (table)" }
+          - { name: beforeAfter, component: beforeAfter, label: "Before and after" }
+          - { name: video, component: videoFeature, label: "Video (hidden on the site for now)" }
+          - name: booking
+            component: textBlock
+            label: "Easy to book, fast quoting (dark band)"
+            description: "This page's own paragraphs, starting with its \"Managed for you\" line. The How it works steps below them come from Site settings > Brand lines. Leave the button empty to keep \"Get a fast quote\"."
+          - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
+          - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
+          - name: faq
+            component: faq
+            label: "FAQs"
+            description: "Three answers still need Teagan's read-through: how long a deep clean takes, what isn't included, and bringing your own products. The moving furniture answer is worth checking with her too."
+          - { name: closingCta, component: callToAction, label: "Closing call to action" }
