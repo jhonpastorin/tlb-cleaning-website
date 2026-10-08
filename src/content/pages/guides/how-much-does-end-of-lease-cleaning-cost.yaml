@@ -120,29 +120,15 @@ pricing:
   heading: How we price ours
   body:
     - type: paragraph
-      text: Here is how ours works, in plain terms.
-    - type: list
-      items:
-        - "Basis: [CONFIRM. Is a TLB bond clean priced as a fixed quote per
-          property, or hourly, or fixed with an hourly overrun clause? This is
-          the first thing a reader wants and the first thing a competitor
-          states.]"
-        - "Minimum charge: [CONFIRM the minimum job charge, if there is one. A
-          studio or a one-bedroom unit is the case this answers.]"
-        - "What a typical range looks like: [CONFIRM. A range by property size,
-          stated as a range with condition named as the variable. Do not publish
-          a single figure, and do not publish anything that has not been checked
-          against real recent jobs.]"
-        - "Extras: [CONFIRM the pricing basis for carpet steam cleaning,
-          exterior windows, balconies and garages. Per room, per square metre,
-          or per job.]"
-        - "Deposit and payment: [CONFIRM whether a deposit is taken, and when
-          payment falls due relative to the inspection.]"
+      text: It depends on the size of the property and the condition it's left in.
+        That's why we quote rather than publish a flat rate that would be wrong
+        for most homes. Tell us the basics and you'll have a price back quickly,
+        with no obligation attached to it.
     - type: paragraph
-      text: Every one of those is quoted against the published task list rather than
-        against a guess, and the quote comes before the work does. If something
-        turns up on the day that changes the job, you hear about it before it is
-        done and not on the invoice.
+      text: The quote is built against the published task list rather than against a
+        guess, and it comes before the work does. If something turns up on the
+        day that changes the job, you hear about it before it is done and not on
+        the invoice.
 falseEconomy:
   heading: The lowest quote is sometimes the most expensive one
   body:

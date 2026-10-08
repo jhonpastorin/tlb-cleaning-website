@@ -1,7 +1,7 @@
 seo:
   title: Property Management Cleaning Services | TLB Cleaning
-  description: Cleaning for rent rolls, with an employed local team, one point of
-    contact and a re-clean commitment in writing. Add us to your panel.
+  description: Cleaning for rent rolls, with an employed local team and one point
+    of contact. Add us to your panel.
 buttonLabel: Add us to your panel
 hero:
   kicker: Real estate and property management cleaning
@@ -65,7 +65,7 @@ pathways:
       title: Standing work across the rent roll
       description: Routine cleans on managed and holiday-let properties, common areas,
         and the owner-occupied jobs your landlords ask you to recommend somebody
-        for. A local business, [insured] and [police-checked], with one number
+        for. A local business, insured and police-checked, with one number
         to ring.
       cta:
         label: Why TLB
@@ -82,28 +82,18 @@ workingWithUs:
         property twice. When something needs a decision, the person who rings
         you knows the job.
     - icon: chart-bars
-      title: Capacity, in writing
+      title: More than one cleaner on a vacancy
       description: A vacancy does not wait for one person to be free, and two or three
-        of our team can go on a property to compress a turnaround. [How many
-        vacancy cleans a week we can absorb, and our standard turnaround from
-        keys to done. Confirm, this is the number that wins the trial.]
+        of our team can go on a property to compress a turnaround.
     - icon: target
       title: Cleaned against the condition report
       description: We clean to the standard the exit inspection is measured against,
         not to a general idea of clean. That means the oven, the rangehood
         filter, window tracks, fan blades, skirtings and the spots that reliably
         get written up.
-    - icon: spark
-      title: If it fails on cleaning, we come back
-      description: "A re-clean is not a negotiation and not an invoice. [Our re-clean
-        commitment: the window it applies in, what it covers, and whether it is
-        free. Confirm. Word it as a re-clean, never as a bond back guarantee, no
-        cleaner controls whether a bond is returned.]"
     - icon: office
       title: Invoicing that suits your trust accounting
       description: Referenced to the property so it can be coded without a phone call.
-        [Whether we invoice the agency, the owner or the outgoing tenant, per
-        job or consolidated, and our terms. Confirm.]
     - icon: idea
       title: You hear about it from us first
       description: Damage, something abandoned, a property that was worse than the
@@ -218,11 +208,6 @@ comparison:
         - A standard checklist
         - The cleaner's own judgement
         - The outgoing condition report
-    - label: If the inspection fails on cleaning
-      values:
-        - Case by case
-        - Case by case
-        - A re-clean commitment in writing
     - label: Invoicing
       values:
         - Head office, on their cycle
@@ -254,24 +239,14 @@ bookingFaq:
         week, and there is no lock-in contract either way."
     - question: How quickly can you turn a vacancy around?
       answer: We can put more than one cleaner on a property, so a turnaround is
-        limited by access rather than by one person’s day. [Our standard
-        turnaround from keys to done, and how much notice we need for an urgent
-        one. Confirm.] Tell us the photography or open-home date and we will
-        work back from it.
-    - question: What happens if the exit inspection fails on cleaning?
-      answer: "We come back and fix it. [Our re-clean commitment: the window it
-        applies in, what it covers, and whether it is free. Confirm.] What we
-        will not do is argue with your report. If we missed something, we missed
-        it, and the fastest route back to a released bond is us being there
-        tomorrow."
+        limited by access rather than by one person’s day. Tell us the
+        photography or open-home date and we will work back from it.
     - question: How does invoicing work?
       answer: Referenced to the property so your team can code it without ringing us.
-        [Whether we invoice the agency, the owner or the outgoing tenant, per
-        job or consolidated monthly, and our terms. Confirm.]
     - question: Are your cleaners employed or subcontracted?
       answer: Employed, on our own team. That is what lets us tell you who is
         attending before they do, and cover a property from within the same team
-        when someone is away. We are [insured] and [police-checked], and there
+        when someone is away. We are insured and police-checked, and there
         is one local number to ring.
 generalFaq:
   heading: Property management cleaning services, common questions

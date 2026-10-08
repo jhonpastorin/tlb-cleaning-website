@@ -59,8 +59,8 @@ pathways:
         alt: TLB cleaner in uniform with her cleaning caddy in an office kitchenette
       title: I want to know who is in the building
       description: The same small team each visit, in TLB uniform, and you can meet
-        them before the first one. We are a local business, [insured] and
-        [police-checked], and there is one local number to ring if something is
+        them before the first one. We are a local business, insured and
+        police-checked, and there is one local number to ring if something is
         not right.
       cta:
         label: Why TLB
@@ -103,7 +103,7 @@ scope:
       title: Groomed, dried and put back
       description: The pile is groomed so it dries evenly, air movers go down where
         the floor has to be back in service quickly, and furniture goes back
-        where it was. Typical drying time is [X to Y hours. Confirm].
+        where it was.
 worthKnowing:
   heading: What a low carpet quote usually leaves out
   body:
@@ -247,12 +247,11 @@ faq:
         accept a quote, and ask the cleaner in writing whether their method
         meets it.
     - question: How much does commercial carpet cleaning cost?
-      answer: Commercial carpet is usually priced per square metre, with a minimum
-        charge for small jobs, and the rate moves with the condition of the
-        floor, how much furniture there is to work around and whether the work
-        is after hours. Ask for the price against a written scope rather than an
-        hourly rate, so you can see what is actually included. [TLB’s pricing
-        basis and minimum charge. Confirm.]
+      answer: It depends on the size and condition of the floor, how much furniture
+        there is to work around and whether the work is after hours. That's why
+        we quote rather than publish a flat rate that would be wrong for most
+        sites. Tell us the basics and you'll have a price back quickly, with no
+        obligation attached to it.
 closingCta:
   kicker: Commercial carpet cleaning
   heading: Start with a walkthrough.

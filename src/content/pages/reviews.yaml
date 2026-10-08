@@ -25,25 +25,6 @@ reputation:
         had us in their homes for years, in their words rather than ours.
 reviews:
   heading: What our clients say
-agencies:
-  heading: Trusted by local agencies
-  lead: Bond cleans and vacancy turnarounds for real estate agencies across the
-    region. These slots hold their marks and their words, with permission, or
-    they stay empty.
-  logos:
-    - logo:
-        alt: Real estate agency mark, supplied with permission
-      quote: "[TBC - a quote from a property manager about bond cleans passing
-        inspection first time, or about being able to hand TLB a difficult
-        vacate at short notice.]"
-      company: "[Agency name - TBC]"
-      tag: '[Relationship, e.g. "Managed properties since [year]" - TBC]'
-    - logo:
-        alt: Real estate agency mark, supplied with permission
-      quote: "[TBC - a second agency, ideally one on the Queensland side of the
-        border, since this site claims work in both states.]"
-      company: "[Agency name - TBC]"
-      tag: "[Relationship - TBC]"
 beforeAfter:
   heading: The difference, room by room
   lead: Drag the handle across each frame to see the same spot before and after a
@@ -86,9 +67,7 @@ faq:
   items:
     - question: Where can I read reviews of TLB Cleaning?
       answer: Reviews are being collected from clients as the website launches, and
-        they will appear on this page in their own words. [TBC - add the Google
-        Business Profile and Facebook page links here, and to sameAs in
-        src/data/meetTheTeam.ts, as soon as those profiles exist.]
+        they will appear on this page in their own words.
     - question: Do you guarantee my bond back?
       answer: No, and be careful with anyone who does, because a bond is released by
         an agent or a tribunal rather than by a cleaner. What we do is clean to
@@ -106,8 +85,7 @@ faq:
     - question: Do you work with real estate agencies?
       answer: Yes. Bond cleans, vacancy turnarounds and routine cleans on managed
         properties are a steady part of what we do, and agency work is where the
-        standard is least forgiving. [TBC - name the agencies here once each has
-        given written permission.]
+        standard is least forgiving.
     - question: Are the before and after photos on this site real jobs?
       answer: Yes. Both comparisons on this page are real TLB jobs, published with the
         client’s written permission and with nothing identifying in frame — no

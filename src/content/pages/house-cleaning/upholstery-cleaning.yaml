@@ -84,14 +84,14 @@ method:
       title: Cleaned to the code, not to a formula
       description: Water safe fabrics get low moisture extraction with the hand tool.
         Solvent only fabrics need a dry method instead, and delicate or X-coded
-        covers get vacuumed and left alone rather than risked. [Confirm whether
-        TLB cleans S-coded solvent-only fabric.]
+        covers get vacuumed and left alone rather than risked.
     - icon: office
       title: Groomed and dried
       description: The pile is groomed back the right way so it dries evenly without
-        watermarks, and we get air moving through the room. Typical drying time
-        is [X to Y hours. Confirm]. Cushions go back only once they are dry,
-        never before.
+        watermarks, and we get air moving through the room. Drying time depends
+        on the fabric, the airflow and the weather, and we will tell you what to
+        expect on the day. Cushions go back only once they are dry, never
+        before.
 spills:
   heading: What to do in the first ten minutes after a spill
   body:
@@ -190,8 +190,10 @@ generalFaq:
       answer: Upholstery is usually priced per seat or per item, so a three seater,
         two armchairs and six dining chairs are quoted as separate line items
         rather than by the hour. What moves the price is the fabric, the size,
-        the condition and whether any spot treatment is needed. [TLB’s pricing
-        basis and minimum charge. Confirm.]
+        the condition and whether any spot treatment is needed. That's why we
+        quote rather than publish a flat rate that would be wrong for most
+        homes. Tell us the basics and you'll have a price back quickly, with no
+        obligation attached to it.
 closingCta:
   kicker: Upholstery and lounge cleaning
   heading: Book your lounge in.

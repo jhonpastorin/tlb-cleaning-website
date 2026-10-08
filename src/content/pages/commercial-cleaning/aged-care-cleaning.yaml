@@ -205,18 +205,11 @@ brandedFaq:
     - question: Do you take single units, or only whole sites?
       answer: We quote whole sites and we also do independent living unit turnovers
         between residents, which is closer to an end of lease clean than to a
-        regular visit. [Whether TLB takes individual occupied units inside a
-        village, and whether that is billed to the village or the resident.
-        Confirm.] If a resident wants their own unit cleaned privately, we are
-        happy to arrange that separately from your contract.
+        regular visit.
     - question: Are your cleaners screened?
-      answer: "Our cleaners are employed by TLB rather than subcontracted, which is
-        what makes screening possible to evidence at all: there is no third
-        party in between holding the paperwork. [TLB’s screening: what checks
-        are held for every cleaner, how often they are renewed, and what
-        evidence can be produced on request. Confirm before this page ships.]
-        Ask us for it in writing at the walkthrough and hold us to producing
-        it."
+      answer: "Yes, they are police-checked. Our cleaners are employed by TLB rather
+        than subcontracted, which is what makes screening possible to evidence
+        at all: there is no third party in between holding the paperwork."
     - question: Can you work around care routines and meal times?
       answer: Yes, and the schedule is built backwards from them. We take your daily
         rhythm at the walkthrough, meaning meals, medication rounds, physio,
@@ -246,12 +239,13 @@ faq:
   heading: Aged care cleaning services, common questions
   items:
     - question: How much does aged care cleaning cost?
-      answer: It is priced per visit against a written scope. The number moves with
-        how many resident rooms and bathrooms there are, how much communal and
-        corridor floor, whether wet areas and laundries are included, and how
-        many visits a day the dining rooms need. A village of independent living
-        units and a residential care home are different jobs at different
-        prices. [TLB’s pricing basis. Confirm.]
+      answer: It depends on how many resident rooms and bathrooms there are, how much
+        communal and corridor floor, whether wet areas and laundries are
+        included, and how many visits a day the dining rooms need. A village of
+        independent living units and a residential care home are different jobs
+        at different prices. That's why we quote rather than publish a flat
+        rate that would be wrong for most sites. Tell us the basics and you'll
+        have a price back quickly, with no obligation attached to it.
     - question: What are the cleaning requirements for aged care homes in Australia?
       answer: Approved providers are required to give residents a service environment
         that is safe, clean, well maintained and comfortable, and that

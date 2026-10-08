@@ -175,7 +175,9 @@ const page = await getPage(
     reputation: section.textBlock,
     reviews: section.sectionHeading,
     // The `list` variant: the featured quote only shows on `carousel`.
-    agencies: section.logoBar.omit({ featuredQuote: true }),
+    // Optional: left out of the YAML until an agency has given permission,
+    // and the band does not render without it.
+    agencies: section.optional(section.logoBar.omit({ featuredQuote: true })),
     beforeAfter: section.beforeAfter,
     honesty: section.callout,
     otherWays: section.sectionIntro,
@@ -192,7 +194,7 @@ const pageMeta = {
 const business = meetTheTeamBusiness(pageMeta.description);
 
 // The agency marks are still reserved slots (see the agency band note above).
-const agencyLogos = page.agencies.logos.map((item) => ({ ...item, logo: sized(item.logo, '2/1') }));
+const agencyLogos = page.agencies?.logos.map((item) => ({ ...item, logo: sized(item.logo, '2/1') }));
 ---
 
 <Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
@@ -232,7 +234,9 @@ const agencyLogos = page.agencies.logos.map((item) => ({ ...item, logo: sized(it
 
     <GoogleReviewSlider heading={page.reviews.heading} reviews={googleReviews} profileUrl={googleBusinessProfileUrl} />
 
-    <LogoBar heading={page.agencies.heading} lead={page.agencies.lead} logos={agencyLogos} />
+    {page.agencies && agencyLogos && (
+      <LogoBar heading={page.agencies.heading} lead={page.agencies.lead} logos={agencyLogos} />
+    )}
 
     {/* Drag the handle to wipe between the two frames of each pair. The
         pairs are both real TLB job photography, and the `note` plus FAQ 6

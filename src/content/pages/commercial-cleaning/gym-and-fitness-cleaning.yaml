@@ -43,13 +43,9 @@ access:
       absence, which means quiet-hour visits, working zone by zone rather than
       room by room, and never taking a whole change room out of service at
       once."
-    - It also changes who we send. A cleaner working an unstaffed gym at five in
-      the morning is alone in a building with members, which is a work health
-      and safety question for us and a member-experience question for you.
-      [Whether TLB will service unstaffed 24/7 access hours. Confirm.] If the
-      answer is no, the honest version of this page covers staffed studios and
-      staffed hours, and we should say so rather than quote and then
-      renegotiate.
+    - A cleaner working an unstaffed gym at five in the morning is alone in a
+      building with members, which is a work health and safety question for us
+      and a member-experience question for you.
 zones:
   heading: Three zones, three different problems
   lead: A gym cannot be cleaned with an office scope done more often. The soiling
@@ -74,9 +70,8 @@ zones:
       description: Mats cleaned on both sides and stood to dry rather than stacked
         wet, which is what makes a mat cupboard smell. Sprung timber and vinyl
         mopped with the right dilution so it is not left slippery. Rubber
-        flooring deep cleaned with a scrubber and the right chemistry rather
-        than a mop, because a mop on rubber just moves the film around. [Whether
-        TLB has a scrubber for rubber flooring. Confirm.]
+        flooring needs a scrubber and the right chemistry rather than a mop,
+        because a mop on rubber just moves the film around.
     - image:
         src: /src/assets/commercial_cleaning/premises/gym-change-room-and-showers-cleaned.jpg
         alt: A clean, empty change room in a modern fitness studio, lockers and bench
@@ -171,9 +166,9 @@ brandedFaq:
       answer: In your quietest window, zone by zone rather than room by room, so
         nothing is ever fully out of service. For a staffed gym that is usually
         before opening or after the last class. For a 24/7 club it is the small
-        hours, and there will still be members in the building. [Whether TLB
-        services unstaffed 24/7 hours. Confirm.] If we cannot cover a window, we
-        will tell you at the walkthrough rather than after you have signed.
+        hours, and there will still be members in the building. If we cannot
+        cover a window, we will tell you at the walkthrough rather than after
+        you have signed.
     - question: Do you clean the equipment itself, or just the floors?
       answer: The equipment is most of the job here. Every pad, grip, handle, lever
         and console gets wiped and disinfected with proper contact time, frames
@@ -200,9 +195,8 @@ brandedFaq:
         climate and comes back if only wiped, so it needs treating and then a
         schedule to keep it down. Anything growing behind a wall or under a
         floor is remediation rather than cleaning, and that is a different job.
-        [Whether TLB takes on commercial wet-area mould remediation, or treats
-        surface mould only. Confirm.] We have a page on mould and we will tell
-        you honestly which side of the line yours is.
+        We have a page on mould and we will tell you honestly which side of the
+        line yours is.
     - question: What happens if I get in touch?
       answer: We walk the gym at the quietest hour you have, look at the change room
         drains and the underside of the equipment rather than the reception
@@ -213,12 +207,13 @@ faq:
   heading: Gym Cleaning FAQs
   items:
     - question: How much does gym cleaning cost?
-      answer: It is priced per visit against a written scope. The number moves with
-        how many pieces of equipment there are rather than floor area, how many
-        change rooms and showers, whether the rubber flooring needs machine
-        cleaning, and how many visits a day your traffic justifies. A boutique
-        studio and a full gym with two change rooms are different jobs. [TLB’s
-        pricing basis. Confirm.]
+      answer: It depends on how many pieces of equipment there are rather than floor
+        area, how many change rooms and showers, whether the rubber flooring
+        needs machine cleaning, and how many visits a day your traffic
+        justifies. A boutique studio and a full gym with two change rooms are
+        different jobs. That's why we quote rather than publish a flat rate that
+        would be wrong for most gyms. Tell us the basics and you'll have a price
+        back quickly, with no obligation attached to it.
     - question: How often should a gym be cleaned?
       answer: Daily at minimum for equipment, floors and change rooms, and twice daily
         for change rooms in a busy club. Equipment touch points ideally get a

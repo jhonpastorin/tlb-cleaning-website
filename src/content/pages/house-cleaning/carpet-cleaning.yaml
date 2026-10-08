@@ -91,12 +91,12 @@ method:
       description: Wool takes less water, a gentler pH and much more care on the
         drying, and silk, jute and viscose take less again. Some rugs are better
         off going to a rug plant, and we will say so rather than take the job.
-        [Confirm TLB cleans wool in home.]
     - icon: office
       title: Groomed and dried
       description: The pile is groomed so it dries evenly and air is moved across it.
-        Typical drying time is [X to Y hours. Confirm]. In a humid Northern
-        Rivers summer we will tell you to leave a fan on, and we would rather
+        Drying time depends on the carpet, the airflow and the weather, and we
+        will tell you what to expect on the day. In a humid Northern Rivers
+        summer we will tell you to leave a fan on, and we would rather
         say that than pretend humidity does not exist.
 worthKnowing:
   heading: What a low carpet quote usually leaves out
@@ -225,7 +225,9 @@ nonBrandedFaq:
         with a minimum charge for a small job, and rugs are usually quoted
         separately by size and fibre. What moves the price is the area, the
         condition, whether furniture has to be moved and whether any spot
-        treatment is needed. [TLB’s pricing basis and minimum charge. Confirm.]
+        treatment is needed. That's why we quote rather than publish a flat rate
+        that would be wrong for most homes. Tell us the basics and you'll have a
+        price back quickly, with no obligation attached to it.
 closingCta:
   kicker: Carpet and rug cleaning
   heading: Book your carpet clean.

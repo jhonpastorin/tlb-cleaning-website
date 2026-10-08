@@ -133,26 +133,14 @@ pricing:
   heading: How we price ours
   body:
     - type: paragraph
-      text: Here is how ours works, in plain terms.
-    - type: list
-      items:
-        - "Basis: [CONFIRM. Does TLB price regular home cleaning hourly, as a
-          fixed price per visit, or both depending on the job?]"
-        - "Typical visit: [CONFIRM. A range for a common property size at a
-          common frequency, with the variables named. A range, never a single
-          figure, and never a figure that has not been checked against recent
-          jobs.]"
-        - "The first clean: [CONFIRM. Higher first visit, a separately quoted
-          initial deep clean, or neither.]"
-        - "Minimum booking: [CONFIRM whether there is a minimum visit length or
-          minimum charge.]"
-        - "What is included as standard, and what is an extra: [CONFIRM the
-          standard task list, and specifically whether inside the oven, inside
-          the fridge, interior windows and bed changes are in it.]"
+      text: It depends on the size of your place, its condition and how often we
+        come. That's why we quote rather than publish a flat rate that would be
+        wrong for most homes. Tell us the basics and you'll have a price back
+        quickly, with no obligation attached to it.
     - type: paragraph
-      text: "Whatever the answer, the useful thing to ask any cleaner is the same:
-        what does one visit cost, and what is on the list for that visit. Two
-        numbers without two lists cannot be compared."
+      text: "Whoever you book, the useful thing to ask is the same: what does one
+        visit cost, and what is on the list for that visit. Two numbers without
+        two lists cannot be compared."
 rate:
   heading: Why one rate is half another
   body:

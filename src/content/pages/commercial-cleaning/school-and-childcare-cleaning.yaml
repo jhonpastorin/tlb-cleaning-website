@@ -141,12 +141,11 @@ childcareScope:
         stretcher frames done. Carpet in a childcare room needs extraction more
         often than an office does, because what lands on it is not dust.
     - icon: target
-      title: Bathrooms and the nappy change area
-      description: Child-height toilets and basins, floors, and the nappy change
-        bench, sink, bin and the wall behind it. [Whether TLB cleans the nappy
-        change area, and with what products. Confirm.] It is the least pleasant
-        line on any childcare scope and the one an assessor looks at first, so
-        it needs naming rather than assuming.
+      title: Bathrooms at child height
+      description: Child-height toilets and basins, and the floors. The nappy change
+        area is the least pleasant line on any childcare scope and the one an
+        assessor looks at first, so it needs naming on the scope rather than
+        assuming.
     - icon: spray-bottle
       title: Products that belong in a room with children
       description: Low-odour, low-residue products, everything rinsed rather than left
@@ -205,13 +204,9 @@ brandedFaq:
   heading: Frequently Asked Questions
   items:
     - question: Do your cleaners hold a Working With Children Check?
-      answer: "They have to, and so does anyone else quoting your site. [TLB’s
-        position: a current WWCC clearance number for every cleaner who would
-        attend, produced in writing on request, and what happens when a
-        replacement is sent at short notice. Confirm before this page ships.]
-        Because our cleaners are employed by TLB rather than subcontracted,
-        there is no third party holding that paperwork, which is what makes it
-        possible to give you per person rather than per company."
+      answer: They have to, and so does anyone else quoting your site. Our cleaners are
+        employed by TLB rather than subcontracted, so there is no third party
+        holding that paperwork.
     - question: When would you be on site?
       answer: After the last pickup for a centre, and after hours for a school, with
         the periodic work booked into term breaks. Anything that genuinely has
@@ -221,10 +216,7 @@ brandedFaq:
     - question: Can you work to our own policies?
       answer: Yes, and yours wins over our standard scope wherever they differ. If
         your cleaning and infection control policy specifies a product, a method
-        or a frequency, it goes on the scope in writing. [Whether TLB will
-        provide a written cleaning procedure a service can attach to its own NQF
-        documentation. Confirm.] Ask for that at the walkthrough rather than at
-        your next assessment.
+        or a frequency, it goes on the scope in writing.
     - question: Who sanitises the toys?
       answer: "Your educators, on your own rotation and under your own policy. It is
         not us being unhelpful: toy sanitising is a judgement about your
@@ -248,12 +240,13 @@ faq:
   heading: School and Childcare Cleaning FAQs
   items:
     - question: How much does school or childcare cleaning cost?
-      answer: It is priced per visit against a written scope. The number moves with
-        how many rooms and bathrooms there are, how much of the floor is carpet,
-        whether a mid-day bathroom check is included, and how much outdoor hard
-        surface there is. A centre with four rooms and a school with twenty
-        classrooms are different jobs at different frequencies. [TLB’s pricing
-        basis. Confirm.]
+      answer: It depends on how many rooms and bathrooms there are, how much of the
+        floor is carpet, whether a mid-day bathroom check is included, and how
+        much outdoor hard surface there is. A centre with four rooms and a
+        school with twenty classrooms are different jobs at different
+        frequencies. That's why we quote rather than publish a flat rate that
+        would be wrong for most sites. Tell us the basics and you'll have a
+        price back quickly, with no obligation attached to it.
     - question: Do cleaners need a Working With Children Check in NSW?
       answer: Yes, where the work is child-related, and cleaning a school or childcare
         service generally is. The clearance is issued to the individual rather

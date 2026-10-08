@@ -65,8 +65,6 @@ stages:
         passable and nobody trips over the last trade’s mess. Floors kept clear
         for the trades who need a clean substrate. Amenities and the site office
         cleaned, which is the part everyone skips and everyone complains about.
-        Waste removal from site is [included / quoted separately, and requires a
-        tip fee. Confirm].
     - image:
         src: /src/assets/commercial_cleaning/premises/construction-cleaner-detailing-new-window-frames.jpg
         alt: A cleaner in a high-visibility vest detailing plaster dust off a new
@@ -76,8 +74,7 @@ stages:
         the tops of doors, architraves and skirtings. Paint spots, adhesive,
         silicone smears and stickers off glass, tiles and tapware. Window frames
         and tracks vacuumed out. Cupboards and drawers cleaned inside. Floors
-        vacuumed then washed, not swept. Done with [an H-class vacuum. Confirm
-        TLB owns one] rather than a broom, for the reason in the block above.
+        vacuumed then washed, not swept.
     - image:
         src: /src/assets/commercial_cleaning/premises/construction-final-detail-clean-of-a-new-bathroom.jpg
         alt: A cleaner in a high-visibility vest polishing the brushed-metal tapware of
@@ -174,10 +171,7 @@ brandedFaq:
     - question: Are your cleaners inducted to work on site?
       answer: Any cleaner attending a construction site needs a general construction
         induction card, the white card, plus your own site induction, and they
-        need to sign in and out like every other trade. [Whether TLB holds a
-        current white card for every cleaner who would attend, and whether TLB
-        can provide a SWMS for the work. Confirm before this page ships.] Ask us
-        for the cards and the SWMS before we come on site, not after.
+        need to sign in and out like every other trade.
     - question: Can you work to our handover date?
       answer: "Yes, and that is usually the whole brief. Tell us the handover date and
         we work backwards: the builders clean once the trades are genuinely out,
@@ -186,8 +180,7 @@ brandedFaq:
         will move with it where we have the capacity."
     - question: Do you take the rubbish away?
       answer: Debris and packaging get cleared and bagged as part of the clean. Taking
-        it off site is [included / a separate line with a tip fee. Confirm],
-        because it needs a vehicle and a disposal cost rather than just labour.
+        it off site needs a vehicle and a disposal cost rather than just labour.
         Bins on site cost everyone less, so if there is still a skip when we
         arrive, say so.
     - question: What about the windows?
@@ -213,11 +206,11 @@ faq:
   heading: Post construction cleaning services, common questions
   items:
     - question: How much does a builders clean cost?
-      answer: It is priced per job rather than per hour, against a written scope, and
-        the number moves with which stages you need, how much glass there is,
-        how much the trades left behind and whether the date is fixed. Floor
-        area on its own is a poor predictor, which is why a phone quote for a
-        builders clean is usually wrong. [TLB’s pricing basis. Confirm.]
+      answer: It depends on which stages you need, how much glass there is, how much
+        the trades left behind and whether the date is fixed. Floor area on its
+        own is a poor predictor. That's why we quote rather than publish a flat
+        rate that would be wrong for most sites. Tell us the basics and you'll
+        have a price back quickly, with no obligation attached to it.
     - question: What is included in a builders clean?
       answer: There is no standard definition, which is exactly why it should be
         written down. A normal scope covers dust removal from all surfaces

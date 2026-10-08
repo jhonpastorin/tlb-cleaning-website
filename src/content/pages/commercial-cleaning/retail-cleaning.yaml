@@ -51,8 +51,7 @@ clock:
       description: Shopfront glass outside as well as in, the frames and the
         threshold, and the footpath immediately outside swept. Coastal
         shopfronts collect salt film that fresh water alone will not shift, so
-        the glass needs washing rather than wiping. [Whether TLB does external
-        glass, and up to what height. Confirm.] Anything above ground level
+        the glass needs washing rather than wiping. Anything above ground level
         needs its own plan.
       href: /house-cleaning/window-cleaning/
     - icon: house
@@ -140,11 +139,9 @@ brandedFaq:
   items:
     - question: Our shop is small. Is that too small for you?
       answer: "No, and small shops are a lot of what this work is. What a small shop
-        does run into is a minimum charge: a fifteen minute visit costs almost
-        the same to get to as a forty minute one, so there is a floor below
-        which a daily service cannot be priced honestly. [TLB’s minimum charge
-        per visit. Confirm.] Often the better answer for a small shop is three
-        visits a week rather than five, and we will say so."
+        does run into is travel: a fifteen minute visit costs almost the same to
+        get to as a forty minute one. Often the better answer for a small shop
+        is three visits a week rather than five, and we will say so."
     - question: Can you be finished before we open?
       answer: "Yes, and that is the whole point of an early visit. Floors dry, glass
         done, entry clear, before you unlock. A cleaner still working at trade
@@ -154,8 +151,8 @@ brandedFaq:
         moves with it."
     - question: Do you do the windows too?
       answer: Internal glass is part of every retail scope. External shopfront glass
-        at ground level is [included / a separate line. Confirm], and it needs
-        washing rather than wiping in a coastal town because of salt film.
+        at ground level needs washing rather than wiping in a coastal town
+        because of salt film.
         Anything above ground level is a different job with different equipment,
         and we will tell you which yours is rather than quoting and then
         discovering it.
@@ -175,20 +172,17 @@ brandedFaq:
     - question: Do you take on a whole strip or a centre?
       answer: That is a different and larger conversation than a single shop, and it
         is the one case on this page where a site walkthrough genuinely pays for
-        itself. [Whether TLB takes multi-tenancy, managed strip or shopping
-        centre common area work. Confirm.] If you manage a strip rather than
-        trade from one, the strata and common area page is closer to what you
-        need.
+        itself. If you manage a strip rather than trade from one, the strata and
+        common area page is closer to what you need.
 faq:
   heading: Retail Cleaning FAQs
   items:
     - question: How much does shop cleaning cost?
-      answer: Retail is priced per visit against a written scope, and for a small shop
-        the minimum charge matters more than the rate does, because travel and
-        setup are most of a short visit. The number moves with floor area and
-        floor type, how much glass there is, whether external glass is included,
-        and how many visits a week. [TLB’s pricing basis and minimum charge per
-        visit. Confirm.]
+      answer: It depends on floor area and floor type, how much glass there is,
+        whether external glass is included, and how many visits a week. That's
+        why we quote rather than publish a flat rate that would be wrong for
+        most shops. Tell us the basics and you'll have a price back quickly,
+        with no obligation attached to it.
     - question: How often should a shop be cleaned?
       answer: Daily for anywhere with food, a fitting room or high foot traffic, and
         three times a week is usually enough for a low-traffic boutique or

@@ -100,8 +100,6 @@ sharedScope:
       body:
         - Separate cloths and mop heads for bathrooms, treatment rooms and
           general areas, so nothing crosses from a toilet to a treatment bed.
-          Ours are [laundered between sites / single-use and disposed of.
-          Confirm], and whichever it is goes on the scope in writing.
     - type: feature
       icon: house
       heading: Floors, and the edges of them
@@ -161,10 +159,8 @@ brandedFaq:
         their own price, so you can see what the timing costs.
     - question: Will you follow our infection control policy?
       answer: Yes. Where your policy specifies a product, a method or a frequency,
-        yours wins over our standard scope and we write it in. [Whether TLB has
-        a documented cleaning procedure a practice can attach to its own policy,
-        and whether it names the products used. Confirm.] If your policy needs a
-        particular disinfectant used a particular way, tell us at the
+        yours wins over our standard scope and we write it in. If your policy
+        needs a particular disinfectant used a particular way, tell us at the
         walkthrough and it goes on the scope rather than into someone’s memory.
     - question: Do you clean treatment beds and clinical equipment?
       answer: We clean and disinfect treatment bed and chair upholstery, plinths,
@@ -180,11 +176,8 @@ brandedFaq:
         not next week. Basins and traps are cleaned, and wax residue comes off
         with the right solvent rather than a scourer.
     - question: Are your cleaners police-checked?
-      answer: "Our cleaners are employed by TLB rather than subcontracted, so there is
-        no third party between you and the person who attends. [TLB’s screening:
-        what checks are held and how often they are renewed. Confirm.] For a
-        practice holding patient records on site, ask for that in writing along
-        with the insurance certificate, and ask any other cleaner for the same."
+      answer: Yes. Our cleaners are employed by TLB rather than subcontracted, so there
+        is no third party between you and the person who attends.
     - question: What happens if I get in touch?
       answer: We walk the premises after hours with you, room by room, and ask what
         your own procedures require. Then you get a written scope naming each
@@ -194,12 +187,13 @@ faq:
   heading: Medical office cleaning services, common questions
   items:
     - question: How much does medical or clinic cleaning cost?
-      answer: It is priced per visit against a written scope. The number moves with
-        how many consulting or treatment rooms there are, how many bathrooms,
-        how much of the floor is vinyl versus carpet, and whether the visit has
-        to happen inside a narrow window between close and open. A three-room
-        clinic and a ten-room practice are different jobs. [TLB’s pricing basis.
-        Confirm.]
+      answer: It depends on how many consulting or treatment rooms there are, how many
+        bathrooms, how much of the floor is vinyl versus carpet, and whether the
+        visit has to happen inside a narrow window between close and open. A
+        three-room clinic and a ten-room practice are different jobs. That's why
+        we quote rather than publish a flat rate that would be wrong for most
+        practices. Tell us the basics and you'll have a price back quickly, with
+        no obligation attached to it.
     - question: What is the difference between cleaning and disinfecting?
       answer: "Cleaning physically removes soil, and disinfecting kills what is left.
         The order matters and it is where most cleaning goes wrong: spraying

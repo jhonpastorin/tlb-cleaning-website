@@ -1,8 +1,7 @@
 seo:
   title: Tile & Grout Cleaning Services | TLB Cleaning
   description: Tile and grout cleaning that brings back the original colour in
-    bathrooms, kitchens and entryways. Sealing available. Get a fixed quote
-    today.
+    bathrooms, kitchens and entryways. Get a fixed quote today.
 buttonLabel: Get a fixed quote today
 hero:
   kicker: Tile and grout cleaning
@@ -54,7 +53,7 @@ pathways:
         href: /house-cleaning/end-of-lease-cleaning/
 method:
   heading: How we clean tile and grout
-  lead: Six stages. Most of the result comes from dwell time and agitation, not
+  lead: Five stages. Most of the result comes from dwell time and agitation, not
     from pressure.
   items:
     - icon: target
@@ -80,19 +79,12 @@ method:
       description: The loosened soil has to come off the floor rather than be spread
         around it, so it is rinsed and the dirty water is lifted away. Wiping a
         cleaned grout line with a cloth puts a good share of it straight back.
-        [Confirm what equipment TLB uses here.]
     - icon: puzzle
       title: An honest look at what is left
       description: When it is clean and dry we look at it with you. Some
         discolouration is soil and comes out. Some is staining in the cement,
         some is worn or missing grout, and some is a shower that needs
         regrouting rather than cleaning. We will tell you which you have.
-    - icon: bloom
-      title: Sealing, if it is worth it
-      description: Clean grout can be sealed so it absorbs less and stays looking
-        better for longer. It is a separate job with its own cost and it needs
-        the grout to be properly dry first, so it usually means a second visit.
-        [Confirm whether TLB offers sealing.]
 mould:
   heading: If the black spots keep coming back
   body:
@@ -162,9 +154,8 @@ bookingFaq:
     - question: Should we seal the grout afterwards?
       answer: It is worth considering in a shower or a busy kitchen, because sealed
         grout absorbs less and stays looking better for longer. It has to go on
-        properly dry grout, so it usually means coming back. It is not permanent
-        either, and it will need doing again eventually. [Confirm whether TLB
-        offers sealing and at what interval.]
+        properly dry grout, and it is not permanent, so it will need doing again
+        eventually.
     - question: What happens if I get in touch?
       answer: Tell us which rooms and roughly how old the tiling is. We will look at
         the surface and the state of the grout, give you an honest view of how
@@ -204,9 +195,10 @@ generalFaq:
     - question: How much does tile and grout cleaning cost?
       answer: Usually priced per area or per room, with bathrooms often quoted as a
         whole because the wall tiling, the shower and the floor are one job.
-        What moves the price is the area, the condition, the surface type and
-        whether sealing is added. [TLB’s pricing basis and minimum charge.
-        Confirm.]
+        What moves the price is the area, the condition and the surface type.
+        That's why we quote rather than publish a flat rate that would be wrong
+        for most homes. Tell us the basics and you'll have a price back quickly,
+        with no obligation attached to it.
 closingCta:
   kicker: Tile and grout cleaning
   heading: Find out how far it will come back.

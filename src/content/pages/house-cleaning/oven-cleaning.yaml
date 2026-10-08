@@ -69,9 +69,7 @@ method:
     - icon: spray-bottle
       title: The parts go in to soak
       description: Soaking does the work that scrubbing otherwise has to, which is why
-        a proper job takes time rather than muscle. [Confirm whether TLB soaks
-        on site in trays, carries a heated dip tank, or takes parts away and
-        returns them.]
+        a proper job takes time rather than muscle.
     - icon: spark
       title: The cavity is cleaned while they sit
       description: Roof, floor, back, seals and the corners where carbon collects. The
@@ -94,8 +92,7 @@ method:
       title: The other appliances, same visit
       description: Rangehood and filters, the inside of the fridge, the microwave and
         the cooktop are the usual extras, and they are quicker done at the same
-        time than booked separately. [Confirm the full list, and whether
-        dishwashers and washing machines are included.]
+        time than booked separately.
 beforeAfter:
   heading: What the cooktop looks like afterwards
   lead: Months of boil-overs and spills, baked on and wiped around. Drag the
@@ -213,8 +210,10 @@ generalFaq:
       answer: "Usually priced per appliance, so an oven, a cooktop, a rangehood and a
         barbecue are separate line items, generally with a lower rate when
         several are done in one visit. Size and condition move it: a double oven
-        or one that has not been touched in years takes longer. [TLB’s pricing
-        basis and minimum charge. Confirm.]"
+        or one that has not been touched in years takes longer. That's why we
+        quote rather than publish a flat rate that would be wrong for most
+        kitchens. Tell us the basics and you'll have a price back quickly, with
+        no obligation attached to it."
 closingCta:
   kicker: Oven, BBQ and appliance cleaning
   heading: Get the worst job in the house off your list.

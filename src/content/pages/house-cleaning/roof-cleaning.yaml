@@ -87,7 +87,7 @@ explainer:
       heading: Who is on your roof
       body:
         - The same small local team, in TLB uniform, harnessed and anchored. We
-          are local, [insured] and there is one number to ring if something is
+          are local, insured and there is one number to ring if something is
           not right.
         - We walk the roof before we start and tell you what we found. Cracked
           tiles, failed pointing, a rusted valley or a sheet that has lifted are
@@ -126,14 +126,12 @@ method:
     - icon: spray-bottle
       title: Solution on, and time to work
       description: A low pressure application, left to do its job rather than rushed,
-        then rinsed at a pressure the surface can take. [Confirm the cleaning
-        solution TLB uses and its dilution, so this page can name it plainly.]
+        then rinsed at a pressure the surface can take.
     - icon: bloom
       title: Plants and pets protected
       description: Garden beds along the drip line get wet down before and rinsed
         after, outdoor furniture is moved or covered, and pets come inside while
-        we work. [Confirm TLB’s garden protection protocol and what is done with
-        the run-off.]
+        we work.
     - icon: idea
       title: A word on what we found
       description: Cracked tiles, failed ridge pointing, a rusted valley, lifted
@@ -212,16 +210,15 @@ bookingFaq:
         who knows where those are. Old, brittle or previously blasted tiles are
         more fragile, and we assess that before starting. If a roof should not
         be walked we will tell you rather than risk it and hope.
-    - question: Do you do colorbond as well as tiles?
-      answer: "Yes. [Confirm TLB cleans both tile and colorbond.] Colorbond usually
-        needs less work, because growth has less to hold on to, but it still
-        films up with grime and algae in the shade, and it needs low pressure
-        for a different reason: force gets under the laps and around the
-        screws."
+    - question: What about a colorbond roof?
+      answer: "Colorbond usually needs less work than tiles, because growth has less
+        to hold on to, but it still films up with grime and algae in the shade,
+        and it needs low pressure for a different reason: force gets under the
+        laps and around the screws."
     - question: What about our garden and our pets?
       answer: Beds along the drip line get wet down before and rinsed after, furniture
         is moved or covered and pets stay inside until we have finished and
-        rinsed off. [Confirm TLB’s garden protection protocol.] Tell us about
+        rinsed off. Tell us about
         anything precious in the beds when you book and we will work around it.
     - question: Can you paint or restore the roof too?
       answer: No. We clean roofs, we do not recoat or repair them, and we do not have
@@ -259,8 +256,10 @@ generalFaq:
       answer: Roof cleaning is usually priced per square metre of roof area, with a
         minimum charge, and the rate moves with pitch, access, roof type, how
         heavy the growth is and whether the gutters are done at the same time.
-        Ask for a price against a written scope that says which method is being
-        used. [TLB’s pricing basis and minimum charge. Confirm.]
+        That's why we quote rather than publish a flat rate that would be wrong
+        for most roofs. Ask for a price against a written scope that says which
+        method is being used. Tell us the basics and you'll have a price back
+        quickly, with no obligation attached to it.
 closingCta:
   kicker: Roof cleaning
   heading: Start with a look at it.

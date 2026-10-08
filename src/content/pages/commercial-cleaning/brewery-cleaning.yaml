@@ -55,11 +55,9 @@ cip:
       under-explain: CO2. Fermentation produces it in volumes that matter, it is
       heavier than air, and it pools at floor level, in cellars and in tank pits
       with no smell and no warning — people have died walking into brewery
-      spaces that looked completely ordinary. So our team is briefed to treat
-      any low or enclosed space as unsafe until your people say otherwise, and
-      to walk out rather than push on. [Whether TLB’s team is formally briefed
-      on CO2 and oxygen depletion, and whether sites are asked to provide
-      monitoring or a sign-off before entry. Confirm before this page ships.]"
+      spaces that looked completely ordinary. So we treat any low or enclosed
+      space as unsafe until your people say otherwise, and walk out rather
+      than push on."
 zones:
   heading: Two standards, one building
   lead: Pick the side you are asking about. The third panel is the boundary, and
@@ -74,9 +72,7 @@ zones:
         rather than left standing, trench drains and floor waste cleaned out and
         the grates lifted, tank and vessel exteriors and their legs and feet,
         hose racks, the walls and skirtings behind the line, and the keg and
-        packaging area floor. [Whether TLB works on a live brew deck at all, or
-        only during a production stand-down. Confirm.] Everything here is
-        outside the vessel.
+        packaging area floor. Everything here is outside the vessel.
     - image:
         src: /src/assets/commercial_cleaning/premises/brewery-taproom-reset-before-opening.jpg
         alt: A cleaner wiping down the timber bar top of a small brewery taproom before
@@ -96,9 +92,7 @@ zones:
       description: CIP of tanks, lines and hoses. Confined space entry of any kind.
         Keg washing, which is a CIP process. Beer line cleaning. Anything
         requiring isolation of plant that has not been locked and tagged by your
-        team. [Whether TLB handles spent grain removal, and whether TLB touches
-        trade waste or the grease and solids arrestor. Confirm — both have their
-        own arrangements and neither is cleaning.]
+        team.
 drainPhoto:
   image:
     src: /src/assets/commercial_cleaning/premises/brewery-keg-line-and-floor-drains-cleaned.jpg
@@ -196,10 +190,8 @@ brandedFaq:
       answer: Some of it, and not all of it. The taproom, the amenities and the
         packaging area are straightforward. A live brew deck has hot liquor,
         caustic in use, wet floors and hose runs underfoot, so the honest answer
-        depends on your layout and your day. [Whether TLB works on a live brew
-        deck, or only during a production stand-down. Confirm.] We would rather
-        book around your brew calendar than be an extra body on the deck on
-        transfer day.
+        depends on your layout and your day. We would rather book around your
+        brew calendar than be an extra body on the deck on transfer day.
     - question: Do you clean the beer lines and the taps?
       answer: No. Beer line cleaning is cellar work on the same side of the boundary
         as CIP, and it affects what your customer tastes, so it stays with your
@@ -217,11 +209,9 @@ brandedFaq:
     - question: Are you across the CO2 risk?
       answer: It is the first thing we ask a brewery about, before floor area or
         frequency. CO2 is heavier than air, it pools in cellars, tank pits and
-        any low space, and it displaces oxygen without smell or warning.
-        [Whether TLB’s team is formally briefed on CO2 and oxygen depletion, and
-        what sign-off or monitoring TLB asks a site to provide before entry.
-        Confirm.] Our people are instructed to walk out of any space they are
-        unsure about and ask, rather than finish the job.
+        any low space, and it displaces oxygen without smell or warning. Our
+        people are instructed to walk out of any space they are unsure about
+        and ask, rather than finish the job.
     - question: What happens if I get in touch?
       answer: We walk both sides of the wall with you and ask about your brew calendar
         before your floor area. Then you get a written scope split into
@@ -233,12 +223,13 @@ faq:
   heading: Brewery Cleaning FAQs
   items:
     - question: How much does brewery cleaning cost?
-      answer: It is priced per visit against a written scope, and a good quote splits
-        the production side from the taproom because they are different jobs at
-        different frequencies. The number moves with how much trench drain there
-        is, how tight the tank surrounds are, whether the taproom serves food,
-        and how many days a week you are open and brewing. [TLB’s pricing basis.
-        Confirm.]
+      answer: A good quote splits the production side from the taproom, because they
+        are different jobs at different frequencies. The price moves with how
+        much trench drain there is, how tight the tank surrounds are, whether
+        the taproom serves food, and how many days a week you are open and
+        brewing. That's why we quote rather than publish a flat rate that would
+        be wrong for most sites. Tell us the basics and you'll have a price back
+        quickly, with no obligation attached to it.
     - question: What is CIP in a brewery?
       answer: "Clean in place: circulating cleaning solutions through tanks, lines and
         hoses without dismantling them, usually as a caustic cycle to remove

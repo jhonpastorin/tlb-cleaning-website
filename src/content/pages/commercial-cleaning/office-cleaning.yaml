@@ -62,8 +62,8 @@ pathways:
           bench cleared
       title: I need to know who is in the building
       description: The same person each visit, in TLB uniform, and you can meet them
-        before the first one. We are a local business, [insured] and
-        [police-checked], and if something is not right you ring a local number
+        before the first one. We are a local business, insured and
+        police-checked, and if something is not right you ring a local number
         and get a local answer.
       cta:
         label: Why TLB
@@ -107,8 +107,7 @@ scope:
       title: Not included, and said out loud
       description: Carpet extraction, external windows above ground level and pressure
         cleaning are separate services rather than part of a nightly scope, and
-        we quote them separately. Consumables are [supplied by us / supplied by
-        you. Confirm]. We do not handle clinical or hazardous waste.
+        we quote them separately. We do not handle clinical or hazardous waste.
 callout:
   heading: An hourly rate tells you nothing.
   body:
@@ -183,10 +182,9 @@ brandedFaq:
         in month six.
     - question: Do you bring your own equipment and products?
       answer: Yes. Vacuums, mops, cloths and cleaning products all come with us, and
-        we do not use your kitchen sponge on the bathroom. Consumables such as
-        hand towel, toilet paper and bin liners are [supplied by us / supplied
-        by you. Confirm], and whichever it is goes on the scope so it is never a
-        surprise.
+        we do not use your kitchen sponge on the bathroom. Who supplies
+        consumables such as hand towel, toilet paper and bin liners goes on the
+        scope, so it is never a surprise.
     - question: What happens if I get in touch?
       answer: We walk your office with you, usually for twenty minutes, and ask what
         has been going wrong. Then you get a written scope and a price per
@@ -196,12 +194,11 @@ faq:
   heading: Office cleaning services, common questions
   items:
     - question: How much does office cleaning cost?
-      answer: Office cleaning is normally priced per visit rather than per hour, and
-        the price moves with floor area, how many bathrooms and kitchenettes
-        there are, how often you want it done and whether the work is after
-        hours. Ask every quote for a price per visit against a written scope so
-        you are comparing the same job. [TLB’s pricing basis and any minimum
-        charge. Confirm.]
+      answer: It depends on floor area, how many bathrooms and kitchenettes there are,
+        how often you want it done and whether the work is after hours. That's
+        why we quote rather than publish a flat rate that would be wrong for
+        most offices. Tell us the basics and you'll have a price back quickly,
+        with no obligation attached to it.
     - question: How often should an office be cleaned?
       answer: "It comes down to headcount and whether there are client-facing rooms,
         not floor area. A small office with a handful of desks and one bathroom

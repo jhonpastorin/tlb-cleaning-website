@@ -41,10 +41,9 @@ boundary:
     - Working at height. Dusting the top of racking, cleaning high-bay light
       fittings or getting to the underside of a roof needs an elevating work
       platform and the training and licensing that goes with operating one, plus
-      a fall-prevention plan for the site. [Whether TLB will do any work at
-      height. Confirm, the likely honest answer is no.] Driving your forklift or
-      a reach truck to get us up there is not a workaround; that needs a high
-      risk work licence.
+      a fall-prevention plan for the site. Driving your forklift or a reach
+      truck to get us up there is not a workaround; that needs a high risk work
+      licence.
     - Racking inspection, and spills of anything we cannot identify. A cleaner
       who notices a bent upright should tell you, and ours will, but a racking
       inspection is an engineering assessment and no cleaning contract
@@ -62,9 +61,8 @@ scope:
       description: Aisles and open floor swept then scrubbed with a walk-behind or
         ride-on autoscrubber, which lifts the tyre rubber, dust and film that a
         mop just redistributes. Line markings and pedestrian walkways done
-        rather than skipped. [Whether TLB owns or hires an autoscrubber, and
-        what area it can cover in a shift. Confirm.] A mop on two thousand
-        square metres of concrete is not a service.
+        rather than skipped. A mop on two thousand square metres of concrete is
+        not a service.
     - icon: chart-bars
       title: Racking, shelving and stock surfaces
       description: Beam faces, upright bases, the accessible levels of shelving and
@@ -185,10 +183,8 @@ brandedFaq:
       answer: They have to, and it should be a condition of the contract rather than a
         formality. Most industrial sites require a site-specific induction, a
         sign-in, high-visibility clothing and safety footwear as a minimum, and
-        some require more. [What inductions, tickets and PPE TLB’s team can
-        meet, and whether that includes a general construction induction card.
-        Confirm.] Tell us your requirements at the walkthrough and we will tell
-        you honestly what we hold.
+        some require more. Tell us your requirements at the walkthrough and we
+        will tell you honestly what we hold.
     - question: When would you be on site, if we run two shifts?
       answer: In whatever gap genuinely exists, and if there is not one, zone by zone
         around live work. Amenities can be done between shifts because they
@@ -198,11 +194,10 @@ brandedFaq:
         shutdown job and we will say so rather than promise a nightly pass.
     - question: Do you do the floor with a machine?
       answer: That is the right question to ask every contractor quoting you, because
-        it is the difference between a service and an appearance. [Whether TLB
-        owns or hires an autoscrubber, and the area it covers in a shift.
-        Confirm.] A mop and bucket on a warehouse floor moves the tyre rubber
-        and dust film around instead of lifting it, which is why a mopped
-        concrete floor can look wet-clean and still be slippery.
+        it is the difference between a service and an appearance. A mop and
+        bucket on a warehouse floor moves the tyre rubber and dust film around
+        instead of lifting it, which is why a mopped concrete floor can look
+        wet-clean and still be slippery.
     - question: Can you work around forklifts?
       answer: We work around them by not being in the same aisle at the same time,
         which is a scheduling answer rather than a bravery one. Our team stays
@@ -227,12 +222,14 @@ faq:
   heading: Warehouse Cleaning FAQs
   items:
     - question: How much does warehouse cleaning cost?
-      answer: The floor is usually priced per square metre and the amenities per
-        visit, and a good quote shows them separately so you can see what you
-        are buying. The number moves with how much of the floor a machine can
-        actually reach around racking and stock, how many bathrooms and crib
-        rooms there are, whether the dock and hardstand are included, and
-        whether there is a gap in your shifts. [TLB’s pricing basis. Confirm.]
+      answer: A good quote shows the floor and the amenities separately, so you can
+        see what you are buying. The price moves with how much of the floor a
+        machine can actually reach around racking and stock, how many bathrooms
+        and crib rooms there are, whether the dock and hardstand are included,
+        and whether there is a gap in your shifts. That's why we quote rather
+        than publish a flat rate that would be wrong for most sites. Tell us the
+        basics and you'll have a price back quickly, with no obligation attached
+        to it.
     - question: How often should a warehouse floor be cleaned?
       answer: Aisles and pedestrian walkways weekly to fortnightly for a normal
         storage site, and daily to weekly for a busy distribution centre or

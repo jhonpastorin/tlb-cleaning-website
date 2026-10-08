@@ -81,8 +81,7 @@ method:
       title: Fabric handled dry, or not at all
       description: Roller, roman and sunscreen blinds mark permanently if they are
         treated like a hard surface, and a water ring on a fabric blind is worse
-        than the dust was. These get dry methods and spot work only. [Confirm
-        whether TLB cleans fabric blinds at all.]
+        than the dust was. These get dry methods and spot work only.
     - icon: puzzle
       title: Tracks, sills and pelmets
       description: The window track is where the dust ends up once the blind above it
@@ -93,8 +92,7 @@ method:
       description: Standard ceilings and windows are routine. A raked ceiling, a
         stairwell void or a second storey reached from outside is a different
         job with different equipment, and we will tell you when something is
-        beyond a step ladder rather than improvise. [Confirm TLB’s height
-        limit.]
+        beyond a step ladder rather than improvise.
 scope:
   heading: Ask whether your blinds are leaving the house
   body:
@@ -161,8 +159,7 @@ faq:
       answer: Standard ceiling heights are routine. A raked ceiling, a stairwell void
         or anything that needs more than a step ladder is a different job, and
         we will tell you honestly if it is beyond what we can do safely rather
-        than have someone stretch off the top rung. [Confirm TLB’s height limit
-        before launch.]
+        than have someone stretch off the top rung.
     - question: Can you clean our fabric roller blinds?
       answer: They are dusted and spot treated rather than wet cleaned, because water
         marks fabric blinds permanently and a tidemark cannot be blended out
@@ -207,14 +204,14 @@ nonBrandedFaq:
       answer: "Usually priced per blind and per fan, with a lower rate when a whole
         house is done at once or when it is added to an existing clean. Size and
         type move it: a wide vertical blind or a plantation shutter takes longer
-        than a small venetian. [TLB’s pricing basis and minimum charge.
-        Confirm.]"
+        than a small venetian. That's why we quote rather than publish a flat
+        rate that would be wrong for most homes. Tell us the basics and you'll
+        have a price back quickly, with no obligation attached to it."
     - question: Can curtains be cleaned without taking them down?
       answer: "Light dust can be vacuumed off in place with a brush head. Anything
         more depends on the care label: lined, blockout and sheer curtains can
         shrink or mark if they are washed or steamed wrong, so they usually come
-        down for a proper clean. [Confirm whether TLB cleans curtains, and
-        how.]"
+        down for a proper clean."
 closingCta:
   kicker: Blinds, shutters and ceiling fans
   heading: Add blind cleaning services to your next clean.

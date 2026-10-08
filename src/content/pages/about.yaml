@@ -11,9 +11,9 @@ hero:
   lead: TLB Cleaning is a locally owned cleaning company, started in Alstonville
     by Teagan Burke and grown one recommendation at a time.
   image:
-    src: /src/assets/about/about-tlb-cleaning-team-in-a-home-entry-hall.jpg
-    alt: Three TLB cleaners with their caddies in the entry hall of a bright coastal
-      home
+    src: /src/assets/airbnb/airbnb-hero-two-cleaners-presenting-a-made-bed.jpg
+    alt: Two TLB cleaners presenting the cushions on a freshly made bed in a holiday
+      home bedroom
 definition:
   body:
     - type: paragraph

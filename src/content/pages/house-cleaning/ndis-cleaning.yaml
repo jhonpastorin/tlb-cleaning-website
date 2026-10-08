@@ -57,7 +57,7 @@ pathways:
         alt: A TLB cleaner and a support coordinator talking in the living room of a
           home, relaxed and unhurried
       title: I am a Support Coordinator
-      description: We make managing plans easy. We are a reliable, [insured] local
+      description: We make managing plans easy. We are a reliable, insured local
         business ready to provide consistent, respectful in-home help for your
         participants.
       cta:
@@ -117,7 +117,7 @@ whyChoose:
           someone who had already been looked after.
         - Most of our team are local women. If you'd feel more comfortable with
           a woman in your home, tell us and we'll do our best to arrange it.
-        - We're [insured], [police-checked / worker-screened], and bound by the
+        - We're insured, police-checked, and bound by the
           NDIS Code of Conduct like every provider paid from NDIS funding. Your
           home is yours. We treat it that way.
 windows:
@@ -144,14 +144,12 @@ bookingFaq:
   items:
     - question: Can I use my NDIS funding to pay for cleaning?
       answer: Often, yes. Cleaning usually sits under Core Supports where it's
-        reasonable and necessary in your plan. We work with [plan-managed and
-        self-managed] participants, and we're glad to talk it through with your
-        coordinator.
+        reasonable and necessary in your plan, and we're glad to talk it through
+        with your coordinator.
     - question: Who actually comes into my home, will it be the same person each time?
       answer: The same trusted local team wherever we can, familiar faces, not a
-        different stranger each week. TLB is a real local business, insured and
-        accountable [confirm police checks], with Teagan standing behind every
-        job.
+        different stranger each week. TLB is a real local business, insured,
+        police-checked and accountable, with Teagan standing behind every job.
     - question: What makes TLB different from other cleaners doing NDIS work?
       answer: A local team with backup. Big enough that your clean still happens when
         someone is unwell, and local enough that the person who comes knows you

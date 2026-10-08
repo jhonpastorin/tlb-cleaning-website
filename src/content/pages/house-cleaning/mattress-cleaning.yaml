@@ -84,12 +84,13 @@ method:
       description: "A hand tool puts in as little solution as the job needs and pulls
         it straight back out. Deliberately restrained: the inside of a mattress
         cannot be dried out once it is wet, so putting less in is the whole
-        skill. [Confirm TLB uses low moisture extraction.]"
+        skill."
     - icon: office
       title: Dried before the bed goes back together
       description: Air moved across the surface until it is dry to the touch, and we
-        book mornings so it has the day. Typical drying time is [X to Y hours.
-        Confirm]. We would rather come back another day than have you make up a
+        book mornings so it has the day. Drying time depends on the mattress,
+        the airflow and the weather, and we will tell you what to expect on the
+        day. We would rather come back another day than have you make up a
         bed that is not properly dry.
 scope:
   heading: What a mattress clean does not do
@@ -141,8 +142,8 @@ faq:
     - question: Can we sleep in the bed that night?
       answer: That is the plan, and it is why we book mattresses in the morning. We
         use as little moisture as the job allows and get air moving across the
-        surface before we leave. Typical drying is [X to Y hours. Confirm]. If
-        it is a humid week we will tell you honestly rather than have you make
+        surface before we leave. How long it takes depends on the mattress, the
+        airflow and the weather. If it is a humid week we will tell you honestly rather than have you make
         the bed up over a damp mattress.
     - question: Do we need to strip the bed first?
       answer: It helps a lot if you can. Sheets, protector and pillows off, and
@@ -198,7 +199,9 @@ nonBrandedFaq:
       answer: Mattresses are usually priced per mattress by size, so a king costs more
         than a single, with a lower rate per bed when several are done in the
         same visit. Heavy staining or a mattress that has to be turned may add
-        to it. [TLB’s pricing basis and minimum charge. Confirm.]
+        to it. That's why we quote rather than publish a flat rate that would be
+        wrong for most homes. Tell us the basics and you'll have a price back
+        quickly, with no obligation attached to it.
 closingCta:
   kicker: Mattress cleaning
   heading: Book it for a morning.

@@ -152,7 +152,7 @@ who:
         faces on the roof as in the house.
     - type: list
       items:
-        - We are local, [insured] and there is one number to ring if something
+        - We are local, insured and there is one number to ring if something
           is not right.
         - You get told what we found on the roof, in plain words, with no upsell
           attached to it.
@@ -194,10 +194,9 @@ faq:
         downpipes or left beside your bins. If you would rather keep it for
         compost, say so and we will tip it where you want it instead.
     - question: Can you do a two-storey house?
-      answer: "Often yes, and it depends on access more than height: firm level ground
-        for the ladder, room to set it at the right angle, and no power line in
-        the way. [Confirm TLB’s height limit and what is declined.] If a section
-        is not safe to reach we will say so and tell you what sort of operator
+      answer: "It depends on access more than height: firm level ground for the
+        ladder, room to set it at the right angle, and no power line in the way.
+        If a section is not safe to reach we will say so and tell you what sort of operator
         can do it."
     - question: Do you need anything from us on the day?
       answer: Side access, the gate unlocked, dogs sorted out and cars moved off the
@@ -235,14 +234,15 @@ nonBrandedFaq:
       answer: It reduces the work rather than ending it. Good mesh keeps leaves and
         embers out and is genuinely useful under trees, but fine debris still
         builds up on top of it and in the valleys, so it needs checking. Guard
-        installed badly can also hold litter against the roof. [Confirm whether
-        TLB supplies or installs gutter guard.]
+        installed badly can also hold litter against the roof.
     - question: How much does gutter cleaning cost?
       answer: Gutter cleaning is usually priced on the length of gutter and the
         access, with a minimum charge for small jobs, and it moves with height,
         roof pitch, how packed the gutters are and whether valleys and a second
-        storey are involved. Ask for a price against a written scope rather than
-        an hourly rate. [TLB’s pricing basis and minimum charge. Confirm.]
+        storey are involved. That's why we quote rather than publish a flat rate
+        that would be wrong for most roofs. Ask for a price against a written
+        scope rather than an hourly rate. Tell us the basics and you'll have a
+        price back quickly, with no obligation attached to it.
 closingCta:
   kicker: Gutter cleaning
   heading: Book it before the wet season.

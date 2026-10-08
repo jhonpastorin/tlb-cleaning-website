@@ -48,9 +48,7 @@ isolation:
       unexpected start-up during cleaning is one of the recognised ways people
       are killed in factories. So we clean what is isolated and tagged, we clean
       exteriors and surrounds of what is not, and we do not enter confined
-      spaces at all, which need a permit and training we do not hold. [Whether
-      anyone at TLB holds their own isolation training, or whether we work
-      strictly under the client’s permit. Confirm.]
+      spaces at all, which need a permit and training we do not hold.
 stages:
   heading: One window, three stages
   lead: In this order, because the floor gets dirty again while the plant is being
@@ -77,11 +75,9 @@ stages:
       title: "Stage two: plant surrounds and the wash-down"
       description: Equipment exteriors, guarding, frames and the floor and wall behind
         and under the line. Stainless washed down and dried rather than left to
-        air spot. Where a machine has been isolated and tagged out by your team,
-        we clean into the opened guarding; where it has not, we clean the
-        surrounds and stop at the guard. [Confirm which of those two TLB will
-        offer.] The distinction goes on the scope, not into a conversation on
-        the day.
+        air spot. Where a machine has not been isolated and tagged out by your
+        team, we clean the surrounds and stop at the guard. The distinction goes
+        on the scope, not into a conversation on the day.
     - image:
         src: /src/assets/commercial_cleaning/premises/factory-crib-room-cleaned-for-shift-change.jpg
         alt: A cleaner wiping down the table of a clean, empty factory crib room,
@@ -92,8 +88,7 @@ stages:
         after the shutdown ends. In a food production site there is a second
         layer: cleaning inside a food environment has to run to your own
         HACCP-based food safety program, with your products and your
-        verification. [Whether TLB will work inside a food production
-        environment. Confirm.]"
+        verification."
 shutdown:
   heading: A shutdown is not a booking
   blocks:
@@ -222,18 +217,14 @@ brandedFaq:
       answer: You do, under your own procedure, and it has to be done and tagged
         before we start. That duty sits with the site rather than with us, and
         we will not take it on informally because a shutdown is running behind.
-        [Whether TLB works strictly under the client’s permit, or holds any
-        isolation training of its own. Confirm.] We clean what is isolated and
-        tagged, we clean surrounds and exteriors of what is not, and we do not
-        enter confined spaces at all.
+        We clean what is isolated and tagged, we clean surrounds and exteriors
+        of what is not, and we do not enter confined spaces at all.
     - question: Can you clean inside a food production environment?
-      answer: "That depends on your food safety program rather than on our
-        willingness. Cleaning inside a food environment has to run to your own
-        HACCP-based plan: your approved products, your dilutions, your sequence
-        and your verification records, with our work documented so it can be
-        audited. [Whether TLB will work inside a food production environment,
-        and whether the team has food safety training on record. Confirm.] If we
-        cannot meet your program, we will say so rather than work around it."
+      answer: "Cleaning inside a food environment has to run to your own HACCP-based
+        plan: your approved products, your dilutions, your sequence and your
+        verification records, with every clean documented so it can be audited.
+        If we cannot meet your program, we will say so rather than work around
+        it."
     - question: Do you do the recurring work as well as shutdowns?
       answer: Yes, and it is usually the better way to run it. Amenities, walkways,
         the floor and the accessible plant surrounds on a weekly or fortnightly
@@ -246,9 +237,8 @@ brandedFaq:
         descalers include caustic and acidic products that damage the wrong
         substrate and injure people who use them without training, so the
         product list belongs on the scope with the Safety Data Sheets attached
-        rather than in a cleaner’s van. [Whether TLB’s team is trained in
-        industrial chemical handling and SDS interpretation. Confirm.] Where
-        your program names a product, yours wins.
+        rather than in a cleaner’s van. Where your program names a product,
+        yours wins.
     - question: What happens if I get in touch?
       answer: We walk the site while it is running, which is the only way to see where
         the residue actually goes, and we ask what you make before we ask how
@@ -259,12 +249,12 @@ faq:
   heading: Factory Cleaning FAQs
   items:
     - question: How much does factory cleaning cost?
-      answer: Shutdown work is priced per job on an hours estimate, and recurring work
-        per visit, and a good quote shows them separately. The number moves with
-        what the site produces, how much of the area is hand work rather than
-        machine work, how long the window is, and how long since the last proper
-        clean. A phone quote for a factory is a guess. [TLB’s pricing basis.
-        Confirm.]
+      answer: A good quote shows shutdown work and recurring work separately. The price
+        moves with what the site produces, how much of the area is hand work
+        rather than machine work, how long the window is, and how long since the
+        last proper clean. That's why we quote rather than publish a flat rate
+        that would be wrong for most sites. Tell us the basics and you'll have a
+        price back quickly, with no obligation attached to it.
     - question: What is lockout tagout and why does cleaning need it?
       answer: "It is the process of isolating plant from every energy source and
         physically locking and tagging the isolation so it cannot be reversed

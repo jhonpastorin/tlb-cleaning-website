@@ -65,7 +65,7 @@ pathways:
       title: I want it done with everything else
       description: Windows twice a year, gutters before the wet season, and your
         regular clean carrying on as normal. Same local team, one number to
-        ring, and we are [insured]. You set it up once and stop thinking about
+        ring, and we are insured. You set it up once and stop thinking about
         it.
       cta:
         label: Set up your regular clean
@@ -78,8 +78,7 @@ method:
     - icon: spray-bottle
       title: Glass, both sides
       description: Washed, squeegeed and edged, then the perimeter dried by hand so
-        there is no line left around the outside of the pane. [Confirm whether
-        inside glass is included as standard or quoted separately.]
+        there is no line left around the outside of the pane.
     - icon: target
       title: Frames, sills and reveals
       description: Wiped down with the glass rather than left as a grey border around
@@ -94,8 +93,7 @@ method:
     - icon: bloom
       title: Flyscreens and security screens
       description: Taken out where they lift out, washed, dried and put back the way
-        they came. [Confirm whether screens are included, and whether security
-        screens are washed in place rather than removed.]
+        they came.
     - icon: idea
       title: Cobwebs and the surrounds
       description: Webs knocked out of the reveal, the eave above the window and the
@@ -178,8 +176,7 @@ bookingFaq:
   items:
     - question: Do you do the inside of the windows as well?
       answer: Usually yes, and most people want both, because clean glass outside
-        makes the inside obvious. [Confirm whether inside glass is included as
-        standard or priced separately.] If we are doing the inside we work
+        makes the inside obvious. If we are doing the inside we work
         around you, put mats down under each window and take the tracks and
         sills as we go.
     - question: How often should we get them done?
@@ -190,9 +187,8 @@ bookingFaq:
         regular clean.
     - question: Can you reach our upstairs windows?
       answer: First-floor glass is done from the ground with a water-fed pole, so
-        there is no ladder against your gutter and nothing for you to hold.
-        [Confirm the height limit and whether anything is quoted out, for
-        example a stairwell window over a paved courtyard.] If a window is
+        there is no ladder against your gutter and nothing for you to hold. If
+        a window is
         genuinely unsafe to reach we will say so rather than improvise.
     - question: Does anyone need to be home?
       answer: Not for the outside. We need side access, the gate unlocked and any dogs
@@ -234,9 +230,11 @@ generalFaq:
     - question: How much does window cleaning cost?
       answer: Window cleaning is usually priced per window or per pane, with a minimum
         charge for small jobs, and the rate moves with height, access, how many
-        are sliding doors and whether screens and tracks are included. Ask for
-        the price against a written list of what is covered rather than an
-        hourly rate. [TLB’s pricing basis and minimum charge. Confirm.]
+        are sliding doors and whether screens and tracks are included. That's
+        why we quote rather than publish a flat rate that would be wrong for
+        most homes. Ask for the price against a written list of what is covered
+        rather than an hourly rate. Tell us the basics and you'll have a price
+        back quickly, with no obligation attached to it.
 closingCta:
   kicker: Window cleaning
   heading: Get your view back.

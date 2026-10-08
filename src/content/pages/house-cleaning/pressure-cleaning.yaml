@@ -69,7 +69,7 @@ pathways:
       title: I want it to just stay done
       description: Surfaces done once a year never get back to the state that needs
         rescuing, and each visit costs less because there is less to take off.
-        Same local team, [insured], on the same schedule as your regular clean
+        Same local team, insured, on the same schedule as your regular clean
         if you want it that way.
       cta:
         label: Set up your regular clean
@@ -109,8 +109,7 @@ method:
       title: Pre-treat, then clean
       description: Oil, grease and organic growth get a treatment with dwell time
         before any water goes near them, and grease needs heat or a degreaser to
-        release at all. Blasting a stain cold just spreads it. [Confirm whether
-        TLB runs hot water or cold.]
+        release at all. Blasting a stain cold just spreads it.
     - icon: chart-bars
       title: Surface cleaner on the flat, wand on the edges
       description: Open areas are done with a rotary surface cleaner, which cleans
@@ -124,11 +123,9 @@ method:
         the root rather than knocking the top off it, which is why a soft washed
         surface stays clean longer.
     - icon: idea
-      title: Your garden, your pool, your drain
-      description: Beds get rinsed, the pool gets covered or the surround is worked
-        away from it, and run-off carrying detergent or oil is kept out of the
-        stormwater drain rather than hosed into it. [Confirm what TLB does about
-        run-off on a residential job.]
+      title: Your garden and your pool
+      description: Beds get rinsed, and the pool gets covered or the surround is
+        worked away from it.
 beforeAfter:
   heading: One driveway, both ways.
   lead: Drag the handle across the photo.
@@ -205,8 +202,7 @@ bookingFaq:
         price.
     - question: What do you need from us on the day?
       answer: Cars off the area being cleaned, furniture and pots moved if you can,
-        the gate unlocked and dogs inside. [Confirm whether TLB brings its own
-        water and power, or needs a tap and a power point.] Everything else,
+        the gate unlocked and dogs inside. Everything else,
         including the machine, comes with us.
     - question: Can you do it while we are out?
       answer: Yes, as long as we can get in and reach a tap. Most people are at work
@@ -246,9 +242,11 @@ generalFaq:
       answer: It is usually priced per square metre with a minimum charge for small
         jobs, and the rate moves with the surface, how badly stained it is,
         access to water and power, and whether anything needs soft washing
-        instead. Ask for the price against a written scope rather than an hourly
-        rate, so you can see what is included. [TLB’s pricing basis and minimum
-        charge. Confirm.]
+        instead. That's why we quote rather than publish a flat rate that would
+        be wrong for most homes. Ask for the price against a written scope
+        rather than an hourly rate, so you can see what is included. Tell us the
+        basics and you'll have a price back quickly, with no obligation attached
+        to it.
 closingCta:
   kicker: High pressure cleaning
   heading: Send us a photo of the worst bit.

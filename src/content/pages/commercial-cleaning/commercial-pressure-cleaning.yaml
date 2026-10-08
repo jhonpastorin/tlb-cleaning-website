@@ -68,8 +68,8 @@ pathways:
           forecourt, turning to the camera with a friendly expression
       title: I want to know who is on my site
       description: The same small team each visit, in TLB uniform, and you can meet
-        them before the first one. We are a local business, [insured] and
-        [police-checked], and there is one local number to ring if something is
+        them before the first one. We are a local business, insured and
+        police-checked, and there is one local number to ring if something is
         not right.
       cta:
         label: Why TLB
@@ -111,10 +111,7 @@ scope:
     - icon: idea
       title: Wash water managed, not just hosed away
       description: Water carrying oil, grease, detergent or food waste must not go
-        down a stormwater drain. On sites where that is a risk we block the
-        drains and capture the run-off, and dispose of it to sewer or to a
-        licensed facility. [Confirm TLB’s capture method and disposal
-        arrangement.]
+        down a stormwater drain.
 worthKnowing:
   heading: Two things to ask before you let anyone start
   body:
@@ -153,9 +150,8 @@ industrial:
     - type: paragraph
       text: The wash water matters more on an industrial site than anywhere else.
         Run-off from a loading dock or a wash bay carries oil, grease and
-        detergent, and none of that can go to stormwater. We plan the capture
-        before the machine starts rather than after. [Confirm TLB’s capture
-        method and disposal arrangement.]
+        detergent, and none of that can go to stormwater. We plan for it before
+        the machine starts rather than after.
     - type: paragraph
       text: Most sites run to a shift pattern rather than trading hours, so we work to
         the quiet window rather than assuming a weekend.
@@ -228,9 +224,7 @@ brandedFaq:
         have before we quote.
     - question: What do you need from us on the day?
       answer: Vehicles moved off the area being cleaned, and access to the site at the
-        agreed time. [Confirm whether TLB brings its own water and power, or
-        needs a tap and a power point on site.] Everything else, including the
-        plant, the chemicals and the signage, comes with us.
+        agreed time. The plant, the chemicals and the signage come with us.
     - question: What happens if I get in touch?
       answer: We come and walk the site, look at the surfaces and tell you what will
         clean up and what will not. Then you get a written scope and a price,
@@ -270,13 +264,11 @@ faq:
         needs your water authority or council to agree the conditions. Ask any
         cleaner how they handle it."
     - question: How much does commercial pressure cleaning cost?
-      answer: Commercial pressure cleaning is usually priced per square metre, with a
-        minimum charge for small jobs. The rate moves with the surface, how
-        badly stained it is, access to water and power, whether the work is
-        after hours and whether the wash water has to be captured. Ask for the
-        price against a written scope rather than an hourly rate, so you can see
-        what is actually included. [TLB’s pricing basis and minimum charge.
-        Confirm.]
+      answer: It depends on the surface, how badly stained it is, access to water and
+        power, whether the work is after hours and whether the wash water has to
+        be captured. That's why we quote rather than publish a flat rate that
+        would be wrong for most sites. Tell us the basics and you'll have a
+        price back quickly, with no obligation attached to it.
 closingCta:
   kicker: Commercial pressure cleaning
   heading: Start with a walkthrough.

@@ -84,8 +84,7 @@ scope:
     - icon: spray-bottle
       title: Low pressure and a solution
       description: A cleaning solution applied gently, given time to kill the growth,
-        then rinsed at a pressure the surface can take. [Confirm the solution
-        TLB uses and its dilution, so this page can name it plainly.]
+        then rinsed at a pressure the surface can take.
     - icon: target
       title: Eaves, soffits and cobwebs
       description: The underside of the eaves is where the webs, the mud nests and the
@@ -100,8 +99,7 @@ scope:
       title: Plants, pets and furniture
       description: Beds along the wall get wet down before and rinsed after, furniture
         and pots move out of the way, pets come inside, and anything precious in
-        the garden gets pointed out to us first. [Confirm TLB’s garden
-        protection protocol.]
+        the garden gets pointed out to us first.
     - icon: puzzle
       title: Where we stop
       description: Sound painted surfaces, render, weatherboard, brick, fibre cement,
@@ -181,8 +179,7 @@ faq:
       answer: "Not sound paint. The pressure is closer to a garden hose than a
         pressure washer, which is the whole point of soft washing. Paint that is
         already flaking or chalking is a different matter: we will show you
-        before we start, because a wash will lift what was already letting go.
-        [Confirm TLB’s position on flaking paint.]"
+        before we start, because a wash will lift what was already letting go."
     - question: How long does the whole house take?
       answer: A single-storey house is usually most of a day, and a two-storey one is
         a day or more depending on access and how much growth there is. Most of
@@ -192,13 +189,10 @@ faq:
       answer: Beds along the wall get wet down before we start and rinsed again
         afterwards, which is what protects them. Furniture and pots move, pets
         stay inside, and anything you are precious about gets pointed out to us
-        first. [Confirm TLB’s garden protection protocol and what happens to the
-        run-off.]
+        first.
     - question: Can you reach a two-storey wall and the gable?
-      answer: "Usually, from the ground, with the right reach on the lance. [Confirm
-        TLB’s height limit and what is quoted out.] Access is what decides it: a
-        gable end over a steep garden bed is harder than a two-storey wall over
-        a lawn. If we cannot reach something safely we will say so instead of
+      answer: "Access is what decides it: a gable end over a steep garden bed is
+        harder than a two-storey wall over a lawn. If we cannot reach something safely we will say so instead of
         improvising."
     - question: Can you do the inside mould as well?
       answer: That is a different service, and it has a health dimension that outside
@@ -234,8 +228,10 @@ nonBrandedFaq:
       answer: It is usually priced on the size of the house and the access, with a
         minimum charge, and it moves with the number of storeys, how much growth
         there is, the wall material and whether the roof, windows or driveway
-        are done at the same time. Ask for a price against a written scope of
-        what is included. [TLB’s pricing basis and minimum charge. Confirm.]
+        are done at the same time. That's why we quote rather than publish a
+        flat rate that would be wrong for most homes. Ask for a price against a
+        written scope of what is included. Tell us the basics and you'll have a
+        price back quickly, with no obligation attached to it.
 closingCta:
   kicker: Exterior house washing
   heading: Send us a photo of the shady side.

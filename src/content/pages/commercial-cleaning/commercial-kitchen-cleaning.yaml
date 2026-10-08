@@ -80,19 +80,9 @@ scope:
     - icon: bloom
       title: Cool rooms and freezers
       description: Interior walls, ceiling, shelving pulled out and washed, floor and
-        the door seals, which is where mould actually starts. [Whether TLB
-        defrosts freezers, and whether stock is moved by us or by your team.
-        Confirm.] Stock movement should stay with your own staff for food safety
-        reasons, and we would rather book around a delivery than take
-        responsibility for one.
-    - icon: chart-bars
-      title: Filters and the visible canopy
-      description: Baffle filters removed, degreased, dried and refitted, and the
-        canopy interior and underside degreased. [Whether TLB does this at all,
-        and if so, the exact wording that makes clear it is NOT a certified
-        AS/NZS 1668.1 duct clean. Confirm before this page ships.] Ductwork
-        above the canopy is a certified trade and we will give you a name rather
-        than a quote.
+        the door seals, which is where mould actually starts. Stock movement
+        should stay with your own staff for food safety reasons, and we would
+        rather book around a delivery than take responsibility for one.
     - icon: spark
       title: The stainless nobody has time for
       description: Shelving, racks, trolleys, the tops of everything, the extraction
@@ -117,7 +107,7 @@ trades:
       heading: Periodic deep cleaning
       body:
         - Us. Floors, drains, walls, behind and under the line, cool rooms,
-          stainless, filters. Booked monthly or quarterly, done between
+          stainless. Booked monthly or quarterly, done between
           services. No certificate, because none exists for this work — what you
           get is a written scope and a kitchen you can see the difference in.
     - type: feature
@@ -179,11 +169,9 @@ brandedFaq:
         lunch and dinner. Tell us your trading pattern at the walkthrough and we
         will fit the visit into the only gap that genuinely exists.
     - question: Do you do the canopy and the ducts?
-      answer: Filters and the visible canopy, yes. Ductwork, no. [Confirm the exact
-        scope TLB will offer here, and word it so nobody can read it as a
-        certified AS/NZS 1668.1 clean.] Certified exhaust cleaning finishes with
-        a report and a certificate for your insurer, and only a specialist can
-        issue that. Ask us and we will give you a name instead of a quote.
+      answer: Not the ducts. Certified exhaust cleaning finishes with a report and a
+        certificate for your insurer, and only a specialist can issue that. Ask
+        us and we will give you a name instead of a quote.
     - question: How often should we book a deep clean?
       answer: Monthly for a kitchen with a busy fryer and grill, quarterly for a café
         or a kitchen doing mostly cold and oven work. What sets it is how much
@@ -194,10 +182,8 @@ brandedFaq:
     - question: Do we have to empty the cool room first?
       answer: "Stock movement should stay with your team, for food safety reasons
         rather than for convenience: your staff know what can leave a cool room
-        and for how long, and we do not. [Whether TLB will move sealed stock,
-        and whether freezers are defrosted. Confirm.] In practice we book cool
-        room work for the morning after a delivery gap, so there is less in
-        there to move."
+        and for how long, and we do not. In practice we book cool room work for
+        the morning after a delivery gap, so there is less in there to move."
     - question: What chemicals do you use in a food area?
       answer: Food-safe products where surfaces are food contact, and heavy degreasers
         only on floors, walls and equipment exteriors where they can be rinsed
@@ -215,12 +201,13 @@ faq:
   heading: Commercial Kitchen Cleaning FAQs
   items:
     - question: How much does commercial kitchen cleaning cost?
-      answer: A periodic deep clean is priced per job against a written scope, and the
-        number moves with the size of the cooking line, how much of the
-        equipment has to be pulled out, the floor area of quarry tile, whether
-        cool rooms are included and how long it has been since the last one. The
-        first clean on a kitchen that has never had one is always the biggest.
-        [TLB’s pricing basis. Confirm.]
+      answer: The price of a periodic deep clean moves with the size of the cooking
+        line, how much of the equipment has to be pulled out, the floor area of
+        quarry tile, whether cool rooms are included and how long it has been
+        since the last one. The first clean on a kitchen that has never had one
+        is always the biggest. That's why we quote rather than publish a flat
+        rate that would be wrong for most kitchens. Tell us the basics and
+        you'll have a price back quickly, with no obligation attached to it.
     - question: How often does a commercial kitchen need deep cleaning?
       answer: "Monthly for a high-volume kitchen with fryers and a chargrill,
         quarterly for lighter cooking. The driver is airborne oil rather than
