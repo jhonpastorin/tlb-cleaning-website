@@ -84,7 +84,9 @@ team:
   blocks:
     - type: image
       image:
-        alt: The TLB Cleaning team
+        src: /src/assets/home/home-tlb-cleaner-wiping-down-a-kitchen-sink.jpg
+        alt: A TLB cleaner in the green uniform wiping down a kitchen sink beside a
+          window onto a garden
     - type: text
       body:
         - TLB was started by Teagan Burke, an Alstonville local who built an

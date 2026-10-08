@@ -36,7 +36,9 @@ story:
   blocks:
     - type: image
       image:
-        alt: Teagan Burke, who started TLB Cleaning
+        src: /src/assets/about/about-tlb-cleaner-wiping-down-a-shower-niche.jpg
+        alt: A TLB cleaner in the green uniform wiping down the bottles in a tiled
+          shower niche
     - type: text
       body:
         - Teagan started out cleaning houses around Alstonville herself, with a

@@ -140,12 +140,10 @@ import { sized } from '../lib/cms-schemas';
 // ⚠️ The dashed box is a pre-launch state. It must not ship to production —
 // either the asset lands or this hero goes back to `variant="minimal"`.
 //
-// Dropping the asset in is a one-line change: add `src`. `ratio` is 4/3 and
-// `imageFit` is contain-bottom, matching the cut-out-figure-on-a-green-circle
-// template the three sourced assets use (contain so the backdrop is never
-// cropped, bottom-anchored so the figure stands on the section's edge). If a
-// plain photograph arrives instead, drop `imageFit` to let it default to
-// `cover` and bleed edge to edge.
+// A plain photograph arrived (the made bed), so `imageFit` is left at its
+// `cover` default and the photo bleeds edge to edge, same as the homepage.
+// If a cut-out figure on a green circle replaces it, set `imageFit` back to
+// contain-bottom so the backdrop is never cropped.
 //
 // ⚠️ This page argues "the part none of the others can show you: names and
 // faces". A hero with no faces on it is the weakest possible opening for
@@ -539,7 +537,6 @@ const objectionBlocks = page.objections.items.map((item) => ({ type: 'text' as c
     <Hero
       variant="split-single-image"
       imagePosition="right"
-      imageFit="contain-bottom"
       kicker={page.hero.kicker}
       headingLines={page.hero.headingLines}
       subheading={page.hero.subheading}

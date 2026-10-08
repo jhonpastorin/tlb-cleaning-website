@@ -11,7 +11,8 @@ hero:
   lead: We grew across the Northern Rivers one recommendation at a time, without
     ever running an advertisement. This is what people were recommending.
   image:
-    alt: The TLB team, the local cleaners this page names
+    src: /src/assets/why_tlb/why-tlb-made-bed-with-green-quilted-linen.jpg
+    alt: A freshly made bed with green quilted linen against a white panelled wall
   cta:
     label: See how TLB compares
     href: "#compare"
@@ -33,7 +34,9 @@ pathways:
   headingAccent: Start wherever you are.
   cards:
     - image:
-        alt: Four cleaning business models compared
+        src: /src/assets/why_tlb/why-tlb-reviewing-a-clean-on-a-laptop-together.jpg
+        alt: Two women looking over a laptop together in a living room, one in the
+          green TLB uniform
       title: How do you compare?
       description: A franchise, an online platform, a solo cleaner or a local team.
         They are genuinely different things and each is right for someone.
@@ -41,7 +44,9 @@ pathways:
         label: See the comparison
         href: "#compare"
     - image:
-        alt: House key being handed back
+        src: /src/assets/why_tlb/why-tlb-cleaner-wiping-out-a-fridge-crisper.jpg
+        alt: A TLB cleaner in the green uniform wiping out the crisper drawer of an
+          empty fridge
       title: I already have a cleaner
       description: Most people reading this do. Here is how to change without it being
         awkward, and the one time of year not to.
@@ -49,7 +54,8 @@ pathways:
         label: How to switch
         href: "#switching"
     - image:
-        alt: The TLB cleaning team, named and photographed
+        src: /src/assets/why_tlb/why-tlb-cleaner-on-the-verandah-with-her-caddy.jpg
+        alt: A TLB cleaner sitting on a verandah lounge beside her cleaning caddy
       title: Who would actually come?
       description: The part none of the others can show you. Names and faces, before
         anyone knocks on your door.
