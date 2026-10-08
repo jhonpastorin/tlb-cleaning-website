@@ -262,7 +262,7 @@ Monday's Phone column stores it as given.
 
 ## Step 4 — Point the live site at the webhook
 
-In **Render → the `tlb-cleaning-website` service → Environment**, add:
+In **Render → the `tlbcleaning` service → Environment**, add:
 
 | Key | Value |
 |---|---|
