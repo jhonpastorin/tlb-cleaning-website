@@ -1,0 +1,82 @@
+---
+// The breadcrumb trail that sits directly above a page's H1. Rendered by
+// Hero.astro, and by ContactForm.astro on the one page (/contact/) whose H1 is
+// the form's. The trail comes from the URL via breadcrumbs.ts, so no page
+// passes one, and it renders nothing on the homepage and the 404 page.
+//
+// Also emits the matching `BreadcrumbList` JSON-LD, so the trail Google reads
+// can never drift from the one a reader sees.
+//
+// Colour is inherited, never set: the trail sits on the Dark Teal
+// split-mosaic hero as well as on light panels, and `currentColor` reads
+// correctly on both.
+import { breadcrumbTrail } from '../../data/breadcrumbs';
+
+const trail = breadcrumbTrail(Astro.url.pathname);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: trail.map((crumb, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: crumb.label,
+    item: new URL(crumb.href, Astro.site).href,
+  })),
+};
+---
+
+{trail.length > 0 && (
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      {trail.map((crumb, i) =>
+        i === trail.length - 1 ? (
+          <li aria-current="page">{crumb.label}</li>
+        ) : (
+          <li>
+            <a href={crumb.href}>{crumb.label}</a>
+          </li>
+        ),
+      )}
+    </ol>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </nav>
+)}
+
+<style>
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3xs) var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-small);
+    line-height: 1.4;
+  }
+
+  /* Separator drawn in CSS, so a screen reader announces the list rather than
+     a row of chevron characters. */
+  .breadcrumbs li + li::before {
+    content: '›';
+    margin-inline-end: var(--space-xs);
+    opacity: 0.6;
+  }
+
+  .breadcrumbs a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    opacity: 0.8;
+  }
+
+  .breadcrumbs a:hover {
+    opacity: 1;
+  }
+
+  .breadcrumbs [aria-current='page'] {
+    font-weight: var(--weight-heading);
+  }
+</style>

@@ -28,6 +28,8 @@
 // own width:100%, which blew out a 1fr/1fr grid to ~10/90 before the fix.)
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
+import Breadcrumbs from '../ui/Breadcrumbs.astro';
+import { breadcrumbTrail } from '../../data/breadcrumbs';
 import type { ImageBlock, MosaicImage, ButtonData } from '../../data/types';
 
 type Variant = 'split-mosaic' | 'full-width-photo' | 'split-single-image' | 'split-collage' | 'minimal';
@@ -132,6 +134,12 @@ const {
   stats = [],
 } = Astro.props;
 
+// The breadcrumb trail replaces the kicker. Both sit above the <h1>, and on
+// almost every page the kicker only repeated the trail's last crumb ("Home ›
+// Commercial cleaning" then "COMMERCIAL CLEANING"). So the kicker shows only
+// where there is no trail: the homepage and the 404 page.
+const showKicker = kicker && breadcrumbTrail(Astro.url.pathname).length === 0;
+
 const wide = images.find((img) => img.span === 'wide');
 const rest = images.filter((img) => img.span !== 'wide');
 
@@ -145,7 +153,8 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
   <section data-cta-location="hero" class="hero hero--split-mosaic" aria-labelledby="hero-heading">
     <div class="container hero__grid">
       <div class="hero__copy">
-        {kicker && <p class="hero__kicker">{kicker}</p>}
+        <Breadcrumbs />
+        {showKicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>
@@ -204,7 +213,8 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
           </div>
         )}
-        {kicker && <p class="hero__kicker">{kicker}</p>}
+        <Breadcrumbs />
+        {showKicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>
@@ -238,7 +248,8 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
           </div>
         )}
-        {kicker && <p class="hero__kicker">{kicker}</p>}
+        <Breadcrumbs />
+        {showKicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>
@@ -264,7 +275,8 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
           </div>
         )}
-        {kicker && <p class="hero__kicker">{kicker}</p>}
+        <Breadcrumbs />
+        {showKicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>
@@ -307,7 +319,8 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
             <Placeholder ratio={logo.ratio ?? '2/1'} label={logo.label} src={logo.src} />
           </div>
         )}
-        {kicker && <p class="hero__kicker">{kicker}</p>}
+        <Breadcrumbs />
+        {showKicker && <p class="hero__kicker">{kicker}</p>}
         <h1 id="hero-heading">
           {headingLines.map((line) => (
             <>

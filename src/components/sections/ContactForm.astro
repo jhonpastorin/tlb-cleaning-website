@@ -37,6 +37,7 @@
 // which is ugly — but an ugly confirmation beats a dead form, and the enquiry
 // is in the board either way.
 import Button from '../ui/Button.astro';
+import Breadcrumbs from '../ui/Breadcrumbs.astro';
 import {
   areaOptions,
   enquiryCopy,
@@ -159,7 +160,12 @@ const config = {
 <section id="enquiry" class:list={['enquiry', `enquiry--${theme}`]} aria-labelledby="enquiry-heading">
   <div class="container enquiry__inner">
     <div class="enquiry__intro">
-      {kicker && <p class="enquiry__kicker">{kicker}</p>}
+      {/* Only when this form is the page's opener, i.e. carries its H1:
+          the trail belongs above a page's H1, not above the enquiry band
+          SiteFooter adds to every other page. The trail replaces the kicker
+          there, as it does in Hero.astro, rather than stacking above it. */}
+      {headingLevel === 'h1' && <div class="enquiry__breadcrumbs"><Breadcrumbs /></div>}
+      {kicker && headingLevel !== 'h1' && <p class="enquiry__kicker">{kicker}</p>}
       <Heading id="enquiry-heading">{heading}</Heading>
       {lead && <p class="lead">{lead}</p>}
     </div>
@@ -459,6 +465,10 @@ const config = {
   /* Same treatment as Hero's and CallToAction's kickers — same idea, same
      visual language, deliberately not shared code for one declaration
      block (CallToAction.astro makes the same call, in the same words). */
+  .enquiry__breadcrumbs {
+    margin-bottom: var(--space-md);
+  }
+
   .enquiry__kicker {
     font-family: var(--font-display);
     font-weight: var(--weight-heading);

@@ -253,7 +253,6 @@ and **Bing Places** (Bing can import from GBP).
 | Fix | Where | Why it matters |
 | --- | --- | --- |
 | Add a default share image (`og:image`, 1200 x 630) | [src/layouts/Base.astro](../src/layouts/Base.astro) supports `ogImage` but no page passes one | Links shared on Facebook, Messenger, LinkedIn and iMessage show a blank card. Not a ranking factor, but it affects clicks. |
-| `BreadcrumbList` schema | Base layout or the service and town templates | Shows the page path in Google results instead of a bare URL. |
 | `Service` schema on service pages | Service page templates | Helps Google and AI search understand what each page sells and where. |
 | `FAQPage` schema on pages with FAQs | Pages with FAQ sections | Google no longer shows FAQ rich results for most sites, but AI search tools still use it to understand the page. Optional. |
 | Core Web Vitals | https://pagespeed.web.dev and Search Console > Experience > Core Web Vitals | The site is static and should pass. Check the homepage and one town page after launch, on mobile. |

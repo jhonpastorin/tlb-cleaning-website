@@ -455,6 +455,38 @@ export const headerNav: MegaMenuNavItem[] = navData.header
     return megaMenu.length ? { label: item.label, href: item.href, megaMenu } : { label: item.label, href: item.href };
   });
 
+// ── BREADCRUMB LABELS ───────────────────────────────────────────────────
+//
+// Every href the menus link, with the label the menu gives it, for the
+// breadcrumb trail (breadcrumbs.ts). The client's rule, 13 Oct 2026: a crumb
+// reads exactly as the menu does ("Home Cleaning", not "House cleaning" from
+// the URL).
+//
+// A page can be in the menus more than once under different labels, so the
+// first match wins, in this order: the visible header menu, the primary bar,
+// then entries ticked "Hidden". So /locations/ reads "Areas we clean" (the
+// header) rather than the primary bar's "Locations", and /about/ reads
+// "About", because its header entry, "Meet the team", is hidden.
+//
+// A row is hidden when it is ticked "Hidden" or its whole header item is.
+const headerEntries = navData.header.flatMap((item) => [
+  { label: item.label, href: item.href, hidden: !!item.hidden },
+  ...(item.townMenu
+    ? townMenu.flatMap((group) => group.items).map((row) => ({ ...row, hidden: !!item.hidden }))
+    : (item.groups ?? [])
+        .flatMap((group) => group.items)
+        .map((row) => ({ label: row.label, href: row.href, hidden: !!(item.hidden || row.hidden) }))),
+]);
+
+export const menuLabels = new Map<string, string>();
+for (const { label, href } of [
+  ...headerEntries.filter((entry) => !entry.hidden),
+  ...navData.primary,
+  ...headerEntries.filter((entry) => entry.hidden),
+]) {
+  if (href && !menuLabels.has(href)) menuLabels.set(href, label);
+}
+
 // ── WHAT GOOGLE MAY INDEX ───────────────────────────────────────────────
 //
 // The hrefs of menu ROWS ticked "Hidden", for indexing.ts. A hidden row is a
