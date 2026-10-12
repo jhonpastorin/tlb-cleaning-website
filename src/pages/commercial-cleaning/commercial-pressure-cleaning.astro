@@ -108,6 +108,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
@@ -454,7 +455,6 @@ const business = localBusiness({
   // ⚠️ NSW only. See the note "In `business`" above: the wash water answer
   // cites NSW law.
   areaServed: 'Northern Rivers and Tweed, NSW',
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
 });
 
 const heroImage = page.hero.image && sized(page.hero.image, '1/1');
@@ -625,6 +625,7 @@ const pathwayCards = page.pathways.cards.map((card, i) => ({
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

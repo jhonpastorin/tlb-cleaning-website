@@ -99,18 +99,26 @@ the top) > paste the URL > **Request indexing**. There's a small daily limit,
 so do these first:
 
 1. `https://tlbcleaning.com.au/`
-2. `/house-cleaning/`
-3. `/house-cleaning/end-of-lease-cleaning/`
-4. `/house-cleaning/deep-cleaning/`
-5. `/airbnb-holiday-home-cleaning/`
-6. `/commercial-cleaning/`
-7. `/commercial-cleaning/office-cleaning/`
-8. `/locations/`
-9. `/locations/byron-bay/`
-10. `/locations/ballina/`
+2. `https://tlbcleaning.com.au/house-cleaning/`
+3. `https://tlbcleaning.com.au/house-cleaning/end-of-lease-cleaning/`
+4. `https://tlbcleaning.com.au/house-cleaning/deep-cleaning/`
+5. `https://tlbcleaning.com.au/airbnb-holiday-home-cleaning/`
+6. `https://tlbcleaning.com.au/commercial-cleaning/`
+7. `https://tlbcleaning.com.au/commercial-cleaning/office-cleaning/`
+8. `https://tlbcleaning.com.au/locations/`
+9. `https://tlbcleaning.com.au/locations/byron-bay/`
+10. `https://tlbcleaning.com.au/locations/ballina/`
 
-Also inspect **one hidden page**, e.g. `/house-cleaning/window-cleaning/`.
-It should say "Excluded by 'noindex' tag". That confirms the rule is working.
+Also inspect **one hidden page**, e.g. `/house-cleaning/window-cleaning/`,
+and click **Test live URL**. Under Page indexing it should say "Indexing
+allowed? No: 'noindex' detected in 'robots' meta tag". That confirms the rule
+is working.
+
+The first screen of URL Inspection shows Google's **stored** copy from its last
+crawl, not the live page. A hidden page Google crawled before it was hidden
+will still show as indexed there. Click **Request indexing** on it: Google
+recrawls, sees the noindex and drops the page, usually within a few days.
+Pages you don't request drop out on their own next recrawl.
 
 ### 2.4 Add users
 
@@ -212,17 +220,26 @@ Business Profile can.** It's the most important item on this list.
   guide from the site).
 - Keep hours current, including public holidays.
 
-### 4.3 Send the website team
+### 4.3 Keep the website matching the profile
 
-Once the profile exists, send the website team the following. It goes into
-the business details Google reads from every page
+**Done 12 Oct 2026.** Every page now tells Google the following
 ([src/data/business.ts](../src/data/business.ts)):
 
-- the profile's public URL
-- whether the address is public or hidden (if public, the full address)
-- opening hours
-- the logo file (square PNG or SVG)
-- links to TLB's Facebook, Instagram, LinkedIn and any other profiles
+- **Name:** TLB Cleaning Services (the profile's name), with "TLB Cleaning"
+  and "TLB Professional Cleaning Services" as alternate names
+- **Address:** hidden; service area only, same as the profile
+- **Hours:** Monday to Friday, 9am to 5pm
+- **Logo:** `public/logo.png`
+- **Profiles:** the Google Business Profile (set in Pages CMS > Reviews >
+  Google Business Profile link), Facebook, Instagram, TikTok and LinkedIn
+
+**If any of these change on the profile, change them in `business.ts` too.**
+Different hours or names on the website and on Google weaken both.
+
+The business uses three names today: "TLB Cleaning" (website), "TLB Cleaning
+Services" (Google) and "TLB Professional Cleaning Services" (logo, social
+handles). Settle on one long term and use it everywhere: Google, directories,
+invoices, signage and the website.
 
 ### 4.4 Other map listings
 
@@ -235,7 +252,6 @@ and **Bing Places** (Bing can import from GBP).
 
 | Fix | Where | Why it matters |
 | --- | --- | --- |
-| Fill logo, address and `sameAs` (profile URLs) in the business details | [src/data/business.ts](../src/data/business.ts) | Every page currently tells Google the logo and address are empty strings. This ties the website to the Business Profile. Needs the items in 4.3. |
 | Add a default share image (`og:image`, 1200 x 630) | [src/layouts/Base.astro](../src/layouts/Base.astro) supports `ogImage` but no page passes one | Links shared on Facebook, Messenger, LinkedIn and iMessage show a blank card. Not a ranking factor, but it affects clicks. |
 | `BreadcrumbList` schema | Base layout or the service and town templates | Shows the page path in Google results instead of a bare URL. |
 | `Service` schema on service pages | Service page templates | Helps Google and AI search understand what each page sells and where. |
@@ -408,8 +424,8 @@ after 3 weeks.
 - [ ] `www` and `http` redirect to `https://tlbcleaning.com.au/`
 - [ ] Bing Webmaster Tools imported from Google
 - [ ] Google Business Profile created, verified, fully filled in
-- [ ] Profile URL, logo, hours and social links sent to the website team
-- [ ] `business.ts` schema filled in, default share image added
+- [x] Profile URL, logo, hours and social links added to the website schema
+- [ ] Default share image added
 - [ ] Apple Business Connect and Bing Places set up
 - [ ] Directory listings created with identical NAP
 - [ ] Review-request routine running after every job

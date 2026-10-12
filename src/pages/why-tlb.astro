@@ -96,6 +96,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
@@ -504,7 +505,6 @@ const pageMeta = {
 const business = localBusiness({
   description: pageMeta.description,
   areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
 });
 
 const heroImage = page.hero.image && sized(page.hero.image, '4/3');
@@ -667,6 +667,7 @@ const objectionBlocks = page.objections.items.map((item) => ({ type: 'text' as c
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

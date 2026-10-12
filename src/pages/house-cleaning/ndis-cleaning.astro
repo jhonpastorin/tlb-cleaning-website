@@ -67,6 +67,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
@@ -463,7 +464,6 @@ const business = localBusiness({
   description: pageMeta.description,
   // See the `areaServed` note above.
   areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
 });
 
 // `quoteCta.href` is the destination, so there is one form to build (see §1).
@@ -651,6 +651,7 @@ const whyChooseBlocks = page.whyChoose.items.map((item, i) => ({
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

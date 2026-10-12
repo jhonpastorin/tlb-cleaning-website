@@ -70,6 +70,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
@@ -278,7 +279,6 @@ const pageMeta = {
 const business = localBusiness({
   description: pageMeta.description,
   areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
 });
 
 const pageCta = { ...quoteCta, label: page.buttonLabel };
@@ -437,6 +437,7 @@ const explainerBlocks = page.explainer.items.map((item) =>
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

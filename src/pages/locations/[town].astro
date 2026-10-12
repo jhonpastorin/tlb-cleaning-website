@@ -67,6 +67,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
   serviceLinks,
@@ -174,7 +175,6 @@ const business = {
   ...localBusiness({
     description: pageMeta.description,
     areaServed: `${town} and the surrounding ${regionProse}, ${state}`,
-    sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
   }),
   address: {
     streetAddress: '',
@@ -373,6 +373,7 @@ const nearbyGroups: TagGroup[] = [
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

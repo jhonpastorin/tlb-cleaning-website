@@ -39,6 +39,15 @@ const contact = loadData(
     /** The phone number in international form, for the LocalBusiness JSON-LD. */
     schemaTelephone: z.string().min(1),
     copyright: z.string().min(1),
+    /** TLB's social profiles: the footer icons and the JSON-LD `sameAs`. */
+    social: z
+      .array(
+        z.object({
+          platform: z.enum(['facebook', 'instagram', 'tiktok', 'linkedin', 'x', 'youtube']),
+          href: z.string().url(),
+        }),
+      )
+      .default([]),
   }),
 );
 
@@ -160,6 +169,25 @@ export const footerContact = {
 };
 
 export const footerCopyright = contact.copyright;
+
+const platformNames = {
+  facebook: 'Facebook',
+  instagram: 'Instagram',
+  tiktok: 'TikTok',
+  linkedin: 'LinkedIn',
+  x: 'X',
+  youtube: 'YouTube',
+} as const;
+
+/** The footer's social icons, from "Contact details" in Pages CMS. */
+export const footerSocialLinks = contact.social.map(({ platform, href }) => ({
+  platform,
+  href,
+  label: `TLB on ${platformNames[platform]}`,
+}));
+
+/** The same profiles as bare URLs, for the LocalBusiness JSON-LD `sameAs`. */
+export const socialProfileUrls = contact.social.map(({ href }) => href);
 
 // ⚠️ "CONTACT" REMOVED, 18 Sep 2026, at the client's request, and it was a
 // broken link anyway at the time. Its replacement is the phone CTA below.

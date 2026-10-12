@@ -51,6 +51,7 @@ import {
   serviceLinks,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
@@ -297,7 +298,6 @@ const business = localBusiness({
   // v6 leads with the Northern Rivers and the Tweed; the Southern Gold
   // Coast is where the team crosses to, not part of the primary claim.
   areaServed: 'Northern Rivers NSW, the Tweed, and the Southern Gold Coast QLD',
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
 });
 
 const heroImage = page.hero.image && sized(page.hero.image, '4/3');
@@ -483,6 +483,7 @@ const ourServiceItems = serviceLinks.map((service) => {
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

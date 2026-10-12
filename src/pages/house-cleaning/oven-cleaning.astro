@@ -82,6 +82,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
@@ -254,7 +255,6 @@ const pageMeta = {
 const business = localBusiness({
   description: pageMeta.description,
   areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
 });
 
 const pageCta = { label: page.buttonLabel, href: quoteCta.href };
@@ -407,6 +407,7 @@ const pathwayCards = [
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

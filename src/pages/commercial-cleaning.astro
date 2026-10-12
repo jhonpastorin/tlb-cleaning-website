@@ -130,6 +130,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
@@ -729,7 +730,6 @@ const business = localBusiness({
   description: pageMeta.description,
   // ✅ WIDENED with §14's town list. See the note "In `business`" above.
   areaServed: 'Northern Rivers and Tweed NSW, and the Southern Gold Coast QLD',
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
 });
 
 const walkthroughCta = { label: page.ctaLabel ?? walkthroughCtaLabel, href: quoteCta.href };
@@ -946,6 +946,7 @@ const commercialComparisonRows = (() => {
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

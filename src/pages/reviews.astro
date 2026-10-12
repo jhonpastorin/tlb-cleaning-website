@@ -2,7 +2,7 @@
 // Reviews. Third of the four "Meet the team" pages
 // (src/data/meetTheTeam.ts), and the hardest page on this site to build
 // honestly, because it is the one page whose entire content is proof and
-// this business has not published a single verified review yet.
+// this business has only a short, real review history on Google.
 //
 // THE RULE THIS PAGE IS BUILT ON. Every quote slot below is a briefing
 // bracket, not a testimonial. Nothing here invents a client, a name, a
@@ -16,10 +16,10 @@
 // WHAT IS DELIBERATELY ABSENT, so nobody adds it back as an improvement:
 //  1. NO STAR AVERAGE AND NO REVIEW COUNT. Not in the hero, not as a
 //     Hero `stats` row, not as a badge. There is no verified figure to state.
-//  2. NO GOOGLE OR FACEBOOK REVIEW WIDGET, and no link to a profile, because
-//     `meetTheTeamBusiness`' `sameAs` is still empty. The moment those
-//     profiles exist, fill sameAs in src/data/meetTheTeam.ts and link them
-//     from the callout below and from FAQ 1.
+//  2. NO GOOGLE OR FACEBOOK REVIEW WIDGET. The reviews are copied in by hand
+//     (googleReviews.ts) and the page LINKS to the Google Business Profile
+//     instead: the slider, the honesty callout's button and FAQ 1 all point
+//     there (12 Oct 2026).
 //  3. NO AGENCY LOGOS. The logo band is reserved slots. An agency's mark is
 //     their property and their endorsement, and the brand foundation §3.5 is
 //     explicit that permission has to be sought first. Do not generate one.
@@ -67,6 +67,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../data/navigation';
@@ -141,10 +142,8 @@ import { sized } from '../lib/cms-schemas';
 // brand foundation calls the voice "quietly confident" and the site's whole
 // argument is that TLB is the more honest option.
 //
-// ⚠️ Add the Google Business Profile and Facebook links here the day they
-// exist, and fill `sameAs` in src/data/meetTheTeam.ts at the same time. The
-// second paragraph promises a place to leave a review and currently cannot
-// point at one.
+// Its second paragraph sends a happy client to the Google Business Profile, so
+// the button goes there too (honestyCta, below the content load).
 
 // Cross-links to the other three pages in this cluster.
 const clusterItems = otherMeetTheTeamPages('/reviews/');
@@ -192,6 +191,13 @@ const pageMeta = {
 };
 
 const business = meetTheTeamBusiness(pageMeta.description);
+
+// The honesty callout's button. The URL is the one in Pages CMS > Reviews >
+// Google Business Profile link (googleReviews.ts), not a second copy; with
+// that field empty the callout falls back to whatever cta its own content has.
+const honestyCta = googleBusinessProfileUrl
+  ? { label: 'Leave us a review on Google', href: googleBusinessProfileUrl }
+  : page.honesty.cta;
 
 // The agency marks are still reserved slots (see the agency band note above).
 const agencyLogos = page.agencies?.logos.map((item) => ({ ...item, logo: sized(item.logo, '2/1') }));
@@ -250,7 +256,7 @@ const agencyLogos = page.agencies?.logos.map((item) => ({ ...item, logo: sized(i
       afterLabel={page.beforeAfter.afterLabel}
     />
 
-    <Callout tone="note" heading={page.honesty.heading} body={page.honesty.body} cta={page.honesty.cta} />
+    <Callout tone="note" heading={page.honesty.heading} body={page.honesty.body} cta={honestyCta} />
 
     <ServiceBlocks
       variant="list"
@@ -277,6 +283,7 @@ const agencyLogos = page.agencies?.logos.map((item) => ({ ...item, logo: sized(i
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

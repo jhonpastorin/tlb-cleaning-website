@@ -31,11 +31,11 @@
 // Where a guide states something about law, policy or price, the page itself
 // carries the flag — see each file's header.
 import type { LocalBusinessInfo } from '../layouts/Base.astro';
+import { localBusiness } from './business';
 import type { Tag } from '../components/sections/TagCloud.astro';
 import type { ServiceIconName } from '../components/ui/ServiceIcon.astro';
 import { z } from 'astro/zod';
 import { loadData } from '../lib/cms-data';
-import { schemaTelephone, contactEmail } from './navigation';
 
 // THE LABELS, BLURBS AND ICONS LIVE IN PAGES CMS ("Site settings > Cross-links:
 // guides", src/content/site/guides.yaml). The nine URLs are fixed and checked
@@ -146,32 +146,16 @@ export const otherGuides = (self: GuideHref | null, only?: GuideHref[]) =>
  * Telephone and email are TLB's real details (client, 23 Sep 2026), matching
  * `footerContact` in navigation.ts.
  *
- * ⚠️ Logo and address are still empty, inherited verbatim from every page
- * built before these. Both are real facts TLB holds and neither is in the
- * repo. One fix here fills all ten.
+ * Name, logo, hours and profile links come from business.ts, so only
+ * areaServed is decided here.
  *
  * ⚠️ `areaServed` names both states, unlike premises.ts' NSW-only string.
  * These guides address tenants and hosts on both sides of the border and two
  * of them are specifically about the difference, so narrowing it here would
  * contradict the pages. Same open sitewide question as everywhere else.
  */
-export const guidesBusiness = (description: string): LocalBusinessInfo => ({
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: schemaTelephone,
-  email: contactEmail,
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: [],
-  areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD',
-  description,
-});
+export const guidesBusiness = (description: string): LocalBusinessInfo =>
+  localBusiness({ description, areaServed: 'Northern Rivers NSW, the Tweed and Southern Gold Coast QLD' });
 
 /**
  * The line the two regulatory guides carry under their opening block.

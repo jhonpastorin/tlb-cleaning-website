@@ -55,6 +55,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
@@ -316,6 +317,7 @@ const moreGuideTags = relatedGuides(selfHref, page.moreGuides.tags ?? []);
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

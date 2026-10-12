@@ -105,6 +105,7 @@ import {
   headerSecondaryCta,
   footerServiceLinks,
   footerContact,
+  footerSocialLinks,
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
@@ -334,7 +335,6 @@ const business = localBusiness({
   // Residential pages claim the full service area, including QLD. Only the
   // commercial pages are NSW-only, and that is a live open item over there.
   areaServed: 'Northern Rivers NSW and Southern Gold Coast QLD',
-  sameAs: googleBusinessProfileUrl ? [googleBusinessProfileUrl] : [],
 });
 
 const heroImage = page.hero.image && sized(page.hero.image, '1/1');
@@ -502,6 +502,7 @@ const pathwayCards = [
       { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
     ]}
     contact={footerContact}
+    socialLinks={footerSocialLinks}
     copyright={footerCopyright}
   />
 </Base>

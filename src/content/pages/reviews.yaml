@@ -21,8 +21,8 @@ reputation:
         the day it was supposed to be.
     - type: paragraph
       text: It also means our reputation has always been held by other people rather
-        than by us. The reviews below are being collected from clients who have
-        had us in their homes for years, in their words rather than ours.
+        than by us. The reviews below are copied word for word from our Google
+        Business Profile, in our clients' words rather than ours.
 reviews:
   heading: What our clients say
 beforeAfter:
@@ -50,15 +50,14 @@ beforeAfter:
           black finish
       caption: Gas cooktop and burners
 honesty:
-  heading: Why there is no rating on this page yet
+  heading: Why there is no rating on this page
   body:
-    - TLB has been booked by word of mouth for years and has only just built a
-      website, so there is no long review history to show you. We would rather
-      say that than put up a number nobody can check.
-    - The quotes on this page are being collected from real clients, with their
-      permission, and they will appear here with their first name and their
-      town. If we have cleaned for you and you are willing to say so, tell us
-      and we will point you at where to leave it.
+    - TLB was booked by word of mouth for years before it had a website, so our
+      online review history is still short. We would rather show you real
+      reviews in full than put a number at the top of this page.
+    - Every review above is copied word for word from our Google Business
+      Profile, where you can read them all. If we have cleaned for you and you
+      are happy to say so, that is the place to leave one.
 otherWays:
   heading: Other ways to check us out
   lead: Who we are, what happens after you book, and what it is like working here.
@@ -66,8 +65,9 @@ faq:
   heading: "Reviews and standards: FAQs"
   items:
     - question: Where can I read reviews of TLB Cleaning?
-      answer: Reviews are being collected from clients as the website launches, and
-        they will appear on this page in their own words.
+      answer: On our Google Business Profile. The reviews on this page are copied
+        from there word for word, and you can read all of them, or leave your
+        own, through the links on this page.
     - question: Do you guarantee my bond back?
       answer: No, and be careful with anyone who does, because a bond is released by
         an agent or a tribunal rather than by a cleaner. What we do is clean to

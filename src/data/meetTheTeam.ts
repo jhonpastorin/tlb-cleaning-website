@@ -19,8 +19,8 @@
 // are checked here against MeetTheTeamHref, so a typo fails the build.
 import { z } from 'astro/zod';
 import type { LocalBusinessInfo } from '../layouts/Base.astro';
+import { localBusiness } from './business';
 import { loadData } from '../lib/cms-data';
-import { schemaTelephone, contactEmail } from './navigation';
 
 /** The four slugs as a union, so a page cross-linking a sibling that does
  *  not exist is an `astro check` error rather than a 404 a reader finds —
@@ -84,31 +84,11 @@ export const otherMeetTheTeamPages = (self: MeetTheTeamHref) =>
  * `footerContact` in navigation.ts, so the structured data and the footer the
  * reader actually sees now agree.
  *
- * ⚠️ Logo, address and sameAs are still empty, inherited verbatim from every
- * page built before these four. They are real facts TLB holds and none of
- * them are in the repo. One fix here fills all four.
- *
- * ⚠️ `sameAs` matters more on these pages than anywhere else on the site:
- * /reviews/ is a page about third-party proof with no link to a Google
- * Business Profile or Facebook page to point at. Fill this the day those
- * profiles exist.
+ * Name, logo, hours and `sameAs` (the Google Business Profile and social
+ * profiles) come from business.ts, so only areaServed is decided here.
+ * `sameAs` matters most on /reviews/, a page about third-party proof.
  *
  * `areaServed` is the homepage's own v6 string, verbatim.
  */
-export const meetTheTeamBusiness = (description: string): LocalBusinessInfo => ({
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: schemaTelephone,
-  email: contactEmail,
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: [],
-  areaServed: 'Northern Rivers NSW, the Tweed, and the Southern Gold Coast QLD',
-  description,
-});
+export const meetTheTeamBusiness = (description: string): LocalBusinessInfo =>
+  localBusiness({ description, areaServed: 'Northern Rivers NSW, the Tweed, and the Southern Gold Coast QLD' });

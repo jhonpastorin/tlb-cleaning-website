@@ -23,10 +23,11 @@
 //
 // Nothing in this hub points outside it any more.
 import type { LocalBusinessInfo } from '../layouts/Base.astro';
+import { localBusiness } from './business';
 import type { Tag } from '../components/sections/TagCloud.astro';
 import { z } from 'astro/zod';
 import { loadData } from '../lib/cms-data';
-import { schemaTelephone, contactEmail, walkthroughLabel } from './navigation';
+import { walkthroughLabel } from './navigation';
 
 // THE LABELS AND BLURBS LIVE IN PAGES CMS ("Site settings > Cross-links:
 // premises", src/content/site/premises.yaml). The thirteen URLs are fixed and
@@ -119,32 +120,16 @@ export const relatedPremises = (self: PremisesHref, extras: Tag[] = []): Tag[] =
  * Telephone and email are TLB's real details (client, 23 Sep 2026), matching
  * `footerContact` in navigation.ts.
  *
- * ⚠️ Logo and address are still empty, inherited verbatim from the sibling
- * pages built before this one. Both are real facts TLB holds and neither is
- * in the repo. One fix here now fills all thirteen.
+ * Name, logo, hours and profile links come from business.ts, so only
+ * areaServed is decided here.
  *
  * ⚠️ `areaServed` is NSW only, following the call commercial-cleaning.astro
  * made. footerContact still claims the Southern Gold Coast. Same open item as
  * on the hub: if TLB does commercial work across the border, this string and
  * every commercial page's `nswLocationGroups` change together.
  */
-export const commercialBusiness = (description: string): LocalBusinessInfo => ({
-  name: 'TLB Cleaning',
-  url: 'https://tlbcleaning.com.au/',
-  logo: '',
-  telephone: schemaTelephone,
-  email: contactEmail,
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: '',
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-  sameAs: [],
-  areaServed: 'Northern Rivers and Tweed, NSW',
-  description,
-});
+export const commercialBusiness = (description: string): LocalBusinessInfo =>
+  localBusiness({ description, areaServed: 'Northern Rivers and Tweed, NSW' });
 
 /**
  * The site-walkthrough CTA every commercial page leads with, instead of the

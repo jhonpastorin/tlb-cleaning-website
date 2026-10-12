@@ -1711,6 +1711,28 @@ content:
             label: Copyright line
             type: string
             required: true
+          - name: social
+            label: Social media profiles
+            type: object
+            description: Shown as icons in the footer of every page, in this order, and given to Google as TLB's other profiles.
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{platform}"
+            fields:
+              - name: platform
+                label: Platform
+                type: select
+                required: true
+                options:
+                  values:
+                    - { name: facebook, label: Facebook }
+                    - { name: instagram, label: Instagram }
+                    - { name: tiktok, label: TikTok }
+                    - { name: linkedin, label: LinkedIn }
+                    - { name: x, label: X (Twitter) }
+                    - { name: youtube, label: YouTube }
+              - { name: href, label: Profile link, type: string, required: true, description: "The full https:// address of the profile page." }
 
       - name: buttons
         label: Site-wide buttons

@@ -15,17 +15,22 @@ import { isIndexable } from '../data/indexing';
 
 export interface LocalBusinessInfo {
   name: string;
+  /** Other names the business is known by, so Google ties them to one entity. */
+  alternateName: string[];
   url: string;
   logo: string;
   telephone: string;
   email: string;
+  /** Service-area business: the street address is hidden on Google, so only
+   *  the parts TLB chooses to show are given. Empty parts are left out. */
   address: {
-    streetAddress: string;
-    addressLocality: string;
-    addressRegion: string;
-    postalCode: string;
+    streetAddress?: string;
+    addressLocality?: string;
+    addressRegion?: string;
+    postalCode?: string;
     addressCountry: string;
   };
+  openingHours: { dayOfWeek: string[]; opens: string; closes: string }[];
   sameAs: string[];
   areaServed: string;
   description: string;
@@ -54,6 +59,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: business.name,
+  alternateName: business.alternateName,
   url: business.url,
   logo: business.logo,
   image: ogImage ?? business.logo,
@@ -63,8 +69,12 @@ const jsonLd = {
   areaServed: business.areaServed,
   address: {
     '@type': 'PostalAddress',
-    ...business.address,
+    ...Object.fromEntries(Object.entries(business.address).filter(([, value]) => value)),
   },
+  openingHoursSpecification: business.openingHours.map((hours) => ({
+    '@type': 'OpeningHoursSpecification',
+    ...hours,
+  })),
   sameAs: business.sameAs,
 };
 
