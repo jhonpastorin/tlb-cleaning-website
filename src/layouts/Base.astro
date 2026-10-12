@@ -11,6 +11,7 @@ import poppinsBoldWoff2 from '@fontsource/poppins/files/poppins-latin-700-normal
 // Every page on the site reaches this layout, so this import is the one place
 // the noindex decision has to be made. See site-env.ts for why it fails closed.
 import { isStaging, robotsContent, siteEnv } from '../data/site-env';
+import { isIndexable } from '../data/indexing';
 
 export interface LocalBusinessInfo {
   name: string;
@@ -42,6 +43,12 @@ interface Props {
 }
 
 const { title, description, canonical, ogImage, business, noindex = false } = Astro.props;
+
+// Production only (staging is blanket-noindexed below). A page asks for noindex
+// itself, or indexing.ts rules it out because nothing in the menu links it yet.
+// integrations/sitemap.mjs reads this tag back out of the built HTML, so a page
+// with it can never appear in sitemap.xml.
+const excludeFromIndex = noindex || !isIndexable(Astro.url.pathname);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -112,7 +119,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {isStaging ? (
       <meta name="robots" content={robotsContent} />
     ) : (
-      noindex && <meta name="robots" content="noindex, follow" />
+      excludeFromIndex && <meta name="robots" content="noindex, follow" />
     )}
 
     <!-- Open Graph -->

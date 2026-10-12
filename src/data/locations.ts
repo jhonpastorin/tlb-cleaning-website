@@ -198,10 +198,9 @@ export const isNavigableTown = (town: string) => navigableTownSet.has(town);
 //
 // While the site is on staging this is covered site-wide: site-env.ts puts
 // `noindex` on every page unless SITE_ENV=production. That is a blanket switch,
-// not a per-page one — so the day the site goes production, these pages become
-// indexable along with everything else. If they should stay out of the index
-// after launch, that still needs a per-page decision. There is no sitemap in
-// this project, so there is nothing to exclude them from.
+// not a per-page one. On production the per-page decision is indexing.ts: a
+// town not in liveTowns gets `noindex, follow` and is left out of sitemap.xml,
+// so making a town live here is also what puts it in front of Google.
 
 // Region labels are the client's exact wording, state suffix included, and
 // they are deliberately the same string in the menu, the hub, the region pages

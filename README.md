@@ -70,10 +70,18 @@ Indexing is controlled by one environment variable, `SITE_ENV`, read in
 `SITE_ENV` is exactly `production`. Anything else — unset, misspelt, `prod` —
 gets `noindex, nofollow` on every page and a `Disallow: /` robots.txt.
 
-| `SITE_ENV` | Robots meta tag | `robots.txt` |
-| --- | --- | --- |
-| `production` | none | `Allow: /` |
-| anything else, or unset | `noindex, nofollow` | `Disallow: /` |
+| `SITE_ENV` | Robots meta tag | `robots.txt` | `sitemap.xml` |
+| --- | --- | --- | --- |
+| `production` | none, except pages ruled out below | `Allow: /` + `Sitemap:` line | every indexable page |
+| anything else, or unset | `noindex, nofollow` | `Disallow: /` | not written |
+
+On production, `src/data/indexing.ts` still puts `noindex, follow` on built
+pages nothing in the menu links: town pages not in "Live town pages", and
+menu rows ticked "Hidden". `integrations/sitemap.mjs` then writes
+`dist/sitemap.xml` from every built page **without** a noindex tag, at its
+canonical URL, so the sitemap cannot disagree with the pages. The build log
+says how many URLs it wrote. Search Console setup and the wider SEO plan are in
+[docs/SEO-SETUP.md](docs/SEO-SETUP.md).
 
 This is deliberate. An indexed staging copy competes with the real site under
 the client's own brand and takes weeks to clear, so a forgotten variable

@@ -1796,7 +1796,7 @@ content:
                     fields:
                       - { name: label, label: Text, type: string, required: true }
                       - { name: href, label: Links to, type: string }
-                      - { name: hidden, label: Hidden (keep this row out of the menu), type: boolean }
+                      - { name: hidden, label: Hidden (keep this row out of the menu), type: boolean, description: "Also keeps the page out of Google (noindex, and left out of sitemap.xml) once published. Untick to put it back in both." }
                       - { name: note, label: Note, type: text, readonly: true }
 
       - name: trust-bar
@@ -2095,7 +2095,7 @@ content:
           - name: liveTowns
             component: townPicker
             label: Live town pages
-            description: "Towns whose page is linked from the menu, the location bands and the region pages. Every town is still named everywhere; only these are clickable."
+            description: "Towns whose page is linked from the menu, the location bands and the region pages. Every town is still named everywhere; only these are clickable. Only these town pages are shown to Google (in sitemap.xml); the rest are kept out of search until they are added here and published."
           - { name: subheading, label: Subheading over the town lists, type: string, required: true }
           - { name: nswSubheading, label: Subheading on NSW-only pages, type: string, required: true }
           - name: regionPhotos

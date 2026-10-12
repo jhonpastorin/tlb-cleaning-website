@@ -10,8 +10,12 @@ import { isProduction } from '../data/site-env';
 // index; this file is the coarser signal that stops well-behaved crawlers
 // fetching them in the first place. Both are driven by the same flag, so they
 // can never disagree.
+//
+// Production also points crawlers at the sitemap, which integrations/sitemap.mjs
+// writes on production builds only. Staging has none to point at.
+const sitemapUrl = new URL('/sitemap.xml', import.meta.env.SITE).href;
 const body = isProduction
-  ? `User-agent: *\nAllow: /\n`
+  ? `User-agent: *\nAllow: /\n\nSitemap: ${sitemapUrl}\n`
   : `User-agent: *\nDisallow: /\n`;
 
 export const GET: APIRoute = () =>
