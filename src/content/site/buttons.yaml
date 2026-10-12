@@ -1,7 +1,7 @@
 quote:
   label: Get an instant quote
-  href: /contact/
+  href: "#enquiry"
 book:
   label: Book your clean online
-  href: /contact/
+  href: "#enquiry"
 walkthroughLabel: Book a site walkthrough

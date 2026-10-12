@@ -100,9 +100,13 @@ const navData = loadData(
 export const schemaTelephone = contact.schemaTelephone;
 export const contactEmail = contact.email;
 
-// ⚠️ BOTH CTAs POINT AT /contact/ FOR NOW, 18 Sep 2026, at the client's
-// request. Their real destinations are built here and are the values to
-// restore:
+// ⚠️ BOTH CTAs POINT AT #enquiry, 12 Oct 2026, at the client's request: the
+// enquiry form on the page the reader is already on, which SiteFooter renders
+// above the footer on every page except /contact/ (whose form opens the page,
+// so the anchor still resolves there) and /thank-you/ (which renders no
+// quoteCta). Before that, 18 Sep 2026, both pointed at /contact/. Their
+// originally intended destinations are the values to restore if those pages
+// are ever built:
 //
 //     quoteCta           href: '/quote/'
 //     headerSecondaryCta href: '/book/'
@@ -120,8 +124,8 @@ export const contactEmail = contact.email;
 // `quoteCta.href`.
 //
 // ⚠️ THE LABELS NOW OVERSTATE WHAT HAPPENS. "Get an instant quote" and "Book
-// your clean online" both land on a contact page that has neither a quote flow
-// nor a booking flow — though it now carries a real phone and email. The labels
+// your clean online" both land on an enquiry form, which is neither a quote
+// flow nor a booking flow. The labels
 // were left alone because only the destinations were asked about, but they are
 // a promise the page does not keep. Worth settling before launch: either build
 // the two pages, or reword these to something the contact page delivers.

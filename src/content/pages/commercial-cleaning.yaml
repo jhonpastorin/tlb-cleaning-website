@@ -55,7 +55,7 @@ pathways:
         gets quoted before it happens, never added to an invoice afterwards.
       cta:
         label: Talk to our team
-        href: /contact/
+        href: "#enquiry"
     - image:
         src: /src/assets/commercial_cleaning/commercial-cleaner-with-a-caddy-in-an-office-kitchenette.jpg
         alt: TLB cleaner in uniform with her cleaning caddy in an office kitchenette

@@ -81,13 +81,17 @@ import { z } from 'astro/zod';
 import { getPage } from '../lib/cms';
 import * as section from '../lib/cms-schemas';
 
-// The closing CTA points back UP at the form (#enquiry), not at `quoteCta`.
-// `quoteCta.href` is '/contact/' — this page — so using it here gave the band
-// a button that reloaded the page the reader was already on. Every OTHER page
-// still uses `quoteCta` and still lands here, which is what navigation.ts
-// intends. The anchor now scrolls upward rather than down, since the form
-// opens the page; that is correct behaviour for a closing CTA whose whole job
-// is "go back and do the thing".
+// The closing CTA points back UP at the form (#enquiry). It is kept as its own
+// constant rather than read from `quoteCta`: that button used to be
+// '/contact/', which reloaded this page, and although it is now '#enquiry' too
+// (12 Oct 2026; every other page carries the form above its footer), this
+// band must not change if the site-wide button is ever repointed. The anchor
+// scrolls upward rather than down, since the form opens the page; that is
+// correct behaviour for a closing CTA whose whole job is "go back and do the
+// thing".
+//
+// `enquiryForm={false}` on SiteFooter below: this page's form is the one at
+// the top, and a second would duplicate the `#enquiry` anchor.
 const formAnchor = '#enquiry';
 
 // What to include is genuinely useful and costs nothing to say — it is the
@@ -182,5 +186,6 @@ const closingButton = page.closingCta.cta ?? { ...quoteCta, href: formAnchor };
     contact={footerContact}
     socialLinks={footerSocialLinks}
     copyright={footerCopyright}
+    enquiryForm={false}
   />
 </Base>

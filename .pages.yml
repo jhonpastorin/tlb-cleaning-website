@@ -1743,7 +1743,7 @@ content:
           - name: quote
             component: link
             label: Quote button (on most pages)
-            description: Changing this changes the button on every page that uses it.
+            description: "Changing this changes the button on every page that uses it. #enquiry jumps to the enquiry form at the bottom of the page the reader is on."
           - name: book
             component: link
             label: Booking button

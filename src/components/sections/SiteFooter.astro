@@ -10,6 +10,7 @@
 // and StarRating.astro were held to before they were shared).
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
+import ContactForm from './ContactForm.astro';
 import type { NavItem, ButtonData } from '../../data/types';
 import type { ImageMetadata } from 'astro';
 
@@ -52,6 +53,18 @@ interface Props {
   /** Optional now (was required) — a legal/registration line some brands need and others don't. */
   registration?: string;
   copyright: string;
+  /**
+   * Renders the enquiry form (ContactForm, `id="enquiry"`) directly above the
+   * footer. On by default, because every quote and booking CTA on the site
+   * now points at `#enquiry` on the page the reader is already on (site/buttons
+   * .yaml), and that anchor only resolves where the form is rendered.
+   *
+   * Pass `false` ONLY on a page that must not carry it: /contact/ (its form
+   * already opens the page, and a second one would duplicate `#enquiry`) and
+   * /thank-you/ (the reader has just submitted). Turning it off anywhere else
+   * leaves that page's CTAs pointing at an anchor that does not exist.
+   */
+  enquiryForm?: boolean;
 }
 
 const {
@@ -65,8 +78,14 @@ const {
   newsletter,
   registration,
   copyright,
+  enquiryForm = true,
 } = Astro.props;
 ---
+
+{/* Outside <footer> so it is not counted as a footer click in analytics
+    (`data-cta-location="footer"` below). The phone and email are the same
+    ones this footer shows, so a failed submit points at matching details. */}
+{enquiryForm && <ContactForm fallbackPhone={contact.phone} fallbackEmail={contact.email} />}
 
 <footer class="site-footer" data-cta-location="footer">
   <div class="container site-footer__inner">

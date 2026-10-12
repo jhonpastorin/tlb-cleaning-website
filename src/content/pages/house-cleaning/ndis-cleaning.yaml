@@ -62,7 +62,7 @@ pathways:
         participants.
       cta:
         label: Talk to us
-        href: /contact/
+        href: "#enquiry"
 worthKnowing:
   heading: You probably don't need a registered provider.
   body:
