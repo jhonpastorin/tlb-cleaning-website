@@ -25,6 +25,9 @@ export interface Tag {
 // other — `groups` wins if both are set.
 export interface TagGroup {
   label: string;
+  /** Turns the group's <h3> into a link, with `label` as the anchor text —
+   *  e.g. a region heading pointing at that region's overview page. */
+  href?: string;
   tags: Tag[];
 }
 
@@ -60,7 +63,13 @@ const headingId = `tag-cloud-heading-${Math.random().toString(36).slice(2, 9)}`;
     {grouped ? (
       groups.map((group) => (
         <div class="tag-cloud__group">
-          <h3 class="tag-cloud__group-label">{group.label}</h3>
+          <h3 class="tag-cloud__group-label">
+            {group.href ? (
+              <a href={group.href} class="tag-cloud__group-link">{group.label}</a>
+            ) : (
+              group.label
+            )}
+          </h3>
           <ul class="tag-cloud__list">
             {group.tags.map((tag) => {
               const Tag = tag.href ? 'a' : 'span';
@@ -138,6 +147,39 @@ const headingId = `tag-cloud-heading-${Math.random().toString(36).slice(2, 9)}`;
 
   .tag-cloud__group:first-of-type .tag-cloud__group-label {
     margin-top: 0;
+  }
+
+  /* A linked region heading. It has to read as clickable before anyone
+     hovers, because a heading is otherwise the least link-like thing on the
+     band: the Mint Green underline (the pills' own ring colour) does that at
+     rest, and hover moves the text to Mint Green as well. Focus is the
+     sitewide :focus-visible ring. */
+  .tag-cloud__group-link {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
+    transition: color var(--duration-fast) var(--ease-standard);
+  }
+
+  .tag-cloud__group-link:hover {
+    color: var(--color-accent);
+  }
+
+  /* Hover on a linked pill: it inverts to an Off White fill with Dark Teal
+     text, so a pill that is a link reads differently from one that isn't the
+     moment the pointer reaches it (a town with a page vs one without, every
+     "Other premises we clean" pill). Scoped to <a> so plain-text pills never
+     react. */
+  a.tag-cloud__tag {
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+  }
+
+  a.tag-cloud__tag:hover {
+    background: var(--color-on-brand);
+    color: var(--color-brand);
   }
 
   /* The flat variant's own margin-block already spaces one grid from the

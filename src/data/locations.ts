@@ -211,22 +211,37 @@ export const isNavigableTown = (town: string) => navigableTownSet.has(town);
 // Only a navigable town gets an href; the rest are plain pills. This is the
 // only place that rule is applied to a band, so the bands cannot disagree with
 // each other about which towns are live.
-const toGroup = (label: string, towns: string[]): TagGroup => ({
+const toGroup = (label: string, towns: string[], href?: string): TagGroup => ({
   label,
+  ...(href ? { href } : {}),
   tags: towns.map((town) => ({
     label: town,
     ...(isNavigableTown(town) ? { href: townSlug(town) } : {}),
   })),
 });
 
+/** The href for a region overview page: /locations/<slug>/. Lives here rather
+ *  than in regionPages.ts, which re-exports it, because regionPages.ts imports
+ *  this file's town lists at load time and the reverse import would be a
+ *  cycle. */
+export const regionSlugHref = (slug: string) => `/locations/${slug}/`;
+
+// Each band's region heading links to that region's overview page, with the
+// heading wording itself as the anchor text. The Tweed has no overview page
+// (deleted 21 Sep 2026, see the note at the top), so at the client's request
+// its heading links to the Tweed Heads town page instead. Point it at
+// regionSlugHref('the-tweed') if that page ever comes back.
+const northernRiversGroup = toGroup('Northern Rivers NSW', northernRiversTowns, regionSlugHref('northern-rivers'));
+const tweedGroup = toGroup('The Tweed', tweedTowns, townSlug('Tweed Heads'));
+
 /**
  * Every town, in three labelled regions — the list the mega-menu shows, and
  * the one every "Where we clean" band on the site renders.
  */
 export const locationGroups: TagGroup[] = [
-  toGroup('Northern Rivers NSW', northernRiversTowns),
-  toGroup('The Tweed', tweedTowns),
-  toGroup('Southern Gold Coast QLD', southernGoldCoastTowns),
+  northernRiversGroup,
+  tweedGroup,
+  toGroup('Southern Gold Coast QLD', southernGoldCoastTowns, regionSlugHref('southern-gold-coast')),
 ];
 
 /**
@@ -243,10 +258,7 @@ export const locationGroups: TagGroup[] = [
  * instead — and commercial-cleaning's last non-branded FAQ needs the Blue Card
  * answer that is still open there.
  */
-export const nswLocationGroups: TagGroup[] = [
-  toGroup('Northern Rivers NSW', northernRiversTowns),
-  toGroup('The Tweed', tweedTowns),
-];
+export const nswLocationGroups: TagGroup[] = [northernRiversGroup, tweedGroup];
 
 /** The subheading above a full three-region band. */
 export const locationSubheading = locationsData.subheading;

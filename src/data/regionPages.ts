@@ -119,5 +119,6 @@ export const regionPageBySlug = (slug: string) => {
   return region;
 };
 
-/** The href the header menu and anything else should use for a region. */
-export const regionSlugHref = (slug: string) => `/locations/${slug}/`;
+/** The href the header menu and anything else should use for a region.
+ *  Defined in locations.ts so the "Where we clean" bands can use it too. */
+export { regionSlugHref } from './locations';
