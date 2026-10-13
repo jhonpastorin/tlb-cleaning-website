@@ -7,8 +7,11 @@
 // consumers is the bar this codebase sets for sharing (see comparison.ts,
 // locations.ts, navigation.ts) and this has fourteen.
 //
-// Labels and hrefs are navigation.ts' own, verbatim, so the mega-menu and
-// every page's "other premises we clean" band cannot disagree. If a slug
+// Hrefs are navigation.ts' own, verbatim. Labels mostly are too, except that
+// single and two-type labels gain "cleaning" here ("Brewery cleaning", not the
+// menu's "Breweries") so each pill doubles as a keyword anchor for its page.
+// Three-type labels, ones already saying "cleaning", and any that would pass
+// 30 characters (wraps the 241px desktop pill) keep the menu wording. If a slug
 // changes, it changes in navigation.ts and here — and the `astro check` guard
 // below is what catches a page pointing at a premises type that no longer
 // exists.
