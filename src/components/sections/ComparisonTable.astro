@@ -44,7 +44,16 @@ interface Props {
   cta?: ButtonData;
 }
 
-const { heading, lead, cornerLabel, columns, rows, footnote, cta } = Astro.props;
+const { heading, lead, cornerLabel, columns, rows, footnote } = Astro.props;
+
+// The "How TLB compares" / "How TLB Cleaning compares" table closes with a
+// contact button on every page that carries it, set here once rather than
+// in each page's content. Matched on the heading's own words, as
+// lib/headings.ts does; the guides' and hub pages' other tables don't
+// match and stay without one. A `cta` passed in still wins.
+const isTlbComparison = /^how tlb( cleaning)? compares$/i.test(heading?.replace(/\s+/g, ' ').trim() ?? '');
+const cta: ButtonData | undefined =
+  Astro.props.cta ?? (isTlbComparison ? { label: 'Speak to someone today', href: '/contact/' } : undefined);
 
 // Same random-suffix fix as TextBlock.astro/ServiceBlocks.astro's own
 // patch note — avoids a duplicate id if this section is ever used more
