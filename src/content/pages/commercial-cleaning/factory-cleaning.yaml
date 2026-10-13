@@ -1,16 +1,16 @@
 seo:
-  title: Factory Cleaning | TLB Cleaning
-  description: Factory and production cleaning across the Northern Rivers and the
-    Tweed. Floors, plant surrounds, wash-downs and crib rooms, booked to your
-    shutdown window and finished inside it.
+  title: Factory Cleaning Services | TLB Cleaning
+  description: Factory cleaning services across the Northern Rivers and the
+    Tweed. Floors, plant surrounds, wash-downs and crib rooms, finished inside
+    your shutdown window.
 hero:
-  kicker: Factory and production cleaning
+  kicker: Factory cleaning
   headingLines:
-    - You get one window.
-    - We finish inside it.
-  lead: Factory and production cleaning across the Northern Rivers and the Tweed.
-    Floors, plant surrounds, wash-downs and amenities, booked to a shutdown that
-    was scheduled months ago and cannot move. {{line.fast}}
+    - Factory cleaning services, finished inside your shutdown window
+  lead: You get one window, and we finish inside it. Factory cleaning services
+    across the Northern Rivers and the Tweed for floors, plant surrounds,
+    wash-downs and amenities, booked to a shutdown that was scheduled months ago
+    and cannot move. {{line.fast}}
   image:
     src: /src/assets/commercial_cleaning/premises/factory-cleaner-scrubbing-a-production-floor-walkway.jpg
     alt: A cleaner in a high-visibility vest scrubbing a marked pedestrian walkway
@@ -50,7 +50,7 @@ isolation:
       exteriors and surrounds of what is not, and we do not enter confined
       spaces at all, which need a permit and training we do not hold.
 stages:
-  heading: One window, three stages
+  heading: Factory cleaning services in three stages, inside one window
   lead: In this order, because the floor gets dirty again while the plant is being
     done and the amenities have to be ready for the shift that walks in at the
     end.
@@ -183,7 +183,7 @@ worthKnowing:
       text: The other thing that moves it upstream is the audit. If you produce food,
         your premises, fixtures, fittings and equipment have to be kept clean
         and sanitary, and in practice cleaning is a prerequisite program inside
-        your own HACCP-based food safety plan — with named tasks, frequencies,
+        your own HACCP-based food safety plan, with named tasks, frequencies,
         products and verification records. Customer and certification audits go
         looking for exactly that documentation. A cleaning arrangement that
         exists as a verbal understanding with a contractor cannot produce it, no
@@ -204,7 +204,7 @@ whereWeClean:
 brandLine:
   heading: "{{line.fast.heading}}"
 brandedFaq:
-  heading: Frequently Asked Questions
+  heading: Booking a factory clean
   items:
     - question: Can you work inside our shutdown window?
       answer: That is the whole job, and the answer depends on an honest count rather
@@ -246,7 +246,7 @@ brandedFaq:
         estimate against your window, a crew size, and a recommendation on what
         should be recurring rather than in the shutdown. No obligation.
 faq:
-  heading: Factory Cleaning FAQs
+  heading: Factory cleaning services, common questions
   items:
     - question: How much does factory cleaning cost?
       answer: A good quote shows shutdown work and recurring work separately. The price
@@ -268,8 +268,8 @@ faq:
       answer: Food businesses must keep premises, fixtures, fittings and equipment in
         a clean and sanitary condition under the Food Standards Code, and a food
         production site normally meets that through a HACCP-based food safety
-        program in which cleaning is a prerequisite program — documented tasks,
-        frequencies, approved chemicals and verification records. Customer and
+        program in which cleaning is a prerequisite program, with documented
+        tasks, frequencies, approved chemicals and verification records. Customer and
         certification audits look for that documentation. Your own program and
         your regulator are the authoritative sources. This is general
         information, not compliance advice.
@@ -298,7 +298,7 @@ faq:
         shutdown window that is fixed months in advance. Same trade, materially
         different job.
 closingCta:
-  kicker: Factory and production cleaning
+  kicker: Factory cleaning services
   heading: Tell us what you make first.
   lead: Then we walk the site while it is running, count the hand work honestly,
     and give you an hours figure against your window. If the window is too

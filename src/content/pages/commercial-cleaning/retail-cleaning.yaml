@@ -1,16 +1,15 @@
 seo:
-  title: Retail and Shopfront Cleaning | TLB Cleaning
-  description: Shop and retail cleaning across the Northern Rivers and the Tweed.
-    Floors, glass and the entry finished before you unlock the door, from a
-    local team on a written scope.
+  title: Commercial Shop Cleaning Services | TLB Cleaning
+  description: Commercial shop cleaning services across the Northern Rivers and
+    the Tweed. Floors, glass and the entry finished before you unlock the door.
 hero:
-  kicker: Retail and shopfront cleaning
+  kicker: Commercial shop cleaning
   headingLines:
-    - They decide before
-    - they walk in.
-  lead: Shop and retail cleaning across the Northern Rivers and the Tweed. Floors,
-    glass and the entry finished before you unlock the door, by the same local
-    person every time. {{line.fast}}
+    - Commercial shop cleaning services that start with the glass
+  lead: Your customers decide before they walk in. Commercial shop cleaning
+    services across the Northern Rivers and the Tweed, with floors, glass and
+    the entry finished before you unlock the door, by the same local person
+    every time. {{line.fast}}
   image:
     src: /src/assets/commercial_cleaning/premises/retail-cleaner-mopping-a-shop-floor-before-opening.jpg
     alt: A cleaner mopping the polished concrete floor of a bright coastal homewares
@@ -18,8 +17,8 @@ hero:
 definition:
   body:
     - type: paragraph
-      text: "Retail cleaning is the daily cleaning of a shop or shopfront: floors,
-        entry and matting, internal and external glass, the counter and fitting
+      text: "Commercial shop cleaning, or retail cleaning, is the daily cleaning of
+        a shop or shopfront: floors, entry and matting, internal and external glass, the counter and fitting
         rooms, shelving and display surfaces, staff areas and the bathroom. TLB
         Cleaning does this work across the Northern Rivers and the Tweed for
         single shops, cafés and takeaway front of house, salons, galleries and
@@ -34,7 +33,7 @@ definition:
         browser reacts to before anyone has said hello.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 clock:
-  heading: What happens, and when
+  heading: What our commercial shop cleaning services cover, and when
   lead: Ordered by the clock rather than by room, because that is the order a shop
     actually runs on.
   items:
@@ -135,7 +134,7 @@ whereWeClean:
 brandLine:
   heading: "{{line.fast.heading}}"
 brandedFaq:
-  heading: Frequently Asked Questions
+  heading: Booking a shop clean
   items:
     - question: Our shop is small. Is that too small for you?
       answer: "No, and small shops are a lot of what this work is. What a small shop
@@ -175,7 +174,7 @@ brandedFaq:
         itself. If you manage a strip rather than trade from one, the strata and
         common area page is closer to what you need.
 faq:
-  heading: Retail Cleaning FAQs
+  heading: Commercial shop cleaning services, common questions
   items:
     - question: How much does shop cleaning cost?
       answer: It depends on floor area and floor type, how much glass there is,
@@ -192,8 +191,8 @@ faq:
         since everything walks in from outside.
     - question: Who is responsible for cleaning in a retail lease, the tenant or the
         landlord?
-      answer: "Typically the landlord’s contract covers common areas — mall floors,
-        shared bathrooms, the loading dock, common bin areas — and the cost is
+      answer: "Typically the landlord’s contract covers common areas (mall floors,
+        shared bathrooms, the loading dock, common bin areas) and the cost is
         recovered from tenants through outgoings. Anything inside the lease line
         is usually the tenant’s: your floor, your glass, your fitting rooms,
         your stockroom. Leases vary, so the cleaning clause in your own lease is
@@ -201,7 +200,7 @@ faq:
         scope."
     - question: Why does shopfront glass in a coastal town streak?
       answer: Because it is salt rather than dust. Sea air deposits a fine salt film
-        that attracts moisture and cannot be removed by dry wiping — a cloth
+        that attracts moisture and cannot be removed by dry wiping. A cloth
         just moves it around and leaves a haze that shows badly in low morning
         sun. It needs washing with a detergent solution and squeegeeing off, the
         same way a professional does a window, which is why wiped shopfront
@@ -221,7 +220,7 @@ faq:
         stockroom with a blocked exit path, and that is a fire and work health
         and safety problem rather than a tidiness one."
 closingCta:
-  kicker: Retail and shopfront cleaning
+  kicker: Commercial shop cleaning
   heading: Send us your floor plan or your lease clause.
   lead: For a single shop we can quote from that and a few photos. For a bigger
     store or a strip of tenancies, a walkthrough is worth the twenty minutes.

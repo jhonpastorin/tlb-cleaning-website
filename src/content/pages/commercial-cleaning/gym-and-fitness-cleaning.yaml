@@ -1,16 +1,15 @@
 seo:
-  title: Gym and Fitness Studio Cleaning | TLB Cleaning
-  description: Cleaning for gyms, fitness studios and 24/7 access clubs across the
-    Northern Rivers and the Tweed. Equipment, mats, rubber floors and change
-    rooms, done daily on a written scope.
+  title: Commercial Gym Cleaning Services | TLB Cleaning
+  description: Commercial gym cleaning services across the Northern Rivers and the
+    Tweed. Equipment, mats, rubber floors and change rooms on a written scope.
 hero:
-  kicker: Gym and fitness studio cleaning
+  kicker: Commercial gym cleaning
   headingLines:
-    - Members do not cancel
-    - over the equipment.
-  lead: Cleaning for gyms, studios and 24/7 access clubs across the Northern
-    Rivers and the Tweed. Equipment, mats, rubber floors and change rooms, on a
-    scope written for a room people sweat in. {{line.fast}}
+    - Commercial gym cleaning services for gyms, studios and 24/7 clubs
+  lead: Members do not cancel over the equipment. Commercial gym cleaning
+    services across the Northern Rivers and the Tweed, covering equipment, mats,
+    rubber floors and change rooms on a scope written for a room people sweat
+    in. {{line.fast}}
   image:
     src: /src/assets/commercial_cleaning/premises/gym-cleaner-wiping-down-strength-equipment.jpg
     alt: A cleaner wiping down the padded bench of a strength machine in a bright,
@@ -18,8 +17,8 @@ hero:
 definition:
   body:
     - type: paragraph
-      text: "Gym cleaning is the daily cleaning of a fitness facility: equipment and
-        upholstery, mats and rubber flooring, mirrors and glass, change rooms
+      text: "Commercial gym cleaning is the daily cleaning of a fitness facility:
+        equipment and upholstery, mats and rubber flooring, mirrors and glass, change rooms
         and showers, and the high-touch surfaces members put their hands on
         between sets. TLB Cleaning does this work across the Northern Rivers and
         the Tweed for gyms, boutique studios, 24/7 access clubs and studio
@@ -47,8 +46,8 @@ access:
       building with members, which is a work health and safety question for us
       and a member-experience question for you.
 zones:
-  heading: Three zones, three different problems
-  lead: A gym cannot be cleaned with an office scope done more often. The soiling
+  heading: What our commercial gym cleaning services cover, zone by zone
+  lead: Three zones, three different problems. A gym cannot be cleaned with an office scope done more often. The soiling
     is biological, and each of these rooms holds it differently.
   items:
     - image:
@@ -160,7 +159,7 @@ whereWeClean:
 brandLine:
   heading: "{{line.fast.heading}}"
 brandedFaq:
-  heading: Frequently Asked Questions
+  heading: Booking a gym clean
   items:
     - question: When would you clean, if we never close?
       answer: In your quietest window, zone by zone rather than room by room, so
@@ -204,7 +203,7 @@ brandedFaq:
         scope split by zone, a price per visit and a schedule for the periodic
         work. No obligation.
 faq:
-  heading: Gym Cleaning FAQs
+  heading: Commercial gym cleaning services, common questions
   items:
     - question: How much does gym cleaning cost?
       answer: It depends on how many pieces of equipment there are rather than floor
@@ -231,7 +230,7 @@ faq:
     - question: What is the correct way to disinfect gym equipment?
       answer: Clean first, then disinfect, then leave it wet. Wipe the visible soil
         off, apply the disinfectant, and let it stay wet on the surface for the
-        contact time printed on its own label — usually a minute or several —
+        contact time printed on its own label, usually a minute or several,
         before it dries or is wiped. Spraying and immediately wiping dry is the
         most common error and it largely wastes the product. Grips, levers and
         adjustment pins matter as much as the pads.
@@ -250,7 +249,7 @@ faq:
         chemicals degrade the surface and shorten the life of a floor that is
         expensive to replace.
 closingCta:
-  kicker: Gym and fitness studio cleaning
+  kicker: Commercial gym cleaning
   heading: We will look at the drains first.
   lead: A walkthrough at your quietest hour, at the change room drains and the
     underside of the equipment rather than the reception desk. Then a written

@@ -108,7 +108,7 @@ trades:
       body:
         - Us. Floors, drains, walls, behind and under the line, cool rooms,
           stainless. Booked monthly or quarterly, done between
-          services. No certificate, because none exists for this work — what you
+          services. No certificate, because none exists for this work. What you
           get is a written scope and a kitchen you can see the difference in.
     - type: feature
       icon: chart-bars
@@ -198,7 +198,7 @@ brandedFaq:
         need is a certified exhaust clean, we will say so and point you at
         someone who can issue the certificate.
 faq:
-  heading: Commercial Kitchen Cleaning FAQs
+  heading: Commercial kitchen cleaning services, common questions
   items:
     - question: How much does commercial kitchen cleaning cost?
       answer: The price of a periodic deep clean moves with the size of the cooking
@@ -222,8 +222,8 @@ faq:
         councils inspect against it. The Code sets the outcome rather than a
         task list, so your own food safety program is what documents how you
         meet it. Exhaust systems have separate maintenance requirements under
-        AS/NZS 1668.1. This is general information, not compliance advice — your
-        council is the right source for your premises.
+        AS/NZS 1668.1. This is general information, not compliance advice, and
+        your council is the right source for your premises.
     - question: Who is responsible for cleaning a commercial kitchen, staff or a
         contractor?
       answer: "Both, and the split should be written down. Kitchen staff clean as they

@@ -154,8 +154,8 @@ worthKnowing:
         in a building where people walk alongside forklifts. A machine-scrubbed
         floor is not a tidier floor. It is a floor with more grip."
     - type: paragraph
-      text: "Dust does two things worth budgeting for. In the wrong setting — timber,
-        grain, flour, some plastics and metals — accumulated combustible dust on
+      text: "Dust does two things worth budgeting for. In the wrong setting (timber,
+        grain, flour, some plastics and metals) accumulated combustible dust on
         racking and roof structure is a recognised fire and explosion risk, and
         it is exactly the dust nobody can reach without an EWP. Everywhere else
         it is quieter and slower: abrasive dust and tyre rubber ground into
@@ -219,7 +219,7 @@ brandedFaq:
         a frequency against each, a price per visit, and the periodic work
         booked to a shutdown. No obligation."
 faq:
-  heading: Warehouse Cleaning FAQs
+  heading: Commercial warehouse cleaning services, common questions
   items:
     - question: How much does warehouse cleaning cost?
       answer: A good quote shows the floor and the amenities separately, so you can
@@ -269,7 +269,7 @@ faq:
         work is a separate specialist engagement, usually booked into a
         shutdown.
 closingCta:
-  kicker: Warehouse and industrial cleaning
+  kicker: Commercial warehouse cleaning
   heading: We will look at the crib room too.
   lead: A walk of the site at the floor, the racking, the dock and the amenities.
     Then a written scope split by zone, with the floor and the amenities priced

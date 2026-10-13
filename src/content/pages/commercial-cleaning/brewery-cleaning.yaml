@@ -1,17 +1,16 @@
 seo:
-  title: Brewery Cleaning | TLB Cleaning
-  description: Brewery cleaning across the Northern Rivers and the Tweed. Brew
-    deck floors and drains, the cellar, and the taproom reset before you open.
-    Tanks and lines stay with your brewers.
+  title: Brewery Cleaning Services | TLB Cleaning
+  description: Brewery cleaning services across the Northern Rivers and the
+    Tweed. Brew deck floors and drains, the cellar, and the taproom reset
+    before you open.
 hero:
   kicker: Brewery cleaning
   headingLines:
-    - Two buildings.
-    - One lease.
-  lead: Brewery cleaning across the Northern Rivers and the Tweed. The brew deck,
-    the cellar and the drains on one standard, the taproom on another, and a
-    scope that knows the difference. Tanks and lines stay with your brewers.
-    {{line.fast}}
+    - Brewery cleaning services for the brew deck and the taproom
+  lead: Two buildings, one lease. Brewery cleaning services across the Northern
+    Rivers and the Tweed, with the brew deck, the cellar and the drains on one
+    standard and the taproom on another, on a scope that knows the difference.
+    Tanks and lines stay with your brewers. {{line.fast}}
   collageImages:
     - src: /src/assets/commercial_cleaning/premises/brewery-cleaner-hosing-down-the-brew-deck-floor.jpg
       alt: A cleaner in gumboots hosing down the concrete floor of a small craft
@@ -33,12 +32,13 @@ definition:
         and cellar door venues."
     - type: paragraph
       text: It stops at the outside of the vessel, and that is not a limitation we are
-        apologising for. Cleaning in place — the caustic and acid cycles that
-        clean the inside of tanks, lines and hoses — is part of making beer. It
+        apologising for. Cleaning in place, the caustic and acid cycles that
+        clean the inside of tanks, lines and hoses, is part of making beer. It
         sits with your brewers, on your own schedule, with your own chemistry
         and your own verification, because it is the step that decides whether a
         batch is sound. Everything outside the vessel is a cleaning job, and
-        there is a lot more of it than most brewery scopes account for.
+        there is a lot more of it than most brewery cleaning scopes account
+        for.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 cip:
   heading: We do not touch the inside of a tank, a line or a hose. Ever.
@@ -54,13 +54,13 @@ cip:
     - "The second thing, and the one we would rather over-explain than
       under-explain: CO2. Fermentation produces it in volumes that matter, it is
       heavier than air, and it pools at floor level, in cellars and in tank pits
-      with no smell and no warning — people have died walking into brewery
+      with no smell and no warning. People have died walking into brewery
       spaces that looked completely ordinary. So we treat any low or enclosed
       space as unsafe until your people say otherwise, and walk out rather
       than push on."
 zones:
-  heading: Two standards, one building
-  lead: Pick the side you are asking about. The third panel is the boundary, and
+  heading: What our brewery cleaning services cover, on both sides of the wall
+  lead: Two standards, one building. Pick the side you are asking about. The third panel is the boundary, and
     it is the most important of the three.
   items:
     - image:
@@ -145,8 +145,8 @@ worthKnowing:
   body:
     - type: paragraph
       text: "A brewery is the only premises type on this site where poor environmental
-        cleaning can cost you an entire batch. The organisms that spoil beer —
-        wild yeast, Lactobacillus, Pediococcus — do not usually arrive from
+        cleaning can cost you an entire batch. The organisms that spoil beer
+        (wild yeast, Lactobacillus, Pediococcus) do not usually arrive from
         outside. They live in the building: in drains, in floor corners, on the
         ends of hoses left on a wet floor, in the biofilm under a grate nobody
         lifts. Your CIP protects the inside of the vessel beautifully and does
@@ -157,7 +157,7 @@ worthKnowing:
       text: The regulatory side is simpler than people expect and catches breweries
         out anyway. Beer is a food, which makes a brewery a food business, so
         the same obligation to keep premises, fixtures, fittings and equipment
-        clean and sanitary applies to you as to a commercial kitchen — and if
+        clean and sanitary applies to you as to a commercial kitchen, and if
         your taproom serves food, that side of the wall carries the full food
         service obligations too. Councils inspect both. The practical
         consequence is that your cleaning needs to exist as a written schedule
@@ -177,7 +177,7 @@ whereWeClean:
 brandLine:
   heading: "{{line.fast.heading}}"
 brandedFaq:
-  heading: Frequently Asked Questions
+  heading: Booking a brewery clean
   items:
     - question: Will you do our CIP?
       answer: "No, and you should be wary of anyone who says yes. CIP is brewing
@@ -220,7 +220,7 @@ brandedFaq:
         will tell you plainly which parts of your building we are not the right
         contractor for.
 faq:
-  heading: Brewery Cleaning FAQs
+  heading: Brewery cleaning services, common questions
   items:
     - question: How much does brewery cleaning cost?
       answer: A good quote splits the production side from the taproom, because they
@@ -266,8 +266,8 @@ faq:
     - question: Who deals with spent grain and trade waste?
       answer: Both sit outside a cleaning contract. Spent grain is normally collected
         under its own arrangement, most often as stockfeed for a local farm, on
-        a schedule set by brew days. Trade waste — the wastewater a brewery
-        discharges to sewer — is normally regulated by the local water authority
+        a schedule set by brew days. Trade waste, the wastewater a brewery
+        discharges to sewer, is normally regulated by the local water authority
         under a trade waste agreement, with its own monitoring and its own
         arrestor servicing. A cleaning contractor can keep the surrounds of both
         clean and flag a problem, and that is the extent of it.

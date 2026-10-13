@@ -1,15 +1,15 @@
 seo:
-  title: School and Childcare Cleaning | TLB Cleaning
-  description: Cleaning for schools, preschools and childcare centres across the
-    Northern Rivers and the Tweed. A Working With Children checked local team, a
-    written scope, and bathrooms done properly.
+  title: Commercial Cleaning Services for Schools | TLB Cleaning
+  description: Commercial cleaning services for schools and childcare centres
+    across the Northern Rivers and the Tweed, by a Working With Children checked
+    team.
 hero:
-  kicker: Schools and childcare cleaning
+  kicker: Commercial cleaning for schools
   headingLines:
-    - Everything here
-    - gets touched by a two-year-old.
-  lead: Cleaning for schools, preschools and childcare centres across the Northern
-    Rivers and the Tweed. A Working With Children checked local team, working
+    - Commercial cleaning services for schools and childcare centres
+  lead: Everything here gets touched by a two-year-old. Commercial cleaning
+    services for schools, preschools and childcare centres across the Northern
+    Rivers and the Tweed, by a Working With Children checked local team working
     after pickup, on a scope written for the way children actually use a room.
     {{line.fast}}
   image:
@@ -19,8 +19,8 @@ hero:
 definition:
   body:
     - type: paragraph
-      text: "School and childcare cleaning is the daily cleaning of an education
-        setting: classrooms and playrooms, bathrooms, hall and library, staff
+      text: "Commercial cleaning for schools and childcare centres is the daily
+        cleaning of an education setting: classrooms and playrooms, bathrooms, hall and library, staff
         rooms and offices, and the hard surfaces of outdoor play areas. TLB
         Cleaning does this work across the Northern Rivers and the Tweed for
         schools, preschools, long day care centres and out of school hours
@@ -72,7 +72,7 @@ split:
         alt: A cleaner mopping the vinyl floor of a bright primary school classroom
           after hours, chairs stacked on the desks
 schoolScope:
-  heading: "Schools: what goes on the scope"
+  heading: "Commercial cleaning services for schools: what goes on the scope"
   lead: Daily work after hours, a mid-day bathroom check where it is needed, and
     the periodic work booked to a named term break.
   items:
@@ -124,7 +124,7 @@ bathroomPhoto:
   caption: The bathrooms. What a parent judges the place on, and the first line a
     thin scope drops.
 childcareScope:
-  heading: "Childcare: what is genuinely different"
+  heading: "Childcare cleaning: what is genuinely different"
   lead: Not the same list at a lower height. These are the six things a childcare
     room needs that a classroom scope does not cover.
   items:
@@ -163,7 +163,7 @@ childcareScope:
     - icon: idea
       title: Working around the roster
       description: Most of the clean happens after the last pickup. What has to happen
-        during the day — a bathroom check, a spill, an outdoor area — is done by
+        during the day (a bathroom check, a spill, an outdoor area) is done by
         someone your educators know by name, signed in, and never alone in a
         room with children. That last part is not negotiable and it is not a
         favour.
@@ -201,7 +201,7 @@ whereWeClean:
 brandLine:
   heading: "{{line.fast.heading}}"
 brandedFaq:
-  heading: Frequently Asked Questions
+  heading: Booking a school or childcare clean
   items:
     - question: Do your cleaners hold a Working With Children Check?
       answer: They have to, and so does anyone else quoting your site. Our cleaners are
@@ -210,7 +210,7 @@ brandedFaq:
     - question: When would you be on site?
       answer: After the last pickup for a centre, and after hours for a school, with
         the periodic work booked into term breaks. Anything that genuinely has
-        to happen during the day — a bathroom check, a spill, an outdoor area —
+        to happen during the day (a bathroom check, a spill, an outdoor area)
         is done by someone your staff know, signed in through your own process,
         and never alone in a room with children.
     - question: Can you work to our own policies?
@@ -237,7 +237,7 @@ brandedFaq:
         price per visit, and a schedule for the periodic work against named term
         breaks. No obligation.
 faq:
-  heading: School and Childcare Cleaning FAQs
+  heading: Commercial cleaning services for schools and childcare, common questions
   items:
     - question: How much does school or childcare cleaning cost?
       answer: It depends on how many rooms and bathrooms there are, how much of the
@@ -274,19 +274,19 @@ faq:
       answer: Because the illnesses that close a room travel by hands and surfaces
         rather than through the air. Gastroenteritis and hand-foot-and-mouth
         both spread readily in a childcare setting, and surface cleaning of the
-        things children actually touch — low door handles, tap handles, table
-        edges, shelf lips, the change bench — is part of the recognised control
+        things children actually touch (low door handles, tap handles, table
+        edges, shelf lips, the change bench) is part of the recognised control
         set alongside handwashing and exclusion periods. Floors matter far less
         than the bottom sixty centimetres of everything else.
     - question: Should school cleaning happen during term breaks or during term?
       answer: Both, and they are different work. Daily cleaning happens during term,
-        after hours. The periodic work — carpet extraction, hard floor strip and
-        seal, high dusting, vents, internal glass — needs empty rooms and drying
+        after hours. The periodic work (carpet extraction, hard floor strip and
+        seal, high dusting, vents, internal glass) needs empty rooms and drying
         time, so it only really fits a term break. A scope that does not name
         which break each periodic task falls into tends to see none of them
         happen.
 closingCta:
-  kicker: Schools and childcare cleaning
+  kicker: Commercial cleaning for schools
   heading: Ask us for the clearance numbers first.
   lead: Then a walkthrough after hours, including the bathrooms and the change
     area. You get a written scope with a frequency against every line, and the

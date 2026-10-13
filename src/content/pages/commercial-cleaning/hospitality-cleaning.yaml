@@ -130,7 +130,7 @@ whereWeClean:
 brandLine:
   heading: "{{line.fast.heading}}"
 brandedFaq:
-  heading: Booking a venue clean
+  heading: Booking a restaurant or venue clean
   items:
     - question: Can you work around our trading hours rather than a fixed roster?
       answer: Yes, and that is how nearly all of this work runs. The daily visit
@@ -164,7 +164,7 @@ brandedFaq:
         area. Then you get a written scope per area, a price per visit, and an
         honest answer about capacity in December. No obligation.
 faq:
-  heading: Restaurant and venue cleaning questions
+  heading: Commercial restaurant cleaning services, common questions
   items:
     - question: How much does restaurant cleaning cost?
       answer: It depends on the size of the room, how many bathrooms there are, how
@@ -210,7 +210,7 @@ faq:
         rather than thorough by nature, which is why the overnight version is
         the one worth paying for when a room carries two bookings in a weekend."
 closingCta:
-  kicker: Restaurants, pubs and venues
+  kicker: Commercial restaurant cleaning
   heading: Start with your quietest hour.
   lead: Not your floor area. Tell us when your room is actually empty and what
     your December looks like, and we will tell you honestly what we can hold.
