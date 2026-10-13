@@ -10,8 +10,10 @@
 // Hrefs are navigation.ts' own, verbatim. Labels mostly are too, except that
 // single and two-type labels gain "cleaning" here ("Brewery cleaning", not the
 // menu's "Breweries") so each pill doubles as a keyword anchor for its page.
-// Three-type labels, ones already saying "cleaning", and any that would pass
-// 30 characters (wraps the 241px desktop pill) keep the menu wording. If a slug
+// Three-type labels and ones already saying "cleaning" keep the menu wording.
+// The first pass also held back anything over 30 characters (it wraps the
+// 241px desktop pill); the client then asked for the gym and warehouse labels
+// anyway, so "Schools and childcare centres" is the only one still held. If a slug
 // changes, it changes in navigation.ts and here — and the `astro check` guard
 // below is what catches a page pointing at a premises type that no longer
 // exists.
