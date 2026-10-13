@@ -20,3 +20,6 @@ npm-debug.log*
 
 # Pages CMS migration baseline (scripts/compare-build.mjs)
 dist-before/
+
+# Playwright MCP browser logs, snapshots and screenshots
+.playwright-mcp/
