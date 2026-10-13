@@ -94,6 +94,12 @@ interface Props {
    *  crop. Default 'center'. The half-width panel is much narrower than a
    *  16/9 file, so a subject near one edge needs this to stay in frame. */
   imageFocus?: 'left' | 'center' | 'right' | `${number}%`;
+  /** split-single-image only: how much of the row the photo panel takes at
+   *  desktop widths. Default 'default' (an even half). 'wide' gives the photo
+   *  a larger share, for a landscape group shot whose people stand near the
+   *  edges and would otherwise be cropped off by the half-width panel. Mobile
+   *  is unaffected: both collapse to one full-width column below --bp-lg. */
+  imageWidth?: 'default' | 'wide';
   /** full-width-photo only: how wide the floating copy card runs at desktop
    *  widths. Default 'default' (480px), which is the width every caller had
    *  before this prop existed — the 56 /locations/<town>/ pages included, so
@@ -128,6 +134,7 @@ const {
   imagePosition = 'left',
   imageFit = 'cover',
   imageFocus = 'center',
+  imageWidth = 'default',
   cardWidth = 'default',
   collageImages = [],
   align = 'left',
@@ -234,7 +241,11 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
 {variant === 'split-single-image' && image && (
   <section
     data-cta-location="hero"
-    class:list={['hero', 'hero--split-single', { 'hero--split-single-reverse': imagePosition === 'right' }]}
+    class:list={[
+      'hero',
+      'hero--split-single',
+      { 'hero--split-single-reverse': imagePosition === 'right', 'hero--split-single-wide': imageWidth === 'wide' },
+    ]}
     aria-labelledby="hero-heading"
   >
     <div class="hero__grid">
@@ -681,6 +692,20 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
 
   .hero--split-single-reverse .hero__media {
     grid-column: 3;
+  }
+
+  /* imageWidth="wide": the photo track grows, the copy track keeps 1fr.
+     Desktop only, inside a min-width query, because the -reverse compound
+     selector outranks the --bp-lg one-column rule below and would otherwise
+     keep the split on mobile. */
+  @media (min-width: 1026px) {
+    .hero--split-single-wide .hero__grid {
+      grid-template-columns: 1.5fr 1fr var(--hero-gutter);
+    }
+
+    .hero--split-single-wide.hero--split-single-reverse .hero__grid {
+      grid-template-columns: var(--hero-gutter) 1fr 1.5fr;
+    }
   }
 
   /* mirrors --bp-lg */

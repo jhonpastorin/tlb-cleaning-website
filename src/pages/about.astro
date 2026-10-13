@@ -55,9 +55,13 @@ import CallToAction from '../components/sections/CallToAction.astro';
 import SiteFooter from '../components/sections/SiteFooter.astro';
 import logoImg from '../assets/logo/tlb-logo-horizontal.png';
 import footerLogoImg from '../assets/logo/tlb-logo-square.png';
-// Hero: the team arriving, generated for this page. Generic service imagery,
-// not a photograph of TLB's actual employees, and captioned as such nowhere.
-// See src/assets/about/IMAGE-PROMPTS.md for the line that separates the two.
+// Behind the trust bar and definition block: the team arriving, generated for
+// this page. Generic service imagery, not a photograph of TLB's actual
+// employees, and captioned as such nowhere. See
+// src/assets/about/IMAGE-PROMPTS.md for the line that separates the two.
+// Deliberately a different photo from the hero, so the same frame doesn't
+// appear twice in a row.
+import backdropImg from '../assets/about/about-tlb-cleaning-team-in-a-home-entry-hall.jpg';
 // Behind the word-of-mouth block. The subject is the run itself: gear going
 // into a car at the start of a morning, in a street like the ones we clean in.
 import {
@@ -82,8 +86,7 @@ import { sized } from '../lib/cms-schemas';
 // the one why-tlb.astro sends readers here for. Deliberately not "About us"
 // as a heading: a reader who clicked "Meet the team" knows where they are.
 
-// Definition block, sharing the hero's backdrop photo with the trust bar
-// above it. Written as answer-target sentences (subject, predicate, object)
+// Definition block, sharing one backdrop photo with the trust bar above it. Written as answer-target sentences (subject, predicate, object)
 // per the brand foundation's GEO guidance §3.6.2, because "who is TLB
 // Cleaning" is a question an answer engine will field about this business
 // long before a human reads the page.
@@ -173,8 +176,7 @@ const page = await getPage(
   'about',
   z.object({
     seo: section.seo,
-    // The hero photo also sits behind the trust bar (see the Backdrop below),
-    // so it cannot be left empty.
+    // Required: the split-single-image hero renders nothing without a photo.
     hero: section.hero.extend({ image: section.requiredImage }),
     definition: section.textBlock,
     statement: section.textBlock,
@@ -230,6 +232,7 @@ const teamImages = page.team.images.map(({ image, caption }) => ({ ...sized(imag
     <Hero
       variant="split-single-image"
       imagePosition="right"
+      imageWidth="wide"
       kicker={page.hero.kicker}
       headingLines={page.hero.headingLines}
       subheading={page.hero.subheading}
@@ -241,11 +244,11 @@ const teamImages = page.team.images.map(({ image, caption }) => ({ ...sized(imag
     {/* Trust bar and definition block share ONE photo behind the Cream scrim, laid
         out across both — see index.astro for why a per-section background
         cannot do this. 90%, raised from 75% on 29 Sep 2026. Measured over
-        this frame's own darkest region under the copy column, 75% gave 4.10:1
-        — an AA FAIL. 90% gives 5.90:1. Backdrop.astro's `opacity` doc carries
-        the method. It follows the hero photo, so re-check the contrast if an
-        editor swaps that photo in Pages CMS. */}
-    <Backdrop image={heroImage.src} tint="muted" opacity={90} focus="center">
+        the then-hero frame's darkest region under the copy column, 75% gave
+        4.10:1, an AA FAIL. 90% gives 5.90:1. Backdrop.astro's `opacity` doc
+        carries the method. Its own photo (backdropImg above), no longer the
+        hero's, so re-check the contrast if it is swapped. */}
+    <Backdrop image={backdropImg} tint="muted" opacity={90} focus="center">
       <TrustBar variant="card" cards={trustBarCards} />
       <TextBlock
         theme="muted"
@@ -282,6 +285,7 @@ const teamImages = page.team.images.map(({ image, caption }) => ({ ...sized(imag
       body={page.wordOfMouth.body}
       cta={page.wordOfMouth.cta}
       backgroundImage={page.wordOfMouth.backgroundImage}
+      backgroundFocus="25%"
       scrimOpacity={82}
     />
 

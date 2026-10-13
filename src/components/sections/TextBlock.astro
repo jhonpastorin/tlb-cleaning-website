@@ -68,6 +68,10 @@ interface Props {
    *  the LIGHTEST area of the photo before you do — the scrim is the only
    *  thing standing between the copy and whatever is underneath. */
   scrimOpacity?: number;
+  /** Which part of `backgroundImage` survives the cover crop, vertically.
+   *  Default 'center'. The band is much wider than it is tall, so a photo of
+   *  people needs 'top' or a percentage to keep their faces in frame. */
+  backgroundFocus?: 'top' | 'center' | 'bottom' | `${number}%`;
   /** Optional id on the <section>, for a link or ad that lands on this block
    *  directly (e.g. `#owners-who-live-away`). */
   id?: string;
@@ -83,6 +87,7 @@ const {
   cta,
   backgroundImage,
   scrimOpacity = 80,
+  backgroundFocus = 'center',
 } = Astro.props;
 
 // Random suffix so multiple instances on one page never collide — same fix
@@ -99,7 +104,14 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
 >
   {backgroundImage && (
     <div class="text-block__bg" aria-hidden="true">
-      <Image src={backgroundImage} alt="" widths={[800, 1400, 2000]} sizes="100vw" loading="lazy" />
+      <Image
+        src={backgroundImage}
+        alt=""
+        widths={[800, 1400, 2000]}
+        sizes="100vw"
+        loading="lazy"
+        style={`object-position: center ${backgroundFocus};`}
+      />
       <span class="text-block__scrim" style={`--text-block-scrim-opacity: ${scrimOpacity}%;`}></span>
     </div>
   )}

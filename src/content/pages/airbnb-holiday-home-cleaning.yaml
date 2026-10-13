@@ -257,9 +257,8 @@ afterEveryStay:
       title: The restock list
       description: What we topped up this stay, so you know what's been used.
     - image:
-        src: /src/assets/airbnb/airbnb-report-cleaner-sorting-supplies-filmed-on-a-tripod-phone.jpg
-        alt: A cleaner sorting supplies from her trolley on a deck, recorded on a phone
-          on a tripod
+        src: /src/assets/airbnb/airbnb-report-cleaner-photographing-a-shower-on-her-phone.jpg
+        alt: A TLB cleaner photographing a bathroom shower on her phone to report it
       title: Flagged for you
       description: Anything broken, missing or worn, with a photo and what we suggest.
 ownersAway:
