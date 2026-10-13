@@ -30,8 +30,8 @@ definition:
         neglected one.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: People arrive here with three questions.
-  headingAccent: Which one is yours?
+  heading: Types of tile and grout
+  headingAccent: cleaning services
   cards:
     - image:
         src: /src/assets/home_cleaning/appliances/tile_and_grout/tile-and-grout-cleaner-wiping-the-low-shower-tiles.jpg

@@ -27,8 +27,8 @@ definition:
         same thing by them.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: Two people read this page.
-  headingAccent: Which one are you?
+  heading: Types of end of lease
+  headingAccent: cleaning services
   cards:
     - image:
         src: /src/assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/end-of-lease-empty-room-glass-doors-onto-the-deck.jpg

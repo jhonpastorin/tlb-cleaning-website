@@ -35,8 +35,8 @@ definition:
         reliably it can be turned around inside the window you actually have.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: Two kinds of premises, two different clocks.
-  headingAccent: Which one is yours?
+  heading: Types of hospitality
+  headingAccent: cleaning services
   cards:
     - image:
         src: /src/assets/commercial_cleaning/premises/hospitality-cleaner-resetting-a-cafe-dining-room-before-service.jpg

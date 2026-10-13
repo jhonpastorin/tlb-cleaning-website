@@ -21,8 +21,8 @@ definition:
         the Tweed and the Southern Gold Coast.
   backgroundImage: /src/assets/home_cleaning/house-cleaning-cleaner-mopping-timber-living-room-floor.png
 pathways:
-  heading: Not quite what you need?
-  headingAccent: Start here instead.
+  heading: Types of house
+  headingAccent: cleaning services
   cards:
     - image:
         src: /src/assets/airbnb/airbnb-report-cleaner-wiping-down-a-shower-pump-bottle.jpg
@@ -110,7 +110,7 @@ inclusions:
   footnote: A cross means it's not something we take on. Anything marked quoted
     separately we're happy to do — just ask when you book and we'll price it in.
 frequency:
-  heading: Weekly, fortnightly or monthly
+  heading: Weekly, fortnightly or monthly house cleaning. Pick what fits.
   cornerLabel: How often we come
   columns:
     - label: Weekly

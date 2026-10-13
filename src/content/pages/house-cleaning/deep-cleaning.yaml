@@ -22,8 +22,8 @@ definition:
         Gold Coast.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: Not sure a deep clean is the one?
-  headingAccent: Start here.
+  heading: Types of deep
+  headingAccent: cleaning services
   cards:
     - image:
         src: /src/assets/home_cleaning/inside_your_home/deep_cleaning/deep-cleaning-tidy-kitchen-kept-up-by-regular-visits.jpg

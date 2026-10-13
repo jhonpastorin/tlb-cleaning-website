@@ -31,8 +31,8 @@ definition:
         less than calling someone out for it separately.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: People arrive here with three questions.
-  headingAccent: Which one is yours?
+  heading: Types of blind
+  headingAccent: cleaning services
   cards:
     - image:
         src: /src/assets/home_cleaning/appliances/blinds_shutters_and_fans/plantation-shutters-and-ceiling-fan-in-a-living-room.jpg

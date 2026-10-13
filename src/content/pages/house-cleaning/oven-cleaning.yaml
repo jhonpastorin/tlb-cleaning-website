@@ -34,8 +34,8 @@ definition:
         What changes is the size of the parts and how much grease is on them.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: People arrive here with three questions.
-  headingAccent: Which one is yours?
+  heading: Types of oven
+  headingAccent: cleaning services
   cards:
     - image:
         src: /src/assets/home_cleaning/appliances/oven_bbq_and_appliances/well-used-barbecue-on-a-timber-deck.jpg
