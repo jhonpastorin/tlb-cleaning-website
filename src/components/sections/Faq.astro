@@ -1,4 +1,6 @@
 ---
+import { sectionHeadingTags } from '../../lib/headings';
+
 // Accordion only — "FAQ Grid" (the wireframe's second example: static Q&A
 // cards, alternating tones, all visible at once, no expand/collapse) is
 // exactly ContentGrid.astro's `text` block type already: question as
@@ -28,6 +30,8 @@ interface Props {
 
 const { heading, lead, items } = Astro.props;
 
+const { Heading } = sectionHeadingTags(heading);
+
 // `name`-grouped <details> exclusivity is document-wide, not scoped to this
 // component's own markup — two <Faq> instances on one page sharing a
 // literal "faq" name would incorrectly close each other's open items. A
@@ -49,7 +53,7 @@ const headingId = `faq-heading-${Math.random().toString(36).slice(2, 9)}`;
   <div class="container container--narrow">
     {heading && (
       <div class="faq__intro">
-        <h2 id={headingId}>{heading}</h2>
+        <Heading id={headingId} class="title-2">{heading}</Heading>
         {lead && <p class="lead">{lead}</p>}
       </div>
     )}
@@ -81,7 +85,7 @@ const headingId = `faq-heading-${Math.random().toString(36).slice(2, 9)}`;
     margin-bottom: var(--space-xl);
   }
 
-  .faq__intro h2 {
+  .faq__intro :is(h2, h3) {
     margin-bottom: var(--space-sm);
   }
 

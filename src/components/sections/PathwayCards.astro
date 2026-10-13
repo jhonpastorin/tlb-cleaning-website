@@ -2,6 +2,7 @@
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
 import type { ImageBlock, ButtonData } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 interface Card {
   number: number;
@@ -19,15 +20,17 @@ interface Props {
 }
 
 const { heading, headingAccent, cards } = Astro.props;
+
+const { Heading, Subheading } = sectionHeadingTags(`${heading} ${headingAccent}`);
 ---
 
 <section class="pathway" aria-labelledby="pathway-heading">
   <div class="container pathway__inner">
-    <h2 id="pathway-heading" class="pathway__heading">
+    <Heading id="pathway-heading" class="title-2 pathway__heading">
       {heading}
       <br />
       <span class="pathway__heading-accent">{headingAccent}</span>
-    </h2>
+    </Heading>
 
     <ul class="pathway__list">
       {cards.map((card) => (
@@ -38,7 +41,7 @@ const { heading, headingAccent, cards } = Astro.props;
           <div class="pathway__body">
             <div class="pathway__title-row">
               <span class="pathway__number" aria-hidden="true">{card.number}</span>
-              <h3 class="pathway__title">{card.title}</h3>
+              <Subheading class="title-3 pathway__title">{card.title}</Subheading>
             </div>
             <p class="pathway__description">{card.description}</p>
             <Button label={card.cta.label} href={card.cta.href} variant={card.cta.variant ?? 'brand'} fullWidth />

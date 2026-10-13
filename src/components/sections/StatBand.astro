@@ -1,6 +1,7 @@
 ---
 import Button from '../ui/Button.astro';
 import type { ButtonData } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 type IconName = 'group' | 'heart' | 'language' | 'house';
 
@@ -17,11 +18,13 @@ interface Props {
 }
 
 const { heading, stats, buttons } = Astro.props;
+
+const { Heading } = sectionHeadingTags(heading);
 ---
 
 <section class="stat-band" aria-labelledby="stat-band-heading">
   <div class="container stat-band__inner">
-    <h2 id="stat-band-heading" class="stat-band__heading">{heading}</h2>
+    <Heading id="stat-band-heading" class="title-2 stat-band__heading">{heading}</Heading>
 
     <ul class="stat-band__list">
       {stats.map((stat) => (

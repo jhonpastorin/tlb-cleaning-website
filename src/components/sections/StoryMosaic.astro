@@ -15,6 +15,7 @@
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
 import type { StoryBlock, ButtonData } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 interface Props {
   theme?: 'dark' | 'light';
@@ -24,11 +25,13 @@ interface Props {
 }
 
 const { theme = 'dark', heading, blocks, cta } = Astro.props;
+
+const { Heading } = sectionHeadingTags(heading);
 ---
 
 <section class:list={['story', `story--${theme}`]} aria-labelledby={heading ? 'story-heading' : undefined}>
   <div class="container story__inner">
-    {heading && <h2 id="story-heading" class="story__heading">{heading}</h2>}
+    {heading && <Heading id="story-heading" class="title-2 story__heading">{heading}</Heading>}
 
     <div class="story__grid">
       {blocks.map((block) =>
@@ -73,7 +76,7 @@ const { theme = 'dark', heading, blocks, cta } = Astro.props;
   }
 
   .story--dark .story__heading,
-  .story--dark :global(h2) {
+  .story--dark :global(:is(h2, h3)) {
     color: var(--color-on-inverse);
   }
 

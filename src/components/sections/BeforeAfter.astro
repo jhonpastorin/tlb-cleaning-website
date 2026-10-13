@@ -25,6 +25,7 @@
 // content requirement the component cannot enforce; the photo brief has to.
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { sectionHeadingTags } from '../../lib/headings';
 
 interface PairImage {
   /** A statically-imported image. Required — unlike most of this library,
@@ -75,6 +76,8 @@ const {
   note,
 } = Astro.props;
 
+const { Heading } = sectionHeadingTags(heading);
+
 // Build-time random suffix per instance — the same fix Faq.astro,
 // ServiceBlocks.astro and TagCloud.astro all already apply, for the same
 // reason. Two of these on one page would otherwise emit duplicate ids: the
@@ -87,7 +90,7 @@ const headingId = `${uid}-heading`;
 
 <section class="before-after" aria-labelledby={heading ? headingId : undefined}>
   <div class="container before-after__inner">
-    {heading && <h2 id={headingId} class="before-after__heading">{heading}</h2>}
+    {heading && <Heading id={headingId} class="title-2 before-after__heading">{heading}</Heading>}
     {lead && <p class="before-after__lead">{lead}</p>}
 
     <div class="before-after__grid">

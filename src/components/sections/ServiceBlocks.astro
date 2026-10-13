@@ -26,6 +26,7 @@ import Button from '../ui/Button.astro';
 import ServiceIcon from '../ui/ServiceIcon.astro';
 import type { ServiceIconName } from '../ui/ServiceIcon.astro';
 import type { ImageBlock, ButtonData } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 type Variant = 'icon-grid' | 'image-cards' | 'list' | 'highlight' | 'slider' | 'photo-tiles';
 
@@ -75,6 +76,8 @@ const {
   note,
 } = Astro.props;
 
+const { Heading, Subheading } = sectionHeadingTags(heading);
+
 // Random suffix so multiple <ServiceBlocks> instances on one page never
 // collide on this id — same fix Faq.astro already applies to its own
 // per-instance group name. Found live while building the TLB homepage,
@@ -88,7 +91,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
   <section class="service-blocks service-blocks--icon-grid" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id={headingId}>{heading}</h2>
+        <Heading id={headingId} class="title-2">{heading}</Heading>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -96,7 +99,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
         {items.map((item) => (
           <div class="service-blocks__icon-item">
             {item.icon && <ServiceIcon name={item.icon} class="service-blocks__icon" />}
-            <h3>{item.title}</h3>
+            <Subheading class="title-3">{item.title}</Subheading>
             {item.tag && <span class="service-blocks__tag">{item.tag}</span>}
             <p>{item.description}</p>
           </div>
@@ -116,7 +119,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
   <section class="service-blocks service-blocks--image-cards" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id={headingId}>{heading}</h2>
+        <Heading id={headingId} class="title-2">{heading}</Heading>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -132,10 +135,10 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
               {numbered ? (
                 <div class="service-blocks__title-row">
                   <span class="service-blocks__number" aria-hidden="true">{i + 1}</span>
-                  <h3>{item.title}</h3>
+                  <Subheading class="title-3">{item.title}</Subheading>
                 </div>
               ) : (
-                <h3>{item.title}</h3>
+                <Subheading class="title-3">{item.title}</Subheading>
               )}
               <p>{item.description}</p>
             </div>
@@ -158,7 +161,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
   <section class="service-blocks service-blocks--list" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id={headingId}>{heading}</h2>
+        <Heading id={headingId} class="title-2">{heading}</Heading>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -192,7 +195,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
   <section class="service-blocks service-blocks--photo-tiles" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id={headingId}>{heading}</h2>
+        <Heading id={headingId} class="title-2">{heading}</Heading>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -230,7 +233,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
   <section class="service-blocks service-blocks--highlight" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id={headingId}>{heading}</h2>
+        <Heading id={headingId} class="title-2">{heading}</Heading>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -243,7 +246,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
               </div>
             )}
             <div class="service-blocks__showcase-body">
-              <h3>{item.title}</h3>
+              <Subheading class="title-3">{item.title}</Subheading>
               <p>{item.description}</p>
               {item.cta && <Button label={item.cta.label} href={item.cta.href} variant={item.cta.variant ?? 'inverse'} />}
             </div>
@@ -274,7 +277,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
   <section class="service-blocks service-blocks--slider" aria-labelledby={headingId}>
     <div class="container">
       <div class="service-blocks__intro">
-        <h2 id={headingId}>{heading}</h2>
+        <Heading id={headingId} class="title-2">{heading}</Heading>
         {lead && <p class="lead">{lead}</p>}
       </div>
 
@@ -295,7 +298,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
                   </div>
                 )}
                 <div class="service-blocks__slide-body">
-                  <h3>{item.title}</h3>
+                  <Subheading class="title-3">{item.title}</Subheading>
                   <p>{item.description}</p>
                   {item.cta && <Button label={item.cta.label} href={item.cta.href} variant={item.cta.variant ?? 'inverse'} />}
                 </div>
@@ -336,7 +339,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
     margin-bottom: var(--space-xl);
   }
 
-  .service-blocks__intro h2 {
+  .service-blocks__intro :is(h2, h3) {
     margin-bottom: var(--space-sm);
   }
 
@@ -359,7 +362,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
     margin-bottom: var(--space-xs);
   }
 
-  .service-blocks__icon-item h3 {
+  .service-blocks__icon-item :is(h3, h4) {
     font-size: var(--title-7);
   }
 
@@ -433,7 +436,7 @@ const headingId = `service-blocks-heading-${Math.random().toString(36).slice(2, 
     flex: 1;
   }
 
-  .service-blocks__card-body h3 {
+  .service-blocks__card-body :is(h3, h4) {
     font-size: var(--title-7);
   }
 

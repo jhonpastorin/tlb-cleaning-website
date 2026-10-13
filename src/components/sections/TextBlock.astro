@@ -15,6 +15,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Button from '../ui/Button.astro';
 import type { ButtonData } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 // A body entry is either a paragraph (string) or a bullet list
 // ({ list: [...] }). Order-driven rather than a separate `bullets` prop,
@@ -90,6 +91,8 @@ const {
   backgroundFocus = 'center',
 } = Astro.props;
 
+const { Heading, Subheading } = sectionHeadingTags(heading);
+
 // Random suffix so multiple instances on one page never collide — same fix
 // Faq.astro already applies to its own per-instance heading, and the same
 // bug class ServiceBlocks.astro was patched for while building this same
@@ -117,13 +120,13 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
   )}
   <div class="container container--narrow">
     <div class:list={['text-block__inner', { 'text-block__inner--center': align === 'center' }]}>
-      {heading && <h2 id={headingId}>{heading}</h2>}
+      {heading && <Heading id={headingId} class="title-2">{heading}</Heading>}
       <div class:list={['text-block__body', { 'text-block__body--large': size === 'large' }]}>
         {body.map((entry) =>
           typeof entry === 'string' ? (
             <p>{entry}</p>
           ) : 'subheading' in entry ? (
-            <h3 class="text-block__subheading">{entry.subheading}</h3>
+            <Subheading class="title-3 text-block__subheading">{entry.subheading}</Subheading>
           ) : entry.ordered ? (
             <ol class="text-block__list text-block__list--ordered">
               {entry.list.map((item) => (
@@ -225,7 +228,7 @@ const headingId = `text-block-heading-${Math.random().toString(36).slice(2, 9)}`
     margin-inline: auto;
   }
 
-  .text-block--dark :global(h2) {
+  .text-block--dark :global(:is(h2, h3)) {
     color: var(--color-on-inverse);
   }
 

@@ -17,6 +17,7 @@
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
 import type { ImageBlock, ButtonData } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 type Variant = 'primary' | 'secondary' | 'form';
 
@@ -67,6 +68,8 @@ const {
   action,
   method = 'post',
 } = Astro.props;
+
+const { Heading } = sectionHeadingTags(heading);
 ---
 
 {variant === 'primary' && (
@@ -79,7 +82,7 @@ const {
           </div>
         )}
         {kicker && <p class="cta__kicker">{kicker}</p>}
-          <h2 id="cta-heading">{heading}</h2>
+          <Heading id="cta-heading" class="title-2">{heading}</Heading>
         {lead && <p class="lead">{lead}</p>}
         <Button label={cta.label} href={cta.href} variant={cta.variant ?? 'inverse'} />
       </div>
@@ -99,7 +102,7 @@ const {
       <div class="cta__band">
         <div class="cta__copy">
           {kicker && <p class="cta__kicker">{kicker}</p>}
-          <h2 id="cta-heading">{heading}</h2>
+          <Heading id="cta-heading" class="title-2">{heading}</Heading>
           {lead && <p class="lead">{lead}</p>}
         </div>
 
@@ -119,7 +122,7 @@ const {
   <section data-cta-location="cta_band" class="cta cta--form" aria-labelledby="cta-heading">
     <div class="container cta__form-inner">
       {kicker && <p class="cta__kicker">{kicker}</p>}
-          <h2 id="cta-heading">{heading}</h2>
+          <Heading id="cta-heading" class="title-2">{heading}</Heading>
       {lead && <p class="lead">{lead}</p>}
 
       <form class="cta__form" action={action} method={method}>
@@ -241,7 +244,7 @@ const {
     margin-inline: auto;
   }
 
-  .cta--form h2 {
+  .cta--form :is(h2, h3) {
     margin-bottom: var(--space-sm);
   }
 

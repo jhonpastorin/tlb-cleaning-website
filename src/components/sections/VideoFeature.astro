@@ -1,5 +1,6 @@
 ---
 import VideoPlaceholder from '../ui/VideoPlaceholder.astro';
+import { sectionHeadingTags } from '../../lib/headings';
 
 interface Props {
   headingLines: string[];
@@ -7,6 +8,8 @@ interface Props {
 }
 
 const { headingLines, video } = Astro.props;
+
+const { Heading } = sectionHeadingTags(headingLines.join(' '));
 
 // ⚠️ HIDDEN ON EVERY PAGE (6 Oct 2026). This section can only render
 // VideoPlaceholder's dashed frame and no real video exists yet, so it was
@@ -20,14 +23,14 @@ const showSection = false;
 {showSection && (
 <section class="video-feature" aria-labelledby="video-feature-heading">
   <div class="container video-feature__inner">
-    <h2 id="video-feature-heading" class="video-feature__heading">
+    <Heading id="video-feature-heading" class="title-2 video-feature__heading">
       {headingLines.map((line) => (
         <>
           {line}
           <br />
         </>
       ))}
-    </h2>
+    </Heading>
 
     <div class="video-feature__frame">
       <VideoPlaceholder ratio={video.ratio ?? '16/9'} label={video.label} caption={video.caption} />

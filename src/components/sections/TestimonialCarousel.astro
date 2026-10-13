@@ -13,6 +13,7 @@
 import Placeholder from '../ui/Placeholder.astro';
 import StarRating from '../ui/StarRating.astro';
 import type { ImageBlock } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 interface Testimonial {
   quote: string;
@@ -30,6 +31,8 @@ interface Props {
 }
 
 const { heading, testimonials, uniform = false } = Astro.props;
+
+const { Heading } = sectionHeadingTags(heading);
 const solo = testimonials.length <= 1;
 // Matches the client script's starting index exactly (see the script below)
 // so the server-rendered markup already reflects the middle card being
@@ -39,7 +42,7 @@ const initialIndex = Math.floor((testimonials.length - 1) / 2);
 
 <section class="testimonials" aria-labelledby="testimonials-heading">
   <div class="container testimonials__inner">
-    <h2 id="testimonials-heading" class="testimonials__heading">{heading}</h2>
+    <Heading id="testimonials-heading" class="title-2 testimonials__heading">{heading}</Heading>
 
     <div
       class:list={['testimonial-carousel', { 'testimonial-carousel--solo': solo, 'testimonial-carousel--uniform': uniform }]}

@@ -1,4 +1,6 @@
 ---
+import { sectionHeadingTags } from '../../lib/headings';
+
 // Exported because src/data/premises.ts builds TagCloud pill lists for the
 // thirteen "by type of premises" pages and needs to name this shape. Same
 // reason `TagGroup` below is exported: a shared data module that hands this
@@ -43,6 +45,8 @@ interface Props {
 
 const { heading, subheading, tags = [], groups = [], note } = Astro.props;
 
+const { Heading, Subheading } = sectionHeadingTags(heading);
+
 const grouped = groups.length > 0;
 
 // Build-time random suffix per instance — the same fix ServiceBlocks.astro
@@ -57,19 +61,19 @@ const headingId = `tag-cloud-heading-${Math.random().toString(36).slice(2, 9)}`;
 
 <section class="tag-cloud" aria-labelledby={headingId}>
   <div class="container tag-cloud__inner">
-    <h2 id={headingId} class="tag-cloud__heading">{heading}</h2>
+    <Heading id={headingId} class="title-2 tag-cloud__heading">{heading}</Heading>
     <p class="tag-cloud__subheading">{subheading}</p>
 
     {grouped ? (
       groups.map((group) => (
         <div class="tag-cloud__group">
-          <h3 class="tag-cloud__group-label">
+          <Subheading class="title-3 tag-cloud__group-label">
             {group.href ? (
               <a href={group.href} class="tag-cloud__group-link">{group.label}</a>
             ) : (
               group.label
             )}
-          </h3>
+          </Subheading>
           <ul class="tag-cloud__list">
             {group.tags.map((tag) => {
               const Tag = tag.href ? 'a' : 'span';

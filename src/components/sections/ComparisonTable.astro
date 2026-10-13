@@ -14,6 +14,7 @@
 // element" call Faq.astro already makes with <details>/<summary>.
 import Button from '../ui/Button.astro';
 import type { ButtonData } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 interface ComparisonColumn {
   label: string;
@@ -46,6 +47,8 @@ interface Props {
 
 const { heading, lead, cornerLabel, columns, rows, footnote } = Astro.props;
 
+const { Heading } = sectionHeadingTags(heading);
+
 // The "How TLB compares" / "How TLB Cleaning compares" table closes with a
 // contact button on every page that carries it, set here once rather than
 // in each page's content. It jumps to the enquiry form above the footer
@@ -67,7 +70,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
   <div class="container">
     {(heading || lead) && (
       <div class="comparison-table__intro">
-        {heading && <h2 id={headingId}>{heading}</h2>}
+        {heading && <Heading id={headingId} class="title-2">{heading}</Heading>}
         {lead && <p class="lead">{lead}</p>}
       </div>
     )}
@@ -144,7 +147,7 @@ const headingId = `comparison-table-heading-${Math.random().toString(36).slice(2
     margin-bottom: var(--space-xl);
   }
 
-  .comparison-table__intro h2 {
+  .comparison-table__intro :is(h2, h3) {
     margin-bottom: var(--space-sm);
   }
 

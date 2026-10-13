@@ -46,6 +46,7 @@ import {
   thankYouPath,
   type SelectOption,
 } from '../../data/contactForm';
+import { sectionHeadingTags } from '../../lib/headings';
 
 interface Props {
   /** Overrides `enquiryCopy.heading`. */
@@ -84,8 +85,11 @@ const {
 } = Astro.props;
 
 // Astro renders a capitalised variable as a component/tag name, which is how
-// one markup block serves both heading levels without duplicating it.
-const Heading = headingLevel;
+// one markup block serves every heading level without duplicating it. A
+// mid-page form is a section like any other, so `h2` means "section heading"
+// and lib/headings.ts picks the tag from the words (the default "Send us the
+// details" is an <h3>); `.title-2` keeps it the size it always was.
+const Heading = headingLevel === 'h1' ? 'h1' : sectionHeadingTags(heading).Heading;
 
 // The four free-text fields, mapped rather than written out four times. The
 // autocomplete tokens are the real point of the table: they are what lets a
@@ -166,7 +170,7 @@ const config = {
           there, as it does in Hero.astro, rather than stacking above it. */}
       {headingLevel === 'h1' && <div class="enquiry__breadcrumbs"><Breadcrumbs /></div>}
       {kicker && headingLevel !== 'h1' && <p class="enquiry__kicker">{kicker}</p>}
-      <Heading id="enquiry-heading">{heading}</Heading>
+      <Heading id="enquiry-heading" class={headingLevel === 'h1' ? undefined : 'title-2'}>{heading}</Heading>
       {lead && <p class="lead">{lead}</p>}
     </div>
 
@@ -456,9 +460,9 @@ const config = {
     margin-bottom: var(--space-lg);
   }
 
-  /* Both levels, because `headingLevel` swaps the tag — an `h2`-only
-     selector would silently drop the spacing on the page-opener variant. */
-  .enquiry__intro :is(h1, h2) {
+  /* Every level, because `headingLevel` and lib/headings.ts swap the tag —
+     an `h2`-only selector would silently drop the spacing on the others. */
+  .enquiry__intro :is(h1, h2, h3) {
     margin-bottom: var(--space-sm);
   }
 

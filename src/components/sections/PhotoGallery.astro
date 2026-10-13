@@ -17,6 +17,7 @@
 // needs this file's own sizing is wrapped in a plain <div> authored here.
 import Placeholder from '../ui/Placeholder.astro';
 import type { ImageBlock } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 type Variant = 'grid' | 'filmstrip' | 'story';
 
@@ -45,6 +46,8 @@ interface Props {
 }
 
 const { variant = 'grid', heading, lead, images = [], steps = [] } = Astro.props;
+
+const { Heading, Subheading } = sectionHeadingTags(heading);
 ---
 
 {variant === 'grid' && (
@@ -52,7 +55,7 @@ const { variant = 'grid', heading, lead, images = [], steps = [] } = Astro.props
     <div class="container">
       {heading && (
         <div class="photo-gallery__intro">
-          <h2 id="photo-gallery-heading">{heading}</h2>
+          <Heading id="photo-gallery-heading" class="title-2">{heading}</Heading>
           {lead && <p class="lead">{lead}</p>}
         </div>
       )}
@@ -73,7 +76,7 @@ const { variant = 'grid', heading, lead, images = [], steps = [] } = Astro.props
     <div class="container photo-gallery__layout">
       {heading && (
         <div class="photo-gallery__intro">
-          <h2 id="photo-gallery-heading">{heading}</h2>
+          <Heading id="photo-gallery-heading" class="title-2">{heading}</Heading>
           {lead && <p class="lead">{lead}</p>}
         </div>
       )}
@@ -97,7 +100,7 @@ const { variant = 'grid', heading, lead, images = [], steps = [] } = Astro.props
     <div class="container">
       {heading && (
         <div class="photo-gallery__intro">
-          <h2 id="photo-gallery-heading">{heading}</h2>
+          <Heading id="photo-gallery-heading" class="title-2">{heading}</Heading>
           {lead && <p class="lead">{lead}</p>}
         </div>
       )}
@@ -111,7 +114,7 @@ const { variant = 'grid', heading, lead, images = [], steps = [] } = Astro.props
               </div>
               <div class="photo-gallery__step-body">
                 {step.step && <span class="photo-gallery__step-label">{step.step}</span>}
-                <h3>{step.heading}</h3>
+                <Subheading class="title-3">{step.heading}</Subheading>
                 {step.body.map((paragraph) => (
                   <p>{paragraph}</p>
                 ))}
@@ -140,7 +143,7 @@ const { variant = 'grid', heading, lead, images = [], steps = [] } = Astro.props
     padding-block: var(--space-2xl);
   }
 
-  .photo-gallery__intro h2 {
+  .photo-gallery__intro :is(h2, h3) {
     margin-bottom: var(--space-sm);
   }
 

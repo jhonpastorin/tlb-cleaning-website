@@ -27,6 +27,11 @@ h4 { font-size: var(--title-4); }
 h5 { font-size: var(--title-5); }
 h6 { font-size: var(--title-6); }
 
+/* Size by class, for section headings whose tag is set by the outline rule
+   in src/lib/headings.ts: an <h3> carrying .title-2 still looks like an h2. */
+.title-2 { font-size: var(--title-2); }
+.title-3 { font-size: var(--title-3); }
+
 p {
   line-height: var(--leading-normal);
 }

@@ -17,6 +17,7 @@
 import Placeholder from '../ui/Placeholder.astro';
 import StarRating from '../ui/StarRating.astro';
 import type { ImageBlock } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 type Variant = 'list' | 'carousel';
 
@@ -47,6 +48,8 @@ interface Props {
 }
 
 const { variant = 'list', heading, lead, logos, featuredQuote } = Astro.props;
+
+const { Heading } = sectionHeadingTags(heading);
 ---
 
 {variant === 'list' && (
@@ -54,7 +57,7 @@ const { variant = 'list', heading, lead, logos, featuredQuote } = Astro.props;
     <div class="container">
       {heading && (
         <div class="logo-bar__intro">
-          <h2 id="logo-bar-heading">{heading}</h2>
+          <Heading id="logo-bar-heading" class="title-2">{heading}</Heading>
           {lead && <p class="lead">{lead}</p>}
         </div>
       )}
@@ -83,7 +86,7 @@ const { variant = 'list', heading, lead, logos, featuredQuote } = Astro.props;
     <div class="container">
       {heading && (
         <div class="logo-bar__intro">
-          <h2 id="logo-bar-heading">{heading}</h2>
+          <Heading id="logo-bar-heading" class="title-2">{heading}</Heading>
           {lead && <p class="lead">{lead}</p>}
         </div>
       )}
@@ -137,7 +140,7 @@ const { variant = 'list', heading, lead, logos, featuredQuote } = Astro.props;
     margin-bottom: var(--space-xl);
   }
 
-  .logo-bar__intro h2 {
+  .logo-bar__intro :is(h2, h3) {
     margin-bottom: var(--space-sm);
   }
 

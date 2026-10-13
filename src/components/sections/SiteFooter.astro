@@ -177,7 +177,7 @@ const {
       <nav class="site-footer__nav" aria-label="Footer">
         {columns.map((column) => (
           <div class="site-footer__column">
-            <h3 class="site-footer__column-title">{column.title}</h3>
+            <p class="site-footer__column-title">{column.title}</p>
             <ul>
               {column.links.map((link) => (
                 <li><a href={link.href}>{link.label}</a></li>
@@ -188,7 +188,7 @@ const {
       </nav>
 
       <div class="site-footer__column">
-        <h3 class="site-footer__column-title">{contactHeading}</h3>
+        <p class="site-footer__column-title">{contactHeading}</p>
         <ul class="site-footer__contact-list">
           <li>
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false">
@@ -215,7 +215,7 @@ const {
 
       {newsletter && (
         <div class="site-footer__column">
-          <h3 class="site-footer__column-title">{newsletter.heading}</h3>
+          <p class="site-footer__column-title">{newsletter.heading}</p>
           <form class="site-footer__newsletter" action={newsletter.action} method={newsletter.method ?? 'post'}>
             <label class="sr-only" for="footer-newsletter-email">{newsletter.fieldLabel ?? 'Email address'}</label>
             <input
@@ -314,6 +314,11 @@ const {
   }
 
   .site-footer__column-title {
+    /* A <p>, not a heading: column labels are not part of the page outline.
+       The heading font, weight and line height that h3 used to supply. */
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
     font-size: var(--title-7);
     color: var(--color-on-inverse);
     margin-bottom: var(--space-sm);

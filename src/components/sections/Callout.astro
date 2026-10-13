@@ -20,6 +20,7 @@
 // contradict the thing that component exists to be.
 import Button from '../ui/Button.astro';
 import type { ButtonData } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 interface Props {
   /** `note` (default) = brand-accent panel. `warning` = charcoal panel, for
@@ -32,6 +33,8 @@ interface Props {
 
 const { tone = 'note', heading, body, cta } = Astro.props;
 
+const { Heading } = sectionHeadingTags(heading);
+
 // Same random-suffix fix Faq/TextBlock/ServiceBlocks/ComparisonTable all
 // carry — avoids a duplicate id if a page ever uses two callouts.
 const headingId = `callout-heading-${Math.random().toString(36).slice(2, 9)}`;
@@ -40,7 +43,7 @@ const headingId = `callout-heading-${Math.random().toString(36).slice(2, 9)}`;
 <section class="callout" aria-labelledby={heading ? headingId : undefined}>
   <div class="container">
     <div class:list={['callout__panel', `callout__panel--${tone}`]}>
-      {heading && <h2 id={headingId} class="callout__heading">{heading}</h2>}
+      {heading && <Heading id={headingId} class="title-2 callout__heading">{heading}</Heading>}
       <div class="callout__body">
         {body.map((paragraph) => (
           <p>{paragraph}</p>
@@ -95,8 +98,9 @@ const headingId = `callout-heading-${Math.random().toString(36).slice(2, 9)}`;
   }
 
   .callout__heading {
-    /* One step down from a section h2: this is still an <h2> for document
-       outline purposes, but visually it's an aside, not a new chapter. */
+    /* One step down from a section h2: this is still a section heading
+       (h2 or h3, see lib/headings.ts) for document outline purposes, but
+       visually it's an aside, not a new chapter. */
     font-size: var(--text-big);
     margin: 0;
   }

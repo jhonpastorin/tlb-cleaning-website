@@ -21,6 +21,7 @@
 // Placeholder-wrapping rule throughout.
 import Placeholder from '../ui/Placeholder.astro';
 import type { ImageBlock } from '../../data/types';
+import { sectionHeadingTags } from '../../lib/headings';
 
 interface CarouselCard {
   image?: ImageBlock;
@@ -35,13 +36,15 @@ interface Props {
 }
 
 const { heading, lead, cards } = Astro.props;
+
+const { Heading, Subheading } = sectionHeadingTags(heading);
 ---
 
 <section class="card-carousel" aria-labelledby={heading ? 'card-carousel-heading' : undefined}>
   <div class="container card-carousel__inner">
     {heading && (
       <div class="card-carousel__intro">
-        <h2 id="card-carousel-heading">{heading}</h2>
+        <Heading id="card-carousel-heading" class="title-2">{heading}</Heading>
         {lead && <p class="lead">{lead}</p>}
       </div>
     )}
@@ -64,7 +67,7 @@ const { heading, lead, cards } = Astro.props;
               )}
               {(card.heading || card.body) && (
                 <div class="carousel-card__body">
-                  {card.heading && <h3>{card.heading}</h3>}
+                  {card.heading && <Subheading class="title-3">{card.heading}</Subheading>}
                   {card.body?.map((paragraph) => (
                     <p>{paragraph}</p>
                   ))}
@@ -115,7 +118,7 @@ const { heading, lead, cards } = Astro.props;
     max-width: var(--container-narrow);
   }
 
-  .card-carousel__intro h2 {
+  .card-carousel__intro :is(h2, h3) {
     margin-bottom: var(--space-sm);
   }
 
@@ -186,7 +189,7 @@ const { heading, lead, cards } = Astro.props;
     gap: var(--space-xs);
   }
 
-  .carousel-card__body h3 {
+  .carousel-card__body :is(h3, h4) {
     font-size: var(--title-6);
   }
 

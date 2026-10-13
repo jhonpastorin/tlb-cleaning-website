@@ -15,6 +15,7 @@
 // Avatars are the reviewer's initial, never their Google profile photo (see
 // the rules in src/data/googleReviews.ts).
 import StarRating from '../ui/StarRating.astro';
+import { sectionHeadingTags } from '../../lib/headings';
 
 export interface ReviewCard {
   author: string;
@@ -37,6 +38,8 @@ interface Props {
 
 const { heading, reviews, profileUrl, interval = 5000 } = Astro.props;
 
+const { Heading } = sectionHeadingTags(heading);
+
 const monthFormat = new Intl.DateTimeFormat('en-AU', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 const formatMonth = (date: string) => monthFormat.format(new Date(`${date}-01T00:00:00Z`));
 // First letter, skipping brackets and punctuation, so "[Client name — TBC]"
@@ -54,7 +57,7 @@ const googleMark = `<svg viewBox="0 0 48 48" width="22" height="22" aria-hidden=
 
 <section class="review-slider" aria-labelledby="review-slider-heading" data-review-slider data-interval={interval}>
   <div class="container review-slider__inner">
-    <h2 id="review-slider-heading" class="review-slider__heading">{heading}</h2>
+    <Heading id="review-slider-heading" class="title-2 review-slider__heading">{heading}</Heading>
 
     <div class="review-slider__viewport" tabindex="0" aria-label="Reviews, scroll sideways for more" data-viewport>
       <ul class="review-slider__track">
