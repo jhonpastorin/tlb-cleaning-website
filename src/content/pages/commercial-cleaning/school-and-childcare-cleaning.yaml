@@ -200,42 +200,6 @@ whereWeClean:
     - If a town isn't listed, ask us anyway.
 brandLine:
   heading: "{{line.fast.heading}}"
-brandedFaq:
-  heading: Booking a school or childcare clean
-  items:
-    - question: Do your cleaners hold a Working With Children Check?
-      answer: They have to, and so does anyone else quoting your site. Our cleaners are
-        employed by TLB rather than subcontracted, so there is no third party
-        holding that paperwork.
-    - question: When would you be on site?
-      answer: After the last pickup for a centre, and after hours for a school, with
-        the periodic work booked into term breaks. Anything that genuinely has
-        to happen during the day (a bathroom check, a spill, an outdoor area)
-        is done by someone your staff know, signed in through your own process,
-        and never alone in a room with children.
-    - question: Can you work to our own policies?
-      answer: Yes, and yours wins over our standard scope wherever they differ. If
-        your cleaning and infection control policy specifies a product, a method
-        or a frequency, it goes on the scope in writing.
-    - question: Who sanitises the toys?
-      answer: "Your educators, on your own rotation and under your own policy. It is
-        not us being unhelpful: toy sanitising is a judgement about your
-        service’s practice and it belongs with people trained in it, and a
-        cleaner doing it informally creates a gap in your own records. We clean
-        storage tubs, shelving and the surfaces the toys sit on, which is the
-        part that supports your rotation rather than replacing it."
-    - question: What products would you use around children?
-      answer: Low-odour, low-residue products, rinsed rather than left to air dry on
-        any surface a child will touch or mouth, and nothing stored on site
-        within reach. Our chemicals arrive and leave with the cleaner. Where
-        your policy names particular products or requires a particular dilution,
-        we use yours and it is written into the scope.
-    - question: What happens if I get in touch?
-      answer: We walk the site after hours with you, including the bathrooms and the
-        nappy change area, and ask what your own policies require. Then you get
-        a written scope split by area with a frequency against each line, a
-        price per visit, and a schedule for the periodic work against named term
-        breaks. No obligation.
 faq:
   heading: Commercial cleaning services for schools and childcare, common questions
   items:
@@ -285,6 +249,39 @@ faq:
         time, so it only really fits a term break. A scope that does not name
         which break each periodic task falls into tends to see none of them
         happen.
+    - question: Do your cleaners hold a Working With Children Check?
+      answer: They have to, and so does anyone else quoting your site. Our cleaners are
+        employed by TLB rather than subcontracted, so there is no third party
+        holding that paperwork.
+    - question: When would you be on site?
+      answer: After the last pickup for a centre, and after hours for a school, with
+        the periodic work booked into term breaks. Anything that genuinely has
+        to happen during the day (a bathroom check, a spill, an outdoor area)
+        is done by someone your staff know, signed in through your own process,
+        and never alone in a room with children.
+    - question: Can you work to our own policies?
+      answer: Yes, and yours wins over our standard scope wherever they differ. If
+        your cleaning and infection control policy specifies a product, a method
+        or a frequency, it goes on the scope in writing.
+    - question: Who sanitises the toys?
+      answer: "Your educators, on your own rotation and under your own policy. It is
+        not us being unhelpful: toy sanitising is a judgement about your
+        service’s practice and it belongs with people trained in it, and a
+        cleaner doing it informally creates a gap in your own records. We clean
+        storage tubs, shelving and the surfaces the toys sit on, which is the
+        part that supports your rotation rather than replacing it."
+    - question: What products would you use around children?
+      answer: Low-odour, low-residue products, rinsed rather than left to air dry on
+        any surface a child will touch or mouth, and nothing stored on site
+        within reach. Our chemicals arrive and leave with the cleaner. Where
+        your policy names particular products or requires a particular dilution,
+        we use yours and it is written into the scope.
+    - question: What happens if I get in touch?
+      answer: We walk the site after hours with you, including the bathrooms and the
+        nappy change area, and ask what your own policies require. Then you get
+        a written scope split by area with a frequency against each line, a
+        price per visit, and a schedule for the periodic work against named term
+        breaks. No obligation.
 closingCta:
   kicker: Commercial cleaning for schools
   heading: Ask us for the clearance numbers first.

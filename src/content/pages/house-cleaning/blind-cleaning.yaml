@@ -142,35 +142,6 @@ whereWeClean:
 brandLine:
   heading: "{{line.fast.heading}}"
 faq:
-  heading: Frequently asked questions
-  items:
-    - question: Can you do this with our regular clean?
-      answer: Yes, and that is how most people do it. We allow extra time on a visit
-        that is already booked rather than sending someone out for it
-        separately, which keeps the cost down. Once or twice a year suits most
-        homes. Just tell us which rooms you want done when you book.
-    - question: Do you do ceiling fans as well as blinds?
-      answer: Yes, and they are usually done in the same pass, because both are
-        overhead work in the same room. Blades are wiped top and bottom with the
-        blade supported, and the housing and pull chain are done too. If a fan
-        wobbles when it runs, tell us, because that is a balancing or electrical
-        issue rather than a cleaning one.
-    - question: What about high windows and raked ceilings?
-      answer: Standard ceiling heights are routine. A raked ceiling, a stairwell void
-        or anything that needs more than a step ladder is a different job, and
-        we will tell you honestly if it is beyond what we can do safely rather
-        than have someone stretch off the top rung.
-    - question: Can you clean our fabric roller blinds?
-      answer: They are dusted and spot treated rather than wet cleaned, because water
-        marks fabric blinds permanently and a tidemark cannot be blended out
-        afterwards. If a fabric blind is genuinely soiled rather than dusty, the
-        honest answer is usually specialist ultrasonic cleaning or replacement,
-        and we will say so.
-    - question: What happens if I get in touch?
-      answer: Tell us roughly how many windows, what kind of blinds and how many fans.
-        We will give you a price and either book it in on its own or add it to
-        your next regular clean, whichever works out better for you.
-nonBrandedFaq:
   heading: Blind, fan and curtain cleaning FAQs
   items:
     - question: How often should blinds be cleaned?
@@ -212,6 +183,32 @@ nonBrandedFaq:
         more depends on the care label: lined, blockout and sheer curtains can
         shrink or mark if they are washed or steamed wrong, so they usually come
         down for a proper clean."
+    - question: Can you do this with our regular clean?
+      answer: Yes, and that is how most people do it. We allow extra time on a visit
+        that is already booked rather than sending someone out for it
+        separately, which keeps the cost down. Once or twice a year suits most
+        homes. Just tell us which rooms you want done when you book.
+    - question: Do you do ceiling fans as well as blinds?
+      answer: Yes, and they are usually done in the same pass, because both are
+        overhead work in the same room. Blades are wiped top and bottom with the
+        blade supported, and the housing and pull chain are done too. If a fan
+        wobbles when it runs, tell us, because that is a balancing or electrical
+        issue rather than a cleaning one.
+    - question: What about high windows and raked ceilings?
+      answer: Standard ceiling heights are routine. A raked ceiling, a stairwell void
+        or anything that needs more than a step ladder is a different job, and
+        we will tell you honestly if it is beyond what we can do safely rather
+        than have someone stretch off the top rung.
+    - question: Can you clean our fabric roller blinds?
+      answer: They are dusted and spot treated rather than wet cleaned, because water
+        marks fabric blinds permanently and a tidemark cannot be blended out
+        afterwards. If a fabric blind is genuinely soiled rather than dusty, the
+        honest answer is usually specialist ultrasonic cleaning or replacement,
+        and we will say so.
+    - question: What happens if I get in touch?
+      answer: Tell us roughly how many windows, what kind of blinds and how many fans.
+        We will give you a price and either book it in on its own or add it to
+        your next regular clean, whichever works out better for you.
 closingCta:
   kicker: Blinds, shutters and ceiling fans
   heading: Add blind cleaning services to your next clean.

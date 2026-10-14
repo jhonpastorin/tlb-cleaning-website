@@ -176,49 +176,6 @@ whereWeClean:
     - If a town isn't listed, ask us anyway.
 brandLine:
   heading: "{{line.fast.heading}}"
-brandedFaq:
-  heading: Booking a brewery clean
-  items:
-    - question: Will you do our CIP?
-      answer: "No, and you should be wary of anyone who says yes. CIP is brewing
-        rather than cleaning: it runs caustic and acid at injuring
-        concentrations, the vessels are confined spaces, and the cycle is what
-        decides whether your batch is sound. It stays with your brewers, your
-        chemistry and your verification records. We clean the room your tanks
-        are standing in, which is the part that is usually under-served."
-    - question: Can you work while we are brewing?
-      answer: Some of it, and not all of it. The taproom, the amenities and the
-        packaging area are straightforward. A live brew deck has hot liquor,
-        caustic in use, wet floors and hose runs underfoot, so the honest answer
-        depends on your layout and your day. We would rather book around your
-        brew calendar than be an extra body on the deck on transfer day.
-    - question: Do you clean the beer lines and the taps?
-      answer: No. Beer line cleaning is cellar work on the same side of the boundary
-        as CIP, and it affects what your customer tastes, so it stays with your
-        team or your line-cleaning contractor. We clean the outside of the tap
-        bank, the drip trays, the bar top and the floor and drain under it,
-        which is where the stale smell in a taproom almost always comes from
-        rather than from the lines.
-    - question: How often should the drains be done?
-      answer: Fortnightly at minimum on the production side, and weekly for a brewery
-        running most days, with the grates lifted and the channel scrubbed
-        rather than hosed. Taproom floor wastes and the drip tray drain want
-        doing weekly. It sounds like over-servicing until you have had an
-        environmental contamination scare, at which point it reads as the least
-        important line on the scope.
-    - question: Are you across the CO2 risk?
-      answer: It is the first thing we ask a brewery about, before floor area or
-        frequency. CO2 is heavier than air, it pools in cellars, tank pits and
-        any low space, and it displaces oxygen without smell or warning. Our
-        people are instructed to walk out of any space they are unsure about
-        and ask, rather than finish the job.
-    - question: What happens if I get in touch?
-      answer: We walk both sides of the wall with you and ask about your brew calendar
-        before your floor area. Then you get a written scope split into
-        production and taproom with a frequency against every line, the boundary
-        written down explicitly, and a price per visit. No obligation, and we
-        will tell you plainly which parts of your building we are not the right
-        contractor for.
 faq:
   heading: Brewery cleaning services, common questions
   items:
@@ -271,6 +228,46 @@ faq:
         under a trade waste agreement, with its own monitoring and its own
         arrestor servicing. A cleaning contractor can keep the surrounds of both
         clean and flag a problem, and that is the extent of it.
+    - question: Will you do our CIP?
+      answer: "No, and you should be wary of anyone who says yes. CIP is brewing
+        rather than cleaning: it runs caustic and acid at injuring
+        concentrations, the vessels are confined spaces, and the cycle is what
+        decides whether your batch is sound. It stays with your brewers, your
+        chemistry and your verification records. We clean the room your tanks
+        are standing in, which is the part that is usually under-served."
+    - question: Can you work while we are brewing?
+      answer: Some of it, and not all of it. The taproom, the amenities and the
+        packaging area are straightforward. A live brew deck has hot liquor,
+        caustic in use, wet floors and hose runs underfoot, so the honest answer
+        depends on your layout and your day. We would rather book around your
+        brew calendar than be an extra body on the deck on transfer day.
+    - question: Do you clean the beer lines and the taps?
+      answer: No. Beer line cleaning is cellar work on the same side of the boundary
+        as CIP, and it affects what your customer tastes, so it stays with your
+        team or your line-cleaning contractor. We clean the outside of the tap
+        bank, the drip trays, the bar top and the floor and drain under it,
+        which is where the stale smell in a taproom almost always comes from
+        rather than from the lines.
+    - question: How often should the drains be done?
+      answer: Fortnightly at minimum on the production side, and weekly for a brewery
+        running most days, with the grates lifted and the channel scrubbed
+        rather than hosed. Taproom floor wastes and the drip tray drain want
+        doing weekly. It sounds like over-servicing until you have had an
+        environmental contamination scare, at which point it reads as the least
+        important line on the scope.
+    - question: Are you across the CO2 risk?
+      answer: It is the first thing we ask a brewery about, before floor area or
+        frequency. CO2 is heavier than air, it pools in cellars, tank pits and
+        any low space, and it displaces oxygen without smell or warning. Our
+        people are instructed to walk out of any space they are unsure about
+        and ask, rather than finish the job.
+    - question: What happens if I get in touch?
+      answer: We walk both sides of the wall with you and ask about your brew calendar
+        before your floor area. Then you get a written scope split into
+        production and taproom with a frequency against every line, the boundary
+        written down explicitly, and a price per visit. No obligation, and we
+        will tell you plainly which parts of your building we are not the right
+        contractor for.
 closingCta:
   kicker: Brewery cleaning
   heading: We will walk both sides of the wall.

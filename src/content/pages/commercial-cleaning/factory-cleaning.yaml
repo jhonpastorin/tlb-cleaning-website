@@ -203,48 +203,6 @@ whereWeClean:
     - If a town isn't listed, ask us anyway.
 brandLine:
   heading: "{{line.fast.heading}}"
-brandedFaq:
-  heading: Booking a factory clean
-  items:
-    - question: Can you work inside our shutdown window?
-      answer: That is the whole job, and the answer depends on an honest count rather
-        than on enthusiasm. We walk the site during production, count the plant
-        surrounds and the hand-work areas properly, and give you an hours figure
-        and the crew size needed to hit your window. If the window is too short
-        for the scope you want, we will tell you at the walkthrough and offer
-        you a shorter scope instead of a longer shutdown.
-    - question: Who isolates the plant?
-      answer: You do, under your own procedure, and it has to be done and tagged
-        before we start. That duty sits with the site rather than with us, and
-        we will not take it on informally because a shutdown is running behind.
-        We clean what is isolated and tagged, we clean surrounds and exteriors
-        of what is not, and we do not enter confined spaces at all.
-    - question: Can you clean inside a food production environment?
-      answer: "Cleaning inside a food environment has to run to your own HACCP-based
-        plan: your approved products, your dilutions, your sequence and your
-        verification records, with every clean documented so it can be audited.
-        If we cannot meet your program, we will say so rather than work around
-        it."
-    - question: Do you do the recurring work as well as shutdowns?
-      answer: Yes, and it is usually the better way to run it. Amenities, walkways,
-        the floor and the accessible plant surrounds on a weekly or fortnightly
-        visit, with the heavy plant work saved for the shutdown. Residue that is
-        a fortnight old takes a fraction of the time that residue baked on for a
-        quarter does, so the recurring visit tends to pay for itself in shutdown
-        hours you do not buy.
-    - question: What chemicals would you use on our site?
-      answer: Whatever your site approves, and nothing else. Industrial degreasers and
-        descalers include caustic and acidic products that damage the wrong
-        substrate and injure people who use them without training, so the
-        product list belongs on the scope with the Safety Data Sheets attached
-        rather than in a cleaner’s van. Where your program names a product,
-        yours wins.
-    - question: What happens if I get in touch?
-      answer: We walk the site while it is running, which is the only way to see where
-        the residue actually goes, and we ask what you make before we ask how
-        big the floor is. Then you get a written scope by stage, an hours
-        estimate against your window, a crew size, and a recommendation on what
-        should be recurring rather than in the shutdown. No obligation.
 faq:
   heading: Factory cleaning services, common questions
   items:
@@ -297,6 +255,45 @@ faq:
         made, plant that must be isolated before anyone works near it, and a
         shutdown window that is fixed months in advance. Same trade, materially
         different job.
+    - question: Can you work inside our shutdown window?
+      answer: That is the whole job, and the answer depends on an honest count rather
+        than on enthusiasm. We walk the site during production, count the plant
+        surrounds and the hand-work areas properly, and give you an hours figure
+        and the crew size needed to hit your window. If the window is too short
+        for the scope you want, we will tell you at the walkthrough and offer
+        you a shorter scope instead of a longer shutdown.
+    - question: Who isolates the plant?
+      answer: You do, under your own procedure, and it has to be done and tagged
+        before we start. That duty sits with the site rather than with us, and
+        we will not take it on informally because a shutdown is running behind.
+        We clean what is isolated and tagged, we clean surrounds and exteriors
+        of what is not, and we do not enter confined spaces at all.
+    - question: Can you clean inside a food production environment?
+      answer: "Cleaning inside a food environment has to run to your own HACCP-based
+        plan: your approved products, your dilutions, your sequence and your
+        verification records, with every clean documented so it can be audited.
+        If we cannot meet your program, we will say so rather than work around
+        it."
+    - question: Do you do the recurring work as well as shutdowns?
+      answer: Yes, and it is usually the better way to run it. Amenities, walkways,
+        the floor and the accessible plant surrounds on a weekly or fortnightly
+        visit, with the heavy plant work saved for the shutdown. Residue that is
+        a fortnight old takes a fraction of the time that residue baked on for a
+        quarter does, so the recurring visit tends to pay for itself in shutdown
+        hours you do not buy.
+    - question: What chemicals would you use on our site?
+      answer: Whatever your site approves, and nothing else. Industrial degreasers and
+        descalers include caustic and acidic products that damage the wrong
+        substrate and injure people who use them without training, so the
+        product list belongs on the scope with the Safety Data Sheets attached
+        rather than in a cleaner’s van. Where your program names a product,
+        yours wins.
+    - question: What happens if I get in touch?
+      answer: We walk the site while it is running, which is the only way to see where
+        the residue actually goes, and we ask what you make before we ask how
+        big the floor is. Then you get a written scope by stage, an hours
+        estimate against your window, a crew size, and a recommendation on what
+        should be recurring rather than in the shutdown. No obligation.
 closingCta:
   kicker: Factory cleaning services
   heading: Tell us what you make first.

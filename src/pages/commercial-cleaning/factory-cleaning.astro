@@ -255,7 +255,6 @@ const page = await getPage(
     whereWeClean: section.tagCloud.omit({ tags: true }),
     // Heading only. The paragraphs are the shared brand lines.
     brandLine: section.sectionHeading,
-    brandedFaq: section.faq,
     faq: section.faq,
     closingCta: section.callToAction,
   }),
@@ -386,8 +385,9 @@ const business = commercialBusiness(pageMeta.description);
       body={[managedForYou.recurring, ...theLineBody.commercial, ...howItWorks.general]}
     />
 
-    <Faq heading={page.brandedFaq.heading} lead={page.brandedFaq.lead} items={page.brandedFaq.items} />
-    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
+    {/* One FAQ section: the long-tail questions first, then the booking
+        questions that used to sit in a separate branded block above them. */}
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} schema />
 
     <CallToAction
       variant="secondary"

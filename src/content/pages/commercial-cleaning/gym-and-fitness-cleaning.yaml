@@ -158,50 +158,6 @@ whereWeClean:
     - If a town isn't listed, ask us anyway.
 brandLine:
   heading: "{{line.fast.heading}}"
-brandedFaq:
-  heading: Booking a gym clean
-  items:
-    - question: When would you clean, if we never close?
-      answer: In your quietest window, zone by zone rather than room by room, so
-        nothing is ever fully out of service. For a staffed gym that is usually
-        before opening or after the last class. For a 24/7 club it is the small
-        hours, and there will still be members in the building. If we cannot
-        cover a window, we will tell you at the walkthrough rather than after
-        you have signed.
-    - question: Do you clean the equipment itself, or just the floors?
-      answer: The equipment is most of the job here. Every pad, grip, handle, lever
-        and console gets wiped and disinfected with proper contact time, frames
-        included down to the floor. Floors matter, but a member’s hands never
-        touch the floor and they touch forty pieces of equipment in an hour. A
-        gym quote that talks mostly about floors is an office quote with a
-        different heading on it.
-    - question: Will you use products that damage upholstery?
-      answer: No, and it is worth asking every cleaner. Alcohol-heavy and
-        solvent-based sprays crack and dry out vinyl bench upholstery over
-        months, which is how a gym ends up replacing pads it should not have
-        needed to. We use products rated for gym vinyl and rubber, at the right
-        dilution. If your equipment manufacturer specifies something, theirs
-        wins and it goes on the scope.
-    - question: Can you deal with the change room drains and grout?
-      answer: Yes, and they belong on the schedule rather than in a complaint. Grout
-        gets agitated and treated periodically instead of mopped over, and
-        drains get cleaned out and treated on a set interval, because biofilm in
-        a drain is a smell you cannot chase with floor cleaner. Both go on the
-        scope with a frequency, which is the only way either one actually
-        happens.
-    - question: What if we already have mould in the showers?
-      answer: Surface mould on grout and silicone in a wet area is normal in this
-        climate and comes back if only wiped, so it needs treating and then a
-        schedule to keep it down. Anything growing behind a wall or under a
-        floor is remediation rather than cleaning, and that is a different job.
-        We have a page on mould and we will tell you honestly which side of the
-        line yours is.
-    - question: What happens if I get in touch?
-      answer: We walk the gym at the quietest hour you have, look at the change room
-        drains and the underside of the equipment rather than the reception
-        desk, and tell you what is actually going on. Then you get a written
-        scope split by zone, a price per visit and a schedule for the periodic
-        work. No obligation.
 faq:
   heading: Commercial gym cleaning services, common questions
   items:
@@ -248,6 +204,47 @@ faq:
         across it, which is why a mopped rubber floor still feels sticky. Harsh
         chemicals degrade the surface and shorten the life of a floor that is
         expensive to replace.
+    - question: When would you clean, if we never close?
+      answer: In your quietest window, zone by zone rather than room by room, so
+        nothing is ever fully out of service. For a staffed gym that is usually
+        before opening or after the last class. For a 24/7 club it is the small
+        hours, and there will still be members in the building. If we cannot
+        cover a window, we will tell you at the walkthrough rather than after
+        you have signed.
+    - question: Do you clean the equipment itself, or just the floors?
+      answer: The equipment is most of the job here. Every pad, grip, handle, lever
+        and console gets wiped and disinfected with proper contact time, frames
+        included down to the floor. Floors matter, but a member’s hands never
+        touch the floor and they touch forty pieces of equipment in an hour. A
+        gym quote that talks mostly about floors is an office quote with a
+        different heading on it.
+    - question: Will you use products that damage upholstery?
+      answer: No, and it is worth asking every cleaner. Alcohol-heavy and
+        solvent-based sprays crack and dry out vinyl bench upholstery over
+        months, which is how a gym ends up replacing pads it should not have
+        needed to. We use products rated for gym vinyl and rubber, at the right
+        dilution. If your equipment manufacturer specifies something, theirs
+        wins and it goes on the scope.
+    - question: Can you deal with the change room drains and grout?
+      answer: Yes, and they belong on the schedule rather than in a complaint. Grout
+        gets agitated and treated periodically instead of mopped over, and
+        drains get cleaned out and treated on a set interval, because biofilm in
+        a drain is a smell you cannot chase with floor cleaner. Both go on the
+        scope with a frequency, which is the only way either one actually
+        happens.
+    - question: What if we already have mould in the showers?
+      answer: Surface mould on grout and silicone in a wet area is normal in this
+        climate and comes back if only wiped, so it needs treating and then a
+        schedule to keep it down. Anything growing behind a wall or under a
+        floor is remediation rather than cleaning, and that is a different job.
+        We have a page on mould and we will tell you honestly which side of the
+        line yours is.
+    - question: What happens if I get in touch?
+      answer: We walk the gym at the quietest hour you have, look at the change room
+        drains and the underside of the equipment rather than the reception
+        desk, and tell you what is actually going on. Then you get a written
+        scope split by zone, a price per visit and a schedule for the periodic
+        work. No obligation.
 closingCta:
   kicker: Commercial gym cleaning
   heading: We will look at the drains first.

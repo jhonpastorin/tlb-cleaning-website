@@ -181,7 +181,6 @@ const page = await getPage(
     // Heading only: the paragraphs under it all come from Brand lines.
     brandLine: section.sectionHeading,
     faq: section.faq,
-    nonBrandedFaq: section.faq,
     closingCta: section.callToAction,
   }),
 );
@@ -325,8 +324,9 @@ const pathwayCards = [
       body={[managedForYou.oneOff, ...theLineBody.residential, ...howItWorks.general]}
     />
 
-    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} />
-    <Faq heading={page.nonBrandedFaq.heading} lead={page.nonBrandedFaq.lead} items={page.nonBrandedFaq.items} />
+    {/* One FAQ section: the long-tail questions first, then the booking
+        questions that used to sit in a separate block above them. */}
+    <Faq heading={page.faq.heading} lead={page.faq.lead} items={page.faq.items} schema />
 
     <CallToAction
       variant="secondary"

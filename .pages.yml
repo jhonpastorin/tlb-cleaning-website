@@ -2412,12 +2412,8 @@ content:
             description: "The paragraphs under this heading come from Site settings > Brand lines."
           - name: faq
             component: faq
-            label: "FAQs"
-            description: "Answers in [brackets] are waiting on TLB (height limit). Keep them until confirmed."
-          - name: nonBrandedFaq
-            component: faq
             label: "Blind, fan and curtain cleaning FAQs"
-            description: "No health or allergy claims here (brand rule). Answers in [brackets] are waiting on TLB."
+            description: "No health or allergy claims here (brand rule). Answers in [brackets] are waiting on TLB (height limit). Keep them until confirmed."
           - { name: closingCta, component: callToAction, label: "Closing call to action" }
       - name: carpet-cleaning
         label: Carpet cleaning
@@ -3896,14 +3892,10 @@ content:
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
             description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
-          - name: brandedFaq
-            component: faq
-            label: "Frequently asked questions (about working with us)"
-            description: "The CIP answer must not be softened. The brew deck and CO2 answers carry [Confirm] brackets."
           - name: faq
             component: faq
             label: "Brewery cleaning FAQs"
-            description: "The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line."
+            description: "Questions about the service first, then questions about working with us. The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line. The CIP answer must not be softened. The brew deck and CO2 answers carry [Confirm] brackets."
           - name: closingCta
             component: callToAction
             label: "Closing call to action"
@@ -4177,14 +4169,10 @@ content:
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
             description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
-          - name: brandedFaq
-            component: faq
-            label: "Frequently asked questions (about working with us)"
-            description: "The isolation, food production and chemicals answers carry [Confirm] brackets. The isolation answer must not be softened."
           - name: faq
             component: faq
             label: "Factory cleaning FAQs"
-            description: "The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line."
+            description: "Questions about the service first, then questions about working with us. The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line. The isolation, food production and chemicals answers carry [Confirm] brackets. The isolation answer must not be softened."
           - name: closingCta
             component: callToAction
             label: "Closing call to action"
@@ -4232,14 +4220,10 @@ content:
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
             description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
-          - name: brandedFaq
-            component: faq
-            label: "Frequently asked questions (about working with us)"
-            description: "The 24/7 and mould answers carry [Confirm] brackets."
           - name: faq
             component: faq
             label: "Gym cleaning FAQs"
-            description: "The cost answer carries a [Confirm] bracket."
+            description: "Questions about the service first, then questions about working with us. The cost answer carries a [Confirm] bracket. The 24/7 and mould answers carry [Confirm] brackets."
           - name: closingCta
             component: callToAction
             label: "Closing call to action"
@@ -4457,14 +4441,10 @@ content:
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
             description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
-          - name: brandedFaq
-            component: faq
-            label: "Frequently asked questions (about working with us)"
-            description: "The small shop, windows and whole-strip answers carry [Confirm] brackets."
           - name: faq
             component: faq
             label: "Retail cleaning FAQs"
-            description: "The cost answer carries a [Confirm] bracket."
+            description: "Questions about the service first, then questions about working with us. The cost answer carries a [Confirm] bracket. The small shop, windows and whole-strip answers carry [Confirm] brackets."
           - name: closingCta
             component: callToAction
             label: "Closing call to action"
@@ -4522,14 +4502,10 @@ content:
             component: sectionHeading
             label: "Easy to book heading (above the brand lines)"
             description: "The paragraphs under it come from Site settings > Brand lines. Tip: {{line.fast.heading}} inserts the shared heading."
-          - name: brandedFaq
-            component: faq
-            label: "Frequently asked questions (about working with us)"
-            description: "The Working With Children Check answer must not ship with its [Confirm] bracket still in it. The policies answer carries a [Confirm] bracket."
           - name: faq
             component: faq
             label: "School and childcare cleaning FAQs"
-            description: "The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line."
+            description: "Questions about the service first, then questions about working with us. The cost answer carries a [Confirm] bracket. Keep the \"not compliance advice\" line. The Working With Children Check answer must not ship with its [Confirm] bracket still in it. The policies answer carries a [Confirm] bracket."
           - name: closingCta
             component: callToAction
             label: "Closing call to action"

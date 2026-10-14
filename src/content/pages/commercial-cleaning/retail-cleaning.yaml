@@ -133,46 +133,6 @@ whereWeClean:
     - If a town isn't listed, ask us anyway.
 brandLine:
   heading: "{{line.fast.heading}}"
-brandedFaq:
-  heading: Booking a shop clean
-  items:
-    - question: Our shop is small. Is that too small for you?
-      answer: "No, and small shops are a lot of what this work is. What a small shop
-        does run into is travel: a fifteen minute visit costs almost the same to
-        get to as a forty minute one. Often the better answer for a small shop
-        is three visits a week rather than five, and we will say so."
-    - question: Can you be finished before we open?
-      answer: "Yes, and that is the whole point of an early visit. Floors dry, glass
-        done, entry clear, before you unlock. A cleaner still working at trade
-        is worse than no cleaner: you are paying for a service that is now
-        costing you sales, and a wet floor sign in a doorway turns browsers
-        around. If your opening time changes seasonally, tell us and the visit
-        moves with it."
-    - question: Do you do the windows too?
-      answer: Internal glass is part of every retail scope. External shopfront glass
-        at ground level needs washing rather than wiping in a coastal town
-        because of salt film.
-        Anything above ground level is a different job with different equipment,
-        and we will tell you which yours is rather than quoting and then
-        discovering it.
-    - question: Will you touch our stock or displays?
-      answer: Not unless you ask us to. The default is that we dust around merchandise
-        and never move, restyle or reposition it, because a display someone
-        spent an hour on is not ours to improve. If you would rather we lifted
-        pieces to dust the plinth and put them back exactly as they were, we
-        will, and that goes on the scope in writing so it is never a surprise
-        either way.
-    - question: What if we get a spill or a mess mid-trade?
-      answer: Ring the local number. For clients on an ongoing scope we will get to a
-        mid-trade problem the same day where we can, and tell you honestly if we
-        cannot rather than leaving you waiting. Most retail messes are a fifteen
-        minute job that becomes a real one if it dries, so it is worth calling
-        early rather than mopping it with paper towel and hoping.
-    - question: Do you take on a whole strip or a centre?
-      answer: That is a different and larger conversation than a single shop, and it
-        is the one case on this page where a site walkthrough genuinely pays for
-        itself. If you manage a strip rather than trade from one, the strata and
-        common area page is closer to what you need.
 faq:
   heading: Commercial shop cleaning services, common questions
   items:
@@ -219,6 +179,43 @@ faq:
         worth insisting on, because a stockroom that is never cleaned becomes a
         stockroom with a blocked exit path, and that is a fire and work health
         and safety problem rather than a tidiness one."
+    - question: Our shop is small. Is that too small for you?
+      answer: "No, and small shops are a lot of what this work is. What a small shop
+        does run into is travel: a fifteen minute visit costs almost the same to
+        get to as a forty minute one. Often the better answer for a small shop
+        is three visits a week rather than five, and we will say so."
+    - question: Can you be finished before we open?
+      answer: "Yes, and that is the whole point of an early visit. Floors dry, glass
+        done, entry clear, before you unlock. A cleaner still working at trade
+        is worse than no cleaner: you are paying for a service that is now
+        costing you sales, and a wet floor sign in a doorway turns browsers
+        around. If your opening time changes seasonally, tell us and the visit
+        moves with it."
+    - question: Do you do the windows too?
+      answer: Internal glass is part of every retail scope. External shopfront glass
+        at ground level needs washing rather than wiping in a coastal town
+        because of salt film.
+        Anything above ground level is a different job with different equipment,
+        and we will tell you which yours is rather than quoting and then
+        discovering it.
+    - question: Will you touch our stock or displays?
+      answer: Not unless you ask us to. The default is that we dust around merchandise
+        and never move, restyle or reposition it, because a display someone
+        spent an hour on is not ours to improve. If you would rather we lifted
+        pieces to dust the plinth and put them back exactly as they were, we
+        will, and that goes on the scope in writing so it is never a surprise
+        either way.
+    - question: What if we get a spill or a mess mid-trade?
+      answer: Ring the local number. For clients on an ongoing scope we will get to a
+        mid-trade problem the same day where we can, and tell you honestly if we
+        cannot rather than leaving you waiting. Most retail messes are a fifteen
+        minute job that becomes a real one if it dries, so it is worth calling
+        early rather than mopping it with paper towel and hoping.
+    - question: Do you take on a whole strip or a centre?
+      answer: That is a different and larger conversation than a single shop, and it
+        is the one case on this page where a site walkthrough genuinely pays for
+        itself. If you manage a strip rather than trade from one, the strata and
+        common area page is closer to what you need.
 closingCta:
   kicker: Commercial shop cleaning
   heading: Send us your floor plan or your lease clause.
