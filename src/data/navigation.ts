@@ -427,12 +427,11 @@ if (townMenuItems.length > 1) {
 // red on the client's sheet were relinked within a day (blinds, deep cleaning,
 // end of lease), which is all relinking one ever takes: untick "Hidden".
 //
-// ⚠️ UNLINKED IS NOT UNINDEXED. Those pages still build into dist/, stay
-// crawlable by URL and are still linked from page BODIES (premises.ts
-// cross-links all thirteen premises pages). On production, indexing.ts gives
-// every hidden row's page `noindex, follow` and keeps it out of sitemap.xml
-// (hiddenMenuHrefs, at the bottom of this file), the same rule locations.ts
-// applies to the unlinked town pages.
+// ⚠️ "HIDDEN" MEANS OUT OF THE HEADER MENU, NOTHING ELSE. Those pages still
+// build into dist/, are linked from page BODIES (the TagCloud pills, e.g.
+// premises.ts cross-links all thirteen premises pages) and are indexed on
+// production like any other page. Until 14 Oct 2026 a hidden row also unlinked
+// its pills and put `noindex` on its page; the client reversed both.
 //
 // A group left with no linked children is dropped rather than rendered as a
 // bare heading. "Outside your home" and "By type of premises" empty out
@@ -486,38 +485,3 @@ for (const { label, href } of [
 ]) {
   if (href && !menuLabels.has(href)) menuLabels.set(href, label);
 }
-
-// ── WHAT GOOGLE MAY INDEX ───────────────────────────────────────────────
-//
-// The hrefs of menu ROWS ticked "Hidden", for indexing.ts. A hidden row is a
-// page TLB is not selling yet, so on production it carries `noindex` and stays
-// out of sitemap.xml. Unticking "Hidden" in Pages CMS undoes both on the next
-// publish.
-//
-// Rows only, not top-level items: "Meet the team" (/about/) and "Guides" are
-// hidden from the header but still linked from primaryNav and from page
-// bodies, and they are pages TLB wants found.
-//
-// An href that is visible anywhere else in the navigation data (primary bar,
-// services list, a visible header item or row) is left indexable, so hiding a
-// duplicate row can never de-index a page the menu still links.
-const visibleHrefs = new Set([
-  ...navData.primary.map(({ href }) => href),
-  ...navData.services.map(({ href }) => href),
-  ...navData.header
-    .filter((item) => !item.hidden)
-    .flatMap((item) => [
-      item.href,
-      ...(item.groups ?? []).flatMap((group) =>
-        group.items.filter((child) => !child.hidden).map((child) => child.href),
-      ),
-    ]),
-]);
-
-export const hiddenMenuHrefs = new Set(
-  navData.header
-    .flatMap((item) => item.groups ?? [])
-    .flatMap((group) => group.items)
-    .filter((child) => child.hidden && child.href && !visibleHrefs.has(child.href))
-    .map((child) => child.href as string),
-);

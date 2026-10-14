@@ -7,24 +7,22 @@
 // two cannot disagree: whatever this decides is what the sitemap shows.
 //
 // A page is kept out of the index when it is built and reachable by URL but
-// nothing in the menu links it. Indexing those would put thin or unsold pages
-// in front of Google with no internal links behind them (see the ⚠️ notes in
-// locations.ts and navigation.ts). Both switches are in Pages CMS:
+// nothing on the site links it: the town pages that are not live. Indexing
+// those would put 42 near-identical pages in front of Google with no internal
+// links behind them (see the ⚠️ note in locations.ts). The switch is in Pages
+// CMS: Locations > Live towns and region photos > Live town pages.
 //
-//   town pages     Locations > Live towns and region photos > Live town pages
-//   service pages  Site settings > Navigation > Main menu > row "Hidden"
+// Service pages whose menu row is ticked "Hidden" are NOT kept out. They used
+// to be, but since 14 Oct 2026 the TagCloud pills on other pages link them, so
+// "Hidden" only keeps a page out of the header menu (client's call).
 //
 // Staging is unaffected: site-env.ts already marks every staging page
 // `noindex, nofollow`, and Base.astro checks that first.
 import { allTowns, isNavigableTown, townSlug } from './locations';
-import { hiddenMenuHrefs } from './navigation';
 
 const unlinkedTownPaths = new Set(allTowns.filter((town) => !isNavigableTown(town)).map(townSlug));
 
 /** Every path compared here ends in a slash, as every canonical on the site does. */
 const withTrailingSlash = (pathname: string) => (pathname.endsWith('/') ? pathname : `${pathname}/`);
 
-export const isIndexable = (pathname: string) => {
-  const path = withTrailingSlash(pathname);
-  return !unlinkedTownPaths.has(path) && !hiddenMenuHrefs.has(path);
-};
+export const isIndexable = (pathname: string) => !unlinkedTownPaths.has(withTrailingSlash(pathname));

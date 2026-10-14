@@ -30,19 +30,24 @@ canonical URL.
 **Which pages Google may index** is decided by one rule
 ([src/data/indexing.ts](../src/data/indexing.ts)). A page is kept out of
 Google (it gets `noindex, follow` and is left out of the sitemap) when nothing
-in the menu links to it yet:
+on the site links to it yet:
 
 | Kept out of Google | Why | How to bring it live |
 | --- | --- | --- |
 | Town pages not in "Live town pages" (42 of 56 today) | They share one template and differ only by town name. Indexing 42 near-identical pages risks Google treating them as doorway pages, which can drag down the whole site. | Pages CMS > Locations > Live towns and region photos > add the town to **Live town pages** > Publish to live site |
-| Menu rows ticked **Hidden** (18 service pages today, e.g. window, gutter, roof cleaning, most commercial premises) | TLB isn't promoting these services yet, and an indexed page with no internal links rarely ranks anyway. | Pages CMS > Site settings > Navigation > Main menu > untick **Hidden** on the row > Publish to live site |
 | `/thank-you/` and the 404 page | Not useful in search results. | Never. |
 
-Everything else is indexed: the homepage, House cleaning and its 8 visible
-services, Commercial cleaning and its 5 visible services, Airbnb, the guides
+Everything else is indexed: the homepage, House cleaning and all 16 of its
+services, Commercial cleaning and all 15 of its services, Airbnb, the guides
 hub and 9 guides, About, Why TLB, Reviews,
 Contact, Work with us, How booking works, the locations hub, both region pages
-and the 14 live towns. **That's 50 URLs today.**
+and the 14 live towns. **That's 68 URLs today.**
+
+Menu rows ticked **Hidden** in Pages CMS (18 service pages today, e.g. window,
+gutter, roof cleaning, most commercial premises) are left out of the header
+menu only. Their pages are linked from the "What we clean" and "Other premises
+we clean" pills on other pages, so they are indexed and in the sitemap like
+any other page.
 
 Staging is never indexed. Every staging page is `noindex, nofollow`, its
 robots.txt blocks everything, and it has no sitemap. Render also sends a
@@ -50,7 +55,7 @@ noindex header. See the "Search engine indexing" section of the
 [README](../README.md).
 
 **Check it any time:** the production build log prints
-`[tlb-sitemap] wrote sitemap.xml with N URLs`. If you unhide a page and N
+`[tlb-sitemap] wrote sitemap.xml with N URLs`. If you make a town live and N
 doesn't go up by one, something is wrong.
 
 ---
@@ -109,13 +114,13 @@ so do these first:
 9. `https://tlbcleaning.com.au/locations/byron-bay/`
 10. `https://tlbcleaning.com.au/locations/ballina/`
 
-Also inspect **one hidden page**, e.g. `/house-cleaning/window-cleaning/`,
+Also inspect **one town page that isn't live**, e.g. `/locations/bangalow/`,
 and click **Test live URL**. Under Page indexing it should say "Indexing
 allowed? No: 'noindex' detected in 'robots' meta tag". That confirms the rule
 is working.
 
 The first screen of URL Inspection shows Google's **stored** copy from its last
-crawl, not the live page. A hidden page Google crawled before it was hidden
+crawl, not the live page. A town page Google crawled before it was kept out
 will still show as indexed there. Click **Request indexing** on it: Google
 recrawls, sees the noindex and drops the page, usually within a few days.
 Pages you don't request drop out on their own next recrawl.
@@ -157,8 +162,8 @@ few weeks after launch. Add the redirects as `routes` in
 
 ### 2.7 What "normal" looks like in the first weeks
 
-- **Indexing > Pages** will show about 62 URLs as "Excluded by 'noindex' tag".
-  **That's intentional** (42 towns, 18 hidden services, thank-you, 404). Don't
+- **Indexing > Pages** will show about 44 URLs as "Excluded by 'noindex' tag".
+  **That's intentional** (42 towns, thank-you, 404). Don't
   "fix" it.
 - "Discovered, currently not indexed" and "Crawled, currently not indexed" are
   common on a new site. They usually clear within a few weeks as Google trusts
@@ -374,7 +379,7 @@ Good sources for a cleaning business:
 2. **Queries** tab: which searches show TLB? Look for terms with lots of
    impressions but positions 8 to 20. Those are the quickest wins: improve
    the matching page.
-3. **Indexing > Pages**: any new errors? Remember about 62 URLs are excluded
+3. **Indexing > Pages**: any new errors? Remember about 44 URLs are excluded
    by noindex on purpose.
 4. **Business Profile > Performance**: calls, website clicks, direction
    requests.
@@ -415,9 +420,9 @@ after 3 weeks.
 ## Checklist
 
 - [ ] Search Console Domain property verified by DNS TXT
-- [ ] `sitemap.xml` submitted, status Success, about 50 URLs
+- [ ] `sitemap.xml` submitted, status Success, about 68 URLs
 - [ ] Top 10 pages requested for indexing
-- [ ] Hidden page confirmed "Excluded by 'noindex' tag"
+- [ ] Non-live town page confirmed "Excluded by 'noindex' tag"
 - [ ] TLB added as Owner, team added as users
 - [ ] Search Console linked to GA4
 - [ ] `www` and `http` redirect to `https://tlbcleaning.com.au/`

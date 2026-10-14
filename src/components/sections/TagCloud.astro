@@ -1,6 +1,5 @@
 ---
 import { sectionHeadingTags } from '../../lib/headings';
-import { hiddenMenuHrefs } from '../../data/navigation';
 
 // Exported because src/data/premises.ts builds TagCloud pill lists for the
 // thirteen "by type of premises" pages and needs to name this shape. Same
@@ -44,17 +43,12 @@ interface Props {
   note: string[];
 }
 
-const { heading, subheading, tags: rawTags = [], groups: rawGroups = [], note } = Astro.props;
-
-// A pill only links to a page the header menu links. A page whose menu row is
-// ticked "Hidden" (Site settings > Navigation in Pages CMS) is not ready yet,
-// so its pill stays visible as plain text, the way an unlinked town does.
-// Unticking "Hidden" turns every pill pointing at that page back into a link
-// on the next publish. Client request, 13 Oct 2026.
-const liveTag = ({ label, href }: Tag): Tag =>
-  href && !hiddenMenuHrefs.has(href) ? { label, href } : { label };
-const tags = rawTags.map(liveTag);
-const groups = rawGroups.map((group) => ({ ...group, tags: group.tags.map(liveTag) }));
+// Every pill with an href is a link, including pills for pages whose menu row
+// is ticked "Hidden" in Pages CMS: "Hidden" keeps a page out of the header
+// menu only (client, 14 Oct 2026, reversing the 13 Oct rule that unlinked
+// them). Town pills are the exception, and that is decided upstream in
+// locations.ts, which leaves the href off a town that is not live.
+const { heading, subheading, tags = [], groups = [], note } = Astro.props;
 
 const { Heading, Subheading } = sectionHeadingTags(heading);
 

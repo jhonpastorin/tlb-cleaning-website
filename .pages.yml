@@ -1818,7 +1818,7 @@ content:
                     fields:
                       - { name: label, label: Text, type: string, required: true }
                       - { name: href, label: Links to, type: string }
-                      - { name: hidden, label: Hidden (keep this row out of the menu), type: boolean, description: "Also keeps the page out of Google (noindex, and left out of sitemap.xml) once published. Untick to put it back in both." }
+                      - { name: hidden, label: Hidden (keep this row out of the menu), type: boolean, description: "Keeps this row out of the header menu only. The page is still published, linked from other pages and shown to Google. Untick to put it back in the menu." }
                       - { name: note, label: Note, type: text, readonly: true }
 
       - name: trust-bar

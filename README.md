@@ -76,8 +76,9 @@ gets `noindex, nofollow` on every page and a `Disallow: /` robots.txt.
 | anything else, or unset | `noindex, nofollow` | `Disallow: /` | not written |
 
 On production, `src/data/indexing.ts` still puts `noindex, follow` on built
-pages nothing in the menu links: town pages not in "Live town pages", and
-menu rows ticked "Hidden". `integrations/sitemap.mjs` then writes
+pages nothing on the site links: town pages not in "Live town pages". (Menu
+rows ticked "Hidden" are only left out of the header menu; their pages are
+linked from other pages and indexed.) `integrations/sitemap.mjs` then writes
 `dist/sitemap.xml` from every built page **without** a noindex tag, at its
 canonical URL, so the sitemap cannot disagree with the pages. The build log
 says how many URLs it wrote. Search Console setup and the wider SEO plan are in
