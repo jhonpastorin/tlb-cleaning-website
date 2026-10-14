@@ -163,7 +163,7 @@ beforeAfter:
 reviews:
   heading: What our clients say
 ourServices:
-  heading: Our services
+  heading: Our cleaning services
   tileCtaLabel: See the service
   photos:
     - service: /house-cleaning/
@@ -196,7 +196,7 @@ whereWeClean:
   note:
     - If a town isn't listed, ask us anyway.
 faq:
-  heading: Frequently asked questions
+  heading: Cleaning questions, answered
   items:
     - question: Are you a franchise?
       answer: No. TLB is locally owned and locally run, started here and still here.

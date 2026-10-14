@@ -315,7 +315,7 @@ whereWeClean:
 brandLine:
   heading: "{{line.fast.heading}}"
 faq:
-  heading: Frequently asked questions
+  heading: "End of lease cleaning: frequently asked questions"
   items:
     - question: What happens if the property fails the exit inspection?
       answer: If the agent lists something that was on our task list, tell us and we

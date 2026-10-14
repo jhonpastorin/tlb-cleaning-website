@@ -314,7 +314,7 @@ whereWeClean:
 brandLine:
   heading: "{{line.fast.heading}}"
 faq:
-  heading: Frequently asked questions
+  heading: "Mould cleaning: frequently asked questions"
   items:
     - question: Will the mould come back after you clean it?
       answer: If the moisture that grew it is still there, yes. Cleaning removes the

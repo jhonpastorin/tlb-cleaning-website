@@ -212,7 +212,7 @@ whereWeClean:
   note:
     - If a town isn't listed, ask us anyway.
 faq:
-  heading: Frequently asked questions
+  heading: "House cleaning: frequently asked questions"
   items:
     - question: Who's in my house when I'm at work?
       answer: Someone you've met. We'll introduce the cleaner looking after your home

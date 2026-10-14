@@ -124,7 +124,7 @@ whereWeClean:
   note:
     - If a town isn't listed, ask us anyway.
 faq:
-  heading: Frequently asked questions
+  heading: "About TLB Cleaning: frequently asked questions"
   items:
     - question: Who owns TLB Cleaning?
       answer: Teagan Burke, who started the business cleaning houses around
