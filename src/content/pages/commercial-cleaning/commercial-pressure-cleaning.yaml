@@ -36,8 +36,8 @@ definition:
         surface takes which."
   backgroundImage: /src/assets/commercial_cleaning/pressure/clean-commercial-forecourt-and-entry.jpg
 pathways:
-  heading: Types of commercial pressure
-  headingAccent: cleaning services
+  heading: Commercial pressure cleaning, by what your site needs.
+  headingAccent: Start here.
   cards:
     - image:
         src: /src/assets/commercial_cleaning/pressure/half-cleaned-concrete-car-park.jpg

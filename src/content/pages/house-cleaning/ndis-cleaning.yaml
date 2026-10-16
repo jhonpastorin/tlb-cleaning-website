@@ -28,8 +28,8 @@ definition:
         and the Tweed.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: Types of NDIS
-  headingAccent: cleaning services
+  heading: NDIS cleaning for participants and coordinators.
+  headingAccent: Start here.
   cards:
     - image:
         src: /src/assets/home/house-cleaning-team-vacuuming-open-plan-living-room.jpg

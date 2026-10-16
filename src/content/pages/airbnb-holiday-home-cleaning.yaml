@@ -70,8 +70,8 @@ takeCareOf:
       title: Garden and outdoor care
       description: Coming March 2027.
 pathways:
-  heading: Types of Airbnb
-  headingAccent: cleaning services
+  heading: Airbnb cleaning, by the way you host.
+  headingAccent: Start here.
   cards:
     - image:
         src: /src/assets/airbnb/airbnb-turnover-cleaner-wiping-down-the-kitchen-window.jpg

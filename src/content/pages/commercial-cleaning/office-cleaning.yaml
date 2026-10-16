@@ -33,8 +33,8 @@ definition:
         what they charge but exactly what they touch.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: Types of office
-  headingAccent: cleaning services
+  heading: Office cleaning, by what brought you here.
+  headingAccent: Start here.
   cards:
     - image:
         src: /src/assets/commercial_cleaning/premises/office-cleaner-emptying-desk-bins-along-a-workstation-bank.jpg

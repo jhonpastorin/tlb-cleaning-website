@@ -33,8 +33,8 @@ definition:
         emergency. It is just a job that quietly never gets done.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: Types of mattress
-  headingAccent: cleaning services
+  heading: Mattress cleaning, by what brought you here.
+  headingAccent: Start here.
   cards:
     - image:
         src: /src/assets/home_cleaning/appliances/mattress/stripped-bed-ready-for-mattress-cleaning.jpg

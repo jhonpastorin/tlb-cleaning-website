@@ -36,8 +36,8 @@ definition:
         your furniture.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: Types of upholstery
-  headingAccent: cleaning services
+  heading: Upholstery cleaning, by what happened to your lounge.
+  headingAccent: Start here.
   cards:
     - image:
         src: /src/assets/home_cleaning/appliances/upholstery_and_lounge/well-used-family-sofa-in-a-living-room.jpg

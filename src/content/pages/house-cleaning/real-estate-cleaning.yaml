@@ -36,8 +36,8 @@ definition:
         ringing four cleaners to find out who is free.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: Types of real estate
-  headingAccent: cleaning services
+  heading: Types of property management cleaning.
+  headingAccent: Start here.
   cards:
     - image:
         src: /src/assets/real_estate/real-estate-cleaning-two-cleaners-arriving-at-a-rental-house.jpg

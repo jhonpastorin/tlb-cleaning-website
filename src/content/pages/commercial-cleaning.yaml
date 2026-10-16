@@ -31,8 +31,8 @@ definition:
         gets checked. This page covers all of it.
   backgroundImage: /src/assets/home/house-cleaning-cleaner-wiping-tall-interior-window.png
 pathways:
-  heading: Types of commercial
-  headingAccent: cleaning services
+  heading: Commercial cleaning, by what matters most to you.
+  headingAccent: Start here.
   cards:
     - image:
         src: /src/assets/commercial_cleaning/commercial-cleaner-vacuuming-an-open-plan-office.jpg

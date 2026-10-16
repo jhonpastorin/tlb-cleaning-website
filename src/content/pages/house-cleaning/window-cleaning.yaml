@@ -36,8 +36,8 @@ definition:
         paper towel.
   backgroundImage: /src/assets/home_cleaning/outside_your_home/clean-coastal-home-exterior.jpg
 pathways:
-  heading: Types of window
-  headingAccent: cleaning services
+  heading: Window cleaning, by what needs doing.
+  headingAccent: Start here.
   cards:
     - image:
         src: /src/assets/home_cleaning/outside_your_home/window_cleaning/salt-hazed-sliding-door-glass.jpg

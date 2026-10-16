@@ -10,7 +10,7 @@
 // Only the tag follows this rule, never the look: section components pair
 // `Heading` with the `.title-2` class and `Subheading` with `.title-3`
 // (global.css), so a demoted heading renders exactly as it did as an <h2>.
-const KEEP_AS_H2 = ['how tlb compares', 'what our clients say', 'types of mould removal services'];
+const KEEP_AS_H2 = ['how tlb compares', 'what our clients say', 'mould removal, by what you are dealing with. start here.'];
 
 export function keepsH2(text: string): boolean {
   const normalised = text.replace(/\s+/g, ' ').trim().toLowerCase();
