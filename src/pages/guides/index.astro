@@ -42,6 +42,7 @@ import {
   headerNav,
   headerSecondaryCta,
   footerServiceLinks,
+  footerLocationLinks,
   footerContact,
   footerSocialLinks,
   footerCopyright,
@@ -209,7 +210,7 @@ const heroImage = page.hero.image && sized(page.hero.image, '4/3');
     logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
     columns={[
       { title: 'Services', links: footerServiceLinks },
-      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+      { title: 'Locations', links: footerLocationLinks },
     ]}
     contact={footerContact}
     socialLinks={footerSocialLinks}

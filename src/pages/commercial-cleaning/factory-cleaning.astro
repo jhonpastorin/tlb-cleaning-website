@@ -90,6 +90,7 @@ import {
   headerNav,
   headerSecondaryCta,
   footerServiceLinks,
+  footerLocationLinks,
   footerContact,
   footerSocialLinks,
   footerCopyright,
@@ -402,7 +403,7 @@ const business = commercialBusiness(pageMeta.description);
     logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
     columns={[
       { title: 'Services', links: footerServiceLinks },
-      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+      { title: 'Locations', links: footerLocationLinks },
     ]}
     contact={footerContact}
     socialLinks={footerSocialLinks}

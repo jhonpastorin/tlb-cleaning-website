@@ -1,7 +1,7 @@
 ---
 // The locations hub, shipping at /locations/.
 //
-// WHY IT EXISTS. Every footer on the site carries "View all locations" →
+// WHY IT EXISTS. Every footer on the site carries "All locations" →
 // `/locations/`, and the primary nav carries "Locations" → the same href.
 // That link was a 404 on all 106 built pages. locations.ts' own header has
 // carried a standing warning about it ("⚠️ Still 404ing … /locations/ itself,
@@ -76,6 +76,7 @@ import {
   headerNav,
   headerSecondaryCta,
   footerServiceLinks,
+  footerLocationLinks,
   footerContact,
   footerSocialLinks,
   footerCopyright,
@@ -408,7 +409,7 @@ const regionBlocks = [
     logo={{ label: 'TLB Cleaning', src: footerLogoImg }}
     columns={[
       { title: 'Services', links: footerServiceLinks },
-      { title: 'Locations', links: [{ label: 'View all locations', href: '/locations/' }] },
+      { title: 'Locations', links: footerLocationLinks },
     ]}
     contact={footerContact}
     socialLinks={footerSocialLinks}

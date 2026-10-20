@@ -24,6 +24,7 @@ import {
   southernGoldCoastTowns,
   isNavigableTown,
   townSlug,
+  locationGroups,
 } from './locations';
 import { regionSlugHref } from './regionPages';
 
@@ -154,6 +155,16 @@ export const walkthroughLabel = buttons.walkthroughLabel;
 export const serviceLinks = navData.services;
 
 export const footerServiceLinks: NavItem[] = serviceLinks.map(({ title, href }) => ({ label: title, href }));
+
+// The footer's "Locations" column: the three regions, then the hub. Read from
+// locations.ts' `locationGroups`, so each region carries the same label and
+// link as its heading on every "Where we clean" band, the Tweed's included
+// (its Tweed Heads town page, as it has no overview page). Client's request,
+// 20 Oct 2026.
+export const footerLocationLinks: NavItem[] = [
+  ...locationGroups.flatMap(({ label, href }) => (href ? [{ label, href }] : [])),
+  { label: 'All locations', href: '/locations/' },
+];
 
 // The site's real contact details, supplied by the client 23 Sep 2026. This
 // is the single source: the footer on all 111 pages, the header's phone CTA

@@ -30,7 +30,7 @@
 // every band and the hub still name the region. See regionPages.ts.
 //
 // ✅ RESOLVED — /locations/ exists. src/pages/locations/index.astro is the
-// hub every footer's "View all locations" and the primary nav's "Locations"
+// hub every footer's "All locations" and the primary nav's "Locations"
 // point at, and it renders `locationGroups` below as its canonical town list,
 // so the hub cannot disagree with the mega-menu or with any page's "Where we
 // clean" band. Its counts are derived from these arrays too.
