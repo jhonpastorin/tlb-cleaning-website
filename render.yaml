@@ -69,6 +69,12 @@ services:
       - key: PUBLIC_ENQUIRY_WEBHOOK_URL
         sync: false
 
+      # The footer newsletter signup's Zapier catch hook. Its own Zap, not the
+      # enquiry one. See NEWSLETTER-FORM-SETUP.md. Unset is safe: the field
+      # renders and says sign-ups are not switched on.
+      - key: PUBLIC_NEWSLETTER_WEBHOOK_URL
+        sync: false
+
     headers:
       # Everything under /_astro/ is content-hashed by Astro (filenames change
       # when contents change), so it can be cached indefinitely. HTML is left on
@@ -96,6 +102,10 @@ services:
       # that testing the form on staging cannot create items in the live board.
       # See MONDAY-FORM-SETUP.md.
       - key: PUBLIC_ENQUIRY_WEBHOOK_URL
+        sync: false
+
+      # Same idea for the newsletter: a test Zap, or empty.
+      - key: PUBLIC_NEWSLETTER_WEBHOOK_URL
         sync: false
 
     headers:

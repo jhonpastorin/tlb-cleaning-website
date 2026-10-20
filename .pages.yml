@@ -1938,6 +1938,20 @@ content:
             list: true
             description: "These are sent to the Monday.com board word for word. Changing or adding one means updating the board's dropdown column the same day, or those enquiries arrive with the service blank."
 
+      - name: newsletter
+        label: Newsletter signup
+        type: file
+        path: src/content/site/newsletter.yaml
+        format: yaml
+        fields:
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: placeholder, label: Text inside the email box, type: string, required: true }
+          - { name: submitLabel, label: Subscribe button, type: string, required: true }
+          - { name: submittingLabel, label: Subscribe button while sending, type: string, required: true }
+          - { name: successMessage, label: After subscribing, message, type: text, required: true }
+          - { name: errorMessage, label: If subscribing fails, message, type: text, required: true }
+          - { name: unconfiguredMessage, label: If the signup is not connected, message, type: text, required: true }
+
       - name: who-is-in-your-home
         label: '"Who is in my home" card'
         type: file

@@ -1,0 +1,7 @@
+heading: Newsletter
+placeholder: Email address
+submitLabel: Subscribe
+submittingLabel: Subscribing…
+successMessage: Thanks, you are on the list.
+errorMessage: That did not go through. Please try again in a minute.
+unconfiguredMessage: Sign-ups are not switched on yet, so nothing was sent.

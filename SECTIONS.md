@@ -2082,7 +2082,7 @@ the sections it hasn't supplied.
 | `columns` | `{ title: string, links: NavItem[] }[]` | Any count — the Contact column (see below) is appended automatically alongside these, not inside `columns`. |
 | `contact` | `{ phone, email, address }` | |
 | `contactHeading` | `string` | Default `'Contact'` — override to `'Phone'` etc. if that fits the brand's content better. |
-| `newsletter` | `{ heading, placeholder?, fieldLabel?, cta: { label, variant? }, action?, method? }` | Optional; omit entirely for no newsletter column. Real `<input type="email" required>` + a `Button` with `type="submit"` — see the `type` prop note under `Button.astro` above. |
+| `newsletter` | `boolean` | Default `true`. An email-only signup column posted to a Zapier catch hook (`PUBLIC_NEWSLETTER_WEBHOOK_URL`); copy from Pages CMS (`site/newsletter.yaml`). See `src/data/newsletter.ts` and NEWSLETTER-FORM-SETUP.md. Pass `false` to drop the column. |
 | `registration` | `string` | Now optional (was required) — a legal/registration line some brands need and others don't. |
 | `copyright` | `string` | |
 
@@ -2095,7 +2095,6 @@ the sections it hasn't supplied.
   columns={footer.columns}
   contact={footer.contact}
   contactHeading="Phone"
-  newsletter={{ heading: 'Newsletter', cta: { label: 'Subscribe' } }}
   registration={footer.registration}
   copyright={footer.copyright}
 />

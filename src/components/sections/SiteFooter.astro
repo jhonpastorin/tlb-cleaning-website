@@ -11,7 +11,8 @@
 import Placeholder from '../ui/Placeholder.astro';
 import Button from '../ui/Button.astro';
 import ContactForm from './ContactForm.astro';
-import type { NavItem, ButtonData } from '../../data/types';
+import { newsletterCopy, newsletterEndpoint } from '../../data/newsletter';
+import type { NavItem } from '../../data/types';
 import type { ImageMetadata } from 'astro';
 
 type SocialPlatform = 'facebook' | 'instagram' | 'tiktok' | 'linkedin' | 'x' | 'youtube';
@@ -21,16 +22,6 @@ interface SocialLink {
   href: string;
   /** Accessible name override. Defaults to "Follow us on {platform}". */
   label?: string;
-}
-
-interface NewsletterConfig {
-  heading: string;
-  placeholder?: string;
-  /** Visually-hidden label — the field still needs an accessible name. Default 'Email address'. */
-  fieldLabel?: string;
-  cta: Pick<ButtonData, 'label' | 'variant'>;
-  action?: string;
-  method?: 'get' | 'post';
 }
 
 interface Props {
@@ -48,8 +39,13 @@ interface Props {
   contact: { phone: string; phoneHref?: string; email: string; address: string };
   /** Default 'Contact' — override to e.g. 'Phone' if that fits the brand's content better. */
   contactHeading?: string;
-  /** Omit entirely for a footer with no newsletter signup. */
-  newsletter?: NewsletterConfig;
+  /**
+   * The email signup column, posted to a Zapier catch hook. On by default,
+   * like `enquiryForm`, so every page gets it without passing anything. Copy
+   * comes from Pages CMS and the endpoint from PUBLIC_NEWSLETTER_WEBHOOK_URL;
+   * see src/data/newsletter.ts. Pass `false` to drop the column.
+   */
+  newsletter?: boolean;
   /** Optional now (was required) — a legal/registration line some brands need and others don't. */
   registration?: string;
   copyright: string;
@@ -75,7 +71,7 @@ const {
   columns,
   contact,
   contactHeading = 'Contact',
-  newsletter,
+  newsletter = true,
   registration,
   copyright,
   enquiryForm = true,
@@ -213,20 +209,45 @@ const {
         </ul>
       </div>
 
+      {/* Same three honest outcomes as ContactForm: no endpoint -> refuse and
+          say so; request fails -> say so; 2xx -> thank in place. Posted as
+          urlencoded by the script below so it stays a CORS simple request.
+          With JavaScript off, `action` still delivers the email natively. */}
       {newsletter && (
         <div class="site-footer__column">
-          <p class="site-footer__column-title">{newsletter.heading}</p>
-          <form class="site-footer__newsletter" action={newsletter.action} method={newsletter.method ?? 'post'}>
-            <label class="sr-only" for="footer-newsletter-email">{newsletter.fieldLabel ?? 'Email address'}</label>
+          <p class="site-footer__column-title">{newsletterCopy.heading}</p>
+          <form
+            class="site-footer__newsletter"
+            action={newsletterEndpoint || undefined}
+            method="post"
+            data-newsletter-form
+            data-endpoint={newsletterEndpoint}
+            data-submit-label={newsletterCopy.submitLabel}
+            data-submitting-label={newsletterCopy.submittingLabel}
+            data-success={newsletterCopy.successMessage}
+            data-error={newsletterCopy.errorMessage}
+            data-unconfigured={newsletterCopy.unconfiguredMessage}
+          >
+            <label class="sr-only" for="footer-newsletter-email">Email address</label>
             <input
               id="footer-newsletter-email"
               class="site-footer__newsletter-field"
               type="email"
               name="email"
-              placeholder={newsletter.placeholder ?? 'Email Address'}
+              autocomplete="email"
+              placeholder={newsletterCopy.placeholder}
               required
             />
-            <Button label={newsletter.cta.label} type="submit" variant={newsletter.cta.variant ?? 'brand'} size="sm" />
+            <input type="hidden" name="sourcePage" value="" data-source-page />
+            <input type="hidden" name="submittedAt" value="" data-submitted-at />
+            {/* Honeypot, same as ContactForm's: off-screen, skipped by
+                keyboards and screen readers, filled only by bots. */}
+            <div class="site-footer__newsletter-trap" aria-hidden="true">
+              <label for="footer-newsletter-website">Website</label>
+              <input id="footer-newsletter-website" type="text" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+            <Button label={newsletterCopy.submitLabel} type="submit" variant="surface" size="sm" />
+            <p class="site-footer__newsletter-status" role="status" data-newsletter-status></p>
           </form>
         </div>
       )}
@@ -237,6 +258,76 @@ const {
     <p class="container small">{copyright}</p>
   </div>
 </footer>
+
+<script>
+  // The browser's own email check runs before `submit` fires, so by the time
+  // this handler runs the address is at least well formed.
+  document.querySelectorAll<HTMLFormElement>('[data-newsletter-form]').forEach((form) => {
+    const { endpoint, submitLabel, submittingLabel, success, error, unconfigured } = form.dataset;
+    const status = form.querySelector<HTMLElement>('[data-newsletter-status]');
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+    const say = (message = '', tone = 'error') => {
+      if (!status) return;
+      status.dataset.tone = tone;
+      status.textContent = message;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      // A filled honeypot is a bot: thank it and send nothing.
+      const trap = form.querySelector<HTMLInputElement>('[name="website"]');
+      if (trap && trap.value.trim() !== '') {
+        say(success, 'success');
+        return;
+      }
+
+      if (!endpoint) {
+        say(unconfigured);
+        return;
+      }
+
+      const sourcePage = form.querySelector<HTMLInputElement>('[data-source-page]');
+      const submittedAt = form.querySelector<HTMLInputElement>('[data-submitted-at]');
+      if (sourcePage) sourcePage.value = window.location.pathname;
+      if (submittedAt) submittedAt.value = new Date().toISOString();
+
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = submittingLabel ?? '';
+      }
+      say('');
+
+      try {
+        const body = new URLSearchParams();
+        new FormData(form).forEach((value, key) => {
+          if (key !== 'website') body.append(key, String(value));
+        });
+
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: body.toString(),
+        });
+        if (!response.ok) throw new Error(`Webhook responded ${response.status}`);
+
+        form.dataset.state = 'done';
+        say(success, 'success');
+        // For GTM: a signup has no thank-you page to count as a page view.
+        const w = window as unknown as { dataLayer?: unknown[] };
+        (w.dataLayer = w.dataLayer || []).push({ event: 'newsletter_signup', ctaLocation: 'footer' });
+      } catch (err) {
+        console.error('[FORM] newsletter submit failed', err);
+        say(error);
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = submitLabel ?? '';
+        }
+      }
+    });
+  });
+</script>
 
 <style>
   .site-footer {
@@ -382,6 +473,34 @@ const {
 
   .site-footer__newsletter-field::placeholder {
     color: var(--color-body);
+  }
+
+  /* After a successful signup only the thank-you is left. */
+  .site-footer__newsletter[data-state='done'] > :not([data-newsletter-status]) {
+    display: none;
+  }
+
+  .site-footer__newsletter-status {
+    color: var(--color-on-inverse);
+    font-size: var(--text-small);
+  }
+
+  .site-footer__newsletter-status:empty {
+    display: none;
+  }
+
+  .site-footer__newsletter-status[data-tone='success'] {
+    color: var(--color-accent);
+  }
+
+  /* Off-screen rather than display:none: some bots skip fields they can tell
+     are hidden. */
+  .site-footer__newsletter-trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
   }
 
   .site-footer__bottom {
