@@ -12,7 +12,6 @@ import { loadData } from '../lib/cms-data';
 export const newsletterCopy = loadData(
   'site/newsletter',
   z.object({
-    heading: z.string().min(1),
     placeholder: z.string().min(1),
     submitLabel: z.string().min(1),
     submittingLabel: z.string().min(1),

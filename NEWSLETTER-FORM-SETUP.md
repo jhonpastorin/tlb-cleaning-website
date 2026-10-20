@@ -1,6 +1,7 @@
 # Footer newsletter signup → Zapier: setup guide
 
-The footer on every page has a one-field newsletter signup (email only). The
+The footer on every page has a one-field newsletter signup (email only), under
+the Contact details, with a "Subscribe to Newsletter" button. The
 website side is built. **It will not submit until step 3 is done.** Until then
 the field renders but tells the reader sign-ups are not switched on, rather
 than thanking them for an email that went nowhere.
@@ -56,7 +57,7 @@ one there and the Zap's mapping breaks.
 
 | Outcome | Message (editable in Pages CMS → Site settings → Newsletter signup) |
 |---|---|
-| Sent, Zapier replied 2xx | "Thanks, you are on the list." The field and button disappear. |
+| Sent, Zapier replied 2xx | "Thanks, you are on the list." under an emptied field, ready for another address. |
 | Sent, but it failed | "That did not go through. Please try again in a minute." |
 | No webhook URL set | "Sign-ups are not switched on yet, so nothing was sent." |
 

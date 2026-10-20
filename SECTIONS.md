@@ -2082,7 +2082,7 @@ the sections it hasn't supplied.
 | `columns` | `{ title: string, links: NavItem[] }[]` | Any count — the Contact column (see below) is appended automatically alongside these, not inside `columns`. |
 | `contact` | `{ phone, email, address }` | |
 | `contactHeading` | `string` | Default `'Contact'` — override to `'Phone'` etc. if that fits the brand's content better. |
-| `newsletter` | `boolean` | Default `true`. An email-only signup column posted to a Zapier catch hook (`PUBLIC_NEWSLETTER_WEBHOOK_URL`); copy from Pages CMS (`site/newsletter.yaml`). See `src/data/newsletter.ts` and NEWSLETTER-FORM-SETUP.md. Pass `false` to drop the column. |
+| `newsletter` | `boolean` | Default `true`. An email-only signup under the Contact details (no column of its own), posted to a Zapier catch hook (`PUBLIC_NEWSLETTER_WEBHOOK_URL`); copy from Pages CMS (`site/newsletter.yaml`). See `src/data/newsletter.ts` and NEWSLETTER-FORM-SETUP.md. Pass `false` to drop it. |
 | `registration` | `string` | Now optional (was required) — a legal/registration line some brands need and others don't. |
 | `copyright` | `string` | |
 
@@ -2100,8 +2100,8 @@ the sections it hasn't supplied.
 />
 ```
 
-**Layout, not a fixed column count:** `columns` (any length) + Contact +
-Newsletter (if present) all land in one `repeat(auto-fit, minmax(140px,
+**Layout, not a fixed column count:** `columns` (any length) + Contact (with
+the newsletter signup inside it) all land in one `repeat(auto-fit, minmax(140px,
 1fr))` grid — deliberately not a fixed `repeat(N, 1fr)`, which is what the
 first pass at this restructure used and got wrong. `auto-fit` is what
 actually handles "however many columns a brand happens to have" instead of

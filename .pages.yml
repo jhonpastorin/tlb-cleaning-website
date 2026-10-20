@@ -1944,7 +1944,6 @@ content:
         path: src/content/site/newsletter.yaml
         format: yaml
         fields:
-          - { name: heading, label: Heading, type: string, required: true }
           - { name: placeholder, label: Text inside the email box, type: string, required: true }
           - { name: submitLabel, label: Subscribe button, type: string, required: true }
           - { name: submittingLabel, label: Subscribe button while sending, type: string, required: true }

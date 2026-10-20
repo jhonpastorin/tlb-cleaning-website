@@ -40,10 +40,10 @@ interface Props {
   /** Default 'Contact' — override to e.g. 'Phone' if that fits the brand's content better. */
   contactHeading?: string;
   /**
-   * The email signup column, posted to a Zapier catch hook. On by default,
+   * The email signup under the Contact details, posted to a Zapier catch hook. On by default,
    * like `enquiryForm`, so every page gets it without passing anything. Copy
    * comes from Pages CMS and the endpoint from PUBLIC_NEWSLETTER_WEBHOOK_URL;
-   * see src/data/newsletter.ts. Pass `false` to drop the column.
+   * see src/data/newsletter.ts. Pass `false` to drop it.
    */
   newsletter?: boolean;
   /** Optional now (was required) — a legal/registration line some brands need and others don't. */
@@ -207,15 +207,14 @@ const {
             <a href={contact.phoneHref ?? `tel:${contact.phone.replace(/\s+/g, '')}`}>{contact.phone}</a>
           </li>
         </ul>
-      </div>
 
-      {/* Same three honest outcomes as ContactForm: no endpoint -> refuse and
-          say so; request fails -> say so; 2xx -> thank in place. Posted as
-          urlencoded by the script below so it stays a CORS simple request.
-          With JavaScript off, `action` still delivers the email natively. */}
-      {newsletter && (
-        <div class="site-footer__column">
-          <p class="site-footer__column-title">{newsletterCopy.heading}</p>
+        {/* Under the contact details rather than a column of its own; the
+            button label names it, so it carries no heading.
+            Same three honest outcomes as ContactForm: no endpoint -> refuse and
+            say so; request fails -> say so; 2xx -> thank in place. Posted as
+            urlencoded by the script below so it stays a CORS simple request.
+            With JavaScript off, `action` still delivers the email natively. */}
+        {newsletter && (
           <form
             class="site-footer__newsletter"
             action={newsletterEndpoint || undefined}
@@ -249,8 +248,8 @@ const {
             <Button label={newsletterCopy.submitLabel} type="submit" variant="surface" size="sm" />
             <p class="site-footer__newsletter-status" role="status" data-newsletter-status></p>
           </form>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   </div>
 
@@ -312,7 +311,9 @@ const {
         });
         if (!response.ok) throw new Error(`Webhook responded ${response.status}`);
 
-        form.dataset.state = 'done';
+        // Back to an empty, ready form with the thank-you under it, so the
+        // reader can see it worked and sign up another address if they want.
+        form.reset();
         say(success, 'success');
         // For GTM: a signup has no thank-you page to count as a page view.
         const w = window as unknown as { dataLayer?: unknown[] };
@@ -320,12 +321,17 @@ const {
       } catch (err) {
         console.error('[FORM] newsletter submit failed', err);
         say(error);
+      } finally {
         if (submit) {
           submit.disabled = false;
           submit.textContent = submitLabel ?? '';
         }
       }
     });
+
+    // A new address replaces the old outcome; a stale "thanks" or "failed"
+    // under a fresh entry would describe the wrong email.
+    form.querySelector('[name="email"]')?.addEventListener('input', () => say(''));
   });
 </script>
 
@@ -387,7 +393,7 @@ const {
   }
 
   /* auto-fit rather than a fixed column count: link columns (any count from
-     `columns`), Contact, and Newsletter (optional) all land here as equal
+     `columns`) and Contact (which carries the newsletter signup) land here as equal
      flat items — this must flex with however many of those actually exist,
      not assume a specific total the way a fixed `repeat(N, 1fr)` would. */
   .site-footer__columns {
@@ -458,6 +464,7 @@ const {
     flex-direction: column;
     gap: var(--space-sm);
     align-items: flex-start;
+    margin-top: var(--space-md);
   }
 
   .site-footer__newsletter-field {
@@ -473,11 +480,6 @@ const {
 
   .site-footer__newsletter-field::placeholder {
     color: var(--color-body);
-  }
-
-  /* After a successful signup only the thank-you is left. */
-  .site-footer__newsletter[data-state='done'] > :not([data-newsletter-status]) {
-    display: none;
   }
 
   .site-footer__newsletter-status {
