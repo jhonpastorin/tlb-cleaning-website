@@ -522,6 +522,14 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
     display: flex;
     align-items: center;
     min-height: var(--hero-min-height);
+    /* Keeps a tall card (a long H1, a narrow viewport) off the section's
+       bottom edge. Without it the card grows to fill the section and
+       TrustBar's card variant, which pulls up over this hero by
+       --trust-bar-overlap, lands on it. Must stay larger than that overlap
+       at every breakpoint (2.75rem, then 1.5rem below --bp-sm). A short
+       card is still centred in the min-height, so this changes nothing for
+       it. */
+    padding-block: var(--space-xl);
     overflow: hidden;
   }
 
@@ -584,6 +592,10 @@ const collageColB = collageImages.filter((_, i) => i % 2 === 1);
 
   /* mirrors --bp-sm */
   @media (max-width: 480px) {
+    .hero--full-width-photo {
+      padding-block: var(--space-lg);
+    }
+
     .hero--full-width-photo .hero__card {
       max-width: 100%;
     }

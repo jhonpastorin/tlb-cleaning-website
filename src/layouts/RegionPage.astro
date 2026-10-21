@@ -232,9 +232,15 @@ const serviceItems = serviceLinks.map((service) => ({
     {/* `full-width-photo`, matching /locations/<town>/ and the hub rather than
         the service pages' `split-single-image`: a location page opens on a
         place, and that variant floats a solid card over the photo so the copy
-        never depends on the photo's own contrast. */}
+        never depends on the photo's own contrast.
+
+        `cardWidth="wide"` for the same reason as the hub: the region
+        headings ("Cleaners across the Southern Gold Coast.") wrapped to four
+        lines at the 480px default, and the card ran tall enough for the
+        TrustBar's overlap to land on it. */}
     <Hero
       variant="full-width-photo"
+      cardWidth="wide"
       kicker={page.hero.kicker}
       headingLines={region.headingLines}
       lead={region.lead}
