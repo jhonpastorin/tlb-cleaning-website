@@ -71,7 +71,7 @@ import {
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
-import { nswLocationGroups } from '../../data/locations';
+import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
 import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
@@ -316,7 +316,7 @@ const schema = pageSchema({
     <TagCloud
       heading={page.whereWeClean.heading}
       subheading={page.whereWeClean.subheading}
-      groups={nswLocationGroups}
+      groups={locationGroups}
       note={page.whereWeClean.note}
     />
 

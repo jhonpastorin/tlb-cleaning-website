@@ -247,16 +247,15 @@ export const locationGroups: TagGroup[] = [
 /**
  * NSW only — the Northern Rivers and the Tweed, minus Queensland.
  *
- * For the nine pages whose own meta and copy claim NSW and stop at the border:
- * the commercial sub-pages (brewery, factory, gym, kitchen and the rest) and
- * ndis-cleaning. The client confirmed on 18 Sep 2026 that these stay NSW-only
- * while every other band widened to all three regions, so that each band keeps
- * matching the page's own meta description rather than contradicting it.
- *
- * ⚠️ Confirm this is still deliberate for both kinds of page. If TLB does
- * commercial or NDIS work across the border they should use `locationGroups`
- * instead — and commercial-cleaning's last non-branded FAQ needs the Blue Card
- * answer that is still open there.
+ * ⚠️ NO PAGE RENDERS THIS NOW. On 18 Sep 2026 the client kept the commercial
+ * sub-pages and ndis-cleaning NSW-only. On 22 Oct 2026, with the schema review
+ * putting the Southern Gold Coast on every service, the last six bands using
+ * this (brewery, factory, gym, retail, school and childcare, and the
+ * how-to-choose-a-commercial-cleaner guide) moved to `locationGroups`. Kept,
+ * with `nswLocationSubheading` and its Pages CMS field, so a page can go back
+ * to NSW-only by swapping one import. Those six pages' meta descriptions and
+ * intros still say "the Northern Rivers and the Tweed", and
+ * commercial-cleaning's last non-branded FAQ still needs its Blue Card answer.
  */
 export const nswLocationGroups: TagGroup[] = [northernRiversGroup, tweedGroup];
 

@@ -39,8 +39,9 @@
 // BLOCKS LAUNCH, specific to this page:
 //   - WWCC for every cleaner. See above. This is the gate.
 //   - The Queensland question the hub left open: whether TLB works across
-//     the border and therefore needs Blue Cards too. `nswLocationGroups`
-//     below says NSW only, which is at least internally consistent.
+//     the border and therefore needs Blue Cards too. The "Where we clean"
+//     band now lists the Southern Gold Coast (client, 22 Oct 2026), so
+//     cleaners on Queensland sites need a Blue Card as well as a WWCC.
 //   - Whether TLB will do a childcare centre's nappy change area and
 //     bathrooms, which is the least pleasant and most scrutinised part of
 //     the job. Bracketed in §5.
@@ -89,7 +90,7 @@ import {
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
-import { nswLocationGroups } from '../../data/locations';
+import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { commercialBusiness, relatedPremises, walkthroughCtaLabel } from '../../data/premises';
 import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
@@ -367,7 +368,7 @@ const schema = pageSchema({
     <TagCloud
       heading={page.whereWeClean.heading}
       subheading={page.whereWeClean.subheading}
-      groups={nswLocationGroups}
+      groups={locationGroups}
       note={page.whereWeClean.note}
     />
 

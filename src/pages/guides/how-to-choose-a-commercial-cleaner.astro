@@ -68,7 +68,7 @@ import {
   footerCopyright,
   quoteCta,
 } from '../../data/navigation';
-import { nswLocationGroups } from '../../data/locations';
+import { locationGroups } from '../../data/locations';
 import { trustBarCards } from '../../data/trust';
 import { otherGuides, relatedGuides } from '../../data/guides';
 import { walkthroughCtaLabel } from '../../data/premises';
@@ -192,7 +192,7 @@ const page = await getPage(
     // `tags` holds only this page's own extra links. relatedGuides() adds the
     // other guides before them and the hub link after them.
     moreGuides: section.tagCloud,
-    // The towns are the NSW-only groups (nswLocationGroups), set in code.
+    // The towns are all three regions (locationGroups), set in code.
     whereWeClean: section.tagCloud,
     closingCta: section.callToAction,
   }),
@@ -318,7 +318,7 @@ const moreGuideTags = relatedGuides(selfHref, page.moreGuides.tags ?? []);
       heading={page.whereWeClean.heading}
       subheading={page.whereWeClean.subheading}
       tags={page.whereWeClean.tags}
-      groups={nswLocationGroups}
+      groups={locationGroups}
       note={page.whereWeClean.note}
     />
 
