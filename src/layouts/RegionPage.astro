@@ -36,6 +36,7 @@
 // scenes, not photographs of these places — IMAGE-GUIDELINES.md §5 and
 // townPages.ts' header. The copy names towns; the image labels never do.
 import Base from './Base.astro';
+import { pageSchema, regionNodes } from './../data/schema';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
@@ -152,22 +153,10 @@ const pageMeta = {
   canonical: `https://tlbcleaning.com.au/locations/${region.slug}/`,
 };
 
-// ⚠️ `areaServed` narrows to this region, which is the point of the page —
-// the /locations/ hub carries the wide three-region string instead. Every
-// other field is empty, inherited from every page built before these; one
-// fix in one place would fill the whole site's structured data and nobody
-// has supplied the details yet. The address carries the region's state, so
-// it replaces the empty site-wide one.
-const business = {
-  ...localBusiness({ description: pageMeta.description, areaServed: `${region.headingLabel}` }),
-  address: {
-    streetAddress: '',
-    addressLocality: '',
-    addressRegion: region.state,
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-};
+// Since the Oct 2026 schema review this only names the site for Open Graph.
+// What Google reads about the region (its Place, and a Service across its
+// towns) is `schema` at the end of this block.
+const business = localBusiness({ description: pageMeta.description, areaServed: `${region.headingLabel}` });
 
 // The town pills. Every town in the region is NAMED; only a navigable one is
 // LINKED, which is the same rule the header menu follows and which
@@ -217,9 +206,17 @@ const serviceItems = serviceLinks.map((service) => ({
 // charge for the outer reaches, this is the first answer to fix and it is
 // wrong on four pages, not one.
 
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'FAQPage',
+  faq: page.faq.items,
+  nodes: regionNodes(pageMeta.canonical, region.headingLabel),
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

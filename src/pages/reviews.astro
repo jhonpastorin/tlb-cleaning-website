@@ -38,6 +38,7 @@
 //     came from the homepage brief and src/data/trust.ts already flags them.
 //     On a page about proof, substantiate them or drop them.
 import Base from '../layouts/Base.astro';
+import { pageSchema } from '../data/schema';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
@@ -202,9 +203,12 @@ const honestyCta = googleBusinessProfileUrl
 
 // The agency marks are still reserved slots (see the agency band note above).
 const agencyLogos = page.agencies?.logos.map((item) => ({ ...item, logo: sized(item.logo, '2/1') }));
+
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({ url: pageMeta.canonical, title: pageMeta.title, type: 'WebPage' });
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

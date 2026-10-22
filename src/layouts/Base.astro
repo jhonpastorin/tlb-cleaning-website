@@ -12,6 +12,8 @@ import poppinsBoldWoff2 from '@fontsource/poppins/files/poppins-latin-700-normal
 // the noindex decision has to be made. See site-env.ts for why it fails closed.
 import { isStaging, robotsContent, siteEnv } from '../data/site-env';
 import { isIndexable } from '../data/indexing';
+import { breadcrumbTrail } from '../data/breadcrumbs';
+import type { PageSchema } from '../data/schema';
 
 export interface LocalBusinessInfo {
   name: string;
@@ -45,9 +47,13 @@ interface Props {
   /** Keep this page out of search on production too. For pages a reader only
    *  reaches by doing something, like /thank-you/ after a form submit. */
   noindex?: boolean;
+  /** The page's JSON-LD graph, from schema.ts' `pageSchema()`. When given it
+   *  is the page's only structured data, and `business` just names the site
+   *  for Open Graph. Pages without one get the LocalBusiness block below. */
+  schema?: PageSchema;
 }
 
-const { title, description, canonical, ogImage, business, noindex = false } = Astro.props;
+const { title, description, canonical, ogImage, business, noindex = false, schema } = Astro.props;
 
 // Production only (staging is blanket-noindexed below). A page asks for noindex
 // itself, or indexing.ts rules it out because nothing in the menu links it yet.
@@ -77,6 +83,23 @@ const jsonLd = {
   })),
   sameAs: business.sameAs,
 };
+
+// The breadcrumb trail as JSON-LD, for pages without a `schema` (a schema
+// carries its own). Built from the same breadcrumbTrail() the visible trail in
+// Breadcrumbs.astro uses, so the two cannot disagree.
+const trail = breadcrumbTrail(Astro.url.pathname);
+const breadcrumbJsonLd = trail.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: trail.map((crumb, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: crumb.label,
+        item: new URL(crumb.href, Astro.site).href,
+      })),
+    }
+  : null;
 
 // Google Tag Manager. One container across both environments; the ID is not a
 // secret, so it lives here rather than in an env var.
@@ -162,7 +185,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href={poppinsBoldWoff2} as="font" type="font/woff2" crossorigin />
 
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+    {schema ? (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+    ) : (
+      <>
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+        {breadcrumbJsonLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} is:inline />}
+      </>
+    )}
 
     {/* Simple Commenter, STAGING ONLY. Supplied by the client as a
         paste-into-the-head snippet and reproduced verbatim. The `id` is a

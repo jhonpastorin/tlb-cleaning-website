@@ -4,8 +4,9 @@
 // the form's. The trail comes from the URL via breadcrumbs.ts, so no page
 // passes one, and it renders nothing on the homepage and the 404 page.
 //
-// Also emits the matching `BreadcrumbList` JSON-LD, so the trail Google reads
-// can never drift from the one a reader sees.
+// The matching `BreadcrumbList` JSON-LD is in the page's <head>, built by
+// Base.astro or schema.ts from the same breadcrumbTrail(), so the trail Google
+// reads can never drift from the one a reader sees.
 //
 // Colour is inherited, never set: the trail sits on the Dark Teal
 // split-mosaic hero as well as on light panels, and `currentColor` reads
@@ -13,17 +14,6 @@
 import { breadcrumbTrail } from '../../data/breadcrumbs';
 
 const trail = breadcrumbTrail(Astro.url.pathname);
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: trail.map((crumb, i) => ({
-    '@type': 'ListItem',
-    position: i + 1,
-    name: crumb.label,
-    item: new URL(crumb.href, Astro.site).href,
-  })),
-};
 ---
 
 {trail.length > 0 && (
@@ -39,7 +29,6 @@ const jsonLd = {
         ),
       )}
     </ol>
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
   </nav>
 )}
 

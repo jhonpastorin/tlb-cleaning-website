@@ -122,6 +122,7 @@
 //     Standards audit history, or clinical cleaning capability. Do not add
 //     one without evidence: those are auditable claims.
 import Base from '../../layouts/Base.astro';
+import { pageSchema, serviceNode, withoutQuestions } from '../../data/schema';
 import SiteHeader from '../../components/sections/SiteHeader.astro';
 import Hero from '../../components/sections/Hero.astro';
 import TrustBar from '../../components/sections/TrustBar.astro';
@@ -422,9 +423,22 @@ const residentsBlocks = page.residents.blocks.map((block) =>
 );
 
 const business = commercialBusiness(pageMeta.description);
+
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+// The sheet leaves the question below out of the FAQ schema; it stays on the page.
+// It also takes only the first FAQ block here, not the general one.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'FAQPage',
+  faq: withoutQuestions(page.brandedFaq.items, [
+    'Are your cleaners screened?',
+  ]),
+  nodes: [serviceNode(pageMeta.canonical)],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

@@ -11,6 +11,7 @@
 // new prose sections plus a much larger FAQ, service list and town list
 // arrived. Treat this file, not the v5 plan, as current.
 import Base from '../layouts/Base.astro';
+import { pageSchema, organizationNode, websiteNode } from '../data/schema';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
@@ -322,9 +323,17 @@ const ourServiceItems = serviceLinks.map((service) => {
   };
 });
 
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'FAQPage',
+  faq: page.faq.items,
+  nodes: [organizationNode(), websiteNode()],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

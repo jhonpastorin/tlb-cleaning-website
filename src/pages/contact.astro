@@ -59,6 +59,7 @@
 //     would be inventing a fact about the business.
 //  3. NO ABN, no insurance number, no certificate figures. Same rule.
 import Base from '../layouts/Base.astro';
+import { pageSchema, localBusinessNode } from '../data/schema';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Callout from '../components/sections/Callout.astro';
 import ContactForm from '../components/sections/ContactForm.astro';
@@ -122,9 +123,17 @@ const business = meetTheTeamBusiness(pageMeta.description);
 // quote button's wording, still pointed at the form rather than at this page.
 const closingButton = page.closingCta.cta ?? { ...quoteCta, href: formAnchor };
 
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'ContactPage',
+  mainEntityIsBusiness: true,
+  nodes: [localBusinessNode({ contact: true })],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

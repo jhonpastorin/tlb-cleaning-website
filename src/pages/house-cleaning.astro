@@ -38,6 +38,7 @@
 // quotes land. Never fill a reserved slot with invented photos, quotes or
 // names — those are outward-facing trust claims, not filler.
 import Base from '../layouts/Base.astro';
+import { pageSchema, serviceNode } from '../data/schema';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
@@ -417,9 +418,23 @@ const pathwayCards = page.pathways.cards.map((card, i) => ({
 // highlighted ones.
 const inclusionsColumns = highlightColumn(page.inclusions.columns, 0);
 const frequencyColumns = highlightColumn(page.frequency.columns, 1);
+
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  faq: page.faq.items,
+  nodes: [
+    serviceNode(pageMeta.canonical, {
+      name: 'House Cleaning Services',
+      serviceType: 'Regular house cleaning',
+      description: 'Regular house cleaning services across the Northern Rivers, the Tweed, and the Southern Gold Coast.',
+    }),
+  ],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

@@ -56,6 +56,7 @@
 // invented photos, quotes or names. Prompts for the outstanding slots are in
 // src/assets/home_cleaning/inside_your_home/end_of_lease_and_bond_cleaning/IMAGE-PROMPTS.md.
 import Base from '../../layouts/Base.astro';
+import { pageSchema, serviceNode } from '../../data/schema';
 import SiteHeader from '../../components/sections/SiteHeader.astro';
 import Hero from '../../components/sections/Hero.astro';
 import TrustBar from '../../components/sections/TrustBar.astro';
@@ -682,9 +683,18 @@ const readingGuides = page.readingGuides.items.map((item) =>
 
 // The end of lease clean (the first column) is the highlighted one.
 const comparisonColumns = highlightColumn(page.comparison.columns, 0);
+
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'FAQPage',
+  faq: page.faq.items,
+  nodes: [serviceNode(pageMeta.canonical)],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

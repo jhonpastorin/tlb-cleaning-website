@@ -24,6 +24,7 @@
 // service page on this site. Treat it as a first draft to react to.
 import type { GetStaticPaths } from 'astro';
 import Base from '../../layouts/Base.astro';
+import { pageSchema, townNodes } from '../../data/schema';
 import SiteHeader from '../../components/sections/SiteHeader.astro';
 import Hero from '../../components/sections/Hero.astro';
 import TrustBar from '../../components/sections/TrustBar.astro';
@@ -167,24 +168,13 @@ const pageMeta = {
   canonical: `https://tlbcleaning.com.au${townSlug(town)}`,
 };
 
-// ⚠️ `areaServed` and `addressLocality` are the two fields that should NOT be
-// the site-wide three-region string every service page uses. A LocalBusiness
-// whose area of service is the town the page is about is the whole point of
-// the page existing. The address is this town's, so it replaces the empty
-// site-wide one.
-const business = {
-  ...localBusiness({
-    description: pageMeta.description,
-    areaServed: `${town} and the surrounding ${regionProse}, ${state}`,
-  }),
-  address: {
-    streetAddress: '',
-    addressLocality: town,
-    addressRegion: state,
-    postalCode: '',
-    addressCountry: 'AU',
-  },
-};
+// Since the Oct 2026 schema review this only names the site for Open Graph.
+// What Google reads about the town (a Place inside its region, and a Service
+// across the town and its neighbours) is `schema` at the end of this block.
+const business = localBusiness({
+  description: pageMeta.description,
+  areaServed: `${town} and the surrounding ${regionProse}, ${state}`,
+});
 
 // Hero. `full-width-photo` rather than the service pages'
 // `split-single-image`: those run a cut-out figure on a transparent backdrop,
@@ -284,9 +274,17 @@ const nearbyGroups: TagGroup[] = [
 // the map. If there is a town TLB charges travel to, or reaches less often,
 // that town needs an override rather than this blanket answer.
 
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'FAQPage',
+  faq: page.faq.items,
+  nodes: townNodes(pageMeta.canonical, town, nearby),
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

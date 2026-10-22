@@ -69,6 +69,7 @@
 // on every page unless SITE_ENV=production, so the brief was reading a
 // staging build. Nothing on this page needs changing for it.
 import Base from '../layouts/Base.astro';
+import { pageSchema } from '../data/schema';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
@@ -523,9 +524,17 @@ const tradeOffBlocks = page.tradeOff.items.map((item) => ({
 }));
 
 const objectionBlocks = page.objections.items.map((item) => ({ type: 'text' as const, ...item }));
+
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+// The sheet takes the switching FAQ block only.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  faq: page.switchingFaq.items,
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

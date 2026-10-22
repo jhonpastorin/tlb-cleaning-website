@@ -75,6 +75,7 @@
 //     require of contractors, which is often higher than a domestic
 //     cleaner's. Bracketed in a non-branded FAQ.
 import Base from '../../layouts/Base.astro';
+import { pageSchema, serviceNode, withoutQuestions } from '../../data/schema';
 import SiteHeader from '../../components/sections/SiteHeader.astro';
 import Hero from '../../components/sections/Hero.astro';
 import TrustBar from '../../components/sections/TrustBar.astro';
@@ -356,9 +357,24 @@ const scopeFailureBlocks = page.scopeFailures.items.map((item) =>
 const relatedTags = relatedPremises('/commercial-cleaning/strata-cleaning/', page.related.tags ?? []);
 
 const business = commercialBusiness(pageMeta.description);
+
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+// The sheet leaves the question below out of the FAQ schema; it stays on the page.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'FAQPage',
+  faq: [
+    ...withoutQuestions(page.brandedFaq.items, [
+      'Do you use subcontractors?',
+    ]),
+    ...page.faq.items,
+  ],
+  nodes: [serviceNode(pageMeta.canonical)],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

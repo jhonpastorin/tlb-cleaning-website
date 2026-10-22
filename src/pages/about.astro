@@ -37,6 +37,7 @@
 //  4. The FAQ's insurance and background-check answers are HELD BACK, not
 //     drafted. See the note above faqItems.
 import Base from '../layouts/Base.astro';
+import { pageSchema, localBusinessNode } from '../data/schema';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
@@ -218,9 +219,18 @@ const valueBlocks = page.values.items.map((item) => ({
 
 const teamImages = page.team.images.map(({ image, caption }) => ({ ...sized(image, '1/1'), caption }));
 
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'AboutPage',
+  description: pageMeta.description,
+  mainEntityIsBusiness: true,
+  nodes: [localBusinessNode()],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

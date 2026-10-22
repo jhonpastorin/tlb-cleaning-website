@@ -38,6 +38,7 @@
 //     genuinely takes a couple of minutes before launch, because the page
 //     sets that expectation twice.
 import Base from '../layouts/Base.astro';
+import { pageSchema, howToNode } from '../data/schema';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
@@ -172,9 +173,17 @@ const practicalBlocks = page.practical.items.map((item) => ({
 
 // Cross-links to the other three pages in this cluster.
 const clusterItems = otherMeetTheTeamPages('/how-booking-works/');
+
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  faq: page.faq.items,
+  nodes: [howToNode(pageMeta.canonical, page.steps.steps.map((step) => step.heading))],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

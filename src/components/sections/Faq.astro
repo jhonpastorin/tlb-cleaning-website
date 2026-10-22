@@ -26,26 +26,14 @@ interface Props {
   heading?: string;
   lead?: string;
   items: FaqItem[];
-  // Emit `FAQPage` JSON-LD for these questions. Opt-in rather than always on,
-  // because a page should carry one FAQPage block and several pages still
-  // render two <Faq> sections. Turn it on for the one section per page whose
-  // questions belong in search.
-  schema?: boolean;
+  // No JSON-LD here. A page's FAQPage schema is part of its one graph in the
+  // <head>: the page passes the questions it wants in search to Base.astro's
+  // `schema` (see schema.ts), from the same items it renders here.
 }
 
-const { heading, lead, items, schema = false } = Astro.props;
+const { heading, lead, items } = Astro.props;
 
 const { Heading } = sectionHeadingTags(heading);
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: items.map((item) => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: { '@type': 'Answer', text: item.answer },
-  })),
-};
 
 // `name`-grouped <details> exclusivity is document-wide, not scoped to this
 // component's own markup — two <Faq> instances on one page sharing a
@@ -63,8 +51,6 @@ const groupName = `faq-${Math.random().toString(36).slice(2, 9)}`;
 // applied to both now.
 const headingId = `faq-heading-${Math.random().toString(36).slice(2, 9)}`;
 ---
-
-{schema && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />}
 
 <section class="faq" aria-labelledby={heading ? headingId : undefined}>
   <div class="container container--narrow">

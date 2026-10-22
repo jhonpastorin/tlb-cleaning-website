@@ -89,6 +89,7 @@
 // photographing the outcome and the cause rather than the horror, so keep
 // any replacement modest for the same reason.
 import Base from '../../layouts/Base.astro';
+import { pageSchema, serviceNode } from '../../data/schema';
 import SiteHeader from '../../components/sections/SiteHeader.astro';
 import Hero from '../../components/sections/Hero.astro';
 import TrustBar from '../../components/sections/TrustBar.astro';
@@ -751,9 +752,18 @@ const comparisonColumns = highlightColumn(page.comparison.columns, 0);
 const healthBody = healthSourceApproved
   ? page.health.body.map((paragraph, i) => (i === 1 ? healthApprovedParagraph : paragraph))
   : page.health.body;
+
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'FAQPage',
+  faq: page.faq.items,
+  nodes: [serviceNode(pageMeta.canonical)],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

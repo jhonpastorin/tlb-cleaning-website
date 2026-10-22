@@ -106,6 +106,7 @@
 // block was filled on a reasonable assumption and removed again at TLB's
 // direction.
 import Base from '../layouts/Base.astro';
+import { pageSchema, serviceNode, commercialCatalog } from '../data/schema';
 import SiteHeader from '../components/sections/SiteHeader.astro';
 import Hero from '../components/sections/Hero.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
@@ -748,9 +749,20 @@ const commercialComparisonRows = (() => {
   const rows = serviceComparisonRows(page.comparison.whoCleansLabel);
   return [...rows.slice(0, 4), page.comparison.addedRow, ...rows.slice(4)];
 })();
+
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+// The sheet takes the branded FAQ block only, and lists every commercial page
+// as an offer of this one.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'FAQPage',
+  faq: page.brandedFaq.items,
+  nodes: [serviceNode(pageMeta.canonical, { name: 'Commercial cleaning', catalog: commercialCatalog() })],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}

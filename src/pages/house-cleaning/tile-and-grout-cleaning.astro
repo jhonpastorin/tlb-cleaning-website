@@ -79,6 +79,7 @@
 // tiled floor cannot be keyed off white). See
 // src/assets/home_cleaning/appliances/IMAGE-PROMPTS.md.
 import Base from '../../layouts/Base.astro';
+import { pageSchema, serviceNode } from '../../data/schema';
 import SiteHeader from '../../components/sections/SiteHeader.astro';
 import Hero from '../../components/sections/Hero.astro';
 import TrustBar from '../../components/sections/TrustBar.astro';
@@ -296,9 +297,20 @@ const pathwayCards = [
   whoIsInYourHomeCard(cardTeamImg, 'A TLB cleaner straightening the bottles in a tiled shower niche'),
 ];
 
+// Structured data, built to the reviewed schema sheet (Oct 2026): see schema.ts.
+const schema = pageSchema({
+  url: pageMeta.canonical,
+  title: pageMeta.title,
+  type: 'FAQPage',
+  faq: [
+    ...page.bookingFaq.items,
+    ...page.generalFaq.items,
+  ],
+  nodes: [serviceNode(pageMeta.canonical)],
+});
 ---
 
-<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business}>
+<Base title={pageMeta.title} description={pageMeta.description} canonical={pageMeta.canonical} business={business} schema={schema}>
   <SiteHeader
     logo={{ label: 'TLB Cleaning', src: logoImg }}
     primaryNav={primaryNav}
