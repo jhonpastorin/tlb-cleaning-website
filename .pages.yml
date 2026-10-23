@@ -2512,7 +2512,7 @@ content:
           - { name: seo, component: seo }
           - name: hero
             component: hero
-            description: "Leave the button empty to keep this page's \"Get a fast quote\" button. Deep cleans are quoted fast, not priced instantly, so avoid the word instant here."
+            description: "Leave the button empty to keep \"Get an instant quote\"."
           - name: definition
             component: textBlock
             label: "Intro (under the trust bar)"
@@ -2533,7 +2533,7 @@ content:
           - name: booking
             component: textBlock
             label: "Easy to book, fast quoting (dark band)"
-            description: "This page's own paragraphs, starting with its \"Managed for you\" line. The How it works steps below them come from Site settings > Brand lines. Leave the button empty to keep \"Get a fast quote\"."
+            description: "This page's own paragraphs, starting with its \"Managed for you\" line. The How it works steps below them come from Site settings > Brand lines. Leave the button empty to keep \"Get an instant quote\"."
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: faq
@@ -2552,7 +2552,7 @@ content:
             description: "The description's \"passes the first inspection\" and \"fixed quote\" were shipped on TLB's instruction and contradict the page's own FAQ. Do not repeat those claims elsewhere."
           - name: hero
             component: hero
-            description: "Leave the button empty to keep this page's \"Get a fast quote\" button. Bond cleans are quoted fast, not priced instantly. Never promise a bond back, a pass at inspection or a refund anywhere on this page (Australian Consumer Law)."
+            description: "Leave the button empty to keep \"Get an instant quote\". Never promise a bond back, a pass at inspection or a refund anywhere on this page (Australian Consumer Law)."
           - name: definition
             component: textBlock
             label: "Intro (under the trust bar)"
@@ -2593,7 +2593,7 @@ content:
           - name: booking
             component: textBlock
             label: "Book it around the handover date (dark band)"
-            description: "Leave the button empty to keep \"Get a fast quote\"."
+            description: "Leave the button empty to keep \"Get an instant quote\"."
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: brandLine
@@ -2607,7 +2607,7 @@ content:
           - name: closingCta
             component: callToAction
             label: "Closing call to action"
-            description: "Leave the button empty to keep \"Get a fast quote\"."
+            description: "Leave the button empty to keep \"Get an instant quote\"."
       - name: exterior-house-washing
         label: Exterior house washing
         type: file
@@ -2909,7 +2909,7 @@ content:
           - name: booking
             component: textBlock
             label: "Send us a photo (dark band)"
-            description: "The photo-before-quoting flow is not yet confirmed. Leave the button empty to keep \"Get a fast quote\"."
+            description: "The photo-before-quoting flow is not yet confirmed. Leave the button empty to keep \"Get an instant quote\"."
           - { name: reviews, component: sectionHeading, label: "Google reviews heading" }
           - { name: whereWeClean, component: tagCloud, label: "Where we clean" }
           - name: brandLine
@@ -2923,7 +2923,7 @@ content:
           - name: closingCta
             component: callToAction
             label: "Closing call to action"
-            description: "Leave the button empty to keep \"Get a fast quote\"."
+            description: "Leave the button empty to keep \"Get an instant quote\"."
 
       - name: house-cleaning-ndis-cleaning
         label: NDIS cleaning

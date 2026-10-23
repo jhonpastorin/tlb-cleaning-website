@@ -172,28 +172,13 @@ import { howItWorks, managedForYou, theLineBody } from '../../data/brand-lines';
 // In `pageMeta`, on `canonical`:
 // Domain still a placeholder, same as every other page. Confirm before launch.
 
-// PAGE-LOCAL CTA LABEL, added 15 Sep 2026 - the same override
-// deep-cleaning.astro already carries, for the same reason and with the same
-// scope.
-//
-// The shared `quoteCta` still reads "Get an instant quote" everywhere. On
-// THIS page that contradicted the copy directly above and below it: BFD 13.2
-// names bond cleans as work instant pricing works badly for, the hero lead
-// says "fast quoting", and the pricing block argues at length that a bond
-// clean cannot be priced sight unseen. The button was the last thing on the
-// page still saying "instant".
-//
-// Overridden here rather than in navigation.ts because that export serves
-// every page, including the genuinely instant-priceable ones. The site-wide
-// split is still the Phase 2.3 / step 7 job in WEBSITE-UPDATE-PLAN-BFD-V2.md.
-//
-// The SITE HEADER's button keeps the shared label deliberately. It is a
-// global component and changing it would relabel the regular-cleaning pages,
-// where "instant" is correct per BFD 13.2. That needs a per-page label or a
-// site-wide decision, not a copy edit on this file.
-//
-// `href` is unchanged, so it routes exactly where it did.
-const pageQuoteCta = { ...quoteCta, label: 'Get a fast quote' };
+// CTA LABEL, 23 Oct 2026, on a client instruction: household pages say "Get an
+// instant quote", and "Get a fast quote" is kept for holiday let and
+// commercial work. This page carried a page-local "Get a fast quote" override
+// from 15 Sep 2026 (BFD 13.2 names bond cleans as work instant pricing works
+// badly for); that override is gone and every button here uses `quoteCta` as
+// is. The hero lead still says "fast quoting" through {{line.fast}}: that is
+// the brand line, not a button.
 
 // Section 1. Hero. Same shape as every other service page:
 // split-single-image, image right, cut-out figure standing on the section
@@ -711,7 +696,7 @@ const schema = pageSchema({
       headingLines={page.hero.headingLines}
       subheading={page.hero.subheading}
       lead={page.hero.lead}
-      cta={page.hero.cta ?? pageQuoteCta}
+      cta={page.hero.cta ?? quoteCta}
       image={heroImage}
     />
 
@@ -861,7 +846,7 @@ const schema = pageSchema({
       align="left"
       heading={page.booking.heading}
       body={page.booking.body}
-      cta={page.booking.cta ?? pageQuoteCta}
+      cta={page.booking.cta ?? quoteCta}
       backgroundImage={page.booking.backgroundImage}
     />
 
@@ -899,7 +884,7 @@ const schema = pageSchema({
       kicker={page.closingCta.kicker}
       heading={page.closingCta.heading}
       lead={page.closingCta.lead}
-      cta={page.closingCta.cta ?? pageQuoteCta}
+      cta={page.closingCta.cta ?? quoteCta}
     />
   </main>
 

@@ -108,27 +108,18 @@ import { sized, highlightColumn } from '../../lib/cms-schemas';
 //     Heads rows: there is no geo phrase here to extend.
 //  3. "Book today" is a harder CTA than this page supports. BFD §13.2
 //     names deep cleans as work instant pricing works badly for, which is
-//     why the CTA below was overridden away from "instant". The meta now
-//     says book, the page says get a fast quote.
+//     why the CTA below was once overridden away from "instant". The meta
+//     says book, the page's buttons say get an instant quote.
 // In `pageMeta`:
 // Domain still a placeholder, same as the other pages — confirm before launch.
 
-// ⚠️ PAGE-LOCAL CTA LABEL. The shared `quoteCta` still reads "Get an instant
-// quote" everywhere, and on THIS page that contradicted the sentence next to
-// it: the hero lead, the §10 heading and the booking copy all say quoting is
-// fast, not instant, because BFD §13.2 names deep cleans as work instant
-// pricing works badly for. The button was the last thing still saying
-// "instant".
-//
-// Overridden here rather than in navigation.ts because that export serves
-// every page, including the genuinely instant-priceable ones. The site-wide
-// split is still the Phase 2.3 / step 7 job in WEBSITE-UPDATE-PLAN-BFD-V2.md
-// — this is the deep-clean page taking its own half of it early. `href` is
-// unchanged, so it routes exactly where it did.
-//
-// Header and footer chrome keep the shared label deliberately: that is site
-// navigation, not this page's argument.
-const pageQuoteCta = { ...quoteCta, label: 'Get a fast quote' };
+// CTA LABEL, 23 Oct 2026, on a client instruction: household pages say "Get an
+// instant quote", and "Get a fast quote" is kept for holiday let and
+// commercial work. This page used to override the shared `quoteCta` to "Get a
+// fast quote" (BFD §13.2 names deep cleans as work instant pricing works badly
+// for); that override is gone and every button here uses `quoteCta` as is.
+// The hero lead and the §10 heading still say "fast quoting" through
+// {{line.fast}}: that is the brand line, not a button.
 
 // TRUST BAR: the shared `trustBarCards` from data/trust.ts, same as the other
 // fifty pages. Rendered directly below — this page holds no local set.
@@ -598,7 +589,7 @@ const schema = pageSchema({
       headingLines={page.hero.headingLines}
       subheading={page.hero.subheading}
       lead={page.hero.lead}
-      cta={page.hero.cta ?? pageQuoteCta}
+      cta={page.hero.cta ?? quoteCta}
       image={heroImage}
     />
 
@@ -677,7 +668,7 @@ const schema = pageSchema({
       align="left"
       heading={page.booking.heading}
       body={[...page.booking.body, ...howItWorks.general]}
-      cta={page.booking.cta ?? pageQuoteCta}
+      cta={page.booking.cta ?? quoteCta}
       backgroundImage={page.booking.backgroundImage}
     />
 
@@ -719,7 +710,7 @@ const schema = pageSchema({
       kicker={page.closingCta.kicker}
       heading={page.closingCta.heading}
       lead={page.closingCta.lead}
-      cta={page.closingCta.cta ?? pageQuoteCta}
+      cta={page.closingCta.cta ?? quoteCta}
     />
   </main>
 

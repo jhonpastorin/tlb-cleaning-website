@@ -193,25 +193,12 @@ import { sized, highlightColumn } from '../../lib/cms-schemas';
 //     detail, which is defensible but is the sort of line to have an answer
 //     ready for.
 
-// ⚠️ PAGE-LOCAL CTA LABEL, 15 Sep 2026. The shared `quoteCta` still reads
-// "Get an instant quote" everywhere, and on THIS page that promised the one
-// thing the copy then withdraws: section 12 says outright that condition
-// sets the price and a job like this cannot be priced sight unseen, and the
-// whole page is built on sending a photo first. A button offering an instant
-// number contradicted the sentence above it.
-//
-// Overridden here rather than in navigation.ts because that export serves
-// every page, including the genuinely instant-priceable ones. The site-wide
-// split is still the Phase 2.3 / step 7 job in WEBSITE-UPDATE-PLAN-BFD-V2.md.
-// `href` is unchanged, so it routes exactly where it did.
-//
-// Four instances on this page take it: the hero, pathway card 1, the booking
-// block and the closing CTA. Header and footer chrome keep the shared label
-// deliberately, same call deep-cleaning.astro made: that is site navigation,
-// not this page's argument, and the conflict between the two header CTAs is
-// a site-wide decision above this page (BFD §9.5 and §13.2 currently
-// contradict each other on it).
-const pageQuoteCta = { ...quoteCta, label: 'Get a fast quote' };
+// CTA LABEL, 23 Oct 2026, on a client instruction: household pages say "Get an
+// instant quote", and "Get a fast quote" is kept for holiday let and
+// commercial work. This page carried a page-local "Get a fast quote" override
+// from 15 Sep 2026 (section 12 says a job like this cannot be priced sight
+// unseen); that override is gone. Pathway card 1, the booking block and the
+// closing CTA now use `quoteCta` as is. The hero keeps its own label below.
 
 // ⚠️ HERO TAKES ITS OWN LABEL, 16 Sep 2026, on a client instruction. The hero
 // button now reads "Book an inspection today" rather than "Get a fast quote".
@@ -223,10 +210,11 @@ const pageQuoteCta = { ...quoteCta, label: 'Get a fast quote' };
 // search snippet now say the same thing.
 //
 // The other three instances (pathway card 1, the booking block and the
-// closing CTA) deliberately KEEP "Get a fast quote": by the time a reader is
-// that far down they have read the inspection argument, and repeating the
-// same booking verb four times reads as a single nagging button rather than
-// as a page. `href` is unchanged, so it routes exactly where the others do.
+// closing CTA) deliberately take the quote label instead ("Get an instant
+// quote" since 23 Oct 2026): by the time a reader is that far down they have
+// read the inspection argument, and repeating the same booking verb four
+// times reads as a single nagging button rather than as a page. `href` is
+// unchanged, so it routes exactly where the others do.
 const heroQuoteCta = { ...quoteCta, label: 'Book an inspection today' };
 
 // Section 1. Hero. The figure is this folder's own cut-out rather than the
@@ -339,7 +327,7 @@ const heroQuoteCta = { ...quoteCta, label: 'Book an inspection today' };
 // Section heading/accent and the three CTA labels are DRAFTED, not briefed.
 //
 // In `pathwayCards`, on the button of "It's in the bathroom and it looks awful":
-// Page-local "Get a fast quote", 15 Sep 2026 — see `pageQuoteCta`.
+// "Get an instant quote" from content, 23 Oct 2026 (was "Get a fast quote").
 // Cards 2 and 3 are unchanged: they route to another page and to an
 // anchor, not to the quote flow.
 
@@ -652,7 +640,7 @@ const healthSourceApproved = false;
 // Section 16. Closing block. Drafted. Repeats the page's position rather
 // than a promise, which is the only close consistent with everything above.
 // Heading and lead unchanged 15 Sep 2026 — the button label is the only edit
-// here, and it is the fourth and last instance of it. See `pageQuoteCta`.
+// here. The button is `quoteCta` ("Get an instant quote") since 23 Oct 2026.
 
 // The approved version of section 10's second paragraph, gated on
 // `healthSourceApproved` above. Since the move to Pages CMS the live
@@ -909,7 +897,7 @@ const schema = pageSchema({
       align="left"
       heading={page.booking.heading}
       body={page.booking.body}
-      cta={page.booking.cta ?? pageQuoteCta}
+      cta={page.booking.cta ?? quoteCta}
       backgroundImage={page.booking.backgroundImage}
     />
 
@@ -959,7 +947,7 @@ const schema = pageSchema({
       kicker={page.closingCta.kicker}
       heading={page.closingCta.heading}
       lead={page.closingCta.lead}
-      cta={page.closingCta.cta ?? pageQuoteCta}
+      cta={page.closingCta.cta ?? quoteCta}
     />
   </main>
 
